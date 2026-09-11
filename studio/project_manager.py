@@ -156,3 +156,29 @@ def list_projects() -> List[Dict[str, Any]]:
     # Sort newest first
     projects.sort(key=lambda x: str(x["directory_name"]), reverse=True)
     return projects
+
+
+def delete_project(directory_name: str) -> bool:
+    """
+    Safely delete a project directory from the projects root.
+    Strictly verifies directory traversal and ensures canonical path is inside PROJECTS_DIR.
+    """
+    if not directory_name or not isinstance(directory_name, str) or not directory_name.strip():
+        raise ValueError("Project directory name is required.")
+
+    clean_name = directory_name.strip()
+    if ".." in clean_name or "/" in clean_name or "\\" in clean_name:
+        raise ValueError("Invalid project directory name: Path traversal not allowed.")
+
+    canonical_root = PROJECTS_DIR.resolve()
+    target_dir = (PROJECTS_DIR / clean_name).resolve()
+
+    if not target_dir.exists() or not target_dir.is_dir():
+        raise FileNotFoundError(f"Project directory '{clean_name}' not found.")
+
+    if target_dir.parent != canonical_root:
+        raise ValueError("Invalid project directory: Target is outside the projects root.")
+
+    shutil.rmtree(target_dir)
+    return True
+

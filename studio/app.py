@@ -48,7 +48,8 @@ from studio.project_manager import (
     cleanup_temp_job_dir,
     save_project_metadata,
     export_to_outputs,
-    list_projects
+    list_projects,
+    delete_project
 )
 from studio.pronunciation_service import PronunciationDictionary
 from studio.transcription_service import transcription_service
@@ -81,14 +82,36 @@ USER_SETTINGS_PATH = BASE_DIR / "config" / "user_settings.json"
 # In-memory active job tracker
 active_jobs: Dict[str, Dict[str, Any]] = {}
 job_cancel_events: Dict[str, asyncio.Event] = {}
+active_project_dirs: set = set()
+
+
+def _is_project_busy(dir_name: str) -> bool:
+    """Check if project has active TTS, transcription, scene, or veo generation."""
+    if not dir_name:
+        return False
+    if dir_name in active_project_dirs:
+        return True
+    for j in active_jobs.values():
+        if j.get("state") in ("preparing", "generating"):
+            if j.get("project_name") == dir_name or j.get("directory_name") == dir_name:
+                return True
+    try:
+        ts_job = transcription_service.get_job(dir_name)
+        if ts_job and ts_job.get("status") in ("queued", "running"):
+            return True
+    except Exception:
+        pass
+    return False
 
 
 class JobRequest(BaseModel):
-    script: str = Field(..., description="Narration text")
+    script: Optional[str] = Field(default=None, description="Narration text")
+    text: Optional[str] = Field(default=None, description="Alias for narration text")
     project_name: str = Field(default="unfoldiq_project", description="Project slug/name")
     voice: str = Field(default="af_heart", description="Kokoro voice identifier")
     speed: float = Field(default=1.0, ge=0.5, le=2.0, description="Speech rate multiplier")
     language: str = Field(default="American English", description="Narration language")
+    output_formats: Optional[List[str]] = Field(default=None, description="Output formats e.g. ['wav', 'mp3']")
     export_mp3: bool = Field(default=True, description="Also generate MP3")
     render_mode: str = Field(default=DEFAULT_RENDER_MODE, description="Smart Render profile: eco|balanced|fast")
 
@@ -541,10 +564,15 @@ def _is_tts_active() -> bool:
 
 
 @app.post("/api/jobs")
+@app.post("/api/generate")
 async def start_job(req: JobRequest, background_tasks: BackgroundTasks):
     """Start a new TTS generation job."""
-    if not req.script or not req.script.strip():
+    content = (req.script or req.text or "").strip()
+    if not content:
         raise HTTPException(status_code=400, detail="Script cannot be empty.")
+    req.script = content
+    if req.output_formats is not None:
+        req.export_mp3 = ("mp3" in req.output_formats)
 
     if transcription_service.is_gpu_busy():
         raise HTTPException(
@@ -709,6 +737,36 @@ async def export_project_audio(dir_name: str, request: Request):
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.delete("/api/projects/{dir_name}")
+async def remove_project(dir_name: str):
+    """Safely delete an entire project directory and its artifacts."""
+    clean_dir = dir_name.strip()
+    if not clean_dir:
+        raise HTTPException(status_code=400, detail="Tên thư mục dự án không hợp lệ.")
+
+    if _is_project_busy(clean_dir):
+        raise HTTPException(
+            status_code=409,
+            detail="Dự án đang trong quá trình xử lý. Vui lòng dừng hoặc chờ xử lý hoàn tất trước khi xóa."
+        )
+
+    try:
+        delete_project(clean_dir)
+        logger.info(f"Project '{clean_dir}' deleted successfully.")
+        return {
+            "status": "success",
+            "message": "Đã xóa dự án.",
+            "directory_name": clean_dir
+        }
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="Không tìm thấy dự án.")
+    except ValueError as ve:
+        raise HTTPException(status_code=400, detail=str(ve))
+    except Exception as e:
+        logger.error(f"Failed to delete project '{clean_dir}': {e}")
+        raise HTTPException(status_code=500, detail="Không thể xóa dự án. Vui lòng thử lại.")
 
 
 # ==============================================================================
@@ -876,6 +934,7 @@ async def save_user_settings(req: UserSettingsRequest):
 # ==============================================================================
 
 @app.post("/api/projects/{dir_name}/timestamps")
+@app.post("/api/projects/{dir_name}/timestamps/generate")
 async def generate_project_timestamps(dir_name: str):
     """Start on-demand local Whisper transcription and alignment for a project."""
     project_path = PROJECTS_DIR / dir_name
@@ -905,6 +964,11 @@ async def generate_project_timestamps(dir_name: str):
 async def get_project_timestamps_status(dir_name: str):
     """Check current transcription/timestamp status, progress, and staleness."""
     status = transcription_service.check_project_timestamps_status(dir_name)
+    if "state" in status and "status" not in status:
+        state_map = {"completed": "Ready", "processing": "Processing", "stale": "Stale", "idle": "Not Generated"}
+        status["status"] = state_map.get(status["state"], status["state"].capitalize())
+    elif "status" in status and "state" not in status:
+        status["state"] = status["status"].lower()
     return status
 
 
@@ -1005,6 +1069,7 @@ async def generate_project_scenes(dir_name: str, req: SceneGenerateRequest = Sce
     if not ts_path.is_file():
         raise HTTPException(status_code=400, detail="Missing timestamps.json. Run timestamp alignment first.")
 
+    active_project_dirs.add(dir_name)
     try:
         # Create planner instance with custom durations if provided
         planner = scene_planner
@@ -1031,6 +1096,8 @@ async def generate_project_scenes(dir_name: str, req: SceneGenerateRequest = Sce
     except Exception as e:
         logger.exception(f"Failed to generate scene plan for {dir_name}: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        active_project_dirs.discard(dir_name)
 
 
 @app.put("/api/projects/{dir_name}/scenes/{scene_id}")
@@ -1152,6 +1219,7 @@ async def generate_project_veo(dir_name: str, req: VeoGenerateRequest = VeoGener
     if not scene_plan_path.is_file():
         raise HTTPException(status_code=400, detail="Missing scene_plan.json. Run scene planning first.")
 
+    active_project_dirs.add(dir_name)
     try:
         # Create generator instance with custom settings if provided
         generator = veo_generator
@@ -1183,6 +1251,8 @@ async def generate_project_veo(dir_name: str, req: VeoGenerateRequest = VeoGener
     except Exception as e:
         logger.exception(f"Failed to generate Veo prompts for {dir_name}: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        active_project_dirs.discard(dir_name)
 
 
 @app.put("/api/projects/{dir_name}/veo/shots/{shot_id}")

@@ -169,6 +169,34 @@ document.addEventListener("DOMContentLoaded", () => {
   const pipelineSidebar = document.getElementById("pipeline-sidebar");
   const workspaceInspector = document.getElementById("workspace-inspector");
   const btnOpenSettings = document.getElementById("btn-open-settings");
+  const btnOpenTour = document.getElementById("btn-open-tour");
+  const workflowStepper = document.getElementById("workflow-stepper");
+
+  // Confirm Modal Elements
+  const confirmModal = document.getElementById("confirm-dialog-modal");
+  const confirmModalTitle = document.getElementById("confirm-modal-title");
+  const confirmModalMsg = document.getElementById("confirm-modal-message");
+  const confirmBtnCancel = document.getElementById("confirm-btn-cancel");
+  const confirmBtnConfirm = document.getElementById("confirm-btn-confirm");
+  const confirmModalCloseBtn = document.getElementById("confirm-modal-close-btn");
+
+  // Tour Elements
+  const tourOverlay = document.getElementById("onboarding-tour-overlay");
+  const tourSpotlight = document.getElementById("tour-spotlight");
+  const tourCard = document.getElementById("tour-card");
+  const tourStepBadge = document.getElementById("tour-step-badge");
+  const tourBtnSkip = document.getElementById("tour-btn-skip");
+  const tourCardTitle = document.getElementById("tour-card-title");
+  const tourCardBody = document.getElementById("tour-card-body");
+  const tourBtnPrev = document.getElementById("tour-btn-prev");
+  const tourBtnNext = document.getElementById("tour-btn-next");
+
+  // Contextual Help Elements
+  const helpModal = document.getElementById("contextual-help-modal");
+  const helpModalTitle = document.getElementById("help-modal-title");
+  const helpModalCloseBtn = document.getElementById("help-modal-close-btn");
+  const helpModalBody = document.getElementById("help-modal-body");
+  const helpModalActionBtn = document.getElementById("help-modal-action-btn");
 
   // ==============================================================================
   // 2. STATE MANAGEMENT & UTILITIES
@@ -186,6 +214,17 @@ document.addEventListener("DOMContentLoaded", () => {
   let tsPollInterval = null;
   let statsDebounceTimer = null;
   let isSeeking = false;
+
+  // Dependency & Invalidation State
+  let tsOutdated = false;
+  let scenesOutdated = false;
+  let veoOutdated = false;
+  let projectCues = [];
+
+  // Modal & Tour State
+  let confirmCallback = null;
+  let lastFocusedElement = null;
+  let currentTourIndex = 0;
 
   // Master-Detail State & Lightweight Rendering Cache
   let selectedSceneId = null;
@@ -245,6 +284,8 @@ document.addEventListener("DOMContentLoaded", () => {
       } else if (e.key === "Escape") {
         if (modalEl === spEditModal) closeEditSceneModal();
         else if (modalEl === veoEditModal) closeEditVeoModal();
+        else if (modalEl === confirmModal) closeConfirmDialog();
+        else if (modalEl === helpModal) closeModuleHelp();
       }
     }
 
@@ -258,6 +299,587 @@ document.addEventListener("DOMContentLoaded", () => {
       activeFocusTrapCleanup = null;
     }
   }
+
+  // HTML Escape utility
+  function escapeHtml(str) {
+    if (!str) return "";
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+  window.escapeHtml = escapeHtml;
+
+  // Toast Notification System (replaces native alert)
+  function showNotification(message, type = "info") {
+    let container = document.getElementById("toast-container");
+    if (!container) {
+      container = document.createElement("div");
+      container.id = "toast-container";
+      container.className = "toast-container";
+      document.body.appendChild(container);
+    }
+    const toast = document.createElement("div");
+    toast.className = `toast-item toast-${type}`;
+    toast.setAttribute("role", "alert");
+    toast.innerHTML = `
+      <span class="toast-message">${escapeHtml(message)}</span>
+      <button type="button" class="toast-close" aria-label="Đóng">&times;</button>
+    `;
+    container.appendChild(toast);
+
+    const removeToast = () => {
+      toast.classList.add("toast-fade-out");
+      setTimeout(() => toast.remove(), 250);
+    };
+
+    toast.querySelector(".toast-close").addEventListener("click", removeToast);
+    setTimeout(removeToast, 4000);
+  }
+  window.showNotification = showNotification;
+
+  // Reusable Confirmation Dialog Modal (replaces native confirm)
+  function showConfirmDialog({
+    title = "Xác nhận",
+    message = "Bạn có chắc chắn muốn thực hiện hành động này?",
+    confirmText = "Xác nhận",
+    cancelText = "Hủy",
+    variant = "danger",
+    onConfirm = null
+  }) {
+    if (!confirmModal || !confirmModalTitle || !confirmModalMsg || !confirmBtnCancel || !confirmBtnConfirm) {
+      if (onConfirm) onConfirm();
+      return;
+    }
+
+    lastFocusedElement = document.activeElement;
+    confirmModalTitle.textContent = title;
+    confirmModalMsg.textContent = message;
+    confirmBtnConfirm.textContent = confirmText;
+    confirmBtnCancel.textContent = cancelText;
+
+    confirmBtnConfirm.disabled = false;
+    confirmBtnCancel.disabled = false;
+
+    // Set variant classes
+    confirmBtnConfirm.className = "btn";
+    if (variant === "danger") {
+      confirmBtnConfirm.classList.add("btn-danger");
+    } else if (variant === "warning") {
+      confirmBtnConfirm.classList.add("btn-warning");
+    } else {
+      confirmBtnConfirm.classList.add("btn-primary");
+    }
+
+    confirmCallback = onConfirm;
+    confirmModal.style.display = "flex";
+    confirmModal.classList.add("open");
+
+    trapFocus(confirmModal);
+    setTimeout(() => {
+      if (confirmBtnCancel) confirmBtnCancel.focus();
+    }, 60);
+  }
+  window.showConfirmDialog = showConfirmDialog;
+
+  function closeConfirmDialog() {
+    if (confirmModal) {
+      confirmModal.style.display = "none";
+      confirmModal.classList.remove("open");
+    }
+    confirmCallback = null;
+    releaseActiveFocus();
+    if (lastFocusedElement && typeof lastFocusedElement.focus === "function") {
+      lastFocusedElement.focus();
+    }
+  }
+  window.closeConfirmDialog = closeConfirmDialog;
+
+  if (confirmBtnCancel) confirmBtnCancel.addEventListener("click", closeConfirmDialog);
+  if (confirmModalCloseBtn) confirmModalCloseBtn.addEventListener("click", closeConfirmDialog);
+  if (confirmModal) {
+    confirmModal.addEventListener("click", (e) => {
+      if (e.target === confirmModal) closeConfirmDialog();
+    });
+  }
+
+  if (confirmBtnConfirm) {
+    confirmBtnConfirm.addEventListener("click", async () => {
+      if (confirmCallback) {
+        const cb = confirmCallback;
+        confirmBtnConfirm.disabled = true;
+        confirmBtnCancel.disabled = true;
+        try {
+          await cb();
+        } catch (err) {
+          console.error("Error executing confirm action:", err);
+          showNotification(`Lỗi thao tác: ${err.message}`, "error");
+        } finally {
+          closeConfirmDialog();
+        }
+      } else {
+        closeConfirmDialog();
+      }
+    });
+  }
+
+  // Pipeline Dependency & Invalidation Management
+  function updateDependencyState() {
+    const hasScript = Boolean(scriptInput && scriptInput.value.trim().length > 0);
+    const hasAudio = Boolean(currentProjectDir && (audioPlayer.src || (finalDurationText && finalDurationText.textContent !== "--")));
+    const hasTs = Boolean(currentProjectDir && projectCues && projectCues.length > 0);
+    const hasScenes = Boolean(currentProjectDir && projectScenes && projectScenes.length > 0);
+    const hasVeo = Boolean(currentProjectDir && projectVeoShots && projectVeoShots.length > 0);
+
+    const sScript = document.getElementById("step-status-script");
+    const sAudio = document.getElementById("step-status-audio");
+    const sTs = document.getElementById("step-status-timestamp");
+    const sScenes = document.getElementById("step-status-scenes");
+    const sVeo = document.getElementById("step-status-veo");
+
+    if (sScript) {
+      sScript.textContent = hasScript ? "✓" : "●";
+      sScript.className = `step-status-icon ${hasScript ? "status-complete" : ""}`;
+    }
+    if (sAudio) {
+      sAudio.textContent = hasAudio ? "✓" : (btnGenerate && btnGenerate.disabled && btnStop && !btnStop.disabled ? "◐" : "○");
+      sAudio.className = `step-status-icon ${hasAudio ? "status-complete" : ""}`;
+    }
+    if (sTs) {
+      if (tsOutdated) {
+        sTs.textContent = "⚠";
+        sTs.className = "step-status-icon status-outdated";
+      } else if (hasTs) {
+        sTs.textContent = "✓";
+        sTs.className = "step-status-icon status-complete";
+      } else {
+        sTs.textContent = "○";
+        sTs.className = "step-status-icon";
+      }
+    }
+    if (sScenes) {
+      if (scenesOutdated) {
+        sScenes.textContent = "⚠";
+        sScenes.className = "step-status-icon status-outdated";
+      } else if (hasScenes) {
+        sScenes.textContent = "✓";
+        sScenes.className = "step-status-icon status-complete";
+      } else {
+        sScenes.textContent = "○";
+        sScenes.className = "step-status-icon";
+      }
+    }
+    if (sVeo) {
+      if (veoOutdated) {
+        sVeo.textContent = "⚠";
+        sVeo.className = "step-status-icon status-outdated";
+      } else if (hasVeo) {
+        sVeo.textContent = "✓";
+        sVeo.className = "step-status-icon status-complete";
+      } else {
+        sVeo.textContent = "○";
+        sVeo.className = "step-status-icon";
+      }
+    }
+
+    if (spStaleAlert) {
+      spStaleAlert.style.display = scenesOutdated ? "flex" : "none";
+    }
+    if (veoStaleAlert) {
+      veoStaleAlert.style.display = veoOutdated ? "flex" : "none";
+    }
+  }
+  window.updateDependencyState = updateDependencyState;
+
+  function resetWorkstationToCleanState() {
+    currentProjectDir = null;
+    window.currentProjectDir = null;
+    if (activeProjectNameEl) activeProjectNameEl.textContent = "Chưa chọn dự án";
+    if (slugPreviewEl) slugPreviewEl.textContent = "";
+    if (playerContextLabel) playerContextLabel.textContent = "Không có dự án nào được chọn";
+
+    if (audioPlayer) {
+      audioPlayer.pause();
+      audioPlayer.removeAttribute("src");
+      audioPlayer.load();
+    }
+    if (finalDurationText) finalDurationText.textContent = "--";
+    if (btnExportWav) btnExportWav.disabled = true;
+    if (btnExportMp3) btnExportMp3.disabled = true;
+
+    projectCues = [];
+    if (tsCuesList) tsCuesList.innerHTML = `<p class="empty-state">Chưa có dữ liệu timestamp. Hãy tạo giọng đọc và bấm "Tạo Timestamp".</p>`;
+    if (tsPreviewCount) tsPreviewCount.textContent = "0 đoạn";
+    if (tsCuesBadge) tsCuesBadge.textContent = "0";
+    setTsStatus("idle", "Chưa tạo");
+
+    projectScenes = [];
+    selectedSceneId = null;
+    if (spRowsContainer) spRowsContainer.innerHTML = `<p class="empty-state">Chưa có Scene Plan. Bấm "Tạo Scene Plan" để phân bổ storyboard.</p>`;
+    if (spSelectedDetail) spSelectedDetail.innerHTML = `<div class="detail-empty-state"><p>Chưa có dữ liệu scene</p></div>`;
+    if (spRowCountBadge) spRowCountBadge.textContent = "0/0";
+    setSpStatus("idle", "Chưa sẵn sàng");
+
+    projectVeoShots = [];
+    selectedShotId = null;
+    if (veoRowsContainer) veoRowsContainer.innerHTML = `<p class="empty-state">Chưa có Veo Prompt. Bấm "Tạo Veo Prompt" để dựng prompt video.</p>`;
+    if (veoSelectedDetail) veoSelectedDetail.innerHTML = `<div class="detail-empty-state"><p>Chưa có dữ liệu shot</p></div>`;
+    if (veoRowCountBadge) veoRowCountBadge.textContent = "0/0";
+    setVeoStatus("idle", "Chưa sẵn sàng");
+
+    tsOutdated = false;
+    scenesOutdated = false;
+    veoOutdated = false;
+    updateDependencyState();
+  }
+  window.resetWorkstationToCleanState = resetWorkstationToCleanState;
+
+  // Contextual Help System
+  const MODULE_HELP_CONTENT = {
+    script: {
+      title: "1. Kịch bản lồng tiếng (Script Editor)",
+      sections: [
+        { label: "Mục đích", text: "Nhập nội dung văn bản kịch bản tiếng Việt hoặc tiếng Anh để tạo giọng đọc lồng tiếng và phân tích thị giác." },
+        { label: "Khi nào sử dụng", text: "Bước đầu tiên của mọi dự án sản xuất video UnfoldIQ." },
+        { label: "Điều kiện tiên quyết", text: "Không có. Bạn có thể gõ trực tiếp hoặc dán kịch bản từ clipboard." },
+        { label: "Đầu ra (Output)", text: "Văn bản được tính toán ký tự, số từ, thời lượng ước tính và tự động phân tách câu chuẩn xác." },
+        { label: "Bước tiếp theo", text: "Kiểm tra phát âm nếu có từ viết tắt, cấu hình giọng đọc và bấm 'Tạo giọng đọc'." }
+      ]
+    },
+    audio: {
+      title: "2. Audio Studio & Kết xuất (Audio QA)",
+      sections: [
+        { label: "Mục đích", text: "Theo dõi tiến độ kết xuất giọng đọc theo từng đoạn (chunk streaming), kiểm tra cache reuse và nghe thử âm thanh chất lượng cao." },
+        { label: "Khi nào sử dụng", text: "Sau khi bấm 'Tạo giọng đọc' hoặc khi mở lại một dự án đã có audio." },
+        { label: "Điều kiện tiên quyết", text: "Đã có kịch bản và dịch vụ Kokoro TTS Server đang hoạt động." },
+        { label: "Đầu ra (Output)", text: "Tệp âm thanh WAV (24kHz studio master) và MP3 (320kbps) trong thư mục dự án." },
+        { label: "Bước tiếp theo", text: "Chuyển sang bước 'Timestamp' để căn chỉnh mốc thời gian phụ đề chính xác." }
+      ]
+    },
+    timestamp: {
+      title: "3. Mốc thời gian phụ đề (Whisper Alignment)",
+      sections: [
+        { label: "Mục đích", text: "Sử dụng mô hình Whisper để nhận dạng và gán mốc thời gian bắt đầu - kết thúc chính xác cho từng câu và từng từ." },
+        { label: "Khi nào sử dụng", text: "Sau khi đã tạo xong file audio WAV." },
+        { label: "Điều kiện tiên quyết", text: "Dự án đã có file audio master." },
+        { label: "Đầu ra (Output)", text: "File phụ đề chuẩn SRT (subtitles.srt) và mảng câu thời gian JSON (timestamps.json)." },
+        { label: "Bước tiếp theo", text: "Chuyển sang 'Scene Planner' để storyboard phân cảnh khớp từng giây với lời đọc." }
+      ]
+    },
+    scenes: {
+      title: "4. Phân bổ storyboard (Visual Scene Planner)",
+      sections: [
+        { label: "Mục đích", text: "Tự động phân bổ kịch bản thành các cảnh quay (storyboard) ngắn có mục tiêu thị giác, thể loại, góc máy và prompt sinh ảnh." },
+        { label: "Khi nào sử dụng", text: "Sau khi đã có mốc thời gian timestamp hoàn chỉnh." },
+        { label: "Điều kiện tiên quyết", text: "Dự án đã hoàn tất bước Audio và Timestamp." },
+        { label: "Đầu ra (Output)", text: "Danh sách scene chi tiết, file scenes.json và storyboard.md xuất bản." },
+        { label: "Bước tiếp theo", text: "Chuyển sang 'Veo Prompt' để sinh bộ câu lệnh tạo video AI chuyển động." }
+      ]
+    },
+    veo: {
+      title: "5. Câu lệnh video AI (Veo Prompt Generator)",
+      sections: [
+        { label: "Mục đích", text: "Dựng câu lệnh sinh video AI độ phân giải cao tương thích Google Veo 2, Runway Gen-3 với đầy đủ framing, camera motion, lighting và negative prompt." },
+        { label: "Khi nào sử dụng", text: "Sau khi đã hoàn tất phân bổ storyboard scenes." },
+        { label: "Điều kiện tiên quyết", text: "Đã có Scene Plan hợp lệ." },
+        { label: "Đầu ra (Output)", text: "Danh sách shot video chi tiết, file veo_prompts.json và export markdown." },
+        { label: "Bước tiếp theo", text: "Sao chép prompt vào công cụ tạo video AI hoặc xuất bản gói dự án." }
+      ]
+    },
+    projects: {
+      title: "6. Lịch sử dự án & Quản lý an toàn (Project Manager)",
+      sections: [
+        { label: "Mục đích", text: "Duyệt danh sách các dự án sản xuất đã tạo, mở nghe lại audio và xóa vĩnh viễn các dự án không còn sử dụng." },
+        { label: "Khi nào sử dụng", text: "Khi muốn chuyển đổi qua lại giữa các dự án hoặc dọn dẹp dung lượng đĩa." },
+        { label: "Điều kiện tiên quyết", text: "Không có. Danh sách tự động quét thư mục projects/." },
+        { label: "Đầu ra (Output)", text: "Xem nhanh thông tin giọng đọc, số ký tự, thời lượng audio và nút xóa an toàn." },
+        { label: "Bước tiếp theo", text: "Bấm 'Mở dự án' để nạp toàn bộ dữ liệu vào workstation." }
+      ]
+    },
+    pronunciation: {
+      title: "7. Từ điển phát âm (Pronunciation Dictionary)",
+      sections: [
+        { label: "Mục đích", text: "Định nghĩa quy tắc thay thế cho từ viết tắt, thuật ngữ khoa học hoặc tên riêng tiếng nước ngoài (ví dụ: AI → ây ai, CPU → xi pi u)." },
+        { label: "Khi nào sử dụng", text: "Trước khi tạo giọng đọc để đảm bảo AI đọc chuẩn xác không vấp." },
+        { label: "Điều kiện tiên quyết", text: "Không có. Quy tắc được lưu trong từ điển toàn cục hệ thống." },
+        { label: "Đầu ra (Output)", text: "Kịch bản tự động được chuẩn hóa trước khi đưa vào Kokoro engine." },
+        { label: "Bước tiếp theo", text: "Bấm 'Nghe thử' để kiểm âm phát âm của từ vừa thêm." }
+      ]
+    },
+    voice: {
+      title: "8. Cấu hình Giọng đọc & Tốc độ (Voice Settings)",
+      sections: [
+        { label: "Mục đích", text: "Lựa chọn giọng đọc AI yêu thích và tinh chỉnh tốc độ đọc phù hợp với phong cách và nhịp điệu của video." },
+        { label: "Khi nào sử dụng", text: "Khi bắt đầu một kịch bản mới hoặc thử nghiệm các phong cách đọc khác nhau." },
+        { label: "Điều kiện tiên quyết", text: "Kokoro TTS Server đang chạy." },
+        { label: "Đầu ra (Output)", text: "Giọng đọc và tốc độ mong muốn được áp dụng cho bản thu âm tiếp theo." },
+        { label: "Bước tiếp theo", text: "Bấm 'Tạo giọng đọc' để bắt đầu kết xuất." }
+      ]
+    }
+  };
+
+  function showModuleHelp(moduleId) {
+    const data = MODULE_HELP_CONTENT[moduleId];
+    if (!data || !helpModal || !helpModalTitle || !helpModalBody) return;
+    lastFocusedElement = document.activeElement;
+    helpModalTitle.textContent = data.title;
+    helpModalBody.innerHTML = `
+      <div class="help-sections-list">
+        ${data.sections.map(s => `
+          <div class="help-section">
+            <div class="help-section-title">${escapeHtml(s.label)}</div>
+            <div class="help-section-content">${escapeHtml(s.text)}</div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+    helpModal.style.display = "flex";
+    helpModal.classList.add("open");
+    trapFocus(helpModal);
+  }
+  window.showModuleHelp = showModuleHelp;
+
+  function closeModuleHelp() {
+    if (helpModal) {
+      helpModal.style.display = "none";
+      helpModal.classList.remove("open");
+    }
+    releaseActiveFocus();
+    if (lastFocusedElement && typeof lastFocusedElement.focus === "function") {
+      lastFocusedElement.focus();
+    }
+  }
+  window.closeModuleHelp = closeModuleHelp;
+
+  if (helpModalCloseBtn) helpModalCloseBtn.addEventListener("click", closeModuleHelp);
+  if (helpModalActionBtn) helpModalActionBtn.addEventListener("click", closeModuleHelp);
+  if (helpModal) {
+    helpModal.addEventListener("click", (e) => {
+      if (e.target === helpModal) closeModuleHelp();
+    });
+  }
+
+  // Attach contextual help button listeners
+  document.querySelectorAll(".btn-module-help").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const mod = btn.dataset.module;
+      if (mod) showModuleHelp(mod);
+    });
+  });
+
+  // Guided Onboarding Tour System (12 Steps)
+  const TOUR_STEPS = [
+    {
+      step: 1,
+      targetId: "ws-script",
+      workspace: "script",
+      title: "1. Kịch bản lồng tiếng (Script Editor)",
+      description: "Nhập hoặc dán kịch bản lồng tiếng tại đây. Workstation tự động tính toán số ký tự, số từ và ước tính thời lượng audio (WPM) theo thời gian thực."
+    },
+    {
+      step: 2,
+      targetId: "voice-select",
+      workspace: "script",
+      title: "2. Cấu hình Giọng đọc & Tốc độ",
+      description: "Lựa chọn giọng đọc Kokoro AI chất lượng cao (ví dụ: af_heart, af_bella, am_adam...) và tinh chỉnh tốc độ phát âm phù hợp với phong cách video của bạn."
+    },
+    {
+      step: 3,
+      targetId: "btn-generate",
+      workspace: "script",
+      title: "3. Tạo giọng đọc AI (Kokoro TTS)",
+      description: "Bấm 'Tạo giọng đọc' để bắt đầu xử lý kịch bản theo từng chunk. Hệ thống hỗ trợ SSE streaming hiển thị tiến độ và tỉ lệ tái sử dụng bộ nhớ đệm (Cache reuse)."
+    },
+    {
+      step: 4,
+      targetId: "ws-audio",
+      workspace: "audio",
+      title: "4. Audio QA & Kiểm âm phòng thu",
+      description: "Theo dõi tiến độ kết xuất, nghe thử âm thanh chất lượng phòng thu với thanh Global Audio Transport ở đáy màn hình và xuất file WAV/MP3 chuẩn phát sóng."
+    },
+    {
+      step: 5,
+      targetId: "btn-generate-ts",
+      workspace: "timestamp",
+      title: "5. Tạo Timestamp (Whisper Alignment)",
+      description: "Sử dụng mô hình Whisper để căn chỉnh timestamp từng từ và từng câu (speech-to-text alignment), đảm bảo phụ đề khớp chính xác từng mili-giây với giọng đọc."
+    },
+    {
+      step: 6,
+      targetId: "ts-cues-list",
+      workspace: "timestamp",
+      title: "6. Phụ đề SRT & Timestamp QA",
+      description: "Xem danh sách cues phụ đề, bấm vào từng cue để nghe audio ngay tại vị trí đó, và tải về file phụ đề SRT hoặc dữ liệu mốc thời gian JSON chuẩn."
+    },
+    {
+      step: 7,
+      targetId: "ws-scenes",
+      workspace: "scenes",
+      title: "7. Visual Scene Planner (Storyboard)",
+      description: "Phân bổ kịch bản thành các cảnh quay ngắn có mục tiêu thị giác. Bạn có thể tìm kiếm, lọc theo thể loại, xem chi tiết và tinh chỉnh prompt ảnh."
+    },
+    {
+      step: 8,
+      targetId: "ws-veo",
+      workspace: "veo",
+      title: "8. Flow / Veo Prompt Generator",
+      description: "Sinh prompt tạo video AI tương thích Google Veo 2 / Runway Gen-3 với đầy đủ góc máy (framing), chuyển động camera, ánh sáng và negative prompt."
+    },
+    {
+      step: 9,
+      targetId: "ws-projects",
+      workspace: "projects",
+      title: "9. Dự án gần đây & Quản lý an toàn",
+      description: "Duyệt lại lịch sử các dự án sản xuất, mở dự án để nghe lại hoặc sử dụng nút Xóa an toàn kèm hộp thoại xác nhận bảo vệ để giải phóng dung lượng đĩa."
+    },
+    {
+      step: 10,
+      targetId: "ws-pronunciation",
+      workspace: "pronunciation",
+      title: "10. Từ điển phát âm (Pronunciation)",
+      description: "Chuẩn hóa các từ viết tắt, tên riêng nước ngoài hoặc thuật ngữ kỹ thuật trước khi tạo giọng đọc. Engine sẽ tự động thay thế trước khi tổng hợp giọng nói."
+    },
+    {
+      step: 11,
+      targetId: "workflow-stepper",
+      workspace: "script",
+      title: "11. Chuỗi phụ thuộc Pipeline",
+      description: "Thanh tiến trình thể hiện mối liên hệ: Kịch bản → Audio → Timestamp → Scene Plan → Veo Prompt. Khi bạn tạo lại Audio mới, các bước phía sau sẽ được cảnh báo 'Cần tạo lại'."
+    },
+    {
+      step: 12,
+      targetId: "top-app-bar",
+      workspace: "script",
+      title: "12. Hoàn thiện & Khởi đầu",
+      description: "Bạn đã nắm vững quy trình sản xuất! Bạn có thể xem lại hướng dẫn này bất kỳ lúc nào bằng nút '? Hướng dẫn' trên thanh tiêu đề. Chúc bạn tạo ra những video tuyệt vời!"
+    }
+  ];
+
+  function startTour(stepIndex = 0) {
+    currentTourIndex = stepIndex;
+    if (!tourOverlay) return;
+    tourOverlay.style.display = "block";
+    tourOverlay.classList.add("open");
+    renderTourStep(currentTourIndex);
+  }
+  window.startTour = startTour;
+
+  function closeTour() {
+    if (tourOverlay) {
+      tourOverlay.style.display = "none";
+      tourOverlay.classList.remove("open");
+    }
+    localStorage.setItem("unfoldiq_tour_completed", "true");
+  }
+  window.closeTour = closeTour;
+
+  function renderTourStep(index) {
+    if (index < 0 || index >= TOUR_STEPS.length) {
+      closeTour();
+      return;
+    }
+    const step = TOUR_STEPS[index];
+    if (step.workspace) {
+      switchWorkspace(step.workspace);
+    }
+
+    if (tourStepBadge) tourStepBadge.textContent = `Bước ${step.step} / ${TOUR_STEPS.length}`;
+    if (tourCardTitle) tourCardTitle.textContent = step.title;
+    if (tourCardBody) tourCardBody.textContent = step.description;
+
+    if (tourBtnPrev) {
+      tourBtnPrev.disabled = (index === 0);
+    }
+    if (tourBtnNext) {
+      tourBtnNext.textContent = (index === TOUR_STEPS.length - 1) ? "Hoàn tất" : "Tiếp tục";
+    }
+
+    setTimeout(() => {
+      const targetEl = document.getElementById(step.targetId);
+      if (targetEl && tourSpotlight && tourCard) {
+        const rect = targetEl.getBoundingClientRect();
+        const padding = 8;
+        tourSpotlight.style.display = "block";
+        tourSpotlight.style.top = `${Math.max(0, rect.top - padding + window.scrollY)}px`;
+        tourSpotlight.style.left = `${Math.max(0, rect.left - padding + window.scrollX)}px`;
+        tourSpotlight.style.width = `${rect.width + padding * 2}px`;
+        tourSpotlight.style.height = `${rect.height + padding * 2}px`;
+
+        const cardWidth = 360;
+        const cardHeight = 220;
+        let cardTop = rect.bottom + 14;
+        let cardLeft = rect.left;
+
+        if (cardTop + cardHeight > window.innerHeight) {
+          cardTop = Math.max(20, rect.top - cardHeight - 14);
+        }
+        if (cardLeft + cardWidth > window.innerWidth) {
+          cardLeft = Math.max(20, window.innerWidth - cardWidth - 20);
+        }
+        tourCard.style.top = `${cardTop}px`;
+        tourCard.style.left = `${cardLeft}px`;
+      } else if (tourCard) {
+        if (tourSpotlight) tourSpotlight.style.display = "none";
+        tourCard.style.top = "50%";
+        tourCard.style.left = "50%";
+        tourCard.style.transform = "translate(-50%, -50%)";
+      }
+    }, 120);
+  }
+
+  if (tourBtnPrev) {
+    tourBtnPrev.addEventListener("click", () => {
+      if (currentTourIndex > 0) {
+        currentTourIndex--;
+        renderTourStep(currentTourIndex);
+      }
+    });
+  }
+
+  if (tourBtnNext) {
+    tourBtnNext.addEventListener("click", () => {
+      if (currentTourIndex < TOUR_STEPS.length - 1) {
+        currentTourIndex++;
+        renderTourStep(currentTourIndex);
+      } else {
+        closeTour();
+      }
+    });
+  }
+
+  if (tourBtnSkip) {
+    tourBtnSkip.addEventListener("click", closeTour);
+  }
+
+  if (btnOpenTour) {
+    btnOpenTour.addEventListener("click", () => {
+      startTour(0);
+    });
+  }
+
+  // Tour keyboard controls
+  window.addEventListener("keydown", (e) => {
+    if (tourOverlay && tourOverlay.style.display !== "none") {
+      if (e.key === "Escape") {
+        closeTour();
+      } else if (e.key === "ArrowRight") {
+        if (currentTourIndex < TOUR_STEPS.length - 1) {
+          currentTourIndex++;
+          renderTourStep(currentTourIndex);
+        } else {
+          closeTour();
+        }
+      } else if (e.key === "ArrowLeft") {
+        if (currentTourIndex > 0) {
+          currentTourIndex--;
+          renderTourStep(currentTourIndex);
+        }
+      }
+    }
+  });
 
   // Universal fast copy helper with inline confirmation
   async function copyTextToClipboard(text, btnEl) {
@@ -357,6 +979,15 @@ document.addEventListener("DOMContentLoaded", () => {
       targetView.classList.add("active");
     }
 
+    // 3b. Update Workflow Stepper Item Active State
+    document.querySelectorAll(".stepper-item").forEach(step => {
+      if (step.dataset.workspace === targetId) {
+        step.classList.add("active");
+      } else {
+        step.classList.remove("active");
+      }
+    });
+
     // 4. Mount heavy rows on entering active scenes or veo workspace
     if (targetId === "scenes" && projectScenes.length > 0) {
       renderScenesList(projectScenes);
@@ -391,6 +1022,15 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".pipeline-nav .nav-item").forEach(btn => {
     btn.addEventListener("click", () => {
       switchWorkspace(btn.dataset.workspace);
+    });
+  });
+
+  // Attach Stepper Item Navigation Listeners
+  document.querySelectorAll(".stepper-item").forEach(step => {
+    step.addEventListener("click", () => {
+      if (step.dataset.workspace) {
+        switchWorkspace(step.dataset.workspace);
+      }
     });
   });
 
@@ -591,6 +1231,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const secs = totalSecs % 60;
       estDurationEl.textContent = `~${mins}ph ${secs}s dự kiến`;
     }
+    updateDependencyState();
   }
 
   scriptInput.addEventListener("input", () => {
@@ -753,10 +1394,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  btnGenerate.addEventListener("click", async () => {
+  async function doGenerateAudio() {
     const text = scriptInput.value.trim();
     if (!text) {
-      alert("Vui lòng nhập kịch bản trước khi tạo giọng đọc.");
+      showNotification("Vui lòng nhập kịch bản trước khi tạo giọng đọc.", "warning");
       return;
     }
 
@@ -807,7 +1448,30 @@ document.addEventListener("DOMContentLoaded", () => {
       setJobState("failed", err.message);
       btnGenerate.disabled = false;
       btnStop.disabled = true;
+      showNotification(`Lỗi tạo giọng đọc: ${err.message}`, "error");
     }
+  }
+
+  btnGenerate.addEventListener("click", () => {
+    const text = scriptInput.value.trim();
+    if (!text) {
+      showNotification("Vui lòng nhập kịch bản trước khi tạo giọng đọc.", "warning");
+      return;
+    }
+
+    const hasExistingAudio = Boolean(currentProjectDir && (audioPlayer.src || (finalDurationText && finalDurationText.textContent !== "--")));
+    if (hasExistingAudio) {
+      showConfirmDialog({
+        variant: "warning",
+        title: "Tạo lại giọng đọc audio?",
+        message: "Dự án đã có bản thu âm hiện tại. Tạo lại audio sẽ làm thay đổi độ dài và căn chỉnh, các bước Timestamp, Scene Plan và Veo Prompts phía sau sẽ cần được tạo lại. Bạn có chắc chắn muốn tiếp tục?",
+        confirmText: "Tạo lại audio",
+        cancelText: "Hủy",
+        onConfirm: () => doGenerateAudio()
+      });
+      return;
+    }
+    doGenerateAudio();
   });
 
   function listenToJobProgress(jobId) {
@@ -872,6 +1536,12 @@ document.addEventListener("DOMContentLoaded", () => {
       audioPlayer.src = `${job.audio_url}?t=${Date.now()}`;
       audioPlayer.play().catch(() => {});
 
+      // Invalidation: Audio regenerated -> downstream steps outdated!
+      if (projectCues && projectCues.length > 0) tsOutdated = true;
+      if (projectScenes && projectScenes.length > 0) scenesOutdated = true;
+      if (projectVeoShots && projectVeoShots.length > 0) veoOutdated = true;
+      updateDependencyState();
+
       loadProjects();
       loadTimestampsForProject(currentProjectDir);
       loadScenesForProject(currentProjectDir);
@@ -884,16 +1554,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  btnStop.addEventListener("click", async () => {
+  btnStop.addEventListener("click", () => {
     if (!currentJobId) return;
-    setJobState("cancelling");
-    btnStop.disabled = true;
-
-    try {
-      await fetch(`/api/jobs/${currentJobId}/cancel`, { method: "POST" });
-    } catch (err) {
-      console.error("Failed to cancel job:", err);
-    }
+    showConfirmDialog({
+      variant: "warning",
+      title: "Dừng tiến trình tạo audio?",
+      message: "Bạn có chắc chắn muốn dừng tiến trình kết xuất giọng đọc đang chạy? Các phần âm thanh chưa hoàn thành sẽ bị hủy.",
+      confirmText: "Dừng tiến trình",
+      cancelText: "Tiếp tục chạy",
+      onConfirm: async () => {
+        setJobState("cancelling");
+        btnStop.disabled = true;
+        try {
+          await fetch(`/api/jobs/${currentJobId}/cancel`, { method: "POST" });
+        } catch (err) {
+          console.error("Failed to cancel job:", err);
+          showNotification(`Lỗi dừng tiến trình: ${err.message}`, "error");
+        }
+      }
+    });
   });
 
   async function triggerExport(format) {
@@ -914,7 +1593,7 @@ document.addEventListener("DOMContentLoaded", () => {
         downloadLink.remove();
       }
     } catch (err) {
-      alert(`Xuất file thất bại: ${err.message}`);
+      showNotification(`Xuất file thất bại: ${err.message}`, "error");
     }
   }
 
@@ -1080,7 +1759,7 @@ document.addEventListener("DOMContentLoaded", () => {
       pronAudioPlayer.src = URL.createObjectURL(blob);
       pronAudioPlayer.play().catch(() => {});
     } catch (err) {
-      alert(`Lỗi nghe thử: ${err.message}`);
+      showNotification(`Lỗi nghe thử: ${err.message}`, "error");
     }
   }
 
@@ -1111,14 +1790,25 @@ document.addEventListener("DOMContentLoaded", () => {
     pronOrigInput.focus();
   };
 
-  window.deletePronEntry = async function(entryId) {
-    if (!confirm("Xóa cách đọc này?")) return;
-    try {
-      await fetch(`/api/pronunciations/${entryId}`, { method: "DELETE" });
-      loadPronunciations();
-    } catch (e) {
-      alert(`Xóa thất bại: ${e.message}`);
-    }
+  window.deletePronEntry = function(entryId) {
+    const entry = dictionaryEntries.find(e => e.id === entryId);
+    const orig = entry ? `"${entry.original}"` : "cách đọc này";
+    showConfirmDialog({
+      variant: "default",
+      title: "Xóa quy tắc phát âm?",
+      message: `Bạn có chắc chắn muốn xóa quy tắc phát âm cho ${orig} khỏi từ điển hệ thống?`,
+      confirmText: "Xóa quy tắc",
+      cancelText: "Hủy",
+      onConfirm: async () => {
+        try {
+          await fetch(`/api/pronunciations/${entryId}`, { method: "DELETE" });
+          showNotification("Đã xóa quy tắc phát âm thành công.", "success");
+          loadPronunciations();
+        } catch (e) {
+          showNotification(`Xóa thất bại: ${e.message}`, "error");
+        }
+      }
+    });
   };
 
   // ==============================================================================
@@ -1206,6 +1896,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (s.status === "Ready" || s.status === "Failed" || s.status === "Cancelled") {
           clearInterval(tsPollInterval);
           tsPollInterval = null;
+          if (s.status === "Ready") {
+            tsOutdated = false;
+            if (projectScenes && projectScenes.length > 0) scenesOutdated = true;
+            if (projectVeoShots && projectVeoShots.length > 0) veoOutdated = true;
+            updateDependencyState();
+          }
           loadTimestampsForProject(dirName);
           loadScenesForProject(dirName);
         }
@@ -1221,6 +1917,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!res.ok) return;
       const data = await res.json();
       const sentences = data.sentences || [];
+      projectCues = sentences;
+      updateDependencyState();
       tsPreviewCount.textContent = `${sentences.length} đoạn`;
 
       if (sentences.length === 0) {
@@ -1258,7 +1956,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  btnGenerateTs.addEventListener("click", async () => {
+  async function doGenerateTimestamps() {
     if (!currentProjectDir) return;
     btnGenerateTs.disabled = true;
     tsErrorAlert.style.display = "none";
@@ -1275,16 +1973,44 @@ document.addEventListener("DOMContentLoaded", () => {
       tsErrorAlert.style.display = "flex";
       tsErrorText.textContent = err.message;
       btnGenerateTs.disabled = false;
+      showNotification(`Lỗi tạo timestamp: ${err.message}`, "error");
     }
+  }
+
+  btnGenerateTs.addEventListener("click", () => {
+    if (!currentProjectDir) return;
+    if (projectCues && projectCues.length > 0) {
+      showConfirmDialog({
+        variant: "warning",
+        title: "Tạo lại Timestamp (Aligner)?",
+        message: "Dự án đã có dữ liệu mốc thời gian phụ đề. Tạo lại timestamp sẽ ghi đè các mốc thời gian hiện tại, các bước Scene Plan và Veo Prompts phía sau sẽ cần được tạo lại để đồng bộ. Tiếp tục?",
+        confirmText: "Tạo lại Timestamp",
+        cancelText: "Hủy",
+        onConfirm: () => doGenerateTimestamps()
+      });
+      return;
+    }
+    doGenerateTimestamps();
   });
 
-  btnCancelTs.addEventListener("click", async () => {
+  btnCancelTs.addEventListener("click", () => {
     if (!currentProjectDir) return;
-    try {
-      await fetch(`/api/projects/${currentProjectDir}/timestamps/cancel`, { method: "POST" });
-    } catch (err) {
-      console.error("Failed to cancel timestamping:", err);
-    }
+    showConfirmDialog({
+      variant: "warning",
+      title: "Hủy tiến trình tạo Timestamp?",
+      message: "Bạn có chắc chắn muốn dừng tiến trình căn chỉnh phụ đề Whisper đang chạy?",
+      confirmText: "Dừng tiến trình",
+      cancelText: "Tiếp tục",
+      onConfirm: async () => {
+        try {
+          await fetch(`/api/projects/${currentProjectDir}/timestamps/cancel`, { method: "POST" });
+          showNotification("Đã yêu cầu hủy tiến trình timestamp.", "info");
+        } catch (err) {
+          console.error("Failed to cancel timestamping:", err);
+          showNotification(`Lỗi hủy timestamp: ${err.message}`, "error");
+        }
+      }
+    });
   });
 
   btnDownloadSrt.addEventListener("click", () => {
@@ -1419,11 +2145,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
       row.innerHTML = `
         <div class="row-meta">
-          <span class="sp-scene-num row-id">Scene ${sc.index}</span>
-          <span class="sp-scene-time row-time">${sFmt} &rarr; ${eFmt}</span>
-          <span class="cat-badge">${escapeHtml(sc.category || 'reconstruction')}</span>
+          <div class="row-meta-left">
+            <span class="sp-scene-num row-id">Scene ${sc.index}</span>
+            <span class="sp-scene-time row-time">${sFmt} &rarr; ${eFmt}</span>
+            <span class="scene-dur-badge">${sc.duration}s</span>
+          </div>
+          <div class="row-meta-right">
+            <span class="cat-badge">${escapeHtml(sc.category || 'reconstruction')}</span>
+          </div>
         </div>
         <div class="row-preview">${escapeHtml(preview)}</div>
+        ${preview.length > 80 ? `<button type="button" class="btn-toggle-expand" aria-label="Xem thêm hoặc thu gọn">Xem thêm</button>` : ''}
       `;
       frag.appendChild(row);
     });
@@ -1521,6 +2253,18 @@ document.addEventListener("DOMContentLoaded", () => {
   // Row selection in Scene List
   if (spRowsContainer) {
     spRowsContainer.addEventListener("click", (e) => {
+      const expandBtn = e.target.closest(".btn-toggle-expand");
+      if (expandBtn) {
+        e.stopPropagation();
+        const row = expandBtn.closest(".compact-row");
+        const preview = row ? row.querySelector(".row-preview") : null;
+        if (preview) {
+          preview.classList.toggle("expanded");
+          expandBtn.textContent = preview.classList.contains("expanded") ? "Thu gọn" : "Xem thêm";
+        }
+        return;
+      }
+
       const row = e.target.closest(".compact-row");
       if (!row) return;
       const sceneId = row.dataset.sceneId;
@@ -1641,7 +2385,7 @@ document.addEventListener("DOMContentLoaded", () => {
         closeEditSceneModal();
         await loadScenesForProject(currentProjectDir);
       } catch (err) {
-        alert(`Lỗi lưu: ${err.message}`);
+        showNotification(`Lỗi lưu: ${err.message}`, "error");
       } finally {
         spModalSaveBtn.disabled = false;
         spModalSaveBtn.textContent = "Lưu thay đổi";
@@ -1649,16 +2393,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  btnGenerateScenes.addEventListener("click", async () => {
+  async function doGenerateScenes() {
     if (!currentProjectDir) return;
-    if (projectScenes.length > 0) {
-      const hasEdits = projectScenes.some(s => s.status === "edited");
-      const msg = hasEdits
-        ? "Tạo lại Scene Plan?\n\nBạn đã chỉnh sửa Scene thủ công. Phiên bản hiện tại sẽ được lưu archive trước khi tạo lại.\n\nBạn có muốn tiếp tục?"
-        : "Tạo lại Scene Plan?\n\nBản hiện tại sẽ được thay thế (bản sao lưu tự động sẽ được giữ lại). Tiếp tục?";
-      if (!confirm(msg)) return;
-    }
-
     btnGenerateScenes.disabled = true;
     if (spErrorAlert) spErrorAlert.style.display = "none";
     setSpStatus("generating", "Đang tạo");
@@ -1673,6 +2409,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const err = await res.json();
         throw new Error(err.detail || "Không thể tạo Scene Plan.");
       }
+      scenesOutdated = false;
+      if (projectVeoShots && projectVeoShots.length > 0) veoOutdated = true;
+      updateDependencyState();
       await loadScenesForProject(currentProjectDir);
     } catch (err) {
       if (spErrorAlert) {
@@ -1680,9 +2419,30 @@ document.addEventListener("DOMContentLoaded", () => {
         spErrorText.textContent = err.message;
       }
       setSpStatus("failed", "Thất bại");
+      showNotification(`Lỗi tạo Scene Plan: ${err.message}`, "error");
     } finally {
       btnGenerateScenes.disabled = false;
     }
+  }
+
+  btnGenerateScenes.addEventListener("click", () => {
+    if (!currentProjectDir) return;
+    if (projectScenes.length > 0) {
+      const hasEdits = projectScenes.some(s => s.status === "edited");
+      const msg = hasEdits
+        ? "Bạn đã chỉnh sửa Scene thủ công. Phiên bản hiện tại sẽ được lưu trữ (archive) trước khi tạo lại. Bạn có chắc chắn muốn tiếp tục?"
+        : "Scene Plan hiện tại sẽ được thay thế (bản sao lưu tự động sẽ được giữ lại). Bước Veo Prompts phía sau sẽ cần tạo lại. Tiếp tục?";
+      showConfirmDialog({
+        variant: "warning",
+        title: "Tạo lại Scene Plan?",
+        message: msg,
+        confirmText: "Tạo lại Scene Plan",
+        cancelText: "Hủy",
+        onConfirm: () => doGenerateScenes()
+      });
+      return;
+    }
+    doGenerateScenes();
   });
 
   btnRefreshScenes.addEventListener("click", () => {
@@ -1822,11 +2582,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
       row.innerHTML = `
         <div class="row-meta">
-          <span class="veo-shot-num row-id">Shot ${sh.index}</span>
-          <span class="veo-shot-time row-time">${sFmt} &rarr; ${eFmt}</span>
-          <span class="tone-tag">${escapeHtml(sh.tone || 'neutral')}</span>
+          <div class="row-meta-left">
+            <span class="veo-shot-num row-id">Shot ${sh.index}</span>
+            <span class="veo-shot-time row-time">${sFmt} &rarr; ${eFmt}</span>
+            <span class="shot-dur-badge">${sh.duration ? `${sh.duration}s` : '--'}</span>
+          </div>
+          <div class="row-meta-right">
+            <span class="tone-tag">${escapeHtml(sh.tone || 'neutral')}</span>
+          </div>
         </div>
         <div class="row-preview">${escapeHtml(preview)}</div>
+        ${preview.length > 80 ? `<button type="button" class="btn-toggle-expand" aria-label="Xem thêm hoặc thu gọn">Xem thêm</button>` : ''}
       `;
       frag.appendChild(row);
     });
@@ -1942,6 +2708,18 @@ document.addEventListener("DOMContentLoaded", () => {
   // Row Selection in Veo Shot List
   if (veoRowsContainer) {
     veoRowsContainer.addEventListener("click", (e) => {
+      const expandBtn = e.target.closest(".btn-toggle-expand");
+      if (expandBtn) {
+        e.stopPropagation();
+        const row = expandBtn.closest(".compact-row");
+        const preview = row ? row.querySelector(".row-preview") : null;
+        if (preview) {
+          preview.classList.toggle("expanded");
+          expandBtn.textContent = preview.classList.contains("expanded") ? "Thu gọn" : "Xem thêm";
+        }
+        return;
+      }
+
       const row = e.target.closest(".compact-row");
       if (!row) return;
       const shotId = row.dataset.shotId;
@@ -2084,7 +2862,7 @@ document.addEventListener("DOMContentLoaded", () => {
         closeEditVeoModal();
         await loadVeoForProject(currentProjectDir);
       } catch (err) {
-        alert(`Lỗi lưu: ${err.message}`);
+        showNotification(`Lỗi lưu: ${err.message}`, "error");
       } finally {
         veoModalSaveBtn.disabled = false;
         veoModalSaveBtn.textContent = "Lưu thay đổi";
@@ -2092,16 +2870,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  btnGenerateVeo.addEventListener("click", async () => {
+  async function doGenerateVeo() {
     if (!currentProjectDir) return;
-    if (projectVeoShots.length > 0) {
-      const hasEdits = projectVeoShots.some(s => s.status === "edited");
-      const msg = hasEdits
-        ? "Tạo lại Veo Prompt?\n\nBạn đã chỉnh sửa Prompt thủ công. Phiên bản hiện tại sẽ được lưu archive trước khi tạo lại.\n\nBạn có muốn tiếp tục?"
-        : "Tạo lại Veo Prompt?\n\nBản hiện tại sẽ được thay thế (bản sao lưu tự động sẽ được giữ lại). Tiếp tục?";
-      if (!confirm(msg)) return;
-    }
-
     btnGenerateVeo.disabled = true;
     if (veoErrorAlert) veoErrorAlert.style.display = "none";
     setVeoStatus("generating", "Đang tạo");
@@ -2116,6 +2886,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const err = await res.json();
         throw new Error(err.detail || "Không thể tạo Veo Prompt.");
       }
+      veoOutdated = false;
+      updateDependencyState();
       await loadVeoForProject(currentProjectDir);
     } catch (err) {
       if (veoErrorAlert) {
@@ -2123,9 +2895,30 @@ document.addEventListener("DOMContentLoaded", () => {
         veoErrorText.textContent = err.message;
       }
       setVeoStatus("failed", "Thất bại");
+      showNotification(`Lỗi tạo Veo Prompt: ${err.message}`, "error");
     } finally {
       btnGenerateVeo.disabled = false;
     }
+  }
+
+  btnGenerateVeo.addEventListener("click", () => {
+    if (!currentProjectDir) return;
+    if (projectVeoShots.length > 0) {
+      const hasEdits = projectVeoShots.some(s => s.status === "edited");
+      const msg = hasEdits
+        ? "Bạn đã chỉnh sửa Prompt thủ công. Phiên bản hiện tại sẽ được lưu trữ (archive) trước khi tạo lại. Bạn có chắc chắn muốn tiếp tục?"
+        : "Veo Prompt hiện tại sẽ được thay thế (bản sao lưu tự động sẽ được giữ lại). Tiếp tục?";
+      showConfirmDialog({
+        variant: "warning",
+        title: "Tạo lại Veo Prompt?",
+        message: msg,
+        confirmText: "Tạo lại Veo Prompt",
+        cancelText: "Hủy",
+        onConfirm: () => doGenerateVeo()
+      });
+      return;
+    }
+    doGenerateVeo();
   });
 
   btnRefreshVeo.addEventListener("click", () => {
@@ -2143,7 +2936,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // ==============================================================================
   // 12. PROJECTS BROWSER & AUDITION
   // ==============================================================================
-  async function loadProjects() {
+  let projectsDeleteListenerAttached = false;
+
+  async function loadProjects(autoSelect = false) {
     try {
       const res = await fetch("/api/projects");
       const data = await res.json();
@@ -2159,8 +2954,12 @@ document.addEventListener("DOMContentLoaded", () => {
               <span class="project-details">${escapeHtml(p.voice)} &bull; ${p.character_count} ký tự &bull; ${dur}</span>
             </div>
             <div class="project-actions">
-              <button class="btn btn-secondary btn-sm" onclick="loadPreviewAudio('${p.directory_name}', ${p.duration_seconds || 0})">
+              <button class="btn btn-secondary btn-sm" onclick="loadPreviewAudio('${escapeHtml(p.directory_name)}', ${p.duration_seconds || 0})">
                 <span>Mở dự án</span>
+              </button>
+              <button class="btn btn-project-delete" data-dir="${escapeHtml(p.directory_name)}" data-name="${escapeHtml(p.project_name || p.directory_name)}" title="Xóa dự án vĩnh viễn" aria-label="Xóa dự án ${escapeHtml(p.project_name || p.directory_name)}">
+                <svg class="ui-icon"><use href="#icon-trash"></use></svg>
+                <span>Xóa</span>
               </button>
             </div>
           `;
@@ -2169,15 +2968,59 @@ document.addEventListener("DOMContentLoaded", () => {
         projectsList.innerHTML = "";
         projectsList.appendChild(frag);
 
-        if (!currentProjectDir && data.projects.length > 0) {
+        if (autoSelect && !currentProjectDir && data.projects.length > 0) {
           loadPreviewAudio(data.projects[0].directory_name, data.projects[0].duration_seconds || 0, false);
         }
       } else {
-        projectsList.innerHTML = `<p class="empty-state">Chưa có dự án nào trong hệ thống.</p>`;
+        projectsList.innerHTML = `<p class="empty-state">Chưa có dự án nào trong hệ thống. Hãy nhập kịch bản và bấm "Tạo giọng đọc" để bắt đầu.</p>`;
       }
     } catch (err) {
       console.error("Failed to list projects:", err);
     }
+  }
+
+  if (projectsList && !projectsDeleteListenerAttached) {
+    projectsDeleteListenerAttached = true;
+    projectsList.addEventListener("click", (e) => {
+      const delBtn = e.target.closest(".btn-project-delete");
+      if (!delBtn) return;
+      e.stopPropagation();
+      const dirName = delBtn.dataset.dir;
+      const projName = delBtn.dataset.name || dirName;
+
+      showConfirmDialog({
+        variant: "danger",
+        title: "Xóa vĩnh viễn dự án?",
+        message: `Bạn có chắc chắn muốn xóa thư mục dự án "${projName}" (${dirName})? Hành động này sẽ xóa toàn bộ audio, timestamp, storyboard scene plan và veo prompts và KHÔNG THỂ KHÔI PHỤC.`,
+        confirmText: "Xóa vĩnh viễn",
+        cancelText: "Hủy",
+        onConfirm: async () => {
+          try {
+            const res = await fetch(`/api/projects/${encodeURIComponent(dirName)}`, {
+              method: "DELETE"
+            });
+            if (res.status === 409) {
+              const err = await res.json().catch(() => ({}));
+              showNotification(err.detail || "Không thể xóa: Dự án đang có tiến trình xử lý ngầm.", "error");
+              return;
+            }
+            if (!res.ok) {
+              const err = await res.json().catch(() => ({}));
+              showNotification(err.detail || "Xóa dự án thất bại.", "error");
+              return;
+            }
+            showNotification(`Đã xóa dự án "${projName}" thành công.`, "success");
+            if (currentProjectDir === dirName) {
+              resetWorkstationToCleanState();
+            }
+            await loadProjects();
+          } catch (err) {
+            console.error("Delete project error:", err);
+            showNotification(`Lỗi khi xóa dự án: ${err.message}`, "error");
+          }
+        }
+      });
+    });
   }
 
   window.loadPreviewAudio = function(dirName, duration, autoPlay = true) {
@@ -2196,6 +3039,11 @@ document.addEventListener("DOMContentLoaded", () => {
     btnExportWav.disabled = false;
     btnExportMp3.disabled = false;
 
+    tsOutdated = false;
+    scenesOutdated = false;
+    veoOutdated = false;
+    updateDependencyState();
+
     loadTimestampsForProject(dirName);
     loadScenesForProject(dirName);
     loadVeoForProject(dirName);
@@ -2204,26 +3052,21 @@ document.addEventListener("DOMContentLoaded", () => {
   btnRefreshHistory.addEventListener("click", loadProjects);
 
   // ==============================================================================
-  // 13. UTILITIES
-  // ==============================================================================
-  function escapeHtml(str) {
-    if (!str) return "";
-    return str
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-  }
-
-  // ==============================================================================
   // 14. INITIALIZATION
   // ==============================================================================
   checkHealth();
   loadVoicesAndSettings();
   loadPronunciations();
-  loadProjects();
+  loadProjects(true);
   updateTextStats();
   updateSlugPreview();
+  updateDependencyState();
   setInterval(checkHealth, 15000);
+
+  // Auto-launch onboarding tour for first-time users
+  if (!localStorage.getItem("unfoldiq_tour_completed")) {
+    setTimeout(() => {
+      startTour(0);
+    }, 1200);
+  }
 });
