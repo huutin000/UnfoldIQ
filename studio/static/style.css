@@ -2073,50 +2073,87 @@ body.workstation-app {
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
-  padding: 0.45rem 0.85rem;
-  margin-bottom: 0.85rem;
+  padding: 0.65rem 1.1rem;
+  margin-bottom: 1.1rem;
+  min-height: 52px;
+  box-sizing: border-box;
   overflow-x: auto;
-  gap: 0.5rem;
+  overflow-y: hidden !important;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+  gap: 0.75rem;
+}
+
+.workflow-stepper::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
 }
 
 .stepper-item {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.3rem 0.65rem;
-  border-radius: var(--radius-sm);
+  gap: 0.55rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
   cursor: pointer;
-  transition: background var(--transition-fast), color var(--transition-fast);
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--text-muted);
+  transition: all var(--transition-fast);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
   white-space: nowrap;
   user-select: none;
+  flex-shrink: 0;
 }
 
 .stepper-item:hover {
   background: var(--bg-hover);
   color: var(--text-primary);
+  border-color: var(--border-subtle);
 }
 
 .stepper-item.active {
-  color: var(--accent);
+  color: #ffffff;
   font-weight: 700;
-  background: rgba(99, 102, 241, 0.12);
+  background: rgba(99, 102, 241, 0.15);
+  border-color: rgba(99, 102, 241, 0.4);
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.15);
 }
 
 .stepper-item .step-num {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   font-weight: 700;
-  opacity: 0.75;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.stepper-item.active .step-num {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.stepper-item .step-label {
+  letter-spacing: -0.01em;
 }
 
 .stepper-arrow {
   color: var(--text-muted);
-  font-size: 0.75rem;
-  opacity: 0.4;
+  font-size: 0.9rem;
+  opacity: 0.45;
   user-select: none;
+  flex-shrink: 0;
+}
+
+.stepper-item .step-status-icon {
+  font-size: 0.82rem;
+  margin-left: 0.15rem;
 }
 
 .stepper-item .step-status-icon.status-complete {
