@@ -1,0 +1,33 @@
+{
+  "kokoro_base_url": "http://127.0.0.1:8880",
+  "studio_host": "127.0.0.1",
+  "studio_port": 7860,
+  "chunk_target_chars": 400,
+  "chunk_max_chars": 480,
+  "default_voice": "af_heart",
+  "default_speed": 1.0,
+  "ffmpeg_path": "C:\\Users\\huuti\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Gyan.FFmpeg.Essentials_Microsoft.Winget.Source_8wekyb3d8bbwe\\ffmpeg-8.1.1-essentials_build\\bin\\ffmpeg.exe",
+  "ffprobe_path": "C:\\Users\\huuti\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Gyan.FFmpeg.Essentials_Microsoft.Winget.Source_8wekyb3d8bbwe\\ffmpeg-8.1.1-essentials_build\\bin\\ffprobe.exe",
+  "transcription": {
+    "enabled": true,
+    "engine": "faster-whisper",
+    "model_path": "models/whisper/small.en",
+    "device": "cuda",
+    "compute_type": "int8_float16",
+    "language": "en",
+    "word_timestamps": true
+  },
+  "scene_planner": {
+    "target_duration_seconds": 6.0,
+    "min_duration_seconds": 3.0,
+    "max_duration_seconds": 10.0,
+    "default_aspect_ratio": "16:9",
+    "default_preset": "unfoldiq_documentary"
+  },
+  "veo_prompt_generator": {
+    "target_shot_duration_seconds": 6.0,
+    "preferred_max_shot_duration_seconds": 8.0,
+    "minimum_shot_duration_seconds": 3.0,
+    "default_aspect_ratio": "16:9"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "baseline_before_nodes": 11704,
+  "after_scenes_nodes": 3120,
+  "after_veo_nodes": 2257,
+  "after_inactive_nodes": 3120,
+  "scenes_count": 144,
+  "shots_count": 242,
+  "dom_reduction_scenes_pct": 73.3,
+  "dom_reduction_veo_pct": 80.7,
+  "dom_reduction_inactive_pct": 73.3,
+  "avg_scene_selection_latency_ms": 3.33,
+  "avg_shot_selection_latency_ms": 7.4,
+  "switching_heap_delta_mb": -1.25,
+  "wcag_contrast": {
+    "ratioMuted": "6.06",
+    "ratioSecondary": "8.71",
+    "ratioPrimary": "17.39",
+    "ratioAccent": "8.83"
+  },
+  "zoom_200_overflow": false
+}
