@@ -50,12 +50,115 @@ def compute_file_sha256(filepath: Path) -> str:
     return h.hexdigest()
 
 
+_ONES_MAP = {
+    0: "zero", 1: "one", 2: "two", 3: "three", 4: "four", 5: "five",
+    6: "six", 7: "seven", 8: "eight", 9: "nine", 10: "ten",
+    11: "eleven", 12: "twelve", 13: "thirteen", 14: "fourteen", 15: "fifteen",
+    16: "sixteen", 17: "seventeen", 18: "eighteen", 19: "nineteen"
+}
+_TENS_MAP = {
+    20: "twenty", 30: "thirty", 40: "forty", 50: "fifty",
+    60: "sixty", 70: "seventy", 80: "eighty", 90: "ninety"
+}
+
+
+def _init_builtin_equivalences() -> Dict[str, Set[str]]:
+    """Builds a high-precision equivalence dictionary for spoken vs transcribed representations."""
+    equiv_map: Dict[str, Set[str]] = {}
+
+    def add_group(items):
+        clean_items = {re.sub(r"\s+", " ", str(x).lower().strip()) for x in items if x is not None and str(x).strip()}
+        for item in clean_items:
+            if item not in equiv_map:
+                equiv_map[item] = set()
+            equiv_map[item].update(clean_items)
+
+    # 1. Numbers 0 to 99 (digits, space-words, hyphen-words, concatenated)
+    for i in range(100):
+        digits = str(i)
+        if i < 20:
+            words = [_ONES_MAP[i]]
+        else:
+            t = (i // 10) * 10
+            o = i % 10
+            w_space = _TENS_MAP[t] + (" " + _ONES_MAP[o] if o else "")
+            w_hyphen = _TENS_MAP[t] + ("-" + _ONES_MAP[o] if o else "")
+            w_concat = _TENS_MAP[t] + (_ONES_MAP[o] if o else "")
+            words = [w_space, w_hyphen, w_concat]
+        add_group([digits] + words)
+
+    # 2. Round numbers, scales, and ordinals
+    for h in range(1, 10):
+        h_word = _ONES_MAP[h]
+        add_group([
+            f"{h}00",
+            f"{h_word} hundred",
+            "hundred" if h == 1 else None,
+            f",{h}00",
+            f"{h}00."
+        ])
+
+    add_group(["1000", "1,000", "thousand", "one thousand", ",000", "000", "1k"])
+    for k in [2, 3, 4, 5, 10, 20, 50, 100, 200, 300, 400, 500]:
+        k_word = _ONES_MAP.get(k) or _TENS_MAP.get(k) or f"{k}"
+        add_group([
+            f"{k}000",
+            f"{k},000",
+            f"{k_word} thousand",
+            f"{k}k"
+        ])
+    add_group(["1000000", "1,000,000", "million", "one million", "1m"])
+
+    # Vietnamese number words
+    add_group(["0", "không"])
+    add_group(["1", "một", "mốt", "nhất"])
+    add_group(["2", "hai", "nhì"])
+    add_group(["3", "ba", "tam"])
+    add_group(["4", "bốn", "tư"])
+    add_group(["5", "năm", "lăm"])
+    add_group(["6", "sáu"])
+    add_group(["7", "bảy"])
+    add_group(["8", "tám"])
+    add_group(["9", "chín"])
+    add_group(["10", "mười"])
+    add_group(["20", "hai mươi", "hai chục"])
+    add_group(["50", "năm mươi", "năm chục"])
+    add_group(["100", "trăm", "một trăm"])
+    add_group(["1000", "nghìn", "ngàn", "một nghìn", "một ngàn"])
+    add_group(["1000000", "triệu", "một triệu"])
+
+    # 3. Spoken Symbols & Currencies
+    add_group(["%", "percent", "percentage", "pct", "phần trăm"])
+    add_group(["$", "dollar", "dollars", "usd", "đô", "đô la"])
+    add_group(["€", "euro", "euros"])
+    add_group(["£", "pound", "pounds"])
+    add_group(["&", "and", "và"])
+    add_group(["+", "plus", "cộng"])
+    add_group(["=", "equals", "equal", "bằng"])
+    add_group(["@", "at"])
+    add_group(["°", "degree", "degrees", "độ"])
+    add_group(["vs", "versus", "vs."])
+    add_group(["etc", "et cetera", "vân vân"])
+    add_group(["ok", "okay"])
+
+    # 4. Common phonetic variants / lemma matches
+    add_group(["remain", "remained"])
+    add_group(["clever", "cleverer"])
+    add_group(["warmth", "warms"])
+
+    return equiv_map
+
+
+BUILTIN_EQUIVALENCES = _init_builtin_equivalences()
+
+
 def normalize_for_matching(text: str) -> str:
     """
-    Deterministic text normalization consistent with Phase 4 aligner:
+    Deterministic text normalization:
     - Unicode NFKC normalization
     - Lowercase
     - Straighten curly quotes and apostrophes
+    - Expand common spoken symbols (%, $, &, +, @)
     - Strip punctuation except contraction apostrophes
     - Collapse whitespace
     """
@@ -63,9 +166,180 @@ def normalize_for_matching(text: str) -> str:
         return ""
     text = unicodedata.normalize("NFKC", text).lower()
     text = text.replace("’", "'").replace("‘", "'").replace("“", '"').replace("”", '"')
+    text = re.sub(r"%", " percent ", text)
+    text = re.sub(r"&", " and ", text)
+    text = re.sub(r"\$", " dollar ", text)
+    text = re.sub(r"€", " euro ", text)
+    text = re.sub(r"£", " pound ", text)
+    text = re.sub(r"\+", " plus ", text)
+    text = re.sub(r"@", " at ", text)
+
     text = re.sub(r"(?<!\w)'|'(?!\w)", " ", text)
     cleaned = re.sub(r"[^\w\s']", " ", text)
     return re.sub(r"\s+", " ", cleaned).strip()
+
+
+def are_tokens_equivalent(
+    e: str,
+    a: str,
+    custom_equiv: Optional[Dict[str, Set[str]]] = None
+) -> bool:
+    """
+    Determines whether expected text and ASR transcribed text represent the same acoustic words.
+    Handles numeric equivalences, symbol expansions, de-hyphenation, and custom pronunciation dict.
+    """
+    if not e or not a:
+        return False
+    if e == a:
+        return True
+
+    # 1. Custom pronunciation dictionary equivalences
+    if custom_equiv:
+        if e in custom_equiv and a in custom_equiv[e]:
+            return True
+        if a in custom_equiv and e in custom_equiv[a]:
+            return True
+
+    # 2. De-hyphenated / compound collapse (e.g. "re-examined" vs "reexamined", "well-known" vs "wellknown")
+    e_compact = e.replace(" ", "").replace("-", "").replace("'", "")
+    a_compact = a.replace(" ", "").replace("-", "").replace("'", "")
+    if e_compact and e_compact == a_compact:
+        return True
+
+    # 3. Built-in Acoustic, Numeric and Symbol Equivalences
+    if e in BUILTIN_EQUIVALENCES and a in BUILTIN_EQUIVALENCES[e]:
+        return True
+    if a in BUILTIN_EQUIVALENCES and e in BUILTIN_EQUIVALENCES[a]:
+        return True
+    if e_compact in BUILTIN_EQUIVALENCES and a_compact in BUILTIN_EQUIVALENCES[e_compact]:
+        return True
+
+    # 4. Leading / trailing hyphen or compound suffix match (e.g. "-gatherer" vs "hunter-gatherer")
+    e_sub = e.lstrip("-").strip()
+    a_sub = a.lstrip("-").strip()
+    if e_sub and a_sub:
+        if e_sub == a_sub:
+            return True
+        if len(a_sub) >= 4 and (e_sub.endswith("-" + a_sub) or e_sub.endswith(" " + a_sub) or e_sub.endswith(a_sub)):
+            return True
+        if len(e_sub) >= 4 and (a_sub.endswith("-" + e_sub) or a_sub.endswith(" " + e_sub) or a_sub.endswith(e_sub)):
+            return True
+
+    return False
+
+
+def word_to_digit_char(w: str) -> str:
+    """Convert number word to digit string or return clean alphanumeric token."""
+    w_clean = re.sub(r"[^\w]", "", w.lower())
+    for d, word in _ONES_MAP.items():
+        if w_clean == word:
+            return str(d)
+    for d, word in _TENS_MAP.items():
+        if w_clean == word:
+            return str(d)
+    if w_clean in BUILTIN_EQUIVALENCES:
+        for item in BUILTIN_EQUIVALENCES[w_clean]:
+            if item.isdigit():
+                return item
+    return w_clean
+
+
+def check_phrase_equivalence(
+    exp_tokens: List[str],
+    det_token: str,
+    equivalences: Optional[Dict[str, Set[str]]] = None
+) -> bool:
+    """
+    Checks if a sequence of expected tokens is acoustically/numerically equivalent
+    to a single detected token (e.g. ['O', 'H', 'seven'] vs 'OH7', ['four', 'hundred'] vs '400',
+    ['thousand', 'seven', 'hundred'] vs ',700').
+    """
+    if not exp_tokens or not det_token:
+        return False
+    det_norm = normalize_for_matching(det_token)
+    exp_joined = normalize_for_matching(" ".join(exp_tokens))
+
+    # 1. Direct joined equivalence
+    if are_tokens_equivalent(exp_joined, det_norm, equivalences):
+        return True
+
+    # 2. Acronym / alphanumeric concatenation
+    digits_code = "".join(word_to_digit_char(t) for t in exp_tokens)
+    det_compact = re.sub(r"[^\w]", "", det_norm)
+    if digits_code and digits_code == det_compact:
+        return True
+
+    raw_compact = "".join(re.sub(r"[^\w]", "", t.lower()) for t in exp_tokens)
+    if raw_compact and raw_compact == det_compact:
+        return True
+
+    # 3. Sub-slice check for compound scales (e.g. ['thousand', 'seven', 'hundred'] -> '700' / ',700')
+    for start_idx in range(len(exp_tokens)):
+        sub_joined = normalize_for_matching(" ".join(exp_tokens[start_idx:]))
+        if are_tokens_equivalent(sub_joined, det_norm, equivalences):
+            return True
+        sub_digits = "".join(word_to_digit_char(t) for t in exp_tokens[start_idx:])
+        if sub_digits and sub_digits == det_compact:
+            return True
+
+    return False
+
+
+def coalesce_alignment_operations(
+    operations: List[Dict[str, Any]],
+    equivalences: Optional[Dict[str, Set[str]]] = None
+) -> List[Dict[str, Any]]:
+    """
+    Coalesces multi-token deletion + substitution sequences into verified matches
+    when the spoken tokens match the transcribed compound, number, or acronym.
+    """
+    if not operations:
+        return []
+
+    new_ops: List[Dict[str, Any]] = []
+    i = 0
+    n = len(operations)
+
+    while i < n:
+        if operations[i]["op"] == "deletion":
+            del_start = i
+            while i < n and operations[i]["op"] == "deletion":
+                i += 1
+
+            if i < n and operations[i]["op"] == "substitution":
+                sub_op = operations[i]
+                del_ops = operations[del_start:i]
+
+                exp_words = [d["expected"] for d in del_ops] + [sub_op["expected"]]
+                det_word = sub_op.get("detected") or ""
+
+                if check_phrase_equivalence(exp_words, det_word, equivalences):
+                    asr_idx = sub_op.get("asr_idx")
+                    for d in del_ops:
+                        d_copy = dict(d)
+                        d_copy["op"] = "match"
+                        d_copy["asr_idx"] = asr_idx
+                        d_copy["detected"] = det_word
+                        new_ops.append(d_copy)
+
+                    sub_copy = dict(sub_op)
+                    sub_copy["op"] = "match"
+                    new_ops.append(sub_copy)
+                    i += 1
+                    continue
+                else:
+                    new_ops.extend(del_ops)
+                    new_ops.append(sub_op)
+                    i += 1
+                    continue
+            else:
+                new_ops.extend(operations[del_start:i])
+                continue
+        else:
+            new_ops.append(operations[i])
+            i += 1
+
+    return new_ops
 
 
 def compute_issue_fingerprint(
@@ -119,14 +393,7 @@ def align_tokens_dp(
     def tokens_match(exp_idx: int, asr_idx: int) -> bool:
         e = norm_exp[exp_idx]
         a = norm_asr[asr_idx]
-        if not e or not a:
-            return False
-        if e == a:
-            return True
-        # Check pronunciation overrides equivalence
-        if e in equivalences and a in equivalences[e]:
-            return True
-        return False
+        return are_tokens_equivalent(e, a, equivalences)
 
     for i in range(1, n + 1):
         for j in range(1, m + 1):
@@ -321,6 +588,25 @@ class VoiceQAEvaluator:
         exp_tokens = [w["word"] for w in ref_words]
         asr_tokens = [w["word"] for w in asr_words]
         operations, metrics = align_tokens_dp(exp_tokens, asr_tokens, equivalences)
+        operations = coalesce_alignment_operations(operations, equivalences)
+
+        # Re-tally match metrics from coalesced operations
+        matched = sum(1 for op in operations if op["op"] == "match")
+        substitutions = sum(1 for op in operations if op["op"] == "substitution")
+        deletions = sum(1 for op in operations if op["op"] == "deletion")
+        insertions = sum(1 for op in operations if op["op"] == "insertion")
+        n_ref = max(1, len(ref_words))
+        wer = round((substitutions + deletions + insertions) / n_ref, 4)
+        match_rate = round((matched / n_ref) * 100.0, 2)
+        metrics = {
+            "wer": wer,
+            "wer_pct": round(wer * 100.0, 2),
+            "match_rate": match_rate,
+            "matched_words": matched,
+            "substitutions": substitutions,
+            "deletions": deletions,
+            "insertions": insertions
+        }
 
         # 5. Detect Issues
         issues: List[Dict[str, Any]] = []
@@ -601,6 +887,9 @@ class VoiceQAEvaluator:
             is_proper_noun = bool(exp_word and (exp_word[0].isupper() or normalize_for_matching(exp_word) in equivalences))
 
             if op_type == "substitution":
+                if are_tokens_equivalent(normalize_for_matching(exp_word), normalize_for_matching(det_word), equivalences):
+                    continue
+
                 # Check if it's a known proper noun or scientific term
                 if is_proper_noun or conf < self.settings["low_confidence_threshold"]:
                     reason = "Possible pronunciation / ASR mismatch" if is_proper_noun else f"Substituted word (low confidence: {conf:.2f})"
