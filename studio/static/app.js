@@ -1207,6 +1207,14 @@ document.addEventListener("DOMContentLoaded", () => {
     return `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
   }
 
+  function formatQATime(seconds, precision = 2) {
+    if (isNaN(seconds) || seconds == null || seconds < 0) return precision === 1 ? "00:00.0" : "00:00.00";
+    const m = Math.floor(seconds / 60);
+    const s = Math.floor(seconds % 60);
+    const frac = Math.floor((seconds % 1) * Math.pow(10, precision));
+    return `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}.${frac.toString().padStart(precision, "0")}`;
+  }
+
   function updateAudioTransportState() {
     if (!audioPlayer) return;
     const isPlaying = !audioPlayer.paused && !audioPlayer.ended && audioPlayer.readyState > 2;
@@ -2087,8 +2095,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const badgeClass = issue.severity === "fail" ? "qa-badge-fail" : "qa-badge-review";
       const startSec = (issue.start_time !== undefined) ? Number(issue.start_time) : (Number(issue.start_seconds) || 0);
       const endSec = (issue.end_time !== undefined) ? Number(issue.end_time) : (Number(issue.end_seconds) || startSec);
-      const startFmt = formatTime(startSec);
-      const endFmt = formatTime(endSec);
+      const isShort = (endSec - startSec) < 2.0 || Math.floor(startSec) === Math.floor(endSec);
+      const startFmt = isShort ? formatQATime(startSec, 1) : formatTime(startSec);
+      const endFmt = isShort ? formatQATime(endSec, 1) : formatTime(endSec);
 
       return `
         <div class="qa-issue-item ${isSelected ? 'active' : ''}" data-fingerprint="${escapeHtml(issue.fingerprint)}">
@@ -2145,8 +2154,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const isResolved = issue.resolution && issue.resolution !== "unresolved";
     const startSec = (issue.start_time !== undefined) ? Number(issue.start_time) : (Number(issue.start_seconds) || 0);
     const endSec = (issue.end_time !== undefined) ? Number(issue.end_time) : (Number(issue.end_seconds) || Math.max(startSec + 0.5, startSec));
-    const startFmt = formatTime(startSec);
-    const endFmt = formatTime(endSec);
+    const isShort = (endSec - startSec) < 2.0 || Math.floor(startSec) === Math.floor(endSec);
+    const startFmt = isShort ? formatQATime(startSec, 2) : formatTime(startSec);
+    const endFmt = isShort ? formatQATime(endSec, 2) : formatTime(endSec);
 
     qaSelectedDetail.innerHTML = `
       <div class="qa-detail-view">
