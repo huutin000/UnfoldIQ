@@ -162,7 +162,12 @@ def delete_project(directory_name: str) -> bool:
     """
     Safely delete a project directory from the projects root.
     Strictly verifies directory traversal and ensures canonical path is inside PROJECTS_DIR.
+    Handles Windows file locks, read-only attributes, and transient file handle delays.
     """
+    import gc
+    import stat
+    import time
+
     if not directory_name or not isinstance(directory_name, str) or not directory_name.strip():
         raise ValueError("Project directory name is required.")
 
@@ -179,6 +184,31 @@ def delete_project(directory_name: str) -> bool:
     if target_dir.parent != canonical_root:
         raise ValueError("Invalid project directory: Target is outside the projects root.")
 
-    shutil.rmtree(target_dir)
+    def _remove_readonly(func, path, exc_info):
+        try:
+            os.chmod(path, stat.S_IWRITE)
+            func(path)
+        except Exception:
+            pass
+
+    # Flush garbage collection to release any lingering file descriptors
+    gc.collect()
+
+    last_err = None
+    for attempt in range(3):
+        try:
+            shutil.rmtree(target_dir, onerror=_remove_readonly)
+            return True
+        except Exception as err:
+            last_err = err
+            gc.collect()
+            time.sleep(0.15)
+
+    if target_dir.exists():
+        if last_err:
+            raise last_err
+        raise RuntimeError(f"Could not remove project directory '{clean_name}'.")
+
     return True
+
 

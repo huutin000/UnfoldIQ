@@ -3768,18 +3768,20 @@ document.addEventListener("DOMContentLoaded", () => {
           const item = document.createElement("div");
           item.className = "project-item";
           const dur = p.duration_seconds ? `${p.duration_seconds} giây` : "--";
+          const safeDir = escapeHtml(p.directory_name);
+          const safeName = escapeHtml(p.project_name || p.directory_name);
           item.innerHTML = `
             <div class="project-info">
-              <span class="project-title">${escapeHtml(p.project_name)}</span>
+              <span class="project-title">${safeName}</span>
               <span class="project-details">${escapeHtml(p.voice)} &bull; ${p.character_count} ký tự &bull; ${dur}</span>
             </div>
             <div class="project-actions">
-              <button class="btn btn-secondary btn-sm" onclick="loadPreviewAudio('${escapeHtml(p.directory_name)}', ${p.duration_seconds || 0})">
+              <button class="btn btn-secondary btn-sm" onclick="loadPreviewAudio('${safeDir}', ${p.duration_seconds || 0})">
                 <span>Mở dự án</span>
               </button>
-              <button class="btn btn-project-delete" data-dir="${escapeHtml(p.directory_name)}" data-name="${escapeHtml(p.project_name || p.directory_name)}" title="Xóa dự án vĩnh viễn" aria-label="Xóa dự án ${escapeHtml(p.project_name || p.directory_name)}">
-                <svg class="ui-icon"><use href="#icon-trash"></use></svg>
-                <span>Xóa</span>
+              <button class="btn btn-project-delete" data-dir="${safeDir}" data-name="${safeName}" onclick="confirmDeleteProject('${safeDir}', '${safeName}', event)" title="Xóa dự án vĩnh viễn" aria-label="Xóa dự án ${safeName}">
+                <svg class="ui-icon" style="pointer-events: none;"><use href="#icon-trash"></use></svg>
+                <span style="pointer-events: none;">Xóa</span>
               </button>
             </div>
           `;
@@ -3799,6 +3801,59 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  function confirmDeleteProject(dirName, projName, event) {
+    if (event) {
+      event.stopPropagation();
+      event.preventDefault();
+    }
+    const cleanDir = dirName || "";
+    const cleanName = projName || cleanDir;
+    if (!cleanDir) return;
+
+    showConfirmDialog({
+      variant: "danger",
+      title: "Xóa vĩnh viễn dự án?",
+      message: `Bạn có chắc chắn muốn xóa thư mục dự án "${cleanName}" (${cleanDir})? Hành động này sẽ xóa toàn bộ audio, timestamp, storyboard scene plan và veo prompts và KHÔNG THỂ KHÔI PHỤC.`,
+      confirmText: "Xóa vĩnh viễn",
+      cancelText: "Hủy",
+      onConfirm: async () => {
+        try {
+          // If this project's audio is currently loaded in player, release it first so Windows doesn't lock the file
+          if (currentProjectDir === cleanDir && audioPlayer) {
+            try {
+              audioPlayer.pause();
+              audioPlayer.removeAttribute("src");
+              audioPlayer.load();
+            } catch (_) {}
+          }
+
+          const res = await fetch(`/api/projects/${encodeURIComponent(cleanDir)}`, {
+            method: "DELETE"
+          });
+          if (res.status === 409) {
+            const err = await res.json().catch(() => ({}));
+            showNotification(err.detail || "Không thể xóa: Dự án đang có tiến trình xử lý ngầm.", "error");
+            return;
+          }
+          if (!res.ok) {
+            const err = await res.json().catch(() => ({}));
+            showNotification(err.detail || "Xóa dự án thất bại.", "error");
+            return;
+          }
+          showNotification(`Đã xóa dự án "${cleanName}" thành công.`, "success");
+          if (currentProjectDir === cleanDir) {
+            resetWorkstationToCleanState();
+          }
+          await loadProjects();
+        } catch (err) {
+          console.error("Delete project error:", err);
+          showNotification(`Lỗi khi xóa dự án: ${err.message}`, "error");
+        }
+      }
+    });
+  }
+  window.confirmDeleteProject = confirmDeleteProject;
+
   if (projectsList && !projectsDeleteListenerAttached) {
     projectsDeleteListenerAttached = true;
     projectsList.addEventListener("click", (e) => {
@@ -3807,39 +3862,7 @@ document.addEventListener("DOMContentLoaded", () => {
       e.stopPropagation();
       const dirName = delBtn.dataset.dir;
       const projName = delBtn.dataset.name || dirName;
-
-      showConfirmDialog({
-        variant: "danger",
-        title: "Xóa vĩnh viễn dự án?",
-        message: `Bạn có chắc chắn muốn xóa thư mục dự án "${projName}" (${dirName})? Hành động này sẽ xóa toàn bộ audio, timestamp, storyboard scene plan và veo prompts và KHÔNG THỂ KHÔI PHỤC.`,
-        confirmText: "Xóa vĩnh viễn",
-        cancelText: "Hủy",
-        onConfirm: async () => {
-          try {
-            const res = await fetch(`/api/projects/${encodeURIComponent(dirName)}`, {
-              method: "DELETE"
-            });
-            if (res.status === 409) {
-              const err = await res.json().catch(() => ({}));
-              showNotification(err.detail || "Không thể xóa: Dự án đang có tiến trình xử lý ngầm.", "error");
-              return;
-            }
-            if (!res.ok) {
-              const err = await res.json().catch(() => ({}));
-              showNotification(err.detail || "Xóa dự án thất bại.", "error");
-              return;
-            }
-            showNotification(`Đã xóa dự án "${projName}" thành công.`, "success");
-            if (currentProjectDir === dirName) {
-              resetWorkstationToCleanState();
-            }
-            await loadProjects();
-          } catch (err) {
-            console.error("Delete project error:", err);
-            showNotification(`Lỗi khi xóa dự án: ${err.message}`, "error");
-          }
-        }
-      });
+      confirmDeleteProject(dirName, projName, e);
     });
   }
 
