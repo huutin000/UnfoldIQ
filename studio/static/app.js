@@ -1082,6 +1082,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // 4. Mount heavy rows on entering active scenes or veo workspace, or load voice QA
     if (targetId === "voice-qa" && currentProjectDir) {
       loadVoiceQA(currentProjectDir);
+    } else if (targetId === "timestamp" && currentProjectDir) {
+      loadTimestampsForProject(currentProjectDir);
     } else if (targetId === "scenes" && projectScenes.length > 0) {
       renderScenesList(projectScenes);
       if (spRowsContainer && spScrollTop > 0) {
@@ -2555,7 +2557,13 @@ document.addEventListener("DOMContentLoaded", () => {
       if (status.model) tsModelBadge.textContent = status.model;
       if (status.device) tsDeviceBadge.textContent = status.device.toUpperCase();
 
-      if (status.status === "Ready") {
+      const rawState = (status.state || "").toLowerCase();
+      const rawStatus = (status.status || "").toLowerCase();
+      const isProcessing = rawStatus === "processing" ||
+        ["preparing", "loading_model", "transcribing", "aligning", "writing", "processing"].includes(rawState) ||
+        ["preparing", "loading_model", "transcribing", "aligning", "writing"].includes(rawStatus);
+
+      if (status.status === "Ready" || (!isProcessing && rawState === "completed")) {
         setTsStatus("ready", "Sẵn sàng");
         btnGenerateTs.disabled = false;
         btnCancelTs.style.display = "none";
@@ -2567,13 +2575,17 @@ document.addEventListener("DOMContentLoaded", () => {
         if (covVal != null) tsCoverageBadge.textContent = `${Number(covVal).toFixed(1)}%`;
         if (status.total_sentences != null) tsCuesBadge.textContent = `${status.total_sentences}`;
         loadCuesList(dirName);
-      } else if (status.status === "Processing") {
+      } else if (isProcessing) {
         setTsStatus("processing", "Đang xử lý");
         btnGenerateTs.disabled = true;
         btnCancelTs.style.display = "inline-flex";
         btnDownloadSrt.disabled = true;
         btnDownloadTsJson.disabled = true;
         tsProgressContainer.style.display = "flex";
+        const pct = (status.progress != null) ? status.progress : ((status.percent != null) ? status.percent : 0);
+        tsProgressFill.style.width = `${pct}%`;
+        tsProgressPct.textContent = `${pct}%`;
+        if (status.message) tsProgressMsg.textContent = status.message;
         pollTimestampStatus(dirName);
       } else {
         setTsStatus("idle", "Chưa tạo");
@@ -2596,21 +2608,27 @@ document.addEventListener("DOMContentLoaded", () => {
         const res = await fetch(`/api/projects/${dirName}/timestamps/status`);
         if (!res.ok) return;
         const s = await res.json();
-        if (s.progress != null) {
-          tsProgressFill.style.width = `${s.progress}%`;
-          tsProgressPct.textContent = `${s.progress}%`;
-        }
+        const pct = (s.progress != null) ? s.progress : ((s.percent != null) ? s.percent : 0);
+        tsProgressFill.style.width = `${pct}%`;
+        tsProgressPct.textContent = `${pct}%`;
         if (s.message) tsProgressMsg.textContent = s.message;
         if (s.elapsed_seconds != null) tsProgressElapsed.textContent = `Đã chạy: ${s.elapsed_seconds}s`;
 
-        if (s.status === "Ready" || s.status === "Failed" || s.status === "Cancelled") {
+        const rawState = (s.state || "").toLowerCase();
+        const rawStatus = (s.status || "").toLowerCase();
+        const isFinished = s.status === "Ready" || rawState === "completed" || s.status === "Failed" || rawState === "failed" || s.status === "Cancelled" || rawState === "cancelled";
+
+        if (isFinished) {
           clearInterval(tsPollInterval);
           tsPollInterval = null;
-          if (s.status === "Ready") {
+          if (s.status === "Ready" || rawState === "completed") {
             tsOutdated = false;
             if (projectScenes && projectScenes.length > 0) scenesOutdated = true;
             if (projectVeoShots && projectVeoShots.length > 0) veoOutdated = true;
             updateDependencyState();
+            showNotification("Tạo Timestamp thành công!", "success");
+          } else if (s.status === "Failed" || rawState === "failed") {
+            showNotification(`Lỗi tạo Timestamp: ${s.error || s.message || "Thất bại"}`, "error");
           }
           loadTimestampsForProject(dirName);
           loadScenesForProject(dirName);
@@ -2670,6 +2688,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!currentProjectDir) return;
     btnGenerateTs.disabled = true;
     tsErrorAlert.style.display = "none";
+    setTsStatus("processing", "Đang xử lý");
+    btnCancelTs.style.display = "inline-flex";
+    tsProgressContainer.style.display = "flex";
+    tsProgressFill.style.width = "0%";
+    tsProgressPct.textContent = "0%";
+    tsProgressMsg.textContent = "Đang khởi động Whisper Aligner...";
+    showNotification("Bắt đầu phân tích và tạo Timestamp...", "info");
+
     try {
       const res = await fetch(`/api/projects/${currentProjectDir}/timestamps/generate`, {
         method: "POST",
@@ -2680,11 +2706,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const err = await res.json();
         throw new Error(err.detail || "Không thể khởi động aligner.");
       }
-      loadTimestampsForProject(currentProjectDir);
+      pollTimestampStatus(currentProjectDir);
     } catch (err) {
       tsErrorAlert.style.display = "flex";
       tsErrorText.textContent = err.message;
       btnGenerateTs.disabled = false;
+      btnCancelTs.style.display = "none";
+      tsProgressContainer.style.display = "none";
+      setTsStatus("idle", "Lỗi tạo");
       showNotification(`Lỗi tạo timestamp: ${err.message}`, "error");
     }
   }

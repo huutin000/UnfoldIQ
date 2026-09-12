@@ -1339,11 +1339,22 @@ async def generate_project_timestamps(dir_name: str, req: Optional[TimestampGene
 async def get_project_timestamps_status(dir_name: str):
     """Check current transcription/timestamp status, progress, and staleness."""
     status = transcription_service.check_project_timestamps_status(dir_name)
-    if "state" in status and "status" not in status:
-        state_map = {"completed": "Ready", "processing": "Processing", "stale": "Stale", "idle": "Not Generated"}
+    active_states = ("preparing", "loading_model", "transcribing", "aligning", "writing", "processing")
+    raw_state = status.get("state", "").lower()
+
+    if raw_state in active_states:
+        status["status"] = "Processing"
+    elif "state" in status and "status" not in status:
+        state_map = {"completed": "Ready", "stale": "Stale", "idle": "Not Generated"}
         status["status"] = state_map.get(status["state"], status["state"].capitalize())
     elif "status" in status and "state" not in status:
         status["state"] = status["status"].lower()
+
+    if "percent" in status and "progress" not in status:
+        status["progress"] = status["percent"]
+    if "progress" in status and "percent" not in status:
+        status["percent"] = status["progress"]
+
     if "coverage_pct" in status and "coverage" not in status:
         status["coverage"] = status["coverage_pct"]
     elif "coverage" in status and "coverage_pct" not in status:
