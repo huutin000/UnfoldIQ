@@ -2192,37 +2192,178 @@ body.workstation-app {
 }
 
 /* ==========================================================================
-   8. RESPONSIVE BREAKPOINTS
+   8. RESPONSIVE BREAKPOINTS & ADAPTIVE WORKSTATION
    ========================================================================== */
-@media (max-width: 1439px) {
+
+/* Drawer Backdrop for Mobile & Tablet */
+.drawer-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  z-index: 14;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-normal);
+}
+
+.drawer-backdrop.active {
+  display: block !important;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* --------------------------------------------------------------------------
+   8a. LAPTOP VIEWPORTS (1200px – 1439px) — 1366x768, 1280x800, 1440x900, 1080p 125%
+   Maintain 3-column workstation in grid flow so all action buttons stay visible.
+   -------------------------------------------------------------------------- */
+@media (min-width: 1200px) and (max-width: 1439px) {
   .workstation-body {
-    grid-template-columns: 210px 1fr 0px;
+    grid-template-columns: 185px 1fr 295px;
+  }
+  .pipeline-sidebar {
+    padding: 0.75rem 0.5rem;
+  }
+  .nav-item {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.5rem;
+    gap: 0.45rem;
+  }
+  .sidebar-section-title {
+    font-size: 0.64rem;
+    padding: 0.25rem 0.4rem 0.4rem;
   }
   .workspace-inspector {
-    position: fixed;
-    right: 0;
-    top: 50px;
-    bottom: 58px;
-    width: 320px;
-    z-index: 15;
-    box-shadow: -8px 0 24px rgba(0, 0, 0, 0.4);
-    transform: translateX(100%);
-    transition: transform var(--transition-normal);
+    position: static;
+    width: auto;
+    transform: none !important;
+    box-shadow: none;
+    border-left: 1px solid var(--border-subtle);
+    padding: 0.85rem;
   }
-  .workspace-inspector.open {
-    transform: translateX(0);
+  .inspector-body {
+    padding: 0;
+    gap: 0.75rem;
+  }
+  .inspector-meta-card {
+    padding: 0.65rem;
+  }
+  .workflow-stepper {
+    padding: 0.5rem 0.75rem;
+    gap: 0.45rem;
+    margin-bottom: 0.85rem;
+    min-height: 48px;
+  }
+  .stepper-item {
+    padding: 0.35rem 0.6rem;
+    font-size: 0.82rem;
+    gap: 0.45rem;
+  }
+  .stepper-item .step-num {
+    width: 20px;
+    height: 20px;
+    font-size: 0.72rem;
+  }
+  .stepper-arrow {
+    font-size: 0.78rem;
+  }
+  .workspace-view {
+    padding: 1rem 1.15rem;
+    gap: 0.85rem;
+  }
+  .qa-metrics-grid {
+    gap: 0.75rem;
+  }
+  .qa-metric-card {
+    padding: 0.85rem 0.95rem;
+  }
+  .qa-metric-card .metric-big-val {
+    font-size: 1.35rem;
   }
 }
 
-@media (max-width: 1024px) {
+/* --------------------------------------------------------------------------
+   8b. SMALL DESKTOP / LARGE TABLET (992px – 1199px)
+   Sidebar adapts to smart icon rail (60px), keeping workspace spacious & inspector in flow.
+   -------------------------------------------------------------------------- */
+@media (min-width: 992px) and (max-width: 1199px) {
   .workstation-body {
-    grid-template-columns: 0px 1fr 0px;
+    grid-template-columns: 64px 1fr 280px;
   }
-  /* Fixed drawers leave the grid flow: pin the main pane to the 1fr track
-     explicitly, otherwise auto-placement collapses it into the 0px track. */
+  .pipeline-sidebar {
+    padding: 0.75rem 0.35rem;
+    align-items: center;
+  }
+  .sidebar-section-title,
+  .sidebar-divider,
+  .sidebar-footer,
+  .nav-step-num,
+  .nav-label,
+  .nav-status-badge {
+    display: none;
+  }
+  .nav-item {
+    justify-content: center;
+    padding: 0.6rem 0;
+    width: 46px;
+    height: 46px;
+    border-radius: var(--radius-md);
+  }
+  .nav-icon {
+    margin: 0;
+  }
+  .nav-icon .ui-icon {
+    width: 18px;
+    height: 18px;
+  }
+  .workspace-inspector {
+    position: static;
+    width: auto;
+    transform: none !important;
+    box-shadow: none;
+    border-left: 1px solid var(--border-subtle);
+    padding: 0.85rem;
+  }
+  .inspector-body {
+    gap: 0.75rem;
+  }
+  .workflow-stepper {
+    gap: 0.35rem;
+    padding: 0.45rem 0.6rem;
+    margin-bottom: 0.75rem;
+  }
+  .stepper-arrow {
+    display: none;
+  }
+  .stepper-item {
+    padding: 0.3rem 0.55rem;
+    font-size: 0.8rem;
+  }
+  .qa-workbench-container,
+  .master-detail-container {
+    grid-template-columns: minmax(280px, 1fr) minmax(320px, 1.2fr);
+    gap: 0.85rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   8c. TABLETS & NARROW SCREENS (< 992px)
+   Sidebar & Inspector become smooth slide-out drawers with backdrop overlay.
+   Center workspace gets full width.
+   -------------------------------------------------------------------------- */
+@media (max-width: 991px) {
+  .workstation-body {
+    grid-template-columns: 1fr;
+    position: relative;
+  }
   .workspace-main {
-    grid-column: 2;
+    grid-column: 1;
     grid-row: 1;
+    width: 100%;
     min-width: 0;
   }
   .pipeline-sidebar {
@@ -2230,28 +2371,83 @@ body.workstation-app {
     left: 0;
     top: 50px;
     bottom: 58px;
-    width: 220px;
+    width: 250px;
+    max-width: 80vw;
     z-index: 15;
-    box-shadow: 8px 0 24px rgba(0, 0, 0, 0.4);
+    background-color: var(--bg-sidebar);
+    box-shadow: 8px 0 28px rgba(0, 0, 0, 0.5);
     transform: translateX(-100%);
     transition: transform var(--transition-normal);
   }
   .pipeline-sidebar.open {
     transform: translateX(0);
   }
+  .workspace-inspector {
+    position: fixed;
+    right: 0;
+    top: 50px;
+    bottom: 58px;
+    width: 320px;
+    max-width: 85vw;
+    z-index: 15;
+    background-color: var(--bg-sidebar);
+    box-shadow: -8px 0 28px rgba(0, 0, 0, 0.5);
+    transform: translateX(100%);
+    transition: transform var(--transition-normal);
+  }
+  .workspace-inspector.open {
+    transform: translateX(0);
+  }
+  .workflow-stepper {
+    overflow-x: auto;
+    padding: 0.5rem 0.75rem;
+    gap: 0.4rem;
+    scrollbar-width: thin;
+    margin-bottom: 0.85rem;
+  }
+  .stepper-arrow {
+    display: none;
+  }
+  .qa-workbench-container,
+  .master-detail-container {
+    grid-template-columns: 1fr;
+    height: auto;
+    overflow-y: visible;
+  }
+  .master-list-pane {
+    max-height: 400px;
+  }
+  .qa-issues-pane {
+    max-height: 400px;
+  }
 }
 
 /* --------------------------------------------------------------------------
-   8b. TABLET (<=768px) — stack multi-column shared layouts.
-   Desktop/Laptop rendering above these breakpoints is untouched.
+   8d. TABLET PORTRAIT (< 768px) — Stack multi-column elements cleanly.
    -------------------------------------------------------------------------- */
 @media (max-width: 768px) {
   .workspace-view {
-    padding: 1rem 0.85rem;
+    padding: 0.85rem 0.75rem;
+    gap: 0.85rem;
   }
   .ws-header {
     flex-wrap: wrap;
+    align-items: flex-start;
     gap: 0.6rem;
+  }
+  .ws-status-group {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  .qa-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.65rem;
+  }
+  .qa-metric-card {
+    padding: 0.75rem 0.85rem;
+  }
+  .qa-metric-card .metric-big-val {
+    font-size: 1.25rem;
   }
   .preview-details-grid,
   .veo-action-details,
@@ -2265,38 +2461,61 @@ body.workstation-app {
   }
   .modal-footer {
     flex-wrap: wrap;
+    gap: 0.6rem;
   }
-  .workflow-stepper {
-    padding: 0.55rem 0.75rem;
-    gap: 0.5rem;
+  .modal-card {
+    max-width: 95vw;
+    width: 95vw;
+    max-height: 88vh;
+  }
+  .script-counters {
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .counter-box {
+    flex: 1 1 calc(50% - 0.4rem);
+    min-width: 120px;
+    padding: 0.45rem 0.65rem;
   }
 }
 
 /* --------------------------------------------------------------------------
-   8c. MOBILE (<=560px) — compact header / player bar, no page overflow.
+   8e. MOBILE DEVICES (< 576px) — Compact header, player, and dialogs.
    -------------------------------------------------------------------------- */
-@media (max-width: 560px) {
+@media (max-width: 576px) {
   .app-header {
-    padding: 0 0.6rem;
+    padding: 0 0.5rem;
+    height: 48px;
+    min-height: 48px;
   }
   .header-left {
-    gap: 0.5rem;
+    gap: 0.4rem;
     min-width: 0;
     flex: 1 1 auto;
   }
   .header-right {
-    gap: 0.4rem;
+    gap: 0.25rem;
     flex-shrink: 0;
   }
   .brand-subtitle,
   .header-project-indicator .indicator-label,
-  #btn-open-tour span {
+  #btn-open-tour span,
+  #service-status-text {
     display: none;
   }
   .brand-title {
+    font-size: 0.88rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+  .brand-badge {
+    width: 24px;
+    height: 24px;
+  }
+  .brand-badge .ui-icon {
+    width: 14px;
+    height: 14px;
   }
   .header-project-indicator {
     display: none;
@@ -2310,24 +2529,49 @@ body.workstation-app {
   .status-indicator {
     white-space: nowrap;
   }
-  #service-status-text {
-    display: none;
-  }
   #btn-toggle-sidebar,
   .header-right .btn-icon-ghost,
   .header-right .btn-help-guide {
     flex-shrink: 0;
   }
+
+  /* Stepper on Mobile */
+  .workflow-stepper {
+    padding: 0.4rem 0.5rem;
+    gap: 0.35rem;
+    margin-bottom: 0.75rem;
+    min-height: 44px;
+  }
+  .stepper-item {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.78rem;
+    gap: 0.35rem;
+  }
+  .stepper-item .step-num {
+    width: 18px;
+    height: 18px;
+    font-size: 0.7rem;
+  }
+
+  /* Metrics Grid on Mobile */
+  .qa-metrics-grid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  /* Bottom Audio Player on Mobile */
   .app-player-bar {
-    padding: 0 0.6rem;
-    gap: 0.6rem;
+    padding: 0.4rem 0.6rem;
+    gap: 0.4rem;
+    height: auto;
+    min-height: 54px;
   }
   .player-left,
   .player-right {
     min-width: 0;
   }
   .volume-slider {
-    width: 48px;
+    width: 44px;
   }
   .player-context-tag {
     display: none;
@@ -2337,16 +2581,17 @@ body.workstation-app {
     gap: 0.6rem 1.25rem;
   }
   .workspace-view {
-    padding: 0.85rem 0.6rem;
+    padding: 0.75rem 0.5rem;
   }
   .tour-card {
     padding: 1rem;
   }
   .modal-card {
-    width: calc(100vw - 24px);
+    width: calc(100vw - 16px);
+    max-height: 90vh;
   }
   .modal-body {
-    padding: 1rem;
+    padding: 0.85rem;
   }
   .btn,
   .btn-icon-ghost {

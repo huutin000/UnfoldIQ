@@ -1105,11 +1105,32 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Close mobile drawers on switch
-    if (window.innerWidth <= 1024 && pipelineSidebar) {
-      pipelineSidebar.classList.remove("open");
+    if (window.innerWidth < 992) {
+      closeAllDrawers();
     }
   }
   window.switchWorkspace = switchWorkspace;
+
+  const drawerBackdrop = document.getElementById("drawer-backdrop");
+
+  function closeAllDrawers() {
+    if (pipelineSidebar) pipelineSidebar.classList.remove("open");
+    if (workspaceInspector) workspaceInspector.classList.remove("open");
+    if (btnToggleSidebar) btnToggleSidebar.classList.remove("active");
+    if (btnToggleInspector) btnToggleInspector.classList.remove("active");
+    if (drawerBackdrop) drawerBackdrop.classList.remove("active");
+  }
+
+  function syncDrawerBackdrop() {
+    if (!drawerBackdrop) return;
+    const isAnyDrawerOpen = (pipelineSidebar && pipelineSidebar.classList.contains("open")) ||
+                            (workspaceInspector && workspaceInspector.classList.contains("open"));
+    if (isAnyDrawerOpen && window.innerWidth < 992) {
+      drawerBackdrop.classList.add("active");
+    } else {
+      drawerBackdrop.classList.remove("active");
+    }
+  }
 
   // Attach Navigation Listeners
   document.querySelectorAll(".pipeline-nav .nav-item").forEach(btn => {
@@ -1139,15 +1160,42 @@ document.addEventListener("DOMContentLoaded", () => {
   if (btnToggleSidebar && pipelineSidebar) {
     btnToggleSidebar.addEventListener("click", () => {
       pipelineSidebar.classList.toggle("open");
+      btnToggleSidebar.classList.toggle("active", pipelineSidebar.classList.contains("open"));
+      if (workspaceInspector && window.innerWidth < 992 && pipelineSidebar.classList.contains("open")) {
+        workspaceInspector.classList.remove("open");
+        if (btnToggleInspector) btnToggleInspector.classList.remove("active");
+      }
+      syncDrawerBackdrop();
     });
   }
 
   if (btnToggleInspector && workspaceInspector) {
     btnToggleInspector.addEventListener("click", () => {
       workspaceInspector.classList.toggle("open");
-      btnToggleInspector.classList.toggle("active");
+      btnToggleInspector.classList.toggle("active", workspaceInspector.classList.contains("open"));
+      if (pipelineSidebar && window.innerWidth < 992 && workspaceInspector.classList.contains("open")) {
+        pipelineSidebar.classList.remove("open");
+        if (btnToggleSidebar) btnToggleSidebar.classList.remove("active");
+      }
+      syncDrawerBackdrop();
     });
   }
+
+  if (drawerBackdrop) {
+    drawerBackdrop.addEventListener("click", closeAllDrawers);
+  }
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      closeAllDrawers();
+    }
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth >= 992) {
+      closeAllDrawers();
+    }
+  });
 
   // ==============================================================================
   // 4. PERSISTENT BOTTOM AUDIO TRANSPORT
