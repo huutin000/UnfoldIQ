@@ -969,10 +969,16 @@ async def get_project_timestamps_status(dir_name: str):
         status["status"] = state_map.get(status["state"], status["state"].capitalize())
     elif "status" in status and "state" not in status:
         status["state"] = status["status"].lower()
+    if "coverage_pct" in status and "coverage" not in status:
+        status["coverage"] = status["coverage_pct"]
+    elif "coverage" in status and "coverage_pct" not in status:
+        status["coverage_pct"] = status["coverage"]
     return status
 
 
 @app.get("/api/projects/{dir_name}/timestamps")
+@app.get("/api/projects/{dir_name}/timestamps.json")
+@app.get("/api/projects/{dir_name}/timestamps/json")
 async def get_project_timestamps_data(dir_name: str):
     """Retrieve canonical timestamps.json with sentence timing segments."""
     project_path = PROJECTS_DIR / dir_name
@@ -983,6 +989,10 @@ async def get_project_timestamps_data(dir_name: str):
     try:
         with open(ts_json, "r", encoding="utf-8") as f:
             data = json.load(f)
+        if "segments" in data and "sentences" not in data:
+            data["sentences"] = data["segments"]
+        elif "sentences" in data and "segments" not in data:
+            data["segments"] = data["sentences"]
         return data
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to load timestamps.json: {e}")

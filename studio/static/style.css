@@ -2056,6 +2056,109 @@ body.workstation-app {
   }
 }
 
+/* --------------------------------------------------------------------------
+   8b. TABLET (<=768px) — stack multi-column shared layouts.
+   Desktop/Laptop rendering above these breakpoints is untouched.
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .workspace-view {
+    padding: 1rem 0.85rem;
+  }
+  .ws-header {
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .preview-details-grid,
+  .veo-action-details,
+  .pron-form-grid,
+  .modal-grid-2 {
+    grid-template-columns: 1fr;
+  }
+  .pron-form-actions {
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .modal-footer {
+    flex-wrap: wrap;
+  }
+  .workflow-stepper {
+    padding: 0.55rem 0.75rem;
+    gap: 0.5rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   8c. MOBILE (<=560px) — compact header / player bar, no page overflow.
+   -------------------------------------------------------------------------- */
+@media (max-width: 560px) {
+  .app-header {
+    padding: 0 0.6rem;
+  }
+  .header-left {
+    gap: 0.5rem;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+  .header-right {
+    gap: 0.4rem;
+    flex-shrink: 0;
+  }
+  .brand-subtitle,
+  .header-project-indicator .indicator-label,
+  #btn-open-tour span {
+    display: none;
+  }
+  .brand-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .header-project-indicator {
+    margin-left: 0;
+    min-width: 0;
+    max-width: 38vw;
+  }
+  #active-project-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+  }
+  .status-indicator {
+    white-space: nowrap;
+  }
+  .app-player-bar {
+    padding: 0 0.6rem;
+    gap: 0.6rem;
+  }
+  .player-left,
+  .player-right {
+    min-width: 0;
+  }
+  .volume-slider {
+    width: 48px;
+  }
+  .player-context-tag {
+    display: none;
+  }
+  .workspace-view {
+    padding: 0.85rem 0.6rem;
+  }
+  .tour-card {
+    padding: 1rem;
+  }
+  .modal-card {
+    width: calc(100vw - 24px);
+  }
+  .modal-body {
+    padding: 1rem;
+  }
+  .btn,
+  .btn-icon-ghost {
+    min-height: 36px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     transition: none !important;
@@ -2204,6 +2307,7 @@ body.workstation-app {
   inset: 0;
   z-index: 9990;
   pointer-events: none;
+  overflow: hidden; /* fixed overlay must never expand page scroll area */
 }
 
 .tour-spotlight {

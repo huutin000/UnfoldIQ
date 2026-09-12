@@ -808,19 +808,24 @@ document.addEventListener("DOMContentLoaded", () => {
         tourSpotlight.style.width = `${rect.width + padding * 2}px`;
         tourSpotlight.style.height = `${rect.height + padding * 2}px`;
 
-        const cardWidth = 360;
+        const narrowViewport = window.innerWidth < 392; // 360 + margins
+        const cardWidth = narrowViewport ? Math.max(200, window.innerWidth - 32) : 360;
         const cardHeight = 220;
         let cardTop = rect.bottom + 14;
         let cardLeft = rect.left;
 
         if (cardTop + cardHeight > window.innerHeight) {
-          cardTop = Math.max(20, rect.top - cardHeight - 14);
+          cardTop = Math.max(16, rect.top - cardHeight - 14);
         }
-        if (cardLeft + cardWidth > window.innerWidth) {
-          cardLeft = Math.max(20, window.innerWidth - cardWidth - 20);
-        }
-        tourCard.style.top = `${cardTop}px`;
+        cardLeft = Math.max(16, Math.min(cardLeft, window.innerWidth - cardWidth - 16));
+        tourCard.style.transform = "";
+        tourCard.style.top = `${Math.max(16, cardTop)}px`;
         tourCard.style.left = `${cardLeft}px`;
+        if (narrowViewport) {
+          tourCard.style.width = `${cardWidth}px`;
+        } else {
+          tourCard.style.width = "";
+        }
       } else if (tourCard) {
         if (tourSpotlight) tourSpotlight.style.display = "none";
         tourCard.style.top = "50%";
@@ -1854,7 +1859,8 @@ document.addEventListener("DOMContentLoaded", () => {
         btnDownloadTsJson.disabled = false;
         tsProgressContainer.style.display = "none";
 
-        if (status.coverage != null) tsCoverageBadge.textContent = `${status.coverage.toFixed(1)}%`;
+        const covVal = (status.coverage != null) ? status.coverage : status.coverage_pct;
+        if (covVal != null) tsCoverageBadge.textContent = `${Number(covVal).toFixed(1)}%`;
         if (status.total_sentences != null) tsCuesBadge.textContent = `${status.total_sentences}`;
         loadCuesList(dirName);
       } else if (status.status === "Processing") {
@@ -1913,10 +1919,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function loadCuesList(dirName) {
     try {
-      const res = await fetch(`/api/projects/${dirName}/timestamps.json`);
+      const res = await fetch(`/api/projects/${dirName}/timestamps`);
       if (!res.ok) return;
       const data = await res.json();
-      const sentences = data.sentences || [];
+      const sentences = data.segments || data.sentences || [];
       projectCues = sentences;
       updateDependencyState();
       tsPreviewCount.textContent = `${sentences.length} đoạn`;
