@@ -1228,13 +1228,25 @@ async def get_voice_qa(dir_name: str):
     status_data = voice_qa_manager.check_status(dir_name)
     if status_data.get("exists") and status_data.get("data"):
         eval_data = status_data["data"]
+        raw_issues = eval_data.get("issues", [])
+        normalized_issues = []
+        for iss in raw_issues:
+            iss_copy = dict(iss)
+            st = iss_copy.get("start_time") if iss_copy.get("start_time") is not None else iss_copy.get("start_seconds", 0.0)
+            et = iss_copy.get("end_time") if iss_copy.get("end_time") is not None else iss_copy.get("end_seconds", st)
+            iss_copy["start_time"] = float(st)
+            iss_copy["start_seconds"] = float(st)
+            iss_copy["end_time"] = float(et)
+            iss_copy["end_seconds"] = float(et)
+            normalized_issues.append(iss_copy)
+
         return {
             "status": status_data.get("status", "review"),
             "state": "stale" if status_data.get("is_stale") else status_data.get("status", "review"),
             "is_stale": status_data.get("is_stale", False),
             "audio_duration": eval_data.get("audio_duration", 0.0),
             "metrics": eval_data.get("metrics", {}),
-            "issues": eval_data.get("issues", []),
+            "issues": normalized_issues,
             "summary": eval_data.get("summary", {}),
             "created_at": eval_data.get("created_at", "")
         }

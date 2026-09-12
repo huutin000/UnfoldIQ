@@ -1227,6 +1227,12 @@ document.addEventListener("DOMContentLoaded", () => {
   if (btnGlobalPlay && audioPlayer) {
     btnGlobalPlay.addEventListener("click", () => {
       if (!audioPlayer.src) return;
+      if (window._qaPlaybackTimeUpdateHandler) {
+        audioPlayer.removeEventListener("timeupdate", window._qaPlaybackTimeUpdateHandler);
+        window._qaPlaybackTimeUpdateHandler = null;
+        const spanEl = document.querySelector("#btn-qa-play-range span");
+        if (spanEl) spanEl.textContent = "Nghe đoạn này";
+      }
       if (audioPlayer.paused) {
         audioPlayer.play().catch(() => {});
       } else {
@@ -1237,8 +1243,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (audioPlayer) {
     audioPlayer.addEventListener("play", updateAudioTransportState);
-    audioPlayer.addEventListener("pause", updateAudioTransportState);
-    audioPlayer.addEventListener("ended", updateAudioTransportState);
+    audioPlayer.addEventListener("pause", () => {
+      updateAudioTransportState();
+      if (window._qaPlaybackTimeUpdateHandler) {
+        audioPlayer.removeEventListener("timeupdate", window._qaPlaybackTimeUpdateHandler);
+        window._qaPlaybackTimeUpdateHandler = null;
+        const spanEl = document.querySelector("#btn-qa-play-range span");
+        if (spanEl) spanEl.textContent = "Nghe đoạn này";
+      }
+    });
+    audioPlayer.addEventListener("ended", () => {
+      updateAudioTransportState();
+      if (window._qaPlaybackTimeUpdateHandler) {
+        audioPlayer.removeEventListener("timeupdate", window._qaPlaybackTimeUpdateHandler);
+        window._qaPlaybackTimeUpdateHandler = null;
+        const spanEl = document.querySelector("#btn-qa-play-range span");
+        if (spanEl) spanEl.textContent = "Nghe đoạn này";
+      }
+    });
 
     audioPlayer.addEventListener("timeupdate", () => {
       if (isSeeking) return;
@@ -1299,6 +1321,12 @@ document.addEventListener("DOMContentLoaded", () => {
     playerScrubber.addEventListener("change", () => {
       isSeeking = false;
       const dur = audioPlayer.duration || 0;
+      if (window._qaPlaybackTimeUpdateHandler) {
+        audioPlayer.removeEventListener("timeupdate", window._qaPlaybackTimeUpdateHandler);
+        window._qaPlaybackTimeUpdateHandler = null;
+        const spanEl = document.querySelector("#btn-qa-play-range span");
+        if (spanEl) spanEl.textContent = "Nghe đoạn này";
+      }
       if (dur > 0) {
         audioPlayer.currentTime = (playerScrubber.value / 100) * dur;
       }
@@ -2057,8 +2085,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const isSelected = (selectedIssueFingerprint === issue.fingerprint);
       const isResolved = issue.resolution && issue.resolution !== "unresolved";
       const badgeClass = issue.severity === "fail" ? "qa-badge-fail" : "qa-badge-review";
-      const startFmt = formatTime(issue.start_seconds || 0);
-      const endFmt = formatTime(issue.end_seconds || 0);
+      const startSec = (issue.start_time !== undefined) ? Number(issue.start_time) : (Number(issue.start_seconds) || 0);
+      const endSec = (issue.end_time !== undefined) ? Number(issue.end_time) : (Number(issue.end_seconds) || startSec);
+      const startFmt = formatTime(startSec);
+      const endFmt = formatTime(endSec);
 
       return `
         <div class="qa-issue-item ${isSelected ? 'active' : ''}" data-fingerprint="${escapeHtml(issue.fingerprint)}">
@@ -2080,7 +2110,7 @@ document.addEventListener("DOMContentLoaded", () => {
     qaIssuesList.querySelectorAll(".qa-issue-item").forEach(item => {
       item.addEventListener("click", () => {
         const fp = item.dataset.fingerprint;
-        const targetIssue = issues.find(i => i.fingerprint === fp);
+        const targetIssue = filtered.find(i => i.fingerprint === fp) || issues.find(i => i.fingerprint === fp);
         if (targetIssue) {
           selectedIssueFingerprint = fp;
           qaIssuesList.querySelectorAll(".qa-issue-item").forEach(el => el.classList.remove("active"));
@@ -2090,8 +2120,8 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-    // Auto-select
-    let toSelect = issues.find(i => i.fingerprint === selectedIssueFingerprint);
+    // Auto-select: search in 'filtered' first so filter tabs never keep a ghost item
+    let toSelect = filtered.find(i => i.fingerprint === selectedIssueFingerprint);
     if (!toSelect && filtered.length > 0) {
       toSelect = filtered[0];
       selectedIssueFingerprint = toSelect.fingerprint;
@@ -2105,9 +2135,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function selectQAIssue(issue) {
     if (!qaSelectedDetail || !issue) return;
+
+    // Remove any active segment timeupdate handler to prevent playback collisions
+    if (window._qaPlaybackTimeUpdateHandler && audioPlayer) {
+      audioPlayer.removeEventListener("timeupdate", window._qaPlaybackTimeUpdateHandler);
+      window._qaPlaybackTimeUpdateHandler = null;
+    }
+
     const isResolved = issue.resolution && issue.resolution !== "unresolved";
-    const startFmt = formatTime(issue.start_seconds || 0);
-    const endFmt = formatTime(issue.end_seconds || 0);
+    const startSec = (issue.start_time !== undefined) ? Number(issue.start_time) : (Number(issue.start_seconds) || 0);
+    const endSec = (issue.end_time !== undefined) ? Number(issue.end_time) : (Number(issue.end_seconds) || Math.max(startSec + 0.5, startSec));
+    const startFmt = formatTime(startSec);
+    const endFmt = formatTime(endSec);
 
     qaSelectedDetail.innerHTML = `
       <div class="qa-detail-view">
@@ -2173,18 +2212,50 @@ document.addEventListener("DOMContentLoaded", () => {
     if (playBtn) {
       playBtn.addEventListener("click", () => {
         if (!audioPlayer) return;
-        const start = Math.max(0, (issue.start_seconds || 0) - 0.4);
-        const end = (issue.end_seconds || 0) + 0.4;
-        audioPlayer.currentTime = start;
-        audioPlayer.play().catch(() => {});
 
-        const onTimeUpdate = () => {
-          if (audioPlayer.currentTime >= end) {
-            audioPlayer.pause();
-            audioPlayer.removeEventListener("timeupdate", onTimeUpdate);
+        const playSelectedSegment = () => {
+          const start = Math.max(0, startSec - 0.4);
+          const end = Math.max(start + 0.3, endSec + 0.4);
+
+          // Clear any active playback listener
+          if (window._qaPlaybackTimeUpdateHandler) {
+            audioPlayer.removeEventListener("timeupdate", window._qaPlaybackTimeUpdateHandler);
+            window._qaPlaybackTimeUpdateHandler = null;
           }
+
+          const spanEl = playBtn.querySelector("span");
+          if (spanEl) spanEl.textContent = "Đang phát...";
+
+          audioPlayer.currentTime = start;
+          const p = audioPlayer.play();
+          if (p !== undefined) {
+            p.catch(err => {
+              console.warn("QA range play interrupted:", err);
+              if (spanEl) spanEl.textContent = "Nghe đoạn này";
+            });
+          }
+
+          const onTimeUpdate = () => {
+            if (audioPlayer.currentTime >= end) {
+              audioPlayer.pause();
+              audioPlayer.removeEventListener("timeupdate", onTimeUpdate);
+              window._qaPlaybackTimeUpdateHandler = null;
+              if (spanEl) spanEl.textContent = "Nghe đoạn này";
+            }
+          };
+          window._qaPlaybackTimeUpdateHandler = onTimeUpdate;
+          audioPlayer.addEventListener("timeupdate", onTimeUpdate);
         };
-        audioPlayer.addEventListener("timeupdate", onTimeUpdate);
+
+        // If audioPlayer has no valid source yet, load project audio
+        if ((!audioPlayer.src || audioPlayer.src === "" || audioPlayer.src.includes("undefined")) && currentProjectDir) {
+          audioPlayer.src = `/api/projects/${currentProjectDir}/audio/wav?t=${Date.now()}`;
+          audioPlayer.addEventListener("canplay", () => {
+            playSelectedSegment();
+          }, { once: true });
+        } else {
+          playSelectedSegment();
+        }
       });
     }
 
@@ -2378,6 +2449,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Failed to load Voice QA:", err);
     }
   }
+  window.loadVoiceQA = loadVoiceQA;
 
   // Filter tabs click listeners
   document.querySelectorAll(".qa-tab").forEach(tab => {
