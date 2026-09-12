@@ -98,94 +98,122 @@ def run_transcription_pipeline(
     if not model_path.exists():
         raise FileNotFoundError(f"Local Whisper model is not installed at {model_path}.")
 
-    emit_progress("loading_model", 15, f"Loading Whisper model from {model_path.name} on {device} ({compute_type})...")
-    load_start = time.time()
-    
-    from faster_whisper import WhisperModel
-    try:
-        model = WhisperModel(
-            str(model_path),
-            device=device,
-            compute_type=compute_type,
-            local_files_only=True
-        )
-    except Exception as e:
-        if device == "cuda":
-            emit_progress("loading_model", 18, f"CUDA load error: {e}. Falling back to CPU...")
-            device = "cpu"
-            compute_type = "int8"
+    # Check if verified raw transcript cache exists for this exact audio hash
+    raw_path = project_dir / "transcription_raw.json"
+    can_reuse_raw = False
+    raw_segments = []
+    load_duration = 0.0
+    inference_duration = 0.0
+    rtf = 0.0
+
+    if raw_path.exists():
+        try:
+            with open(raw_path, "r", encoding="utf-8") as f:
+                cached_raw = json.load(f)
+            if (
+                cached_raw.get("audio_sha256") == audio_hash
+                and cached_raw.get("model") == model_path.name
+                and cached_raw.get("segments")
+            ):
+                can_reuse_raw = True
+                raw_segments = cached_raw["segments"]
+                load_duration = cached_raw.get("load_duration_seconds", 0.0)
+                inference_duration = cached_raw.get("transcription_duration_seconds", 0.0)
+                rtf = cached_raw.get("realtime_factor", 0.0)
+                device = cached_raw.get("device", device)
+                compute_type = cached_raw.get("compute_type", compute_type)
+                emit_progress("transcribing", 75, "Reusing verified raw transcript cache for audio...")
+        except Exception:
+            can_reuse_raw = False
+
+    if not can_reuse_raw:
+        emit_progress("loading_model", 15, f"Loading Whisper model from {model_path.name} on {device} ({compute_type})...")
+        load_start = time.time()
+        
+        from faster_whisper import WhisperModel
+        try:
             model = WhisperModel(
                 str(model_path),
-                device="cpu",
-                compute_type="int8",
+                device=device,
+                compute_type=compute_type,
                 local_files_only=True
             )
-        else:
-            raise
+        except Exception as e:
+            if device == "cuda":
+                emit_progress("loading_model", 18, f"CUDA load error: {e}. Falling back to CPU...")
+                device = "cpu"
+                compute_type = "int8"
+                model = WhisperModel(
+                    str(model_path),
+                    device="cpu",
+                    compute_type="int8",
+                    local_files_only=True
+                )
+            else:
+                raise
 
-    load_duration = round(time.time() - load_start, 3)
+        load_duration = round(time.time() - load_start, 3)
 
-    emit_progress("transcribing", 25, "Running faster-whisper inference with word timestamps...")
-    inference_start = time.time()
+        emit_progress("transcribing", 25, "Running faster-whisper inference with word timestamps...")
+        inference_start = time.time()
 
-    segments_gen, info = model.transcribe(
-        str(audio_path),
-        language=language,
-        word_timestamps=True,
-        beam_size=5,
-        vad_filter=False
-    )
+        segments_gen, info = model.transcribe(
+            str(audio_path),
+            language=language,
+            word_timestamps=True,
+            beam_size=5,
+            vad_filter=False
+        )
 
-    raw_segments = []
-    for seg in segments_gen:
-        seg_dict = {
-            "id": seg.id,
-            "seek": seg.seek,
-            "start": seg.start,
-            "end": seg.end,
-            "text": seg.text,
-            "tokens": seg.tokens,
-            "avg_logprob": seg.avg_logprob,
-            "compression_ratio": seg.compression_ratio,
-            "no_speech_prob": seg.no_speech_prob,
-            "words": [
-                {
-                    "word": w.word,
-                    "start": w.start,
-                    "end": w.end,
-                    "probability": w.probability
-                }
-                for w in (seg.words or [])
-            ]
+        raw_segments = []
+        for seg in segments_gen:
+            seg_dict = {
+                "id": seg.id,
+                "seek": seg.seek,
+                "start": seg.start,
+                "end": seg.end,
+                "text": seg.text,
+                "tokens": seg.tokens,
+                "avg_logprob": seg.avg_logprob,
+                "compression_ratio": seg.compression_ratio,
+                "no_speech_prob": seg.no_speech_prob,
+                "words": [
+                    {
+                        "word": w.word,
+                        "start": w.start,
+                        "end": w.end,
+                        "probability": w.probability
+                    }
+                    for w in (seg.words or [])
+                ]
+            }
+            raw_segments.append(seg_dict)
+
+            # Update dynamic transcription progress based on audio position
+            if audio_duration > 0:
+                seg_progress = 25 + int(min(seg.end / audio_duration, 1.0) * 55)
+                emit_progress("transcribing", seg_progress, f"Transcribed {seg.end:.1f}s / {audio_duration:.1f}s...")
+
+        inference_duration = round(time.time() - inference_start, 3)
+        rtf = round(inference_duration / max(0.1, audio_duration), 4)
+
+        # 1. Save transcription_raw.json
+        raw_output = {
+            "engine": "faster-whisper",
+            "model": model_path.name,
+            "device": device,
+            "compute_type": compute_type,
+            "language": language,
+            "audio_sha256": audio_hash,
+            "audio_duration": audio_duration,
+            "load_duration_seconds": load_duration,
+            "transcription_duration_seconds": inference_duration,
+            "realtime_factor": rtf,
+            "created_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+            "segments": raw_segments
         }
-        raw_segments.append(seg_dict)
-
-        # Update dynamic transcription progress based on audio position
-        if audio_duration > 0:
-            seg_progress = 25 + int(min(seg.end / audio_duration, 1.0) * 55)
-            emit_progress("transcribing", seg_progress, f"Transcribed {seg.end:.1f}s / {audio_duration:.1f}s...")
-
-    inference_duration = round(time.time() - inference_start, 3)
-    rtf = round(inference_duration / max(0.1, audio_duration), 4)
-
-    # 1. Save transcription_raw.json
-    raw_output = {
-        "engine": "faster-whisper",
-        "model": model_path.name,
-        "device": device,
-        "compute_type": compute_type,
-        "language": language,
-        "audio_sha256": audio_hash,
-        "audio_duration": audio_duration,
-        "load_duration_seconds": load_duration,
-        "transcription_duration_seconds": inference_duration,
-        "realtime_factor": rtf,
-        "created_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-        "segments": raw_segments
-    }
-    raw_path = project_dir / "transcription_raw.json"
-    with open(raw_path, "w", encoding="utf-8") as f:
-        json.dump(raw_output, f, indent=2, ensure_ascii=False)
+        with open(raw_path, "w", encoding="utf-8") as f:
+            json.dump(raw_output, f, indent=2, ensure_ascii=False)
 
     # 2. Perform alignment
     emit_progress("aligning", 85, "Aligning recognized speech with script.txt sentences...")

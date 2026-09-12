@@ -70,6 +70,37 @@ document.addEventListener("DOMContentLoaded", () => {
   const tsPreviewCount = document.getElementById("ts-preview-count");
   const tsCuesList = document.getElementById("ts-cues-list");
 
+  // Voice QA Elements (Phase 8.1)
+  const qaStatusPill = document.getElementById("qa-status-pill");
+  const valQaVerdict = document.getElementById("val-qa-verdict");
+  const subQaVerdict = document.getElementById("sub-qa-verdict");
+  const cardQaVerdict = document.getElementById("card-qa-verdict");
+  const valQaMatch = document.getElementById("val-qa-match");
+  const subQaWer = document.getElementById("sub-qa-wer");
+  const valQaWpm = document.getElementById("val-qa-wpm");
+  const subQaWpm = document.getElementById("sub-qa-wpm");
+  const valQaIssuesCount = document.getElementById("val-qa-issues-count");
+  const subQaBreakdown = document.getElementById("sub-qa-breakdown");
+  const qaProgressContainer = document.getElementById("qa-progress-container");
+  const qaProgressMessage = document.getElementById("qa-progress-message");
+  const qaProgressPercent = document.getElementById("qa-progress-percent");
+  const qaProgressBar = document.getElementById("qa-progress-bar");
+  const qaIssuesList = document.getElementById("qa-issues-list");
+  const qaSelectedDetail = document.getElementById("qa-selected-detail");
+  const btnRunVoiceQa = document.getElementById("btn-run-voice-qa");
+  const btnCancelVoiceQa = document.getElementById("btn-cancel-voice-qa");
+  const btnForceVoiceQa = document.getElementById("btn-force-voice-qa");
+  const btnGotoTimestamp = document.getElementById("btn-goto-timestamp");
+  const insQaStatus = document.getElementById("ins-qa-status");
+  const insQaMatch = document.getElementById("ins-qa-match");
+  const insQaWer = document.getElementById("ins-qa-wer");
+  const insQaWpm = document.getElementById("ins-qa-wpm");
+  const insQaIssues = document.getElementById("ins-qa-issues");
+  const tsQaGateWarning = document.getElementById("ts-qa-gate-warning");
+  const tsQaGateTitle = document.getElementById("ts-qa-gate-title");
+  const tsQaGateMsg = document.getElementById("ts-qa-gate-msg");
+  const btnForceTs = document.getElementById("btn-force-ts");
+
   // Scene Planner Elements
   const spStatusPill = document.getElementById("sp-status-pill");
   const spCountBadge = document.getElementById("sp-count-badge");
@@ -220,6 +251,12 @@ document.addEventListener("DOMContentLoaded", () => {
   let scenesOutdated = false;
   let veoOutdated = false;
   let projectCues = [];
+
+  // Voice QA State (Phase 8.1)
+  let voiceQAData = null;
+  let voiceQAPollTimer = null;
+  let selectedIssueFingerprint = null;
+  let voiceQAFilter = "all";
 
   // Modal & Tour State
   let confirmCallback = null;
@@ -435,6 +472,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const sScript = document.getElementById("step-status-script");
     const sAudio = document.getElementById("step-status-audio");
+    const sQa = document.getElementById("step-status-voice-qa");
+    const badgeStepQa = document.getElementById("badge-step-voice-qa");
     const sTs = document.getElementById("step-status-timestamp");
     const sScenes = document.getElementById("step-status-scenes");
     const sVeo = document.getElementById("step-status-veo");
@@ -446,6 +485,42 @@ document.addEventListener("DOMContentLoaded", () => {
     if (sAudio) {
       sAudio.textContent = hasAudio ? "✓" : (btnGenerate && btnGenerate.disabled && btnStop && !btnStop.disabled ? "◐" : "○");
       sAudio.className = `step-status-icon ${hasAudio ? "status-complete" : ""}`;
+    }
+    if (sQa) {
+      if (voiceQAData && voiceQAData.is_stale) {
+        sQa.textContent = "⚠";
+        sQa.className = "step-status-icon status-outdated";
+      } else if (voiceQAData && voiceQAData.status === "pass") {
+        sQa.textContent = "✓";
+        sQa.className = "step-status-icon status-complete";
+      } else if (voiceQAData && voiceQAData.status === "review") {
+        sQa.textContent = "!";
+        sQa.className = "step-status-icon";
+      } else if (voiceQAData && voiceQAData.status === "fail") {
+        sQa.textContent = "✕";
+        sQa.className = "step-status-icon";
+      } else {
+        sQa.textContent = "○";
+        sQa.className = "step-status-icon";
+      }
+    }
+    if (badgeStepQa) {
+      if (voiceQAData && voiceQAData.is_stale) {
+        badgeStepQa.textContent = "⚠";
+        badgeStepQa.style.color = "var(--text-muted)";
+      } else if (voiceQAData && voiceQAData.status === "pass") {
+        badgeStepQa.textContent = "✓";
+        badgeStepQa.style.color = "var(--success)";
+      } else if (voiceQAData && voiceQAData.status === "review") {
+        badgeStepQa.textContent = "!";
+        badgeStepQa.style.color = "var(--warning)";
+      } else if (voiceQAData && voiceQAData.status === "fail") {
+        badgeStepQa.textContent = "✕";
+        badgeStepQa.style.color = "var(--danger)";
+      } else {
+        badgeStepQa.textContent = "○";
+        badgeStepQa.style.color = "";
+      }
     }
     if (sTs) {
       if (tsOutdated) {
@@ -555,11 +630,21 @@ document.addEventListener("DOMContentLoaded", () => {
         { label: "Khi nào sử dụng", text: "Sau khi bấm 'Tạo giọng đọc' hoặc khi mở lại một dự án đã có audio." },
         { label: "Điều kiện tiên quyết", text: "Đã có kịch bản và dịch vụ Kokoro TTS Server đang hoạt động." },
         { label: "Đầu ra (Output)", text: "Tệp âm thanh WAV (24kHz studio master) và MP3 (320kbps) trong thư mục dự án." },
-        { label: "Bước tiếp theo", text: "Chuyển sang bước 'Timestamp' để căn chỉnh mốc thời gian phụ đề chính xác." }
+        { label: "Bước tiếp theo", text: "Chuyển sang bước 'Voice QA' để kiểm định chất lượng phát âm." }
+      ]
+    },
+    "voice-qa": {
+      title: "3. Voice QA (Kiểm định giọng đọc)",
+      sections: [
+        { label: "Mục đích", text: "Kiểm tra tính chính xác của âm thanh narration đối chiếu với văn bản gốc kịch bản trước khi tạo Timestamp." },
+        { label: "Khi nào sử dụng", text: "Tự động chạy sau khi tạo giọng đọc hoặc chạy thủ công bất cứ lúc nào." },
+        { label: "Phát hiện", text: "Thiếu từ, thừa từ, từ thay thế, lặp đoạn/câu, WPM bất thường, khoảng lặng quá dài và câu bị cắt ngắn." },
+        { label: "Thao tác sửa lỗi", text: "Nghe từng đoạn nghi vấn, Chấp nhận (nếu phát âm đúng), Sửa phát âm qua Từ điển, hoặc Render lại riêng đoạn đó." },
+        { label: "Bước tiếp theo", text: "Sau khi kiểm định đạt PASS hoặc giải quyết xong các cảnh báo, tiếp tục sang bước Timestamp." }
       ]
     },
     timestamp: {
-      title: "3. Mốc thời gian phụ đề (Whisper Alignment)",
+      title: "4. Mốc thời gian phụ đề (Whisper Alignment)",
       sections: [
         { label: "Mục đích", text: "Sử dụng mô hình Whisper để nhận dạng và gán mốc thời gian bắt đầu - kết thúc chính xác cho từng câu và từng từ." },
         { label: "Khi nào sử dụng", text: "Sau khi đã tạo xong file audio WAV." },
@@ -940,6 +1025,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const WORKSPACE_INSPECTOR_MAP = {
     script: "inspector-script",
     audio: "inspector-audio",
+    "voice-qa": "inspector-voice-qa",
     timestamp: "inspector-timestamp",
     scenes: "inspector-scenes",
     veo: "inspector-veo",
@@ -993,8 +1079,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // 4. Mount heavy rows on entering active scenes or veo workspace
-    if (targetId === "scenes" && projectScenes.length > 0) {
+    // 4. Mount heavy rows on entering active scenes or veo workspace, or load voice QA
+    if (targetId === "voice-qa" && currentProjectDir) {
+      loadVoiceQA(currentProjectDir);
+    } else if (targetId === "scenes" && projectScenes.length > 0) {
       renderScenesList(projectScenes);
       if (spRowsContainer && spScrollTop > 0) {
         spRowsContainer.scrollTop = spScrollTop;
@@ -1548,6 +1636,7 @@ document.addEventListener("DOMContentLoaded", () => {
       updateDependencyState();
 
       loadProjects();
+      loadVoiceQA(currentProjectDir);
       loadTimestampsForProject(currentProjectDir);
       loadScenesForProject(currentProjectDir);
       loadVeoForProject(currentProjectDir);
@@ -1817,6 +1906,491 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // ==============================================================================
+  // 8.1 VOICE QA (PHASE 8.1)
+  // ==============================================================================
+
+  function setQaStatus(state, label) {
+    if (!qaStatusPill) return;
+    const cleanState = (state || "idle").toLowerCase().replace(/[^a-z0-9]/g, '-');
+    qaStatusPill.className = `state-pill state-${cleanState}`;
+    qaStatusPill.textContent = label || state.toUpperCase();
+
+    const badgeStepQa = document.getElementById("badge-step-voice-qa");
+    const stepStatusQa = document.getElementById("step-status-voice-qa");
+    let iconChar = "○";
+    let iconColor = "";
+
+    if (cleanState === "pass") {
+      iconChar = "✓";
+      iconColor = "var(--success)";
+    } else if (cleanState === "review") {
+      iconChar = "!";
+      iconColor = "var(--warning)";
+    } else if (cleanState === "fail") {
+      iconChar = "✕";
+      iconColor = "var(--danger)";
+    } else if (cleanState === "running") {
+      iconChar = "◐";
+      iconColor = "var(--accent)";
+    } else if (cleanState === "stale") {
+      iconChar = "⚠";
+      iconColor = "var(--text-muted)";
+    }
+
+    if (badgeStepQa) {
+      badgeStepQa.textContent = iconChar;
+      if (iconColor) badgeStepQa.style.color = iconColor;
+    }
+    if (stepStatusQa) {
+      stepStatusQa.textContent = iconChar;
+      stepStatusQa.className = `step-status-icon ${cleanState === 'pass' ? 'status-complete' : cleanState === 'stale' ? 'status-outdated' : ''}`;
+    }
+  }
+
+  function renderQAMetrics(data) {
+    if (!data) return;
+    const status = (data.status || "idle").toUpperCase();
+    const isStale = Boolean(data.is_stale);
+    const metrics = data.metrics || {};
+    const summary = data.summary || {};
+
+    if (cardQaVerdict) {
+      cardQaVerdict.className = `qa-metric-card verdict-${status.toLowerCase()}`;
+    }
+    if (valQaVerdict) valQaVerdict.textContent = isStale ? "STALE" : status;
+    if (subQaVerdict) subQaVerdict.textContent = isStale ? "Audio đã thay đổi, cần chạy lại" : (status === "PASS" ? "Đạt chuẩn chất lượng" : (status === "REVIEW" ? "Cần người dùng xem lại" : (status === "FAIL" ? "Lỗi nghiêm trọng cần xử lý" : "Chưa kiểm định")));
+
+    if (valQaMatch) valQaMatch.textContent = `${(metrics.transcript_match_pct || 0).toFixed(1)}%`;
+    if (subQaWer) subQaWer.textContent = `WER: ${(metrics.wer_pct || 0).toFixed(1)}%`;
+
+    if (valQaWpm) valQaWpm.textContent = `${Math.round(metrics.overall_wpm || 0)}`;
+    if (subQaWpm) subQaWpm.textContent = `WPM (Chuẩn 130-180)`;
+
+    const unresolvedCount = (summary.unresolved_fail_count || 0) + (summary.unresolved_review_count || 0);
+    if (valQaIssuesCount) valQaIssuesCount.textContent = unresolvedCount;
+    if (subQaBreakdown) subQaBreakdown.textContent = `${summary.unresolved_fail_count || 0} FAIL · ${summary.unresolved_review_count || 0} REVIEW`;
+
+    // Update inspector
+    if (insQaStatus) insQaStatus.textContent = isStale ? "Stale" : status;
+    if (insQaMatch) insQaMatch.textContent = `${(metrics.transcript_match_pct || 0).toFixed(1)}%`;
+    if (insQaWer) insQaWer.textContent = `${(metrics.wer_pct || 0).toFixed(1)}%`;
+    if (insQaWpm) insQaWpm.textContent = `${Math.round(metrics.overall_wpm || 0)} WPM`;
+    if (insQaIssues) insQaIssues.textContent = unresolvedCount;
+
+    setQaStatus(isStale ? "stale" : status.toLowerCase(), isStale ? "Cần chạy lại (Stale)" : status);
+  }
+
+  function renderQAIssues(issues) {
+    if (!qaIssuesList) return;
+    const allCount = issues.length;
+    const failCount = issues.filter(i => i.severity === "fail").length;
+    const reviewCount = issues.filter(i => i.severity === "review").length;
+    const countAllEl = document.getElementById("count-filter-all");
+    const countFailEl = document.getElementById("count-filter-fail");
+    const countReviewEl = document.getElementById("count-filter-review");
+    if (countAllEl) countAllEl.textContent = allCount;
+    if (countFailEl) countFailEl.textContent = failCount;
+    if (countReviewEl) countReviewEl.textContent = reviewCount;
+
+    let filtered = issues;
+    if (voiceQAFilter === "fail") filtered = issues.filter(i => i.severity === "fail");
+    else if (voiceQAFilter === "review") filtered = issues.filter(i => i.severity === "review");
+    else if (voiceQAFilter === "unresolved") filtered = issues.filter(i => !i.resolution || i.resolution === "unresolved");
+
+    if (filtered.length === 0) {
+      qaIssuesList.innerHTML = `<div class="qa-empty-state"><p>${issues.length === 0 ? "Không có vấn đề nào được phát hiện! Giọng đọc khớp hoàn toàn với kịch bản." : "Không có mục nào trong bộ lọc này."}</p></div>`;
+      if (qaSelectedDetail) {
+        qaSelectedDetail.innerHTML = `<div class="qa-detail-empty"><p>${issues.length === 0 ? "Tuyệt vời! Không có lỗi cần xử lý." : "Chọn một mục từ danh sách bên trái."}</p></div>`;
+      }
+      return;
+    }
+
+    qaIssuesList.innerHTML = filtered.map(issue => {
+      const isSelected = (selectedIssueFingerprint === issue.fingerprint);
+      const isResolved = issue.resolution && issue.resolution !== "unresolved";
+      const badgeClass = issue.severity === "fail" ? "qa-badge-fail" : "qa-badge-review";
+      const startFmt = formatTime(issue.start_seconds || 0);
+      const endFmt = formatTime(issue.end_seconds || 0);
+
+      return `
+        <div class="qa-issue-item ${isSelected ? 'active' : ''}" data-fingerprint="${escapeHtml(issue.fingerprint)}">
+          <div class="qa-issue-header">
+            <div class="qa-issue-tags">
+              <span class="qa-badge ${badgeClass}">${escapeHtml(issue.severity.toUpperCase())}</span>
+              <span class="qa-badge qa-badge-category">${escapeHtml(issue.category)}</span>
+              ${isResolved ? `<span class="qa-badge qa-badge-resolved">${escapeHtml(issue.resolution.toUpperCase())}</span>` : ''}
+            </div>
+            <span class="qa-time-range">${startFmt} - ${endFmt}</span>
+          </div>
+          <div class="qa-issue-msg">${escapeHtml(issue.description)}</div>
+          ${issue.expected_text ? `<div class="qa-issue-snippet">Gốc: "${escapeHtml(issue.expected_text.slice(0, 80))}"</div>` : ''}
+        </div>
+      `;
+    }).join("");
+
+    // Attach click handlers
+    qaIssuesList.querySelectorAll(".qa-issue-item").forEach(item => {
+      item.addEventListener("click", () => {
+        const fp = item.dataset.fingerprint;
+        const targetIssue = issues.find(i => i.fingerprint === fp);
+        if (targetIssue) {
+          selectedIssueFingerprint = fp;
+          qaIssuesList.querySelectorAll(".qa-issue-item").forEach(el => el.classList.remove("active"));
+          item.classList.add("active");
+          selectQAIssue(targetIssue);
+        }
+      });
+    });
+
+    // Auto-select
+    let toSelect = issues.find(i => i.fingerprint === selectedIssueFingerprint);
+    if (!toSelect && filtered.length > 0) {
+      toSelect = filtered[0];
+      selectedIssueFingerprint = toSelect.fingerprint;
+    }
+    if (toSelect) {
+      const activeEl = qaIssuesList.querySelector(`[data-fingerprint="${toSelect.fingerprint}"]`);
+      if (activeEl) activeEl.classList.add("active");
+      selectQAIssue(toSelect);
+    }
+  }
+
+  function selectQAIssue(issue) {
+    if (!qaSelectedDetail || !issue) return;
+    const isResolved = issue.resolution && issue.resolution !== "unresolved";
+    const startFmt = formatTime(issue.start_seconds || 0);
+    const endFmt = formatTime(issue.end_seconds || 0);
+
+    qaSelectedDetail.innerHTML = `
+      <div class="qa-detail-view">
+        <div class="qa-detail-header-card">
+          <div class="qa-issue-tags">
+            <span class="qa-badge ${issue.severity === 'fail' ? 'qa-badge-fail' : 'qa-badge-review'}">${escapeHtml(issue.severity.toUpperCase())}</span>
+            <span class="qa-badge qa-badge-category">${escapeHtml(issue.category)}</span>
+            ${isResolved ? `<span class="qa-badge qa-badge-resolved">ĐÃ XỬ LÝ: ${escapeHtml(issue.resolution.toUpperCase())}</span>` : '<span class="qa-badge" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">CHƯA XỬ LÝ</span>'}
+            <span class="qa-time-range" style="margin-left: auto;">${startFmt} - ${endFmt}</span>
+          </div>
+          <div style="font-size: 0.9rem; color: var(--text-primary); font-weight: 500; margin-top: 4px;">
+            ${escapeHtml(issue.description)}
+          </div>
+          <div style="font-size: 0.78rem; color: var(--text-muted); font-family: var(--font-mono);">
+            Chunk #${issue.chunk_index ?? '--'} · Sentence #${issue.sentence_index ?? '--'} · Fingerprint: ${issue.fingerprint.slice(0, 12)}...
+          </div>
+        </div>
+
+        <div class="qa-diff-box">
+          <div class="qa-diff-row expected">
+            <div class="qa-diff-label">Kịch bản gốc (Expected Text)</div>
+            <div class="qa-diff-text">${escapeHtml(issue.expected_text || "—")}</div>
+          </div>
+          <div class="qa-diff-row actual">
+            <div class="qa-diff-label">Nhận dạng từ âm thanh (Recognized ASR)</div>
+            <div class="qa-diff-text">${escapeHtml(issue.recognized_text || "—")}</div>
+          </div>
+        </div>
+
+        <div class="qa-playback-bar">
+          <div class="qa-playback-info">
+            <button type="button" id="btn-qa-play-range" class="btn btn-primary btn-sm">
+              <svg class="ui-icon"><use href="#icon-play"/></svg>
+              <span>Nghe đoạn này</span>
+            </button>
+            <span class="qa-playback-time">${startFmt} &rarr; ${endFmt}</span>
+            <span style="font-size: 0.76rem; color: var(--text-muted);">(kèm ±0.4s ngữ cảnh)</span>
+          </div>
+        </div>
+
+        <div class="qa-decision-actions">
+          <div class="qa-pane-title" style="margin-bottom: 0;">Thao tác giải quyết lỗi</div>
+          <div class="qa-decision-row">
+            <button type="button" id="btn-qa-accept" class="btn btn-secondary btn-sm qa-btn-action" title="Chấp nhận phát âm này đúng âm vị thực tế">
+              <span>✓ Chấp nhận (Acoustic Match)</span>
+            </button>
+            <button type="button" id="btn-qa-pronunciation" class="btn btn-secondary btn-sm qa-btn-action" title="Thêm từ này vào Từ điển Phát âm">
+              <span>Sửa phát âm</span>
+            </button>
+            <button type="button" id="btn-qa-rerender-chunk" class="btn btn-secondary btn-sm qa-btn-action" title="Render lại riêng chunk này">
+              <span>Render lại đoạn</span>
+            </button>
+            <button type="button" id="btn-qa-waive" class="btn btn-secondary btn-sm qa-btn-action" title="Bỏ qua cảnh báo này">
+              <span>Bỏ qua (Waive)</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Attach playback listener
+    const playBtn = document.getElementById("btn-qa-play-range");
+    if (playBtn) {
+      playBtn.addEventListener("click", () => {
+        if (!audioPlayer) return;
+        const start = Math.max(0, (issue.start_seconds || 0) - 0.4);
+        const end = (issue.end_seconds || 0) + 0.4;
+        audioPlayer.currentTime = start;
+        audioPlayer.play().catch(() => {});
+
+        const onTimeUpdate = () => {
+          if (audioPlayer.currentTime >= end) {
+            audioPlayer.pause();
+            audioPlayer.removeEventListener("timeupdate", onTimeUpdate);
+          }
+        };
+        audioPlayer.addEventListener("timeupdate", onTimeUpdate);
+      });
+    }
+
+    // Attach decision actions
+    const btnAccept = document.getElementById("btn-qa-accept");
+    if (btnAccept) {
+      btnAccept.addEventListener("click", () => acceptQAIssue(issue.fingerprint));
+    }
+
+    const btnWaive = document.getElementById("btn-qa-waive");
+    if (btnWaive) {
+      btnWaive.addEventListener("click", () => waiveQAIssue(issue.fingerprint));
+    }
+
+    const btnPron = document.getElementById("btn-qa-pronunciation");
+    if (btnPron) {
+      btnPron.addEventListener("click", () => {
+        switchWorkspace("pronunciation");
+        const origInput = document.getElementById("dict-original-input");
+        if (origInput && issue.expected_text) {
+          origInput.value = issue.expected_text.trim();
+          origInput.focus();
+        }
+      });
+    }
+
+    const btnRerender = document.getElementById("btn-qa-rerender-chunk");
+    if (btnRerender) {
+      btnRerender.addEventListener("click", () => {
+        const cIdx = issue.chunk_index != null ? issue.chunk_index : 1;
+        showConfirmDialog({
+          variant: "warning",
+          title: `Render lại Chunk #${cIdx}?`,
+          message: `Thao tác này sẽ chỉ tổng hợp lại âm thanh riêng cho Chunk #${cIdx} và tự động ghép lại vào master audio.wav. Các chunk hợp lệ khác vẫn được giữ nguyên. Tiếp tục?`,
+          confirmText: "Render lại Chunk",
+          cancelText: "Hủy",
+          onConfirm: () => rerenderQAChunk(cIdx)
+        });
+      });
+    }
+  }
+
+  async function acceptQAIssue(fingerprint) {
+    if (!currentProjectDir || !fingerprint) return;
+    try {
+      const res = await fetch(`/api/projects/${currentProjectDir}/voice-qa/issues/${fingerprint}/accept`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ note: "User confirmed acoustic match" })
+      });
+      if (!res.ok) throw new Error("Không thể lưu quyết định chấp nhận.");
+      showNotification("Đã chấp nhận phát âm (Acoustic Match).", "success");
+      loadVoiceQA(currentProjectDir, true);
+    } catch (err) {
+      showNotification(`Lỗi: ${err.message}`, "error");
+    }
+  }
+
+  async function waiveQAIssue(fingerprint) {
+    if (!currentProjectDir || !fingerprint) return;
+    try {
+      const res = await fetch(`/api/projects/${currentProjectDir}/voice-qa/issues/${fingerprint}/waive`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ note: "User waived issue" })
+      });
+      if (!res.ok) throw new Error("Không thể lưu quyết định bỏ qua.");
+      showNotification("Đã bỏ qua mục kiểm định này.", "info");
+      loadVoiceQA(currentProjectDir, true);
+    } catch (err) {
+      showNotification(`Lỗi: ${err.message}`, "error");
+    }
+  }
+
+  async function rerenderQAChunk(chunkIndex) {
+    if (!currentProjectDir) return;
+    showNotification(`Đang render lại Chunk #${chunkIndex}...`, "info");
+    try {
+      const res = await fetch(`/api/projects/${currentProjectDir}/voice-qa/rerender-chunk/${chunkIndex}`, {
+        method: "POST"
+      });
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.detail || "Render lại chunk thất bại.");
+      }
+      showNotification(`Chunk #${chunkIndex} đã được render và ghép lại audio thành công! Đang chạy lại Voice QA...`, "success");
+      runVoiceQA(currentProjectDir, false);
+    } catch (err) {
+      showNotification(`Lỗi render lại chunk: ${err.message}`, "error");
+    }
+  }
+
+  async function runVoiceQA(dirName, forceTranscribe = false) {
+    if (!dirName) return;
+    showQAProgress(5, "Khởi động Voice QA...");
+    try {
+      const res = await fetch(`/api/projects/${dirName}/voice-qa/run`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ force_transcribe: forceTranscribe })
+      });
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.detail || "Không thể khởi động Voice QA.");
+      }
+      loadVoiceQA(dirName);
+    } catch (err) {
+      hideQAProgress();
+      showNotification(`Lỗi chạy Voice QA: ${err.message}`, "error");
+    }
+  }
+
+  async function cancelVoiceQA(dirName) {
+    if (!dirName) return;
+    try {
+      await fetch(`/api/projects/${dirName}/voice-qa/cancel`, { method: "POST" });
+      showNotification("Đã yêu cầu hủy Voice QA.", "info");
+      hideQAProgress();
+      setQaStatus("idle", "Đã hủy");
+    } catch (err) {
+      console.error("Failed to cancel Voice QA:", err);
+    }
+  }
+
+  function showQAProgress(pct, msg) {
+    if (qaProgressContainer) qaProgressContainer.style.display = "block";
+    if (qaProgressPercent) qaProgressPercent.textContent = `${pct}%`;
+    if (qaProgressBar) qaProgressBar.style.width = `${pct}%`;
+    if (qaProgressMessage) qaProgressMessage.textContent = msg || "Đang kiểm định...";
+    if (btnRunVoiceQa) btnRunVoiceQa.disabled = true;
+    if (btnCancelVoiceQa) btnCancelVoiceQa.style.display = "inline-flex";
+    setQaStatus("running", "Đang phân tích...");
+  }
+
+  function hideQAProgress() {
+    if (qaProgressContainer) qaProgressContainer.style.display = "none";
+    if (btnRunVoiceQa) btnRunVoiceQa.disabled = false;
+    if (btnCancelVoiceQa) btnCancelVoiceQa.style.display = "none";
+  }
+
+  function updateTimestampGate(qaData) {
+    if (!tsQaGateWarning) return;
+    if (qaData && (qaData.status === "fail" || qaData.summary?.unresolved_fail_count > 0)) {
+      tsQaGateWarning.style.display = "flex";
+      if (tsQaGateTitle) tsQaGateTitle.textContent = "Voice QA có lỗi nghiêm trọng";
+      if (tsQaGateMsg) tsQaGateMsg.textContent = "Voice QA phát hiện lỗi sai lệch kịch bản. Bạn hãy sửa hoặc xác nhận bỏ qua trước khi tiếp tục.";
+      const forceBtn = document.getElementById("btn-force-ts");
+      if (forceBtn) forceBtn.style.display = "inline-flex";
+    } else if (qaData && qaData.status === "review" && (qaData.summary?.unresolved_review_count > 0)) {
+      tsQaGateWarning.style.display = "flex";
+      tsQaGateWarning.style.borderColor = "rgba(245, 158, 11, 0.4)";
+      tsQaGateWarning.style.background = "rgba(245, 158, 11, 0.08)";
+      if (tsQaGateTitle) {
+        tsQaGateTitle.textContent = "Voice QA cần kiểm tra";
+        tsQaGateTitle.style.color = "#f59e0b";
+      }
+      if (tsQaGateMsg) tsQaGateMsg.textContent = `Voice QA còn ${qaData.summary.unresolved_review_count} mục cần xem xét. Timestamp vẫn có thể tạo bình thường.`;
+      const forceBtn = document.getElementById("btn-force-ts");
+      if (forceBtn) forceBtn.style.display = "none";
+    } else {
+      tsQaGateWarning.style.display = "none";
+    }
+  }
+
+  async function loadVoiceQA(dirName, autoSelect = true) {
+    if (!dirName) return;
+    try {
+      const res = await fetch(`/api/projects/${dirName}/voice-qa`);
+      if (!res.ok) return;
+      const data = await res.json();
+      voiceQAData = data;
+
+      if (data.status === "running") {
+        showQAProgress(data.progress || 0, data.message || "Đang kiểm định...");
+        if (!voiceQAPollTimer) {
+          voiceQAPollTimer = setInterval(() => loadVoiceQA(dirName, false), 1500);
+        }
+        return;
+      }
+
+      if (voiceQAPollTimer) {
+        clearInterval(voiceQAPollTimer);
+        voiceQAPollTimer = null;
+      }
+      hideQAProgress();
+      renderQAMetrics(data);
+      renderQAIssues(data.issues || []);
+      updateTimestampGate(data);
+      updateDependencyState();
+    } catch (err) {
+      console.error("Failed to load Voice QA:", err);
+    }
+  }
+
+  // Filter tabs click listeners
+  document.querySelectorAll(".qa-tab").forEach(tab => {
+    tab.addEventListener("click", () => {
+      document.querySelectorAll(".qa-tab").forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
+      voiceQAFilter = tab.dataset.filter || "all";
+      if (voiceQAData && voiceQAData.issues) {
+        renderQAIssues(voiceQAData.issues);
+      }
+    });
+  });
+
+  if (btnRunVoiceQa) {
+    btnRunVoiceQa.addEventListener("click", () => {
+      if (currentProjectDir) runVoiceQA(currentProjectDir, false);
+    });
+  }
+
+  if (btnCancelVoiceQa) {
+    btnCancelVoiceQa.addEventListener("click", () => {
+      if (currentProjectDir) cancelVoiceQA(currentProjectDir);
+    });
+  }
+
+  if (btnForceVoiceQa) {
+    btnForceVoiceQa.addEventListener("click", () => {
+      if (currentProjectDir) {
+        showConfirmDialog({
+          variant: "warning",
+          title: "Chạy lại Voice QA (Bỏ qua cache)?",
+          message: "Thao tác này sẽ thực hiện nhận dạng ASR Faster-Whisper mới hoàn toàn từ file audio.wav mà không tái sử dụng cache. Tiếp tục?",
+          confirmText: "Chạy lại hoàn toàn",
+          cancelText: "Hủy",
+          onConfirm: () => runVoiceQA(currentProjectDir, true)
+        });
+      }
+    });
+  }
+
+  if (btnGotoTimestamp) {
+    btnGotoTimestamp.addEventListener("click", () => {
+      switchWorkspace("timestamp");
+    });
+  }
+
+  if (btnForceTs) {
+    btnForceTs.addEventListener("click", () => {
+      showConfirmDialog({
+        variant: "warning",
+        title: "Bỏ qua cảnh báo Voice QA?",
+        message: "Bạn có chắc chắn muốn bỏ qua các lỗi phát hiện bởi Voice QA và tiếp tục tạo Timestamp không?",
+        confirmText: "Xác nhận & Tạo Timestamp",
+        cancelText: "Hủy",
+        onConfirm: () => doGenerateTimestamps(true)
+      });
+    });
+  }
+
+
+  // ==============================================================================
   // 9. TIMESTAMPS & SUBTITLES (PHASE 4)
   // ==============================================================================
   function setTsStatus(state, label) {
@@ -1962,13 +2536,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  async function doGenerateTimestamps() {
+  async function doGenerateTimestamps(force = false) {
     if (!currentProjectDir) return;
     btnGenerateTs.disabled = true;
     tsErrorAlert.style.display = "none";
     try {
       const res = await fetch(`/api/projects/${currentProjectDir}/timestamps/generate`, {
-        method: "POST"
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ force: force })
       });
       if (!res.ok) {
         const err = await res.json();
@@ -1985,6 +2561,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
   btnGenerateTs.addEventListener("click", () => {
     if (!currentProjectDir) return;
+
+    // Check Voice QA gating: if unresolved FAIL, block and prompt
+    if (voiceQAData && (voiceQAData.status === "fail" || voiceQAData.summary?.unresolved_fail_count > 0)) {
+      showConfirmDialog({
+        variant: "danger",
+        title: "Voice QA phát hiện lỗi nghiêm trọng!",
+        message: "Voice QA phát hiện lỗi sai lệch kịch bản (FAIL) chưa giải quyết. Bạn nên kiểm tra và khắc phục ở bước Voice QA trước khi tạo Timestamp.\n\nBạn có muốn bỏ qua cảnh báo này và tiếp tục tạo Timestamp không?",
+        confirmText: "Bỏ qua & Tiếp tục",
+        cancelText: "Xem Voice QA",
+        onConfirm: () => doGenerateTimestamps(true),
+        onCancel: () => switchWorkspace("voice-qa")
+      });
+      return;
+    }
+
     if (projectCues && projectCues.length > 0) {
       showConfirmDialog({
         variant: "warning",
@@ -3114,6 +3705,7 @@ document.addEventListener("DOMContentLoaded", () => {
     veoOutdated = false;
     updateDependencyState();
 
+    loadVoiceQA(dirName);
     loadTimestampsForProject(dirName);
     loadScenesForProject(dirName);
     loadVeoForProject(dirName);

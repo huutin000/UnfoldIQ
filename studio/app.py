@@ -55,6 +55,11 @@ from studio.pronunciation_service import PronunciationDictionary
 from studio.transcription_service import transcription_service
 from studio.scene_planner import scene_planner, ScenePlanValidationError
 from studio.veo_prompt_generator import veo_generator, VeoPromptGenerator, VeoPlanValidationError
+from studio.voice_qa import (
+    voice_qa_manager,
+    VoiceQAEvaluator,
+    compute_file_sha256,
+)
 
 
 # Setup logging
@@ -83,10 +88,11 @@ USER_SETTINGS_PATH = BASE_DIR / "config" / "user_settings.json"
 active_jobs: Dict[str, Dict[str, Any]] = {}
 job_cancel_events: Dict[str, asyncio.Event] = {}
 active_project_dirs: set = set()
+active_qa_jobs: Dict[str, Dict[str, Any]] = {}
 
 
 def _is_project_busy(dir_name: str) -> bool:
-    """Check if project has active TTS, transcription, scene, or veo generation."""
+    """Check if project has active TTS, transcription, scene, veo, or voice QA generation."""
     if not dir_name:
         return False
     if dir_name in active_project_dirs:
@@ -95,6 +101,9 @@ def _is_project_busy(dir_name: str) -> bool:
         if j.get("state") in ("preparing", "generating"):
             if j.get("project_name") == dir_name or j.get("directory_name") == dir_name:
                 return True
+    qa_job = active_qa_jobs.get(dir_name)
+    if qa_job and qa_job.get("status") == "running":
+        return True
     try:
         ts_job = transcription_service.get_job(dir_name)
         if ts_job and ts_job.get("status") in ("queued", "running"):
@@ -183,6 +192,18 @@ class VeoShotUpdateRequest(BaseModel):
     veo_prompt: Optional[str] = None
     negative_prompt: Optional[str] = None
     aspect_ratio: Optional[str] = None
+
+
+class VoiceQARunRequest(BaseModel):
+    force_transcribe: bool = Field(default=False, description="Ignore cache and re-run Whisper ASR")
+
+
+class VoiceQADecisionRequest(BaseModel):
+    note: Optional[str] = Field(default=None, description="Optional note for human decision")
+
+
+class TimestampGenerateRequest(BaseModel):
+    force: bool = Field(default=False, description="Force timestamp generation even if Voice QA is FAIL")
 
 
 
@@ -519,6 +540,12 @@ async def _run_tts_job(job_id: str, req: JobRequest):
         job["elapsed_seconds"] = round(time.time() - start_time, 1)
         job["audio_url"] = f"/api/projects/{project_dir.name}/audio/wav"
         logger.info(f"Job {job_id} successfully completed in {job['elapsed_seconds']}s (Audio: {job['final_duration_seconds']}s)")
+
+        # Trigger Voice QA in background (Section 35)
+        try:
+            asyncio.create_task(_run_voice_qa_pipeline(project_dir.name))
+        except Exception as ex:
+            logger.warning(f"Voice QA auto-trigger failed for {project_dir.name}: {ex}")
 
     except asyncio.CancelledError:
         job["state"] = "cancelled"
@@ -930,12 +957,339 @@ async def save_user_settings(req: UserSettingsRequest):
 
 
 # ==============================================================================
+# VOICE QA API (Phase 8.1)
+# ==============================================================================
+
+async def _rerender_chunk_impl(dir_name: str, chunk_index: int) -> Dict[str, Any]:
+    project_dir = (PROJECTS_DIR / dir_name).resolve()
+    if not project_dir.is_dir():
+        raise HTTPException(status_code=404, detail=f"Project '{dir_name}' not found.")
+    
+    metadata_p = project_dir / "metadata.json"
+    if not metadata_p.is_file():
+        metadata_p = project_dir / "settings.json"
+    if not metadata_p.is_file():
+        raise HTTPException(status_code=400, detail="Missing metadata.json or settings.json in project.")
+    
+    with open(metadata_p, "r", encoding="utf-8") as f:
+        meta = json.load(f)
+    
+    settings = meta.get("settings", meta)
+    script_path = project_dir / "script.txt"
+    if not script_path.is_file():
+        raise HTTPException(status_code=400, detail="Missing script.txt in project.")
+    
+    with open(script_path, "r", encoding="utf-8") as f:
+        script_text = f.read()
+
+    voice = settings.get("voice", "af_heart")
+    speed = float(settings.get("speed", 1.0))
+    render_mode = settings.get("render_mode", DEFAULT_RENDER_MODE)
+    export_mp3 = bool(settings.get("export_mp3", True)) or (project_dir / "audio.mp3").is_file()
+
+    applied_overrides: Dict[str, str] = {}
+    synthesis_text = pron_dict.apply(script_text, applied_map=applied_overrides)
+    plan = plan_render(
+        script=script_text,
+        voice=voice,
+        speed=speed,
+        render_mode=render_mode,
+        pronunciation_overrides=applied_overrides,
+        synthesis_script=synthesis_text
+    )
+
+    target_chunk = None
+    for c in plan.chunks:
+        if c.index == chunk_index or int(c.chunk_id) == chunk_index:
+            target_chunk = c
+            break
+
+    if target_chunk is None:
+        raise HTTPException(status_code=400, detail=f"Chunk index {chunk_index} not found in project (total {plan.total_chunks} chunks).")
+
+    cache = RenderCache(project_dir)
+    tmp_path = cache.chunks_dir / f".tmp_rerender_{target_chunk.chunk_id}_{target_chunk.render_hash[:12]}.wav"
+    cancel_evt = asyncio.Event()
+
+    async def synth_fn(text: str, out: Path) -> None:
+        await kokoro_client.synthesize_chunk(
+            text=text,
+            voice=voice,
+            speed=speed,
+            output_path=out,
+            cancel_event=cancel_evt,
+        )
+
+    res = await render_chunk_with_retry(
+        synth_fn, target_chunk.text, tmp_path,
+        cancel_check=cancel_evt.is_set,
+    )
+    if not res.get("ok"):
+        if tmp_path.exists():
+            try:
+                tmp_path.unlink()
+            except Exception:
+                pass
+        raise HTTPException(status_code=500, detail=f"Failed to rerender chunk {chunk_index}: {res.get('error')}")
+
+    cache.store(target_chunk.render_hash, tmp_path, target_chunk.chunk_id)
+    if tmp_path.exists():
+        try:
+            tmp_path.unlink()
+        except Exception:
+            pass
+
+    ordered = sorted(plan.chunks, key=lambda c: c.index)
+    chunk_files = []
+    for chunk in ordered:
+        p = cache.lookup(chunk.render_hash)
+        if p is None:
+            raise HTTPException(status_code=500, detail=f"Chunk {chunk.chunk_id} missing from cache during re-stitch.")
+        chunk_files.append(p)
+
+    master_tmp = project_dir / ".audio_new.wav"
+    if master_tmp.exists():
+        master_tmp.unlink()
+    stitch_wav_files(chunk_files, master_tmp)
+    replace_file_atomically(master_tmp, project_dir / "audio.wav")
+
+    if export_mp3:
+        mp3_tmp = project_dir / ".audio_new.mp3"
+        if mp3_tmp.exists():
+            mp3_tmp.unlink()
+        convert_wav_to_mp3(project_dir / "audio.wav", mp3_tmp)
+        replace_file_atomically(mp3_tmp, project_dir / "audio.mp3")
+
+    return {
+        "status": "success",
+        "message": f"Chunk {chunk_index} re-rendered successfully and master audio updated.",
+        "chunk_id": target_chunk.chunk_id,
+        "chunk_index": target_chunk.index
+    }
+
+
+async def _run_voice_qa_pipeline(dir_name: str):
+    project_dir = PROJECTS_DIR / dir_name
+    audio_path = project_dir / "audio.wav"
+    script_path = project_dir / "script.txt"
+    if not audio_path.is_file() or not script_path.is_file():
+        if dir_name in active_qa_jobs:
+            active_qa_jobs[dir_name]["status"] = "error"
+            active_qa_jobs[dir_name]["error"] = "Missing audio.wav or script.txt"
+        return
+
+    job = active_qa_jobs.setdefault(dir_name, {})
+    job["status"] = "running"
+    job["progress"] = 10
+    job["message"] = "Preparing Voice QA..."
+    job["start_time"] = time.time()
+
+    try:
+        current_audio_hash = compute_file_sha256(audio_path)
+        raw_transcription_path = project_dir / "transcription_raw.json"
+
+        raw_data = None
+        if raw_transcription_path.exists():
+            try:
+                with open(raw_transcription_path, "r", encoding="utf-8") as f:
+                    cached_raw = json.load(f)
+                if cached_raw.get("audio_sha256") == current_audio_hash and cached_raw.get("segments"):
+                    raw_data = cached_raw
+                    logger.info(f"Voice QA reusing cached raw transcription for {dir_name}")
+            except Exception as ex:
+                logger.warning(f"Error reading existing transcription_raw.json: {ex}")
+
+        if not raw_data:
+            job["progress"] = 20
+            job["message"] = "Running Faster-Whisper ASR transcription..."
+
+            ts_job = await transcription_service.start_transcription(
+                project_id=dir_name,
+                is_tts_active_fn=_is_tts_active
+            )
+
+            while True:
+                await asyncio.sleep(0.5)
+                if job.get("status") in ("cancelling", "cancelled"):
+                    await transcription_service.cancel_transcription(dir_name)
+                    job["status"] = "cancelled"
+                    job["message"] = "Voice QA cancelled."
+                    return
+
+                curr_ts_job = transcription_service.get_job(dir_name)
+                if not curr_ts_job:
+                    break
+                state = curr_ts_job.get("state")
+                job["progress"] = 20 + int(curr_ts_job.get("percent", 0) * 0.6)
+                job["message"] = curr_ts_job.get("message", "Transcribing...")
+
+                if state == "completed":
+                    break
+                elif state in ("failed", "cancelled"):
+                    job["status"] = "error" if state == "failed" else "cancelled"
+                    job["error"] = curr_ts_job.get("error", "Transcription failed")
+                    job["message"] = f"ASR transcription {state}: {job['error']}"
+                    return
+
+            if raw_transcription_path.exists():
+                with open(raw_transcription_path, "r", encoding="utf-8") as f:
+                    raw_data = json.load(f)
+            else:
+                job["status"] = "error"
+                job["error"] = "transcription_raw.json not produced"
+                return
+
+        job["progress"] = 85
+        job["message"] = "Evaluating speech accuracy and quality metrics..."
+
+        with open(script_path, "r", encoding="utf-8") as f:
+            script_text = f.read()
+
+        dict_entries = pron_dict.entries if hasattr(pron_dict, "entries") else []
+        existing_decisions = voice_qa_manager.load_decisions(dir_name)
+
+        evaluator = VoiceQAEvaluator()
+        eval_result = await asyncio.to_thread(
+            evaluator.evaluate,
+            script_text=script_text,
+            raw_segments=raw_data.get("segments", []),
+            audio_duration=raw_data.get("audio_duration", 0.0),
+            audio_sha256=current_audio_hash,
+            pronunciation_entries=dict_entries,
+            human_decisions=existing_decisions
+        )
+
+        voice_qa_manager.save_evaluation(dir_name, eval_result)
+        job["status"] = "completed"
+        job["progress"] = 100
+        job["message"] = f"Voice QA completed: {eval_result['status'].upper()}"
+        job["eval_result"] = eval_result
+
+    except asyncio.CancelledError:
+        job["status"] = "cancelled"
+        job["message"] = "Voice QA cancelled."
+    except Exception as e:
+        logger.exception(f"Voice QA pipeline error for {dir_name}: {e}")
+        job["status"] = "error"
+        job["error"] = str(e)
+        job["message"] = f"Voice QA failed: {e}"
+
+
+@app.post("/api/projects/{dir_name}/voice-qa")
+@app.post("/api/projects/{dir_name}/voice-qa/run")
+async def run_voice_qa(dir_name: str, req: Optional[VoiceQARunRequest] = None):
+    project_path = PROJECTS_DIR / dir_name
+    if not project_path.is_dir():
+        raise HTTPException(status_code=404, detail="Project directory not found.")
+    if not (project_path / "audio.wav").is_file():
+        raise HTTPException(status_code=400, detail="Missing audio.wav in project. Generate TTS narration first.")
+    if not (project_path / "script.txt").is_file():
+        raise HTTPException(status_code=400, detail="Missing script.txt in project.")
+    if _is_tts_active():
+        raise HTTPException(status_code=409, detail="Cannot start Voice QA while TTS synthesis is active.")
+
+    current_job = active_qa_jobs.get(dir_name)
+    if current_job and current_job.get("status") == "running":
+        return {"status": "running", "job": current_job}
+
+    if req and req.force_transcribe:
+        raw_p = project_path / "transcription_raw.json"
+        if raw_p.exists():
+            try:
+                raw_p.unlink()
+            except Exception:
+                pass
+
+    active_qa_jobs[dir_name] = {
+        "status": "running",
+        "progress": 0,
+        "message": "Starting Voice QA...",
+        "start_time": time.time()
+    }
+    asyncio.create_task(_run_voice_qa_pipeline(dir_name))
+    return {"status": "started", "job": active_qa_jobs[dir_name]}
+
+
+@app.get("/api/projects/{dir_name}/voice-qa")
+async def get_voice_qa(dir_name: str):
+    project_path = PROJECTS_DIR / dir_name
+    if not project_path.is_dir():
+        raise HTTPException(status_code=404, detail="Project directory not found.")
+
+    active_job = active_qa_jobs.get(dir_name)
+    if active_job and active_job.get("status") == "running":
+        return {
+            "status": "running",
+            "progress": active_job.get("progress", 0),
+            "message": active_job.get("message", "Evaluating Voice QA..."),
+            "elapsed_seconds": round(time.time() - active_job.get("start_time", time.time()), 1)
+        }
+
+    status_data = voice_qa_manager.check_status(dir_name)
+    if status_data.get("exists") and status_data.get("data"):
+        eval_data = status_data["data"]
+        return {
+            "status": status_data.get("status", "review"),
+            "state": "stale" if status_data.get("is_stale") else status_data.get("status", "review"),
+            "is_stale": status_data.get("is_stale", False),
+            "audio_duration": eval_data.get("audio_duration", 0.0),
+            "metrics": eval_data.get("metrics", {}),
+            "issues": eval_data.get("issues", []),
+            "summary": eval_data.get("summary", {}),
+            "created_at": eval_data.get("created_at", "")
+        }
+
+    return {
+        "status": "idle",
+        "state": "idle",
+        "exists": False,
+        "has_audio": (project_path / "audio.wav").is_file()
+    }
+
+
+@app.post("/api/projects/{dir_name}/voice-qa/cancel")
+async def cancel_voice_qa(dir_name: str):
+    job = active_qa_jobs.get(dir_name)
+    if job and job.get("status") == "running":
+        job["status"] = "cancelling"
+        job["message"] = "Cancelling Voice QA..."
+        await transcription_service.cancel_transcription(dir_name)
+        job["status"] = "cancelled"
+        job["message"] = "Voice QA cancelled."
+        return {"status": "cancelled"}
+    return {"status": "not_running"}
+
+
+@app.post("/api/projects/{dir_name}/voice-qa/issues/{fingerprint}/accept")
+async def accept_voice_qa_issue(dir_name: str, fingerprint: str, req: Optional[VoiceQADecisionRequest] = None):
+    note = req.note if req else None
+    res = voice_qa_manager.record_decision(dir_name, fingerprint, "accepted", note=note)
+    if not res:
+        raise HTTPException(status_code=404, detail="Issue fingerprint not found or Voice QA report missing.")
+    return {"status": "success", "fingerprint": fingerprint, "decision": "accepted", "qa_status": res}
+
+
+@app.post("/api/projects/{dir_name}/voice-qa/issues/{fingerprint}/waive")
+async def waive_voice_qa_issue(dir_name: str, fingerprint: str, req: Optional[VoiceQADecisionRequest] = None):
+    note = req.note if req else None
+    res = voice_qa_manager.record_decision(dir_name, fingerprint, "waived", note=note)
+    if not res:
+        raise HTTPException(status_code=404, detail="Issue fingerprint not found or Voice QA report missing.")
+    return {"status": "success", "fingerprint": fingerprint, "decision": "waived", "qa_status": res}
+
+
+@app.post("/api/projects/{dir_name}/voice-qa/rerender-chunk/{chunk_index}")
+async def rerender_chunk_endpoint(dir_name: str, chunk_index: int):
+    return await _rerender_chunk_impl(dir_name, chunk_index)
+
+
+# ==============================================================================
 # TIMESTAMPS & SUBTITLES API (Phase 4)
 # ==============================================================================
 
 @app.post("/api/projects/{dir_name}/timestamps")
 @app.post("/api/projects/{dir_name}/timestamps/generate")
-async def generate_project_timestamps(dir_name: str):
+async def generate_project_timestamps(dir_name: str, req: Optional[TimestampGenerateRequest] = None):
     """Start on-demand local Whisper transcription and alignment for a project."""
     project_path = PROJECTS_DIR / dir_name
     if not project_path.is_dir():
@@ -944,6 +1298,15 @@ async def generate_project_timestamps(dir_name: str):
         raise HTTPException(status_code=400, detail="Missing audio.wav in project. Generate TTS narration first.")
     if not (project_path / "script.txt").is_file():
         raise HTTPException(status_code=400, detail="Missing script.txt in project.")
+
+    # Voice QA Gating Check (Prompt Section 34)
+    force = req.force if req else False
+    qa_status = voice_qa_manager.check_status(dir_name)
+    if qa_status.get("status") == "fail" and not force:
+        raise HTTPException(
+            status_code=400,
+            detail="Voice QA còn lỗi nghiêm trọng (FAIL). Hãy sửa hoặc xác nhận bỏ qua trước khi tiếp tục."
+        )
 
     try:
         job = await transcription_service.start_transcription(

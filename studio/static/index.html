@@ -8,13 +8,17 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=3.4">
+  <link rel="stylesheet" href="style.css?v=3.5">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
 <body class="workstation-app">
 
   <!-- SVG Icon Sprite Definition -->
   <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="icon-voice-qa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      <polyline points="9 12 11 14 15 10"/>
+    </symbol>
     <symbol id="icon-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M12 2v20M17 5v14M7 5v14M2 9v6M22 9v6"/>
     </symbol>
@@ -191,20 +195,26 @@
           <span class="nav-label">Giọng đọc</span>
           <span class="nav-status-badge" id="badge-step-audio">○</span>
         </button>
-        <button class="nav-item" data-workspace="timestamp" id="nav-step-timestamp">
+        <button class="nav-item" data-workspace="voice-qa" id="nav-step-voice-qa">
           <span class="nav-step-num">03</span>
+          <span class="nav-icon"><svg class="ui-icon"><use href="#icon-voice-qa"/></svg></span>
+          <span class="nav-label">Voice QA</span>
+          <span class="nav-status-badge" id="badge-step-voice-qa">○</span>
+        </button>
+        <button class="nav-item" data-workspace="timestamp" id="nav-step-timestamp">
+          <span class="nav-step-num">04</span>
           <span class="nav-icon"><svg class="ui-icon"><use href="#icon-timestamp"/></svg></span>
           <span class="nav-label">Timestamp</span>
           <span class="nav-status-badge" id="badge-step-timestamp">○</span>
         </button>
         <button class="nav-item" data-workspace="scenes" id="nav-step-scenes">
-          <span class="nav-step-num">04</span>
+          <span class="nav-step-num">05</span>
           <span class="nav-icon"><svg class="ui-icon"><use href="#icon-scene"/></svg></span>
           <span class="nav-label">Scene Plan</span>
           <span class="nav-status-badge" id="badge-step-scenes">○</span>
         </button>
         <button class="nav-item" data-workspace="veo" id="nav-step-veo">
-          <span class="nav-step-num">05</span>
+          <span class="nav-step-num">06</span>
           <span class="nav-icon"><svg class="ui-icon"><use href="#icon-video"/></svg></span>
           <span class="nav-label">Veo Prompt</span>
           <span class="nav-status-badge" id="badge-step-veo">○</span>
@@ -250,20 +260,26 @@
           <span class="step-status-icon" id="step-status-audio">○</span>
         </div>
         <div class="stepper-arrow">&rarr;</div>
-        <div class="stepper-item" data-workspace="timestamp" id="step-node-timestamp">
+        <div class="stepper-item" data-workspace="voice-qa" id="step-node-voice-qa">
           <span class="step-num">3</span>
+          <span class="step-label">Voice QA</span>
+          <span class="step-status-icon" id="step-status-voice-qa">○</span>
+        </div>
+        <div class="stepper-arrow">&rarr;</div>
+        <div class="stepper-item" data-workspace="timestamp" id="step-node-timestamp">
+          <span class="step-num">4</span>
           <span class="step-label">Timestamp</span>
           <span class="step-status-icon" id="step-status-timestamp">○</span>
         </div>
         <div class="stepper-arrow">&rarr;</div>
         <div class="stepper-item" data-workspace="scenes" id="step-node-scenes">
-          <span class="step-num">4</span>
+          <span class="step-num">5</span>
           <span class="step-label">Scene Plan</span>
           <span class="step-status-icon" id="step-status-scenes">○</span>
         </div>
         <div class="stepper-arrow">&rarr;</div>
         <div class="stepper-item" data-workspace="veo" id="step-node-veo">
-          <span class="step-num">5</span>
+          <span class="step-num">6</span>
           <span class="step-label">Veo Prompt</span>
           <span class="step-status-icon" id="step-status-veo">○</span>
         </div>
@@ -361,7 +377,89 @@
 
 
       <!-- ============================================================== -->
-      <!-- WORKSPACE 03: TIMESTAMP -->
+      <!-- WORKSPACE 03: VOICE QA (Phase 8.1) -->
+      <!-- ============================================================== -->
+      <section id="ws-voice-qa" class="workspace-view">
+        <div class="ws-header">
+          <div class="ws-title-group">
+            <h2 class="ws-title">Voice QA (Kiểm định giọng đọc)</h2>
+            <button type="button" class="btn-module-help" data-module="voice-qa" title="Xem hướng dẫn Voice QA" aria-label="Hướng dẫn Voice QA">?</button>
+            <span class="ws-description">Kiểm tra tính chính xác của âm thanh narration so với kịch bản gốc trước khi làm Timestamp</span>
+          </div>
+          <div class="ws-status-group">
+            <span id="qa-status-pill" class="state-pill state-idle">Chưa kiểm định</span>
+          </div>
+        </div>
+
+        <!-- QA Top Metrics Grid -->
+        <div class="qa-metrics-grid">
+          <div class="qa-metric-card" id="card-qa-verdict">
+            <div class="metric-header">KẾT LUẬN QA</div>
+            <div class="metric-big-val" id="val-qa-verdict">--</div>
+            <div class="metric-sub" id="sub-qa-verdict">Cần chạy kiểm định</div>
+          </div>
+          <div class="qa-metric-card">
+            <div class="metric-header">ĐỘ KHỚP NỘI DUNG</div>
+            <div class="metric-big-val" id="val-qa-match">--%</div>
+            <div class="metric-sub" id="sub-qa-wer">WER: --%</div>
+          </div>
+          <div class="qa-metric-card">
+            <div class="metric-header">TỐC ĐỘ NÓI (WPM)</div>
+            <div class="metric-big-val" id="val-qa-wpm">--</div>
+            <div class="metric-sub" id="sub-qa-wpm">Từ / phút</div>
+          </div>
+          <div class="qa-metric-card">
+            <div class="metric-header">MỤC CẦN XỬ LÝ</div>
+            <div class="metric-big-val" id="val-qa-issues-count">0</div>
+            <div class="metric-sub" id="sub-qa-breakdown">0 FAIL · 0 REVIEW</div>
+          </div>
+        </div>
+
+        <!-- Progress bar when running -->
+        <div id="qa-progress-container" class="qa-progress-bar-wrap" style="display: none;">
+          <div class="qa-progress-header">
+            <span id="qa-progress-message">Đang kiểm định giọng đọc...</span>
+            <span id="qa-progress-percent">0%</span>
+          </div>
+          <div class="progress-track">
+            <div id="qa-progress-bar" class="progress-fill" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <!-- Master / Detail Container -->
+        <div class="qa-workbench-container">
+          <!-- Left Column: Issues List & Filter Tabs -->
+          <div class="qa-issues-pane">
+            <div class="qa-pane-toolbar">
+              <div class="qa-filter-tabs">
+                <button type="button" class="qa-tab active" data-filter="all">Tất cả (<span id="count-filter-all">0</span>)</button>
+                <button type="button" class="qa-tab tab-fail" data-filter="fail">FAIL (<span id="count-filter-fail">0</span>)</button>
+                <button type="button" class="qa-tab tab-review" data-filter="review">REVIEW (<span id="count-filter-review">0</span>)</button>
+                <button type="button" class="qa-tab" data-filter="unresolved">Chưa xử lý</button>
+              </div>
+            </div>
+            <div id="qa-issues-list" class="qa-issues-list scrollbar-custom">
+              <div class="qa-empty-state">
+                <p>Chưa có dữ liệu Voice QA. Nhấn <strong>"Chạy Voice QA"</strong> để phân tích giọng đọc.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Selected Issue Inspection & Decisions -->
+          <div class="qa-detail-pane">
+            <div class="qa-pane-title">Chi tiết mục phát hiện & Thao tác</div>
+            <div id="qa-selected-detail" class="qa-detail-content">
+              <div class="qa-detail-empty">
+                <p>Chọn một mục từ danh sách bên trái để kiểm tra và thao tác.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ============================================================== -->
+      <!-- WORKSPACE 04: TIMESTAMP -->
       <!-- ============================================================== -->
       <section id="ws-timestamp" class="workspace-view">
         <div class="ws-header">
@@ -800,12 +898,74 @@
         </div>
       </div>
 
+      <!-- Context Inspector: VOICE QA -->
+      <div id="inspector-voice-qa" class="inspector-panel">
+        <div class="inspector-header">
+          <h3 class="inspector-title">Thao tác Voice QA</h3>
+        </div>
+        <div class="inspector-body">
+          <div class="inspector-meta-card">
+            <div class="meta-row">
+              <span class="meta-title">Trạng thái:</span>
+              <span class="meta-value" id="ins-qa-status">Chưa chạy</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-title">Khớp kịch bản:</span>
+              <span class="meta-value" id="ins-qa-match">--%</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-title">Word Error Rate:</span>
+              <span class="meta-value" id="ins-qa-wer">--%</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-title">Tốc độ TB:</span>
+              <span class="meta-value" id="ins-qa-wpm">-- WPM</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-title">Mục cần xem:</span>
+              <span class="meta-value" id="ins-qa-issues">0</span>
+            </div>
+          </div>
+          <div class="inspector-cta-group">
+            <button id="btn-run-voice-qa" class="btn btn-primary btn-block">
+              <svg class="ui-icon"><use href="#icon-play"/></svg>
+              <span>Chạy Voice QA</span>
+            </button>
+            <button id="btn-cancel-voice-qa" class="btn btn-danger btn-block" style="display: none;">
+              <svg class="ui-icon"><use href="#icon-stop"/></svg>
+              <span>Hủy kiểm định</span>
+            </button>
+            <button id="btn-force-voice-qa" class="btn btn-secondary btn-block">
+              <svg class="ui-icon"><use href="#icon-refresh"/></svg>
+              <span>Chạy lại (bỏ cache)</span>
+            </button>
+          </div>
+          <div class="inspector-cta-group" style="margin-top: 14px;">
+            <button id="btn-goto-timestamp" class="btn btn-secondary btn-block">
+              <span>Tiếp tục sang Timestamp &rarr;</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
       <!-- Context Inspector: TIMESTAMP -->
       <div id="inspector-timestamp" class="inspector-panel">
         <div class="inspector-header">
           <h3 class="inspector-title">Thao tác Timestamp</h3>
         </div>
         <div class="inspector-body">
+          <!-- Voice QA Gate Warning Banner -->
+          <div id="ts-qa-gate-warning" class="qa-gate-banner" style="display: none;">
+            <div class="qa-gate-icon">⚠️</div>
+            <div class="qa-gate-content">
+              <div class="qa-gate-title" id="ts-qa-gate-title">Voice QA còn lỗi nghiêm trọng</div>
+              <div class="qa-gate-msg" id="ts-qa-gate-msg">Kịch bản phát âm có sai lệch. Hãy sửa hoặc xác nhận bỏ qua.</div>
+              <button type="button" id="btn-force-ts" class="btn btn-secondary btn-sm" style="margin-top: 8px; width: 100%;">
+                Bỏ qua cảnh báo & Tạo Timestamp
+              </button>
+            </div>
+          </div>
+
           <div class="inspector-cta-group">
             <button id="btn-generate-ts" class="btn btn-primary btn-block" disabled title="Phân tích audio bằng Whisper để căn chỉnh timestamp câu">
               <span>Tạo Timestamp</span>
@@ -1219,7 +1379,7 @@
     </div>
   </div>
 
-  <script src="app.js?v=3.4"></script>
+  <script src="app.js?v=3.5"></script>
 </body>
 </html>
 
