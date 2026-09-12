@@ -1230,11 +1230,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // Duration estimate: 150 wpm adjusted for speed
     const totalSecs = words > 0 ? Math.round((words / 150.0) * 60.0 / speed) : 0;
     if (totalSecs < 60) {
-      estDurationEl.textContent = `~${totalSecs}s dự kiến`;
+      estDurationEl.textContent = `~${totalSecs}s`;
     } else {
       const mins = Math.floor(totalSecs / 60);
       const secs = totalSecs % 60;
-      estDurationEl.textContent = `~${mins}ph ${secs}s dự kiến`;
+      estDurationEl.textContent = `~${mins}ph ${secs}s`;
     }
     updateDependencyState();
   }
@@ -2176,7 +2176,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderSelectedSceneDetail(sc) {
     if (!spSelectedDetail) return;
     if (!sc) {
-      spSelectedDetail.innerHTML = `<div class="detail-empty-state"><p>Chọn một scene từ danh sách bên trái để xem chi tiết</p></div>`;
+      spSelectedDetail.innerHTML = `<div class="empty-detail-state"><p>Chọn một scene từ danh sách bên trái để xem chi tiết</p></div>`;
       return;
     }
 
@@ -2185,8 +2185,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     spSelectedDetail.innerHTML = `
       <div class="detail-header-card">
-        <div class="detail-topbar">
-          <div class="detail-identity">
+        <div class="detail-identity-row">
+          <div class="detail-title-time">
             <span class="sp-scene-num detail-title">Scene ${sc.index}</span>
             <span class="sp-scene-time detail-time">${sFmt} &rarr; ${eFmt} (${sc.duration}s)</span>
           </div>
@@ -2197,41 +2197,71 @@ document.addEventListener("DOMContentLoaded", () => {
             ${sc.continuity_group ? `<span class="veo-pill-tag continuity-tag">${escapeHtml(sc.continuity_group)}</span>` : ''}
           </div>
         </div>
-        <div class="detail-actions">
+        <div class="detail-actions-bar">
           <button class="btn btn-secondary btn-sm btn-seek-scene" data-action="seek" data-start="${sc.start}">
             <svg class="icon"><use href="#icon-play" /></svg>
             <span>▶ Phát</span>
-          </button>
-          <button class="btn btn-secondary btn-sm btn-copy-prompt" data-action="copy">
-            <svg class="icon"><use href="#icon-export" /></svg>
-            <span>Sao chép Prompt</span>
           </button>
           <button class="btn btn-secondary btn-sm btn-edit-scene" data-action="edit">
             <svg class="icon"><use href="#icon-edit" /></svg>
             <span>Chỉnh sửa</span>
           </button>
+          <button class="btn btn-secondary btn-sm btn-copy-prompt" data-action="copy-image">
+            <svg class="icon"><use href="#icon-export" /></svg>
+            <span>Sao chép Prompt</span>
+          </button>
         </div>
       </div>
 
-      <div class="detail-prose-box">
+      <div class="detail-prose-card">
         <div class="detail-prose-label">Lời bình Narration</div>
-        <div class="sp-narration-box">&ldquo;${escapeHtml(sc.narration || '')}&rdquo;</div>
+        <div class="detail-prose-content narration-quote">&ldquo;${escapeHtml(sc.narration || '')}&rdquo;</div>
       </div>
 
-      <div class="detail-prose-box">
+      <div class="detail-prose-card">
         <div class="detail-prose-label">Visual Summary</div>
-        <div class="sp-visual-summary"><span class="sp-vs-prefix">Visual:</span> <span>${escapeHtml(sc.visual_summary || '')}</span></div>
+        <div class="detail-prose-content">${escapeHtml(sc.visual_summary || '')}</div>
       </div>
 
-      <div class="detail-prompt-box sp-prompt-box">
-        <div class="detail-prompt-label">Image Prompt</div>
-        <code>${escapeHtml(sc.image_prompt || '')}</code>
+      <div class="prompt-section-card">
+        <div class="prompt-section-header">
+          <div class="prompt-header-title-group">
+            <span class="prompt-section-title">Image Prompt</span>
+            <span class="prompt-tag">SDXL / Midjourney</span>
+          </div>
+          <div class="prompt-header-actions">
+            <button class="btn btn-secondary btn-sm" data-action="copy-image" title="Sao chép Image Prompt">
+              <svg class="icon"><use href="#icon-export" /></svg>
+              <span>Sao chép</span>
+            </button>
+            <button class="btn btn-secondary btn-sm" data-action="edit" title="Chỉnh sửa Scene">
+              <svg class="icon"><use href="#icon-edit" /></svg>
+              <span>Sửa</span>
+            </button>
+          </div>
+        </div>
+        <div class="prompt-section-content">
+          <code>${escapeHtml(sc.image_prompt || '')}</code>
+        </div>
       </div>
 
       ${sc.negative_prompt ? `
-      <div class="detail-prompt-box sp-negative-prompt-box" style="margin-top: 10px;">
-        <div class="detail-prompt-label">Negative Prompt</div>
-        <code style="color: var(--text-muted);">${escapeHtml(sc.negative_prompt)}</code>
+      <div class="prompt-section-card negative-prompt-card">
+        <div class="prompt-section-header">
+          <div class="prompt-header-title-group">
+            <span class="prompt-section-title">Negative Prompt</span>
+            <span class="prompt-tag negative-tag">Exclusions</span>
+          </div>
+          <div class="prompt-header-actions">
+            <button class="btn btn-secondary btn-sm" data-action="copy-negative" title="Sao chép Negative Prompt">
+              <svg class="icon"><use href="#icon-export" /></svg>
+              <span>Sao chép</span>
+            </button>
+          </div>
+        </div>
+        <div class="prompt-section-content negative-content">
+          <code>${escapeHtml(sc.negative_prompt)}</code>
+        </div>
       </div>
       ` : ''}
     `;
@@ -2313,8 +2343,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (action === "seek") {
         window.seekGlobalAudio(scene.start, `Scene ${scene.index} (${formatTime(scene.start)})`);
-      } else if (action === "copy") {
+      } else if (action === "copy" || action === "copy-image") {
         await copyTextToClipboard(scene.image_prompt, btn);
+      } else if (action === "copy-negative") {
+        await copyTextToClipboard(scene.negative_prompt, btn);
       } else if (action === "edit") {
         openEditSceneModal(scene);
       }
@@ -2613,7 +2645,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderSelectedShotDetail(sh) {
     if (!veoSelectedDetail) return;
     if (!sh) {
-      veoSelectedDetail.innerHTML = `<div class="detail-empty-state"><p>Chọn một shot từ danh sách bên trái để xem chi tiết</p></div>`;
+      veoSelectedDetail.innerHTML = `<div class="empty-detail-state"><p>Chọn một shot từ danh sách bên trái để xem chi tiết</p></div>`;
       return;
     }
 
@@ -2625,8 +2657,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     veoSelectedDetail.innerHTML = `
       <div class="detail-header-card">
-        <div class="detail-topbar">
-          <div class="detail-identity">
+        <div class="detail-identity-row">
+          <div class="detail-title-time">
             <span class="veo-shot-num detail-title">Shot ${sh.index} &bull; ${escapeHtml(sh.shot_id)}</span>
             <span class="veo-shot-parent detail-subtitle">${escapeHtml(splitInfo)}</span>
             <span class="veo-shot-time detail-time">${sFmt} &rarr; ${eFmt} (${sh.duration}s)</span>
@@ -2637,28 +2669,28 @@ document.addEventListener("DOMContentLoaded", () => {
             ${sh.continuity_anchor ? `<span class="veo-pill-tag continuity-tag">${escapeHtml(sh.continuity_anchor)}</span>` : ''}
           </div>
         </div>
-        <div class="detail-actions">
+        <div class="detail-actions-bar">
           <button class="btn btn-secondary btn-sm btn-seek-shot" data-action="seek" data-start="${sh.start}">
             <svg class="icon"><use href="#icon-play" /></svg>
             <span>▶ Phát từ đây</span>
-          </button>
-          <button class="btn btn-secondary btn-sm btn-copy-veo-prompt" data-action="copy">
-            <svg class="icon"><use href="#icon-export" /></svg>
-            <span>Sao chép Prompt</span>
           </button>
           <button class="btn btn-secondary btn-sm btn-edit-veo-shot" data-action="edit">
             <svg class="icon"><use href="#icon-edit" /></svg>
             <span>Chỉnh sửa Prompt</span>
           </button>
+          <button class="btn btn-secondary btn-sm btn-copy-veo-prompt" data-action="copy">
+            <svg class="icon"><use href="#icon-export" /></svg>
+            <span>Sao chép Prompt</span>
+          </button>
         </div>
       </div>
 
-      <div class="detail-prose-box">
+      <div class="detail-prose-card">
         <div class="detail-prose-label">Lời bình Narration</div>
-        <div class="veo-narration-box">&ldquo;${escapeHtml(sh.narration || '')}&rdquo;</div>
+        <div class="detail-prose-content narration-quote">&ldquo;${escapeHtml(sh.narration || '')}&rdquo;</div>
       </div>
 
-      <div class="veo-action-details detail-prose-box">
+      <div class="detail-prose-card veo-action-details">
         <div class="detail-prose-label">Chi tiết kịch bản thị giác</div>
         <div class="veo-action-row">
           <span class="veo-action-label">Hành động:</span>
@@ -2678,15 +2710,45 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       </div>
 
-      <div class="detail-prompt-box veo-prompt-box">
-        <div class="detail-prompt-label">Veo Video Prompt (Production-Ready)</div>
-        <code>${escapeHtml(sh.veo_prompt || '')}</code>
+      <div class="prompt-section-card">
+        <div class="prompt-section-header">
+          <div class="prompt-header-title-group">
+            <span class="prompt-section-title">Veo Video Prompt</span>
+            <span class="prompt-tag">Veo 2 Production-Ready</span>
+          </div>
+          <div class="prompt-header-actions">
+            <button class="btn btn-secondary btn-sm" data-action="copy" title="Sao chép Prompt">
+              <svg class="icon"><use href="#icon-export" /></svg>
+              <span>Sao chép</span>
+            </button>
+            <button class="btn btn-secondary btn-sm" data-action="edit" title="Chỉnh sửa Shot">
+              <svg class="icon"><use href="#icon-edit" /></svg>
+              <span>Sửa</span>
+            </button>
+          </div>
+        </div>
+        <div class="prompt-section-content veo-content">
+          <code>${escapeHtml(sh.veo_prompt || '')}</code>
+        </div>
       </div>
 
       ${sh.negative_prompt ? `
-      <div class="detail-prompt-box veo-negative-prompt-box" style="margin-top: 10px;">
-        <div class="detail-prompt-label">Negative Prompt</div>
-        <code style="color: var(--text-muted);">${escapeHtml(sh.negative_prompt)}</code>
+      <div class="prompt-section-card negative-prompt-card">
+        <div class="prompt-section-header">
+          <div class="prompt-header-title-group">
+            <span class="prompt-section-title">Negative Prompt</span>
+            <span class="prompt-tag negative-tag">Exclusions</span>
+          </div>
+          <div class="prompt-header-actions">
+            <button class="btn btn-secondary btn-sm" data-action="copy-negative" title="Sao chép Negative Prompt">
+              <svg class="icon"><use href="#icon-export" /></svg>
+              <span>Sao chép</span>
+            </button>
+          </div>
+        </div>
+        <div class="prompt-section-content negative-content">
+          <code>${escapeHtml(sh.negative_prompt)}</code>
+        </div>
       </div>
       ` : ''}
     `;
@@ -2769,8 +2831,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (action === "seek") {
         window.seekGlobalAudio(shot.start, `Shot ${shot.index} (${formatTime(shot.start)})`);
-      } else if (action === "copy") {
+      } else if (action === "copy" || action === "copy-image") {
         await copyTextToClipboard(shot.veo_prompt, btn);
+      } else if (action === "copy-negative") {
+        await copyTextToClipboard(shot.negative_prompt, btn);
       } else if (action === "edit") {
         openEditVeoModal(shot);
       }
