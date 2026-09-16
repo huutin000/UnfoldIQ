@@ -29,7 +29,7 @@ import time
 import wave
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Awaitable, Callable, Dict, List, Optional
+from typing import Any, Awaitable, Callable, Dict, List, Optional, Set
 
 import soundfile as sf
 
@@ -195,6 +195,7 @@ class ChunkPlan:
     pause_before: float = 0.0
     pause_after: float = 0.0
     emphasis: List[str] = field(default_factory=list)
+    is_locked: bool = False
 
 
 @dataclass
@@ -219,6 +220,7 @@ def plan_render(
     max_chars: int,
     pron_preprocess: Optional[Callable[[str], Any]] = None,
     narration: Optional[Dict[str, Any]] = None,
+    locked_chunk_indices: Optional[Set[int]] = None,
 ) -> RenderPlan:
     """Deterministic render plan reusing Phase 2 chunking guarantees.
 
@@ -238,6 +240,9 @@ def plan_render(
     narration_hash participates in per-chunk hashes, so one beat change
     invalidates only overlapping chunks. narration=None (or Off) behaves
     exactly like the legacy path.
+
+    Phase 2: optional locked_chunk_indices prevents automated/bulk regeneration
+    from overwriting locked chunk assets.
     """
     manifest = build_and_verify_manifest(
         synthesis_text, target_chars=target_chars, max_chars=max_chars
@@ -275,6 +280,7 @@ def plan_render(
         emphasis = list(d.get("emphasis", []))
         directive_sig = {"rate_factor": rate_factor, "pause_before": pause_before,
                          "pause_after": pause_after, "emphasis": emphasis}
+        is_chk_locked = bool(locked_chunk_indices and item["index"] in locked_chunk_indices)
         chunks.append(
             ChunkPlan(
                 chunk_id=f"{item['index']:04d}",
@@ -291,6 +297,7 @@ def plan_render(
                 pause_before=pause_before,
                 pause_after=pause_after,
                 emphasis=emphasis,
+                is_locked=is_chk_locked,
             )
         )
 

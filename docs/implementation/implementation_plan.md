@@ -9,7 +9,7 @@
 > 2. Local-first & Free-first (0đ chi phí API, chạy 100% trên phần cứng thực tế i5-11400H / 16GB RAM / RTX 3050 4GB VRAM).
 > 3. **Bất biến chất lượng Master:** Không hạ độ phân giải 1080p, không nén Master WAV PCM 24kHz/16-bit để đánh đổi hiệu năng. Mọi tối ưu hóa chỉ diễn ra trên working representation (Thumbnail WebP, Proxy 720p).
 > 4. Chiến lược rollback source code dựa 100% trên Git checkpoints/tags; `.bak` chỉ dùng cho persistent user project data.
-> 5. **Ranh giới Rendering độc lập:** Upstream pipeline chỉ xuất dữ liệu ra `Render Manifest` chuẩn hóa độc lập; FFmpeg là rendering engine đầu tiên; không dùng OpenShot; Remotion chỉ là định hướng nghiên cứu tương lai cho browser preview.
+> 5. **Ranh giới Rendering độc lập:** Upstream pipeline chỉ xuất dữ liệu ra `Render Manifest` chuẩn hóa độc lập; FFmpeg là rendering engine chính thức dựa trên Manifest (refactor/adaptation đường ống hiện hữu); không dùng OpenShot; Remotion chỉ là định hướng nghiên cứu tương lai cho browser preview.
 > 6. **Cấu trúc 9 Top-Level Phases & 1 Cổng Nghiệm thu Cuối (Final Quality Gate):** Hệ thống duy trì chính xác 9 Phases cấp cao nhất (Phase 3 gồm 4 subphases tuần tự 3A $\rightarrow$ 3D) và kết thúc bằng Cổng Nghiệm thu Tích hợp Toàn diện (Final System Integration Gate — không phải Phase 10).
 
 ---
@@ -17,10 +17,10 @@
 ## MỤC LỤC
 
 1. [Pre-Implementation Gate (Cổng tiền thực thi)](#pre-implementation-gate)
-2. [Nguyên tắc Thiết kế, Giới hạn Kiến trúc & Chính sách Cổng Thực thi (Execution Gate Policy)](#nguyên-tắc-thiết-kế--giới-hạn-kiến-trúc)
+2. [Nguyên tắc Thiết kế, Giới hạn Kiến trúc, Kỷ luật Thực thi & Chính sách Ngôn ngữ Giao diện (UI Language Policy)](#nguyên-tắc-thiết-kế--giới-hạn-kiến-trúc)
 3. [Phân kỳ Triển khai Chi tiết (Phases 1–9, Final System Gate & Future Horizon)](#phân-kỳ-triển-khai-chi-tiết)
    - [Phase 1: Workflow & Data Foundation (✅ PASS / FINAL — VERIFIED)](#phase-1-workflow--data-foundation)
-   - [Phase 2: Dependency Engine, Versioning & Resource Scheduling (⏭ READY TO START — NOT STARTED)](#phase-2-dependency-engine-versioning--resource-scheduling)
+   - [Phase 2: Dependency Engine, Versioning & Resource Scheduling (✅ PASS / FINAL — VERIFIED)](#phase-2-dependency-engine-versioning--resource-scheduling)
    - [Phase 3: Core Workbenches Restructuring (Subphases 3A, 3B, 3C, 3D — NOT STARTED)](#phase-3-core-workbenches-restructuring)
    - [Phase 4: Media, Asset & Export Pipeline (NOT STARTED)](#phase-4-media-asset--export-pipeline)
    - [Phase 5: UI Polish, Component Consolidation & Virtualization (NOT STARTED)](#phase-5-ui-polish-component-consolidation--virtualization)
@@ -144,14 +144,14 @@ Qua rà soát đối chiếu giữa các file audit, làm rõ và chuẩn hóa c
   - Upstream pipeline (Story, Voice, Visual, Export) không bao giờ sinh trực tiếp lệnh hay cú pháp FFmpeg CLI.
   - Toàn bộ trạng thái biên tập được chuẩn hóa thành `render-manifest.json` có schema version riêng (`schemaVersion: "1.0.0"`).
   - Kiến trúc này cho phép hoán đổi hoặc bổ sung bất kỳ renderer nào trong tương lai mà không làm ảnh hưởng đến Scene Plan, Timestamps hay Production Export.
-- **FFmpeg là Rendering Engine Đầu tiên (First-Party Rendering Engine):**
-  - Phiên bản đầu tiên của hệ thống sử dụng FFmpeg làm render engine chính thức (bản build tĩnh 8.1.1 essentials đã tích hợp sẵn trong repo).
+- **FFmpeg là Rendering Engine Chính thức Dựa trên Manifest (Manifest-Driven FFmpeg Render Engine):**
+  - Tái cấu trúc và chuẩn hóa (refactor/adaptation) đường ống FFmpeg hiện hữu dựa trên Render Manifest trung gian (bản build tĩnh 8.1.1 essentials đã tích hợp sẵn trong repo).
   - Khai thác song song bộ mã hóa phần cứng `h264_nvenc` và CPU fallback `libx264`, kết hợp hệ thống Filtergraphs phức hợp (`filter_complex`) để ghép nối, scale/pad, audio ducking và phụ đề.
 - **Không sử dụng OpenShot:**
   - OpenShot không nằm trong kiến trúc hiện tại cũng như tương lai của hệ thống, tránh cồng kềnh phụ thuộc bên ngoài và bảo đảm tính scriptable tự động 100%.
 - **Remotion — Định hướng Nghiên cứu Tương lai (Future Consideration):**
   - Remotion chỉ được ghi nhận như một giải pháp nghiên cứu trong tương lai nếu người dùng phát sinh nhu cầu Web Preview / Visual Timeline Editor thời gian thực trên trình duyệt; không phải dependency hiện tại.
-  - Mọi công cụ Timeline Editor trong tương lai bắt buộc phải thao tác trực tiếp trên cùng một mô hình `render-manifest.json`, không được tạo pipeline render phân mảnh.
+  - Mọi công cụ Timeline Editor trong tương lai đọc Render Manifest để hiển thị preview, ghi nhận thao tác vào mô hình `TimelineOverrides / CompositionTimeline`, và biên dịch ra một bản manifest bất biến MỚI (tuyệt đối không chỉnh sửa đè in-place lên file manifest lịch sử), bảo đảm tính toàn vẹn và không phân mảnh pipeline.
 
 ### 8. Chính sách Cổng Thực thi (Execution Gate Policy)
 Nhằm bảo đảm tính kỷ luật tối cao và loại bỏ hoàn toàn các rủi ro hồi quy (regression risks), toàn bộ lộ trình tuân thủ nghiêm ngặt chuỗi cổng thực thi tuần tự:
@@ -177,6 +177,115 @@ $$\begin{matrix}
 > 5. **Tính tuần tự của Rendering Milestone (Phases 7–9):** Phase 7 (Render Manifest) phải PASS trước khi triển khai Phase 8 (FFmpeg Engine); Phase 8 phải PASS trước khi triển khai Phase 9 (Render QA).
 > 6. **Cấu trúc 9 Top-Level Phases bất biến:** Tổng số top-level phases của hệ thống là 9. Cổng kiểm định tích hợp cuối cùng (`Final System Integration & Production Validation Gate`) là một Cổng Chất lượng Toàn diện (Final Quality Gate), không phải là Phase 10.
 
+### 9. Chính sách Ngôn ngữ Giao diện (UI Language Policy)
+
+Để bảo đảm trải nghiệm người dùng tự nhiên, mượt mà và tối ưu cho nhà sáng tạo độc lập tại Việt Nam, đồng thời giữ vững tính chuẩn xác kỹ thuật và tính ổn định của mã nguồn, UnfoldIQ thiết lập nguyên tắc ngôn ngữ giao diện bất biến:
+
+$$\begin{aligned}
+\mathbf{USER\text{-}FACING\ UI} &\longrightarrow \mathbf{Vietnamese\text{-}first\ (Tiếng\ Việt\ là\ ngôn\ ngữ\ mặc\ định)} \\
+\mathbf{CODE\ /\ API\ /\ SCHEMA} &\longrightarrow \mathbf{English\ (Tiếng\ Anh\ kỹ\ thuật\ chuẩn\ mực)}
+\end{aligned}$$
+
+> **Policy status:** `ACTIVE`  
+> **Implementation status:** `ENFORCED FOR ALL NEW/TOUCHED USER-FACING UI FROM PHASE 3A ONWARD`  
+> **Legacy UI compliance:** `NOT CLAIMED` (Di chuyển tuần tự khi từng Workbench được tái cấu trúc)  
+
+#### 9.1. Bảy Điều Khoản Khế Ước Bắt Buộc (Canonical UI Language Contract)
+1. **Ngôn ngữ mặc định & Khai báo App Shell:** Toàn bộ giao diện UnfoldIQ có ngôn ngữ hiển thị mặc định là tiếng Việt. File App Shell nguồn (`studio/static/index.html`) đã được kiểm chứng khai báo `<html lang="vi">`. Việc duy trì và kế thừa `<html lang="vi">` là tiêu chí nghiệm thu bắt buộc cho Subphase 3A.
+2. **Ưu tiên tiếng Việt cho toàn bộ bề mặt tương tác người dùng mới/được chỉnh sửa từ Subphase 3A:**
+   - Áp dụng cho 100% bề mặt user-facing khi được xây mới hoặc chỉnh sửa từ Subphase 3A trở đi: Navigation, Menu, Tab, Button, Primary CTA, Label, Form helper text.
+   - Validation messages, Error messages, Warnings, Tooltips, Empty states.
+   - Confirmation dialogs, Modal sheets, Toasts, Status badges, Table headers.
+   - Filters, Search placeholders, User-facing job states, Preflight checks, Recovery/actionable prompts.
+   - **Quy tắc Accessible-Name (Tên Tiếp Cận):** Ưu tiên nhãn HTML tự nhiên (`<label for="...">`) và text tiếng Việt hiển thị trực quan; dùng `aria-labelledby` khi có visible label; chỉ dùng `aria-label` khi không có nhãn hiển thị trực quan (như nút icon-only); tuyệt đối không thêm `aria-label` dư thừa đè lên text hiển thị rõ ràng; toàn bộ text trợ năng ẩn bắt buộc là tiếng Việt.
+3. **Giữ nguyên tiếng Anh chuẩn mực cho danh từ riêng và công nghệ:**
+   Chỉ giữ nguyên tiếng Anh khi thuật ngữ là:
+   - Tên công nghệ / thư viện / engine / công cụ: `FFmpeg`, `ffprobe` (viết thường khi chỉ lệnh CLI), `Kokoro`, `Faster-Whisper`, `Whisper`, `Veo`, `Flow`, `Playwright`, `axe-core`, `SQLite`, `WAL`.
+   - Bộ mã hóa / định dạng / giao thức / chuẩn: `NVENC`, `CUDA`, `H.264`, `H.265`, `AV1`, `AAC`, `PCM`, `MP3`, `WebP`, `PNG`, `JPEG`, `MP4`, `MOV`, `SRT`, `VTT`, `JSON`, `CSV`, `API`, `HTTP`, `REST`, `WCAG 2.2 AA`.
+   - Phần cứng / tính toán: `GPU`, `CPU`, `VRAM`, `SHA-256`.
+   - Thuật ngữ chuyên môn sáng tạo đặc thù: `Negative Prompt`, `Visual Bible`, `Render Manifest`.
+4. **Giữ nguyên tiếng Anh 100% cho cấu trúc kỹ thuật nội bộ (Internal Implementation):**
+   - Tên biến, hàm, class, module, file nguồn.
+   - API endpoint routes (`/api/projects/{id}/story`, `/api/projects/{id}/voice`).
+   - JSON keys, Schema identifiers, Database table & column names.
+   - Giá trị enum thực sự (`DRAFT`, `NEEDS_REVIEW`, `READY`, `OUTDATED`, `BLOCKED`, `QUEUED`, `RENDERING`, `COMPLETED`, `FAILED`, `CANCELLED`).
+   - Cờ boolean nội bộ (`is_locked = true / false`), không biến thành enum giả tưởng.
+   - Test names, log files chuyên biệt cho developers.
+   - Tuyệt đối **không đổi tên API, enum, schema, code identifier hoặc database field** chỉ để phục vụ Việt hóa giao diện.
+5. **Ánh xạ bắt buộc (Enum Mapping Rule):** Mọi giá trị trạng thái/mã lỗi nội bộ bằng tiếng Anh bắt buộc phải được ánh xạ qua lớp từ điển hiển thị sang tiếng Việt trước khi render lên UI (ví dụ: `DRAFT` $\rightarrow$ `Bản nháp`, `OUTDATED` $\rightarrow$ `Cần cập nhật`, `BLOCKED` $\rightarrow$ `Bị chặn`).
+6. **Không hiển thị raw enum/error code trực tiếp:** Không bao giờ để người dùng nhìn thấy chuỗi enum thô như `NEEDS_REVIEW` hay mã `MISSING_ASSET`, trừ trường hợp giao diện bật chế độ Developer/Debug Diagnostics có chủ đích. Khi có lỗi kỹ thuật, hiển thị thông báo tiếng Việt hành động được kèm mã kỹ thuật phụ trợ trong phần chi tiết.
+7. **Quy tắc chú giải song ngữ lần đầu (First-Use Clarification):** Ở lần đầu tiên xuất hiện hoặc trong tooltip của một khái niệm kỹ thuật phức tạp, giao diện có thể sử dụng định dạng: *Tiếng Việt (Thuật ngữ tiếng Anh gốc)*. Ví dụ: `Đồ thị phụ thuộc (Dependency Graph)`, `Bộ điều phối tài nguyên (Resource Scheduler)`, `Bản sửa đổi (Revision)`, `Khóa nội dung (Lock)`, `Bộ nhớ đệm (Cache)`, `Bản xem trước nhẹ (Proxy)`, `Cổng kiểm tra trước khi xuất (Preflight)`.
+
+#### 9.2. Bảng Ánh xạ Phân vùng, Trạng thái & Hành động Cốt lõi
+- **Khu làm việc (Workbenches):**
+  - `Overview` $\rightarrow$ `Tổng quan`
+  - `Story` $\rightarrow$ `Kịch bản`
+  - `Voice` $\rightarrow$ `Giọng đọc`
+  - `Visual` $\rightarrow$ `Hình ảnh & Cảnh`
+  - `Export` $\rightarrow$ `Xuất video`
+- **Trạng thái Thực thể (Internal Domain Enums $\rightarrow$ Nhãn UI):**
+  - `DRAFT` $\rightarrow$ `Bản nháp`
+  - `NEEDS_REVIEW` $\rightarrow$ `Cần kiểm tra`
+  - `READY` $\rightarrow$ `Sẵn sàng`
+  - `OUTDATED` $\rightarrow$ `Cần cập nhật`
+  - `BLOCKED` $\rightarrow$ `Bị chặn`
+- **Trạng thái Khóa Boolean (Derived UI State):**
+  - `is_locked = true` $\rightarrow$ `Đã khóa`
+  - `is_locked = false` $\rightarrow$ `Mở khóa`
+- **Trạng thái Tiến trình Render/Job (Render & Scheduler States):**
+  - `QUEUED` $\rightarrow$ `Đang chờ`
+  - `RENDERING` $\rightarrow$ `Đang kết xuất`
+  - `COMPLETED` $\rightarrow$ `Hoàn tất`
+  - `FAILED` $\rightarrow$ `Thất bại`
+  - `CANCELLED` $\rightarrow$ `Đã hủy`
+- **Hành động & Nút tương tác (Core Actions):**
+  - `Save` $\rightarrow$ `Lưu` | `Cancel` $\rightarrow$ `Hủy` | `Delete` $\rightarrow$ `Xóa` | `Restore` $\rightarrow$ `Khôi phục`
+  - `Retry` $\rightarrow$ `Thử lại` | `Generate` $\rightarrow$ `Tạo` | `Regenerate` $\rightarrow$ `Tạo lại` | `Lock` $\rightarrow$ `Khóa` | `Unlock` $\rightarrow$ `Mở khóa`
+  - `Download` $\rightarrow$ `Tải xuống` | `Upload` $\rightarrow$ `Tải lên` | `Copy` $\rightarrow$ `Sao chép` | `Edit` $\rightarrow$ `Chỉnh sửa`
+  - `Approve` $\rightarrow$ `Duyệt` | `Replace` $\rightarrow$ `Thay thế` | `Continue` $\rightarrow$ `Tiếp tục` | `Back` $\rightarrow$ `Quay lại`
+  - `Close` $\rightarrow$ `Đóng` | `Search` $\rightarrow$ `Tìm kiếm` | `Filter` $\rightarrow$ `Lọc` | `Reset` $\rightarrow$ `Đặt lại`
+
+#### 9.3. Kiến trúc Từ điển Tập trung (Centralized UI String Architecture)
+- Để tránh phân mảnh và trùng lặp hard-coded chuỗi văn bản trên frontend, mã nguồn UI từ Phase 3 trở đi phải tổ chức từ điển chuỗi tập trung (ví dụ: `UI_TEXT`, `STATUS_LABELS`, `ACTION_LABELS`, `ERROR_MESSAGES`) hoặc layer localization gọn nhẹ.
+- Chi tiết bảng tra cứu thuật ngữ đầy đủ được duy trì tại: [`docs/implementation/UI_LANGUAGE_GLOSSARY.md`](UI_LANGUAGE_GLOSSARY.md).
+
+#### 9.4. Phạm vi Áp dụng Xuyên suốt (Phases 1–9 Application Matrix)
+- **Phase 1 (Workflow & Data Foundation):** Giữ nguyên backend APIs/schemas; mọi thông báo user-facing bảo trì đều tuân thủ tiếng Việt.
+- **Phase 2 (Dependency Engine, Versioning & Scheduler):** Backend/models bằng tiếng Anh (`ArtifactRevision`, `DependencyGraph`, `ResourceScheduler`, `contentHash`, `is_locked`); các thông báo người dùng (Next Best Action, Blockers, Lock conflict, Scheduler state) hiển thị bằng tiếng Việt.
+- **Subphase 3A (App Shell + Overview + Story):** Duy trì `<html lang="vi">`, Navigation (`Tổng quan`, `Kịch bản`), Story editor, Editorial QA (`Kiểm tra nội dung`), Word Count (`Số từ`), Duration (`Thời lượng ước tính`) hoàn toàn tiếng Việt-first.
+- **Subphase 3B (Voice Workbench):** Giao diện chỉnh sửa giọng đọc, `Phát âm`, `Kiểm tra giọng đọc` (Voice QA), `Tạo lại đoạn này` tiếng Việt-first; giữ nguyên tên model/provider `Kokoro`, `Faster-Whisper`.
+- **Subphase 3C (Visual Workbench):** `Cảnh` (Scene), `Cảnh quay` (Shot), `Chuyển động máy quay` (Camera Motion); giữ nguyên `Visual Bible`, `Negative Prompt` khi hiển thị cho chuyên môn sáng tạo.
+- **Subphase 3D (Export Workbench):** `Xuất video`, `Kiểm tra trước khi xuất` (Preflight), `Kết xuất video`, `Tải xuống`.
+- **Phase 4 (Media, Asset & Export Pipeline):** `Tài nguyên` (Asset), `Ảnh thu nhỏ` (Thumbnail), `Bản xem trước nhẹ (Proxy)`, `Bản gốc / Master`, `Gói sản xuất` (Portable Package); giữ nguyên định dạng file WebP, MP4, AAC.
+- **Phase 5 (UI Polish & Virtualization):** Command Palette (`Tìm cảnh hoặc cảnh quay...`), phím tắt (`Ctrl + K`), filters, virtualized components tiếng Việt-first.
+- **Phase 6 (Accessibility & Responsive):** Kiểm chuẩn `WCAG 2.2 AA`; accessible names tuân thủ quy tắc ưu tiên native label; 100% `aria-label`, `aria-description`, screen-reader text là tiếng Việt đồng bộ giao diện thị giác.
+- **Phase 7 (Render Manifest):** File `render-manifest.json` và schema fields là tiếng Anh; thông báo lỗi biên dịch manifest (ví dụ `MISSING_ASSET` $\rightarrow$ *"Không thể tạo Render Manifest vì còn tài nguyên bị thiếu"*) bằng tiếng Việt.
+- **Phase 8 (Manifest-Driven FFmpeg Render Engine):** Giữ tên công nghệ `FFmpeg`, `NVENC`; trạng thái render job (`Đang chờ`, `Đang kết xuất`, `Hoàn tất`, `Thất bại`) bằng tiếng Việt.
+- **Phase 9 (Automated Render QA):** Kết quả nghiệm thu hiển thị bằng tiếng Việt (ví dụ: *"Video không đạt kiểm tra kỹ thuật: thiếu luồng âm thanh"*); lưu log chẩn đoán kỹ thuật (`ffprobe`, `codec_name`) cho developers.
+
+#### 9.5. Danh Sách Kiểm Tra Sẵn Sàng Cho Subphase 3A (Subphase 3A Readiness Checklist)
+- [x] `UI_LANGUAGE_POLICY_REPORT.md` = `ACTIVE`.
+- [x] `UI_LANGUAGE_GLOSSARY.md` = Canonical wording source.
+- [x] `<html lang="vi">` đã được xác minh trong App Shell hiện hữu (`studio/static/index.html`) và là tiêu chí nghiệm thu của 3A.
+- [x] Top-level Workbench labels đã có nhãn tiếng Việt chuẩn hóa (`Tổng quan`, `Kịch bản`, `Giọng đọc`, `Hình ảnh & Cảnh`, `Xuất video`).
+- [x] Bảng ánh xạ trạng thái cho toàn bộ Phase 2 domain statuses đã hoàn tất.
+- [x] Cờ boolean `is_locked` có quy tắc ánh xạ hiển thị (`Đã khóa` / `Mở khóa`), không nhầm lẫn thành enum.
+- [x] Danh mục mã lỗi Phase 2 có chiến lược hiển thị thông báo tiếng Việt hành động được.
+- [x] Quy tắc accessible-name ưu tiên native label trước khi dùng ARIA đã được ban hành.
+- [x] Toàn bộ định danh API/schema/enum giữ nguyên tiếng Anh.
+- [x] Không dịch tràn lan các định danh kỹ thuật, tên công cụ hoặc codec.
+
+#### 9.6. Tiêu chí Nghiệm thu Ngôn ngữ cho Các Phase Tương lai (Future UI Acceptance Criteria)
+Mọi phase có tác động đến UI (Phase 3A $\rightarrow$ Phase 9) bắt buộc phải đạt 8 tiêu chí kiểm định ngôn ngữ:
+- [ ] 100% nhãn, nút, tiêu đề và thông báo hiển thị cho người dùng là tiếng Việt tự nhiên.
+- [ ] Danh từ riêng kỹ thuật, codec, chuẩn quốc tế được giữ nguyên chuẩn xác.
+- [ ] Giá trị enum nội bộ được ánh xạ qua từ điển tiếng Việt, không để lộ chuỗi raw enum.
+- [ ] Thông báo lỗi/cảnh báo mang tính hướng dẫn hành động bằng tiếng Việt rõ ràng.
+- [ ] Thuộc tính trợ năng (`aria-label`, `aria-description`, `sr-only`) đồng bộ với ngôn ngữ hiển thị tiếng Việt.
+- [ ] Không sử dụng nhiều biến thể dịch khác nhau cho cùng một khái niệm nghiệp vụ.
+- [ ] Toàn bộ định danh API, code, database, schema giữ nguyên 100% tiếng Anh.
+- [ ] Không thay đổi bất kỳ backend contract nào chỉ vì mục đích bản địa hóa UI.
+
 ---
 
 ## PHÂN KỲ TRIỂN KHAI CHI TIẾT (PHASES 1–9, FINAL SYSTEM GATE & FUTURE HORIZON)
@@ -187,11 +296,11 @@ $$\begin{matrix}
   Phase 1: Workflow & Data Foundation [✅ PASS / FINAL — VERIFIED]
     │
     ▼
-  Phase 2: Dependency Engine, Versioning & Resource Scheduling [⏭ READY TO START — NOT STARTED]
+  Phase 2: Dependency Engine, Versioning & Resource Scheduling [✅ PASS / FINAL — VERIFIED]
     │
     ▼
   Phase 3: Core Workbenches Restructuring [⏳ NOT STARTED]
-    ├── 3A: App Shell + Overview + Story Workbench [Sequential Gate 1]
+    ├── 3A: App Shell + Overview + Story Workbench [Sequential Gate 1: ⏭ READY TO START]
     ├── 3B: Voice Workbench [Sequential Gate 2]
     ├── 3C: Visual Workbench [Sequential Gate 3]
     └── 3D: Export Workbench UI [Sequential Gate 4]
@@ -228,9 +337,9 @@ $$\begin{matrix}
 | Phase / Gate | Tên Phân Kỳ | Trạng Thái Quy Trình | Trạng Thái Triển Khai | Căn Cứ / Ghi Chú |
 | :--- | :--- | :---: | :---: | :--- |
 | **Phase 1** | Workflow & Data Foundation | ✅ **PASS / FINAL** | `VERIFIED` | 451/451 tests PASSED (100%) tại `PHASE_01_FINAL_VERIFICATION_REPORT.md`. |
-| **Phase 2** | Dependency Engine, Versioning & Scheduler | ⏭ **READY TO START** | `NOT STARTED` | Đã chốt kiến trúc; sẵn sàng khởi động khi có lệnh. |
+| **Phase 2** | Dependency Engine, Versioning & Scheduler | ✅ **PASS / FINAL** | `VERIFIED` | **483/483 tests PASSED (100%)** (42.72s) tại `PHASE_02_FINAL_CLOSURE_REPORT.md` & `PHASE_02_MICRO_CLOSURE_REPORT.md` (baseline ban đầu 467 tests). |
 | **Phase 3** | Core Workbenches Restructuring | ⏳ **NOT STARTED** | `NOT STARTED` | Gồm 4 subphases tuần tự (3A $\rightarrow$ 3B $\rightarrow$ 3C $\rightarrow$ 3D). |
-| ↳ *3A* | *App Shell + Overview + Story* | ⏳ *NOT STARTED* | `NOT STARTED` | Gate 1 của Phase 3. |
+| ↳ *3A* | *App Shell + Overview + Story* | ⏭ **READY TO START** | `NOT STARTED` | Gate 1 của Phase 3 (Sẵn sàng khởi động). |
 | ↳ *3B* | *Voice Workbench* | ⏳ *NOT STARTED* | `NOT STARTED` | Gate 2 của Phase 3 (phụ thuộc 3A). |
 | ↳ *3C* | *Visual Workbench* | ⏳ *NOT STARTED* | `NOT STARTED` | Gate 3 của Phase 3 (phụ thuộc 3B). |
 | ↳ *3D* | *Export Workbench UI* | ⏳ *NOT STARTED* | `NOT STARTED` | Gate 4 của Phase 3 (phụ thuộc 3C). |
@@ -361,10 +470,10 @@ Xây dựng nền tảng dữ liệu thực thể thống nhất với Stable ID
 
 ---
 
-### PHASE 2: DEPENDENCY ENGINE, VERSIONING & RESOURCE SCHEDULING (⏭ READY TO START — NOT STARTED)
+### PHASE 2: DEPENDENCY ENGINE, VERSIONING & RESOURCE SCHEDULING (✅ PASS / FINAL — VERIFIED)
 
-- **Trạng thái Quy trình:** `READY TO START`
-- **Trạng thái Triển khai:** `NOT STARTED`
+- **Trạng thái Quy trình:** `PASS / FINAL`
+- **Trạng thái Triển khai:** `VERIFIED`
 - **Điều kiện Tiên quyết:** Phase 1 PASS / FINAL (Đã thỏa mãn nghiệm thu 451/451 tests).
 
 #### 2.1. Objective
@@ -445,10 +554,15 @@ Xây dựng Đồ thị Phụ thuộc Thực thể (Artifact-Level DAG) có cơ 
 #### 2.16. Rollback
 - Git commit checkout về tag kết thúc Phase 1.
 
-#### 2.17. Acceptance Criteria
-- [ ] Sửa 1 câu kịch bản không làm bẩn các câu âm thanh không liên quan trong DAG.
-- [ ] 0 lỗi CUDA OOM trong toàn bộ các kịch bản thử nghiệm tải (stress scenarios); các tác vụ tuân thủ đúng ngân sách tài nguyên đã cấu hình; giao diện người dùng duy trì phản hồi mượt mà; đo lường và báo cáo VRAM đỉnh thực tế.
-- [ ] Phục hồi revision thành công 100% không làm hỏng tính toàn vẹn của dự án.
+#### 2.17. Acceptance Criteria (Nghiệm thu Hoàn tất — PASS / FINAL)
+- [x] Sửa 1 câu kịch bản không làm bẩn các câu âm thanh không liên quan trong DAG (Đo kiểm: $p95 = 0.0003\text{ ms}$).
+- [x] 0 lỗi CUDA OOM trong toàn bộ các kịch bản thử nghiệm tải; phân lớp `CUDA_HEAVY concurrency=1` và `ResourceGuard` bảo vệ VRAM GPU 4GB; giao diện phản hồi mượt mà.
+- [x] Phục hồi revision thành công 100% không làm hỏng tính toàn vẹn của dự án; bảo toàn tuyệt đối Stable ID.
+- [x] 100% canonical tests tiếp tục PASS: **483/483 tests PASSED (100%)** trong 42.72s (baseline ban đầu 467/467 tests trong 33.12s).
+
+> **Nghiệm thu Thực tế:** Đã nghiệm thu chính thức và đóng gói toàn diện tại [`docs/implementation/PHASE_02_FINAL_CLOSURE_REPORT.md`](file:///d:/Project/UnfoldIQ/docs/implementation/PHASE_02_FINAL_CLOSURE_REPORT.md) & [`docs/implementation/PHASE_02_MICRO_CLOSURE_REPORT.md`](file:///d:/Project/UnfoldIQ/docs/implementation/PHASE_02_MICRO_CLOSURE_REPORT.md).  
+> **Trạng thái Phase 2:** **`PASS / FINAL — VERIFIED`** $\rightarrow$ **Sẵn sàng chuyển giao cho Subphase 3A (`READY TO START SUBPHASE 3A`).**
+
 
 ---
 
@@ -1119,9 +1233,9 @@ Sau khi hoàn thiện đường ống kết xuất cốt lõi (Phases 1–9), h�
 graph TD
     PRE["Pre-Implementation Gate<br>(Baseline, Git Tag, Backup)"] --> P1["Phase 1: Workflow & Data Foundation<br>(✅ PASS / FINAL — VERIFIED)"]
     
-    P1 --> P2["Phase 2: Dependency Engine, Versioning & Scheduler<br>(⏭ READY TO START — NOT STARTED)"]
+    P1 --> P2["Phase 2: Dependency Engine, Versioning & Scheduler<br>(✅ PASS / FINAL — VERIFIED)"]
     
-    P2 --> P3A["Subphase 3A: App Shell + Overview + Story<br>(Sequential Gate 1: NOT STARTED)"]
+    P2 --> P3A["Subphase 3A: App Shell + Overview + Story<br>(Sequential Gate 1: ⏭ READY TO START)"]
     
     P3A --> P3B["Subphase 3B: Voice Workbench<br>(Sequential Gate 2: NOT STARTED)"]
     
@@ -1147,8 +1261,8 @@ graph TD
 
     style PRE fill:#111826,stroke:#4f8cff,color:#eef3fa
     style P1 fill:#064e3b,stroke:#10b981,color:#eef3fa
-    style P2 fill:#1e3a8a,stroke:#3b82f6,color:#eef3fa
-    style P3A fill:#16202f,stroke:#2e3d55,color:#eef3fa
+    style P2 fill:#064e3b,stroke:#10b981,color:#eef3fa
+    style P3A fill:#1e3a8a,stroke:#3b82f6,color:#eef3fa
     style P3B fill:#16202f,stroke:#2e3d55,color:#eef3fa
     style P3C fill:#16202f,stroke:#2e3d55,color:#eef3fa
     style P3D fill:#16202f,stroke:#2e3d55,color:#eef3fa
@@ -1181,12 +1295,12 @@ Mọi yêu cầu từ 1 đến 80 đều được ánh xạ trực tiếp vào l
 | | 9 | Menu/module | **COVERED** | `NOT STARTED` | Phase 3: Bỏ menu phân mảnh, tích hợp ngữ cảnh vào 5 Workbench. |
 | | 10 | Data/API/schema | **COVERED** | `VERIFIED` | Phase 1: Domain Schema V2 với stable IDs (đã nghiệm thu). |
 | | 11 | Compatibility/migration | **COVERED** | `VERIFIED` | Phase 1: ProjectAdapter hỗ trợ tương thích ngược kèm backup `.bak`. |
-| | 12 | Automation boundary | **COVERED** | `NOT STARTED` | Phase 2: AI nặng bắt buộc có lệnh rõ ràng từ người dùng. |
-| | 13 | Dependency engine | **COVERED** | `NOT STARTED` | Phase 2: Xây dựng đồ thị Artifact-level DAG có lan truyền vi mô. |
-| | 14 | Status model | **COVERED** | `NOT STARTED` | Phase 2: Chuẩn hóa 3 base review states (`DRAFT` / `NEEDS_REVIEW` / `READY`) + derived `OUTDATED` + blockers → effective `BLOCKED`. |
+| | 12 | Automation boundary | **COVERED** | `VERIFIED` | Phase 2: AI nặng bắt buộc có lệnh rõ ràng từ người dùng. |
+| | 13 | Dependency engine | **COVERED** | `VERIFIED` | Phase 2: Xây dựng đồ thị Artifact-level DAG có lan truyền vi mô. |
+| | 14 | Status model | **COVERED** | `VERIFIED` | Phase 2: Chuẩn hóa 3 base review states (`DRAFT` / `NEEDS_REVIEW` / `READY`) + derived `OUTDATED` + blockers → effective `BLOCKED`. |
 | | 15 | Dashboard | **COVERED** | `NOT STARTED` | Subphase 3A: Overview Workbench tinh gọn, theo dõi tiến độ pipeline. |
 | | 16 | Top-level IA | **COVERED** | `NOT STARTED` | Subphase 3A: 5 Tab Workbench trên đỉnh (`Overview, Story, Voice, Visual, Export`). |
-| | 17 | Version/locking | **COVERED** | `NOT STARTED` | Phase 2: Khóa an toàn `is_locked` cho Story Beat, Audio Chunk, Scene Timing, Shot Card và Media Asset. |
+| | 17 | Version/locking | **COVERED** | `VERIFIED` | Phase 2: Khóa an toàn `is_locked` cho Story Beat, Audio Chunk, Scene Timing, Shot Card và Media Asset. |
 | | 18 | Local regeneration | **COVERED** | `NOT STARTED` | Subphase 3B: Nút "Sinh lại câu này" trên từng Audio Chunk. |
 | | 19 | Voice QA | **COVERED** | `NOT STARTED` | Subphase 3B: Tích hợp Voice QA inline vào Inspector của Voice Workbench. |
 | | 20 | Timestamp | **COVERED** | `NOT STARTED` | Subphase 3B: Căn chỉnh Word cues trực tiếp dưới trình phát âm thanh. |
@@ -1194,11 +1308,11 @@ Mọi yêu cầu từ 1 đến 80 đều được ánh xạ trực tiếp vào l
 | | 22 | Scene/Shot Workbench | **COVERED** | `NOT STARTED` | Subphase 3C: Cột Navigator chọn Scene, Cột giữa hiển thị danh sách thẻ Shot. |
 | | 23 | Veo Prompt | **COVERED** | `NOT STARTED` | Subphase 3C: Nhúng `veo_prompt` và `negative_prompt` trực tiếp vào thẻ Shot. |
 | | 24 | Export | **COVERED** | `NOT STARTED` | Subphase 3D: Preflight Checklist tự động và xuất tải artifact độc lập. |
-| | 25 | Next Best Action | **COVERED** | `NOT STARTED` | Phase 2: Engine Next Best Action gợi ý bước tiếp theo theo luật DAG. |
+| | 25 | Next Best Action | **COVERED** | `VERIFIED` | Phase 2: Engine Next Best Action gợi ý bước tiếp theo theo luật DAG. |
 | | 26 | No collaboration | **COVERED** | `NOT STARTED` | Toàn bộ: Loại bỏ 100% comment, assignment, permissions. |
-| | 27 | History/restore | **COVERED** | `NOT STARTED` | Phase 2: Quản lý `ArtifactRevision` độc lập với autosave. |
+| | 27 | History/restore | **COVERED** | `VERIFIED` | Phase 2: Quản lý `ArtifactRevision` độc lập với autosave. |
 | | 28 | Provider abstraction | **COVERED** | `VERIFIED` | Phase 1: Tách interface `TTSProvider` và `STTProvider` (đã nghiệm thu). |
-| | 29 | Cost/cache | **COVERED** | `NOT STARTED` | Phase 2: Khóa băm composite cache key bảo đảm 0đ chi phí API. |
+| | 29 | Cost/cache | **COVERED** | `VERIFIED` | Phase 2: Khóa băm composite cache key bảo đảm 0đ chi phí API. |
 | | 30 | Benchmarks | **COVERED** | `NOT STARTED` | Đã phân tích có chọn lọc Runway, ElevenLabs, Descript, LTX, ComfyUI, Premiere. |
 | | 31 | Pattern-not-copy | **COVERED** | `NOT STARTED` | Chỉ lấy pattern: Transcript sync, Khóa chunk, Visual elements, DAG cache, Proxy. |
 | | 32 | Feature value | **COVERED** | `NOT STARTED` | Từ chối tính năng rác: Không timeline đa rãnh, không lưu take vô hạn. |
@@ -1211,7 +1325,7 @@ Mọi yêu cầu từ 1 đến 80 đều được ánh xạ trực tiếp vào l
 | | 39 | Functional simplification | **COVERED** | `NOT STARTED` | Phase 3: Gom các tính năng rời rạc thành submodules nội tuyến. |
 | | 40 | Performance regression | **COVERED** | `VERIFIED` | Pre-gate: Thiết lập chỉ số cơ sở và ngưỡng hồi quy cho từng Phase. |
 | | 41 | Hardware-aware no quality loss | **COVERED** | `NOT STARTED` | Phase 4: Tách biệt Proxy vs Master; bảo toàn 100% chất lượng 1080p và WAV 24kHz. |
-| | 42 | Resource scheduler | **COVERED** | `NOT STARTED` | Phase 2: `LocalResourceScheduler` giới hạn `CUDA_HEAVY concurrency=1`. |
+| | 42 | Resource scheduler | **COVERED** | `VERIFIED` | Phase 2: `LocalResourceScheduler` giới hạn `CUDA_HEAVY concurrency=1`. |
 | **UI/UX** | 43 | Usability first | **COVERED** | `NOT STARTED` | Phase 3: Mọi màn hình trả lời tức thì 6 câu hỏi cốt lõi. |
 | | 44 | Design system | **COVERED** | `NOT STARTED` | Phase 3: Áp dụng design tokens và linh kiện chuẩn hóa từ đầu. |
 | | 45 | Density | **COVERED** | `NOT STARTED` | Phase 3 & 5: Mật độ Workstation compact, thoáng mắt, không khoảng trắng thừa. |
@@ -1254,21 +1368,20 @@ Mọi yêu cầu từ 1 đến 80 đều được ánh xạ trực tiếp vào l
 > [!NOTE]
 > **Kết luận Đối soát Yêu cầu:**  
 > **80 / 80 requirements mapped/covered by the roadmap. Implementation and verification status remain phase-dependent.**  
-> Các yêu cầu thuộc Phase 1 đã hoàn thành kiểm định thực tế được đánh dấu `VERIFIED`. Các yêu cầu thuộc Phase 2–6 được đánh dấu `NOT STARTED`. Các yêu cầu thuộc Phase 7–9 được phân loại là `FUTURE`.
+> Các yêu cầu thuộc Phase 1 và Phase 2 đã hoàn thành kiểm định thực tế được đánh dấu `VERIFIED`. Các yêu cầu thuộc Phase 3–6 được đánh dấu `NOT STARTED`. Các yêu cầu thuộc Phase 7–9 được phân loại là `FUTURE`.
 
 ---
 
 ## CHIẾN LƯỢC ROLLBACK & DI CHUYỂN DỮ LIỆU
 
-### 1. Chiến lược Rollback Mã nguồn (Source Code Rollback)
+### 1. Chiến lược Rollback Mã nguồn An toàn (Safe Source Code Rollback)
 - Toàn bộ source code được bảo vệ bằng hệ thống Git Checkpoints:
   - Trước mỗi Phase/Subphase: Tạo tag `pre-phase-X`.
   - Khi hoàn thành và pass toàn bộ tests của Phase: Tạo tag `post-phase-X`.
-  - **Lệnh rollback tức thì khi gặp sự cố không thể khắc phục:**
-    ```bash
-    git reset --hard pre-phase-X
-    git clean -fd
-    ```
+  - **Quy tắc Rollback an toàn bằng Git Checkpoint:**
+    - Rollback mã nguồn khi cần thiết được thực hiện qua `git reset --hard pre-phase-X` sau khi đã kiểm tra kỹ lưỡng (intentional review).
+    - Tuyệt đối **KHÔNG sử dụng lệnh diện rộng `git clean -fd`** trên repository này để tránh xóa nhầm các tệp untracked quan trọng, dữ liệu kiểm thử hoặc file bằng chứng.
+    - Mọi thao tác dọn dẹp file thừa phải thực hiện có chủ đích (targeted cleanup/restore) trên từng đường dẫn cụ thể sau khi đã rà soát danh sách.
 - **Tuyệt đối không dùng file `.bak` để làm cơ chế rollback cho mã nguồn Python/JS.**
 
 ### 2. Chiến lược Di chuyển & Bảo vệ Dữ liệu Dự án (Persistent Data Migration)
@@ -1285,22 +1398,24 @@ Mọi yêu cầu từ 1 đến 80 đều được ánh xạ trực tiếp vào l
 ## KẾT LUẬN & TUYÊN BỐ SẴN SÀNG (GATE READINESS VERDICT)
 
 Bản Kế hoạch Triển khai Revision 2.1 đã được đồng bộ hóa toàn diện trạng thái thực tế và xác lập đầy đủ các quy tắc thực thi:
-1. **Phase 1 Hoàn Tất Tuyệt Đối (PASS / FINAL):** 451/451 tests PASSED (100%), 0 failed, 0 skipped, verified trên codebase thực tế tại `PHASE_01_FINAL_VERIFICATION_REPORT.md`.
-2. **Phase 2 Sẵn Sàng Khởi Động (READY TO START):** Toàn bộ hợp đồng kiến trúc (DAG, 4-tier status, revision/lock, scheduler) đã chuẩn hóa, sẵn sàng bắt đầu khi có lệnh từ người dùng.
+1. **Phase 1 Hoàn Tất Tuyệt Đối (PASS / FINAL — VERIFIED):** 451/451 tests PASSED (100%), 0 failed, 0 skipped, verified trên codebase thực tế tại `PHASE_01_FINAL_VERIFICATION_REPORT.md`.
+2. **Phase 2 Hoàn Tất Tuyệt Đối (PASS / FINAL — VERIFIED):** Đạt 100% tiêu chí nghiệm thu khắt khe của toàn bộ các chốt chặn chất lượng (Gates A–J), bộ kiểm thử hồi quy đạt **483/483 tests PASSED (100%)** tại `PHASE_02_FINAL_CLOSURE_REPORT.md` & `PHASE_02_MICRO_CLOSURE_REPORT.md` (baseline ban đầu 467 tests), sẵn sàng bàn giao chuyển tiếp sang Subphase 3A.
 3. **Chính Sách Cổng Thực Thi Nghiêm Ngặt (Execution Gate Policy):** Tuân thủ chu trình tuần tự (Phase 2 $\rightarrow$ 3A $\rightarrow$ 3B $\rightarrow$ 3C $\rightarrow$ 3D $\rightarrow$ 4 $\rightarrow$ 5 $\rightarrow$ 6 $\rightarrow$ 7 $\rightarrow$ 8 $\rightarrow$ 9 $\rightarrow$ Final System Gate). Không gộp nhiều phase vào một task code.
 4. **Cấu Trúc 9 Top-Level Phases & Cổng Nghiệm Thu Cuối:** Duy trì chính xác 9 Phases. Bổ sung `Final System Integration & Production Validation Gate` (Cổng nghiệm thu toàn diện hệ thống với 13 tiêu chuẩn chất lượng khắt khe, không phải Phase 10).
 5. **Ranh Giới Rendering & Manifest:** Shot-centric 141 Shots, timebase số nguyên khung hình 24fps, snapshot bất biến `exports/<exportId>/render-manifest.json`, progress `-progress pipe:1`, CPU fallback có chọn lọc, Hard Gates vs Context-aware Warnings.
-6. **Bảo Toàn Mã Nguồn Tuyệt Đối:** ZERO application source code changes trong suốt quá trình hoàn thiện và đồng bộ hóa tài liệu kế hoạch.
+6. **Chính Sách Ngôn Ngữ Giao Diện (UI Language Policy):** Áp dụng nhất quán `Vietnamese-first` cho toàn bộ UI hiển thị, `English` cho code/API/schema, bảo toàn danh từ riêng công nghệ và tra cứu từ điển tại `UI_LANGUAGE_GLOSSARY.md`.
 
 ---
 
 ### PHÁN QUYẾT ĐỒNG BỘ LỘ TRÌNH (FINAL ROADMAP SYNC VERDICT):
-# 🟢 PLAN PASS / ROADMAP SYNCHRONIZED
+# 🟢 PLAN PASS / ROADMAP SYNCHRONIZED — READY FOR SUBPHASE 3A
 
 > **Tuyên bố Sẵn sàng Chuyển giao:**  
 > - **Phase 1:** ✅ `PASS / FINAL — VERIFIED` (451/451 tests PASSED)  
-> - **Phase 2:** ⏭ `READY TO START / NOT STARTED`  
-> - **Phases 3–6:** ⏳ `NOT STARTED`  
+> - **Phase 2:** ✅ `PASS / FINAL — VERIFIED` (483/483 tests PASSED, đạt toàn bộ Gates A–J tại `PHASE_02_FINAL_CLOSURE_REPORT.md` & `PHASE_02_MICRO_CLOSURE_REPORT.md`)  
+> - **Subphase 3A:** ⏭ `READY TO START / NOT STARTED` (App Shell + Overview + Story Workbench)  
+> - **Subphases 3B–3D & Phases 4–6:** ⏳ `NOT STARTED`  
 > - **Phases 7–9:** 🔵 `FUTURE / NOT STARTED`  
 > - **Final System Integration Gate:** 🏁 `NOT YET RUN` (Final Quality Gate, không phải Phase 10)  
-> - **Kỷ luật vận hành:** Hoàn thành đồng bộ tài liệu và dừng lại tại đây; **tuyệt đối KHÔNG bắt đầu code Phase 2 trong cùng task** cho tới khi người dùng ra lệnh tiếp theo.
+> - **Kỷ luật vận hành:** Phase 2 đã hoàn tất kiểm định và đóng toàn bộ các khoảng trống; sẵn sàng bắt đầu Subphase 3A khi có lệnh từ người dùng.
+

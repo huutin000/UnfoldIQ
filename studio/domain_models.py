@@ -4,6 +4,7 @@ Represents the unified domain model for Story, Voice, Visual, Media Assets, and 
 Fully compatible with Pydantic v2 and backward-compatible with legacy Phase 1-15 project formats.
 """
 
+from enum import Enum
 from typing import Dict, Any, List, Optional
 from pydantic import BaseModel, Field
 
@@ -40,6 +41,7 @@ class StoryBeat(BaseModel):
     target_duration_seconds: Optional[float] = None
     estimated_word_count: Optional[int] = None
     notes: Optional[str] = None
+    is_locked: bool = False
 
     model_config = {"extra": "allow"}
 
@@ -53,6 +55,7 @@ class AssetRef(BaseModel):
     lifecycle_state: str = "GENERATED"  # GENERATED, SELECTED, APPROVED, LOCKED, REJECTED
     checksum: Optional[str] = None
     mime_type: Optional[str] = None
+    is_locked: bool = False
 
     model_config = {"extra": "allow"}
 
@@ -75,6 +78,7 @@ class Shot(BaseModel):
     start: Optional[float] = None
     end: Optional[float] = None
     duration: Optional[float] = None
+    is_locked: bool = False
 
     model_config = {"extra": "allow"}
 
@@ -92,6 +96,7 @@ class Scene(BaseModel):
     evidence_mode: Optional[str] = "reconstruction"
     shot_type: Optional[str] = "medium wide"
     shots: List[Shot] = Field(default_factory=list)
+    is_locked: bool = False
 
     model_config = {"extra": "allow"}
 
@@ -205,3 +210,128 @@ class ProjectV2State(BaseModel):
     metadata: Dict[str, Any] = Field(default_factory=dict)
 
     model_config = {"extra": "allow"}
+
+
+# ==============================================================================
+# PHASE 2 DOMAIN MODELS: DEPENDENCY, VERSIONING, LOCKING, SCHEDULER
+# ==============================================================================
+
+class ReviewStatus(str, Enum):
+    DRAFT = "DRAFT"
+    NEEDS_REVIEW = "NEEDS_REVIEW"
+    READY = "READY"
+
+
+class DerivedFreshness(str, Enum):
+    CURRENT = "CURRENT"
+    OUTDATED = "OUTDATED"
+
+
+class EffectiveStatus(str, Enum):
+    BLOCKED = "BLOCKED"
+    OUTDATED = "OUTDATED"
+    NEEDS_REVIEW = "NEEDS_REVIEW"
+    DRAFT = "DRAFT"
+    READY = "READY"
+
+
+class Blocker(BaseModel):
+    code: str
+    source_artifact_id: Optional[str] = None
+    message: str
+
+    model_config = {"extra": "allow"}
+
+
+class ArtifactNode(BaseModel):
+    artifact_id: str
+    artifact_type: str  # story_beat, audio_chunk, scene_timing, shot, visual_bible, etc.
+    content_hash: str
+    review_status: str = ReviewStatus.READY.value
+    is_outdated: bool = False
+    is_locked: bool = False
+    blockers: List[Blocker] = Field(default_factory=list)
+    effective_status: Optional[str] = None
+    dependencies: List[str] = Field(default_factory=list)  # parent artifact_ids
+    metadata: Dict[str, Any] = Field(default_factory=dict)
+
+    model_config = {"extra": "allow"}
+
+
+class DependencyEdge(BaseModel):
+    parent_id: str
+    child_id: str
+
+    model_config = {"extra": "allow"}
+
+
+class ArtifactRevision(BaseModel):
+    revision_id: str
+    project_id: str
+    artifact_type: str
+    artifact_id: str
+    created_at: str
+    content_hash: str
+    snapshot_data: Dict[str, Any] = Field(default_factory=dict)
+    message: Optional[str] = None
+    source_revision_id: Optional[str] = None
+    event_type: str = "MANUAL"  # GENERATE, REGENERATE, APPROVE, REPLACE_ASSET, RESTORE, MANUAL
+    author: str = "solo"
+
+    model_config = {"extra": "allow"}
+
+
+class CacheKeyRecord(BaseModel):
+    cache_key: str
+    project_id: str
+    artifact_type: str
+    artifact_id: str
+    input_hash: str
+    provider: Optional[str] = None
+    model: Optional[str] = None
+    settings_hash: Optional[str] = None
+    created_at: str
+
+    model_config = {"extra": "allow"}
+
+
+class NextAction(BaseModel):
+    action_type: str
+    target_artifact_id: Optional[str] = None
+    target_artifact_type: Optional[str] = None
+    target_stage: Optional[str] = None
+    reason: str
+    priority: int  # 1=BLOCKED, 2=OUTDATED, 3=NEEDS_REVIEW, 4=DRAFT, 5=READY/PROCEED
+    metadata: Dict[str, Any] = Field(default_factory=dict)
+
+    model_config = {"extra": "allow"}
+
+
+class ResourceClass(str, Enum):
+    CUDA_HEAVY = "CUDA_HEAVY"
+    GPU_ENCODER = "GPU_ENCODER"
+    CPU_BOUND = "CPU_BOUND"
+    IO_BOUND = "IO_BOUND"
+
+
+class JobState(str, Enum):
+    QUEUED = "QUEUED"
+    RUNNING = "RUNNING"
+    COMPLETED = "COMPLETED"
+    FAILED = "FAILED"
+    CANCELLED = "CANCELLED"
+
+
+class SchedulerJob(BaseModel):
+    job_id: str
+    job_type: str
+    resource_class: str
+    status: str = JobState.QUEUED.value
+    created_at: str
+    started_at: Optional[str] = None
+    completed_at: Optional[str] = None
+    error_message: Optional[str] = None
+    metadata: Dict[str, Any] = Field(default_factory=dict)
+
+    model_config = {"extra": "allow"}
+

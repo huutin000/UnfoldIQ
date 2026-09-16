@@ -3244,6 +3244,157 @@ async def get_project_visual(dir_name: str):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+# ==============================================================================
+# PHASE 2 API ENDPOINTS: DEPENDENCY, NEXT ACTION, VERSIONING & LOCKING
+# ==============================================================================
+
+@app.get("/api/projects/{dir_name}/dependencies/graph")
+async def get_project_dependency_graph(dir_name: str):
+    """Returns artifact-level dependency graph with nodes, edges, statuses, and blockers."""
+    from studio.project_bootstrap import bootstrap_project_graph, get_project_state_store
+    p_dir = PROJECTS_DIR / dir_name
+    if not p_dir.is_dir():
+        raise HTTPException(
+            status_code=404,
+            detail={"code": "PROJECT_NOT_FOUND", "message": f"Dự án '{dir_name}' không tồn tại.", "project_id": dir_name}
+        )
+    try:
+        store = get_project_state_store(dir_name)
+        graph = bootstrap_project_graph(dir_name, state_store=store)
+        return graph.to_dict()
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.exception(f"Failed to get dependency graph for {dir_name}: {e}")
+        raise HTTPException(status_code=500, detail={"code": "INTERNAL_ERROR", "message": str(e)})
+
+
+@app.get("/api/projects/{dir_name}/next-action")
+async def get_project_next_action(dir_name: str):
+    """Returns the deterministic Next Best Action for the project."""
+    from studio.project_bootstrap import bootstrap_project_graph, get_project_state_store
+    from studio.next_action import NextBestActionService
+    p_dir = PROJECTS_DIR / dir_name
+    if not p_dir.is_dir():
+        raise HTTPException(
+            status_code=404,
+            detail={"code": "PROJECT_NOT_FOUND", "message": f"Dự án '{dir_name}' không tồn tại.", "project_id": dir_name}
+        )
+    try:
+        store = get_project_state_store(dir_name)
+        graph = bootstrap_project_graph(dir_name, state_store=store)
+        service = NextBestActionService(graph)
+        action = service.get_next_action()
+        return action.model_dump()
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.exception(f"Failed to get next action for {dir_name}: {e}")
+        raise HTTPException(status_code=500, detail={"code": "INTERNAL_ERROR", "message": str(e)})
+
+
+@app.get("/api/projects/{dir_name}/history/{artifact_type}/{artifact_id}")
+async def get_artifact_history(dir_name: str, artifact_type: str, artifact_id: str):
+    """Returns historical revisions list for a specific artifact."""
+    from studio.project_bootstrap import get_project_state_store
+    from studio.version_manager import VersionManager
+    from studio.locking import LOCKABLE_ARTIFACT_TYPES
+    valid_types = LOCKABLE_ARTIFACT_TYPES.union({"script", "scene"})
+    if artifact_type not in valid_types:
+        raise HTTPException(
+            status_code=400,
+            detail={"code": "INVALID_ARTIFACT_TYPE", "message": f"Loại thực thể '{artifact_type}' không hợp lệ.", "artifact_type": artifact_type}
+        )
+    p_dir = PROJECTS_DIR / dir_name
+    if not p_dir.is_dir():
+        raise HTTPException(
+            status_code=404,
+            detail={"code": "PROJECT_NOT_FOUND", "message": f"Dự án '{dir_name}' không tồn tại.", "project_id": dir_name}
+        )
+    try:
+        store = get_project_state_store(dir_name)
+        vm = VersionManager(store)
+        revisions = vm.list_history(artifact_type=artifact_type, artifact_id=artifact_id)
+        return [r.model_dump() for r in revisions]
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.exception(f"Failed to get history for {artifact_type}:{artifact_id}: {e}")
+        raise HTTPException(status_code=500, detail={"code": "INTERNAL_ERROR", "message": str(e)})
+
+
+@app.post("/api/projects/{dir_name}/history/{revision_id}/restore")
+async def restore_artifact_revision(dir_name: str, revision_id: str, payload: Optional[Dict[str, Any]] = None):
+    """Restores working state from a historical revision snapshot."""
+    from studio.project_bootstrap import bootstrap_project_graph, get_project_state_store
+    from studio.version_manager import VersionManager, RevisionNotFoundError
+    from studio.locking import LockConflictError
+    p_dir = PROJECTS_DIR / dir_name
+    if not p_dir.is_dir():
+        raise HTTPException(
+            status_code=404,
+            detail={"code": "PROJECT_NOT_FOUND", "message": f"Dự án '{dir_name}' không tồn tại.", "project_id": dir_name}
+        )
+    override_lock = bool(payload.get("override_lock", False)) if payload else False
+    try:
+        store = get_project_state_store(dir_name)
+        graph = bootstrap_project_graph(dir_name, state_store=store)
+        vm = VersionManager(store, graph=graph)
+        result = vm.restore_revision(revision_id, override_lock=override_lock)
+        return result
+    except RevisionNotFoundError as rne:
+        raise HTTPException(
+            status_code=404,
+            detail={"code": "REVISION_NOT_FOUND", "message": str(rne), "revision_id": revision_id}
+        )
+    except LockConflictError as lce:
+        raise HTTPException(
+            status_code=409,
+            detail={"code": "LOCK_CONFLICT", "message": str(lce), "revision_id": revision_id}
+        )
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.exception(f"Failed to restore revision {revision_id}: {e}")
+        raise HTTPException(status_code=500, detail={"code": "INTERNAL_ERROR", "message": str(e)})
+
+
+@app.post("/api/projects/{dir_name}/lock/{artifact_type}/{artifact_id}")
+async def set_artifact_lock(dir_name: str, artifact_type: str, artifact_id: str, payload: Dict[str, Any]):
+    """Locks or unlocks an artifact against automated bulk overwrites."""
+    from studio.project_bootstrap import bootstrap_project_graph, get_project_state_store
+    from studio.locking import LockManager, LOCKABLE_ARTIFACT_TYPES
+    valid_types = LOCKABLE_ARTIFACT_TYPES.union({"script", "scene"})
+    if artifact_type not in valid_types:
+        raise HTTPException(
+            status_code=400,
+            detail={"code": "INVALID_ARTIFACT_TYPE", "message": f"Loại thực thể '{artifact_type}' không hợp lệ.", "artifact_type": artifact_type}
+        )
+    p_dir = PROJECTS_DIR / dir_name
+    if not p_dir.is_dir():
+        raise HTTPException(
+            status_code=404,
+            detail={"code": "PROJECT_NOT_FOUND", "message": f"Dự án '{dir_name}' không tồn tại.", "project_id": dir_name}
+        )
+    locked = bool(payload.get("locked", True))
+    try:
+        store = get_project_state_store(dir_name)
+        graph = bootstrap_project_graph(dir_name, state_store=store)
+        lm = LockManager(store, graph=graph)
+        lm.set_lock(artifact_id, locked, artifact_type)
+        return {
+            "artifact_id": artifact_id,
+            "artifact_type": artifact_type,
+            "is_locked": locked,
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.exception(f"Failed to set lock for {artifact_id}: {e}")
+        raise HTTPException(status_code=500, detail={"code": "INTERNAL_ERROR", "message": str(e)})
+
+
+
 @app.on_event("shutdown")
 async def shutdown_event():
     """Cancel all active transcription workers and safely checkpoint persistent jobs when Studio shuts down."""
