@@ -52,7 +52,6 @@ from studio.project_manager import (
     delete_project
 )
 from studio.pronunciation_service import PronunciationDictionary
-from studio.transcription_service import transcription_service
 from studio.scene_planner import scene_planner, ScenePlanValidationError
 from studio.narration_director import (
     NARRATION_MODES,
@@ -117,7 +116,11 @@ async def startup_event():
     if recovered > 0:
         logger.info(f"Phase 15A Startup: Recovered {recovered} interrupted jobs.")
 
-kokoro_client = KokoroClient()
+from studio.providers import KokoroTTSProvider, WhisperSTTProvider, TTSProvider, STTProvider
+
+tts_provider: TTSProvider = KokoroTTSProvider()
+stt_provider: STTProvider = WhisperSTTProvider()
+kokoro_client = getattr(tts_provider, "client", KokoroClient())
 pron_dict = PronunciationDictionary(BASE_DIR / "config" / "pronunciation_dictionary.json")
 USER_SETTINGS_PATH = BASE_DIR / "config" / "user_settings.json"
 
@@ -142,7 +145,7 @@ def _is_project_busy(dir_name: str) -> bool:
     if qa_job and qa_job.get("status") == "running":
         return True
     try:
-        ts_job = transcription_service.get_job(dir_name)
+        ts_job = stt_provider.get_job(dir_name)
         if ts_job and ts_job.get("status") in ("queued", "running"):
             return True
     except Exception:
@@ -422,7 +425,7 @@ async def _run_tts_job(job_id: str, req: JobRequest):
         # Step 1: Health check
         job["state"] = "preparing"
         job["render_mode"] = render_mode
-        health = await kokoro_client.check_health()
+        health = await tts_provider.check_health()
         if not health.get("healthy"):
             job["state"] = "failed"
             job["error_message"] = "Kokoro TTS service is not available."
@@ -580,7 +583,7 @@ async def _run_tts_job(job_id: str, req: JobRequest):
             async def synth_fn(text: str, out: Path) -> None:
                 # Phase 9: per-chunk narration rate (clamped to Kokoro-safe bounds).
                 eff_speed = min(2.0, max(0.5, float(req.speed) * float(chunk.rate_factor)))
-                await kokoro_client.synthesize_chunk(
+                await tts_provider.synthesize_chunk(
                     text=text,
                     voice=req.voice,
                     speed=eff_speed,
@@ -796,7 +799,7 @@ async def _run_tts_job(job_id: str, req: JobRequest):
 @app.get("/api/health")
 async def health_check():
     """Health check for UnfoldIQ Studio and upstream Kokoro service."""
-    kokoro_health = await kokoro_client.check_health()
+    kokoro_health = await tts_provider.check_health()
     return {
         "status": "healthy",
         "studio": "UnfoldIQ TTS Studio v3.0",
@@ -813,7 +816,7 @@ async def health_check():
 @app.get("/api/voices")
 async def get_voices():
     """Fetch enriched list of voices."""
-    voices = await kokoro_client.get_voices()
+    voices = await tts_provider.get_available_voices()
     return {"voices": voices}
 
 
@@ -835,7 +838,7 @@ async def start_job(req: JobRequest, background_tasks: BackgroundTasks):
     if req.output_formats is not None:
         req.export_mp3 = ("mp3" in req.output_formats)
 
-    if transcription_service.is_gpu_busy():
+    if stt_provider.is_gpu_busy():
         raise HTTPException(
             status_code=409,
             detail="GPU is currently busy with transcription. Please wait or cancel transcription before starting TTS."
@@ -1091,7 +1094,7 @@ async def preview_narration_beat(dir_name: str, req: NarrationPreviewRequest = N
         eff_text, _ = pron_dict.preprocess(b.get("text", ""))
         tmp = out_dir / f".tmp_{safe_tag}_{b.get('beatId')}.wav"
         eff_speed = min(2.0, max(0.5, speed * float(b.get("rate", 1.0))))
-        await kokoro_client.synthesize_chunk(
+        await tts_provider.synthesize_chunk(
             text=eff_text, voice=voice, speed=eff_speed, output_path=tmp)
         if float(b.get("pauseBefore", 0)) > 0.01:
             track.append(("silence", float(b["pauseBefore"])))
@@ -1312,7 +1315,7 @@ async def generate_pronunciation_test_audio(req: PronunciationTestAudioRequest):
     temp_wav = temp_dir / f"pron_test_{uuid.uuid4().hex[:8]}.wav"
 
     try:
-        await kokoro_client.synthesize_chunk(
+        await tts_provider.synthesize_chunk(
             text=req.text.strip(),
             voice=voice,
             speed=speed,
@@ -1463,7 +1466,7 @@ async def _rerender_chunk_impl(dir_name: str, chunk_index: int) -> Dict[str, Any
     cancel_evt = asyncio.Event()
 
     async def synth_fn(text: str, out: Path) -> None:
-        await kokoro_client.synthesize_chunk(
+        await tts_provider.synthesize_chunk(
             text=text,
             voice=voice,
             speed=speed,
@@ -1554,7 +1557,7 @@ async def _run_voice_qa_pipeline(dir_name: str):
             job["progress"] = 20
             job["message"] = "Running Faster-Whisper ASR transcription..."
 
-            ts_job = await transcription_service.start_transcription(
+            ts_job = await stt_provider.start_transcription(
                 project_id=dir_name,
                 is_tts_active_fn=_is_tts_active
             )
@@ -1562,12 +1565,12 @@ async def _run_voice_qa_pipeline(dir_name: str):
             while True:
                 await asyncio.sleep(0.5)
                 if job.get("status") in ("cancelling", "cancelled"):
-                    await transcription_service.cancel_transcription(dir_name)
+                    await stt_provider.cancel_transcription(dir_name)
                     job["status"] = "cancelled"
                     job["message"] = "Voice QA cancelled."
                     return
 
-                curr_ts_job = transcription_service.get_job(dir_name)
+                curr_ts_job = stt_provider.get_job(dir_name)
                 if not curr_ts_job:
                     break
                 state = curr_ts_job.get("state")
@@ -1716,7 +1719,7 @@ async def cancel_voice_qa(dir_name: str):
     if job and job.get("status") == "running":
         job["status"] = "cancelling"
         job["message"] = "Cancelling Voice QA..."
-        await transcription_service.cancel_transcription(dir_name)
+        await stt_provider.cancel_transcription(dir_name)
         job["status"] = "cancelled"
         job["message"] = "Voice QA cancelled."
         return {"status": "cancelled"}
@@ -1772,7 +1775,7 @@ async def generate_project_timestamps(dir_name: str, req: Optional[TimestampGene
         )
 
     try:
-        job = await transcription_service.start_transcription(
+        job = await stt_provider.start_transcription(
             project_id=dir_name,
             is_tts_active_fn=_is_tts_active
         )
@@ -1789,7 +1792,7 @@ async def generate_project_timestamps(dir_name: str, req: Optional[TimestampGene
 @app.get("/api/projects/{dir_name}/timestamps/status")
 async def get_project_timestamps_status(dir_name: str):
     """Check current transcription/timestamp status, progress, and staleness."""
-    status = transcription_service.check_project_timestamps_status(dir_name)
+    status = stt_provider.check_project_timestamps_status(dir_name)
     active_states = ("preparing", "loading_model", "transcribing", "aligning", "writing", "processing")
     raw_state = status.get("state", "").lower()
 
@@ -1853,7 +1856,7 @@ async def download_project_srt(dir_name: str):
 @app.post("/api/projects/{dir_name}/timestamps/cancel")
 async def cancel_project_transcription(dir_name: str):
     """Cancel active transcription worker subprocess for a project."""
-    await transcription_service.cancel_transcription(dir_name)
+    await stt_provider.cancel_transcription(dir_name)
     return {"status": "cancelling", "project_id": dir_name}
 
 
@@ -3097,12 +3100,156 @@ async def get_project_dependency_status(dir_name: str):
     }
 
 
+@app.get("/api/projects/{dir_name}/v2/state")
+async def get_project_v2_state(dir_name: str):
+    """Unified ProjectV2 state endpoint for modern workbenches."""
+    from studio.project_adapter import project_adapter
+    try:
+        state = project_adapter.load_project_v2(dir_name)
+        return state.model_dump()
+    except FileNotFoundError as fe:
+        raise HTTPException(status_code=404, detail=str(fe))
+    except Exception as e:
+        logger.exception(f"Failed to load unified project state for {dir_name}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/projects/{dir_name}/v2/overview")
+@app.get("/api/projects/{dir_name}/slice/overview")
+async def get_project_overview(dir_name: str):
+    """Selective loader: overview summary and stats for App Shell and Dashboard."""
+    from studio.project_adapter import project_adapter
+    try:
+        overview = project_adapter.load_overview_slice(dir_name)
+        return overview.model_dump()
+    except FileNotFoundError as fe:
+        raise HTTPException(status_code=404, detail=str(fe))
+    except Exception as e:
+        logger.exception(f"Failed to load project overview for {dir_name}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/projects/{dir_name}/v2/story")
+@app.get("/api/projects/{dir_name}/story")
+async def get_project_story(dir_name: str):
+    """Selective loader: script and story beats for Story Workbench."""
+    from studio.project_adapter import project_adapter
+    try:
+        story = project_adapter.load_story_slice(dir_name)
+        return story.model_dump()
+    except FileNotFoundError as fe:
+        raise HTTPException(status_code=404, detail=str(fe))
+    except Exception as e:
+        logger.exception(f"Failed to load story slice for {dir_name}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/projects/{dir_name}/v2/voice")
+@app.get("/api/projects/{dir_name}/voice")
+async def get_project_voice(dir_name: str):
+    """Selective loader: audio chunks, settings, and word cues for Voice Workbench."""
+    from studio.project_adapter import project_adapter
+    try:
+        voice = project_adapter.load_voice_slice(dir_name)
+        return voice.model_dump()
+    except FileNotFoundError as fe:
+        raise HTTPException(status_code=404, detail=str(fe))
+    except Exception as e:
+        logger.exception(f"Failed to load voice slice for {dir_name}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/projects/{dir_name}/visual/summary")
+async def get_project_visual_summary(dir_name: str):
+    """Contextual loader: high-level visual pipeline summary without full scene/shot trees."""
+    from studio.project_adapter import project_adapter
+    try:
+        summary = project_adapter.load_visual_summary(dir_name)
+        return summary.model_dump()
+    except FileNotFoundError as fe:
+        raise HTTPException(status_code=404, detail=str(fe))
+    except Exception as e:
+        logger.exception(f"Failed to load visual summary for {dir_name}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/projects/{dir_name}/visual/scenes")
+async def get_project_visual_scenes(dir_name: str):
+    """Contextual loader: lightweight scene list for Visual Navigator (no heavy prompt payloads)."""
+    from studio.project_adapter import project_adapter
+    try:
+        scenes = project_adapter.load_visual_scenes_lightweight(dir_name)
+        return [s.model_dump() for s in scenes]
+    except FileNotFoundError as fe:
+        raise HTTPException(status_code=404, detail=str(fe))
+    except Exception as e:
+        logger.exception(f"Failed to load lightweight scenes for {dir_name}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/projects/{dir_name}/visual/scenes/{scene_id}")
+async def get_project_visual_scene_detail(dir_name: str, scene_id: str):
+    """Contextual loader: full detail for a single scene with all its nested shots."""
+    from studio.project_adapter import project_adapter
+    try:
+        scene = project_adapter.load_scene_detail(dir_name, scene_id)
+        return scene.model_dump()
+    except (FileNotFoundError, KeyError) as fe:
+        raise HTTPException(status_code=404, detail=str(fe))
+    except Exception as e:
+        logger.exception(f"Failed to load scene {scene_id} for {dir_name}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/projects/{dir_name}/visual/shots/{shot_id}")
+async def get_project_visual_shot_detail(dir_name: str, shot_id: str):
+    """Contextual loader: full detail for a single shot card."""
+    from studio.project_adapter import project_adapter
+    try:
+        shot = project_adapter.load_shot_detail(dir_name, shot_id)
+        return shot.model_dump()
+    except (FileNotFoundError, KeyError) as fe:
+        raise HTTPException(status_code=404, detail=str(fe))
+    except Exception as e:
+        logger.exception(f"Failed to load shot {shot_id} for {dir_name}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/projects/{dir_name}/visual/bible")
+async def get_project_visual_bible(dir_name: str):
+    """Contextual loader: Visual Bible entities slice independently."""
+    from studio.project_adapter import project_adapter
+    try:
+        vb_slice = project_adapter.load_visual_bible_slice(dir_name)
+        return vb_slice.model_dump()
+    except FileNotFoundError as fe:
+        raise HTTPException(status_code=404, detail=str(fe))
+    except Exception as e:
+        logger.exception(f"Failed to load visual bible slice for {dir_name}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/projects/{dir_name}/v2/visual")
+@app.get("/api/projects/{dir_name}/visual")
+async def get_project_visual(dir_name: str):
+    """Aggregate loader: scenes, shots, and visual bible for diagnostics/internal inspection."""
+    from studio.project_adapter import project_adapter
+    try:
+        visual = project_adapter.load_visual_slice(dir_name)
+        return visual.model_dump()
+    except FileNotFoundError as fe:
+        raise HTTPException(status_code=404, detail=str(fe))
+    except Exception as e:
+        logger.exception(f"Failed to load visual slice for {dir_name}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @app.on_event("shutdown")
 async def shutdown_event():
     """Cancel all active transcription workers and safely checkpoint persistent jobs when Studio shuts down."""
-    for project_id in list(transcription_service._active_procs.keys()):
+    for project_id in stt_provider.get_active_projects():
         logger.info(f"Studio shutdown: terminating worker for {project_id}...")
-        await transcription_service.cancel_transcription(project_id)
+        await stt_provider.cancel_transcription(project_id)
     # Safe stop and checkpoint active persistent jobs
     graceful_shutdown_manager.execute_safe_stop()
 

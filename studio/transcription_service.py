@@ -20,12 +20,31 @@ from studio.config import BASE_DIR, PROJECTS_DIR, config
 logger = logging.getLogger("unfoldiq.transcription")
 
 
+# In-memory cache for audio sha256 to avoid repeated multi-megabyte disk reads during status polling:
+# {project_id: (st_mtime_ns, st_size, sha256_hex)}
+_audio_hash_cache: Dict[str, Tuple[int, int, str]] = {}
+
+
 def _compute_sha256(filepath: Path) -> str:
     h = hashlib.sha256()
     with open(filepath, "rb") as f:
         while chunk := f.read(65536):
             h.update(chunk)
     return h.hexdigest()
+
+
+def get_audio_sha256_fast(project_id: str, audio_path: Path) -> str:
+    """Return sha256 of audio_path, reusing cached value if mtime and size are unchanged."""
+    try:
+        st = audio_path.stat()
+        cached = _audio_hash_cache.get(project_id)
+        if cached and cached[0] == st.st_mtime_ns and cached[1] == st.st_size:
+            return cached[2]
+        new_hash = _compute_sha256(audio_path)
+        _audio_hash_cache[project_id] = (st.st_mtime_ns, st.st_size, new_hash)
+        return new_hash
+    except Exception:
+        return _compute_sha256(audio_path)
 
 
 class TranscriptionService:
@@ -92,7 +111,7 @@ class TranscriptionService:
             with open(ts_json, "r", encoding="utf-8") as f:
                 data = json.load(f)
             saved_hash = data.get("audio_sha256", "")
-            current_hash = _compute_sha256(audio_path)
+            current_hash = get_audio_sha256_fast(project_id, audio_path)
             is_stale = (saved_hash != current_hash)
             
             # Active job status takes precedence if currently running
