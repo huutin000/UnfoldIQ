@@ -1,8 +1,10 @@
 {
-  "selected_language": "",
+  "selected_language": "American English",
   "selected_voice": "af_heart",
-  "speed": 0.95,
+  "speed": 1.1,
   "preferred_format": "mp3",
-  "updated_at": "2026-09-11T13:53:43.352394+00:00",
-  "render_mode": "balanced"
+  "updated_at": "2026-09-14T06:41:08.579496+00:00",
+  "render_mode": "balanced",
+  "narration_mode": "auto",
+  "narration_profile": "DOCUMENTARY_CINEMATIC"
 }

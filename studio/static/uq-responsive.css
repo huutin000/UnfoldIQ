@@ -1,0 +1,124 @@
+/* UQ responsive — single breakpoint strategy (owns all viewport behavior). */
+/* P0 (§20 FINAL-GAPS): không bao giờ page-level horizontal scroll — drawer
+   off-canvas (translateX) vẫn tính vào scrollWidth nên clip ở root; các pane
+   giữ scroll nội bộ của chúng. */
+html { overflow-x: clip; }
+body { overflow-x: clip; }
+.app-header { overflow-x: hidden; max-width: 100vw; }
+
+@media (max-width: 1439px) {
+  .workstation-body { grid-template-columns: 64px minmax(0, 1fr) 332px; }
+  .pipeline-sidebar { padding: 12px 7px; }
+  .pipeline-sidebar .nav-label, .pipeline-sidebar .sidebar-section-title,
+  .pipeline-sidebar .sidebar-footer, .pipeline-sidebar .nav-step-num { display: none; }
+  .pipeline-sidebar .nav-item { justify-content: center; padding: 9px 0; }
+  .pipeline-sidebar .sidebar-section-title { display: none; }
+  .stepper-wrap .stepper-item { font-size: 12px; padding: 6px 8px; }
+  .stepper-wrap .stepper-item .step-label { max-width: 104px; overflow: hidden; text-overflow: ellipsis; }
+}
+@media (max-width: 1300px) {
+  .brand-subtitle { display: none; }
+  #cost-policy-badge { display: none; }
+  #service-status-badge #service-status-text { display: none; }
+  .uq-project .indicator-val { max-width: 150px; }
+  .header-right { gap: 6px; }
+}
+@media (max-width: 1279px) {
+  .qa-metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .export-card-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 1100px) {
+  .master-detail-container, .qa-workbench-container { grid-template-columns: 1fr; overflow-y: auto; height: auto; }
+  #ws-scenes.workspace-view, #ws-veo.workspace-view { overflow-y: auto; }
+  .research-container { grid-template-columns: 1fr; }
+  .vb-workspace { grid-template-columns: 190px minmax(0, 1fr); }
+  #vb-tab-content-entities { grid-template-columns: 1fr; overflow-y: auto; }
+  .vb-entity-list-pane { border-right: none; border-bottom: 1px solid var(--uq-line); max-height: 42vh; }
+}
+@media (max-width: 1024px) {
+  .workstation-body { grid-template-columns: minmax(0, 1fr); }
+  .app-header { gap: 6px; padding: 0 8px; }
+  .brand-text { display: none; }
+  #cost-policy-badge { display: none; }
+  #service-status-badge #service-status-text { display: none; }
+  #btn-open-tour span { display: none; }
+  .uq-appear span { display: none; }
+  .uq-project .indicator-val { max-width: 120px; }
+  .header-right { gap: 4px; }
+  .pipeline-sidebar { position: fixed; left: 0; top: 54px; bottom: 58px; width: 264px;
+    max-width: 84vw; z-index: var(--uq-z-drawer); transform: translateX(-105%);
+    transition: transform var(--uq-ease); box-shadow: 12px 0 32px rgba(0, 0, 0, 0.5); }
+  .pipeline-sidebar.open { transform: none; }
+  .pipeline-sidebar .nav-label, .pipeline-sidebar .sidebar-section-title,
+  .pipeline-sidebar .sidebar-footer, .pipeline-sidebar .nav-step-num { display: flex; }
+  .pipeline-sidebar .sidebar-section-title { display: block; }
+  .pipeline-sidebar .nav-item { justify-content: flex-start; padding: 8px 10px; }
+  .uq-page { max-width: none; }
+  .vb-workspace { grid-template-columns: 1fr; overflow-y: auto; }
+  .vb-category { border-right: none; border-bottom: 1px solid var(--uq-line);
+    flex-direction: row; overflow-x: auto; overflow-y: hidden; padding: 8px; }
+  .vb-category .vb-cat-head { display: none; }
+  .vb-tab-btn { width: auto; white-space: nowrap; border-left-color: transparent;
+    border-bottom: 2px solid transparent; border-radius: var(--uq-r-ctl); }
+  .vb-tab-btn.active { border-bottom-color: var(--uq-accent); }
+  #vb-tab-content-entities { display: flex; flex-direction: column; overflow: visible; }
+  .vb-entity-list-pane { max-height: none; border-bottom: 1px solid var(--uq-line); }
+}
+@media (max-width: 768px) {
+  .app-header { padding: 0 8px; gap: 6px; }
+  .uq-project .indicator-val { max-width: 90px; }
+  #cost-policy-badge { display: none; }
+  #service-status-badge { display: none; }
+  #btn-open-tour span { display: none; }
+  .uq-appear { display: none; }
+  .brand-text { display: none; }
+  .header-right { gap: 4px; }
+  .workspace-view { padding: 14px 12px calc(14px + 52px); }
+  .ws-header { flex-direction: column; align-items: stretch; }
+  .stepper-select { display: block; width: 100%; margin-top: 8px; }
+  .app-player-bar { height: 52px; min-height: 52px; padding: 0 10px; gap: 10px; }
+  .player-left, .player-right { min-width: 0; }
+  .player-right .volume-slider { width: 52px; }
+  .modal-overlay { padding: 0; }
+  .modal-card, .modal-card-lg, .modal-card-xl.vb-modal-card { width: 100vw; height: 100dvh;
+    max-height: 100dvh; border-radius: 0; }
+  .pron-form-grid, .modal-grid-2, .qa-metrics-grid { grid-template-columns: 1fr; }
+  #overview-stages-grid, #library-cards-container { grid-template-columns: 1fr; }
+  .toast-container { left: 12px; right: 12px; bottom: 64px; max-width: none; }
+}
+@media (max-width: 390px) {
+  .uq-appear span { display: none; }
+  #service-status-badge { display: none; }
+  .uq-project .indicator-val { max-width: 84px; }
+  .app-header { gap: 6px; padding: 0 8px; }
+}
+/* P0 (§20 FINAL-GAPS): tablet dọc — inspector là drawer như 1024–1279,
+   tránh đè layout 1 cột gây tràn ngang. */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .workspace-inspector { position: fixed; right: 0; top: 54px; bottom: 58px; width: min(352px, 92vw);
+    z-index: var(--uq-z-drawer); transform: translateX(105%); transition: transform var(--uq-ease);
+    border-left: 1px solid var(--uq-line); background: var(--uq-nav); }
+  .workspace-inspector.open { transform: none; }
+}
+
+/* Prevent off-canvas drawers from contributing to scrollWidth when closed */
+@media (max-width: 1279px) {
+  .workspace-inspector:not(.open) {
+    display: none !important;
+  }
+}
+@media (max-width: 1024px) {
+  .pipeline-sidebar:not(.open) {
+    display: none !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .brand-subtitle { display: none !important; }
+  .uq-project { display: none !important; }
+  #btn-open-tour { display: none !important; }
+  #btn-open-settings { display: none !important; }
+  .app-header { gap: 4px; padding: 0 4px; }
+  .ws-header { padding: 8px 6px; }
+}
+

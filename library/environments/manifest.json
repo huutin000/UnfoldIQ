@@ -1,0 +1,39 @@
+{
+  "environments": [
+    {
+      "id": "env_olduvai_gorge_grassland_01",
+      "type": "environment",
+      "displayName": {
+        "vi": "Thảo nguyên Olduvai Gorge",
+        "en": "Olduvai Gorge grassland"
+      },
+      "flowName": "Olduvai Grassland",
+      "period": "Early Pleistocene",
+      "status": "APPROVED",
+      "isLocked": true,
+      "description": "Vast East African savannah basin with acacia trees, golden dry grass, volcanic hills on the horizon.",
+      "tags": [
+        "grassland",
+        "savannah",
+        "olduvai"
+      ]
+    },
+    {
+      "id": "env_olduvai_gorge_hearth_site_01",
+      "type": "environment",
+      "displayName": {
+        "vi": "Bãi trú ẩn / Nơi tập trung nhóm",
+        "en": "Olduvai Gorge sheltered site"
+      },
+      "flowName": "Olduvai Shelter Site",
+      "period": "Early Pleistocene",
+      "status": "APPROVED",
+      "isLocked": true,
+      "description": "Shaded rocky outcrop and river terrace shelter with scattered basalt cobbles.",
+      "tags": [
+        "shelter",
+        "river_terrace"
+      ]
+    }
+  ]
+}

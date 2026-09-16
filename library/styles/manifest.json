@@ -1,0 +1,17 @@
+{
+  "styles": [
+    {
+      "id": "style_documentary_cinematic_01",
+      "type": "style",
+      "displayName": {
+        "vi": "Phim tài liệu điện ảnh 8K chân thực",
+        "en": "Documentary photorealism 8K"
+      },
+      "flowName": "Documentary Photorealism",
+      "status": "APPROVED",
+      "isLocked": true,
+      "description": "BBC Earth / National Geographic cinema aesthetic, natural golden hour sunlight, anamorphic lens bokeh, photorealistic skin and hair physics.",
+      "negativePrompt": "modern clothing, buildings, plastic, distorted limbs, blurry face, cartoon, 3d render, oversaturated"
+    }
+  ]
+}

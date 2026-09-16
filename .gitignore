@@ -54,3 +54,8 @@ upstream/
 # Model weights (whisper, kokoro, etc.)
 models/*
 !models/.gitignore
+
+# Local backups & archives
+backups/
+*.zip
+*.tar.gz

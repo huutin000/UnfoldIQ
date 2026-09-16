@@ -1,0 +1,58 @@
+/* UQ Visual Bible — dedicated 3-pane presentation (same DOM contract as app.js). */
+.modal-card-xl.vb-modal-card { width: min(1400px, 96vw); height: min(920px, 92dvh); }
+.vb-modal-body { display: flex; flex-direction: column; min-height: 0; gap: 0; padding: 0; }
+.vb-workspace { display: grid; grid-template-columns: 216px minmax(0, 1fr); gap: 0; flex: 1; min-height: 0; }
+.vb-category { border-right: 1px solid var(--uq-line); background: var(--uq-surface-2);
+  padding: 10px 8px; display: flex; flex-direction: column; gap: 2px; overflow-y: auto; }
+.vb-category .vb-cat-head { font-size: 10.5px; font-weight: 750; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--uq-ink-3); padding: 4px 8px 8px; }
+.vb-tab-btn { display: flex; align-items: center; gap: 8px; width: 100%; text-align: left;
+  background: transparent; border: 1px solid transparent; border-left: 2px solid transparent;
+  border-radius: 0 var(--uq-r-ctl) var(--uq-r-ctl) 0; color: var(--uq-ink-2);
+  font-size: 13px; font-weight: 550; padding: 8px 10px; cursor: pointer; }
+.vb-tab-btn:hover { background: var(--uq-hover); color: var(--uq-ink-1); }
+.vb-tab-btn.active { background: var(--uq-accent-wash); color: var(--uq-accent-ink);
+  border-left-color: var(--uq-accent); font-weight: 650; }
+.vb-tab-btn .badge { margin-left: auto; font-size: 11px; font-family: var(--uq-font-mono);
+  background: var(--uq-hover); color: var(--uq-ink-2); padding: 1px 7px; border-radius: 99px; }
+.vb-tab-btn.active .badge { background: rgba(59,130,246,.25); color: var(--uq-accent-ink); }
+.vb-tab-btn .badge-warning, .vb-tab-btn .badge.badge-warning { background: var(--uq-warn-wash); color: #fcd34d; }
+.vb-main { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+#vb-tab-content-entities { display: grid; grid-template-columns: minmax(270px, 340px) minmax(0, 1fr);
+  flex: 1; min-height: 0; }
+.vb-entity-list-pane { border-right: 1px solid var(--uq-line); display: flex; flex-direction: column;
+  min-height: 0; min-width: 0; }
+.vb-list-toolbar { padding: 10px 12px; border-bottom: 1px solid var(--uq-line); }
+.vb-items-container { flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 8px; }
+.vb-entity-card { background: var(--uq-surface-2); border: 1px solid var(--uq-line);
+  border-radius: var(--uq-r-card); padding: 11px 13px; cursor: pointer;
+  display: flex; flex-direction: column; gap: 6px; }
+.vb-entity-card:hover { border-color: var(--uq-line-strong); background: var(--uq-hover); }
+.vb-entity-card.active { border-color: var(--uq-accent); background: var(--uq-accent-wash); }
+.vb-card-header { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.vb-card-title { font-size: 13.5px; font-weight: 650; }
+.vb-card-desc { font-size: 12.5px; color: var(--uq-ink-2); line-height: 1.55;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.vb-entity-card .badge { font-size: 10.5px; padding: 1px 7px; border-radius: 99px;
+  background: var(--uq-hover); color: var(--uq-ink-2); }
+.vb-inspector-pane { overflow-y: auto; padding: 16px; min-height: 0; display: flex;
+  flex-direction: column; gap: 14px; }
+.vb-detail-section { display: flex; flex-direction: column; gap: 8px; }
+.vb-detail-title { font-size: 11px; font-weight: 750; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--uq-ink-3); }
+.vb-issues-pane { flex: 1; overflow-y: auto; padding: 12px; min-height: 0; }
+.vb-issues-toolbar { display: flex; justify-content: space-between; align-items: center;
+  gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+.vb-issues-list-container { display: flex; flex-direction: column; gap: 8px; }
+.vb-issue-card { background: var(--uq-surface-2); border: 1px solid var(--uq-line);
+  border-radius: var(--uq-r-card); padding: 11px 13px; border-left-width: 3px; }
+.vb-issue-card.severity-error { border-left-color: var(--uq-bad); }
+.vb-issue-card.severity-warning { border-left-color: var(--uq-warn); }
+.vb-issue-card.severity-pass { border-left-color: var(--uq-ok); }
+.vb-ref-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.vb-ref-card { background: var(--uq-surface-2); border: 1px solid var(--uq-line);
+  border-radius: var(--uq-r-card); overflow: hidden; }
+.vb-ref-img { width: 100%; aspect-ratio: 1; object-fit: contain; background: #000; cursor: zoom-in; display: block; }
+.vb-ref-meta { padding: 8px 10px; font-size: 11.5px; color: var(--uq-ink-3); }
+.vb-modal-footer { display: flex; justify-content: space-between; align-items: center; }
+.vb-footer-left, .vb-footer-right { display: flex; align-items: center; gap: 8px; }

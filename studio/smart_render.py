@@ -100,11 +100,16 @@ def compute_render_hash(
     pronunciation_hash: str,
     target_chars: int,
     max_chars: int,
+    narration_hash: str = "",
+    narration_directive: Optional[Dict[str, Any]] = None,
 ) -> str:
     """Stable cache identity for one chunk.
 
     Includes every input that can change generated speech: effective
     (post-pronunciation) chunk text, voice, speed, pronunciation result,
+    narration synthesis state affecting that chunk (Phase 9; "" when Off),
+    the compiled per-chunk directive actually applied at synth/stitch time
+    (rate/pauses/emphasis — so compiler changes invalidate correctly),
     chunking settings and the render engine schema version.
     """
     payload = {
@@ -112,6 +117,8 @@ def compute_render_hash(
         "voice": voice,
         "speed": float(speed),
         "pronunciation_hash": pronunciation_hash,
+        "narration_hash": narration_hash,
+        "narration_directive": narration_directive or {},
         "target_chars": int(target_chars),
         "max_chars": int(max_chars),
         "render_engine_version": RENDER_ENGINE_VERSION,
@@ -126,6 +133,7 @@ def plan_fingerprint(
     pronunciation_hash: str,
     target_chars: int,
     max_chars: int,
+    narration_hash: str = "",
 ) -> str:
     """Compatibility identity for a whole render plan (resume gate)."""
     payload = {
@@ -133,6 +141,7 @@ def plan_fingerprint(
         "voice": voice,
         "speed": float(speed),
         "pronunciation_hash": pronunciation_hash,
+        "narration_hash": narration_hash,
         "target_chars": int(target_chars),
         "max_chars": int(max_chars),
         "render_engine_version": RENDER_ENGINE_VERSION,
@@ -181,6 +190,11 @@ class ChunkPlan:
     render_hash: str
     character_count: int
     word_count: int
+    # Phase 9 narration synthesis instructions (defaults = neutral = legacy path)
+    rate_factor: float = 1.0
+    pause_before: float = 0.0
+    pause_after: float = 0.0
+    emphasis: List[str] = field(default_factory=list)
 
 
 @dataclass
@@ -203,6 +217,8 @@ def plan_render(
     applied_overrides: List[Dict[str, Any]],
     target_chars: int,
     max_chars: int,
+    pron_preprocess: Optional[Callable[[str], Any]] = None,
+    narration: Optional[Dict[str, Any]] = None,
 ) -> RenderPlan:
     """Deterministic render plan reusing Phase 2 chunking guarantees.
 
@@ -210,19 +226,55 @@ def plan_render(
     no-lost-text / no-duplicate-text / punctuation guarantees are preserved.
     Cache addressing is by render_hash (content), therefore chunk identity is
     stable even when a script edit shifts later chunk indices.
+
+    P1.6: when pron_preprocess is provided AND every full-run applied
+    override is single-word, each chunk gets its own pronunciation hash, so a
+    dictionary edit invalidates only chunks it actually touches. Otherwise
+    (multi-word matches possible across chunk boundaries, or no callable)
+    every chunk safely shares the global hash (conservative fallback — never
+    stale audio, at most extra renders).
+
+    Phase 9: optional narration mapping {chunk_index: directive} plus
+    narration_hash participates in per-chunk hashes, so one beat change
+    invalidates only overlapping chunks. narration=None (or Off) behaves
+    exactly like the legacy path.
     """
     manifest = build_and_verify_manifest(
         synthesis_text, target_chars=target_chars, max_chars=max_chars
     )
     synthesis_hash = sha256_text(synthesis_text)
     pron_hash = compute_pronunciation_hash(applied_overrides)
+    narr = narration or {}
+    narr_hash = str(narr.get("narration_hash", ""))
+    narr_dirs = narr.get("directives") or {}
     fingerprint = plan_fingerprint(
-        synthesis_hash, voice, speed, pron_hash, target_chars, max_chars
+        synthesis_hash, voice, speed, pron_hash, target_chars, max_chars,
+        narr_hash,
+    )
+
+    fine_grained = (
+        pron_preprocess is not None
+        and all(len((o.get("original") or "").split()) <= 1
+                for o in (applied_overrides or []))
     )
 
     chunks: List[ChunkPlan] = []
     for item in manifest["chunks"]:
         text = item["text"]
+        chunk_ph = pron_hash
+        if fine_grained:
+            try:
+                _, chunk_applied = pron_preprocess(text)
+                chunk_ph = compute_pronunciation_hash(chunk_applied or [])
+            except Exception:
+                chunk_ph = pron_hash
+        d = narr_dirs.get(item["index"]) or {}
+        rate_factor = float(d.get("rate_factor", 1.0))
+        pause_before = float(d.get("pause_before", 0.0))
+        pause_after = float(d.get("pause_after", 0.0))
+        emphasis = list(d.get("emphasis", []))
+        directive_sig = {"rate_factor": rate_factor, "pause_before": pause_before,
+                         "pause_after": pause_after, "emphasis": emphasis}
         chunks.append(
             ChunkPlan(
                 chunk_id=f"{item['index']:04d}",
@@ -230,10 +282,15 @@ def plan_render(
                 text=text,
                 text_hash=sha256_text(text),
                 render_hash=compute_render_hash(
-                    text, voice, speed, pron_hash, target_chars, max_chars
+                    text, voice, speed, chunk_ph, target_chars, max_chars,
+                    narr_hash, directive_sig,
                 ),
                 character_count=item["character_count"],
                 word_count=item["word_count"],
+                rate_factor=rate_factor,
+                pause_before=pause_before,
+                pause_after=pause_after,
+                emphasis=emphasis,
             )
         )
 

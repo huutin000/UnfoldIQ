@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const projectNameInput = document.getElementById("project-name-input");
   const slugPreviewEl = document.getElementById("slug-preview");
   const activeProjectNameEl = document.getElementById("active-project-name");
+  const btnCloseProject = document.getElementById("btn-close-project");
   const voiceSelect = document.getElementById("voice-select");
   const languageSelect = document.getElementById("language-select");
   const speedSlider = document.getElementById("speed-slider");
@@ -141,6 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const veoCoverageBadge = document.getElementById("veo-coverage-badge");
   const veoStatusPill = document.getElementById("veo-status-pill");
   const btnGenerateVeo = document.getElementById("btn-generate-veo");
+  const btnRegenerateAllVeo = document.getElementById("btn-regenerate-all-veo");
   const btnRefreshVeo = document.getElementById("btn-refresh-veo");
   const btnExportVeoJson = document.getElementById("btn-export-veo-json");
   const btnExportVeoMd = document.getElementById("btn-export-veo-md");
@@ -155,6 +157,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const veoSearchInput = document.getElementById("veo-search-input");
   const veoFilterTone = document.getElementById("veo-filter-tone");
   const veoRowCountBadge = document.getElementById("veo-row-count-badge");
+
+  // Production Export Elements (Phase 11 — contextual to Veo workspace)
+  const prodStatusBadge = document.getElementById("prod-status-badge");
+  const prodSceneCount = document.getElementById("prod-scene-count");
+  const prodShotCount = document.getElementById("prod-shot-count");
+  const prodBlockerCount = document.getElementById("prod-blocker-count");
+  const prodReadinessList = document.getElementById("prod-readiness-list");
+  const prodBlockersList = document.getElementById("prod-blockers-list");
+  const btnProductionExport = document.getElementById("btn-production-export");
+  const prodResult = document.getElementById("prod-result");
+  const prodResultActions = document.getElementById("prod-result-actions");
+  const btnProductionOpenFolder = document.getElementById("btn-production-open-folder");
+  const btnProductionCopyPath = document.getElementById("btn-production-copy-path");
+  const prodHistoryList = document.getElementById("prod-history-list");
 
   // Veo Modal Elements
   const veoEditModal = document.getElementById("veo-edit-modal");
@@ -250,6 +266,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let tsOutdated = false;
   let scenesOutdated = false;
   let veoOutdated = false;
+  // P0.2: scene ids whose Veo shots are outdated (empty = all / whole dataset).
+  let veoOutdatedScenes = [];
   let projectCues = [];
 
   // Voice QA State (Phase 8.1)
@@ -257,6 +275,11 @@ document.addEventListener("DOMContentLoaded", () => {
   let voiceQAPollTimer = null;
   let selectedIssueFingerprint = null;
   let voiceQAFilter = "all";
+
+  // Production Export State (Phase 11)
+  let productionStatus = null;
+  let productionExporting = false;
+  let lastExportPath = null;
 
   // Modal & Tour State
   let confirmCallback = null;
@@ -337,6 +360,45 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // P1 (§8 FINAL-GAPS): single modal helper — focus vào, trap Tab, body scroll
+  // lock, restore focus khi đóng (kể cả khi trigger bị re-render → fallback).
+  let uqOpenModals = [];
+  function uqLockBody() {
+    try {
+      document.body.style.overflow = uqOpenModals.length ? "hidden" : "";
+    } catch (e) {}
+  }
+  function uqModalOpen(modalEl, trigger) {
+    if (!modalEl) return;
+    if (trigger === undefined) trigger = document.activeElement;
+    if (!uqOpenModals.includes(modalEl)) {
+      uqOpenModals.push({ el: modalEl, trigger: trigger });
+    }
+    modalEl.style.display = "flex";
+    modalEl.classList.add("open");
+    uqLockBody();
+    trapFocus(modalEl);
+  }
+  function uqModalClose(modalEl) {
+    if (!modalEl) return;
+    const idx = uqOpenModals.findIndex(m => m.el === modalEl);
+    const rec = idx >= 0 ? uqOpenModals[idx] : null;
+    if (idx >= 0) uqOpenModals.splice(idx, 1);
+    modalEl.style.display = "none";
+    modalEl.classList.remove("open");
+    uqLockBody();
+    releaseActiveFocus();
+    const t = rec && rec.trigger;
+    try {
+      if (t && t.isConnected && typeof t.focus === "function") t.focus();
+      else {
+        const fb = document.querySelector("#btn-open-tour, .nav-item, .stepper-item");
+        if (fb && typeof fb.focus === "function") fb.focus();
+      }
+    } catch (e) {}
+  }
+  window.UQModal = { open: uqModalOpen, close: uqModalClose };
+
   // HTML Escape utility
   function escapeHtml(str) {
     if (!str) return "";
@@ -349,8 +411,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   window.escapeHtml = escapeHtml;
 
-  // Toast Notification System (replaces native alert)
+  // Toast Notification System (replaces native alert) — with dedup (§6):
+  // identical (message+type) within 4s updates the existing toast instead of stacking.
+  let lastToastKey = "";
+  let lastToastAt = 0;
   function showNotification(message, type = "info") {
+    const key = `${type}::${message}`;
+    const now = Date.now();
+    if (key === lastToastKey && now - lastToastAt < 4000) return;
+    lastToastKey = key;
+    lastToastAt = now;
     let container = document.getElementById("toast-container");
     if (!container) {
       container = document.createElement("div");
@@ -366,6 +436,8 @@ document.addEventListener("DOMContentLoaded", () => {
       <button type="button" class="toast-close" aria-label="Đóng">&times;</button>
     `;
     container.appendChild(toast);
+    // Cap stacked toasts: drop oldest beyond 4 so one root cause never floods the screen.
+    while (container.children.length > 4) container.firstChild.remove();
 
     const removeToast = () => {
       toast.classList.add("toast-fade-out");
@@ -378,6 +450,9 @@ document.addEventListener("DOMContentLoaded", () => {
   window.showNotification = showNotification;
 
   // Reusable Confirmation Dialog Modal (replaces native confirm)
+  // Supports chained confirms: a new showConfirmDialog inside onConfirm
+  // keeps the modal open for the inner dialog (generation token).
+  let confirmGeneration = 0;
   function showConfirmDialog({
     title = "Xác nhận",
     message = "Bạn có chắc chắn muốn thực hiện hành động này?",
@@ -411,10 +486,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     confirmCallback = onConfirm;
-    confirmModal.style.display = "flex";
-    confirmModal.classList.add("open");
+    confirmGeneration++;
+    uqModalOpen(confirmModal);
 
-    trapFocus(confirmModal);
     setTimeout(() => {
       if (confirmBtnCancel) confirmBtnCancel.focus();
     }, 60);
@@ -422,15 +496,8 @@ document.addEventListener("DOMContentLoaded", () => {
   window.showConfirmDialog = showConfirmDialog;
 
   function closeConfirmDialog() {
-    if (confirmModal) {
-      confirmModal.style.display = "none";
-      confirmModal.classList.remove("open");
-    }
+    uqModalClose(confirmModal);
     confirmCallback = null;
-    releaseActiveFocus();
-    if (lastFocusedElement && typeof lastFocusedElement.focus === "function") {
-      lastFocusedElement.focus();
-    }
   }
   window.closeConfirmDialog = closeConfirmDialog;
 
@@ -446,6 +513,7 @@ document.addEventListener("DOMContentLoaded", () => {
     confirmBtnConfirm.addEventListener("click", async () => {
       if (confirmCallback) {
         const cb = confirmCallback;
+        const gen = confirmGeneration;
         confirmBtnConfirm.disabled = true;
         confirmBtnCancel.disabled = true;
         try {
@@ -454,7 +522,13 @@ document.addEventListener("DOMContentLoaded", () => {
           console.error("Error executing confirm action:", err);
           showNotification(`Lỗi thao tác: ${err.message}`, "error");
         } finally {
-          closeConfirmDialog();
+          if (gen === confirmGeneration) {
+            closeConfirmDialog();
+          } else {
+            // A chained dialog took over; keep it interactive.
+            confirmBtnConfirm.disabled = false;
+            confirmBtnCancel.disabled = false;
+          }
         }
       } else {
         closeConfirmDialog();
@@ -463,6 +537,17 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Pipeline Dependency & Invalidation Management
+  // P1 (§10): diagnostic một lần cho critical target thiếu — không silent-fail.
+  const uqMissingWarned = new Set();
+  function uqRequireEl(id, critical) {
+    const el = document.getElementById(id);
+    if (!el && critical && !uqMissingWarned.has(id)) {
+      uqMissingWarned.add(id);
+      if (window.console && console.warn) console.warn("[UQ] thiếu control production-critical:", id);
+    }
+    return el;
+  }
+
   function updateDependencyState() {
     const hasScript = Boolean(scriptInput && scriptInput.value.trim().length > 0);
     const hasAudio = Boolean(currentProjectDir && (audioPlayer.src || (finalDurationText && finalDurationText.textContent !== "--")));
@@ -470,13 +555,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const hasScenes = Boolean(currentProjectDir && projectScenes && projectScenes.length > 0);
     const hasVeo = Boolean(currentProjectDir && projectVeoShots && projectVeoShots.length > 0);
 
-    const sScript = document.getElementById("step-status-script");
-    const sAudio = document.getElementById("step-status-audio");
-    const sQa = document.getElementById("step-status-voice-qa");
-    const badgeStepQa = document.getElementById("badge-step-voice-qa");
-    const sTs = document.getElementById("step-status-timestamp");
-    const sScenes = document.getElementById("step-status-scenes");
-    const sVeo = document.getElementById("step-status-veo");
+    const sScript = uqRequireEl("step-status-script", true);
+    const sAudio = uqRequireEl("step-status-audio", true);
+    const sQa = uqRequireEl("step-status-voice-qa", true);
+    const badgeStepQa = uqRequireEl("badge-step-voice-qa", true);
+    const sTs = uqRequireEl("step-status-timestamp", true);
+    const sScenes = uqRequireEl("step-status-scenes", true);
+    const sVeo = uqRequireEl("step-status-veo", true);
 
     if (sScript) {
       sScript.textContent = hasScript ? "✓" : "●";
@@ -565,12 +650,188 @@ document.addEventListener("DOMContentLoaded", () => {
     if (veoStaleAlert) {
       veoStaleAlert.style.display = veoOutdated ? "flex" : "none";
     }
+    renderProjectHealth(hasScript, hasAudio, hasTs, hasScenes, hasVeo);
   }
   window.updateDependencyState = updateDependencyState;
+
+  // P1.4: consolidated Project Health panel (lightweight, in-memory only —
+  // no extra hydration; runs on every dependency-state refresh).
+  function renderProjectHealth(hasScript, hasAudio, hasTs, hasScenes, hasVeo) {
+    const body = document.getElementById("project-health-body");
+    if (!body) return;
+    if (!currentProjectDir) {
+      body.textContent = "Chưa mở dự án.";
+      return;
+    }
+    const st = (ok, label) => ok ? label : "TRỐNG";
+    const healthVi = { VALID: "Hợp lệ", OUTDATED: "Cần đồng bộ", PARTIALLY_OUTDATED: "Một phần cần đồng bộ" };
+    const hv = (v) => healthVi[v] || v;
+    const qa = voiceQAData
+      ? (voiceQAData.is_stale ? "OUTDATED"
+        : (voiceQAData.status || "REVIEW").toUpperCase())
+      : "TRỐNG";
+    const qaVi = { FAIL: "Lỗi", REVIEW: "Cần xem xét", PASS: "Đạt", OUTDATED: "Cần đồng bộ", TRỐNG: "TRỐNG" };
+    const ts = !hasTs ? "TRỐNG" : (tsOutdated ? "OUTDATED" : "VALID");
+    const sp = !hasScenes ? "TRỐNG" : (scenesOutdated ? "OUTDATED" : "VALID");
+    const veo = !hasVeo ? "TRỐNG"
+      : (veoOutdated ? (veoOutdatedScenes.length > 0 ? "PARTIALLY_OUTDATED" : "OUTDATED") : "VALID");
+
+    // Metrics from loaded data (strict equality duplicate heuristic).
+    let gap = 0, ov = 0, dup = 0, badParent = 0, covered = 0;
+    const TOL = 0.005;
+    const sceneIds = new Set((projectScenes || []).map(s => s.scene_id));
+    const withShots = new Set();
+    const byScene = {};
+    (projectVeoShots || []).forEach(s => {
+      const pid = s.parentSceneId || s.parent_scene_id || s.scene_id;
+      if (!sceneIds.has(pid)) { badParent++; return; }
+      withShots.add(pid);
+      (byScene[pid] = byScene[pid] || []).push(s);
+    });
+    covered = withShots.size;
+    Object.values(byScene).forEach(ch => {
+      ch.sort((a, b) => a.start - b.start);
+      for (let i = 0; i < ch.length; i++) {
+        if (!(ch[i].end > ch[i].start)) { gap += 1; continue; }
+        if (i > 0) {
+          const d = ch[i].start - ch[i - 1].end;
+          if (d > TOL) gap += d; else if (d < -TOL) ov += -d;
+          const a = ch[i - 1], b = ch[i];
+          if ((a.shotPurpose || a.shot_purpose) === (b.shotPurpose || b.shot_purpose) &&
+              (a.subject_action || "") === (b.subject_action || "") &&
+              (a.camera_framing || "") === (b.camera_framing || "") &&
+              (a.camera_motion || "") === (b.camera_motion || "")) dup++;
+        }
+      }
+    });
+    const sceneCov = (projectScenes || []).length
+      ? Math.round(covered / projectScenes.length * 100) : 0;
+
+    const narrVi = { READY: "Sẵn sàng", EMPTY: "Trống", OUTDATED: "Cần đồng bộ", ERROR: "Lỗi", REVIEW: "Cần xem xét" };
+    const rows = [
+      ["Kịch bản", hv(st(hasScript, "VALID"))],
+      ["Diễn cảm", narrVi[String(narrationHealth || "").toUpperCase()] || narrationHealth],
+      ["Âm thanh", hv(st(hasAudio, "VALID"))],
+      ["Kiểm âm", qaVi[qa] || qa],
+      ["Mốc thời gian", hv(ts)],
+      ["Kế hoạch cảnh", hv(sp)],
+      ["Liên tục hình ảnh", uqStatusVi(visualContinuityStatus || "NOT GENERATED")],
+      ["Prompt Veo", hv(veo)],
+      ["Độ phủ cảnh", sceneCov + "%"],
+      ["Độ phủ cảnh quay", hasVeo ? "100%" : "—"],
+      ["Cảnh quay trùng lặp", String(dup)],
+      ["Ánh xạ cha không hợp lệ", String(badParent)],
+      ["Khoảng trống timeline", gap.toFixed(3) + "s"],
+      ["Chồng lấn timeline", ov.toFixed(3) + "s"],
+    ];
+    const gate = hasScript && hasAudio && hasTs && hasScenes && hasVeo &&
+      qa !== "FAIL" && !tsOutdated && !scenesOutdated && !veoOutdated &&
+      visualContinuityStatus !== "ERROR" && !visualContinuityIssues.some(i => i.severity === "ERROR") &&
+      sceneCov === 100 && dup === 0 && badParent === 0 && gap <= TOL && ov <= TOL;
+    body.innerHTML = rows.map(([k, v]) =>
+      `<div class="veo-action-row"><span class="veo-action-label">${escapeHtml(k)}:</span>` +
+      `<span class="veo-action-val">${escapeHtml(v)}</span></div>`).join("") +
+      `<div class="veo-action-row"><span class="veo-action-label">Gate:</span>` +
+      `<span class="veo-action-val">${gate ? "SẴN SÀNG SẢN XUẤT HÌNH ẢNH" : "CHƯA SẴN SÀNG"}</span></div>`;
+  }
+
+  // P0.1: canonical script of the opened project ("") when blank.
+  // Editor content is compared against this to detect unsaved typing.
+  let openedScriptText = "";
+
+  function isScriptDirty() {
+    if (!scriptInput) return false;
+    return (scriptInput.value || "") !== openedScriptText;
+  }
+
+  function hydrateScriptEditor(canonicalText) {
+    openedScriptText = canonicalText || "";
+    if (scriptInput) {
+      scriptInput.value = openedScriptText;
+      updateTextStats();
+    }
+  }
+
+  // Returns true if the caller may proceed (clean, or user confirmed discard).
+  function confirmDiscardScriptIfDirty(actionLabel, onProceed) {
+    if (!isScriptDirty()) {
+      onProceed();
+      return;
+    }
+    showConfirmDialog({
+      variant: "warning",
+      title: "Bỏ thay đổi script chưa lưu?",
+      message: `Script trên editor có thay đổi chưa được tạo thành audio. ${actionLabel} sẽ xóa nội dung đang nhập. Bạn có muốn tiếp tục?`,
+      confirmText: "Bỏ thay đổi",
+      cancelText: "Hủy",
+      onConfirm: () => {
+        onProceed();
+      }
+    });
+  }
+
+  // P0.2: realtime dependency reconciliation (shared by open + regen flows).
+  function refreshDependencyStatus(dirName) {
+    if (!dirName) return;
+    fetch(`/api/projects/${encodeURIComponent(dirName)}/status`)
+      .then(res => res.ok ? res.json() : null)
+      .then(statusData => {
+        if (!statusData || currentProjectDir !== dirName) return;
+        tsOutdated = (statusData.timestamp === "OUTDATED");
+        scenesOutdated = (statusData.scenePlan === "OUTDATED");
+        veoOutdated = (statusData.veo === "STALE" || statusData.veo === "OUTDATED");
+        veoOutdatedScenes = (statusData.veoPartial && Array.isArray(statusData.veoOutdatedScenes))
+          ? statusData.veoOutdatedScenes : [];
+        updateDependencyState();
+        updateVeoPartialAlert();
+        loadProductionStatus(dirName);
+      })
+      .catch(err => console.warn("Failed to fetch dependency status:", err));
+  }
+
+  // P0.2: "N Shot cần tạo lại / M Shot hợp lệ" for partial invalidation.
+  function updateVeoPartialAlert() {
+    if (!veoStaleAlert) return;
+    if (veoOutdated && veoOutdatedScenes.length > 0 && projectVeoShots.length > 0) {
+      const staleSet = new Set(veoOutdatedScenes);
+      const staleCount = projectVeoShots.filter(
+        s => staleSet.has(s.parentSceneId || s.parent_scene_id || s.scene_id)).length;
+      const validCount = projectVeoShots.length - staleCount;
+      veoStaleAlert.style.display = "flex";
+      if (veoStaleText) veoStaleText.textContent =
+        `⚠ ${staleCount} cảnh quay cần tạo lại (Cảnh ${veoOutdatedScenes.join(", ")}). ` +
+        `${validCount} / ${projectVeoShots.length} Shot hợp lệ.`;
+    }
+  }
 
   function resetWorkstationToCleanState() {
     currentProjectDir = null;
     window.currentProjectDir = null;
+    try { localStorage.removeItem("unfoldiq_project"); } catch (e) {}
+    // Phase 9: clear transient narration state (plan file stays in project).
+    narrationGen++;
+    narrationPlan = null;
+    narrationSummary = null;
+    narrationSelectedBeat = null;
+    narrationReviewOnly = false;
+    narrationHealth = "TRỐNG";
+    closeNarrationModal();
+    updateNarrationSummary();
+
+    // Phase 10: clear transient visual continuity state
+    visualBibleGen++;
+    visualBibleData = null;
+    window.currentVisualBible = null;
+    window.currentVeoPlan = null;
+    visualContinuityStatus = "Not Generated";
+    visualContinuityIssues = [];
+    visualBibleSelectedEntityId = null;
+    visualBibleSearchFilter = "";
+    visualBibleIssueFilter = "all";
+    if (typeof closeVisualBibleModal === "function") closeVisualBibleModal();
+    if (typeof updateVisualContinuityUI === "function") updateVisualContinuityUI();
+    // P0.1: truly blank — editor cleared, no previous project data visible.
+    hydrateScriptEditor("");
     if (activeProjectNameEl) activeProjectNameEl.textContent = "Chưa chọn dự án";
     if (slugPreviewEl) slugPreviewEl.textContent = "";
     if (playerContextLabel) playerContextLabel.textContent = "Không có dự án nào được chọn";
@@ -580,41 +841,82 @@ document.addEventListener("DOMContentLoaded", () => {
       audioPlayer.removeAttribute("src");
       audioPlayer.load();
     }
+    if (btnCloseProject) btnCloseProject.style.display = "none";
     if (finalDurationText) finalDurationText.textContent = "--";
     if (btnExportWav) btnExportWav.disabled = true;
     if (btnExportMp3) btnExportMp3.disabled = true;
+    if (btnRegenerateAllVeo) btnRegenerateAllVeo.disabled = true;
 
     projectCues = [];
     if (tsCuesList) tsCuesList.innerHTML = `<p class="empty-state">Chưa có dữ liệu timestamp. Hãy tạo giọng đọc và bấm "Tạo Timestamp".</p>`;
     if (tsPreviewCount) tsPreviewCount.textContent = "0 đoạn";
     if (tsCuesBadge) tsCuesBadge.textContent = "0";
+    if (tsCoverageBadge) tsCoverageBadge.textContent = "--";
     setTsStatus("idle", "Chưa tạo");
 
     projectScenes = [];
     selectedSceneId = null;
     if (spRowsContainer) spRowsContainer.innerHTML = `<p class="empty-state">Chưa có Scene Plan. Bấm "Tạo Scene Plan" để phân bổ storyboard.</p>`;
-    if (spSelectedDetail) spSelectedDetail.innerHTML = `<div class="detail-empty-state"><p>Chưa có dữ liệu scene</p></div>`;
+    if (spSelectedDetail) spSelectedDetail.innerHTML = `<div class="detail-empty-state"><p>Chưa có dữ liệu cảnh</p></div>`;
     if (spRowCountBadge) spRowCountBadge.textContent = "0/0";
+    if (spCountBadge) spCountBadge.textContent = "0 cảnh";
+    if (spCoverageBadge) spCoverageBadge.textContent = "Độ phủ 0%";
+    if (spMetaDuration) spMetaDuration.textContent = "Thời lượng: --";
     setSpStatus("idle", "Chưa sẵn sàng");
 
     projectVeoShots = [];
     selectedShotId = null;
     if (veoRowsContainer) veoRowsContainer.innerHTML = `<p class="empty-state">Chưa có Veo Prompt. Bấm "Tạo Veo Prompt" để dựng prompt video.</p>`;
-    if (veoSelectedDetail) veoSelectedDetail.innerHTML = `<div class="detail-empty-state"><p>Chưa có dữ liệu shot</p></div>`;
+    if (veoSelectedDetail) veoSelectedDetail.innerHTML = `<div class="detail-empty-state"><p>Chưa có dữ liệu cảnh quay</p></div>`;
     if (veoRowCountBadge) veoRowCountBadge.textContent = "0/0";
+    if (veoCountBadge) veoCountBadge.textContent = "0 cảnh quay";
+    if (veoCoverageBadge) veoCoverageBadge.textContent = "Độ phủ 0%";
+    if (veoMetaDuration) veoMetaDuration.textContent = "Thời lượng: --";
     setVeoStatus("idle", "Chưa sẵn sàng");
 
     tsOutdated = false;
     scenesOutdated = false;
     veoOutdated = false;
+    veoOutdatedScenes = [];
     updateDependencyState();
+
+    // Phase 11: blank Production card — no path/status leakage.
+    clearProductionCard();
+    // Phase 12: blank Editorial QA card.
+    if (typeof clearEditorialCard === "function") clearEditorialCard();
   }
   window.resetWorkstationToCleanState = resetWorkstationToCleanState;
+
+  if (btnCloseProject) {
+    btnCloseProject.addEventListener("click", () => {
+      // P0.1: dirty check FIRST — nested confirm dialogs would be closed
+      // immediately by the shared modal manager, so chain explicitly.
+      if (isScriptDirty()) {
+        confirmDiscardScriptIfDirty("Đóng dự án", () => doCloseProject());
+      } else {
+        doCloseProject();
+      }
+    });
+  }
+
+  function doCloseProject() {
+    showConfirmDialog({
+      variant: "warning",
+      title: "Đóng dự án hiện tại?",
+      message: "Bạn có muốn đóng dự án hiện tại và đưa Workstation về trạng thái ban đầu? Các thay đổi đã lưu trong tệp dự án không bị mất.",
+      confirmText: "Đóng dự án",
+      cancelText: "Hủy",
+      onConfirm: () => {
+        resetWorkstationToCleanState();
+        showNotification("Đã đóng dự án.", "info");
+      }
+    });
+  }
 
   // Contextual Help System
   const MODULE_HELP_CONTENT = {
     script: {
-      title: "1. Kịch bản lồng tiếng (Script Editor)",
+      title: "1. Kịch bản lồng tiếng",
       sections: [
         { label: "Mục đích", text: "Nhập nội dung văn bản kịch bản tiếng Việt hoặc tiếng Anh để tạo giọng đọc lồng tiếng và phân tích thị giác." },
         { label: "Khi nào sử dụng", text: "Bước đầu tiên của mọi dự án sản xuất video UnfoldIQ." },
@@ -722,19 +1024,14 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
     helpModal.style.display = "flex";
     helpModal.classList.add("open");
+    uqOpenModals.push({ el: helpModal, trigger: lastFocusedElement });
+    uqLockBody();
     trapFocus(helpModal);
   }
   window.showModuleHelp = showModuleHelp;
 
   function closeModuleHelp() {
-    if (helpModal) {
-      helpModal.style.display = "none";
-      helpModal.classList.remove("open");
-    }
-    releaseActiveFocus();
-    if (lastFocusedElement && typeof lastFocusedElement.focus === "function") {
-      lastFocusedElement.focus();
-    }
+    uqModalClose(helpModal);
   }
   window.closeModuleHelp = closeModuleHelp;
 
@@ -755,221 +1052,45 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Guided Onboarding Tour System (12 Steps)
-  const TOUR_STEPS = [
-    {
-      step: 1,
-      targetId: "ws-script",
-      workspace: "script",
-      title: "1. Kịch bản lồng tiếng (Script Editor)",
-      description: "Nhập hoặc dán kịch bản lồng tiếng tại đây. Workstation tự động tính toán số ký tự, số từ và ước tính thời lượng audio (WPM) theo thời gian thực."
-    },
-    {
-      step: 2,
-      targetId: "voice-select",
-      workspace: "script",
-      title: "2. Cấu hình Giọng đọc & Tốc độ",
-      description: "Lựa chọn giọng đọc Kokoro AI chất lượng cao (ví dụ: af_heart, af_bella, am_adam...) và tinh chỉnh tốc độ phát âm phù hợp với phong cách video của bạn."
-    },
-    {
-      step: 3,
-      targetId: "btn-generate",
-      workspace: "script",
-      title: "3. Tạo giọng đọc AI (Kokoro TTS)",
-      description: "Bấm 'Tạo giọng đọc' để bắt đầu xử lý kịch bản theo từng chunk. Hệ thống hỗ trợ SSE streaming hiển thị tiến độ và tỉ lệ tái sử dụng bộ nhớ đệm (Cache reuse)."
-    },
-    {
-      step: 4,
-      targetId: "ws-audio",
-      workspace: "audio",
-      title: "4. Audio QA & Kiểm âm phòng thu",
-      description: "Theo dõi tiến độ kết xuất, nghe thử âm thanh chất lượng phòng thu với thanh Global Audio Transport ở đáy màn hình và xuất file WAV/MP3 chuẩn phát sóng."
-    },
-    {
-      step: 5,
-      targetId: "btn-generate-ts",
-      workspace: "timestamp",
-      title: "5. Tạo Timestamp (Whisper Alignment)",
-      description: "Sử dụng mô hình Whisper để căn chỉnh timestamp từng từ và từng câu (speech-to-text alignment), đảm bảo phụ đề khớp chính xác từng mili-giây với giọng đọc."
-    },
-    {
-      step: 6,
-      targetId: "ts-cues-list",
-      workspace: "timestamp",
-      title: "6. Phụ đề SRT & Timestamp QA",
-      description: "Xem danh sách cues phụ đề, bấm vào từng cue để nghe audio ngay tại vị trí đó, và tải về file phụ đề SRT hoặc dữ liệu mốc thời gian JSON chuẩn."
-    },
-    {
-      step: 7,
-      targetId: "ws-scenes",
-      workspace: "scenes",
-      title: "7. Visual Scene Planner (Storyboard)",
-      description: "Phân bổ kịch bản thành các cảnh quay ngắn có mục tiêu thị giác. Bạn có thể tìm kiếm, lọc theo thể loại, xem chi tiết và tinh chỉnh prompt ảnh."
-    },
-    {
-      step: 8,
-      targetId: "ws-veo",
-      workspace: "veo",
-      title: "8. Flow / Veo Prompt Generator",
-      description: "Sinh prompt tạo video AI tương thích Google Veo 2 / Runway Gen-3 với đầy đủ góc máy (framing), chuyển động camera, ánh sáng và negative prompt."
-    },
-    {
-      step: 9,
-      targetId: "ws-projects",
-      workspace: "projects",
-      title: "9. Dự án gần đây & Quản lý an toàn",
-      description: "Duyệt lại lịch sử các dự án sản xuất, mở dự án để nghe lại hoặc sử dụng nút Xóa an toàn kèm hộp thoại xác nhận bảo vệ để giải phóng dung lượng đĩa."
-    },
-    {
-      step: 10,
-      targetId: "ws-pronunciation",
-      workspace: "pronunciation",
-      title: "10. Từ điển phát âm (Pronunciation)",
-      description: "Chuẩn hóa các từ viết tắt, tên riêng nước ngoài hoặc thuật ngữ kỹ thuật trước khi tạo giọng đọc. Engine sẽ tự động thay thế trước khi tổng hợp giọng nói."
-    },
-    {
-      step: 11,
-      targetId: "workflow-stepper",
-      workspace: "script",
-      title: "11. Chuỗi phụ thuộc Pipeline",
-      description: "Thanh tiến trình thể hiện mối liên hệ: Kịch bản → Audio → Timestamp → Scene Plan → Veo Prompt. Khi bạn tạo lại Audio mới, các bước phía sau sẽ được cảnh báo 'Cần tạo lại'."
-    },
-    {
-      step: 12,
-      targetId: "top-app-bar",
-      workspace: "script",
-      title: "12. Hoàn thiện & Khởi đầu",
-      description: "Bạn đã nắm vững quy trình sản xuất! Bạn có thể xem lại hướng dẫn này bất kỳ lúc nào bằng nút '? Hướng dẫn' trên thanh tiêu đề. Chúc bạn tạo ra những video tuyệt vời!"
-    }
-  ];
+  // Guided Onboarding Tour System — DEPRECATED (12 bước cũ đã gỡ nội dung).
+  // Nội dung tour mới nằm trong guide.js (window.UQGuide). Mảng TOUR_STEPS cũ bị xóa để
+  // tránh nhầm lẫn; DOM overlay (#onboarding-tour-overlay) được UQGuide tái sử dụng.
 
+  // ---------------------------------------------------------------------------
+  // DEPRECATED: tour 12 bước cũ (onboarding revamp spec 04 §15).
+  // Hệ mới: window.UQGuide trong guide.js (product-overview ≤6 bước + mini tours,
+  // Help Center, per-tour versioning unfoldiq.onboarding.v2, migration giữ state cũ).
+  // Các hàm dưới chỉ còn là shim tương thích, không auto-run tour cũ nữa.
+  // ---------------------------------------------------------------------------
   function startTour(stepIndex = 0) {
-    currentTourIndex = stepIndex;
-    if (!tourOverlay) return;
-    tourOverlay.style.display = "block";
-    tourOverlay.classList.add("open");
-    renderTourStep(currentTourIndex);
+    if (window.UQGuide && typeof window.UQGuide.start === "function") {
+      window.UQGuide.start("product-overview", 0);
+      return;
+    }
+    if (tourOverlay) {
+      tourOverlay.style.display = "block";
+      tourOverlay.classList.add("open");
+    }
   }
   window.startTour = startTour;
 
   function closeTour() {
+    if (window.UQGuide && typeof window.UQGuide.dismiss === "function") {
+      try { window.UQGuide.dismiss(); } catch (e) {}
+    }
     if (tourOverlay) {
       tourOverlay.style.display = "none";
       tourOverlay.classList.remove("open");
     }
-    localStorage.setItem("unfoldiq_tour_completed", "true");
+    try { localStorage.setItem("unfoldiq_tour_completed", "true"); } catch (e) {}
   }
   window.closeTour = closeTour;
 
   function renderTourStep(index) {
-    if (index < 0 || index >= TOUR_STEPS.length) {
-      closeTour();
-      return;
-    }
-    const step = TOUR_STEPS[index];
-    if (step.workspace) {
-      switchWorkspace(step.workspace);
-    }
-
-    if (tourStepBadge) tourStepBadge.textContent = `Bước ${step.step} / ${TOUR_STEPS.length}`;
-    if (tourCardTitle) tourCardTitle.textContent = step.title;
-    if (tourCardBody) tourCardBody.textContent = step.description;
-
-    if (tourBtnPrev) {
-      tourBtnPrev.disabled = (index === 0);
-    }
-    if (tourBtnNext) {
-      tourBtnNext.textContent = (index === TOUR_STEPS.length - 1) ? "Hoàn tất" : "Tiếp tục";
-    }
-
-    setTimeout(() => {
-      const targetEl = document.getElementById(step.targetId);
-      if (targetEl && tourSpotlight && tourCard) {
-        const rect = targetEl.getBoundingClientRect();
-        const padding = 8;
-        tourSpotlight.style.display = "block";
-        tourSpotlight.style.top = `${Math.max(0, rect.top - padding + window.scrollY)}px`;
-        tourSpotlight.style.left = `${Math.max(0, rect.left - padding + window.scrollX)}px`;
-        tourSpotlight.style.width = `${rect.width + padding * 2}px`;
-        tourSpotlight.style.height = `${rect.height + padding * 2}px`;
-
-        const narrowViewport = window.innerWidth < 392; // 360 + margins
-        const cardWidth = narrowViewport ? Math.max(200, window.innerWidth - 32) : 360;
-        const cardHeight = 220;
-        let cardTop = rect.bottom + 14;
-        let cardLeft = rect.left;
-
-        if (cardTop + cardHeight > window.innerHeight) {
-          cardTop = Math.max(16, rect.top - cardHeight - 14);
-        }
-        cardLeft = Math.max(16, Math.min(cardLeft, window.innerWidth - cardWidth - 16));
-        tourCard.style.transform = "";
-        tourCard.style.top = `${Math.max(16, cardTop)}px`;
-        tourCard.style.left = `${cardLeft}px`;
-        if (narrowViewport) {
-          tourCard.style.width = `${cardWidth}px`;
-        } else {
-          tourCard.style.width = "";
-        }
-      } else if (tourCard) {
-        if (tourSpotlight) tourSpotlight.style.display = "none";
-        tourCard.style.top = "50%";
-        tourCard.style.left = "50%";
-        tourCard.style.transform = "translate(-50%, -50%)";
-      }
-    }, 120);
+    // No-op: tour cũ đã deprecated, render do UQGuide đảm nhiệm.
+    if (window.UQGuide) return;
+    closeTour();
   }
-
-  if (tourBtnPrev) {
-    tourBtnPrev.addEventListener("click", () => {
-      if (currentTourIndex > 0) {
-        currentTourIndex--;
-        renderTourStep(currentTourIndex);
-      }
-    });
-  }
-
-  if (tourBtnNext) {
-    tourBtnNext.addEventListener("click", () => {
-      if (currentTourIndex < TOUR_STEPS.length - 1) {
-        currentTourIndex++;
-        renderTourStep(currentTourIndex);
-      } else {
-        closeTour();
-      }
-    });
-  }
-
-  if (tourBtnSkip) {
-    tourBtnSkip.addEventListener("click", closeTour);
-  }
-
-  if (btnOpenTour) {
-    btnOpenTour.addEventListener("click", () => {
-      startTour(0);
-    });
-  }
-
-  // Tour keyboard controls
-  window.addEventListener("keydown", (e) => {
-    if (tourOverlay && tourOverlay.style.display !== "none") {
-      if (e.key === "Escape") {
-        closeTour();
-      } else if (e.key === "ArrowRight") {
-        if (currentTourIndex < TOUR_STEPS.length - 1) {
-          currentTourIndex++;
-          renderTourStep(currentTourIndex);
-        } else {
-          closeTour();
-        }
-      } else if (e.key === "ArrowLeft") {
-        if (currentTourIndex > 0) {
-          currentTourIndex--;
-          renderTourStep(currentTourIndex);
-        }
-      }
-    }
-  });
 
   // Universal fast copy helper with inline confirmation
   async function copyTextToClipboard(text, btnEl) {
@@ -1014,7 +1135,7 @@ document.addEventListener("DOMContentLoaded", () => {
         pipelineSidebar.classList.remove("open");
       } else if (workspaceInspector && workspaceInspector.classList.contains("open")) {
         workspaceInspector.classList.remove("open");
-        if (btnToggleInspector) btnToggleInspector.classList.remove("active");
+        syncShellButtons();
       }
     }
   });
@@ -1023,12 +1144,19 @@ document.addEventListener("DOMContentLoaded", () => {
   // 3. WORKSPACE ROUTING & NAVIGATION
   // ==============================================================================
   const WORKSPACE_INSPECTOR_MAP = {
+    overview: "inspector-default",
+    research: "inspector-default",
     script: "inspector-script",
     audio: "inspector-audio",
     "voice-qa": "inspector-voice-qa",
     timestamp: "inspector-timestamp",
     scenes: "inspector-scenes",
     veo: "inspector-veo",
+    library: "inspector-default",
+    timeline: "inspector-default",
+    review: "inspector-default",
+    export: "inspector-default",
+    activity: "inspector-default",
     projects: "inspector-default",
     pronunciation: "inspector-default",
     settings: "inspector-default"
@@ -1036,25 +1164,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function switchWorkspace(targetId) {
     if (!targetId) return;
+    let actualTargetId = targetId;
+    if (targetId === "content") actualTargetId = "research";
+    if (targetId === "studio") actualTargetId = "timeline";
+
     const previousWorkspaceId = activeWorkspaceId;
-    activeWorkspaceId = targetId;
+    activeWorkspaceId = actualTargetId;
 
     // 1. Active-Only DOM Management: Unmount heavy rows from leaving workspace
-    if (previousWorkspaceId === "scenes" && targetId !== "scenes") {
+    if (previousWorkspaceId === "scenes" && actualTargetId !== "scenes") {
       if (spRowsContainer) {
         spScrollTop = spRowsContainer.scrollTop;
         spRowsContainer.innerHTML = `<div class="unmounted-placeholder" style="padding: 24px; text-align: center; color: var(--text-muted); font-size: var(--font-size-xs);">Workspace tạm dừng hiển thị (giải phóng DOM)</div>`;
       }
-    } else if (previousWorkspaceId === "veo" && targetId !== "veo") {
+    } else if (previousWorkspaceId === "veo" && actualTargetId !== "veo") {
       if (veoRowsContainer) {
         veoScrollTop = veoRowsContainer.scrollTop;
         veoRowsContainer.innerHTML = `<div class="unmounted-placeholder" style="padding: 24px; text-align: center; color: var(--text-muted); font-size: var(--font-size-xs);">Workspace tạm dừng hiển thị (giải phóng DOM)</div>`;
       }
     }
 
+    const WORKSPACE_GROUPS = {
+      content: ["content", "research", "script"],
+      studio: ["studio", "timeline", "veo", "audio", "voice-qa", "timestamp"]
+    };
+
     // 2. Update Sidebar Active Item
     document.querySelectorAll(".pipeline-nav .nav-item").forEach(btn => {
-      if (btn.dataset.workspace === targetId) {
+      const ws = btn.dataset.workspace;
+      const isMatch = (ws === actualTargetId) ||
+        (ws === "content" && WORKSPACE_GROUPS.content.includes(actualTargetId)) ||
+        (ws === "studio" && WORKSPACE_GROUPS.studio.includes(actualTargetId));
+      if (isMatch) {
         btn.classList.add("active");
       } else {
         btn.classList.remove("active");
@@ -1065,14 +1206,18 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".workspace-view").forEach(view => {
       view.classList.remove("active");
     });
-    const targetView = document.getElementById(`ws-${targetId}`);
+    const targetView = document.getElementById(`ws-${actualTargetId}`);
     if (targetView) {
       targetView.classList.add("active");
     }
 
     // 3b. Update Workflow Stepper Item Active State
     document.querySelectorAll(".stepper-item").forEach(step => {
-      if (step.dataset.workspace === targetId) {
+      const ws = step.dataset.workspace;
+      const isMatch = (ws === actualTargetId) ||
+        (ws === "content" && WORKSPACE_GROUPS.content.includes(actualTargetId)) ||
+        (ws === "studio" && WORKSPACE_GROUPS.studio.includes(actualTargetId));
+      if (isMatch) {
         step.classList.add("active");
       } else {
         step.classList.remove("active");
@@ -1080,6 +1225,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // 4. Mount heavy rows on entering active scenes or veo workspace, or load voice QA
+    if (window.Phase14 && typeof window.Phase14.handleWorkspaceSwitch === "function") {
+      window.Phase14.handleWorkspaceSwitch(targetId);
+    }
     if (targetId === "voice-qa" && currentProjectDir) {
       loadVoiceQA(currentProjectDir);
     } else if (targetId === "timestamp" && currentProjectDir) {
@@ -1106,8 +1254,8 @@ document.addEventListener("DOMContentLoaded", () => {
       targetPanel.classList.add("active");
     }
 
-    // Close mobile drawers on switch
-    if (window.innerWidth < 992) {
+    // Close drawers on switch khi chúng đang ở chế độ drawer
+    if (window.innerWidth < 1280) {
       closeAllDrawers();
     }
   }
@@ -1118,16 +1266,15 @@ document.addEventListener("DOMContentLoaded", () => {
   function closeAllDrawers() {
     if (pipelineSidebar) pipelineSidebar.classList.remove("open");
     if (workspaceInspector) workspaceInspector.classList.remove("open");
-    if (btnToggleSidebar) btnToggleSidebar.classList.remove("active");
-    if (btnToggleInspector) btnToggleInspector.classList.remove("active");
     if (drawerBackdrop) drawerBackdrop.classList.remove("active");
+    syncShellButtons();
   }
 
   function syncDrawerBackdrop() {
     if (!drawerBackdrop) return;
-    const isAnyDrawerOpen = (pipelineSidebar && pipelineSidebar.classList.contains("open")) ||
-                            (workspaceInspector && workspaceInspector.classList.contains("open"));
-    if (isAnyDrawerOpen && window.innerWidth < 992) {
+    const sidebarDrawerOpen = pipelineSidebar && pipelineSidebar.classList.contains("open") && window.innerWidth < 1024;
+    const inspectorDrawerOpen = workspaceInspector && workspaceInspector.classList.contains("open") && window.innerWidth < 1280;
+    if (sidebarDrawerOpen || inspectorDrawerOpen) {
       drawerBackdrop.classList.add("active");
     } else {
       drawerBackdrop.classList.remove("active");
@@ -1141,8 +1288,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Attach Stepper Item Navigation Listeners
+  // Attach Stepper Item Navigation Listeners (§14: div stepper phải keyboard-reachable).
   document.querySelectorAll(".stepper-item").forEach(step => {
+    if (step.dataset.workspace) {
+      step.setAttribute("tabindex", "0");
+      step.setAttribute("role", "button");
+      step.addEventListener("keydown", (ev) => {
+        if (ev.key === "Enter" || ev.key === " ") {
+          ev.preventDefault();
+          switchWorkspace(step.dataset.workspace);
+        }
+      });
+    }
     step.addEventListener("click", () => {
       if (step.dataset.workspace) {
         switchWorkspace(step.dataset.workspace);
@@ -1158,30 +1315,110 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Toggle Sidebar / Inspector on small screens
+  // 02A §10: appearance single owner — system | light | dark, persist, no flash.
+  const APPEAR_KEY = "unfoldiq_appearance";
+  const appearSelect = document.getElementById("appearance-select");
+  function resolveAppearance(ap) {
+    if (ap === "light") return "light";
+    if (ap === "dark") return "dark";
+    try {
+      return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+    } catch (e) { return "dark"; }
+  }
+  function applyAppearance(ap, persist = true) {
+    const mode = (ap === "light" || ap === "dark" || ap === "system") ? ap : "dark";
+    if (persist) { try { localStorage.setItem(APPEAR_KEY, mode); } catch (e) {} }
+    document.documentElement.dataset.theme = resolveAppearance(mode);
+    if (appearSelect && appearSelect.value !== mode) appearSelect.value = mode;
+  }
+  window.setAppearance = (ap) => applyAppearance(ap, true);
+  (function initAppearance() {
+    let saved = "dark";
+    try { saved = localStorage.getItem(APPEAR_KEY) || "dark"; } catch (e) {}
+    applyAppearance(saved, false);
+    if (appearSelect) {
+      appearSelect.addEventListener("change", () => applyAppearance(appearSelect.value, true));
+    }
+    try {
+      const mq = window.matchMedia("(prefers-color-scheme: light)");
+      const onSys = () => {
+        let cur = "dark";
+        try { cur = localStorage.getItem(APPEAR_KEY) || "dark"; } catch (e) {}
+        if (cur === "system") document.documentElement.dataset.theme = resolveAppearance("system");
+      };
+      if (mq.addEventListener) mq.addEventListener("change", onSys);
+      else if (mq.addListener) mq.addListener(onSys);
+    } catch (e) {}
+  })();
+
+  // Toggle Sidebar / Inspector — single owner (01B).
+  // Sidebar collapse trong flow từ 1024; inspector collapse từ 1280, dưới đó là drawer.
+  // Mỗi control luôn có tác dụng ở mọi viewport (không dead control).
+  const SHELL_KEY = "unfoldiq_shell";
+  function readShellState() {
+    try { return JSON.parse(localStorage.getItem(SHELL_KEY) || "{}"); }
+    catch (e) { return {}; }
+  }
+  function writeShellState(patch) {
+    try { localStorage.setItem(SHELL_KEY, JSON.stringify({ ...readShellState(), ...patch })); }
+    catch (e) { /* private mode: bỏ qua persist */ }
+  }
+  const sidebarInFlow = () => window.innerWidth >= 1024;
+  const inspectorInFlow = () => window.innerWidth >= 1280;
+  function syncShellButtons() {
+    if (btnToggleSidebar) {
+      const collapsed = document.body.classList.contains("sidebar-collapsed");
+      const open = pipelineSidebar ? pipelineSidebar.classList.contains("open") : false;
+      const expanded = sidebarInFlow() ? !collapsed : open;
+      btnToggleSidebar.classList.toggle("active", expanded);
+      btnToggleSidebar.setAttribute("aria-expanded", String(expanded));
+    }
+    if (btnToggleInspector) {
+      const collapsed = document.body.classList.contains("inspector-collapsed");
+      const open = workspaceInspector ? workspaceInspector.classList.contains("open") : false;
+      const expanded = inspectorInFlow() ? !collapsed : open;
+      btnToggleInspector.classList.toggle("active", expanded);
+      btnToggleInspector.setAttribute("aria-expanded", String(expanded));
+    }
+  }
+  // Áp dụng state đã persist khi khởi động (theo breakpoint hiện tại).
+  (function applyPersistedShell() {
+    const saved = readShellState();
+    if (sidebarInFlow() && saved.sidebarCollapsed) document.body.classList.add("sidebar-collapsed");
+    if (inspectorInFlow() && saved.inspectorCollapsed) document.body.classList.add("inspector-collapsed");
+  })();
   if (btnToggleSidebar && pipelineSidebar) {
     btnToggleSidebar.addEventListener("click", () => {
-      pipelineSidebar.classList.toggle("open");
-      btnToggleSidebar.classList.toggle("active", pipelineSidebar.classList.contains("open"));
-      if (workspaceInspector && window.innerWidth < 992 && pipelineSidebar.classList.contains("open")) {
-        workspaceInspector.classList.remove("open");
-        if (btnToggleInspector) btnToggleInspector.classList.remove("active");
+      if (sidebarInFlow()) {
+        document.body.classList.toggle("sidebar-collapsed");
+        writeShellState({ sidebarCollapsed: document.body.classList.contains("sidebar-collapsed") });
+      } else {
+        pipelineSidebar.classList.toggle("open");
+        if (workspaceInspector && pipelineSidebar.classList.contains("open")) {
+          workspaceInspector.classList.remove("open");
+        }
       }
       syncDrawerBackdrop();
+      syncShellButtons();
     });
   }
 
   if (btnToggleInspector && workspaceInspector) {
     btnToggleInspector.addEventListener("click", () => {
-      workspaceInspector.classList.toggle("open");
-      btnToggleInspector.classList.toggle("active", workspaceInspector.classList.contains("open"));
-      if (pipelineSidebar && window.innerWidth < 992 && workspaceInspector.classList.contains("open")) {
-        pipelineSidebar.classList.remove("open");
-        if (btnToggleSidebar) btnToggleSidebar.classList.remove("active");
+      if (inspectorInFlow()) {
+        document.body.classList.toggle("inspector-collapsed");
+        writeShellState({ inspectorCollapsed: document.body.classList.contains("inspector-collapsed") });
+      } else {
+        workspaceInspector.classList.toggle("open");
+        if (pipelineSidebar && workspaceInspector.classList.contains("open")) {
+          pipelineSidebar.classList.remove("open");
+        }
       }
       syncDrawerBackdrop();
+      syncShellButtons();
     });
   }
+  syncShellButtons();
 
   if (drawerBackdrop) {
     drawerBackdrop.addEventListener("click", closeAllDrawers);
@@ -1193,10 +1430,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Chỉ đóng drawer khi breakpoint đổi mode (tránh giật khi resize liên tục).
+  let lastShellMode = (sidebarInFlow() ? "S" : "s") + (inspectorInFlow() ? "I" : "i");
+  let shellResizeT = null;
   window.addEventListener("resize", () => {
-    if (window.innerWidth >= 992) {
-      closeAllDrawers();
-    }
+    clearTimeout(shellResizeT);
+    shellResizeT = setTimeout(() => {
+      const mode = (sidebarInFlow() ? "S" : "s") + (inspectorInFlow() ? "I" : "i");
+      if (mode !== lastShellMode) {
+        lastShellMode = mode;
+        closeAllDrawers();
+      }
+      syncShellButtons();
+      syncDrawerBackdrop();
+    }, 150);
   });
 
   // ==============================================================================
@@ -1232,8 +1479,67 @@ document.addEventListener("DOMContentLoaded", () => {
         pauseIcon.style.display = "none";
       }
     }
+    if (btnGlobalPlay) {
+      btnGlobalPlay.setAttribute("aria-label", isPlaying ? "Tạm dừng" : "Phát");
+    }
   }
 
+  // 02A §26: single playback state — media element là source of truth duy nhất.
+  // Scene button + bottom player + timeline đều render từ state này.
+  const UQAudio = { state: "idle", pending: false };
+  window.UQAudio = UQAudio;
+  function uqScenePlaying(kind, id) {
+    if (UQAudio.state !== "playing" || !audioPlayer) return false;
+    const t = audioPlayer.currentTime || 0;
+    if (kind === "scene") {
+      const sc = (projectScenes || []).find(s => s.scene_id === id);
+      return !!(sc && t >= sc.start && t < sc.end);
+    }
+    const sh = (projectVeoShots || []).find(s => s.shot_id === id);
+    return !!(sh && t >= sh.start && t < sh.end);
+  }
+  function setPlayBtn(btn, playing, baseLabel) {
+    if (!btn) return;
+    const svg = btn.querySelector("svg.icon, svg.ui-icon");
+    const label = btn.querySelector("span:last-child");
+    const use = svg ? svg.querySelector("use") : null;
+    if (use) use.setAttribute("href", playing ? "#icon-pause" : "#icon-play");
+    if (svg) svg.setAttribute("aria-hidden", "true");
+    // Một icon duy nhất: không bao giờ thêm ký hiệu text vào label.
+    if (label) label.textContent = UQAudio.pending ? "Đang tải…" : (playing ? "Tạm dừng" : baseLabel);
+    const name = btn.getAttribute("data-uq-name") || baseLabel;
+    btn.setAttribute("aria-label", UQAudio.pending ? `Đang tải ${name}` : (playing ? `Tạm dừng ${name}` : `Phát ${name}`));
+    btn.classList.toggle("is-playing", playing);
+  }
+  function syncPlaybackUI() {
+    updateAudioTransportState();
+    const scBtn = document.querySelector("#sp-selected-detail .btn-seek-scene");
+    if (scBtn) {
+      if (!scBtn.hasAttribute("data-uq-name")) {
+        scBtn.setAttribute("data-uq-name", (scBtn.getAttribute("aria-label") || "cảnh").replace(/^Phát\s+/, ""));
+      }
+      const scene = (projectScenes || []).find(s => s.scene_id === selectedSceneId);
+      setPlayBtn(scBtn, !!(scene && uqScenePlaying("scene", scene.scene_id)), "Phát");
+    }
+    const shBtn = document.querySelector("#veo-selected-detail .btn-seek-shot");
+    if (shBtn) {
+      if (!shBtn.hasAttribute("data-uq-name")) {
+        shBtn.setAttribute("data-uq-name", (shBtn.getAttribute("aria-label") || "cảnh quay").replace(/^Phát\s+/, ""));
+      }
+      const shot = (projectVeoShots || []).find(s => s.shot_id === selectedShotId);
+      setPlayBtn(shBtn, !!(shot && uqScenePlaying("shot", shot.shot_id)), "Phát từ đây");
+    }
+  }
+
+  // P1 (§11): phát từ đầu sau ended — reset về start hợp lệ trước khi play.
+  function uqReplayFromStart() {
+    try {
+      const dur = audioPlayer.duration || 0;
+      if (audioPlayer.ended || (dur > 0 && audioPlayer.currentTime >= dur - 0.05)) {
+        audioPlayer.currentTime = 0;
+      }
+    } catch (e) {}
+  }
   if (btnGlobalPlay && audioPlayer) {
     btnGlobalPlay.addEventListener("click", () => {
       if (!audioPlayer.src) return;
@@ -1244,7 +1550,15 @@ document.addEventListener("DOMContentLoaded", () => {
         if (spanEl) spanEl.textContent = "Nghe đoạn này";
       }
       if (audioPlayer.paused) {
-        audioPlayer.play().catch(() => {});
+        uqReplayFromStart();
+        UQAudio.pending = true;
+        syncPlaybackUI();
+        audioPlayer.play().then(null, () => {
+          UQAudio.pending = false;
+          UQAudio.state = "error";
+          syncPlaybackUI();
+          showNotification("Không phát được âm thanh. Hãy thử lại.", "error");
+        });
       } else {
         audioPlayer.pause();
       }
@@ -1252,9 +1566,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (audioPlayer) {
-    audioPlayer.addEventListener("play", updateAudioTransportState);
+    audioPlayer.addEventListener("play", () => { UQAudio.pending = false; syncPlaybackUI(); });
+    audioPlayer.addEventListener("playing", () => { UQAudio.state = "playing"; UQAudio.pending = false; syncPlaybackUI(); });
+    audioPlayer.addEventListener("waiting", () => { UQAudio.state = "loading"; syncPlaybackUI(); });
     audioPlayer.addEventListener("pause", () => {
-      updateAudioTransportState();
+      if (UQAudio.state !== "error") UQAudio.state = "paused";
+      UQAudio.pending = false;
+      syncPlaybackUI();
       if (window._qaPlaybackTimeUpdateHandler) {
         audioPlayer.removeEventListener("timeupdate", window._qaPlaybackTimeUpdateHandler);
         window._qaPlaybackTimeUpdateHandler = null;
@@ -1263,7 +1581,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
     audioPlayer.addEventListener("ended", () => {
-      updateAudioTransportState();
+      UQAudio.state = "ended";
+      UQAudio.pending = false;
+      syncPlaybackUI();
       if (window._qaPlaybackTimeUpdateHandler) {
         audioPlayer.removeEventListener("timeupdate", window._qaPlaybackTimeUpdateHandler);
         window._qaPlaybackTimeUpdateHandler = null;
@@ -1271,7 +1591,14 @@ document.addEventListener("DOMContentLoaded", () => {
         if (spanEl) spanEl.textContent = "Nghe đoạn này";
       }
     });
+    audioPlayer.addEventListener("error", () => {
+      UQAudio.state = "error";
+      UQAudio.pending = false;
+      syncPlaybackUI();
+      showNotification("Không tải được âm thanh (lỗi media). Hãy thử lại.", "error");
+    });
 
+    let lastSyncRangeKey = "";
     audioPlayer.addEventListener("timeupdate", () => {
       if (isSeeking) return;
       const cur = audioPlayer.currentTime || 0;
@@ -1279,6 +1606,12 @@ document.addEventListener("DOMContentLoaded", () => {
       if (playerCurrentTime) playerCurrentTime.textContent = formatTime(cur);
       if (dur > 0 && playerScrubber) {
         playerScrubber.value = (cur / dur) * 100;
+      }
+      // Re-sync scene buttons khi time đi qua ranh giới scene (tránh stale Pause).
+      const key = `${Math.floor(cur)}|${UQAudio.state}`;
+      if (key !== lastSyncRangeKey) {
+        lastSyncRangeKey = key;
+        syncPlaybackUI();
       }
 
       // Targeted playback marker updates (sub-1ms class toggle, zero list rebuilding)
@@ -1303,6 +1636,22 @@ document.addEventListener("DOMContentLoaded", () => {
           if (curEl && !curEl.classList.contains("is-active-playback")) {
             curEl.classList.add("is-active-playback");
           }
+        }
+      }
+      // 02A §6: timeline (Phase14) highlight theo global time — cùng source of truth.
+      const tlList = document.getElementById("timeline-clips-list");
+      if (tlList) {
+        const rows = tlList.querySelectorAll("[data-tl-start]");
+        let activeRow = null;
+        rows.forEach(r => {
+          const s = parseFloat(r.getAttribute("data-tl-start") || "0");
+          const e = parseFloat(r.getAttribute("data-tl-end") || "0");
+          if (cur >= s && cur < e) activeRow = r;
+        });
+        const prevTl = tlList.querySelector(".is-active-playback");
+        if (prevTl && prevTl !== activeRow) prevTl.classList.remove("is-active-playback");
+        if (activeRow && !activeRow.classList.contains("is-active-playback")) {
+          activeRow.classList.add("is-active-playback");
         }
       }
     });
@@ -1368,14 +1717,28 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Keyboard Play/Pause Shortcut (Space)
+  // Keyboard Play/Pause Shortcut (Space) — không cướp phím khi focus ở control tương tác.
   document.addEventListener("keydown", (e) => {
-    if (e.code === "Space" && e.target.tagName !== "TEXTAREA" && e.target.tagName !== "INPUT") {
+    if (e.code !== "Space") return;
+    const t = e.target;
+    const tag = (t && t.tagName) || "";
+    if (tag === "TEXTAREA" || tag === "INPUT" || tag === "SELECT" || tag === "BUTTON" ||
+        (t && t.isContentEditable) || (t && t.closest && t.closest("a, button, select, [contenteditable='true']"))) {
+      return;
+    }
+    if (audioPlayer.src) {
       e.preventDefault();
-      if (audioPlayer.src) {
-        if (audioPlayer.paused) audioPlayer.play().catch(() => {});
-        else audioPlayer.pause();
+      if (audioPlayer.paused) {
+        uqReplayFromStart();
+        UQAudio.pending = true;
+        syncPlaybackUI();
+        audioPlayer.play().then(null, () => {
+          UQAudio.pending = false;
+          UQAudio.state = "error";
+          syncPlaybackUI();
+        });
       }
+      else audioPlayer.pause();
     }
   });
 
@@ -1383,7 +1746,14 @@ document.addEventListener("DOMContentLoaded", () => {
   window.seekGlobalAudio = function(startTime, contextLabel) {
     if (!audioPlayer || !audioPlayer.src) return;
     audioPlayer.currentTime = startTime;
-    audioPlayer.play().catch(() => {});
+    UQAudio.pending = true;
+    syncPlaybackUI();
+    audioPlayer.play().then(null, () => {
+      UQAudio.pending = false;
+      UQAudio.state = "error";
+      syncPlaybackUI();
+      showNotification("Không phát được âm thanh. Hãy thử lại.", "error");
+    });
     if (contextLabel && playerContextLabel) {
       playerContextLabel.textContent = contextLabel;
     }
@@ -1422,7 +1792,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const raw = projectNameInput.value.trim() || "unfoldiq_project";
     const slug = raw.toLowerCase().replace(/[^a-z0-9_\-]/g, "_").replace(/_+/g, "_");
     slugPreviewEl.textContent = slug;
-    if (activeProjectNameEl) activeProjectNameEl.textContent = slug;
+    // 02A: typing a name never fakes a selection — active label only changes
+    // on real open/close/reset.
   }
   projectNameInput.addEventListener("input", updateSlugPreview);
 
@@ -1465,10 +1836,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (voicesData.voices && voicesData.voices.length > 0) {
         voiceSelect.innerHTML = "";
+        const VOICE_LANG_VI = { "American English": "Tiếng Anh (Mỹ)", "British English": "Tiếng Anh (Anh)", "Spanish": "Tiếng Tây Ban Nha", "French": "Tiếng Pháp", "Hindi": "Tiếng Hindi", "Italian": "Tiếng Ý", "Japanese": "Tiếng Nhật", "Portuguese": "Tiếng Bồ Đào Nha", "Mandarin": "Tiếng Trung (Quan thoại)", "Chinese": "Tiếng Trung" };
         voicesData.voices.forEach(v => {
           const opt = document.createElement("option");
           opt.value = v.id;
-          opt.textContent = `${v.id} (${v.language}, Grade ${v.grade}) ${v.is_default ? "[Default]" : ""}`;
+          const langVi = VOICE_LANG_VI[v.language] || v.language;
+          opt.textContent = `${v.id} (${langVi}, Hạng ${v.grade}) ${v.is_default ? "[Mặc định]" : ""}`;
           voiceSelect.appendChild(opt);
         });
       }
@@ -1498,6 +1871,17 @@ document.addEventListener("DOMContentLoaded", () => {
           const r = document.querySelector(`input[name="render-mode"][value="${settingsData.render_mode}"]`);
           if (r) r.checked = true;
         }
+
+        if (settingsData.narration_mode) {
+          const n = document.querySelector(`input[name="narration-mode"][value="${settingsData.narration_mode}"]`);
+          if (n) n.checked = true;
+        }
+        if (settingsData.narration_profile) {
+          const np = document.getElementById("narration-profile-select");
+          if (np && [...np.options].some(o => o.value === settingsData.narration_profile)) {
+            np.value = settingsData.narration_profile;
+          }
+        }
       }
     } catch (err) {
       console.error("Failed to load voices or settings:", err);
@@ -1508,12 +1892,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const formats = ["wav"];
     if (chkMp3.checked) formats.push("mp3");
     const renderModeEl = document.querySelector('input[name="render-mode"]:checked');
+    const narrModeEl = document.querySelector('input[name="narration-mode"]:checked');
+    const narrProfileEl = document.getElementById("narration-profile-select");
     const payload = {
       selected_voice: voiceSelect.value,
       selected_language: languageSelect.value,
       speed: parseFloat(speedSlider.value),
       output_formats: formats,
-      render_mode: renderModeEl ? renderModeEl.value : "balanced"
+      render_mode: renderModeEl ? renderModeEl.value : "balanced",
+      narration_mode: narrModeEl ? narrModeEl.value : "auto",
+      narration_profile: narrProfileEl ? narrProfileEl.value : "DOCUMENTARY_CINEMATIC"
     };
 
     try {
@@ -1583,6 +1971,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const formats = ["wav"];
     if (chkMp3.checked) formats.push("mp3");
     const renderModeEl = document.querySelector('input[name="render-mode"]:checked');
+    const narrModeEl2 = document.querySelector('input[name="narration-mode"]:checked');
+    const narrProfileEl2 = document.getElementById("narration-profile-select");
     const payload = {
       text: text,
       project_name: projectNameInput.value.trim() || undefined,
@@ -1590,7 +1980,9 @@ document.addEventListener("DOMContentLoaded", () => {
       language: languageSelect.value,
       speed: parseFloat(speedSlider.value),
       output_formats: formats,
-      render_mode: renderModeEl ? renderModeEl.value : "balanced"
+      render_mode: renderModeEl ? renderModeEl.value : "balanced",
+      narration_mode: narrModeEl2 ? narrModeEl2.value : "auto",
+      narration_profile: narrProfileEl2 ? narrProfileEl2.value : "DOCUMENTARY_CINEMATIC"
     };
 
     btnGenerate.disabled = true;
@@ -1708,6 +2100,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       currentProjectDir = job.project_name;
       window.currentProjectDir = currentProjectDir;
+      // P0.1: the editor now represents the new current project.
+      openedScriptText = scriptInput ? (scriptInput.value || "") : openedScriptText;
       if (activeProjectNameEl) activeProjectNameEl.textContent = currentProjectDir;
       finalDurationText.textContent = `${job.final_duration_seconds} giây`;
       if (playerContextLabel) playerContextLabel.textContent = `${currentProjectDir} • Sẵn sàng`;
@@ -1726,6 +2120,7 @@ document.addEventListener("DOMContentLoaded", () => {
       loadTimestampsForProject(currentProjectDir);
       loadScenesForProject(currentProjectDir);
       loadVeoForProject(currentProjectDir);
+      refreshNarrationPlan(currentProjectDir);
     } else if (job.state === "cancelled" || job.state === "failed") {
       if (activeEventSource) activeEventSource.close();
       btnGenerate.disabled = false;
@@ -1936,6 +2331,9 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       if (!res.ok) throw new Error("Không thể tạo audio nghe thử.");
       const blob = await res.blob();
+      if (pronAudioPlayer.src && pronAudioPlayer.src.startsWith("blob:")) {
+        URL.revokeObjectURL(pronAudioPlayer.src);
+      }
       pronAudioPlayer.src = URL.createObjectURL(blob);
       pronAudioPlayer.play().catch(() => {});
     } catch (err) {
@@ -2043,7 +2441,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (cardQaVerdict) {
       cardQaVerdict.className = `qa-metric-card verdict-${status.toLowerCase()}`;
     }
-    if (valQaVerdict) valQaVerdict.textContent = isStale ? "STALE" : status;
+    if (valQaVerdict) valQaVerdict.textContent = isStale ? "Cần đồng bộ" : status;
     if (subQaVerdict) subQaVerdict.textContent = isStale ? "Audio đã thay đổi, cần chạy lại" : (status === "PASS" ? "Đạt chuẩn chất lượng" : (status === "REVIEW" ? "Cần người dùng xem lại" : (status === "FAIL" ? "Lỗi nghiêm trọng cần xử lý" : "Chưa kiểm định")));
 
     if (valQaMatch) valQaMatch.textContent = `${(metrics.transcript_match_pct || 0).toFixed(1)}%`;
@@ -2054,16 +2452,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const unresolvedCount = (summary.unresolved_fail_count || 0) + (summary.unresolved_review_count || 0);
     if (valQaIssuesCount) valQaIssuesCount.textContent = unresolvedCount;
-    if (subQaBreakdown) subQaBreakdown.textContent = `${summary.unresolved_fail_count || 0} FAIL · ${summary.unresolved_review_count || 0} REVIEW`;
+    if (subQaBreakdown) subQaBreakdown.textContent = `${summary.unresolved_fail_count || 0} lỗi · ${summary.unresolved_review_count || 0} cần xem`;
 
     // Update inspector
-    if (insQaStatus) insQaStatus.textContent = isStale ? "Stale" : status;
+    if (insQaStatus) insQaStatus.textContent = isStale ? "Cần đồng bộ" : status;
     if (insQaMatch) insQaMatch.textContent = `${(metrics.transcript_match_pct || 0).toFixed(1)}%`;
     if (insQaWer) insQaWer.textContent = `${(metrics.wer_pct || 0).toFixed(1)}%`;
     if (insQaWpm) insQaWpm.textContent = `${Math.round(metrics.overall_wpm || 0)} WPM`;
     if (insQaIssues) insQaIssues.textContent = unresolvedCount;
 
-    setQaStatus(isStale ? "stale" : status.toLowerCase(), isStale ? "Cần chạy lại (Stale)" : status);
+    setQaStatus(isStale ? "stale" : status.toLowerCase(), isStale ? "Cần chạy lại" : status);
+  }
+
+  // P1 (§9): Voice QA labels VI — value/enum giữ nguyên, hiển thị dịch.
+  // P1 (§9): status hệ thống hiển thị tiếng Việt (dùng chung toàn app).
+  function uqStatusVi(raw) {
+    const m = { "READY": "Sẵn sàng", "PASS": "Đạt", "REVIEW": "Cần xem xét", "NOT GENERATED": "Chưa tạo", "OUTDATED": "Cần tạo lại", "STALE": "Cần tạo lại", "ERROR": "Lỗi", "LOCKED": "Đã khóa" };
+    const k = String(raw || "").toUpperCase();
+    return m[k] || String(raw || "");
+  }
+
+  // P1 (§9): tone cảnh quay hiển thị tiếng Việt.
+  function veoToneVi(t) {
+    const m = { neutral: "trung tính", mysterious: "bí ẩn", tense: "căng thẳng", ominous: "u ám", awe: "kinh ngạc", curious: "tò mò", calm: "êm dịu", urgent: "khẩn trương" };
+    const v = String(t || "neutral").toLowerCase();
+    return m[v] || String(t || "trung tính");
+  }
+
+  function qaSeverityVi(s) {
+    const v = String(s || "").toLowerCase();
+    if (v === "fail") return "Lỗi";
+    if (v === "review") return "Cần xem";
+    return String(s || "");
+  }
+  function qaResolutionVi(r) {
+    const m = { ACCEPTED: "Đã chấp nhận", WAIVED: "Đã bỏ qua", UNRESOLVED: "Chưa xử lý" };
+    return m[String(r || "").toUpperCase()] || String(r || "");
+  }
+  function qaCategoryVi(c) {
+    const m = {
+      missing_word: "Thiếu từ", extra_word: "Thừa từ", mispronounced: "Phát âm sai",
+      pacing: "Nhịp đọc", truncation: "Cụt câu", duplication: "Lặp từ", pause: "Khoảng nghỉ"
+    };
+    return m[String(c || "").toLowerCase()] || String(c || "");
   }
 
   function renderQAIssues(issues) {
@@ -2105,9 +2536,9 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="qa-issue-item ${isSelected ? 'active' : ''}" data-fingerprint="${escapeHtml(issue.fingerprint)}">
           <div class="qa-issue-header">
             <div class="qa-issue-tags">
-              <span class="qa-badge ${badgeClass}">${escapeHtml(issue.severity.toUpperCase())}</span>
-              <span class="qa-badge qa-badge-category">${escapeHtml(issue.category)}</span>
-              ${isResolved ? `<span class="qa-badge qa-badge-resolved">${escapeHtml(issue.resolution.toUpperCase())}</span>` : ''}
+              <span class="qa-badge ${badgeClass}">${qaSeverityVi(issue.severity)}</span>
+              <span class="qa-badge qa-badge-category">${escapeHtml(qaCategoryVi(issue.category))}</span>
+              ${isResolved ? `<span class="qa-badge qa-badge-resolved">${escapeHtml(qaResolutionVi(issue.resolution))}</span>` : ''}
             </div>
             <span class="qa-time-range">${startFmt} - ${endFmt}</span>
           </div>
@@ -2164,26 +2595,26 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="qa-detail-view">
         <div class="qa-detail-header-card">
           <div class="qa-issue-tags">
-            <span class="qa-badge ${issue.severity === 'fail' ? 'qa-badge-fail' : 'qa-badge-review'}">${escapeHtml(issue.severity.toUpperCase())}</span>
-            <span class="qa-badge qa-badge-category">${escapeHtml(issue.category)}</span>
-            ${isResolved ? `<span class="qa-badge qa-badge-resolved">ĐÃ XỬ LÝ: ${escapeHtml(issue.resolution.toUpperCase())}</span>` : '<span class="qa-badge" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">CHƯA XỬ LÝ</span>'}
+            <span class="qa-badge ${issue.severity === 'fail' ? 'qa-badge-fail' : 'qa-badge-review'}">${issue.severity === 'fail' ? 'Lỗi' : 'Cần xem'}</span>
+            <span class="qa-badge qa-badge-category">${escapeHtml(qaCategoryVi(issue.category))}</span>
+            ${isResolved ? `<span class="qa-badge qa-badge-resolved">ĐÃ XỬ LÝ: ${escapeHtml(qaResolutionVi(issue.resolution))}</span>` : '<span class="qa-badge" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">CHƯA XỬ LÝ</span>'}
             <span class="qa-time-range" style="margin-left: auto;">${startFmt} - ${endFmt}</span>
           </div>
           <div style="font-size: 0.9rem; color: var(--text-primary); font-weight: 500; margin-top: 4px;">
             ${escapeHtml(issue.description)}
           </div>
           <div style="font-size: 0.78rem; color: var(--text-muted); font-family: var(--font-mono);">
-            Chunk #${issue.chunk_index ?? '--'} · Sentence #${issue.sentence_index ?? '--'} · Fingerprint: ${issue.fingerprint.slice(0, 12)}...
+            Đoạn #${issue.chunk_index ?? '--'} · Câu #${issue.sentence_index ?? '--'} · Mã: ${issue.fingerprint.slice(0, 12)}...
           </div>
         </div>
 
         <div class="qa-diff-box">
           <div class="qa-diff-row expected">
-            <div class="qa-diff-label">Kịch bản gốc (Expected Text)</div>
+            <div class="qa-diff-label">Kịch bản gốc</div>
             <div class="qa-diff-text">${escapeHtml(issue.expected_text || "—")}</div>
           </div>
           <div class="qa-diff-row actual">
-            <div class="qa-diff-label">Nhận dạng từ âm thanh (Recognized ASR)</div>
+            <div class="qa-diff-label">Kết quả nhận dạng từ âm thanh</div>
             <div class="qa-diff-text">${escapeHtml(issue.recognized_text || "—")}</div>
           </div>
         </div>
@@ -2203,7 +2634,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="qa-pane-title" style="margin-bottom: 0;">Thao tác giải quyết lỗi</div>
           <div class="qa-decision-row">
             <button type="button" id="btn-qa-accept" class="btn btn-secondary btn-sm qa-btn-action" title="Chấp nhận phát âm này đúng âm vị thực tế">
-              <span>✓ Chấp nhận (Acoustic Match)</span>
+              <span>✓ Chấp nhận (khớp âm thanh)</span>
             </button>
             <button type="button" id="btn-qa-pronunciation" class="btn btn-secondary btn-sm qa-btn-action" title="Thêm từ này vào Từ điển Phát âm">
               <span>Sửa phát âm</span>
@@ -2212,7 +2643,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <span>Render lại đoạn</span>
             </button>
             <button type="button" id="btn-qa-waive" class="btn btn-secondary btn-sm qa-btn-action" title="Bỏ qua cảnh báo này">
-              <span>Bỏ qua (Waive)</span>
+              <span>Bỏ qua</span>
             </button>
           </div>
         </div>
@@ -2434,10 +2865,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function loadVoiceQA(dirName, autoSelect = true) {
     if (!dirName) return;
+    const targetDir = dirName;
     try {
       const res = await fetch(`/api/projects/${dirName}/voice-qa`);
+      if (currentProjectDir !== targetDir) return;
       if (!res.ok) return;
       const data = await res.json();
+      if (currentProjectDir !== targetDir) return;
       voiceQAData = data;
 
       if (data.status === "running") {
@@ -2542,6 +2976,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function loadTimestampsForProject(dirName) {
     if (!dirName) return;
+    const targetDir = dirName;
     currentProjectDir = dirName;
     window.currentProjectDir = currentProjectDir;
     if (tsPollInterval) {
@@ -2551,8 +2986,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const res = await fetch(`/api/projects/${dirName}/timestamps/status`);
+      if (currentProjectDir !== targetDir) return;
       if (!res.ok) return;
       const status = await res.json();
+      if (currentProjectDir !== targetDir) return;
 
       if (status.model) tsModelBadge.textContent = status.model;
       if (status.device) tsDeviceBadge.textContent = status.device.toUpperCase();
@@ -2603,11 +3040,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function pollTimestampStatus(dirName) {
     if (tsPollInterval) clearInterval(tsPollInterval);
+    const targetDir = dirName;
     tsPollInterval = setInterval(async () => {
+      if (currentProjectDir !== targetDir) {
+        clearInterval(tsPollInterval);
+        tsPollInterval = null;
+        return;
+      }
       try {
         const res = await fetch(`/api/projects/${dirName}/timestamps/status`);
+        if (currentProjectDir !== targetDir) return;
         if (!res.ok) return;
         const s = await res.json();
+        if (currentProjectDir !== targetDir) return;
         const pct = (s.progress != null) ? s.progress : ((s.percent != null) ? s.percent : 0);
         tsProgressFill.style.width = `${pct}%`;
         tsProgressPct.textContent = `${pct}%`;
@@ -2663,7 +3108,7 @@ document.addEventListener("DOMContentLoaded", () => {
         card.innerHTML = `
           <span class="cue-time">${sFmt} - ${eFmt}</span>
           <span class="cue-text">${escapeHtml(cue.text)}</span>
-          <button class="cue-play-btn" data-start="${cue.start}">▶</button>
+          <button class="cue-play-btn" data-start="${cue.start}" aria-label="Phát đoạn audio lúc ${sFmt}"><svg class="icon" aria-hidden="true"><use href="#icon-play" /></svg></button>
         `;
         frag.appendChild(card);
       });
@@ -2797,11 +3242,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function loadScenesForProject(dirName) {
     if (!dirName) return;
+    const targetDir = dirName;
     currentProjectDir = dirName;
     window.currentProjectDir = currentProjectDir;
 
     try {
       const res = await fetch(`/api/projects/${dirName}/scenes`);
+      if (currentProjectDir !== targetDir) return;
       if (!res.ok) {
         setSpStatus("idle", "Chưa sẵn sàng");
         btnGenerateScenes.disabled = true;
@@ -2812,14 +3259,15 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const data = await res.json();
+      if (currentProjectDir !== targetDir) return;
       projectScenes = data.scenes || [];
       const status = data.status || "Not Generated";
       const sceneCount = data.scene_count || projectScenes.length;
       const coverage = data.coverage != null ? data.coverage : (sceneCount > 0 ? 100.0 : 0.0);
       const duration = data.audio_duration || 0.0;
 
-      if (spCountBadge) spCountBadge.textContent = `${sceneCount} scene`;
-      if (spCoverageBadge) spCoverageBadge.textContent = (status === "Not Generated" || sceneCount === 0) ? "Coverage 0%" : `Coverage ${coverage.toFixed(0)}%`;
+      if (spCountBadge) spCountBadge.textContent = `${sceneCount} cảnh`;
+      if (spCoverageBadge) spCoverageBadge.textContent = (status === "Not Generated" || sceneCount === 0) ? "Độ phủ 0%" : `Độ phủ ${coverage.toFixed(0)}%`;
       if (spMetaDuration) spMetaDuration.textContent = duration > 0 ? `Thời lượng: ${duration.toFixed(2)}s` : "Thời lượng: --";
 
       btnGenerateScenes.disabled = false;
@@ -2854,7 +3302,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!spTimelineList || !spRowsContainer || !spSelectedDetail) return;
     if (!scenes || scenes.length === 0) {
       spRowsContainer.innerHTML = `<p class="empty-state">Chưa có Scene Plan. Bấm "Tạo Scene Plan" để phân bổ storyboard.</p>`;
-      spSelectedDetail.innerHTML = `<div class="detail-empty-state"><p>Chưa có dữ liệu scene</p></div>`;
+      spSelectedDetail.innerHTML = `<div class="detail-empty-state"><p>Chưa có dữ liệu cảnh</p></div>`;
       if (spRowCountBadge) spRowCountBadge.textContent = "0/0";
       return;
     }
@@ -2874,8 +3322,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (filtered.length === 0) {
-      spRowsContainer.innerHTML = `<p class="empty-state">Không tìm thấy scene phù hợp với bộ lọc.</p>`;
-      spSelectedDetail.innerHTML = `<div class="detail-empty-state"><p>Không có scene nào được chọn</p></div>`;
+      spRowsContainer.innerHTML = `<p class="empty-state">Không tìm thấy cảnh phù hợp với bộ lọc.</p>`;
+      spSelectedDetail.innerHTML = `<div class="detail-empty-state"><p>Không có cảnh nào được chọn</p></div>`;
       return;
     }
 
@@ -2893,7 +3341,7 @@ document.addEventListener("DOMContentLoaded", () => {
       row.dataset.sceneId = sc.scene_id;
       row.setAttribute("role", "button");
       row.setAttribute("tabindex", "0");
-      row.setAttribute("aria-label", `Scene ${sc.index}, ${sc.category || 'reconstruction'}`);
+      row.setAttribute("aria-label", `Cảnh ${sc.index}, ${sc.category || 'reconstruction'}`);
 
       const sFmt = formatTime(sc.start);
       const eFmt = formatTime(sc.end);
@@ -2902,7 +3350,7 @@ document.addEventListener("DOMContentLoaded", () => {
       row.innerHTML = `
         <div class="row-meta">
           <div class="row-meta-left">
-            <span class="sp-scene-num row-id">Scene ${sc.index}</span>
+            <span class="sp-scene-num row-id">Cảnh ${sc.index}</span>
             <span class="sp-scene-time row-time">${sFmt} &rarr; ${eFmt}</span>
             <span class="scene-dur-badge">${sc.duration}s</span>
           </div>
@@ -2923,10 +3371,44 @@ document.addEventListener("DOMContentLoaded", () => {
     renderSelectedSceneDetail(selectedScene);
   }
 
+  // Phase 15B Optimization: Incremental Scene Update (avoids full 79-scene DOM re-render)
+  function updateSceneInStateAndDom(sc) {
+    if (!sc || !sc.scene_id) return;
+    const idx = (projectScenes || []).findIndex(s => s.scene_id === sc.scene_id);
+    if (idx !== -1) {
+      projectScenes[idx] = Object.assign({}, projectScenes[idx], sc);
+    }
+
+    const card = document.getElementById(`sp-card-${sc.scene_id}`);
+    if (card) {
+      const sFmt = formatTime(sc.start);
+      const eFmt = formatTime(sc.end);
+      const preview = sc.visual_summary || sc.narration || sc.image_prompt || "";
+
+      card.setAttribute("aria-label", `Cảnh ${sc.index}, ${sc.category || 'reconstruction'}`);
+      const catBadge = card.querySelector(".cat-badge");
+      if (catBadge) catBadge.textContent = sc.category || 'reconstruction';
+
+      const durBadge = card.querySelector(".scene-dur-badge");
+      if (durBadge) durBadge.textContent = `${sc.duration}s`;
+
+      const previewEl = card.querySelector(".row-preview");
+      if (previewEl) previewEl.textContent = preview;
+
+      const timeEl = card.querySelector(".sp-scene-time");
+      if (timeEl) timeEl.innerHTML = `${sFmt} &rarr; ${eFmt}`;
+    }
+
+    if (selectedSceneId === sc.scene_id) {
+      const current = idx !== -1 ? projectScenes[idx] : sc;
+      renderSelectedSceneDetail(current);
+    }
+  }
+
   function renderSelectedSceneDetail(sc) {
     if (!spSelectedDetail) return;
     if (!sc) {
-      spSelectedDetail.innerHTML = `<div class="empty-detail-state"><p>Chọn một scene từ danh sách bên trái để xem chi tiết</p></div>`;
+      spSelectedDetail.innerHTML = `<div class="empty-detail-state"><p>Chọn một cảnh từ danh sách bên trái để xem chi tiết</p></div>`;
       return;
     }
 
@@ -2937,7 +3419,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="detail-header-card">
         <div class="detail-identity-row">
           <div class="detail-title-time">
-            <span class="sp-scene-num detail-title">Scene ${sc.index}</span>
+            <span class="sp-scene-num detail-title">Cảnh ${sc.index}</span>
             <span class="sp-scene-time detail-time">${sFmt} &rarr; ${eFmt} (${sc.duration}s)</span>
           </div>
           <div class="detail-tags">
@@ -2948,13 +3430,17 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         </div>
         <div class="detail-actions-bar">
-          <button class="btn btn-secondary btn-sm btn-seek-scene" data-action="seek" data-start="${sc.start}">
-            <svg class="icon"><use href="#icon-play" /></svg>
-            <span>▶ Phát</span>
+          <button class="btn btn-secondary btn-sm btn-seek-scene uq-playbtn" data-action="seek" data-start="${sc.start}" aria-label="Phát cảnh ${sc.index}">
+            <svg class="icon" aria-hidden="true"><use href="#icon-play" /></svg>
+            <span>Phát</span>
           </button>
           <button class="btn btn-secondary btn-sm btn-edit-scene" data-action="edit">
             <svg class="icon"><use href="#icon-edit" /></svg>
             <span>Chỉnh sửa</span>
+          </button>
+          <button class="btn btn-secondary btn-sm btn-regen-scene-veo" data-action="regen-scene-veo" title="Tạo lại các cảnh quay cho cảnh này">
+            <svg class="icon"><use href="#icon-refresh" /></svg>
+            <span>Tạo lại cảnh quay</span>
           </button>
           <button class="btn btn-secondary btn-sm btn-copy-prompt" data-action="copy-image">
             <svg class="icon"><use href="#icon-export" /></svg>
@@ -2969,14 +3455,14 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
 
       <div class="detail-prose-card">
-        <div class="detail-prose-label">Visual Summary</div>
+        <div class="detail-prose-label">Tóm tắt hình ảnh</div>
         <div class="detail-prose-content">${escapeHtml(sc.visual_summary || '')}</div>
       </div>
 
       <div class="prompt-section-card">
         <div class="prompt-section-header">
           <div class="prompt-header-title-group">
-            <span class="prompt-section-title">Image Prompt</span>
+            <span class="prompt-section-title">Prompt hình ảnh</span>
             <span class="prompt-tag">SDXL / Midjourney</span>
           </div>
           <div class="prompt-header-actions">
@@ -2984,7 +3470,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <svg class="icon"><use href="#icon-export" /></svg>
               <span>Sao chép</span>
             </button>
-            <button class="btn btn-secondary btn-sm" data-action="edit" title="Chỉnh sửa Scene">
+            <button class="btn btn-secondary btn-sm" data-action="edit" title="Chỉnh sửa cảnh">
               <svg class="icon"><use href="#icon-edit" /></svg>
               <span>Sửa</span>
             </button>
@@ -2999,11 +3485,11 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="prompt-section-card negative-prompt-card">
         <div class="prompt-section-header">
           <div class="prompt-header-title-group">
-            <span class="prompt-section-title">Negative Prompt</span>
-            <span class="prompt-tag negative-tag">Exclusions</span>
+            <span class="prompt-section-title">Prompt loại trừ</span>
+            <span class="prompt-tag negative-tag">Loại trừ</span>
           </div>
           <div class="prompt-header-actions">
-            <button class="btn btn-secondary btn-sm" data-action="copy-negative" title="Sao chép Negative Prompt">
+            <button class="btn btn-secondary btn-sm" data-action="copy-negative" title="Sao chép prompt loại trừ">
               <svg class="icon"><use href="#icon-export" /></svg>
               <span>Sao chép</span>
             </button>
@@ -3014,7 +3500,112 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       </div>
       ` : ''}
+
+      <div class="prompt-section-card" id="sp-scene-visual-block" aria-live="polite">
+        <div class="prompt-section-header">
+          <div class="prompt-header-title-group">
+            <span class="prompt-section-title">Sản xuất hình ảnh (Visual)</span>
+            <span class="prompt-tag">Phase 13</span>
+          </div>
+        </div>
+        <div class="prompt-section-content"><p class="empty-state">Đang tải visual refs…</p></div>
+      </div>
     `;
+    loadSceneVisual(sc.scene_id);
+    syncPlaybackUI();
+  }
+
+  async function loadSceneVisual(sceneId) {
+    const targetDir = currentProjectDir;
+    const el = document.getElementById("sp-scene-visual-block");
+    if (!targetDir || !el) return;
+    try {
+      const res = await fetch(`/api/projects/${encodeURIComponent(targetDir)}/scenes/${encodeURIComponent(sceneId)}/visual`);
+      if (currentProjectDir !== targetDir || !res.ok) return;
+      const data = await res.json();
+      if (currentProjectDir !== targetDir || selectedSceneId !== sceneId) return;
+      const sc = data.scene || {};
+      const entry = data.visualEntry;
+      const eff = data.effectiveOutputType || data.recommendedOutputType;
+      const tag = (t) => `<span class="vb-tag">${escapeHtml(t)}</span>`;
+      el.querySelector(".prompt-section-content").innerHTML = `
+        <div class="prod-history-meta" title="category = phân loại dựng hình gốc; visualType = loại visual sản xuất; output = cách sản xuất clip">Loại dựng: ${escapeHtml(data.scene?.category || sc.category || "—")} · Visual: ${escapeHtml(sc.visualType || "—")} · Sản xuất: ${escapeHtml(eff || "—")}</div>
+        <div class="prod-readiness-list">
+          <div class="prod-readiness-row"><span>Loại visual</span><span class="prod-readiness-val is-ok">${escapeHtml(sc.visualType || "—")}</span></div>
+          <div class="prod-readiness-row"><span>Chủ thể / nhóm</span><span>${(sc.subjectIds || []).map(tag).join(" ") || "—"}</span></div>
+          <div class="prod-readiness-row"><span>Nhân vật đại diện</span><span>${(sc.characterIds || []).map(tag).join(" ") || "—"}</span></div>
+          <div class="prod-readiness-row"><span>Bối cảnh</span><span>${sc.environmentId ? tag(sc.environmentId) : "—"}</span></div>
+          <div class="prod-readiness-row"><span>Vật thể</span><span>${(sc.objectIds || []).map(tag).join(" ") || "—"}</span></div>
+          <div class="prod-readiness-row"><span>Đề xuất</span><span title="${escapeHtml((data.recommendationReasons || []).join("; "))}">${escapeHtml(data.recommendedOutputType || "—")}</span></div>
+          <div class="prod-readiness-row"><span>Sản xuất chọn</span>
+            <select id="sp-visual-override" class="form-select form-input-sm" aria-label="Loại sản xuất đã chọn">
+              <option value="">Theo đề xuất (${escapeHtml(data.recommendedOutputType || "")})</option>
+              ${["STATIC_IMAGE", "EDITOR_MOTION", "VEO"].map(o => `<option value="${o}" ${sc.selectedOutputType === o ? "selected" : ""}>${o}</option>`).join("")}
+            </select>
+          </div>
+          <div class="prod-readiness-row"><span>Hiệu lực</span><span class="prod-readiness-val is-ok">${escapeHtml(eff || "—")}</span></div>
+          <div class="prod-readiness-row"><span>Prompt hình ảnh</span><span>${(function(){ const st = entry ? entry.status : "NOT_STARTED"; return window.I18N ? window.I18N.renderBadge(st) : escapeHtml(st); })()}</span></div>
+          <div class="prod-readiness-row"><span>Gán cast (IDs, cách nhau bởi dấu phẩy)</span>
+            <span><input id="sp-cast-edit" class="form-input form-input-sm" value="${escapeHtml((sc.characterIds || []).join(", "))}" aria-label="Mã nhân vật" style="min-width: 12rem;">
+            <button class="btn btn-secondary btn-sm" id="sp-cast-save-btn"><span>Lưu cast</span></button></span>
+          </div>
+        </div>
+        ${entry ? `<div class="prompt-section-content" style="margin-top:0.5rem;"><code style="white-space:pre-wrap;">${escapeHtml(entry.prompt || "")}</code>
+          <div style="margin-top:0.4rem;"><button class="btn btn-secondary btn-sm" id="sp-visual-copy-btn"><span>Sao chép Visual Prompt</span></button></div></div>` : ""}
+        ${(data.veoInheritance || []).length ? `<div class="prod-history-meta" style="margin-top:0.4rem;">Veo kế thừa: ${(data.veoInheritance || []).map(v => `${escapeHtml(v.shotId)}→${escapeHtml(v.continuityStrategy)}${v.outdated ? " (cũ)" : ""}`).join(" · ")}</div>` : ""}`;
+      const ov = document.getElementById("sp-visual-override");
+      if (ov) ov.addEventListener("change", async () => {
+        if (!currentProjectDir) return;
+        // Corrective §48: empty = reset to AUTO (explicit null clears override).
+        const val = ov.value || null;
+        const r = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/scenes/${encodeURIComponent(sceneId)}`, {
+          method: "PUT", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ selectedOutputType: val })
+        });
+        if (!r.ok) {
+          const e = await r.json().catch(() => ({}));
+          showNotification("Lỗi override: " + (e.detail || "thất bại"), "error");
+          return;
+        }
+        const resData = await r.json().catch(() => ({}));
+        showNotification(val ? "Đã lưu loại sản xuất (cập nhật tức thời)." : "Đã reset theo đề xuất.", "success");
+        if (resData && resData.scene) {
+          updateSceneInStateAndDom(resData.scene);
+        } else {
+          loadScenesForProject(currentProjectDir);
+        }
+        loadSceneVisual(sceneId);
+      });
+      const castSave = document.getElementById("sp-cast-save-btn");
+      if (castSave) castSave.addEventListener("click", async () => {
+        if (!currentProjectDir) return;
+        const raw = document.getElementById("sp-cast-edit")?.value || "";
+        const ids = raw.split(",").map(s => s.trim()).filter(Boolean);
+        const r = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/scenes/${encodeURIComponent(sceneId)}`, {
+          method: "PUT", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ characterIds: ids })
+        });
+        if (!r.ok) {
+          const e = await r.json().catch(() => ({}));
+          showNotification("Lỗi gán cast: " + (e.detail || "thất bại"), "error");
+          return;
+        }
+        const resData = await r.json().catch(() => ({}));
+        showNotification("Đã lưu cast (cập nhật tức thời).", "success");
+        if (resData && resData.scene) {
+          updateSceneInStateAndDom(resData.scene);
+        }
+        loadSceneVisual(sceneId);
+        refreshDependencyStatus(currentProjectDir);
+      });
+      const cp = document.getElementById("sp-visual-copy-btn");
+      if (cp && entry) cp.addEventListener("click", () => {
+        if (navigator.clipboard) navigator.clipboard.writeText(entry.prompt || "")
+          .then(() => showNotification("Đã sao chép Visual Prompt.", "success"));
+      });
+    } catch (err) {
+      console.warn("Failed to load scene visual:", err);
+    }
   }
 
   function selectSceneById(sceneId) {
@@ -3057,7 +3648,7 @@ document.addEventListener("DOMContentLoaded", () => {
       selectSceneById(sceneId);
       const scene = projectScenes.find(s => s.scene_id === sceneId);
       if (scene) {
-        window.seekGlobalAudio(scene.start, `Scene ${scene.index}`);
+        window.seekGlobalAudio(scene.start, `Cảnh ${scene.index}`);
       }
     });
 
@@ -3092,11 +3683,13 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!scene) return;
 
       if (action === "seek") {
-        window.seekGlobalAudio(scene.start, `Scene ${scene.index} (${formatTime(scene.start)})`);
+        window.seekGlobalAudio(scene.start, `Cảnh ${scene.index} (${formatTime(scene.start)})`);
       } else if (action === "copy" || action === "copy-image") {
         await copyTextToClipboard(scene.image_prompt, btn);
       } else if (action === "copy-negative") {
         await copyTextToClipboard(scene.negative_prompt, btn);
+      } else if (action === "regen-scene-veo") {
+        doRegenerateSceneVeo(scene.scene_id);
       } else if (action === "edit") {
         openEditSceneModal(scene);
       }
@@ -3121,7 +3714,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function openEditSceneModal(scene) {
     if (!spEditModal) return;
     editingSceneId = scene.scene_id;
-    if (spModalTitle) spModalTitle.textContent = `Chỉnh sửa Scene ${scene.index} (${scene.scene_id})`;
+    if (spModalTitle) spModalTitle.textContent = `Chỉnh sửa cảnh ${scene.index} (${scene.scene_id})`;
     if (spEditCategory) spEditCategory.value = scene.category || "reconstruction";
     if (spEditEvidence) spEditEvidence.value = scene.evidence_mode || "reconstruction";
     if (spEditShotType) spEditShotType.value = scene.shot_type || "medium wide";
@@ -3131,12 +3724,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (spEditPrompt) spEditPrompt.value = scene.image_prompt || "";
     if (spEditNegativePrompt) spEditNegativePrompt.value = scene.negative_prompt || "";
     spEditModal.style.display = "flex";
+    spEditModal.classList.add("open");
+    uqOpenModals.push({ el: spEditModal, trigger: document.activeElement });
+    uqLockBody();
     trapFocus(spEditModal);
   }
 
   function closeEditSceneModal() {
-    if (spEditModal) spEditModal.style.display = "none";
-    releaseActiveFocus();
+    uqModalClose(spEditModal);
     editingSceneId = null;
   }
 
@@ -3170,8 +3765,14 @@ document.addEventListener("DOMContentLoaded", () => {
           const err = await res.json();
           throw new Error(err.detail || "Không thể cập nhật scene.");
         }
+        const resData = await res.json().catch(() => ({}));
         closeEditSceneModal();
-        await loadScenesForProject(currentProjectDir);
+        if (resData && resData.scene) {
+          updateSceneInStateAndDom(resData.scene);
+          showNotification("Đã cập nhật cảnh thành công (tối ưu tức thì).", "success");
+        } else {
+          await loadScenesForProject(currentProjectDir);
+        }
       } catch (err) {
         showNotification(`Lỗi lưu: ${err.message}`, "error");
       } finally {
@@ -3218,7 +3819,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (projectScenes.length > 0) {
       const hasEdits = projectScenes.some(s => s.status === "edited");
       const msg = hasEdits
-        ? "Bạn đã chỉnh sửa Scene thủ công. Phiên bản hiện tại sẽ được lưu trữ (archive) trước khi tạo lại. Bạn có chắc chắn muốn tiếp tục?"
+        ? "Bạn đã chỉnh sửa cảnh thủ công. Phiên bản hiện tại sẽ được lưu trữ (archive) trước khi tạo lại. Bạn có chắc chắn muốn tiếp tục?"
         : "Scene Plan hiện tại sẽ được thay thế (bản sao lưu tự động sẽ được giữ lại). Bước Veo Prompts phía sau sẽ cần tạo lại. Tiếp tục?";
       showConfirmDialog({
         variant: "warning",
@@ -3237,12 +3838,18 @@ document.addEventListener("DOMContentLoaded", () => {
     if (currentProjectDir) loadScenesForProject(currentProjectDir);
   });
 
+  // P1 (§12): export navigation có feedback (toast), không im lặng.
+  function downloadWithFeedback(url, label) {
+    if (!currentProjectDir || !url) return;
+    showNotification(`Đang tải ${label}…`, "info");
+    window.location.href = url;
+  }
   btnExportScenesJson.addEventListener("click", () => {
-    if (currentProjectDir) window.location.href = `/api/projects/${currentProjectDir}/scenes/prompts.json`;
+    downloadWithFeedback(`/api/projects/${currentProjectDir}/scenes/prompts.json`, "tệp JSON Scene Plan");
   });
 
   btnExportScenesMd.addEventListener("click", () => {
-    if (currentProjectDir) window.location.href = `/api/projects/${currentProjectDir}/scenes/prompts.md`;
+    downloadWithFeedback(`/api/projects/${currentProjectDir}/scenes/prompts.md`, "tệp Markdown Scene Plan");
   });
 
   // ==============================================================================
@@ -3265,11 +3872,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function loadVeoForProject(dirName) {
     if (!dirName) return;
+    const targetDir = dirName;
     currentProjectDir = dirName;
     window.currentProjectDir = currentProjectDir;
 
     try {
       const res = await fetch(`/api/projects/${dirName}/veo`);
+      if (currentProjectDir !== targetDir) return;
       if (!res.ok) {
         setVeoStatus("idle", "Chưa sẵn sàng");
         btnGenerateVeo.disabled = true;
@@ -3280,14 +3889,16 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const data = await res.json();
+      if (currentProjectDir !== targetDir) return;
       projectVeoShots = data.shots || [];
+      window.currentVeoPlan = data;
       const status = data.status || "Not Generated";
       const shotCount = data.shot_count || projectVeoShots.length;
       const coverage = data.coverage != null ? data.coverage : (shotCount > 0 ? 100.0 : 0.0);
       const duration = data.audio_duration || 0.0;
 
-      if (veoCountBadge) veoCountBadge.textContent = `${shotCount} shot`;
-      if (veoCoverageBadge) veoCoverageBadge.textContent = (status === "Not Generated" || shotCount === 0) ? "Coverage 0%" : `${coverage.toFixed(0)}% Time`;
+      if (veoCountBadge) veoCountBadge.textContent = `${shotCount} cảnh quay`;
+      if (veoCoverageBadge) veoCoverageBadge.textContent = (status === "Not Generated" || shotCount === 0) ? "Độ phủ 0%" : `Độ phủ ${coverage.toFixed(0)}% thời lượng`;
       if (veoMetaDuration) veoMetaDuration.textContent = duration > 0 ? `Thời lượng: ${duration.toFixed(2)}s` : "Thời lượng: --";
 
       btnGenerateVeo.disabled = false;
@@ -3302,6 +3913,8 @@ document.addEventListener("DOMContentLoaded", () => {
         setVeoStatus("stale", "Cần tạo lại");
         veoStaleAlert.style.display = "flex";
         veoStaleText.textContent = `Veo Prompt đã cũ (${data.stale_reason || 'dữ liệu đã thay đổi'}). Hãy tạo lại để cập nhật.`;
+        // P0.2: refresh may replace this with the granular partial message.
+        refreshDependencyStatus(dirName);
         btnExportVeoJson.disabled = projectVeoShots.length === 0;
         btnExportVeoMd.disabled = projectVeoShots.length === 0;
       } else {
@@ -3312,6 +3925,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       renderVeoShotsList(projectVeoShots);
+      loadProductionStatus(targetDir);
     } catch (err) {
       console.error("Failed to load project Veo prompts:", err);
       window.__lastVeoError = (err && err.stack) || String(err);
@@ -3319,11 +3933,227 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // ==========================================================================
+  // PRODUCTION EXPORT / FLOW HANDOFF (Phase 11 — contextual to Veo workspace)
+  // ==========================================================================
+  const PROD_READINESS_LABELS = [
+    ["audio", "Audio"],
+    ["voiceQa", "Voice QA"],
+    ["timestamp", "Timestamp"],
+    ["scenePlan", "Scene Plan"],
+    ["visualContinuity", "Visual Continuity"],
+    ["veo", "Veo Prompt"],
+  ];
+
+  function clearProductionCard() {
+    productionStatus = null;
+    productionExporting = false;
+    lastExportPath = null;
+    if (prodStatusBadge) {
+      prodStatusBadge.className = "state-pill state-idle";
+      prodStatusBadge.textContent = "CHƯA SẴN SÀNG";
+    }
+    if (prodSceneCount) prodSceneCount.textContent = "0";
+    if (prodShotCount) prodShotCount.textContent = "0";
+    if (prodBlockerCount) prodBlockerCount.textContent = "0";
+    if (prodReadinessList) prodReadinessList.innerHTML = "";
+    if (prodBlockersList) {
+      prodBlockersList.style.display = "none";
+      prodBlockersList.innerHTML = "";
+    }
+    if (prodResult) {
+      prodResult.style.display = "none";
+      prodResult.innerHTML = "";
+    }
+    if (prodResultActions) prodResultActions.style.display = "none";
+    if (btnProductionExport) btnProductionExport.disabled = true;
+    if (prodHistoryList) prodHistoryList.innerHTML = `<p class="empty-state">Chưa có lần xuất nào.</p>`;
+  }
+  window.clearProductionCard = clearProductionCard;
+
+  function renderProductionStatus(data) {
+    if (!data) {
+      clearProductionCard();
+      return;
+    }
+    productionStatus = data;
+    if (prodSceneCount) prodSceneCount.textContent = String(data.sceneCount || 0);
+    if (prodShotCount) prodShotCount.textContent = String(data.shotCount || 0);
+    if (prodBlockerCount) prodBlockerCount.textContent = String(data.blockerCount || 0);
+    if (prodStatusBadge) {
+      if (data.ready) {
+        prodStatusBadge.className = "state-pill state-pass";
+        prodStatusBadge.textContent = "SẴN SÀNG SẢN XUẤT";
+      } else {
+        prodStatusBadge.className = "state-pill state-fail";
+        prodStatusBadge.textContent = "CHƯA SẴN SÀNG";
+      }
+    }
+    if (prodReadinessList) {
+      const readiness = data.readiness || {};
+      prodReadinessList.innerHTML = PROD_READINESS_LABELS.map(([key, label]) => {
+        const val = String(readiness[key] || "—").toUpperCase();
+        const ok = (val === "READY" || val === "PASS");
+        return `<div class="prod-readiness-row"><span>${label}</span>` +
+          `<span class="prod-readiness-val ${ok ? "is-ok" : "is-bad"}">${ok ? "✓" : "✕"} ${val}</span></div>`;
+      }).join("");
+    }
+    if (prodBlockersList) {
+      const blockers = data.blockers || [];
+      if (blockers.length > 0) {
+        prodBlockersList.style.display = "block";
+        prodBlockersList.innerHTML = `<div class="prod-blockers-title">Lỗi chặn (${blockers.length}):</div>` +
+          "<ul>" + blockers.map(b => `<li>${String(b).replace(/</g, "&lt;")}</li>`).join("") + "</ul>";
+      } else {
+        prodBlockersList.style.display = "none";
+        prodBlockersList.innerHTML = "";
+      }
+    }
+    if (btnProductionExport) btnProductionExport.disabled = productionExporting;
+    renderProductionHistory(data.exports || []);
+  }
+
+  function renderProductionHistory(exports) {
+    if (!prodHistoryList) return;
+    if (!exports || exports.length === 0) {
+      prodHistoryList.innerHTML = `<p class="empty-state">Chưa có lần xuất nào.</p>`;
+      return;
+    }
+    prodHistoryList.innerHTML = exports.map(e => {
+      const when = e.createdAt ? new Date(e.createdAt).toLocaleString("vi-VN") : "—";
+      const snap = e.snapshot === "OLDER SNAPSHOT"
+        ? `<span class="prod-snapshot-stale">Bản cũ</span>` : "";
+      return `<div class="prod-history-item"><div><strong>${e.exportId}</strong> ${snap}<br>` +
+        `<span class="prod-history-meta">${when} · ${e.sceneCount} cảnh · ${e.shotCount} cảnh quay</span></div></div>`;
+    }).join("");
+  }
+
+  async function loadProductionStatus(dirName) {
+    if (!dirName) {
+      clearProductionCard();
+      return;
+    }
+    const targetDir = dirName;
+    try {
+      const res = await fetch(`/api/projects/${encodeURIComponent(dirName)}/production/status`);
+      if (currentProjectDir !== targetDir) return; // async ownership guard
+      if (!res.ok) {
+        clearProductionCard();
+        return;
+      }
+      const data = await res.json();
+      if (currentProjectDir !== targetDir) return; // async ownership guard
+      renderProductionStatus(data);
+    } catch (err) {
+      console.warn("Failed to load production status:", err);
+    }
+  }
+  window.loadProductionStatus = loadProductionStatus;
+
+  async function runProductionExport() {
+    if (!currentProjectDir || productionExporting) return;
+    const targetDir = currentProjectDir;
+    if (prodResult) prodResult.style.display = "none";
+    if (prodResultActions) prodResultActions.style.display = "none";
+    // Client-side gate: surface exact blockers without a futile server call.
+    if (!productionStatus || !productionStatus.ready) {
+      const blockers = (productionStatus && productionStatus.blockers) || ["Dự án chưa sẵn sàng sản xuất."];
+      if (prodResult) {
+        prodResult.style.display = "block";
+        prodResult.className = "prod-result is-error";
+        prodResult.innerHTML = `<strong>Không thể xuất gói sản xuất</strong><ul>` +
+          blockers.map(b => `<li>${String(b).replace(/</g, "&lt;")}</li>`).join("") + "</ul>";
+      }
+      showNotification("Không thể xuất gói sản xuất.", "error");
+      return;
+    }
+    productionExporting = true;
+    if (btnProductionExport) {
+      btnProductionExport.disabled = true;
+      btnProductionExport.querySelector("span").textContent = "Đang xuất...";
+    }
+    if (prodResult) prodResult.style.display = "none";
+    if (prodResultActions) prodResultActions.style.display = "none";
+    try {
+      const res = await fetch(`/api/projects/${encodeURIComponent(targetDir)}/production/export`, { method: "POST" });
+      const payload = await res.json().catch(() => ({}));
+      if (currentProjectDir !== targetDir) return; // async ownership guard (§58)
+      if (!res.ok) {
+        const blockers = (payload.detail && payload.detail.blockers) || [payload.detail || "Không thể xuất gói sản xuất."];
+        if (prodResult) {
+          prodResult.style.display = "block";
+          prodResult.className = "prod-result is-error";
+          prodResult.innerHTML = `<strong>Không thể xuất gói sản xuất</strong><ul>` +
+            blockers.map(b => `<li>${String(b).replace(/</g, "&lt;")}</li>`).join("") + "</ul>";
+        }
+        showNotification("Không thể xuất gói sản xuất.", "error");
+      } else {
+        lastExportPath = payload.exportPath || null;
+        if (prodResult) {
+          prodResult.style.display = "block";
+          prodResult.className = "prod-result is-ok";
+          prodResult.innerHTML = `<strong>Xuất gói sản xuất thành công</strong><br>` +
+            `${payload.sceneCount} cảnh · ${payload.shotCount} cảnh quay<br>` +
+            `<span class="prod-history-meta">Audio ✓ · Subtitle ✓ · Prompt Pack ✓ · Manifest ✓ · Checklist ✓</span>`;
+        }
+        if (prodResultActions) prodResultActions.style.display = "flex";
+        showNotification(`Xuất gói sản xuất thành công (${payload.exportId}).`, "success");
+      }
+    } catch (err) {
+      if (currentProjectDir !== targetDir) return;
+      if (prodResult) {
+        prodResult.style.display = "block";
+        prodResult.className = "prod-result is-error";
+        prodResult.textContent = `Không thể xuất gói sản xuất: ${err.message}`;
+      }
+    } finally {
+      productionExporting = false;
+      if (btnProductionExport && currentProjectDir === targetDir) {
+        btnProductionExport.querySelector("span").textContent = "Xuất gói sản xuất";
+      }
+      if (currentProjectDir === targetDir) loadProductionStatus(targetDir);
+    }
+  }
+
+  async function openProductionExportFolder() {
+    if (!currentProjectDir || !productionStatus || !productionStatus.latestExport) {
+      showNotification("Chưa có gói sản xuất nào để mở.", "warning");
+      return;
+    }
+    const exportId = productionStatus.latestExport.exportId;
+    try {
+      const res = await fetch(
+        `/api/projects/${encodeURIComponent(currentProjectDir)}/production/exports/${encodeURIComponent(exportId)}/open`,
+        { method: "POST" });
+      const data = await res.json();
+      if (!data.opened) {
+        showNotification(`Không mở được Explorer. Đường dẫn: ${data.path}`, "warning");
+      }
+    } catch (err) {
+      showNotification(`Lỗi mở thư mục: ${err.message}`, "error");
+    }
+  }
+
+  function copyProductionExportPath() {
+    const path = lastExportPath || (productionStatus && productionStatus.latestExport && productionStatus.latestExport.path);
+    if (!path) {
+      showNotification("Chưa có đường dẫn export.", "warning");
+      return;
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(path)
+        .then(() => showNotification("Đã sao chép đường dẫn.", "success"))
+        .catch(() => showNotification(path, "info"));
+    } else {
+      showNotification(path, "info");
+    }
+  }
+
   function renderVeoShotsList(shots) {
     if (!veoTimelineList || !veoRowsContainer || !veoSelectedDetail) return;
     if (!shots || shots.length === 0) {
       veoRowsContainer.innerHTML = `<p class="empty-state">Chưa có Veo Prompt. Bấm "Tạo Veo Prompt" để dựng prompt video.</p>`;
-      veoSelectedDetail.innerHTML = `<div class="detail-empty-state"><p>Chưa có dữ liệu shot</p></div>`;
+      veoSelectedDetail.innerHTML = `<div class="detail-empty-state"><p>Chưa có dữ liệu cảnh quay</p></div>`;
       if (veoRowCountBadge) veoRowCountBadge.textContent = "0/0";
       return;
     }
@@ -3343,8 +4173,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (filtered.length === 0) {
-      veoRowsContainer.innerHTML = `<p class="empty-state">Không tìm thấy shot phù hợp với bộ lọc.</p>`;
-      veoSelectedDetail.innerHTML = `<div class="detail-empty-state"><p>Không có shot nào được chọn</p></div>`;
+      veoRowsContainer.innerHTML = `<p class="empty-state">Không tìm thấy cảnh quay phù hợp với bộ lọc.</p>`;
+      veoSelectedDetail.innerHTML = `<div class="detail-empty-state"><p>Không có cảnh quay nào được chọn</p></div>`;
       return;
     }
 
@@ -3362,7 +4192,7 @@ document.addEventListener("DOMContentLoaded", () => {
       row.dataset.shotId = sh.shot_id;
       row.setAttribute("role", "button");
       row.setAttribute("tabindex", "0");
-      row.setAttribute("aria-label", `Shot ${sh.index}, ${sh.tone || 'neutral'}`);
+      row.setAttribute("aria-label", `Cảnh quay ${sh.index}, ${veoToneVi(sh.tone)}`);
 
       const sFmt = formatTime(sh.start);
       const eFmt = formatTime(sh.end);
@@ -3371,12 +4201,12 @@ document.addEventListener("DOMContentLoaded", () => {
       row.innerHTML = `
         <div class="row-meta">
           <div class="row-meta-left">
-            <span class="veo-shot-num row-id">Shot ${sh.index}</span>
+            <span class="veo-shot-num row-id">Cảnh quay ${sh.index}</span>
             <span class="veo-shot-time row-time">${sFmt} &rarr; ${eFmt}</span>
             <span class="shot-dur-badge">${sh.duration ? `${sh.duration}s` : '--'}</span>
           </div>
           <div class="row-meta-right">
-            <span class="tone-tag">${escapeHtml(sh.tone || 'neutral')}</span>
+            <span class="tone-tag">${escapeHtml(veoToneVi(sh.tone))}</span>
           </div>
         </div>
         <div class="row-preview">${escapeHtml(preview)}</div>
@@ -3395,38 +4225,43 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderSelectedShotDetail(sh) {
     if (!veoSelectedDetail) return;
     if (!sh) {
-      veoSelectedDetail.innerHTML = `<div class="empty-detail-state"><p>Chọn một shot từ danh sách bên trái để xem chi tiết</p></div>`;
+      veoSelectedDetail.innerHTML = `<div class="empty-detail-state"><p>Chọn một cảnh quay từ danh sách bên trái để xem chi tiết</p></div>`;
       return;
     }
 
     const sFmt = formatTime(sh.start);
     const eFmt = formatTime(sh.end);
     const splitInfo = (sh.shot_split_total && sh.shot_split_total > 1)
-      ? `Scene ${sh.parent_scene_index} (Shot ${sh.shot_split_index}/${sh.shot_split_total})`
-      : `Scene ${sh.parent_scene_index}`;
+      ? `Cảnh ${sh.parent_scene_index} (Cảnh quay ${sh.shot_split_index}/${sh.shot_split_total})`
+      : `Cảnh ${sh.parent_scene_index}`;
 
     veoSelectedDetail.innerHTML = `
       <div class="detail-header-card">
         <div class="detail-identity-row">
           <div class="detail-title-time">
-            <span class="veo-shot-num detail-title">Shot ${sh.index} &bull; ${escapeHtml(sh.shot_id)}</span>
+            <span class="veo-shot-num detail-title">Cảnh quay ${sh.index} &bull; ${escapeHtml(sh.shot_id)}</span>
             <span class="veo-shot-parent detail-subtitle">${escapeHtml(splitInfo)}</span>
             <span class="veo-shot-time detail-time">${sFmt} &rarr; ${eFmt} (${sh.duration}s)</span>
           </div>
           <div class="detail-tags">
-            <span class="veo-pill-tag tone-tag">${escapeHtml(sh.tone || 'neutral')}</span>
+            <span class="veo-pill-tag purpose-tag">${escapeHtml(sh.shotPurpose || sh.shot_purpose || 'ESTABLISH')}</span>
+            <span class="veo-pill-tag tone-tag">${escapeHtml(veoToneVi(sh.tone))}</span>
             <span class="veo-pill-tag aspect-tag">${escapeHtml(sh.aspect_ratio || '16:9')}</span>
             ${sh.continuity_anchor ? `<span class="veo-pill-tag continuity-tag">${escapeHtml(sh.continuity_anchor)}</span>` : ''}
           </div>
         </div>
         <div class="detail-actions-bar">
-          <button class="btn btn-secondary btn-sm btn-seek-shot" data-action="seek" data-start="${sh.start}">
-            <svg class="icon"><use href="#icon-play" /></svg>
-            <span>▶ Phát từ đây</span>
+          <button class="btn btn-secondary btn-sm btn-seek-shot uq-playbtn" data-action="seek" data-start="${sh.start}" aria-label="Phát cảnh quay ${sh.index} từ đây">
+            <svg class="icon" aria-hidden="true"><use href="#icon-play" /></svg>
+            <span>Phát từ đây</span>
           </button>
           <button class="btn btn-secondary btn-sm btn-edit-veo-shot" data-action="edit">
             <svg class="icon"><use href="#icon-edit" /></svg>
             <span>Chỉnh sửa Prompt</span>
+          </button>
+          <button class="btn btn-secondary btn-sm btn-regen-parent-scene" data-action="regen-parent-scene" title="Tạo lại các cảnh quay cho cảnh này">
+            <svg class="icon"><use href="#icon-refresh" /></svg>
+            <span>Tạo lại Scene</span>
           </button>
           <button class="btn btn-secondary btn-sm btn-copy-veo-prompt" data-action="copy">
             <svg class="icon"><use href="#icon-export" /></svg>
@@ -3463,15 +4298,15 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="prompt-section-card">
         <div class="prompt-section-header">
           <div class="prompt-header-title-group">
-            <span class="prompt-section-title">Veo Video Prompt</span>
-            <span class="prompt-tag">Veo 2 Production-Ready</span>
+            <span class="prompt-section-title">Prompt video Veo</span>
+            <span class="prompt-tag">Veo 2 Sẵn sàng sản xuất</span>
           </div>
           <div class="prompt-header-actions">
             <button class="btn btn-secondary btn-sm" data-action="copy" title="Sao chép Prompt">
               <svg class="icon"><use href="#icon-export" /></svg>
               <span>Sao chép</span>
             </button>
-            <button class="btn btn-secondary btn-sm" data-action="edit" title="Chỉnh sửa Shot">
+            <button class="btn btn-secondary btn-sm" data-action="edit" title="Chỉnh sửa cảnh quay">
               <svg class="icon"><use href="#icon-edit" /></svg>
               <span>Sửa</span>
             </button>
@@ -3486,11 +4321,11 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="prompt-section-card negative-prompt-card">
         <div class="prompt-section-header">
           <div class="prompt-header-title-group">
-            <span class="prompt-section-title">Negative Prompt</span>
-            <span class="prompt-tag negative-tag">Exclusions</span>
+            <span class="prompt-section-title">Prompt loại trừ</span>
+            <span class="prompt-tag negative-tag">Loại trừ</span>
           </div>
           <div class="prompt-header-actions">
-            <button class="btn btn-secondary btn-sm" data-action="copy-negative" title="Sao chép Negative Prompt">
+            <button class="btn btn-secondary btn-sm" data-action="copy-negative" title="Sao chép prompt loại trừ">
               <svg class="icon"><use href="#icon-export" /></svg>
               <span>Sao chép</span>
             </button>
@@ -3501,7 +4336,45 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       </div>
       ` : ''}
+
+      <div class="prompt-section-card" id="veo-inheritance-block" aria-live="polite">
+        <div class="prompt-section-header">
+          <div class="prompt-header-title-group">
+            <span class="prompt-section-title">Kế thừa hình ảnh</span>
+            <span class="prompt-tag">tham chiếu chuẩn</span>
+          </div>
+        </div>
+        <div class="prompt-section-content"><p class="empty-state">Đang tải refs kế thừa…</p></div>
+      </div>
     `;
+    loadVeoInheritance(sh.shot_id);
+    syncPlaybackUI();
+  }
+
+  async function loadVeoInheritance(shotId) {
+    const targetDir = currentProjectDir;
+    const el = document.getElementById("veo-inheritance-block");
+    if (!targetDir || !el || !shotId) return;
+    try {
+      const res = await fetch(`/api/projects/${encodeURIComponent(targetDir)}/veo/shots/${encodeURIComponent(shotId)}/inheritance`);
+      if (currentProjectDir !== targetDir || selectedShotId !== shotId || !res.ok) return;
+      const inh = await res.json();
+      if (currentProjectDir !== targetDir || selectedShotId !== shotId) return;
+      const tag = (t) => `<span class="vb-tag">${escapeHtml(t)}</span>`;
+      el.querySelector(".prompt-section-content").innerHTML = `
+        <div class="prod-readiness-list">
+          <div class="prod-readiness-row"><span>Chủ thể / nhóm</span><span>${(inh.subjectIds || []).map(tag).join(" ") || "—"}</span></div>
+          <div class="prod-readiness-row"><span>Nhân vật đại diện</span><span>${(inh.characterIds || []).map(tag).join(" ") || "—"}</span></div>
+          <div class="prod-readiness-row"><span>Bối cảnh</span><span>${inh.environmentId ? tag(inh.environmentId) : "—"}</span></div>
+          <div class="prod-readiness-row"><span>Vật thể</span><span>${(inh.objectIds || []).map(tag).join(" ") || "—"}</span></div>
+          <div class="prod-readiness-row"><span>Ref assets</span><span>${(inh.referenceAssetIds || []).map(tag).join(" ") || "—"}</span></div>
+          <div class="prod-readiness-row"><span>Continuity strategy</span><span class="prod-readiness-val is-ok">${escapeHtml(inh.continuityStrategy || "—")}</span></div>
+          <div class="prod-readiness-row"><span>VB version</span><span>${escapeHtml(inh.visualBibleVersion || "—")}</span></div>
+        </div>
+        <div class="prod-history-meta" style="margin-top:0.3rem;">Canonical identity nằm ở Visual Bible V2 — shot không tự định nghĩa lại.</div>`;
+    } catch (err) {
+      console.warn("Failed to load Veo inheritance:", err);
+    }
   }
 
   function selectShotById(shotId) {
@@ -3522,6 +4395,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   window.selectShotById = selectShotById;
   window.getProjectVeoShots = () => projectVeoShots;
+  window.loadVeoForProject = loadVeoForProject;
+  window.refreshDependencyStatus = refreshDependencyStatus;
 
   // Row Selection in Veo Shot List
   if (veoRowsContainer) {
@@ -3544,7 +4419,7 @@ document.addEventListener("DOMContentLoaded", () => {
       selectShotById(shotId);
       const shot = projectVeoShots.find(s => s.shot_id === shotId);
       if (shot) {
-        window.seekGlobalAudio(shot.start, `Shot ${shot.index}`);
+        window.seekGlobalAudio(shot.start, `Cảnh quay ${shot.index}`);
       }
     });
 
@@ -3580,11 +4455,13 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!shot) return;
 
       if (action === "seek") {
-        window.seekGlobalAudio(shot.start, `Shot ${shot.index} (${formatTime(shot.start)})`);
+        window.seekGlobalAudio(shot.start, `Cảnh quay ${shot.index} (${formatTime(shot.start)})`);
       } else if (action === "copy" || action === "copy-image") {
         await copyTextToClipboard(shot.veo_prompt, btn);
       } else if (action === "copy-negative") {
         await copyTextToClipboard(shot.negative_prompt, btn);
+      } else if (action === "regen-parent-scene") {
+        doRegenerateSceneVeo(shot.parentSceneId || shot.parent_scene_id);
       } else if (action === "edit") {
         openEditVeoModal(shot);
       }
@@ -3609,7 +4486,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function openEditVeoModal(shot) {
     if (!veoEditModal) return;
     editingVeoShotId = shot.shot_id;
-    if (veoModalTitle) veoModalTitle.textContent = `Chỉnh sửa Shot ${shot.index} (${shot.shot_id})`;
+    if (veoModalTitle) veoModalTitle.textContent = `Chỉnh sửa cảnh quay ${shot.index} (${shot.shot_id})`;
     if (veoEditShotId) veoEditShotId.value = shot.shot_id;
     if (veoEditFraming) veoEditFraming.value = shot.camera_framing || "medium wide documentary shot";
     if (veoEditCameraMotion) veoEditCameraMotion.value = shot.camera_motion || "static cinematic camera";
@@ -3626,12 +4503,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (altPrompt) altPrompt.value = shot.veo_prompt || "";
     if (veoEditNegativePrompt) veoEditNegativePrompt.value = shot.negative_prompt || "";
     veoEditModal.style.display = "flex";
+    veoEditModal.classList.add("open");
+    uqOpenModals.push({ el: veoEditModal, trigger: document.activeElement });
+    uqLockBody();
     trapFocus(veoEditModal);
   }
 
   function closeEditVeoModal() {
-    if (veoEditModal) veoEditModal.style.display = "none";
-    releaseActiveFocus();
+    uqModalClose(veoEditModal);
     editingVeoShotId = null;
   }
 
@@ -3745,12 +4624,115 @@ document.addEventListener("DOMContentLoaded", () => {
     if (currentProjectDir) loadVeoForProject(currentProjectDir);
   });
 
+  if (btnProductionExport) {
+    btnProductionExport.addEventListener("click", () => {
+      if (currentProjectDir) runProductionExport();
+    });
+  }
+  if (btnProductionOpenFolder) {
+    btnProductionOpenFolder.addEventListener("click", () => openProductionExportFolder());
+  }
+  if (btnProductionCopyPath) {
+    btnProductionCopyPath.addEventListener("click", () => copyProductionExportPath());
+  }
+
+  async function doRegenerateAllVeo() {
+    if (!currentProjectDir) return;
+    const targetDir = currentProjectDir;
+    btnRegenerateAllVeo.disabled = true;
+    if (veoErrorAlert) veoErrorAlert.style.display = "none";
+    setVeoStatus("generating", "Đang tạo");
+    try {
+      const res = await fetch(`/api/projects/${encodeURIComponent(targetDir)}/veo/regenerate-all`, {
+        method: "POST"
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.detail || "Không thể tạo lại toàn bộ cảnh quay.");
+      }
+      const data = await res.json().catch(() => ({}));
+      if (currentProjectDir !== targetDir) return;
+      veoOutdated = false;
+      veoOutdatedScenes = [];
+      updateDependencyState();
+      const count = (data.shot_count != null) ? data.shot_count : ((data.shots || []).length || "");
+        showNotification(`Đã tạo lại toàn bộ cảnh quay${count !== "" ? ` (${count} cảnh quay)` : ""} và lưu archive bản cũ.`, "success");
+      await loadVeoForProject(targetDir);
+      refreshDependencyStatus(targetDir);
+    } catch (err) {
+      if (currentProjectDir !== targetDir) return;
+      if (veoErrorAlert) {
+        veoErrorAlert.style.display = "flex";
+        veoErrorText.textContent = err.message;
+      }
+      setVeoStatus("failed", "Thất bại");
+        showNotification(`Lỗi tạo lại toàn bộ cảnh quay: ${err.message}`, "error");
+    } finally {
+      if (btnRegenerateAllVeo && currentProjectDir === targetDir) btnRegenerateAllVeo.disabled = false;
+    }
+  }
+
+  if (btnRegenerateAllVeo) {
+    btnRegenerateAllVeo.addEventListener("click", () => {
+      if (!currentProjectDir) return;
+      showConfirmDialog({
+        variant: "warning",
+        title: "Tạo lại toàn bộ cảnh quay?",
+        message: "Toàn bộ Veo Shot sẽ được tạo lại từ Scene Plan hiện tại. Bản Veo Prompt hiện tại sẽ được lưu archive trước khi thay thế. Bạn có chắc chắn muốn tiếp tục?",
+        confirmText: "Tạo lại toàn bộ",
+        cancelText: "Hủy",
+        onConfirm: () => doRegenerateAllVeo()
+      });
+    });
+  }
+
+  async function doRegenerateSceneVeo(sceneId) {
+    if (!currentProjectDir || !sceneId) return;
+    const targetDir = currentProjectDir;
+    const targetScene = sceneId;
+    showConfirmDialog({
+      variant: "warning",
+      title: "Tạo lại cảnh quay của cảnh này?",
+      message: `Chỉ các cảnh quay thuộc cảnh "${targetScene}" sẽ được tạo lại. Các cảnh khác được giữ nguyên. Bản hiện tại sẽ được lưu archive trước khi thay thế.`,
+      confirmText: "Tạo lại cảnh quay",
+      cancelText: "Hủy",
+      onConfirm: async () => {
+        setVeoStatus("generating", "Đang tạo");
+        try {
+          const res = await fetch(`/api/projects/${encodeURIComponent(targetDir)}/veo/regenerate-scene/${encodeURIComponent(targetScene)}`, {
+            method: "POST"
+          });
+          if (!res.ok) {
+            const err = await res.json().catch(() => ({}));
+            throw new Error(err.detail || "Không thể tạo lại cảnh quay của cảnh.");
+          }
+          if (currentProjectDir !== targetDir) return;
+          veoOutdated = false;
+          veoOutdatedScenes = [];
+          updateDependencyState();
+          showNotification(`Đã tạo lại cảnh quay cho cảnh "${targetScene}".`, "success");
+          await loadVeoForProject(targetDir);
+          refreshDependencyStatus(targetDir);
+        } catch (err) {
+          if (currentProjectDir !== targetDir) return;
+          if (veoErrorAlert) {
+            veoErrorAlert.style.display = "flex";
+            veoErrorText.textContent = err.message;
+          }
+          setVeoStatus("failed", "Thất bại");
+          showNotification(`Lỗi tạo lại cảnh quay: ${err.message}`, "error");
+        }
+      }
+    });
+  }
+  window.doRegenerateSceneVeo = doRegenerateSceneVeo;
+
   btnExportVeoJson.addEventListener("click", () => {
-    if (currentProjectDir) window.location.href = `/api/projects/${currentProjectDir}/veo/prompts.json`;
+    downloadWithFeedback(`/api/projects/${currentProjectDir}/veo/prompts.json`, "tệp JSON Veo Prompt");
   });
 
   btnExportVeoMd.addEventListener("click", () => {
-    if (currentProjectDir) window.location.href = `/api/projects/${currentProjectDir}/veo/prompts.md`;
+    downloadWithFeedback(`/api/projects/${currentProjectDir}/veo/prompts.md`, "tệp Markdown Veo Prompt");
   });
 
   // ==============================================================================
@@ -3762,6 +4744,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const res = await fetch("/api/projects");
       const data = await res.json();
+      const projects = (data.projects && data.projects.length > 0) ? data.projects : [];
       if (data.projects && data.projects.length > 0) {
         const frag = document.createDocumentFragment();
         data.projects.slice(0, 15).forEach(p => {
@@ -3778,6 +4761,9 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="project-actions">
               <button class="btn btn-secondary btn-sm" onclick="loadPreviewAudio('${safeDir}', ${p.duration_seconds || 0})">
                 <span>Mở dự án</span>
+              </button>
+              <button class="btn btn-secondary btn-sm btn-project-complete" data-dir="${safeDir}" data-name="${safeName}" title="Đánh dấu hoàn tất dự án">
+                <span>Hoàn tất</span>
               </button>
               <button class="btn btn-project-delete" data-dir="${safeDir}" data-name="${safeName}" onclick="confirmDeleteProject('${safeDir}', '${safeName}', event)" title="Xóa dự án vĩnh viễn" aria-label="Xóa dự án ${safeName}">
                 <svg class="ui-icon" style="pointer-events: none;"><use href="#icon-trash"></use></svg>
@@ -3796,8 +4782,36 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         projectsList.innerHTML = `<p class="empty-state">Chưa có dự án nào trong hệ thống. Hãy nhập kịch bản và bấm "Tạo giọng đọc" để bắt đầu.</p>`;
       }
+      return projects;
     } catch (err) {
       console.error("Failed to list projects:", err);
+      if (projectsList) projectsList.innerHTML = `<p class="empty-state">Không tải được danh sách dự án. <button class="btn btn-secondary btn-sm" onclick="window.retryLoadProjects()">Thử lại</button></p>`;
+      return [];
+    }
+  }
+  window.retryLoadProjects = () => loadProjects(false);
+
+  // 02A §3: real project resolution — validate persisted/default selection,
+  // clear stale slugs, never call downstream APIs with an invalid project.
+  async function resolveStartupProject() {
+    const projects = await loadProjects(false);
+    let pick = null;
+    try {
+      const persisted = localStorage.getItem("unfoldiq_project");
+      if (persisted) pick = projects.find(p => p.directory_name === persisted) || null;
+    } catch (e) {}
+    if (!pick && activeProjectNameEl) {
+      const label = (activeProjectNameEl.textContent || "").trim();
+      if (label && label !== "Chưa chọn dự án") {
+        pick = projects.find(p => p.directory_name === label || (p.project_name || "") === label) || null;
+      }
+    }
+    if (pick) {
+      loadPreviewAudio(pick.directory_name, pick.duration_seconds || 0, false);
+    } else {
+      // No valid project: clean state, no downstream fetch storm.
+      resetWorkstationToCleanState();
+      await loadProjects(false);
     }
   }
 
@@ -3857,6 +4871,12 @@ document.addEventListener("DOMContentLoaded", () => {
   if (projectsList && !projectsDeleteListenerAttached) {
     projectsDeleteListenerAttached = true;
     projectsList.addEventListener("click", (e) => {
+      const completeBtn = e.target.closest(".btn-project-complete");
+      if (completeBtn) {
+        e.stopPropagation();
+        doCompleteProject(completeBtn.dataset.dir, completeBtn.dataset.name || completeBtn.dataset.dir, e);
+        return;
+      }
       const delBtn = e.target.closest(".btn-project-delete");
       if (!delBtn) return;
       e.stopPropagation();
@@ -3866,9 +4886,61 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  async function doCompleteProject(dirName, projName, event) {
+    if (event) {
+      event.stopPropagation();
+      event.preventDefault();
+    }
+    if (!dirName) return;
+    showConfirmDialog({
+      variant: "warning",
+      title: "Hoàn tất dự án?",
+      message: `Hoàn tất dự án "${projName || dirName}"? Audio master sẽ được lưu sang thư mục outputs/.`,
+      confirmText: "Hoàn tất dự án",
+      cancelText: "Hủy",
+      onConfirm: async () => {
+        try {
+          const doComplete = async () => {
+            const res = await fetch(`/api/projects/${encodeURIComponent(dirName)}/complete`, {
+              method: "POST"
+            });
+            if (!res.ok) {
+              const err = await res.json().catch(() => ({}));
+              showNotification(err.detail || "Hoàn tất dự án thất bại.", "error");
+              return;
+            }
+            if (currentProjectDir === dirName) {
+              resetWorkstationToCleanState();
+            }
+            showNotification(`Đã hoàn tất dự án "${projName || dirName}".`, "success");
+            await loadProjects(false);
+          };
+          // P0.1: dirty check first (nested confirms would be auto-closed).
+          if (dirName === currentProjectDir && isScriptDirty()) {
+            confirmDiscardScriptIfDirty("Hoàn tất dự án", () => { doComplete(); });
+          } else {
+            await doComplete();
+          }
+        } catch (err) {
+          console.error("Complete project error:", err);
+          showNotification(`Lỗi khi hoàn tất dự án: ${err.message}`, "error");
+        }
+      }
+    });
+  }
+  window.doCompleteProject = doCompleteProject;
+
   window.loadPreviewAudio = function(dirName, duration, autoPlay = true) {
+    // P0.1: switching projects with unsaved typing needs explicit discard.
+    if (dirName !== currentProjectDir && isScriptDirty()) {
+      confirmDiscardScriptIfDirty("Mở dự án khác", () => {
+        window.loadPreviewAudio(dirName, duration, autoPlay);
+      });
+      return;
+    }
     currentProjectDir = dirName;
     window.currentProjectDir = currentProjectDir;
+    try { localStorage.setItem("unfoldiq_project", dirName); } catch (e) {}
     if (activeProjectNameEl) activeProjectNameEl.textContent = dirName;
     if (slugPreviewEl) slugPreviewEl.textContent = dirName;
     if (playerContextLabel) playerContextLabel.textContent = `${dirName} • Sẵn sàng`;
@@ -3882,18 +4954,1682 @@ document.addEventListener("DOMContentLoaded", () => {
     btnExportWav.disabled = false;
     btnExportMp3.disabled = false;
 
+    if (btnCloseProject) btnCloseProject.style.display = "inline-flex";
+    if (btnRegenerateAllVeo) btnRegenerateAllVeo.disabled = false;
+
+    // P0.1: hydrate editor with the canonical project script.
+    fetch(`/api/projects/${encodeURIComponent(dirName)}/script`)
+      .then(res => res.ok ? res.json() : null)
+      .then(scriptData => {
+        if (!scriptData || currentProjectDir !== dirName) return;
+        hydrateScriptEditor(scriptData.script || "");
+      })
+      .catch(err => console.warn("Failed to load project script:", err));
+
     tsOutdated = false;
     scenesOutdated = false;
     veoOutdated = false;
+    veoOutdatedScenes = [];
     updateDependencyState();
+
+    // Realtime dependency reconciliation for the opened project.
+    refreshDependencyStatus(dirName);
+    // Phase 9: narration plan summary for the Voice workspace.
+    refreshNarrationPlan(dirName);
 
     loadVoiceQA(dirName);
     loadTimestampsForProject(dirName);
     loadScenesForProject(dirName);
     loadVeoForProject(dirName);
+    loadVisualBible(dirName);
+    loadEditorial(dirName);
+    // 02A: nếu đang đứng ở workspace do Phase14 quản lý, tải lại để thoát empty cũ.
+    try {
+      if (window.Phase14 && activeWorkspaceId === "overview") window.Phase14.loadOverviewData(dirName);
+    } catch (e) {}
   };
 
   btnRefreshHistory.addEventListener("click", loadProjects);
+
+  // ==========================================================================
+  // 13a. SCRIPT EDITORIAL QA (Phase 12 — inside Script workspace, no new stage)
+  // ==========================================================================
+  const edqStatusBadge = document.getElementById("edq-status-badge");
+  const edqScore = document.getElementById("edq-score");
+  const edqIssueCount = document.getElementById("edq-issue-count");
+  const edqProtectedCount = document.getElementById("edq-protected-count");
+  const edqSummary = document.getElementById("edq-summary");
+  const btnEdqAnalyze = document.getElementById("btn-edq-analyze");
+  const btnEdqView = document.getElementById("btn-edq-view");
+  const edqModal = document.getElementById("edq-modal");
+  const edqIssuesList = document.getElementById("edq-issues-list");
+  const edqIssueDetail = document.getElementById("edq-issue-detail");
+  const edqModalCounts = document.getElementById("edq-modal-counts");
+  const edqModalScore = document.getElementById("edq-modal-score");
+
+  let editorialData = null;
+  let editorialProtection = [];
+  let edqFilter = "all";
+  let edqSelectedId = null;
+
+  function clearEditorialCard() {
+    editorialData = null;
+    edqSelectedId = null;
+    if (edqStatusBadge) {
+      edqStatusBadge.className = "state-pill state-idle";
+      edqStatusBadge.textContent = "Chưa bắt đầu";
+    }
+    if (edqScore) edqScore.textContent = "—";
+    if (edqIssueCount) edqIssueCount.textContent = "0";
+    if (edqProtectedCount) edqProtectedCount.textContent = "0";
+    if (edqSummary) edqSummary.textContent = "";
+    if (btnEdqAnalyze) btnEdqAnalyze.disabled = true;
+    if (btnEdqView) btnEdqView.disabled = true;
+    closeEdqModal();
+  }
+  window.clearEditorialCard = clearEditorialCard;
+
+  function renderEditorialCard() {
+    const hasProject = !!currentProjectDir;
+    if (btnEdqAnalyze) btnEdqAnalyze.disabled = !hasProject;
+    if (!editorialData || !editorialData.exists) {
+      if (edqStatusBadge) {
+        edqStatusBadge.className = "state-pill state-idle";
+        edqStatusBadge.textContent = editorialData && editorialData.stale ? "Cần đồng bộ" : "Chưa bắt đầu";
+      }
+      if (btnEdqView) btnEdqView.disabled = true;
+      return;
+    }
+    const st = (editorialData.status || "REVIEW").toUpperCase();
+    if (edqStatusBadge) {
+      edqStatusBadge.className = "state-pill " + (st === "READY" ? "state-pass" : st === "ERROR" ? "state-fail" : "state-review");
+      edqStatusBadge.textContent = st + (editorialData.stale ? " (cần đồng bộ)" : "");
+    }
+    if (edqScore) edqScore.textContent = String(editorialData.score ?? "—");
+    if (edqIssueCount) edqIssueCount.textContent = String(editorialData.openCount ?? 0);
+    if (edqProtectedCount) edqProtectedCount.textContent = String(editorialData.protectedSpanCount ?? 0);
+    if (edqSummary) {
+      const issues = editorialData.issues || [];
+      const byType = {};
+      issues.filter(i => i.status === "OPEN").forEach(i => {
+        const k = (/TTS|READ|NUMBER|NOUN|ABBREV/.test(i.type)) ? "TTS readability" : (/BLOCK|FACT|PROTECT/.test(i.type) ? "factual-protection" : "rhythm/repetition");
+        byType[k] = (byType[k] || 0) + 1;
+      });
+      edqSummary.textContent = Object.entries(byType).map(([k, v]) => `${v} ${k}`).join(" · ") || "Không còn vấn đề mở.";
+    }
+    if (btnEdqView) btnEdqView.disabled = false;
+  }
+
+  async function loadEditorial(dirName) {
+    if (!dirName) {
+      clearEditorialCard();
+      return;
+    }
+    const targetDir = dirName;
+    try {
+      const [resEdq, resProt] = await Promise.all([
+        fetch(`/api/projects/${encodeURIComponent(dirName)}/editorial`),
+        fetch(`/api/projects/${encodeURIComponent(dirName)}/protection`)
+      ]);
+      if (currentProjectDir !== targetDir || !resEdq.ok) return;
+      editorialData = await resEdq.json();
+      if (resProt.ok) {
+        const pj = await resProt.json();
+        editorialProtection = pj.protectedSpans || [];
+      }
+      if (currentProjectDir !== targetDir) return;
+      renderEditorialCard();
+    } catch (err) {
+      console.warn("Failed to load editorial QA:", err);
+    }
+  }
+  window.loadEditorial = loadEditorial;
+
+  async function analyzeEditorial() {
+    if (!currentProjectDir) return;
+    const targetDir = currentProjectDir;
+    btnEdqAnalyze.disabled = true;
+    try {
+      const res = await fetch(`/api/projects/${encodeURIComponent(targetDir)}/editorial/analyze`, { method: "POST" });
+      if (currentProjectDir !== targetDir) return;
+      if (!res.ok) throw new Error("Phân tích thất bại.");
+      editorialData = await res.json();
+      renderEditorialCard();
+      showNotification(`Editorial QA: ${editorialData.score} điểm, ${editorialData.openCount} vấn đề mở.`, "success");
+    } catch (err) {
+      showNotification(err.message, "error");
+    } finally {
+      if (currentProjectDir === targetDir) btnEdqAnalyze.disabled = false;
+    }
+  }
+
+  function openEdqModal() {
+    if (!edqModal || !editorialData || !editorialData.exists) return;
+    uqModalOpen(edqModal);
+    renderEdqList();
+  }
+  function closeEdqModal() {
+    uqModalClose(edqModal);
+  }
+
+  function renderEdqList() {
+    if (!edqIssuesList || !editorialData) return;
+    const issues = editorialData.issues || [];
+    const filtered = issues.filter(i => {
+      if (edqFilter === "review") return i.severity === "REVIEW";
+      if (edqFilter === "block") return i.severity === "BLOCK";
+      if (edqFilter === "open") return i.status === "OPEN";
+      return true;
+    });
+    if (edqModalScore) {
+      edqModalScore.className = "state-pill state-review";
+      edqModalScore.textContent = `${editorialData.score} điểm`;
+    }
+    if (edqModalCounts) edqModalCounts.textContent = `${filtered.length}/${issues.length} vấn đề`;
+    if (!edqSelectedId || !filtered.some(i => i.issueId === edqSelectedId)) {
+      edqSelectedId = filtered.length ? filtered[0].issueId : null;
+    }
+    edqIssuesList.innerHTML = filtered.length ? filtered.map(i => `
+      <div class="compact-row ${i.issueId === edqSelectedId ? 'selected' : ''}" data-id="${i.issueId}">
+        <span class="badge">${i.severity}</span>
+        <span style="flex:1;">${escapeHtml(i.message)}</span>
+        <span class="prod-history-meta">${i.status}</span>
+      </div>`).join("") : `<p class="empty-state">Không có vấn đề nào.</p>`;
+    edqIssuesList.querySelectorAll(".compact-row").forEach(row => {
+      row.addEventListener("click", () => {
+        edqSelectedId = row.getAttribute("data-id");
+        renderEdqList();
+      });
+    });
+    renderEdqDetail(filtered.find(i => i.issueId === edqSelectedId));
+  }
+
+  function renderEdqDetail(issue) {
+    if (!edqIssueDetail) return;
+    if (!issue) {
+      edqIssueDetail.innerHTML = `<p class="empty-state">Chọn một vấn đề để xem Trước/Sau.</p>`;
+      return;
+    }
+    const overlapping = (editorialProtection || []).filter(s =>
+      !(s.endOffset <= issue.startOffset || s.startOffset >= issue.endOffset));
+    const protHtml = overlapping.length
+      ? `<div class="prod-history-meta">Vùng được bảo vệ: ${overlapping.map(s =>
+          `<span class="vb-tag" style="${s.locked ? "" : "opacity:0.6;"}">${escapeHtml(s.type)}: ${escapeHtml(s.text)}${s.locked ? " 🔒" : ""}</span>`).join(" ")}</div>`
+      : "";
+    edqIssueDetail.innerHTML = `
+      <div class="detail-prose-card">
+        <div class="detail-prose-label">${escapeHtml(issue.issueId)} · ${escapeHtml(issue.type)} · ${escapeHtml(issue.severity)}</div>
+        <div class="detail-prose-content">${escapeHtml(issue.message)}</div>
+      </div>
+      <div class="detail-prose-card">
+        <div class="detail-prose-label">Trước</div>
+        <div class="detail-prose-content narration-quote">${escapeHtml(issue.text || "")}</div>
+      </div>
+      ${issue.suggestion ? `
+      <div class="detail-prose-card">
+        <div class="detail-prose-label">Sau (đề xuất)</div>
+        <div class="detail-prose-content">${escapeHtml(issue.suggestion)}</div>
+      </div>` : `<p class="empty-state">Không có đề xuất tự động — cần xem thủ công.</p>`}
+      ${issue.blockReason ? `<div class="prod-result is-error" style="display:block;"><strong>BỊ CHẶN:</strong> ${escapeHtml(issue.blockReason)}</div>` : ""}
+      ${protHtml}
+      <div class="detail-actions-bar">
+        ${issue.suggestion && issue.status === "OPEN" ? `<button class="btn btn-primary btn-sm" id="edq-apply-btn"><span>Áp dụng</span></button>` : ""}
+        ${issue.status === "OPEN" ? `<button class="btn btn-secondary btn-sm" id="edq-ignore-btn"><span>Bỏ qua</span></button>` : `<span class="prod-history-meta">${issue.status}</span>`}
+      </div>`;
+    const applyBtn = document.getElementById("edq-apply-btn");
+    if (applyBtn) applyBtn.addEventListener("click", () => edqApplyIssue(issue.issueId));
+    const ignoreBtn = document.getElementById("edq-ignore-btn");
+    if (ignoreBtn) ignoreBtn.addEventListener("click", () => edqIgnoreIssue(issue.issueId));
+  }
+
+  async function edqApplyIssue(issueId) {
+    if (!currentProjectDir) return;
+    try {
+      const res = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/editorial/issues/${issueId}/apply`, { method: "POST" });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error((data.detail) || "Apply thất bại.");
+      editorialData = await (await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/editorial`)).json();
+      renderEditorialCard();
+      renderEdqList();
+      hydrateScriptEditor("");
+      fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/script`)
+        .then(r => r.ok ? r.json() : null)
+        .then(d => { if (d) hydrateScriptEditor(d.script || ""); });
+      refreshDependencyStatus(currentProjectDir);
+      showNotification("Đã áp dụng đề xuất (script đã đổi → downstream stale theo chain).", "success");
+    } catch (err) {
+      showNotification(err.message, "error");
+      if (/BLOCKED/.test(err.message)) loadEditorial(currentProjectDir);
+    }
+  }
+
+  async function edqIgnoreIssue(issueId) {
+    if (!currentProjectDir) return;
+    const res = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/editorial/issues/${issueId}/ignore`, { method: "POST" });
+    if (res.ok) {
+      editorialData = await res.json().then(() => fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/editorial`).then(r => r.json()));
+      renderEditorialCard();
+      renderEdqList();
+    }
+  }
+
+  if (btnEdqAnalyze) btnEdqAnalyze.addEventListener("click", analyzeEditorial);
+  if (btnEdqView) btnEdqView.addEventListener("click", openEdqModal);
+  const edqModalCloseBtn = document.getElementById("edq-modal-close-btn");
+  if (edqModalCloseBtn) edqModalCloseBtn.addEventListener("click", closeEdqModal);
+  const edqModalDoneBtn = document.getElementById("edq-modal-done-btn");
+  if (edqModalDoneBtn) edqModalDoneBtn.addEventListener("click", closeEdqModal);
+  [["edq-filter-all", "all"], ["edq-filter-review", "review"], ["edq-filter-block", "block"], ["edq-filter-open", "open"]].forEach(([id, val]) => {
+    const b = document.getElementById(id);
+    if (b) b.addEventListener("click", () => { edqFilter = val; renderEdqList(); });
+  });
+
+  // ==============================================================================
+  // 13b. NARRATION DIRECTOR (Phase 9 — hidden inside Voice, no sidebar step)
+  // ==============================================================================
+  let narrationPlan = null;
+  let narrationSummary = null;
+  let narrationSelectedBeat = null;
+  let narrationReviewOnly = false;
+  let narrationGen = 0;
+  let narrationHealth = "TRỐNG";
+
+  const narrationModal = document.getElementById("narration-beats-modal");
+  const narrationList = document.getElementById("narration-beats-list");
+  const narrationDetail = document.getElementById("narration-beat-detail");
+  const narrationCounts = document.getElementById("narration-modal-counts");
+  const narrationSummaryEl = document.getElementById("narration-summary");
+  const narrationPreviewPlayer = document.getElementById("narration-preview-player");
+
+  function selectedNarrationMode() {
+    const r = document.querySelector('input[name="narration-mode"]:checked');
+    return r ? r.value : "auto";
+  }
+  function selectedNarrationProfile() {
+    const s = document.getElementById("narration-profile-select");
+    return (s && s.value) || "DOCUMENTARY_CINEMATIC";
+  }
+
+  function updateNarrationSummary() {
+    if (!narrationSummaryEl) return;
+    if (!currentProjectDir || !narrationSummary) {
+      narrationSummaryEl.textContent = currentProjectDir
+        ? "Chưa phân tích narration." : "Chưa mở dự án.";
+      return;
+    }
+    const st = narrationSummary.stats || {};
+    narrationSummaryEl.textContent =
+      `${st.beat_count || 0} beat · ` +
+      `${(st.beat_count || 0) - (narrationSummary.review || 0)} tự động chấp nhận · ` +
+      `${narrationSummary.review || 0} cần kiểm tra`;
+  }
+
+  async function refreshNarrationPlan(dirName) {
+    const gen = ++narrationGen;
+    narrationPlan = null;
+    narrationSummary = null;
+    narrationHealth = "TRỐNG";
+    updateNarrationSummary();
+    if (!dirName) return;
+    try {
+      const res = await fetch(`/api/projects/${encodeURIComponent(dirName)}/narration/plan`);
+      if (!res.ok) return;
+      const data = await res.json();
+      if (currentProjectDir !== dirName || gen !== narrationGen) return; // stale guard
+      narrationHealth = data.status || "EMPTY";
+      if (data.plan) {
+        narrationPlan = data.plan;
+        const planBeats = data.plan.beats || [];
+        // keep selection if the beat still exists
+        if (narrationSelectedBeat && !planBeats.some(b => b.beatId === narrationSelectedBeat)) {
+          narrationSelectedBeat = null;
+        }
+        const review = planBeats.filter(b => (b.confidence ?? 1) < 0.55 ||
+          (["OMINOUS", "URGENT", "SOMBER", "AWE", "EXCITED", "REVEAL"].includes(b.style)
+            && (b.intensity ?? 0) >= 0.6)).length;
+        narrationSummary = { stats: data.summary?.stats || {}, review };
+      }
+      updateNarrationSummary();
+      updateDependencyState();
+    } catch (err) {
+      console.warn("Failed to load narration plan:", err);
+    }
+  }
+
+  function closeNarrationModal() {
+    uqModalClose(narrationModal);
+    if (narrationPreviewPlayer) {
+      try { narrationPreviewPlayer.pause(); } catch (_) {}
+      const old = narrationPreviewPlayer.dataset.blobUrl;
+      if (old) {
+        try { URL.revokeObjectURL(old); } catch (_) {}
+        delete narrationPreviewPlayer.dataset.blobUrl;
+      }
+      narrationPreviewPlayer.removeAttribute("src");
+    }
+    narrationSelectedBeat = null;
+  }
+
+  function openNarrationModal() {
+    if (!currentProjectDir) {
+      showNotification("Hãy mở một dự án trước.", "warning");
+      return;
+    }
+    if (!narrationPlan) {
+      showNotification("Chưa có Narration Plan. Bấm “Phân tích lại” để tạo.", "warning");
+      return;
+    }
+    renderNarrationList();
+    uqModalOpen(narrationModal);
+  }
+
+  function narrationBeatsFiltered() {
+    const beats = (narrationPlan && narrationPlan.beats) || [];
+    if (!narrationReviewOnly) return beats;
+    return beats.filter(b => (b.confidence ?? 1) < 0.55 ||
+      (["OMINOUS", "URGENT", "SOMBER", "AWE", "EXCITED", "REVEAL"].includes(b.style)
+        && (b.intensity ?? 0) >= 0.6) || b.manualEdited);
+  }
+
+  function renderNarrationList() {
+    if (!narrationList) return;
+    const beats = narrationBeatsFiltered();
+    const all = (narrationPlan && narrationPlan.beats) || [];
+    if (narrationCounts) narrationCounts.textContent = `${beats.length}/${all.length} beat`;
+    if (!beats.length) {
+      narrationList.innerHTML = `<p class="empty-state">Không có beat nào.</p>`;
+      return;
+    }
+    narrationList.innerHTML = "";
+    beats.forEach((b) => {
+      const row = document.createElement("div");
+      row.className = "ts-cue-card" + (b.beatId === narrationSelectedBeat ? " selected" : "");
+      row.setAttribute("role", "option");
+      row.setAttribute("tabindex", "0");
+      const flag = b.manualEdited ? " · ✎" : "";
+      row.innerHTML = `<div class="ts-cue-time"><span>${escapeHtml(b.beatId)} · ` +
+        `${escapeHtml(b.style || "")}${flag}</span>` +
+        `<span style="color: var(--text-dim); font-size: 0.7rem;">${Math.round((b.confidence ?? 0) * 100)}%</span></div>` +
+        `<div class="ts-cue-text">${escapeHtml((b.text || "").slice(0, 90))}</div>`;
+      row.addEventListener("click", () => {
+        narrationSelectedBeat = b.beatId;
+        renderNarrationList();
+        renderNarrationDetail();
+      });
+      narrationList.appendChild(row);
+    });
+  }
+
+  function renderNarrationDetail() {
+    if (!narrationDetail) return;
+    const b = ((narrationPlan && narrationPlan.beats) || [])
+      .find(x => x.beatId === narrationSelectedBeat);
+    if (!b) {
+      narrationDetail.innerHTML = `<p class="empty-state">Chọn một beat để xem và chỉnh.</p>`;
+      return;
+    }
+    const styleVi = { NEUTRAL: "Trung tính", AUTHORITATIVE: "Dẫn dắt", CURIOUS: "Tò mò", MYSTERIOUS: "Bí ẩn", OMINOUS: "U ám", TENSE: "Căng thẳng", URGENT: "Khẩn trương", SOMBER: "Trầm buồn", REFLECTIVE: "Suy ngẫm", AWE: "Kinh ngạc", EXCITED: "Hào hứng", REVEAL: "Hé lộ" };
+    const styleOpts = ["NEUTRAL", "AUTHORITATIVE", "CURIOUS", "MYSTERIOUS", "OMINOUS",
+      "TENSE", "URGENT", "SOMBER", "REFLECTIVE", "AWE", "EXCITED", "REVEAL"]
+      .map(s => `<option value="${s}"${s === b.style ? " selected" : ""}>${styleVi[s] || s}</option>`).join("");
+    narrationDetail.innerHTML =
+      `<div class="form-group"><span class="form-label">Vai trò kể chuyện</span>` +
+      `<div class="form-hint">${escapeHtml(b.role || "")}</div></div>` +
+      `<div class="form-group"><label class="form-label" for="nb-style">Phong cách đọc</label>` +
+      `<select id="nb-style" class="form-select">${styleOpts}</select></div>` +
+      `<div class="form-group"><label class="form-label" for="nb-intensity">Cường độ (${Number(b.intensity ?? 0).toFixed(2)})</label>` +
+      `<input id="nb-intensity" class="form-slider" type="range" min="0" max="1" step="0.01" value="${b.intensity ?? 0.3}" aria-label="Cường độ"></div>` +
+      `<div class="form-group"><label class="form-label" for="nb-rate">Tốc độ (${Number(b.rate ?? 1).toFixed(2)})</label>` +
+      `<input id="nb-rate" class="form-slider" type="range" min="0.85" max="1.15" step="0.01" value="${b.rate ?? 1}" aria-label="Tốc độ"></div>` +
+      `<div class="modal-grid-2"><div class="form-group"><label class="form-label" for="nb-pb">Nghỉ trước (s)</label>` +
+      `<input id="nb-pb" class="form-input" type="number" min="0" max="2" step="0.05" value="${b.pauseBefore ?? 0}"></div>` +
+      `<div class="form-group"><label class="form-label" for="nb-pa">Nghỉ sau (s)</label>` +
+      `<input id="nb-pa" class="form-input" type="number" min="0" max="2" step="0.05" value="${b.pauseAfter ?? 0}"></div></div>` +
+      `<div class="form-group"><label class="form-label" for="nb-emph">Nhấn mạnh (phân tách dấu phẩy)</label>` +
+      `<input id="nb-emph" class="form-input" value="${escapeHtml((b.emphasis || []).join(", "))}"></div>` +
+      `<div class="form-group"><span class="form-label">Độ tin cậy</span>` +
+      `<div class="form-hint">${Math.round((b.confidence ?? 0) * 100)}%${b.manualEdited ? " · đã chỉnh tay" : ""}</div></div>` +
+      `<div class="form-group"><span class="form-label">Lý do</span>` +
+      `<div class="form-hint">${escapeHtml(b.reason || "")}</div></div>` +
+      `<div class="form-group"><span class="form-label">Bằng chứng</span>` +
+      `<div class="form-hint">${escapeHtml((b.evidence || []).join(" · "))}</div></div>` +
+      `<div class="pron-btn-group">` +
+      `<button id="nb-preview" class="btn btn-sm btn-secondary" type="button"><svg class="icon" aria-hidden="true"><use href="#icon-play" /></svg><span>Nghe thử</span></button>` +
+      `<button id="nb-accept" class="btn btn-sm btn-secondary" type="button"><span>Chấp nhận</span></button>` +
+      `<button id="nb-reset" class="btn btn-sm btn-secondary" type="button"><span>Đặt lại Auto</span></button>` +
+      `<button id="nb-save" class="btn btn-sm btn-primary" type="button"><span>Lưu thay đổi</span></button>` +
+      `</div>`;
+    const val = id => { const el = document.getElementById(id); return el ? el.value : null; };
+    document.getElementById("nb-preview").addEventListener("click", () => previewBeat(b.beatId, false));
+    document.getElementById("nb-accept").addEventListener("click", () => saveBeat(b.beatId, { accepted: true }));
+    document.getElementById("nb-reset").addEventListener("click", async () => {
+      if (!currentProjectDir) return;
+      try {
+        const res = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/narration/analyze`, {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ mode: "auto", force: true })
+        });
+        if (!res.ok) throw new Error("Không thể đặt lại.");
+        await refreshNarrationPlan(currentProjectDir);
+        renderNarrationList();
+        renderNarrationDetail();
+        showNotification("Đã đặt lại beat theo Auto.", "success");
+      } catch (err) { showNotification(`Lỗi: ${err.message}`, "error"); }
+    });
+    document.getElementById("nb-save").addEventListener("click", () => {
+      const emph = (val("nb-emph") || "").split(",").map(s => s.trim()).filter(Boolean);
+      saveBeat(b.beatId, {
+        style: val("nb-style"),
+        intensity: parseFloat(val("nb-intensity")),
+        rate: parseFloat(val("nb-rate")),
+        pauseBefore: parseFloat(val("nb-pb")),
+        pauseAfter: parseFloat(val("nb-pa")),
+        emphasis: emph,
+      });
+    });
+  }
+
+  async function saveBeat(beatId, patch) {
+    if (!currentProjectDir) return;
+    const dirName = currentProjectDir;
+    try {
+      const res = await fetch(`/api/projects/${encodeURIComponent(dirName)}/narration/beats/${encodeURIComponent(beatId)}`, {
+        method: "PUT", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(patch)
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.detail || "Không thể lưu beat.");
+      }
+      await refreshNarrationPlan(dirName);
+      renderNarrationList();
+      renderNarrationDetail();
+      showNotification("Đã lưu beat.", "success");
+    } catch (err) {
+      if (currentProjectDir !== dirName) return;
+      showNotification(`Lỗi lưu beat: ${err.message}`, "error");
+    }
+  }
+
+  async function previewBeat(beatId, isSummary) {
+    if (!currentProjectDir || !narrationPreviewPlayer) return;
+    const dirName = currentProjectDir;
+    try {
+      const res = await fetch(`/api/projects/${encodeURIComponent(dirName)}/narration/preview`, {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(isSummary ? {} : { beat_id: beatId })
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.detail || "Không thể tạo preview.");
+      }
+      if (currentProjectDir !== dirName) return; // stale guard: never hydrate wrong project
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const old = narrationPreviewPlayer.dataset.blobUrl;
+      if (old) URL.revokeObjectURL(old);
+      narrationPreviewPlayer.dataset.blobUrl = url;
+      narrationPreviewPlayer.src = url;
+      narrationPreviewPlayer.play().catch(() => {});
+    } catch (err) {
+      if (currentProjectDir !== dirName) return;
+      showNotification(`Lỗi preview: ${err.message}`, "error");
+    }
+  }
+
+  async function reanalyzeNarration() {
+    if (!currentProjectDir) {
+      showNotification("Hãy mở một dự án trước.", "warning");
+      return;
+    }
+    const dirName = currentProjectDir;
+    try {
+      const cur = await (await fetch(`/api/projects/${encodeURIComponent(dirName)}/narration/plan`)).json();
+      const manual = (cur.plan?.beats || []).filter(b => b.manualEdited).length;
+      const go = async () => {
+        const res = await fetch(`/api/projects/${encodeURIComponent(dirName)}/narration/analyze`, {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ mode: selectedNarrationMode(), force: true })
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.detail || "Không thể phân tích lại.");
+        }
+        if (currentProjectDir !== dirName) return;
+        await refreshNarrationPlan(dirName);
+        renderNarrationList();
+        showNotification("Đã phân tích lại narration.", "success");
+      };
+      if (manual > 0) {
+        showConfirmDialog({
+          variant: "warning",
+          title: "Phân tích lại Narration?",
+          message: `Có ${manual} beat chỉnh tay. Các chỉnh sửa diễn cảm thủ công có thể bị thay thế.`,
+          confirmText: "Phân tích lại",
+          cancelText: "Hủy",
+          onConfirm: () => { go(); }
+        });
+      } else {
+        await go();
+      }
+    } catch (err) {
+      showNotification(`Lỗi: ${err.message}`, "error");
+    }
+  }
+
+  const btnOpenNarration = document.getElementById("btn-open-narration");
+  if (btnOpenNarration) btnOpenNarration.addEventListener("click", openNarrationModal);
+  const btnReanalyze = document.getElementById("btn-reanalyze-narration");
+  if (btnReanalyze) btnReanalyze.addEventListener("click", reanalyzeNarration);
+  const narrationModalClose = document.getElementById("narration-modal-close-btn");
+  if (narrationModalClose) narrationModalClose.addEventListener("click", closeNarrationModal);
+  const narrationModalDone = document.getElementById("narration-modal-done-btn");
+  if (narrationModalDone) narrationModalDone.addEventListener("click", closeNarrationModal);
+  const narrFilterAll = document.getElementById("narration-filter-all");
+  if (narrFilterAll) narrFilterAll.addEventListener("click", () => {
+    narrationReviewOnly = false; renderNarrationList();
+  });
+  const narrFilterReview = document.getElementById("narration-filter-review");
+  if (narrFilterReview) narrFilterReview.addEventListener("click", () => {
+    narrationReviewOnly = true; renderNarrationList();
+  });
+  document.querySelectorAll('input[name="narration-mode"]').forEach(el => {
+    el.addEventListener("change", saveUserSettings);
+  });
+  const narrationProfileSelect = document.getElementById("narration-profile-select");
+  if (narrationProfileSelect) narrationProfileSelect.addEventListener("change", saveUserSettings);
+
+  // ==============================================================================
+  // 13c. VISUAL CONTINUITY DIRECTOR & VISUAL BIBLE (Phase 10 — hidden, no sidebar step)
+  // ==============================================================================
+  let visualBibleData = null;
+  let visualContinuityStatus = "Not Generated";
+  let visualContinuityIssues = [];
+  let visualBibleGen = 0;
+  let visualBibleSelectedTab = "subjects";
+  let visualBibleSelectedEntityId = null;
+  let visualBibleSearchFilter = "";
+  let visualBibleIssueFilter = "all";
+
+  const vbModal = document.getElementById("visual-bible-modal");
+  const vbModalCloseBtn = document.getElementById("vb-modal-close-btn");
+  const vbModalDoneBtn = document.getElementById("vb-modal-done-btn");
+  const vbBtnRederive = document.getElementById("vb-btn-rederive");
+  const vbEntitySearch = document.getElementById("vb-entity-search");
+  const vbTabContentEntities = document.getElementById("vb-tab-content-entities");
+  const vbTabContentIssues = document.getElementById("vb-tab-content-issues");
+  const vbEntityItems = document.getElementById("vb-entity-items");
+  const vbEntityInspector = document.getElementById("vb-entity-inspector");
+  const vbIssuesList = document.getElementById("vb-issues-list");
+  const vbIssuesSummaryText = document.getElementById("vb-issues-summary-text");
+  const vbFooterHash = document.getElementById("vb-footer-hash");
+  const vbModalStatusPill = document.getElementById("vb-modal-status-pill");
+
+  async function loadVisualBible(dirName) {
+    const gen = ++visualBibleGen;
+    if (!dirName) {
+      visualBibleData = null;
+      visualContinuityStatus = "Not Generated";
+      visualContinuityIssues = [];
+      updateVisualContinuityUI();
+      return;
+    }
+    try {
+      const [resVb, resIss, resV2] = await Promise.all([
+        fetch(`/api/projects/${encodeURIComponent(dirName)}/visual-bible`),
+        fetch(`/api/projects/${encodeURIComponent(dirName)}/visual-bible/issues`),
+        fetch(`/api/projects/${encodeURIComponent(dirName)}/visual-bible/v2`)
+      ]);
+
+      if (currentProjectDir !== dirName || gen !== visualBibleGen) return;
+
+      if (resVb.ok) {
+        const vbJson = await resVb.json();
+        visualBibleData = vbJson.visual_bible || null;
+        visualContinuityStatus = vbJson.status || (visualBibleData ? "Ready" : "Not Generated");
+      } else {
+        visualBibleData = null;
+        visualContinuityStatus = "Not Generated";
+      }
+      // Phase 13: merge V2 summary (migration flag, style, presets, completeness).
+      try {
+        if (resV2 && resV2.ok) {
+          const v2j = await resV2.json();
+          if (visualBibleData && v2j.exists) {
+            visualBibleData._v2 = v2j;
+            if ((v2j.characters || []).length) visualBibleData.characters = v2j.characters;
+            if ((v2j.objects || []).length) visualBibleData.objects = v2j.objects;
+          } else if (visualBibleData) {
+            visualBibleData._v2 = v2j;
+          }
+        }
+      } catch (e) { console.warn("VB v2 merge skipped:", e); }
+      window.currentVisualBible = visualBibleData;
+
+      if (resIss.ok) {
+        const issJson = await resIss.json();
+        visualContinuityIssues = issJson.issues || [];
+        if (issJson.blocking_count > 0) {
+          visualContinuityStatus = "Review";
+        }
+      } else {
+        visualContinuityIssues = [];
+      }
+
+      updateVisualContinuityUI();
+      updateDependencyState();
+    } catch (err) {
+      console.warn("Failed to load visual bible:", err);
+    }
+  }
+
+  function updateVisualContinuityUI() {
+    const subs = (visualBibleData?.subjects || []).length;
+    const envs = (visualBibleData?.environments || []).length;
+    const pers = (visualBibleData?.periods || []).length;
+    const props = (visualBibleData?.props || []).length;
+    const grps = (visualBibleData?.continuityGroups || []).length;
+    const blockingConflicts = visualContinuityIssues.filter(i => i.severity === "ERROR").length;
+    const warnConflicts = visualContinuityIssues.filter(i => i.severity === "WARNING").length;
+
+    const pillClass = (visualContinuityStatus === "Ready" || visualContinuityStatus === "PASS")
+      ? "state-ready"
+      : (visualContinuityStatus === "Outdated" || visualContinuityStatus === "OUTDATED")
+      ? "state-stale"
+      : (visualContinuityStatus === "Review" || visualContinuityStatus === "ERROR" || blockingConflicts > 0)
+      ? "state-error"
+      : "state-idle";
+
+    const rawStatus = (visualContinuityStatus === "Ready" && blockingConflicts > 0)
+      ? "REVIEW"
+      : (visualContinuityStatus || "NOT GENERATED").toUpperCase();
+    const viStatusMap = { "READY": "Sẵn sàng", "PASS": "Đạt", "REVIEW": "Cần xem xét", "NOT GENERATED": "Chưa tạo", "OUTDATED": "Cần tạo lại", "STALE": "Cần tạo lại", "ERROR": "Lỗi", "LOCKED": "Đã khóa" };
+    const displayStatus = viStatusMap[rawStatus] || rawStatus;
+
+    // Contextual Inspector Badges & Counts
+    ["scenes", "veo"].forEach(prefix => {
+      const badge = document.getElementById(`vc-status-badge-${prefix}`);
+      if (badge) {
+        badge.className = `state-pill ${pillClass}`;
+        badge.textContent = displayStatus;
+      }
+      const sEl = document.getElementById(`vc-subjects-count-${prefix}`);
+      if (sEl) sEl.textContent = subs;
+      const eEl = document.getElementById(`vc-envs-count-${prefix}`);
+      if (eEl) eEl.textContent = envs;
+      const gEl = document.getElementById(`vc-groups-count-${prefix}`);
+      if (gEl) gEl.textContent = grps;
+      const cEl = document.getElementById(`vc-conflicts-count-${prefix}`);
+      if (cEl) {
+        cEl.textContent = blockingConflicts;
+        cEl.style.color = blockingConflicts > 0 ? "#ef4444" : "inherit";
+      }
+    });
+
+    // Modal counts & status
+    if (vbModalStatusPill) {
+      vbModalStatusPill.className = `state-pill ${pillClass}`;
+      vbModalStatusPill.textContent = displayStatus;
+    }
+    const setTabCount = (id, count) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = count;
+    };
+    setTabCount("vb-tab-count-subjects", subs);
+    setTabCount("vb-tab-count-environments", envs);
+    setTabCount("vb-tab-count-periods", pers);
+    setTabCount("vb-tab-count-props", props);
+    setTabCount("vb-tab-count-groups", grps);
+    setTabCount("vb-tab-count-issues", blockingConflicts + warnConflicts);
+    // Phase 13 V2 counts + corrective cast count
+    const v2 = visualBibleData?._v2 || {};
+    setTabCount("vb-tab-count-characters", (v2.characters || []).length || subs);
+    setTabCount("vb-tab-count-objects", (v2.objects || []).length || props);
+    setTabCount("vb-tab-count-references", (v2.referenceAssets || []).length);
+    setTabCount("vb-tab-count-cast",
+      ((visualBibleData?.characters || []).filter(c =>
+        (c.entityKind || "SUBJECT_GROUP") === "REPRESENTATIVE_CHARACTER")).length);
+    updateVbTabVisibility();
+
+    if (vbFooterHash) {
+      const h = visualBibleData?.visualBibleHash;
+      vbFooterHash.textContent = h ? `Hash: ${h.slice(0, 16)}...` : "Chưa tạo Visual Bible";
+    }
+
+    // If modal open, refresh current tab
+    if (vbModal && vbModal.style.display !== "none") {
+      if (visualBibleSelectedTab === "issues") {
+        renderVisualBibleIssues();
+      } else if (visualBibleSelectedTab === "style") {
+        renderVbStylePane();
+      } else if (visualBibleSelectedTab === "references") {
+        renderVbReferencesPane();
+      } else {
+        renderVisualBibleEntities();
+      }
+    }
+  }
+
+  function openVisualBibleModal() {
+    if (!vbModal) return;
+    uqModalOpen(vbModal);
+    if (visualBibleSelectedTab === "issues") {
+      renderVisualBibleIssues();
+    } else if (visualBibleSelectedTab === "style") {
+      renderVbStylePane();
+    } else if (visualBibleSelectedTab === "references") {
+      renderVbReferencesPane();
+    } else {
+      renderVisualBibleEntities();
+    }
+  }
+
+  function closeVisualBibleModal() {
+    uqModalClose(vbModal);
+  }
+
+  // Hook tab switching
+  // P1 (§13): tablist keyboard — Arrow/Home/End + aria-selected động.
+  const vbTabBtns = Array.from(document.querySelectorAll(".vb-tab-btn"));
+  vbTabBtns.forEach((btn, i) => {
+    if (!btn.hasAttribute("tabindex")) btn.setAttribute("tabindex", i === 0 ? "0" : "-1");
+    btn.addEventListener("keydown", (e) => {
+      let j = null;
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") j = (i + 1) % vbTabBtns.length;
+      else if (e.key === "ArrowLeft" || e.key === "ArrowUp") j = (i - 1 + vbTabBtns.length) % vbTabBtns.length;
+      else if (e.key === "Home") j = 0;
+      else if (e.key === "End") j = vbTabBtns.length - 1;
+      if (j !== null && vbTabBtns[j]) {
+        e.preventDefault();
+        vbTabBtns.forEach(b => b.setAttribute("tabindex", "-1"));
+        vbTabBtns[j].setAttribute("tabindex", "0");
+        vbTabBtns[j].focus();
+        vbTabBtns[j].click();
+      }
+    });
+  });
+  document.querySelectorAll(".vb-tab-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".vb-tab-btn").forEach(b => {
+        b.classList.remove("active");
+        b.setAttribute("aria-selected", "false");
+      });
+      btn.classList.add("active");
+      btn.setAttribute("aria-selected", "true");
+      visualBibleSelectedTab = btn.getAttribute("data-tab");
+      visualBibleSelectedEntityId = null;
+
+      const vbStylePane = document.getElementById("vb-tab-content-style");
+      const vbRefPane = document.getElementById("vb-tab-content-references");
+      if (visualBibleSelectedTab === "issues") {
+        if (vbTabContentEntities) vbTabContentEntities.style.display = "none";
+        if (vbTabContentIssues) vbTabContentIssues.style.display = "flex";
+        if (vbStylePane) vbStylePane.style.display = "none";
+        if (vbRefPane) vbRefPane.style.display = "none";
+        renderVisualBibleIssues();
+      } else if (visualBibleSelectedTab === "style") {
+        if (vbTabContentEntities) vbTabContentEntities.style.display = "none";
+        if (vbTabContentIssues) vbTabContentIssues.style.display = "none";
+        if (vbStylePane) vbStylePane.style.display = "block";
+        if (vbRefPane) vbRefPane.style.display = "none";
+        renderVbStylePane();
+      } else if (visualBibleSelectedTab === "references") {
+        if (vbTabContentEntities) vbTabContentEntities.style.display = "none";
+        if (vbTabContentIssues) vbTabContentIssues.style.display = "none";
+        if (vbStylePane) vbStylePane.style.display = "none";
+        if (vbRefPane) vbRefPane.style.display = "block";
+        renderVbReferencesPane();
+      } else {
+        if (vbTabContentEntities) vbTabContentEntities.style.display = "grid";
+        if (vbTabContentIssues) vbTabContentIssues.style.display = "none";
+        if (vbStylePane) vbStylePane.style.display = "none";
+        if (vbRefPane) vbRefPane.style.display = "none";
+        renderVisualBibleEntities();
+      }
+    });
+  });
+
+  if (vbEntitySearch) {
+    vbEntitySearch.addEventListener("input", (e) => {
+      visualBibleSearchFilter = e.target.value.toLowerCase().trim();
+      renderVisualBibleEntities();
+    });
+  }
+
+  function getEntitiesForTab(tab) {
+    if (!visualBibleData) return [];
+    switch (tab) {
+      case "subjects": return visualBibleData.subjects || [];
+      case "environments": return visualBibleData.environments || [];
+      case "periods": return visualBibleData.periods || [];
+      case "props": return visualBibleData.props || [];
+      case "groups": return visualBibleData.continuityGroups || [];
+      // Corrective: cast = representative individuals only (never groups).
+      case "cast":
+        return (visualBibleData.characters || []).filter(c =>
+          (c.entityKind || "SUBJECT_GROUP") === "REPRESENTATIVE_CHARACTER");
+      // Phase 13 V2 views with legacy fallback (non-mutating).
+      case "characters":
+        if ((visualBibleData.characters || []).length) return visualBibleData.characters;
+        return (visualBibleData.subjects || []).map(s => ({ ...s, characterId: s.subjectId }));
+      case "objects":
+        if ((visualBibleData.objects || []).length) return visualBibleData.objects;
+        return (visualBibleData.props || []).map(p => ({ ...p, objectId: p.propId }));
+      default: return [];
+    }
+  }
+
+  function getEntityIdKey(tab) {
+    switch (tab) {
+      case "subjects": return "subjectId";
+      case "environments": return "environmentId";
+      case "periods": return "periodId";
+      case "props": return "propId";
+      case "groups": return "continuityGroupId";
+      case "characters": return "characterId";
+      case "cast": return "characterId";
+      case "objects": return "objectId";
+      default: return "id";
+    }
+  }
+
+  function isMigratedV2() {
+    return String(visualBibleData?.schemaVersion || "1.0.0").startsWith("2.");
+  }
+
+  function isV2Tab(tab) {
+    return (tab === "characters" || tab === "objects" || tab === "cast") && isMigratedV2();
+  }
+
+  // Corrective §15–16: legacy + V2 tabs coexist in DOM; only the canonical
+  // set is shown. Legacy tabs stay for unmigrated projects.
+  function updateVbTabVisibility() {
+    const migrated = isMigratedV2();
+    document.querySelectorAll(".vb-tab-btn[data-legacy-tab]").forEach(b => {
+      b.style.display = migrated ? "none" : "";
+    });
+    const castBtn = document.querySelector('.vb-tab-btn[data-tab="cast"]');
+    if (castBtn) castBtn.style.display = "";
+    if (migrated && (visualBibleSelectedTab === "props" || visualBibleSelectedTab === "characters")) {
+      visualBibleSelectedTab = "cast";
+      document.querySelectorAll(".vb-tab-btn").forEach(b => {
+        const on = b.getAttribute("data-tab") === "cast";
+        b.classList.toggle("active", on);
+        b.setAttribute("aria-selected", on ? "true" : "false");
+      });
+    }
+  }
+
+  function renderVisualBibleEntities() {
+    if (!vbEntityItems || !vbEntityInspector) return;
+    // Corrective: cast suggestions box only on the cast tab.
+    const suggestBox = document.getElementById("vb-cast-suggest-box");
+    if (suggestBox) {
+      suggestBox.style.display = visualBibleSelectedTab === "cast" ? "block" : "none";
+      if (visualBibleSelectedTab === "cast") renderCastSuggestBox();
+    }
+    const entities = getEntitiesForTab(visualBibleSelectedTab);
+    const idKey = getEntityIdKey(visualBibleSelectedTab);
+
+    const filtered = entities.filter(ent => {
+      if (!visualBibleSearchFilter) return true;
+      const text = JSON.stringify(ent).toLowerCase();
+      return text.includes(visualBibleSearchFilter);
+    });
+
+    if (filtered.length === 0) {
+      vbEntityItems.innerHTML = `<p class="empty-state" style="padding: 1.5rem 0.5rem;">Không có mục nào trong danh mục này.</p>`;
+      vbEntityInspector.innerHTML = `<div class="empty-state">Chọn một thực thể để xem chi tiết.</div>`;
+      return;
+    }
+
+    if (!visualBibleSelectedEntityId || !filtered.some(e => e[idKey] === visualBibleSelectedEntityId)) {
+      visualBibleSelectedEntityId = filtered[0][idKey];
+    }
+
+    vbEntityItems.innerHTML = filtered.map(ent => {
+      const id = ent[idKey];
+      const isAct = id === visualBibleSelectedEntityId;
+      const title = ent.name || ent.locationName || ent.label || id;
+      const desc = ent.canonicalDescription || ent.visualDescription || ent.description || ent.biome || ent.terrain || (ent.visualAnchors ? ent.visualAnchors[0] : "") || "";
+      const isManual = ent.manualEdited ? `<span class="badge" style="background: rgba(56,189,248,0.2); color:#38bdf8; margin-left: 4px;">Thủ công</span>` : "";
+      // Corrective §15: explicit kind badge so groups are never read as individuals.
+      const lookupKind = (visualBibleData.characters || []).find(c =>
+        (c.characterId || c.subjectId) === (ent.subjectId || ent.characterId));
+      const kind = ent.entityKind
+        || (lookupKind ? (lookupKind.entityKind || "") : "")
+        || (ent.type === "GROUP" ? "SUBJECT_GROUP" : "")
+        || (visualBibleSelectedTab === "subjects" ? "SUBJECT_GROUP" : "");
+      const kindBadge = kind ? `<span class="badge" style="background: rgba(245,158,11,0.15); color:#f59e0b; margin-left: 4px;">${escapeHtml(kind)}</span>` : "";
+      const histBadge = ent.historicalStatus ? `<span class="badge" style="background: rgba(16,185,129,0.15); color:#34d399; margin-left: 4px;">${escapeHtml(ent.historicalStatus)}</span>` : "";
+
+      return `
+        <div class="vb-entity-card ${isAct ? 'active' : ''}" data-id="${escapeHtml(id)}" title="${escapeHtml(desc)}">
+          <div class="vb-card-header">
+            <span class="vb-card-title">${escapeHtml(title)}</span>
+            ${isManual}${kindBadge}${histBadge}
+          </div>
+          <div class="vb-card-desc" title="${escapeHtml(desc)}">${escapeHtml(desc)}</div>
+        </div>
+      `;
+    }).join("");
+
+    vbEntityItems.querySelectorAll(".vb-entity-card").forEach(card => {
+      card.addEventListener("click", () => {
+        visualBibleSelectedEntityId = card.getAttribute("data-id");
+        renderVisualBibleEntities();
+      });
+    });
+
+    const activeEnt = filtered.find(e => e[idKey] === visualBibleSelectedEntityId);
+    if (activeEnt) {
+      renderVisualBibleInspector(activeEnt, visualBibleSelectedTab);
+    }
+  }
+
+  function renderVisualBibleInspector(ent, tab) {
+    if (!vbEntityInspector) return;
+    const idKey = getEntityIdKey(tab);
+    const id = ent[idKey];
+    const name = ent.name || ent.locationName || ent.label || id;
+    const anchors = ent.visualAnchors || [];
+    const forbidden = ent.forbiddenModernElements || [];
+    const scenes = ent.sourceSceneIds || ent.sceneIds || [];
+    const manual = ent.manualEdited;
+
+    const singType = tab === "groups" ? "continuityGroup" : tab.replace(/s$/, "");
+    const isCast = tab === "cast";
+    const v2 = isV2Tab(tab);
+    const tax = ent.taxonomy || {};
+    const demo = ent.demographics || {};
+    const v2line = [tax.speciesOrPopulation, demo.ageGroup, demo.sex, ent.role].filter(Boolean).join(" · ");
+    const v2status = ent.status || "REVIEW";
+    // Corrective §17: canonical description fallback — migration stores identity
+    // in visualDescription/bodyCharacteristics; never show a blank box when data exists.
+    const canDesc = ent.canonicalDescription || ent.visualDescription
+      || ent.description || ent.bodyCharacteristics || ent.biome || "";
+    const canDescSource = ent.canonicalDescription ? "canonical (đã duyệt)"
+      : (ent.visualDescription || ent.bodyCharacteristics) ? "kế thừa từ mô tả visual (chưa duyệt canonical)"
+      : "trống — cần nhập (REVIEW)";
+
+    vbEntityInspector.innerHTML = `
+      <div class="vb-detail-section">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.5rem;">
+          <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--uq-ink-1); margin: 0;">${escapeHtml(name)}</h4>
+          <span class="badge" style="font-family: monospace; font-size: 0.75rem;">${escapeHtml(id)}</span>
+        </div>
+        ${manual ? '<div style="margin-bottom: 0.75rem;"><span class="badge" style="background: rgba(56,189,248,0.25); color: #38bdf8;">Đã chỉnh sửa thủ công</span></div>' : ''}
+      </div>
+
+      <div class="vb-detail-section">
+        <div class="vb-detail-title">Mô tả quy chuẩn (Canonical Description)</div>
+        <div class="prod-history-meta" style="margin-bottom:0.25rem;">Nguồn: ${escapeHtml(canDescSource)}</div>
+        <textarea id="vb-edit-desc" class="form-textarea" rows="3" style="width: 100%; font-size: 0.82rem;">${escapeHtml(canDesc)}</textarea>
+      </div>
+
+      ${isCast ? `
+        <div class="vb-detail-section">
+          <div class="vb-detail-title">Đại diện sản xuất (§40)</div>
+          <div class="prod-readiness-list">
+            <div class="prod-readiness-row"><span>Dựa trên</span><span>${escapeHtml(ent.sourceSubjectId || "—")}</span></div>
+            <div class="prod-readiness-row"><span>Lịch sử</span><span>${escapeHtml(ent.historicalStatus || "—")}</span></div>
+            <div class="prod-readiness-row"><span>Vai trò</span><span>${escapeHtml(ent.role || "—")}</span></div>
+          </div>
+          <div class="prod-history-meta" style="margin-top:0.25rem;">Nhân vật tái hiện sản xuất — không phải cá thể lịch sử đã xác minh.</div>
+        </div>
+        <div class="vb-detail-section" id="vb-cast-refsetup">
+          <div class="vb-detail-title">Reference setup (§22)</div>
+          <div class="prod-readiness-list" id="vb-cast-refreadiness">
+            <div class="prod-readiness-row"><span>Canonical identity</span><span>…</span></div>
+          </div>
+          <div class="detail-actions-bar" style="margin-top:0.4rem;">
+            <button class="btn btn-secondary btn-sm" data-refcopy="FRONT"><span>Sao chép prompt chính diện</span></button>
+            <button class="btn btn-secondary btn-sm" data-refcopy="THREE_QUARTER"><span>Sao chép prompt góc 3/4</span></button>
+            <button class="btn btn-secondary btn-sm" data-refcopy="PROFILE"><span>Sao chép prompt góc nghiêng</span></button>
+          </div>
+          <div class="prod-history-meta">Import ảnh tại tab Tham chiếu (chọn đúng nhân vật này).</div>
+        </div>
+      ` : ''}
+
+      ${anchors.length > 0 ? `
+        <div class="vb-detail-section">
+          <div class="vb-detail-title">Visual Anchors</div>
+          <div class="vb-tag-list">
+            ${anchors.map(a => `<span class="vb-tag">${escapeHtml(a)}</span>`).join("")}
+          </div>
+        </div>
+      ` : ''}
+
+      ${forbidden.length > 0 ? `
+        <div class="vb-detail-section">
+          <div class="vb-detail-title">Forbidden Elements (Yếu tố cấm kỵ)</div>
+          <div class="vb-tag-list">
+            ${forbidden.map(f => `<span class="vb-tag vb-tag-warning">${escapeHtml(f)}</span>`).join("")}
+          </div>
+        </div>
+      ` : ''}
+
+      ${scenes.length > 0 ? `
+        <div class="vb-detail-section">
+          <div class="vb-detail-title">Liên kết Scene</div>
+          <div class="vb-tag-list">
+            ${scenes.map(s => `<span class="vb-tag" style="background: rgba(16,185,129,0.15); color: #34d399;">${escapeHtml(s)}</span>`).join("")}
+          </div>
+        </div>
+      ` : ''}
+
+      ${v2 ? `
+        <div class="vb-detail-section">
+          <div class="vb-detail-title">Canonical V2 (Phase 13)</div>
+          ${v2line ? `<div class="prod-history-meta" style="margin-bottom:0.3rem;">${escapeHtml(v2line)}</div>` : ""}
+          <label class="form-label" for="vb-edit-status">Trạng thái</label>
+          <select id="vb-edit-status" class="form-select form-input-sm">
+            ${["NOT_STARTED", "REVIEW", "READY"].map(o => `<option value="${o}" ${v2status === o ? "selected" : ""}>${o}</option>`).join("")}
+          </select>
+          <div class="prod-history-meta" id="vb-v2-refs" style="margin-top:0.3rem;">Đang tính refs…</div>
+          <div class="prod-history-meta" id="vb-v2-impact" style="margin-top:0.2rem;"></div>
+        </div>
+      ` : ''}
+
+      <div class="vb-detail-section">
+        <div class="vb-detail-title">Ghi chú bổ sung (Notes)</div>
+        <input type="text" id="vb-edit-notes" class="form-input form-input-sm" value="${escapeHtml(ent.notes || '')}" placeholder="Ghi chú thêm cho thực thể...">
+      </div>
+
+      <div class="vb-inspector-actions">
+        <button type="button" id="vb-btn-save-entity" class="btn btn-primary btn-sm">
+          <span>Lưu thay đổi</span>
+        </button>
+        <button type="button" id="vb-btn-reset-entity" class="btn btn-secondary btn-sm" ${!manual ? 'disabled' : ''}>
+          <span>Đặt lại Auto</span>
+        </button>
+      </div>
+    `;
+
+    // Save entity listener
+    const btnSave = document.getElementById("vb-btn-save-entity");
+    if (btnSave) {
+      // Phase 13: show canonical refs + affected downstream for V2 entities.
+      if (v2 && currentProjectDir) {
+        const kind = (tab === "characters" || tab === "cast") ? "character" : "object";
+        fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/dependencies/impact`, {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ kind, id })
+        }).then(r => r.ok ? r.json() : null).then(imp => {
+          const refsEl = document.getElementById("vb-v2-refs");
+          const impEl = document.getElementById("vb-v2-impact");
+          if (!imp) return;
+          if (refsEl) refsEl.textContent = `Scenes tham chiếu: ${imp.affectedScenes.length ? imp.affectedScenes.slice(0, 8).join(", ") + (imp.affectedScenes.length > 8 ? "…" : "") : "—"}`;
+          if (impEl) impEl.textContent = `Sửa identity → ${imp.affectedScenes.length} scenes / ${imp.affectedShots.length} shots stale (chỉ downstream liên quan).`;
+        }).catch(() => {});
+      }
+      btnSave.addEventListener("click", async () => {
+        if (!currentProjectDir) return;
+        const newDesc = document.getElementById("vb-edit-desc")?.value?.trim();
+        const newNotes = document.getElementById("vb-edit-notes")?.value?.trim();
+        const newStatus = document.getElementById("vb-edit-status")?.value;
+
+        btnSave.disabled = true;
+        btnSave.innerHTML = `<span>Đang lưu...</span>`;
+
+        try {
+          if (v2) {
+            const kind = (tab === "characters" || tab === "cast") ? "character" : "object";
+            const updates = { notes: newNotes };
+            // Corrective §18: cast edits canonical identity; others edit visual description.
+            if (newDesc) {
+              if (tab === "cast") updates.canonicalDescription = newDesc;
+              else updates.visualDescription = newDesc;
+            }
+            if (newStatus) updates.status = newStatus;
+            const res = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/visual-bible/v2/entities/${encodeURIComponent(id)}`, {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ kind, entity_id: id, updates })
+            });
+            if (res.ok) {
+              const data = await res.json();
+              const aff = data.applied || {};
+              showNotification(`Đã lưu V2 (${aff.affectedScenes ? aff.affectedScenes.length : 0} scenes stale).`, "success");
+              await loadVisualBible(currentProjectDir);
+              refreshDependencyStatus(currentProjectDir);
+            } else {
+              const err = await res.json();
+              showNotification("Lỗi khi cập nhật thực thể V2: " + (err.detail || "Thao tác thất bại"), "error");
+            }
+            return;
+          }
+          const updates = {};
+          if (ent.canonicalDescription !== undefined || ent.description !== undefined) {
+            updates.canonicalDescription = newDesc;
+          } else {
+            updates.description = newDesc;
+          }
+          if (newNotes !== undefined) updates.notes = newNotes;
+
+          const res = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/visual-bible/entity`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              entity_type: singType,
+              entity_id: id,
+              updates
+            })
+          });
+
+          if (res.ok) {
+            await loadVisualBible(currentProjectDir);
+          } else {
+            const err = await res.json();
+            alert("Lỗi khi cập nhật thực thể: " + (err.detail || "Thao tác thất bại"));
+          }
+        } catch (e) {
+          console.error("Save entity error:", e);
+        } finally {
+          btnSave.disabled = false;
+          btnSave.innerHTML = `<span>Lưu thay đổi</span>`;
+        }
+      });
+    }
+
+    // Reset entity listener
+    const btnReset = document.getElementById("vb-btn-reset-entity");    if (btnReset && manual) {
+      btnReset.addEventListener("click", async () => {
+        if (!currentProjectDir) return;
+        btnReset.disabled = true;
+        try {
+          const res = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/visual-bible/entity`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              entity_type: singType,
+              entity_id: id,
+              updates: { manualEdited: false }
+            })
+          });
+          if (res.ok) {
+            await loadVisualBible(currentProjectDir);
+          }
+        } catch (e) {
+          console.error("Reset entity error:", e);
+        }
+      });
+    }
+
+    // Corrective §22: cast reference readiness + prompt copy wiring.
+    if (isCast && currentProjectDir) {
+      loadCastRefReadiness(id);
+      document.querySelectorAll("#vb-cast-refsetup [data-refcopy]").forEach(btn => {
+        btn.addEventListener("click", () => copyCastRefPrompt(id, btn.getAttribute("data-refcopy")));
+      });
+    }
+  }
+
+  async function loadCastRefReadiness(characterId) {
+    const el = document.getElementById("vb-cast-refreadiness");
+    if (!el || !currentProjectDir) return;
+    try {
+      const v2 = visualBibleData?._v2 || {};
+      const comp = (v2.completeness || {})[characterId] || { status: "NOT_STARTED", viewsPresent: [], viewsMissing: ["FRONT", "THREE_QUARTER", "PROFILE"] };
+      const hasCanon = !!(visualBibleData?.characters || []).find(c => c.characterId === characterId)?.canonicalDescription;
+      const row = (k, v, ok) => `<div class="prod-readiness-row"><span>${k}</span><span class="prod-readiness-val ${ok ? "is-ok" : "is-bad"}">${v}</span></div>`;
+      el.innerHTML =
+        row("Canonical identity", hasCanon ? "READY" : "MISSING", hasCanon) +
+        ["FRONT", "THREE_QUARTER", "PROFILE"].map(vv => {
+          const has = (comp.viewsPresent || []).includes(vv);
+          return row(vv, has ? "READY" : "MISSING", has);
+        }).join("") +
+        row("Completeness", comp.status || "NOT_STARTED", comp.status === "READY");
+    } catch (err) {
+      console.warn("cast readiness failed:", err);
+    }
+  }
+
+  async function copyCastRefPrompt(characterId, view) {
+    if (!currentProjectDir) return;
+    try {
+      const res = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/cast/${encodeURIComponent(characterId)}/ref-prompts`);
+      if (!res.ok) throw new Error("Không tải được prompt pack.");
+      const pack = await res.json();
+      const text = pack[view] || "";
+      if (navigator.clipboard) await navigator.clipboard.writeText(text);
+      showNotification(`Đã sao chép ${view} prompt (${characterId}).`, "success");
+    } catch (err) {
+      showNotification(err.message, "error");
+    }
+  }
+
+  function renderVisualBibleIssues() {
+    if (!vbIssuesList) return;
+    const issues = visualContinuityIssues || [];
+
+    const filtered = issues.filter(iss => {
+      if (visualBibleIssueFilter === "blocking") return iss.severity === "ERROR";
+      if (visualBibleIssueFilter === "warnings") return iss.severity === "WARNING";
+      return true;
+    });
+
+    if (vbIssuesSummaryText) {
+      const errCount = issues.filter(i => i.severity === "ERROR").length;
+      const warnCount = issues.filter(i => i.severity === "WARNING").length;
+      vbIssuesSummaryText.textContent = `${errCount} lỗi chặn, ${warnCount} cảnh báo`;
+    }
+
+    if (filtered.length === 0) {
+      vbIssuesList.innerHTML = `<p class="empty-state" style="padding: 2rem;">Tuyệt vời! Không phát hiện xung đột liên tục hình ảnh nào.</p>`;
+      return;
+    }
+
+    vbIssuesList.innerHTML = filtered.map(iss => {
+      const sevClass = iss.severity === "ERROR" ? "severity-error" : (iss.severity === "WARNING" ? "severity-warning" : "severity-pass");
+      const sevBadge = iss.severity === "ERROR" ? `<span class="badge" style="background:#ef4444;color:#fff;">Lỗi</span>` : `<span class="badge" style="background:#f59e0b;color:#000;">Cần xem</span>`;
+      const ref = iss.shotId ? `Cảnh quay ${iss.shotId}` : (iss.sceneId ? `Cảnh ${iss.sceneId}` : "");
+
+      return `
+        <div class="vb-issue-card ${sevClass}">
+          <div class="vb-issue-content">
+            <div class="vb-issue-header">
+              ${sevBadge}
+              <span style="font-size: 0.76rem; font-weight: 600; color: var(--uq-ink-3); text-transform: uppercase;">${escapeHtml(iss.category || 'Continuity')}</span>
+              ${ref ? `<span class="badge" style="font-family: monospace; font-size: 0.72rem;">${escapeHtml(ref)}</span>` : ''}
+            </div>
+            <div class="vb-issue-msg">${escapeHtml(iss.message)}</div>
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  // Wire issues filter buttons
+  ["all", "blocking", "warnings"].forEach(filt => {
+    const btn = document.getElementById(`vb-filter-issue-${filt}`);
+    if (btn) {
+      btn.addEventListener("click", () => {
+        ["all", "blocking", "warnings"].forEach(f => {
+          document.getElementById(`vb-filter-issue-${f}`)?.classList.remove("active");
+        });
+        btn.classList.add("active");
+        visualBibleIssueFilter = filt;
+        renderVisualBibleIssues();
+      });
+    }
+  });
+
+  // Wire re-derive button
+  if (vbBtnRederive) {
+    vbBtnRederive.addEventListener("click", async () => {
+      if (!currentProjectDir) return;
+      if (!confirm("Phân tích lại Visual Bible từ Scene Plan? Các chỉnh sửa thủ công sẽ được lưu trữ dự phòng.")) return;
+      vbBtnRederive.disabled = true;
+      try {
+        const res = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/visual-bible/generate?force=true`, { method: "POST" });
+        if (res.ok) {
+          await loadVisualBible(currentProjectDir);
+        } else {
+          const err = await res.json();
+          alert("Lỗi phân tích lại: " + (err.detail || "Thao tác thất bại"));
+        }
+      } catch (e) {
+        console.error("Rederive visual bible error:", e);
+      } finally {
+        vbBtnRederive.disabled = false;
+      }
+    });
+  }
+
+  // Modal open & close buttons
+  document.querySelectorAll(".btn-open-visual-bible").forEach(btn => {
+    btn.addEventListener("click", openVisualBibleModal);
+  });
+  if (vbModalCloseBtn) vbModalCloseBtn.addEventListener("click", closeVisualBibleModal);
+  if (vbModalDoneBtn) vbModalDoneBtn.addEventListener("click", closeVisualBibleModal);
+
+  window.openVisualBibleModal = openVisualBibleModal;
+  window.closeVisualBibleModal = closeVisualBibleModal;
+  window.renderVisualBibleEntities = renderVisualBibleEntities;
+  window.renderVisualBibleIssues = renderVisualBibleIssues;
+  window.selectVisualBibleEntity = (tab, entityId) => {
+    visualBibleSelectedTab = tab;
+    visualBibleSelectedEntityId = entityId;
+    document.querySelectorAll(".vb-tab-btn").forEach(b => {
+      const isMatch = b.getAttribute("data-tab") === tab;
+      b.classList.toggle("active", isMatch);
+      b.setAttribute("aria-selected", isMatch ? "true" : "false");
+    });
+    if (vbTabContentEntities) vbTabContentEntities.style.display = "grid";
+    if (vbTabContentIssues) vbTabContentIssues.style.display = "none";
+    renderVisualBibleEntities();
+  };
+  window.saveCurrentVisualBibleEntity = () => {
+    const btnSave = document.getElementById("vb-btn-save-entity");
+    if (btnSave) btnSave.click();
+  };
+  window.getVisualBibleData = () => visualBibleData;
+
+  window.saveCurrentVisualBibleEntity = () => {
+    const btnSave = document.getElementById("vb-btn-save-entity");
+    if (btnSave) btnSave.click();
+  };
+  window.getVisualBibleData = () => visualBibleData;
+
+  // ==========================================================================
+  // Phase 13 — Style pane + Reference assets pane
+  // ==========================================================================
+  function renderVbStylePane() {
+    const pane = document.getElementById("vb-style-pane");
+    if (!pane) return;
+    const v2 = visualBibleData?._v2 || {};
+    if (!visualBibleData) {
+      pane.innerHTML = `<p class="empty-state">Chưa có Visual Bible.</p>`;
+      return;
+    }
+    if (!v2.migrated) {
+      pane.innerHTML = `
+        <div class="detail-prose-card">
+          <div class="detail-prose-label">Visual Bible V2 chưa khởi tạo</div>
+          <div class="detail-prose-content">Schema hiện tại: ${escapeHtml(visualBibleData.schemaVersion || "1.x")}.
+          Migration giữ nguyên IDs, manual edits và continuity groups (in-place, một nguồn canonical duy nhất).</div>
+          <div class="detail-actions-bar" style="margin-top:0.5rem;">
+            <button class="btn btn-primary btn-sm" id="vb-migrate-btn"><span>Khởi tạo Visual Bible V2</span></button>
+          </div>
+        </div>`;
+      const mb = document.getElementById("vb-migrate-btn");
+      if (mb) mb.addEventListener("click", async () => {
+        if (!currentProjectDir) return;
+        mb.disabled = true;
+        const res = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/visual-bible/v2/migrate`, { method: "POST" });
+        if (res.ok) {
+          showNotification("Đã migrate Visual Bible V2 (IDs giữ nguyên).", "success");
+          await loadVisualBible(currentProjectDir);
+          renderVbStylePane();
+        } else {
+          const e = await res.json().catch(() => ({}));
+          showNotification("Migration thất bại: " + (e.detail || ""), "error");
+          mb.disabled = false;
+        }
+      });
+      return;
+    }
+    const style = v2.projectStyle || {};
+    const story = style.storyStyle || {};
+    const presets = v2.presets || [];
+    pane.innerHTML = `
+      <div class="detail-prose-card">
+        <div class="detail-prose-label">Project Style — ${escapeHtml(style.styleName || "")}</div>
+        <div class="prod-readiness-list">
+          <div class="prod-readiness-row"><span>Preset</span><span>${escapeHtml(style.presetId || "—")} v${escapeHtml(style.presetVersion || "")}</span></div>
+          <div class="prod-readiness-row"><span>Render</span><span>${escapeHtml(story.renderStyle || "—")}</span></div>
+          <div class="prod-readiness-row"><span>Palette</span><span>${escapeHtml(story.palette || "—")}</span></div>
+          <div class="prod-readiness-row"><span>Lighting</span><span>${escapeHtml(story.lighting || "—")}</span></div>
+        </div>
+        <div class="prod-history-meta" style="margin-top:0.3rem;">Negative: ${(style.negativeStyleRules || []).map(escapeHtml).join(" · ")}</div>
+        <div class="detail-actions-bar" style="margin-top:0.5rem;">
+          <select id="vb-preset-select" class="form-select form-input-sm" aria-label="Global preset">
+            ${presets.map(p => `<option value="${p.presetId}" ${p.presetId === style.presetId ? "selected" : ""}>${escapeHtml(p.name)} (${p.presetVersion})</option>`).join("")}
+          </select>
+          <button class="btn btn-secondary btn-sm" id="vb-preset-apply-btn"><span>Áp dụng preset (explicit)</span></button>
+        </div>
+        <div class="prod-history-meta">Đổi style → mọi visual downstream stale (audio/QA/timestamp không đổi).</div>
+      </div>`;
+    const ab = document.getElementById("vb-preset-apply-btn");
+    if (ab) ab.addEventListener("click", async () => {
+      if (!currentProjectDir) return;
+      const pid = document.getElementById("vb-preset-select")?.value;
+      if (!pid) return;
+      ab.disabled = true;
+      const res = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/visual-bible/v2/style/apply-preset`, {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ preset_id: pid })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        showNotification(`Đã áp preset (${(data.applied?.affectedScenes || []).length} scenes stale).`, "success");
+        await loadVisualBible(currentProjectDir);
+        renderVbStylePane();
+      } else {
+        showNotification("Áp preset thất bại.", "error");
+        ab.disabled = false;
+      }
+    });
+  }
+
+  function renderVbReferencesPane() {
+    const grid = document.getElementById("vb-ref-grid");
+    const sel = document.getElementById("vb-ref-entity-select");
+    if (!grid) return;
+    renderValidationGuide();
+    const v2 = visualBibleData?._v2 || {};
+    if (!v2.migrated) {
+      grid.innerHTML = `<p class="empty-state">Khởi tạo Visual Bible V2 (tab Phong cách) trước.</p>`;
+      return;
+    }
+    // Corrective: CHARACTER options are representatives only (never groups).
+    const chars = (v2.characters || []).filter(c =>
+      (c.entityKind || "SUBJECT_GROUP") === "REPRESENTATIVE_CHARACTER");
+    const envs = (visualBibleData?.environments || []).map(e => ({ id: e.environmentId, type: "ENVIRONMENT", label: `${e.environmentId} (env)` }));
+    const objs = (v2.objects || []).map(o => ({ id: o.objectId, type: "OBJECT", label: `${o.objectId} (obj)` }));
+    const options = [
+      ...chars.map(c => ({ id: c.characterId, type: "CHARACTER", label: `${c.characterId} (${(v2.completeness || {})[c.characterId]?.status || "?"})` })),
+      ...envs, ...objs
+    ];
+    if (sel) {
+      sel.innerHTML = options.map(o => `<option value="${o.type}:${o.id}">${escapeHtml(o.label)}</option>`).join("");
+    }
+    const assets = v2.referenceAssets || [];
+    grid.innerHTML = assets.length ? assets.map(a => `
+      <div class="vb-ref-card">
+        <img src="/api/projects/${encodeURIComponent(currentProjectDir)}/references/${encodeURIComponent(a.assetId)}/preview" alt="${escapeHtml(a.assetId)}" loading="lazy" class="vb-ref-img">
+        <div class="vb-ref-meta"><strong>${escapeHtml(a.assetId)}</strong><br>
+        <span class="prod-history-meta">${escapeHtml(a.entityId)} · ${escapeHtml(a.view)}</span></div>
+        <div class="detail-actions-bar">
+          <label class="btn btn-secondary btn-sm" style="cursor:pointer;"><span>Thay thế</span>
+            <input type="file" data-replace="${escapeHtml(a.assetId)}" accept=".png,.jpg,.jpeg,.webp" style="display:none;">
+          </label>
+          <button class="btn btn-secondary btn-sm" data-remove="${escapeHtml(a.assetId)}"><span>Xóa</span></button>
+        </div>
+      </div>`).join("") : `<p class="empty-state">Chưa có reference asset. Tải ảnh front / three-quarter / profile cho nhân vật chính.</p>`;
+    grid.querySelectorAll("input[data-replace]").forEach(inp => {
+      inp.addEventListener("change", () => vbReplaceAsset(inp.getAttribute("data-replace"), inp.files[0]));
+    });
+    grid.querySelectorAll("button[data-remove]").forEach(btn => {
+      btn.addEventListener("click", () => vbRemoveAsset(btn.getAttribute("data-remove"), false));
+    });
+  }
+
+  async function vbUploadAsset() {
+    if (!currentProjectDir) { showNotification("Hãy chọn một dự án trước.", "warning"); return; }
+    const sel = document.getElementById("vb-ref-entity-select");
+    const view = document.getElementById("vb-ref-view-select")?.value || "FRONT";
+    const fileInput = document.getElementById("vb-ref-file");
+    const file = fileInput?.files?.[0];
+    if (!sel || !sel.value || !file) {
+      showNotification("Chọn thực thể và file ảnh (PNG/JPG/WebP).", "warning");
+      return;
+    }
+    const [entityType, ...rest] = sel.value.split(":");
+    const entityId = rest.join(":");
+    const fd = new FormData();
+    fd.append("file", file);
+    const res = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/references/upload?entity_type=${encodeURIComponent(entityType)}&entity_id=${encodeURIComponent(entityId)}&view=${encodeURIComponent(view)}`, {
+      method: "POST", body: fd
+    });
+    if (res.ok) {
+      const data = await res.json();
+      showNotification(`Đã thêm ${data.asset.assetId} (${(data.applied?.affectedScenes || []).length} cảnh cần đồng bộ lại).`, "success");
+      fileInput.value = "";
+      await loadVisualBible(currentProjectDir);
+      renderVbReferencesPane();
+    } else {
+      const e = await res.json().catch(() => ({}));
+      showNotification("Tải lên thất bại: " + (e.detail || ""), "error");
+    }
+  }
+
+  async function vbReplaceAsset(assetId, file) {
+    if (!currentProjectDir || !file) return;
+    const fd = new FormData();
+    fd.append("file", file);
+    const res = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/references/${encodeURIComponent(assetId)}/replace`, {
+      method: "POST", body: fd
+    });
+    if (res.ok) {
+      showNotification(`Đã thay thế ${assetId} (dependents stale).`, "success");
+      await loadVisualBible(currentProjectDir);
+      renderVbReferencesPane();
+    } else {
+      const e = await res.json().catch(() => ({}));
+      showNotification("Thay thế thất bại: " + (e.detail || ""), "error");
+    }
+  }
+
+  async function vbRemoveAsset(assetId, confirmed) {
+    if (!currentProjectDir) return;
+    const note = document.getElementById("vb-ref-impact-note");
+    const res = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/references/${encodeURIComponent(assetId)}?force=${confirmed ? "true" : "false"}`, {
+      method: "DELETE"
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      showNotification("Xóa thất bại: " + (data.detail || ""), "error");
+      return;
+    }
+    if (!data.removed) {
+      const imp = data.impact || {};
+      if (note) {
+        note.style.display = "block";
+        note.innerHTML = `Xóa <strong>${escapeHtml(assetId)}</strong> ảnh hưởng ${imp.affectedScenes ? imp.affectedScenes.length : 0} scenes / ${imp.affectedShots ? imp.affectedShots.length : 0} shots.
+          <button class="btn btn-sm btn-danger" id="vb-ref-remove-confirm"><span>Xác nhận xóa</span></button>`;
+        const cb = document.getElementById("vb-ref-remove-confirm");
+        if (cb) cb.addEventListener("click", () => vbRemoveAsset(assetId, true));
+      }
+      return;
+    }
+    if (note) note.style.display = "none";
+    showNotification(`Đã xóa ${assetId}.`, "success");
+    await loadVisualBible(currentProjectDir);
+    renderVbReferencesPane();
+  }
+
+  const vbRefUploadBtn = document.getElementById("vb-ref-upload-btn");
+  if (vbRefUploadBtn) vbRefUploadBtn.addEventListener("click", vbUploadAsset);
+
+  // ==========================================================================
+  // Corrective §9–10 — Cast suggestions (suggestion-first)
+  // ==========================================================================
+  async function renderCastSuggestBox() {
+    const list = document.getElementById("vb-cast-suggest-list");
+    if (!list || !currentProjectDir) return;
+    try {
+      const res = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/cast/suggestions`);
+      if (!res.ok) return;
+      const data = await res.json();
+      const suggs = data.suggestions || [];
+      if (!suggs.length) {
+        list.innerHTML = `<p class="empty-state">Chưa có gợi ý. Bấm "Phân tích vai diễn".</p>`;
+        return;
+      }
+      list.innerHTML = suggs.map(s => `
+        <div class="vb-ref-card" style="margin-bottom:0.4rem;">
+          <div><strong>${escapeHtml(s.label)}</strong>
+            <span class="badge">${escapeHtml(s.strength || "")}</span>
+            <span class="prod-history-meta">${s.matchCount} scenes · ${escapeHtml(s.status || "OPEN")}</span></div>
+          <div class="prod-history-meta">Từ: ${escapeHtml(s.sourceSubjectId || "—")} · ${(s.sceneIds || []).slice(0, 6).map(escapeHtml).join(", ")}</div>
+          ${(s.evidence || []).slice(0, 2).map(e => `<div class="prod-history-meta">“${escapeHtml(e.snippet || "")}”</div>`).join("")}
+          ${s.status === "OPEN" ? `
+          <div class="detail-actions-bar" style="margin-top:0.3rem;">
+            <button class="btn btn-primary btn-sm" data-cast-create="${escapeHtml(s.suggestionId)}"><span>Tạo</span></button>
+            <button class="btn btn-secondary btn-sm" data-cast-ignore="${escapeHtml(s.suggestionId)}"><span>Bỏ qua</span></button>
+            <button class="btn btn-secondary btn-sm" data-cast-merge="${escapeHtml(s.suggestionId)}"><span>Gộp + bind</span></button>
+          </div>` : `<div class="prod-history-meta">→ ${escapeHtml(s.createdCharacterId || s.mergedInto || s.status)}</div>`}
+        </div>`).join("");
+      list.querySelectorAll("[data-cast-create]").forEach(b => b.addEventListener("click", () => castSuggestionAction(b, "create")));
+      list.querySelectorAll("[data-cast-ignore]").forEach(b => b.addEventListener("click", () => castSuggestionAction(b, "ignore")));
+      list.querySelectorAll("[data-cast-merge]").forEach(b => b.addEventListener("click", () => castSuggestionAction(b, "merge")));
+    } catch (err) {
+      console.warn("cast suggestions failed:", err);
+    }
+  }
+
+  async function castSuggestionAction(btn, action) {
+    if (!currentProjectDir) return;
+    const sid = btn.getAttribute(action === "create" ? "data-cast-create" : action === "ignore" ? "data-cast-ignore" : "data-cast-merge");
+    btn.disabled = true;
+    try {
+      let url, opts = { method: "POST", headers: { "Content-Type": "application/json" } };
+      if (action === "create") {
+        url = `/api/projects/${encodeURIComponent(currentProjectDir)}/cast/suggestions/${encodeURIComponent(sid)}/create`;
+        opts.body = JSON.stringify({});
+      } else if (action === "ignore") {
+        url = `/api/projects/${encodeURIComponent(currentProjectDir)}/cast/suggestions/${encodeURIComponent(sid)}/ignore`;
+      } else {
+        const reps = (visualBibleData?.characters || []).filter(c => (c.entityKind || "") === "REPRESENTATIVE_CHARACTER");
+        if (!reps.length) {
+          showNotification("Chưa có nhân vật đại diện để gộp — hãy Tạo trước.", "warning");
+          btn.disabled = false;
+          return;
+        }
+        const target = reps[0].characterId;
+        url = `/api/projects/${encodeURIComponent(currentProjectDir)}/cast/suggestions/${encodeURIComponent(sid)}/merge`;
+        opts.body = JSON.stringify({ character_id: target, bind_scenes: true });
+      }
+      const res = await fetch(url, opts);
+      if (!res.ok) {
+        const e = await res.json().catch(() => ({}));
+        throw new Error(e.detail || "Thao tác thất bại.");
+      }
+      showNotification(action === "create" ? "Đã tạo nhân vật đại diện (chưa bind scenes)." : action === "ignore" ? "Đã bỏ qua gợi ý." : "Đã gộp + bind scenes.", "success");
+      await loadVisualBible(currentProjectDir);
+      renderCastSuggestBox();
+    } catch (err) {
+      showNotification(err.message, "error");
+      btn.disabled = false;
+    }
+  }
+
+  const vbCastAnalyzeBtn = document.getElementById("vb-cast-analyze-btn");
+  if (vbCastAnalyzeBtn) vbCastAnalyzeBtn.addEventListener("click", async () => {
+    if (!currentProjectDir) return;
+    vbCastAnalyzeBtn.disabled = true;
+    try {
+      const res = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/cast/suggestions/analyze`, { method: "POST" });
+      if (!res.ok) throw new Error("Phân tích thất bại.");
+      renderCastSuggestBox();
+    } catch (err) {
+      showNotification(err.message, "error");
+    } finally {
+      vbCastAnalyzeBtn.disabled = false;
+    }
+  });
+
+  // Corrective §52 — guided external validation checklist in References pane.
+  async function renderValidationGuide() {
+    const el = document.getElementById("vb-validation-guide");
+    if (!el || !currentProjectDir) return;
+    try {
+      const res = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/validation/readiness`);
+      if (!res.ok) return;
+      const r = await res.json();
+      const badge = (v) => (window.I18N ? window.I18N.renderBadge(v) : escapeHtml(v));
+      const steps = ["1. Dàn nhân vật đại diện", "2. Định danh chuẩn", "3. Ảnh tham chiếu mặt trước",
+        "4. Ảnh tham chiếu ba phần tư", "5. Ảnh tham chiếu nghiêng", "6. Gắn cảnh",
+        "7. Tạo mẫu kiểm tra", "8. Soát tính nhất quán"];
+      el.innerHTML = `
+        <div class="detail-prose-card">
+          <div class="detail-prose-label">Mức sẵn sàng kiểm định ngoài (§52)</div>
+          <div class="form-hint" style="margin-bottom:0.35rem;">Các góc tham chiếu (mặt trước, ba phần tư, nghiêng) là ảnh của <strong>cùng một nhân vật</strong>, hệ thống tự chọn góc phù hợp cho từng cảnh.</div>
+          <div class="prod-readiness-list">
+            <div class="prod-readiness-row"><span>Nền tảng hình ảnh</span>${badge(r.visualFoundation)}</div>
+            <div class="prod-readiness-row"><span>Dàn nhân vật đại diện</span>${badge(r.representativeCast)}</div>
+            <div class="prod-readiness-row"><span>Độ phủ tham chiếu</span>${badge(r.referenceCoverage)}</div>
+            <div class="prod-readiness-row"><span>Kiểm định ngoài</span>${badge(r.externalValidation)}</div>
+          </div>
+          ${(r.blockers || []).length ? `<div class="prod-blockers-list" style="display:block;"><div class="prod-blockers-title">Đang bị chặn:</div><ul>${r.blockers.slice(0, 8).map(b => `<li>${escapeHtml(b)}</li>`).join("")}</ul></div>` : ""}
+          <div class="prod-history-meta" style="margin-top:0.3rem;">${steps.map(escapeHtml).join(" → ")}</div>
+        </div>`;
+    } catch (err) {
+      console.warn("validation guide failed:", err);
+    }
+  }
 
   // ==============================================================================
   // 14. INITIALIZATION
@@ -3901,16 +6637,12 @@ document.addEventListener("DOMContentLoaded", () => {
   checkHealth();
   loadVoicesAndSettings();
   loadPronunciations();
-  loadProjects(true);
+  resolveStartupProject();
   updateTextStats();
   updateSlugPreview();
   updateDependencyState();
   setInterval(checkHealth, 15000);
 
-  // Auto-launch onboarding tour for first-time users
-  if (!localStorage.getItem("unfoldiq_tour_completed")) {
-    setTimeout(() => {
-      startTour(0);
-    }, 1200);
-  }
+  // Onboarding first-run do UQGuide (guide.js) đảm nhiệm: welcome + migration
+  // tour cũ, Help Center. Không auto-run tour cũ tại đây nữa.
 });

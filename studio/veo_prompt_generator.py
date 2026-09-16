@@ -1,9 +1,18 @@
 """
-UnfoldIQ Visual Scene to Video Shot Engine — Google Flow / Veo Prompt Generator (Phase 6)
+UnfoldIQ Visual Scene to Video Shot Engine — Google Flow / Veo Prompt Generator (Phase 7)
 Transforms verified scene plans, speech timestamps, and narration scripts into
 production-ready, temporal video generation prompt packs for Google Flow / Veo.
-Ensures 100% full-audio visual timeline coverage, balanced long-scene splitting,
-continuity inheritance, prompt grounding, and zero dialogue/text generation requests.
+
+Phase 7 upgrades:
+- Dynamic visual beat derivation from narration content (not pure duration splitting)
+- shotPurpose enum (ESTABLISH/ACTION/DETAIL/REVEAL/REACTION/EVIDENCE/COMPARISON/TRANSITION/PAYOFF/CONTINUATION)
+- Per-shot distinct subject_action, camera_framing, visual_objective
+- Adjacent duplicate detection (multi-signal: purpose + subject + camera + environment + prompt)
+- Bounded automatic regeneration of duplicate shots (max 3 retries)
+- Scene-level validators: coverage, parent mapping, continuity, narration coverage
+- shotGeneratorVersion + sourceScenePlanHash in canonical output
+- Per-scene regeneration support
+- OUTDATED detection on generator version mismatch
 """
 
 import hashlib
@@ -63,6 +72,24 @@ VEO_NARRATIVE_TONES = [
     "process",
 ]
 
+# Current generator version — bump this when shot generation logic changes materially.
+# Old output with a different version will be flagged as OUTDATED.
+CURRENT_GENERATOR_VERSION = "7.0.0"
+
+# Shot Purpose Enum — strict vocabulary for semantic shot classification.
+SHOT_PURPOSE_ENUM = [
+    "ESTABLISH",    # Sets location / scale / period / environment / spatial context
+    "ACTION",       # Shows meaningful subject action / physical event / behavioral progression
+    "DETAIL",       # Focuses on specific object / body detail / tool / evidence / texture
+    "REVEAL",       # Introduces new information / unexpected subject / important discovery
+    "REACTION",     # Shows response / emotion / behavioral reaction / consequence
+    "EVIDENCE",     # Visualizes archaeological / scientific evidence / artifact / fossil / data-backed clue
+    "COMPARISON",   # Explicitly compares before/after, species, scale, behavior, evidence
+    "TRANSITION",   # Moves story/context between time / location / subject / narrative beat (must have visual content)
+    "PAYOFF",       # Shows the visual conclusion of a prior setup
+    "CONTINUATION", # Continues same event/subject BUT must introduce meaningful progression
+]
+
 # Standard Video Constraints (No spoken dialogue, no text overlays)
 STANDARD_VEO_CONSTRAINTS = [
     "no spoken dialogue",
@@ -76,6 +103,9 @@ STANDARD_VEO_CONSTRAINTS = [
 STANDARD_VEO_CONSTRAINTS_TEXT = (
     "no spoken dialogue, no voiceover, no captions, no subtitles, no text, no watermark"
 )
+
+# Duplicate detection threshold: if similarity score >= this, treat as duplicate
+_DUPLICATE_SCORE_THRESHOLD = 3
 
 
 def format_timestamp_hms(seconds: float) -> str:
@@ -178,6 +208,222 @@ class VeoPlanValidationError(Exception):
     pass
 
 
+# ---------------------------------------------------------------------------
+# VISUAL BEAT DERIVATION
+# ---------------------------------------------------------------------------
+
+# Keywords that signal a visual beat change in narration
+_ACTION_VERBS = [
+    "hunt", "attack", "flee", "chase", "kill", "escape", "strike", "run", "leap",
+    "dig", "discover", "found", "reveal", "uncover", "examine", "study", "analyze",
+    "build", "create", "craft", "knap", "flake", "shape", "use", "carry",
+    "migrate", "travel", "cross", "enter", "emerge", "return", "spread",
+    "evolve", "adapt", "develop", "transform", "change",
+    "eat", "feed", "consume", "drink",
+    "gather", "forage", "scavenge",
+    "communicate", "signal", "warn",
+    "watch", "observe", "scan", "listen",
+]
+
+_EVIDENCE_KEYWORDS = [
+    "fossil", "bone", "skull", "artifact", "tool", "stone", "flint", "obsidian",
+    "evidence", "excavat", "archaeological", "site", "layer", "strat", "sediment",
+    "remains", "specimen", "dating", "analysis", "genome", "dna", "isotope",
+]
+
+_REVEAL_KEYWORDS = [
+    "reveals", "discovered", "surprising", "unexpected", "first time", "new evidence",
+    "scientists found", "research shows", "study reveals", "recent discovery",
+    "breakthrough", "unprecedented", "turns out", "in fact",
+]
+
+_REACTION_KEYWORDS = [
+    "response", "react", "fear", "terror", "panic", "retreat", "freeze",
+    "cautious", "wary", "alert", "threatened", "danger", "prey",
+]
+
+_COMPARISON_KEYWORDS = [
+    "compared to", "unlike", "whereas", "in contrast", "however", "while",
+    "versus", "vs", "similar to", "difference", "both", "neither",
+    "smaller than", "larger than", "faster", "slower",
+]
+
+
+def derive_visual_beats(scene: Dict[str, Any]) -> List[Dict[str, Any]]:
+    """
+    Extract visual beat opportunities from scene narration.
+    Returns a list of beat dicts with 'purpose', 'signal', 'weight'.
+    The number and types of beats inform dynamic shot count planning.
+    """
+    narration = scene.get("narration", "").strip()
+    category = scene.get("category", "reconstruction")
+    tone = scene.get("tone") or scene.get("narrative_tone", "neutral_explanatory")
+    duration = float(scene.get("duration", scene.get("end", 0.0)) if "duration" in scene else
+                     float(scene.get("end", 0.0)) - float(scene.get("start", 0.0)))
+
+    text_lower = narration.lower()
+    beats: List[Dict[str, Any]] = []
+
+    # Beat 1: Establishing shot — always generated for first beat of any scene
+    beats.append({"purpose": "ESTABLISH", "signal": "scene_start", "weight": 1.0})
+
+    # Beat 2: Evidence beat — triggered by archaeological/scientific evidence keywords
+    has_evidence = any(k in text_lower for k in _EVIDENCE_KEYWORDS)
+    if has_evidence and category in ("artifact", "detail/macro", "reconstruction", "anatomy/science"):
+        beats.append({"purpose": "EVIDENCE", "signal": "evidence_keyword", "weight": 0.9})
+
+    # Beat 3: Reveal beat — new information or discovery
+    has_reveal = any(k in text_lower for k in _REVEAL_KEYWORDS)
+    if has_reveal:
+        beats.append({"purpose": "REVEAL", "signal": "reveal_keyword", "weight": 0.85})
+
+    # Beat 4: Action beat — physical or behavioral event
+    sentence_count = len([s for s in re.split(r'[.!?]+', narration) if s.strip()])
+    has_action = any(k in text_lower for k in _ACTION_VERBS)
+    if has_action and category not in ("timeline", "map"):
+        beats.append({"purpose": "ACTION", "signal": "action_verb", "weight": 0.8})
+
+    # Beat 5: Comparison beat
+    has_comparison = any(k in text_lower for k in _COMPARISON_KEYWORDS)
+    if has_comparison:
+        beats.append({"purpose": "COMPARISON", "signal": "comparison_keyword", "weight": 0.7})
+
+    # Beat 6: Reaction beat — for tension scenes
+    has_reaction = tone == "tension" or any(k in text_lower for k in _REACTION_KEYWORDS)
+    if has_reaction and "ESTABLISH" in [b["purpose"] for b in beats]:
+        beats.append({"purpose": "REACTION", "signal": "tension_tone", "weight": 0.75})
+
+    # Beat 7: Detail beat — for longer narrations or when process/artifact category
+    if category in ("process", "artifact", "detail/macro") or sentence_count >= 3:
+        beats.append({"purpose": "DETAIL", "signal": "category_or_length", "weight": 0.65})
+
+    # Beat 8: Payoff or Transition for terminal beats in long scenes
+    if duration >= 12.0 and category in ("transition", "reconstruction"):
+        beats.append({"purpose": "PAYOFF", "signal": "duration_terminal", "weight": 0.6})
+
+    # Deduplicate purposes, keeping highest weight
+    seen_purposes: Dict[str, float] = {}
+    unique_beats = []
+    for b in beats:
+        if b["purpose"] not in seen_purposes or b["weight"] > seen_purposes[b["purpose"]]:
+            seen_purposes[b["purpose"]] = b["weight"]
+            unique_beats = [ub for ub in unique_beats if ub["purpose"] != b["purpose"]]
+            unique_beats.append(b)
+
+    # Sort by weight descending
+    unique_beats.sort(key=lambda x: x["weight"], reverse=True)
+    return unique_beats
+
+
+def determine_dynamic_shot_count(
+    scene: Dict[str, Any],
+    beats: List[Dict[str, Any]],
+    target_duration: float = 6.0,
+    preferred_max_duration: float = 8.0,
+    min_duration: float = 3.0,
+) -> int:
+    """
+    Determine the optimal number of shots for a scene.
+    Considers: duration, visual beat count, narration density.
+    Returns an integer >= 1.
+    """
+    duration = float(scene.get("duration", 0.0)) if "duration" in scene else (
+        float(scene.get("end", 0.0)) - float(scene.get("start", 0.0))
+    )
+    narration = scene.get("narration", "")
+    sentence_count = len([s for s in re.split(r'[.!?]+', narration) if s.strip()])
+    word_count = len(narration.split())
+    beat_count = len(beats)
+
+    # Very short scenes: always 1 shot
+    if duration <= min_duration:
+        return 1
+
+    # Scenes within preferred max duration (<= 8s) remain a single shot
+    if duration <= preferred_max_duration:
+        return 1
+
+    # For longer scenes (> 8s), determine count by duration and visual beats
+    duration_based = max(2, int(round(duration / target_duration)))
+    beat_based = min(beat_count, max(1, int(duration / min_duration)))
+    density_bonus = 1 if sentence_count >= 4 and duration >= 14.0 else 0
+
+    count = max(duration_based, beat_based) + density_bonus
+
+    # Safety: ensure minimum shot duration is respected
+    while count > 1 and (duration / count) < min_duration:
+        count -= 1
+
+    return max(1, count)
+
+
+def _canonical_json(obj: Any) -> str:
+    """Deterministic serialization for hashing (never Python hash())."""
+    return json.dumps(obj, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
+
+
+def scene_content_hash(scene: Dict[str, Any]) -> str:
+    """Stable identity hash of one scene's content (P0.2 per-scene invalidation)."""
+    return hashlib.sha256(_canonical_json(scene).encode("utf-8")).hexdigest()
+
+
+def compute_scene_hashes(scenes: List[Dict[str, Any]]) -> Dict[str, str]:
+    return {sc["scene_id"]: scene_content_hash(sc) for sc in scenes if sc.get("scene_id")}
+
+
+def _compute_shot_similarity(a: Dict[str, Any], b: Dict[str, Any]) -> int:
+    """
+    Compute multi-signal similarity score between two adjacent shots.
+    Score >= _DUPLICATE_SCORE_THRESHOLD is considered a duplicate.
+    Fields compared: purpose, subject_action, camera_framing, camera_motion,
+    visual_objective (first 60 chars), environment.
+    """
+    score = 0
+    # Purpose match
+    if a.get("shotPurpose") and a.get("shotPurpose") == b.get("shotPurpose"):
+        score += 1
+    # Camera framing match
+    if a.get("camera_framing") and a.get("camera_framing") == b.get("camera_framing"):
+        score += 1
+    # Camera motion match
+    if a.get("camera_motion") and a.get("camera_motion") == b.get("camera_motion"):
+        score += 1
+    # Subject action similarity (first 50 chars)
+    a_action = (a.get("subject_action") or "")[:50].lower().strip()
+    b_action = (b.get("subject_action") or "")[:50].lower().strip()
+    if a_action and a_action == b_action:
+        score += 1
+    # Environment match (first 50 chars)
+    a_env = (a.get("environment") or "")[:50].lower().strip()
+    b_env = (b.get("environment") or "")[:50].lower().strip()
+    if a_env and a_env == b_env:
+        score += 1
+    # Visual objective similarity (first 60 chars)
+    a_obj = (a.get("visual_objective") or "")[:60].lower().strip()
+    b_obj = (b.get("visual_objective") or "")[:60].lower().strip()
+    if a_obj and a_obj == b_obj:
+        score += 1
+    return score
+
+
+def detect_adjacent_duplicates(shots: List[Dict[str, Any]]) -> List[Tuple[int, int, int]]:
+    """
+    Detect adjacent duplicate pairs within the same scene.
+    Returns list of (index_a, index_b, score) for pairs exceeding threshold.
+    """
+    duplicates = []
+    for i in range(len(shots) - 1):
+        a = shots[i]
+        b = shots[i + 1]
+        # Only compare shots within the same scene
+        if a.get("scene_id") != b.get("scene_id"):
+            continue
+        score = _compute_shot_similarity(a, b)
+        if score >= _DUPLICATE_SCORE_THRESHOLD:
+            duplicates.append((i, i + 1, score))
+    return duplicates
+
+
 
 class VeoPromptGenerator:
     """Production Google Flow / Veo video prompt generator."""
@@ -195,6 +441,8 @@ class VeoPromptGenerator:
         self.preferred_max_duration = preferred_max_duration or config.veo_preferred_max_duration
         self.min_duration = min_shot_duration or min_duration or config.veo_min_duration
         self.aspect_ratio = aspect_ratio or config.veo_default_aspect_ratio
+        # P2.7: last duplicate-repair run metrics (zeros until first planning pass)
+        self.last_dup_metrics = {"initial_pairs": 0, "passes_used": 0, "remaining": 0}
 
 
     # -------------------------------------------------------------------------
@@ -661,22 +909,203 @@ class VeoPromptGenerator:
         return prompt_str
 
     # -------------------------------------------------------------------------
-    # SCENE-TO-SHOT PLANNING & BALANCED SPLITTING
+    # PURPOSE-DRIVEN CAMERA STRATEGY
+    # -------------------------------------------------------------------------
+    def _purpose_camera_strategy(
+        self,
+        purpose: str,
+        category: str,
+        tone: str,
+        domain: str,
+        shot_sub_idx: int,
+        num_shots: int,
+    ) -> Tuple[str, str]:
+        """
+        Derive shot_type and camera_motion from shotPurpose rather than just index.
+        Ensures ESTABLISH is wide, DETAIL is close, ACTION uses tracking, etc.
+        """
+        if purpose == "ESTABLISH":
+            if category == "map":
+                return "top-down", "slow forward tracking"
+            if category == "timeline":
+                return "wide", "slow lateral tracking"
+            if tone == "awe":
+                return "extreme wide", "slow pull-back"
+            return "wide", "slow pan right"
+
+        if purpose == "ACTION":
+            if tone == "tension":
+                return "medium wide", "controlled handheld"
+            return "medium", "slow forward tracking"
+
+        if purpose in ("DETAIL", "EVIDENCE"):
+            if category == "artifact":
+                return "close-up", "slow push-in"
+            if category == "detail/macro":
+                return "macro/detail", "slow push-in"
+            return "medium close-up", "slow push-in"
+
+        if purpose == "REVEAL":
+            return "medium close-up", "slow pull-back"
+
+        if purpose == "REACTION":
+            if tone == "tension":
+                return "close-up", "static"
+            return "medium close-up", "slow push-in"
+
+        if purpose == "COMPARISON":
+            return "medium wide", "slow lateral tracking"
+
+        if purpose == "TRANSITION":
+            return "medium wide", "slow lateral tracking"
+
+        if purpose == "PAYOFF":
+            if tone == "awe":
+                return "wide", "slow pull-back"
+            return "medium wide", "slow push-in"
+
+        if purpose == "CONTINUATION":
+            # Must differ from previous — use close-up/tracking to add progression
+            if shot_sub_idx % 2 == 0:
+                return "medium close-up", "slow push-in"
+            return "medium", "slow forward tracking"
+
+        # Fallback: use existing strategy
+        return self.infer_camera_strategy(category, tone, domain, shot_sub_idx, num_shots)
+
+    def _purpose_subject_action(
+        self,
+        purpose: str,
+        narration: str,
+        category: str,
+        domain: str,
+        tone: str,
+        shot_sub_idx: int,
+        base_subject: str,
+        base_action: str,
+    ) -> Tuple[str, str]:
+        """
+        Override subject_action to match shotPurpose semantics.
+        Each purpose must produce a meaningfully different action from ESTABLISH.
+        """
+        text_lower = narration.lower()
+
+        if purpose == "ESTABLISH":
+            # Wide context-setting — use the base subject/action from domain builder
+            return base_subject, base_action
+
+        if purpose == "ACTION":
+            if domain == "prehistory":
+                if tone == "tension":
+                    return base_subject, "moving rapidly through undergrowth, crouching low to avoid detection by distant predator"
+                return base_subject, "actively engaged in purposeful physical movement across the terrain"
+            if domain == "astrophysics":
+                return base_subject, "observable motion and energy emission patterns visible in real time"
+            return base_subject, "executing focused physical action relevant to the narrated event"
+
+        if purpose == "DETAIL":
+            if domain == "prehistory" and category in ("artifact", "detail/macro", "process"):
+                subj_detail = f"hands of {base_subject}" if base_subject else "hands of an early hominid"
+                return subj_detail, "precise grip and controlled pressure visible on stone tool edge"
+            if domain == "astrophysics":
+                return "observable surface detail of the astronomical object", "fine structural detail resolving through optical clarity"
+            if domain == "computing_technology":
+                return "circuit substrate and component detail", "micro-fabricated trace and junction structure illuminated by raking light"
+            return f"specific surface or structural detail of {base_subject}" if base_subject else "specific surface or structural detail of the primary subject", "fine texture and material composition revealed under directional light"
+
+        if purpose == "EVIDENCE":
+            if domain == "prehistory":
+                subj_ev = f"fossilized remains or stone tool artifact associated with {base_subject}" if base_subject else "fossilized remains or stone tool artifact"
+                return subj_ev, "resting in-situ as soft raking light reveals surface wear and geological context"
+            if domain == "computing_technology":
+                return "period-accurate hardware evidence and technical documentation", "visible evidence of design evolution and material craft"
+            return f"material evidence relevant to {base_subject}" if base_subject else "material evidence relevant to the narrated discovery", "displayed in scientific context under analytical illumination"
+
+        if purpose == "REVEAL":
+            if domain == "prehistory":
+                subj_rev = f"previously obscured discovery or unexpected finding related to {base_subject}" if base_subject else "previously obscured discovery or unexpected finding"
+                return subj_rev, "emerging into frame as camera repositions to expose new information"
+            return base_subject, "coming into focus as the camera reveals previously unseen spatial relationship"
+
+        if purpose == "REACTION":
+            if domain == "prehistory":
+                return base_subject, "pausing abruptly and scanning surroundings with heightened biological alertness"
+            return base_subject, "registering the consequence of the preceding action through visible behavioral response"
+
+        if purpose == "COMPARISON":
+            # Show two things side by side or sequentially
+            return "two distinct subjects or states under comparison", "juxtaposed within frame to highlight scale or behavioral contrast"
+
+        if purpose == "TRANSITION":
+            if domain == "prehistory":
+                subj_tr = f"the wider environment context around {base_subject}" if base_subject else "the wider environment context"
+                return subj_tr, "camera pulling back slowly to reveal landscape transition and narrative shift"
+            return "transitional environmental context", "smooth visual shift indicating change in time, location, or narrative focus"
+
+        if purpose == "PAYOFF":
+            if tone == "tension":
+                return base_subject, "reaching visual resolution of the preceding tension with clear outcome visible"
+            if tone == "awe":
+                return base_subject, "framed against the full scale of the environment in the payoff composition"
+            return base_subject, "in the culminating visual position that concludes the scene's narrative arc"
+
+        if purpose == "CONTINUATION":
+            # MUST have progression — different camera position / new information
+            if domain == "prehistory":
+                return base_subject, "continuing forward as new environmental detail enters the foreground frame"
+            return base_subject, "progressing through action while new compositional element or information enters frame"
+
+        return base_subject, base_action
+
+    def _purpose_visual_objective(
+        self,
+        purpose: str,
+        scene_visual_summary: str,
+        narration: str,
+        shot_sub_idx: int,
+        num_shots: int,
+    ) -> str:
+        """Generate a distinct visual objective per shot purpose."""
+        summary = scene_visual_summary or f"Scene visualization"
+        narr_short = narration[:50].rstrip() if narration else "narrated event"
+
+        purpose_objectives = {
+            "ESTABLISH": f"{summary} — wide establishing view setting location, scale and environmental context",
+            "ACTION": f"{summary} — action beat showing {narr_short[:40]}... in physical progression",
+            "DETAIL": f"Close detail of specific evidence, tool or texture supporting the narration",
+            "EVIDENCE": f"Material evidence visualization: artifact, fossil or scientific data in context",
+            "REVEAL": f"Reveal moment: new information or discovery entering the frame",
+            "REACTION": f"Reaction beat: subject behavioral response to the preceding event",
+            "COMPARISON": f"Comparison visual: two states, species or scales juxtaposed in frame",
+            "TRANSITION": f"Transition: environmental or narrative shift illustrated visually",
+            "PAYOFF": f"Payoff: visual conclusion of the scene's primary narrative arc",
+            "CONTINUATION": f"{summary} — continuation with meaningful progression (Shot {shot_sub_idx}/{num_shots})",
+        }
+        return purpose_objectives.get(purpose, f"{summary} (Shot {shot_sub_idx}/{num_shots})")
+
+    # -------------------------------------------------------------------------
+    # SCENE-TO-SHOT PLANNING WITH VISUAL BEATS
     # -------------------------------------------------------------------------
     def plan_shots_from_scenes(
         self,
         scenes: List[Dict[str, Any]],
         audio_duration: float,
+        rebase_timeline: bool = True,
+        visual_bible: Optional[Dict[str, Any]] = None,
     ) -> List[Dict[str, Any]]:
         """
-        Deterministic scene-to-shot planning and duration-based splitting.
+        Phase 7 & 10: Dynamic scene-to-shot planning driven by visual beats, shotPurpose,
+        and canonical Visual Bible continuity anchors.
+
         Invariants:
-        1. If scene.duration <= preferred_max_duration (8.0s), creates 1 shot.
-        2. If scene.duration > preferred_max_duration, splits into N balanced shots (no tiny tail shot).
-        3. sum(child_shot_durations) == parent_scene_duration.
-        4. First shot start = 0.000s, last shot end = audio_duration.
-        5. Full project timeline coverage = 100.0%, 0 gaps, 0 overlaps.
-        6. Does NOT mutate input scenes.
+        1. Shot count is derived from visual beat analysis + duration, NOT fixed rules.
+        2. Visual Bible metadata alone does NOT alter shot count.
+        3. Each shot has a unique shotPurpose from SHOT_PURPOSE_ENUM.
+        4. Adjacent shots within same scene have distinct purpose + camera + subject_action.
+        5. sum(child_shot_durations) == parent_scene_duration.
+        6. First shot start = 0.000s, last shot end = audio_duration.
+        7. Full project timeline coverage = 100.0%, 0 gaps, 0 overlaps.
+        8. Does NOT mutate input scenes.
         """
         if not scenes:
             return []
@@ -693,6 +1122,7 @@ class VeoPromptGenerator:
             category = scene.get("category", "reconstruction")
             domain = detect_narration_domain(narration)
             tone = self.infer_narrative_tone(narration, category)
+            visual_summary = scene.get("visual_summary", "")
 
             # Lighting description
             if tone == "awe":
@@ -706,17 +1136,64 @@ class VeoPromptGenerator:
             else:
                 lighting = "natural diffused daylight with realistic environmental reflection"
 
-            # Determine number of shots
-            if scene_duration <= self.preferred_max_duration:
-                num_shots = 1
-            else:
-                # Balanced splitting around target_duration (~6.0s)
-                num_shots = max(2, int(round(scene_duration / self.target_duration)))
-                # If dividing yields segments below min_duration, clamp
-                if (scene_duration / num_shots) < self.min_duration and num_shots > 2:
-                    num_shots = max(2, int(scene_duration // self.min_duration))
+            # Build base subject/action from domain knowledge (used by some purposes)
+            base_subject, base_action = self.build_subject_and_action(
+                narration=narration,
+                category=category,
+                domain=domain,
+                tone=tone,
+                shot_progression_index=1,
+            )
+            environment, env_motion = self.build_environment_and_motion(
+                category=category,
+                domain=domain,
+                tone=tone,
+            )
+            # Resolve continuity group and environment from visual bible if not present on scene
+            has_explicit_groups = any(s.get("continuity_group") or s.get("continuityGroupId") for s in scenes)
+            scene_cg_id = scene.get("continuityGroupId") or scene.get("continuity_group")
+            scene_env_id = scene.get("environmentId")
+            if not has_explicit_groups and visual_bible:
+                for cg in visual_bible.get("continuityGroups", []):
+                    if scene_id in cg.get("sceneIds", []):
+                        if not scene_cg_id:
+                            scene_cg_id = cg.get("continuityGroupId")
+                        if not scene_env_id:
+                            scene_env_id = cg.get("environmentId")
+                        break
 
-            # Split scene into balanced durations
+            continuity_anchor = self.build_continuity_anchor(scene, domain)
+
+            # Phase 10: compact continuity anchor from Visual Bible if available
+            if visual_bible and scene_cg_id:
+                try:
+                    from studio.visual_continuity import visual_continuity_director
+                    vb_anchor = visual_continuity_director.build_compact_continuity_anchor(
+                        {"continuityGroupId": scene_cg_id}, visual_bible
+                    )
+                    if vb_anchor:
+                        continuity_anchor = vb_anchor
+                except Exception as ex:
+                    logger.debug(f"Visual Bible anchor resolution fallback: {ex}")
+
+            # ── Visual beat derivation ──
+            beats = derive_visual_beats(scene)
+            num_shots = determine_dynamic_shot_count(
+                scene, beats,
+                target_duration=self.target_duration,
+                preferred_max_duration=self.preferred_max_duration,
+                min_duration=self.min_duration,
+            )
+
+            # Assign purposes to shots (cycle through beats, fall back to CONTINUATION)
+            shot_purposes: List[str] = []
+            for i in range(num_shots):
+                if i < len(beats):
+                    shot_purposes.append(beats[i]["purpose"])
+                else:
+                    shot_purposes.append("CONTINUATION")
+
+            # Split scene timeline into balanced child intervals
             child_intervals: List[Tuple[float, float, float]] = []
             curr_start = scene_start
             for k in range(num_shots):
@@ -728,47 +1205,46 @@ class VeoPromptGenerator:
                 child_intervals.append((curr_start, child_end, child_dur))
                 curr_start = child_end
 
-            # Construct shot objects
-            continuity_anchor = self.build_continuity_anchor(scene, domain)
-
+            # ── Construct per-beat shot objects ──
             for shot_sub_idx, (s_start, s_end, s_dur) in enumerate(child_intervals, start=1):
-                shot_id = f"{scene_id}_shot_{shot_sub_idx:02d}"
+                purpose = shot_purposes[shot_sub_idx - 1]
 
-                # Infer camera and shot type with progressive variation
-                shot_type, camera_motion = self.infer_camera_strategy(
+                # Purpose-driven camera strategy
+                shot_type, camera_motion = self._purpose_camera_strategy(
+                    purpose=purpose,
                     category=category,
                     tone=tone,
                     domain=domain,
-                    shot_progression_index=shot_sub_idx,
-                    total_shots_in_scene=num_shots,
+                    shot_sub_idx=shot_sub_idx,
+                    num_shots=num_shots,
                 )
-                if num_shots == 1 and scene.get("shot_type") in VEO_SHOT_TYPES:
-                    shot_type = scene["shot_type"]
-                if num_shots == 1 and scene.get("camera_motion"):
-                    camera_motion = scene["camera_motion"]
+                # For single-shot scenes, honour scene-level hints if available
+                if num_shots == 1:
+                    if scene.get("shot_type") in VEO_SHOT_TYPES:
+                        shot_type = scene["shot_type"]
+                    if scene.get("camera_motion"):
+                        camera_motion = scene["camera_motion"]
 
-
-                # Build subject and temporal motion
-                subject, subject_action = self.build_subject_and_action(
+                # Purpose-driven subject & action (ensures per-shot differentiation)
+                subject, subject_action = self._purpose_subject_action(
+                    purpose=purpose,
                     narration=narration,
                     category=category,
                     domain=domain,
                     tone=tone,
-                    shot_progression_index=shot_sub_idx,
+                    shot_sub_idx=shot_sub_idx,
+                    base_subject=base_subject,
+                    base_action=base_action,
                 )
 
-                # Build environment and environmental motion
-                environment, env_motion = self.build_environment_and_motion(
-                    category=category,
-                    domain=domain,
-                    tone=tone,
+                # Per-shot distinct visual objective
+                visual_obj = self._purpose_visual_objective(
+                    purpose=purpose,
+                    scene_visual_summary=visual_summary,
+                    narration=narration,
+                    shot_sub_idx=shot_sub_idx,
+                    num_shots=num_shots,
                 )
-
-                # Visual objective
-                if num_shots == 1:
-                    visual_obj = scene.get("visual_summary") or f"Documentary video shot illustrating {narration[:60]}"
-                else:
-                    visual_obj = f"{scene.get('visual_summary', 'Scene visualization')} (Part {shot_sub_idx}/{num_shots}: {shot_type} view)"
 
                 # Assemble Flow / Veo Prompt
                 veo_prompt = self.build_veo_prompt(
@@ -786,19 +1262,25 @@ class VeoPromptGenerator:
 
                 shot_data = {
                     "shot_id": f"shot_{global_shot_idx:03d}",
+                    # canonical ID fields — both naming conventions for compatibility
                     "scene_id": scene_id,
-                    "parent_scene_id": scene_id,
+                    "parent_scene_id": scene_id,   # snake_case (existing schema)
+                    "parentSceneId": scene_id,      # camelCase (spec requirement)
                     "parent_scene_index": scene.get("index", 1),
                     "index": global_shot_idx,
                     "scene_shot_index": shot_sub_idx,
                     "total_scene_shots": num_shots,
                     "shot_split_index": shot_sub_idx,
                     "shot_split_total": num_shots,
+                    # timing
                     "start": s_start,
                     "end": s_end,
                     "duration": s_dur,
+                    # content
                     "narration": narration,
                     "visual_objective": visual_obj,
+                    "shotPurpose": purpose,          # camelCase (spec requirement)
+                    "shot_purpose": purpose,          # snake_case alias
                     "subject": subject,
                     "subject_action": subject_action,
                     "environment": environment,
@@ -813,8 +1295,13 @@ class VeoPromptGenerator:
                     "narrative_tone": tone,
                     "tone": tone,
                     "aspect_ratio": self.aspect_ratio,
-                    "continuity_group": scene.get("continuity_group"),
+                    "continuity_group": scene_cg_id,
+                    "continuityGroupId": scene_cg_id,
                     "continuity_anchor": continuity_anchor,
+                    "subjectIds": scene.get("subjectIds", [visual_bible["subjects"][0]["subjectId"]] if (visual_bible and visual_bible.get("subjects")) else []),
+                    "environmentId": scene_env_id or scene.get("environmentId", visual_bible["environments"][0]["environmentId"] if (visual_bible and visual_bible.get("environments")) else None),
+                    "periodId": scene.get("periodId", visual_bible["periods"][0]["periodId"] if (visual_bible and visual_bible.get("periods")) else None),
+                    "propIds": scene.get("propIds", [visual_bible["props"][0]["propId"]] if (visual_bible and visual_bible.get("props")) else []),
                     "veo_prompt": veo_prompt,
                     "negative_prompt": STANDARD_VEO_CONSTRAINTS_TEXT,
                     "constraints": list(STANDARD_VEO_CONSTRAINTS),
@@ -823,9 +1310,11 @@ class VeoPromptGenerator:
                 all_shots.append(shot_data)
                 global_shot_idx += 1
 
-
-        # Enforce exact timeline boundaries
-        if all_shots:
+        # Enforce exact timeline boundaries (full-plan calls only).
+        # Single-scene callers (per-scene regeneration) pass rebase_timeline=False
+        # to keep absolute scene positions: the per-scene splitter above already
+        # produces exact absolute intervals.
+        if rebase_timeline and all_shots:
             all_shots[0]["start"] = 0.000
             for i in range(len(all_shots) - 1):
                 all_shots[i]["end"] = all_shots[i + 1]["start"]
@@ -833,7 +1322,127 @@ class VeoPromptGenerator:
             all_shots[-1]["end"] = round(audio_duration, 3)
             all_shots[-1]["duration"] = round(all_shots[-1]["end"] - all_shots[-1]["start"], 3)
 
+        # ── Adjacent duplicate detection + bounded regeneration ──
+        all_shots = self._resolve_duplicates(all_shots, scenes, audio_duration)
+
         return all_shots
+
+    def _resolve_duplicates(
+        self,
+        shots: List[Dict[str, Any]],
+        scenes: List[Dict[str, Any]],
+        audio_duration: float,
+        max_retries: int = 3,
+    ) -> List[Dict[str, Any]]:
+        """
+        Detect adjacent duplicates and regenerate the second shot with an
+        alternative purpose. Uses bounded retry (max_retries per shot).
+        Preserves timeline, parentSceneId, and continuity anchors.
+        """
+        # Build scene lookup
+        scene_map = {sc["scene_id"]: sc for sc in scenes}
+        MAX_PURPOSE_CYCLE = len(SHOT_PURPOSE_ENUM)
+
+        # P2.7: repair instrumentation (also exposed via self.last_dup_metrics)
+        initial_pairs = len(detect_adjacent_duplicates(shots))
+        passes_used = 0
+
+        for attempt in range(max_retries):
+            duplicates = detect_adjacent_duplicates(shots)
+            if not duplicates:
+                break
+            passes_used = attempt + 1
+            logger.info(f"Duplicate resolution pass {attempt + 1}: {len(duplicates)} duplicate pairs found")
+
+            for idx_a, idx_b, score in duplicates:
+                if idx_b >= len(shots):
+                    continue
+                shot_b = shots[idx_b]
+                scene_id = shot_b.get("scene_id")
+                parent_scene = scene_map.get(scene_id, {})
+
+                # Choose an alternative purpose not used by shot_a or the scene yet
+                used_in_scene = {s.get("shotPurpose") for s in shots if s.get("scene_id") == scene_id}
+                alt_purposes = [p for p in SHOT_PURPOSE_ENUM if p not in used_in_scene]
+                if not alt_purposes:
+                    # All purposes used — fall back to CONTINUATION with different camera
+                    alt_purposes = ["CONTINUATION", "DETAIL", "PAYOFF"]
+
+                new_purpose = alt_purposes[attempt % len(alt_purposes)]
+
+                narration = shot_b.get("narration", "")
+                category = shot_b.get("category", "reconstruction")
+                domain = detect_narration_domain(narration)
+                tone = shot_b.get("tone", "neutral_explanatory")
+
+                base_subject, base_action = self.build_subject_and_action(
+                    narration=narration, category=category, domain=domain,
+                    tone=tone, shot_progression_index=idx_b + 1,
+                )
+
+                shot_type, camera_motion = self._purpose_camera_strategy(
+                    purpose=new_purpose, category=category, tone=tone, domain=domain,
+                    shot_sub_idx=idx_b + 1, num_shots=shot_b.get("total_scene_shots", 1),
+                )
+                subject, subject_action = self._purpose_subject_action(
+                    purpose=new_purpose, narration=narration, category=category,
+                    domain=domain, tone=tone, shot_sub_idx=idx_b + 1,
+                    base_subject=base_subject, base_action=base_action,
+                )
+                visual_obj = self._purpose_visual_objective(
+                    purpose=new_purpose,
+                    scene_visual_summary=parent_scene.get("visual_summary", ""),
+                    narration=narration,
+                    shot_sub_idx=idx_b + 1,
+                    num_shots=shot_b.get("total_scene_shots", 1),
+                )
+                environment, env_motion = self.build_environment_and_motion(
+                    category=category, domain=domain, tone=tone,
+                )
+                lighting = shot_b.get("lighting", "natural diffused daylight with realistic environmental reflection")
+
+                veo_prompt = self.build_veo_prompt(
+                    subject=subject, subject_action=subject_action,
+                    environment=environment, environment_motion=env_motion,
+                    shot_type=shot_type, camera_motion=camera_motion,
+                    lighting=lighting, domain=domain, tone=tone,
+                    continuity_anchor=shot_b.get("continuity_anchor"),
+                )
+
+                # Update shot_b in place — preserve timing and identity
+                shots[idx_b].update({
+                    "shotPurpose": new_purpose,
+                    "shot_purpose": new_purpose,
+                    "subject": subject,
+                    "subject_action": subject_action,
+                    "environment": environment,
+                    "environment_motion": env_motion,
+                    "environmental_action": env_motion,
+                    "shot_type": shot_type,
+                    "camera_framing": f"{shot_type} documentary shot" if "shot" not in shot_type else shot_type,
+                    "camera_motion": camera_motion,
+                    "visual_objective": visual_obj,
+                    "veo_prompt": veo_prompt,
+                    "status": "regenerated_dedup",
+                })
+                logger.info(f"Resolved duplicate: shot {shots[idx_b]['shot_id']} → purpose changed to {new_purpose}")
+        else:
+            remaining = detect_adjacent_duplicates(shots)
+            if remaining:
+                logger.warning(f"{len(remaining)} duplicate pairs remain after {max_retries} resolution passes")
+
+        self.last_dup_metrics = {
+            "initial_pairs": initial_pairs,
+            "passes_used": passes_used,
+            "remaining": len(detect_adjacent_duplicates(shots)),
+        }
+        logger.info(
+            "Duplicate repair: initial=%d passes=%d remaining=%d",
+            self.last_dup_metrics["initial_pairs"],
+            passes_used,
+            self.last_dup_metrics["remaining"],
+        )
+        return shots
 
     # -------------------------------------------------------------------------
     # VALIDATION
@@ -991,7 +1600,9 @@ class VeoPromptGenerator:
     ) -> Dict[str, Any]:
         """
         Generate or regenerate complete Veo shot plan and prompt packs for a project.
-        Enforces regeneration backup archive to prevent data loss.
+        Phase 7: Includes shotGeneratorVersion and sourceScenePlanHash in output.
+        Archives existing plan before replacing (transactional — does not destroy
+        the current canonical chain until the new one is validated).
         """
         scene_plan_path = project_dir / "scene_plan.json"
         script_path = project_dir / "script.txt"
@@ -1020,7 +1631,8 @@ class VeoPromptGenerator:
         ts_sha256 = compute_file_sha256(ts_path)
         scene_sha256 = compute_file_sha256(scene_plan_path)
 
-        # Regeneration safety: archive existing plan if present
+        # Archive existing plan BEFORE generation (transactional).
+        # The old canonical data remains valid until the new plan is committed.
         existing_plan_path = project_dir / "veo_prompts.json"
         if existing_plan_path.is_file():
             archive_name = f"veo_prompts_archive_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
@@ -1028,16 +1640,38 @@ class VeoPromptGenerator:
             shutil.copy2(existing_plan_path, project_dir / "veo_prompts.json.bak")
             logger.info(f"Archived previous Veo shot plan to {archive_name}")
 
-        # Plan shots
-        shots = self.plan_shots_from_scenes(scenes, audio_duration)
+        # Phase 10: Load or derive candidate Visual Bible
+        vb = None
+        try:
+            from studio.visual_continuity import visual_continuity_director
+            vb = visual_continuity_director.get_visual_bible(project_dir)
+            if vb is None:
+                vb = visual_continuity_director.derive_and_save(project_dir)
+        except Exception as ex:
+            logger.warning(f"Visual Bible auto-derivation skipped: {ex}")
+
+        # Generate candidate shots using Phase 7 & 10 engine
+        shots = self.plan_shots_from_scenes(scenes, audio_duration, visual_bible=vb)
 
         now_iso = datetime.now(timezone.utc).isoformat()
+        # P1 (§4): lineage — artifact biết mình sinh từ script version nào.
+        try:
+            script_version = int(json.loads((project_dir / "script.json").read_text(encoding="utf-8")).get("version", 1))
+        except Exception:
+            script_version = 1
         veo_data: Dict[str, Any] = {
             "version": 1,
             "project": project_dir.name,
             "created_at": now_iso,
             "updated_at": now_iso,
-            "generator_version": "6.0.0",
+            # Phase 7 & 10 fields — canonical dependency tracking
+            "generator_version": CURRENT_GENERATOR_VERSION,
+            "shotGeneratorVersion": CURRENT_GENERATOR_VERSION,
+            "visualContinuityVersion": "10.0.0",
+            "script_version": script_version,
+            "sourceScenePlanHash": scene_sha256,
+            "sourceVisualBibleHash": vb.get("visualBibleHash") if vb else None,
+            # Existing hash fields (backward compat)
             "source_script_sha256": script_sha256,
             "audio_sha256": audio_sha256,
             "timestamps_sha256": ts_sha256,
@@ -1048,9 +1682,13 @@ class VeoPromptGenerator:
             "full_timeline_coverage": 100.0,
             "status": "Ready",
             "shots": shots,
+            # P0.2: per-scene source hashes for granular invalidation
+            "sceneHashes": compute_scene_hashes(scenes),
+            # P2.7: duplicate-repair metrics for this generation
+            "duplicate_repair": dict(getattr(self, "last_dup_metrics", {})),
         }
 
-        # Validate
+        # Validate candidate — do NOT write if validation fails
         errors = self.validate_veo_plan(veo_data, audio_duration, scenes)
         if errors:
             raise VeoPlanValidationError(f"Veo shot plan validation failed: {'; '.join(errors)}")
@@ -1058,7 +1696,7 @@ class VeoPromptGenerator:
         # Build markdown prompt pack
         prompt_md = self.build_markdown_prompt_pack(veo_data)
 
-        # Atomic writes
+        # Atomic writes — replace canonical only after validation succeeds
         self._atomic_write_file(project_dir / "veo_prompts.json", json.dumps(veo_data, indent=2, ensure_ascii=False))
         self._atomic_write_file(project_dir / "veo_prompts.md", prompt_md)
 
@@ -1066,6 +1704,148 @@ class VeoPromptGenerator:
         return veo_data
 
     plan_project_veo = plan_project_veo_shots
+
+    def regenerate_scene_shots(
+        self,
+        project_dir: Path,
+        scene_id: str,
+        force: bool = False,
+    ) -> Dict[str, Any]:
+        """
+        Regenerate shots for a single Scene without touching other Scenes' shots.
+        Atomically merges new shots into the canonical veo_prompts.json.
+
+        P1 (§5): scene có intake asset LOCKED thì từ chối regen trừ khi force=True
+        (replace phải explicit).
+        """
+        scene_plan_path = project_dir / "scene_plan.json"
+        veo_path = project_dir / "veo_prompts.json"
+
+        if not scene_plan_path.is_file():
+            raise FileNotFoundError(f"Missing scene_plan.json in {project_dir}.")
+        if not veo_path.is_file():
+            raise FileNotFoundError(f"Missing veo_prompts.json in {project_dir}.")
+
+        if not force:
+            try:
+                from studio.asset_intake import asset_intake as _intake
+                locked = [a for a in _intake.list_assets(project_dir, scene_id=scene_id)
+                          if a.get("locked") or a.get("lifecycle") == "LOCKED"]
+                if locked:
+                    raise ValueError(
+                        f"Scene {scene_id} có asset đã KHÓA ({locked[0].get('id')}). "
+                        f"Hãy mở khóa hoặc xác nhận ghi đè rõ ràng trước khi tạo lại."
+                    )
+            except ValueError:
+                raise
+            except Exception:
+                pass
+
+        if not scene_plan_path.is_file():
+            raise FileNotFoundError(f"Missing scene_plan.json in {project_dir}.")
+        if not veo_path.is_file():
+            raise FileNotFoundError(f"Missing veo_prompts.json in {project_dir}.")
+
+        with open(scene_plan_path, "r", encoding="utf-8") as f:
+            scene_data = json.load(f)
+        with open(veo_path, "r", encoding="utf-8") as f:
+            existing_veo = json.load(f)
+
+        scenes = scene_data.get("scenes", [])
+        target_scene = next((sc for sc in scenes if sc.get("scene_id") == scene_id), None)
+        if target_scene is None:
+            raise ValueError(f"Scene {scene_id} not found in scene_plan.json")
+
+        audio_duration = float(scene_data.get("audio_duration", 0.0))
+
+        # Archive before modification
+        archive_name = f"veo_prompts_archive_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+        shutil.copy2(veo_path, project_dir / archive_name)
+        shutil.copy2(veo_path, project_dir / "veo_prompts.json.bak")
+
+        # Generate new candidate shots for this scene only.
+        # The planner partitions absolute scene time; pass rebase_timeline=False
+        # so positions stay absolute (the full-plan rebase only applies to
+        # whole-dataset calls starting at 0.000).
+        scene_start = float(target_scene["start"])
+        scene_end = float(target_scene["end"])
+        vb = None
+        vb_path = project_dir / "visual_bible.json"
+        if vb_path.is_file():
+            try:
+                with open(vb_path, "r", encoding="utf-8") as f:
+                    vb = json.load(f)
+            except Exception:
+                vb = None
+
+        new_scene_shots = self.plan_shots_from_scenes(
+            [target_scene], float(target_scene["end"]), rebase_timeline=False, visual_bible=vb
+        )
+        for s in new_scene_shots:
+            # Clamp float noise to exact scene bounds (never silent invalid data:
+            # merged validation below still rejects any violation).
+            s["start"] = round(max(float(s["start"]), scene_start), 3)
+            s["end"] = round(min(float(s["end"]), scene_end), 3)
+            s["duration"] = round(s["end"] - s["start"], 3)
+            s["outdated"] = False
+
+        # Replace only shots belonging to this scene
+        existing_shots = existing_veo.get("shots", [])
+        kept_shots = [s for s in existing_shots if s.get("scene_id") != scene_id]
+
+        # P1 (§5 FINAL-GAPS): targeted regen không re-index Scene khác.
+        # Shot đã giữ nguyên shot_id ổn định; chỉ shot mới của scene đích nhận id mới
+        # (suffix số lớn nhất hiện có +1). `index` là thứ tự hiển thị sau sort.
+        import re as _re
+        def _num_suffix(sid: str) -> int:
+            m = _re.search(r"(\d+)$", str(sid or ""))
+            return int(m.group(1)) if m else 0
+        max_existing = 0
+        for s in kept_shots:
+            max_existing = max(max_existing, _num_suffix(s.get("shot_id")))
+        for i, s in enumerate(new_scene_shots):
+            s["shot_id"] = f"shot_{max_existing + i + 1:03d}"
+
+        # Merge: kept shots + new scene shots, re-sort by start time
+        merged = sorted(kept_shots + new_scene_shots, key=lambda s: float(s.get("start", 0)))
+
+        # Thứ tự hiển thị tuần tự; shot_id của scene khác KHÔNG đổi.
+        for i, s in enumerate(merged, start=1):
+            s["index"] = i
+
+        # Enforce global timeline boundaries
+        if merged:
+            merged[0]["start"] = 0.000
+            for i in range(len(merged) - 1):
+                merged[i]["end"] = merged[i + 1]["start"]
+                merged[i]["duration"] = round(merged[i]["end"] - merged[i]["start"], 3)
+            merged[-1]["end"] = round(audio_duration, 3)
+            merged[-1]["duration"] = round(merged[-1]["end"] - merged[-1]["start"], 3)
+
+        existing_veo["shots"] = merged
+        existing_veo["shot_count"] = len(merged)
+        existing_veo["updated_at"] = datetime.now(timezone.utc).isoformat()
+        existing_veo["shotGeneratorVersion"] = CURRENT_GENERATOR_VERSION
+        existing_veo["generator_version"] = CURRENT_GENERATOR_VERSION
+        existing_veo["sourceScenePlanHash"] = compute_file_sha256(scene_plan_path)
+        existing_veo["scene_plan_sha256"] = existing_veo["sourceScenePlanHash"]
+        # P0.2: refresh per-scene source hashes from the current plan
+        existing_veo["sceneHashes"] = compute_scene_hashes(scenes)
+        # Phase 10: synchronize sourceVisualBibleHash if no outdated shots remain
+        if vb and not any(s.get("outdated") for s in merged):
+            existing_veo["sourceVisualBibleHash"] = vb.get("visualBibleHash")
+
+        # Validate merged dataset
+        errors = self.validate_veo_plan(existing_veo, audio_duration, scenes)
+        if errors:
+            raise VeoPlanValidationError(f"Per-scene regeneration validation failed: {'; '.join(errors)}")
+
+        prompt_md = self.build_markdown_prompt_pack(existing_veo)
+        self._atomic_write_file(veo_path, json.dumps(existing_veo, indent=2, ensure_ascii=False))
+        self._atomic_write_file(project_dir / "veo_prompts.md", prompt_md)
+
+        logger.info(f"Per-scene regeneration complete: {scene_id}, total shots now {len(merged)}")
+        return existing_veo
 
 
     # -------------------------------------------------------------------------
@@ -1108,8 +1888,96 @@ class VeoPromptGenerator:
             stale_reasons.append("audio.wav modified")
         if compute_file_sha256(ts_p) != veo_data.get("timestamps_sha256"):
             stale_reasons.append("timestamps.json modified")
-        if compute_file_sha256(scene_p) != veo_data.get("scene_plan_sha256"):
-            stale_reasons.append("scene_plan.json modified")
+
+        # Check generator version mismatch — old shots generated with legacy logic
+        saved_gen_version = veo_data.get("shotGeneratorVersion") or veo_data.get("generator_version", "0.0.0")
+        if saved_gen_version != CURRENT_GENERATOR_VERSION:
+            stale_reasons.append(f"generator version mismatch (saved={saved_gen_version}, current={CURRENT_GENERATOR_VERSION})")
+
+        # Phase 10: Check visual_bible.json hash
+        vb_p = project_dir / "visual_bible.json"
+        if vb_p.is_file():
+            try:
+                with open(vb_p, "r", encoding="utf-8") as f:
+                    current_vb = json.load(f)
+                saved_vb_hash = veo_data.get("sourceVisualBibleHash")
+                if saved_vb_hash and current_vb.get("visualBibleHash") != saved_vb_hash:
+                    stale_reasons.append("visual_bible.json modified")
+            except Exception:
+                pass
+
+        # P0.2: per-scene invalidation. Only shots whose parent scene content
+        # changed become outdated; structural changes (added/removed scenes) or
+        # version mismatch invalidate the whole dataset. Replaces the old
+        # whole-file scene_plan.json comparison.
+        outdated_scenes: List[str] = []
+        partial = False
+        if scene_p.is_file():
+            try:
+                with open(scene_p, "r", encoding="utf-8") as f:
+                    current_scenes = (json.load(f)).get("scenes", [])
+                saved_hashes = veo_data.get("sceneHashes") or {}
+                if not saved_hashes:
+                    # No per-scene map (pre-P0.2 dataset): fall back to whole-dataset stale.
+                    if compute_file_sha256(scene_p) != veo_data.get("scene_plan_sha256"):
+                        stale_reasons.append("scene_plan.json modified (no per-scene map)")
+                else:
+                    current_ids = {sc.get("scene_id") for sc in current_scenes if sc.get("scene_id")}
+                    saved_ids = set(saved_hashes.keys())
+                    if current_ids != saved_ids:
+                        stale_reasons.append("scene structure changed (added/removed scenes)")
+                    else:
+                        current_hashes = compute_scene_hashes(current_scenes)
+                        outdated_scenes = sorted(
+                            sid for sid in current_ids
+                            if current_hashes.get(sid) != saved_hashes.get(sid)
+                        )
+                        if outdated_scenes:
+                            stale_reasons.append(
+                                "scene(s) modified: " + ", ".join(outdated_scenes)
+                            )
+                            # Partial only when nothing else invalidates the whole dataset.
+                            partial = not any(
+                                r.startswith(("script.txt", "audio.wav", "timestamps.json",
+                                              "scene structure", "generator version"))
+                                for r in stale_reasons
+                            )
+                            if not partial:
+                                outdated_scenes = []
+            except Exception as e:
+                stale_reasons.append(f"scene comparison failed: {e}")
+
+        # Phase 10: Collect any shots marked outdated (e.g. from partial visual continuity invalidation)
+        shot_outdated_scenes = sorted(list({
+            s.get("scene_id") or s.get("parentSceneId")
+            for s in veo_data.get("shots", [])
+            if s.get("outdated") and (s.get("scene_id") or s.get("parentSceneId"))
+        }))
+        if shot_outdated_scenes:
+            for s_id in shot_outdated_scenes:
+                if s_id not in outdated_scenes:
+                    outdated_scenes.append(s_id)
+            outdated_scenes.sort()
+            if not any("visual continuity" in r or "scene(s) modified" in r for r in stale_reasons):
+                stale_reasons.append("visual continuity modified: " + ", ".join(shot_outdated_scenes))
+
+        total_shots = len(veo_data.get("shots", []))
+        outdated_shots_count = sum(1 for s in veo_data.get("shots", []) if s.get("outdated"))
+
+        has_global_stale = any(
+            r.startswith(("script.txt", "audio.wav", "timestamps.json",
+                          "scene structure", "generator version"))
+            for r in stale_reasons
+        )
+
+        if outdated_shots_count >= total_shots and total_shots > 0:
+            partial = False
+        elif outdated_scenes and not has_global_stale and (outdated_shots_count < total_shots or not total_shots):
+            partial = True
+            if "visual_bible.json modified" in stale_reasons and outdated_shots_count < total_shots:
+                stale_reasons = [r for r in stale_reasons if r != "visual_bible.json modified"]
+        elif not partial and not outdated_scenes and not stale_reasons:
+            partial = False
 
         status = "Stale" if stale_reasons else "Ready"
         return {
@@ -1120,6 +1988,11 @@ class VeoPromptGenerator:
             "stale_reason": "; ".join(stale_reasons) if stale_reasons else None,
             "created_at": veo_data.get("created_at"),
             "updated_at": veo_data.get("updated_at"),
+            "generator_version": saved_gen_version,
+            "scene_plan_sha256": veo_data.get("scene_plan_sha256"),
+            # P0.2: granular invalidation detail
+            "partial": partial,
+            "outdated_scenes": outdated_scenes,
         }
 
     # -------------------------------------------------------------------------

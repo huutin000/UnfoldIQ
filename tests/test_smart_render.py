@@ -117,24 +117,88 @@ class TestSmartRenderPlan(unittest.TestCase):
             "match_count": 1,
         }]
         pron_hash = compute_pronunciation_hash(overrides)
+        # default (empty) narration directive, matching plan_render defaults
+        default_dir = {"rate_factor": 1.0, "pause_before": 0.0,
+                       "pause_after": 0.0, "emphasis": []}
         # Effective text of the chunk containing the phrase changes.
         changed = [c for c in plain.chunks if "Homo habilis" in c.text]
         unchanged = [c for c in plain.chunks if "Homo habilis" not in c.text]
         self.assertTrue(changed)
         for c in changed:
             new_text = c.text.replace("Homo habilis", "HOH-moh HAB-ih-liss")
-            new_hash = compute_render_hash(new_text, "af_heart", 1.0, pron_hash, 400, 480)
+            new_hash = compute_render_hash(new_text, "af_heart", 1.0, pron_hash,
+                                           400, 480, "", default_dir)
             self.assertNotEqual(new_hash, c.render_hash)
         for c in unchanged:
-            same_hash = compute_render_hash(c.text, "af_heart", 1.0, pron_hash, 400, 480)
+            same_hash = compute_render_hash(c.text, "af_heart", 1.0, pron_hash,
+                                            400, 480, "", default_dir)
             # Pronunciation hash input differs globally, so hash differs, but the
             # *chunk text* is identical — the engine reuses by identical inputs.
             self.assertEqual(
                 compute_render_hash(c.text, "af_heart", 1.0,
-                                    compute_pronunciation_hash([]), 400, 480),
+                                    compute_pronunciation_hash([]), 400, 480,
+                                    "", default_dir),
                 c.render_hash,
             )
             self.assertNotEqual(same_hash, c.render_hash)  # documents global-hash behavior
+
+
+class TestPronunciationGranularity(unittest.TestCase):
+    """P1.6: single-word entry edits invalidate only affected chunks."""
+
+    def _preprocess(self, entries):
+        import re
+
+        def run(text):
+            applied = []
+            current = text
+            for i, (orig, spoken) in enumerate(entries):
+                pat = re.compile(r"(?<!\w)" + re.escape(orig) + r"(?!\w)", re.IGNORECASE)
+                n = len(pat.findall(current))
+                if n:
+                    current = pat.sub(spoken, current)
+                    applied.append({"entry_id": f"e{i}", "original": orig,
+                                    "spoken_form": spoken, "match_count": n})
+            return current, applied
+        return run
+
+    def _plan_with_entries(self, entries):
+        pre = self._preprocess(entries)
+        synth, applied = pre(SCRIPT)
+        return plan_render(synth, "af_heart", 1.0, applied, 400, 480,
+                           pron_preprocess=pre), applied
+
+    def test_18_single_word_edit_only_affected_chunks(self):
+        before, _ = self._plan_with_entries([])
+        after, applied = self._plan_with_entries([("prey", "PRAY")])
+        self.assertTrue(applied)
+        same, diff = 0, 0
+        for cb, ca in zip(before.chunks, after.chunks):
+            # chunk text itself changes only where the word occurred
+            if "prey" in cb.text.lower():
+                diff += 1
+                self.assertNotEqual(cb.render_hash, ca.render_hash)
+            else:
+                same += 1
+                self.assertEqual(cb.render_hash, ca.render_hash)
+        self.assertGreater(same, 0)
+        self.assertGreater(diff, 0)
+
+    def test_19_multiword_edit_falls_back_global(self):
+        before, _ = self._plan_with_entries([])
+        after, applied = self._plan_with_entries(
+            [("Homo habilis", "HOH-moh HAB-ih-liss")])
+        self.assertTrue(applied)
+        # conservative fallback: every hash differs, nothing stale is reused
+        for cb, ca in zip(before.chunks, after.chunks):
+            self.assertNotEqual(cb.render_hash, ca.render_hash)
+
+    def test_20_noop_dict_edit_keeps_all_hits(self):
+        before, _ = self._plan_with_entries([])
+        after, applied = self._plan_with_entries([("xyzzqq", "SPOKEN")])
+        self.assertEqual(applied, [])
+        for cb, ca in zip(before.chunks, after.chunks):
+            self.assertEqual(cb.render_hash, ca.render_hash)
 
 
 class TestSmartRenderCache(unittest.TestCase):

@@ -1,0 +1,30 @@
+/* UQ base — foundation. Loads after legacy style.css; owns base presentation. */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; }
+body.workstation-app {
+  background: var(--uq-canvas);
+  color: var(--uq-ink-1);
+  font-family: var(--uq-font-ui);
+  font-size: var(--uq-t-body);
+  line-height: 1.55;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4 { text-wrap: pretty; line-height: 1.3; margin: 0; }
+p { margin: 0; }
+button { font-family: inherit; }
+:focus { outline: none; }
+:focus-visible { outline: 2px solid var(--uq-focus); outline-offset: 2px; border-radius: 4px; }
+::selection { background: rgba(59, 130, 246, 0.35); }
+::-webkit-scrollbar { width: 10px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--uq-line-strong); border-radius: 8px; border: 2px solid var(--uq-canvas); }
+.ui-icon { width: 15px; height: 15px; flex-shrink: 0; vertical-align: -2px; }
+.mono { font-family: var(--uq-font-mono); }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms; transition-duration: 0.01ms; scroll-behavior: auto; }
+}

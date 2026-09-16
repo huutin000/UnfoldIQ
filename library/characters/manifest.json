@@ -1,0 +1,266 @@
+{
+  "characters": [
+    {
+      "id": "char_hh_primary_caregiver_01",
+      "type": "character",
+      "displayName": {
+        "vi": "Người chăm sóc chính / Mẹ",
+        "en": "Primary caregiver / mother"
+      },
+      "flowName": "Homo habilis Mother",
+      "species": "Homo habilis",
+      "period": "Early Pleistocene",
+      "sex": "female",
+      "ageClass": "adult",
+      "role": "primary_caregiver",
+      "status": "APPROVED",
+      "isLocked": true,
+      "description": "Adult female Homo habilis with weathered skin, natural dark body hair, maternal gaze, authentic hominin cranial morphology.",
+      "referencePackName": {
+        "vi": "Bộ tham chiếu chuẩn nhân vật — Người mẹ",
+        "en": "Canonical Character Reference Pack — Mother"
+      },
+      "referencePack": {
+        "FRONT": {
+          "file": "ref_hh_mother_front.png",
+          "policy": "REQUIRED",
+          "labelVi": "Chính diện"
+        },
+        "THREE_QUARTER": {
+          "file": "ref_hh_mother_three_quarter.png",
+          "policy": "REQUIRED",
+          "labelVi": "Góc 3/4"
+        },
+        "PROFILE": {
+          "file": "ref_hh_mother_profile.png",
+          "policy": "REQUIRED",
+          "labelVi": "Góc nghiêng"
+        },
+        "FULL_BODY": {
+          "file": "ref_hh_mother_full_body.png",
+          "policy": "RECOMMENDED",
+          "labelVi": "Toàn thân"
+        }
+      },
+      "referenceCoverage": {
+        "FRONT": "ref_hh_mother_front.png",
+        "THREE_QUARTER": "ref_hh_mother_three_quarter.png",
+        "PROFILE": "ref_hh_mother_profile.png",
+        "FULL_BODY": "ref_hh_mother_full_body.png"
+      },
+      "providerSelection": {
+        "google_flow": [
+          "THREE_QUARTER",
+          "FULL_BODY"
+        ],
+        "veo": [
+          "FRONT",
+          "PROFILE",
+          "THREE_QUARTER"
+        ]
+      },
+      "tags": [
+        "hominin",
+        "mother",
+        "olduvai",
+        "caregiver"
+      ]
+    },
+    {
+      "id": "char_hh_infant_01",
+      "type": "character",
+      "displayName": {
+        "vi": "Trẻ sơ sinh / Con non",
+        "en": "Infant / newborn"
+      },
+      "flowName": "Homo habilis Infant",
+      "species": "Homo habilis",
+      "period": "Early Pleistocene",
+      "sex": "indeterminate",
+      "ageClass": "infant",
+      "role": "dependent_offspring",
+      "status": "APPROVED",
+      "isLocked": true,
+      "description": "Vulnerable dependent hominin infant with soft fine hair, clinging reflex, compact facial proportions.",
+      "referencePackName": {
+        "vi": "Bộ tham chiếu chuẩn nhân vật — Con non",
+        "en": "Canonical Character Reference Pack — Infant"
+      },
+      "referencePack": {
+        "FRONT": {
+          "file": "ref_hh_infant_front.png",
+          "policy": "REQUIRED",
+          "labelVi": "Chính diện"
+        },
+        "THREE_QUARTER": {
+          "file": "ref_hh_infant_three_quarter.png",
+          "policy": "REQUIRED",
+          "labelVi": "Góc 3/4"
+        },
+        "PROFILE": {
+          "file": "ref_hh_infant_profile.png",
+          "policy": "REQUIRED",
+          "labelVi": "Góc nghiêng"
+        },
+        "FULL_BODY": {
+          "file": "ref_hh_infant_full_body.png",
+          "policy": "RECOMMENDED",
+          "labelVi": "Toàn thân"
+        }
+      },
+      "referenceCoverage": {
+        "FRONT": "ref_hh_infant_front.png",
+        "THREE_QUARTER": "ref_hh_infant_three_quarter.png",
+        "PROFILE": "ref_hh_infant_profile.png",
+        "FULL_BODY": "ref_hh_infant_full_body.png"
+      },
+      "providerSelection": {
+        "google_flow": [
+          "THREE_QUARTER",
+          "FULL_BODY"
+        ],
+        "veo": [
+          "FRONT",
+          "PROFILE",
+          "THREE_QUARTER"
+        ]
+      },
+      "tags": [
+        "hominin",
+        "infant",
+        "vulnerable",
+        "altricial"
+      ]
+    },
+    {
+      "id": "char_hh_secondary_caregiver_01",
+      "type": "character",
+      "displayName": {
+        "vi": "Người hỗ trợ chăm sóc / Thành viên nhóm",
+        "en": "Secondary caregiver / alloparent"
+      },
+      "flowName": "Homo habilis Caregiver",
+      "species": "Homo habilis",
+      "period": "Early Pleistocene",
+      "sex": "female",
+      "ageClass": "subadult",
+      "role": "alloparent",
+      "status": "APPROVED",
+      "isLocked": true,
+      "description": "Subadult hominin helper, vigilant posture, sharing burden of carrying and guarding infant.",
+      "referencePackName": {
+        "vi": "Bộ tham chiếu chuẩn nhân vật — Người hỗ trợ",
+        "en": "Canonical Character Reference Pack — Caregiver"
+      },
+      "referencePack": {
+        "FRONT": {
+          "file": "ref_hh_caregiver_front.png",
+          "policy": "REQUIRED",
+          "labelVi": "Chính diện"
+        },
+        "THREE_QUARTER": {
+          "file": "ref_hh_caregiver_three_quarter.png",
+          "policy": "REQUIRED",
+          "labelVi": "Góc 3/4"
+        },
+        "PROFILE": {
+          "file": "ref_hh_caregiver_profile.png",
+          "policy": "REQUIRED",
+          "labelVi": "Góc nghiêng"
+        },
+        "FULL_BODY": {
+          "file": "ref_hh_caregiver_full_body.png",
+          "policy": "RECOMMENDED",
+          "labelVi": "Toàn thân"
+        }
+      },
+      "referenceCoverage": {
+        "FRONT": "ref_hh_caregiver_front.png",
+        "THREE_QUARTER": "ref_hh_caregiver_three_quarter.png",
+        "PROFILE": "ref_hh_caregiver_profile.png",
+        "FULL_BODY": "ref_hh_caregiver_full_body.png"
+      },
+      "providerSelection": {
+        "google_flow": [
+          "THREE_QUARTER",
+          "FULL_BODY"
+        ],
+        "veo": [
+          "FRONT",
+          "PROFILE",
+          "THREE_QUARTER"
+        ]
+      },
+      "tags": [
+        "hominin",
+        "alloparent",
+        "helper"
+      ]
+    },
+    {
+      "id": "char_pleistocene_predator_01",
+      "type": "character",
+      "displayName": {
+        "vi": "Thú săn mồi Pleistocene / Báo tiền sử",
+        "en": "Pleistocene predator"
+      },
+      "flowName": "Pleistocene Predator",
+      "species": "Megantereon / Ancestral Panthera",
+      "period": "Early Pleistocene",
+      "sex": "indeterminate",
+      "ageClass": "adult",
+      "role": "apex_predator",
+      "status": "APPROVED",
+      "isLocked": true,
+      "description": "Muscular Pleistocene predator, stalking stance through dry savannah grass.",
+      "referencePackName": {
+        "vi": "Bộ tham chiếu chuẩn nhân vật — Báo săn mồi",
+        "en": "Canonical Character Reference Pack — Predator"
+      },
+      "referencePack": {
+        "FRONT": {
+          "file": "ref_predator_front.png",
+          "policy": "REQUIRED",
+          "labelVi": "Chính diện"
+        },
+        "THREE_QUARTER": {
+          "file": "ref_predator_three_quarter.png",
+          "policy": "REQUIRED",
+          "labelVi": "Góc 3/4"
+        },
+        "PROFILE": {
+          "file": "ref_predator_profile.png",
+          "policy": "REQUIRED",
+          "labelVi": "Góc nghiêng"
+        },
+        "FULL_BODY": {
+          "file": "ref_predator_full_body.png",
+          "policy": "RECOMMENDED",
+          "labelVi": "Toàn thân"
+        }
+      },
+      "referenceCoverage": {
+        "FRONT": "ref_predator_front.png",
+        "THREE_QUARTER": "ref_predator_three_quarter.png",
+        "PROFILE": "ref_predator_profile.png",
+        "FULL_BODY": "ref_predator_full_body.png"
+      },
+      "providerSelection": {
+        "google_flow": [
+          "THREE_QUARTER",
+          "FULL_BODY"
+        ],
+        "veo": [
+          "FRONT",
+          "PROFILE",
+          "THREE_QUARTER"
+        ]
+      },
+      "tags": [
+        "carnivore",
+        "threat",
+        "savannah"
+      ]
+    }
+  ]
+}

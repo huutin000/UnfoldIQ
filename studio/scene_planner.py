@@ -60,6 +60,48 @@ class ScenePlanValidationError(Exception):
     pass
 
 
+def _validate_scene_visual_field(project_dir: Path, scene: Dict[str, Any],
+                                 field: str, value: Any) -> None:
+    """Phase 13: validate canonical visual references against Visual Bible V2.
+
+    Unknown IDs are rejected (blocking). Lazy import avoids module cycles.
+    """
+    from studio.visual_bible_v2 import load_bible, entity_ids
+    from studio.visual_prompt import VISUAL_TYPE_ENUM, SELECTED_OUTPUTS, RECOMMENDED_OUTPUTS
+
+    bible = load_bible(Path(project_dir)) or {}
+    if field == "visualType" and value not in VISUAL_TYPE_ENUM:
+        raise ValueError(f"Invalid visualType: {value}")
+    if field == "selectedOutputType" and value not in SELECTED_OUTPUTS:
+        raise ValueError(f"Invalid selectedOutputType: {value}")
+    if field == "recommendedOutputType" and value not in RECOMMENDED_OUTPUTS:
+        raise ValueError(f"Invalid recommendedOutputType: {value}")
+    if field == "characterIds":
+        from studio.visual_bible_v2 import find_entity as _find
+        known = set(entity_ids(bible, "character"))
+        for cid in value or []:
+            if cid not in known:
+                raise ValueError(f"Unknown characterId: {cid}")
+            ent = _find(bible, "character", cid)
+            if ent is not None and (ent.get("entityKind") or "SUBJECT_GROUP") != "REPRESENTATIVE_CHARACTER":
+                raise ValueError(
+                    f"'{cid}' is a {ent.get('entityKind') or 'SUBJECT_GROUP'}, not a "
+                    f"representative individual — bind it via subjectIds, not characterIds.")
+    if field == "environmentId" and value:
+        if value not in set(entity_ids(bible, "environment")):
+            raise ValueError(f"Unknown environmentId: {value}")
+    if field == "objectIds":
+        known = set(entity_ids(bible, "object"))
+        for oid in value or []:
+            if oid not in known:
+                raise ValueError(f"Unknown objectId: {oid}")
+    if field == "subjectIds":
+        known = set(entity_ids(bible, "character"))
+        for sid in value or []:
+            if sid not in known:
+                raise ValueError(f"Unknown subjectId: {sid}")
+
+
 class ScenePlanner:
     """Production visual scene planner and prompt generator."""
 
@@ -460,12 +502,18 @@ class ScenePlanner:
         scenes = self.group_segments_into_scenes(segments, audio_duration)
 
         now_iso = datetime.now(timezone.utc).isoformat()
+        # P1 (§4): lineage — artifact biết mình sinh từ script version nào.
+        try:
+            script_version = int(json.loads((project_dir / "script.json").read_text(encoding="utf-8")).get("version", 1))
+        except Exception:
+            script_version = 1
         plan_data: Dict[str, Any] = {
             "version": 1,
             "project": project_dir.name,
             "created_at": now_iso,
             "updated_at": now_iso,
             "planner_version": "5.0.0",
+            "script_version": script_version,
             "source_script_sha256": script_sha256,
             "audio_sha256": audio_sha256,
             "timestamps_sha256": ts_sha256,
@@ -562,12 +610,36 @@ class ScenePlanner:
             "continuity_group",
             "image_prompt",
             "negative_prompt",
+            # Phase 13: canonical visual references (validated below).
+            "visualType",
+            "characterIds",
+            "subjectIds",
+            "environmentId",
+            "objectIds",
+            "composition",
+            "narrativePurpose",
+            "recommendedOutputType",
+            "selectedOutputType",
+            "historicalConstraints",
+            "scientificConstraints",
+            "visualStatus",
+            "notes",
         ]
 
         changed = False
+        visual_changed = False
         for field in allowed_fields:
-            if field in updates and updates[field] is not None:
-                val = updates[field]
+            if field not in updates:
+                continue
+            val = updates[field]
+            # Corrective §48: explicit null/"AUTO" clears selectedOutputType
+            # back to follow-recommendation (no stale explicit state left).
+            if field == "selectedOutputType" and (val is None or val == "AUTO"):
+                target_scene["selectedOutputType"] = None
+                changed = True
+                visual_changed = True
+                continue
+            if val is not None:
                 if field == "category" and val not in VISUAL_CATEGORIES:
                     raise ValueError(f"Invalid visual category: {val}")
                 if field == "evidence_mode" and val not in EVIDENCE_MODES:
@@ -576,6 +648,12 @@ class ScenePlanner:
                     raise ValueError(f"Invalid shot type: {val}")
                 if field == "camera_motion" and val not in CAMERA_MOTIONS:
                     raise ValueError(f"Invalid camera motion: {val}")
+                if field in ("visualType", "characterIds", "subjectIds",
+                             "environmentId", "objectIds", "selectedOutputType",
+                             "recommendedOutputType", "composition", "narrativePurpose",
+                             "historicalConstraints", "scientificConstraints"):
+                    _validate_scene_visual_field(project_dir, target_scene, field, val)
+                    visual_changed = True
                 target_scene[field] = val
                 changed = True
 
@@ -626,6 +704,17 @@ class ScenePlanner:
             self._atomic_write_file(plan_path, json.dumps(plan, indent=2, ensure_ascii=False))
             self._atomic_write_file(project_dir / "image_prompts.json", json.dumps(prompt_pack, indent=2, ensure_ascii=False))
             self._atomic_write_file(project_dir / "image_prompts.md", prompt_md)
+
+            # Phase 13: scene-local visual invalidation (only this scene downstream).
+            if visual_changed:
+                try:
+                    from studio.visual_dependencies import compute_impact, apply_impact
+                    kind = "selectedOutput" if set(updates.keys()) == {"selectedOutputType"} else "scene"
+                    impact = compute_impact(project_dir, {"kind": kind,
+                                                          "sceneId": scene_id})
+                    apply_impact(project_dir, impact)
+                except Exception as e:
+                    logger.warning(f"Scene visual invalidation skipped for {scene_id}: {e}")
 
         return target_scene
 

@@ -1,0 +1,22 @@
+{
+  "objects": [
+    {
+      "id": "prop_stone_tool_01",
+      "type": "object",
+      "displayName": {
+        "vi": "Công cụ đá Oldowan",
+        "en": "Oldowan stone chopper"
+      },
+      "flowName": "Oldowan Stone Tool",
+      "period": "Early Pleistocene",
+      "status": "APPROVED",
+      "isLocked": true,
+      "description": "Sharp flaked basalt river cobble core with distinct conchoidal fracture scars.",
+      "tags": [
+        "lithic",
+        "tool",
+        "oldowan"
+      ]
+    }
+  ]
+}

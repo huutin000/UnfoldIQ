@@ -1,0 +1,64 @@
+{
+  "schemaVersion": "1.0.0",
+  "presets": [
+    {
+      "presetId": "preset_unfoldiq_editorial_hybrid",
+      "presetVersion": "1.0.0",
+      "name": "UnfoldIQ Editorial Hybrid",
+      "description": "Reusable art direction only. No characters, environments, objects, reference assets, or continuity state.",
+      "storyStyle": {
+        "renderStyle": "2D stylized semi-realistic",
+        "palette": "warm earthy editorial palette, restrained saturation",
+        "lighting": "soft directional daylight with gentle ambient occlusion",
+        "lineWeight": "clean medium-weight outlines",
+        "texture": "subtle paper grain, no photorealistic noise",
+        "anatomyStyle": "plausible simplified anatomy, no caricature",
+        "faceDetailLevel": "moderate — readable expression, not portrait detail",
+        "backgroundDetailLevel": "suggestive, depth-graded washes"
+      },
+      "explanationStyle": {
+        "renderStyle": "clean editorial vector / doodle"
+      },
+      "evidenceStyle": {
+        "renderStyle": "archaeological editorial visual"
+      },
+      "negativeStyleRules": [
+        "No anime",
+        "No chibi",
+        "No Pixar-like look",
+        "No random modern clothing",
+        "No random jewelry",
+        "No photorealistic gore",
+        "No text, captions, subtitles, or watermarks in frame"
+      ]
+    },
+    {
+      "presetId": "preset_documentary_photorealism",
+      "presetVersion": "1.0.0",
+      "name": "Documentary Photorealism (legacy-compatible)",
+      "description": "Matches the Phase 10 visualStyle tone for migrated projects.",
+      "storyStyle": {
+        "renderStyle": "photorealistic documentary reconstruction",
+        "palette": "naturalistic daylight with realistic environmental reflection",
+        "lighting": "naturalistic daylight with authentic atmospheric depth",
+        "lineWeight": "none — photographic",
+        "texture": "natural material detail",
+        "anatomyStyle": "realistic anatomy and body mechanics",
+        "faceDetailLevel": "full",
+        "backgroundDetailLevel": "full environmental detail"
+      },
+      "explanationStyle": {
+        "renderStyle": "clean educational diagram"
+      },
+      "evidenceStyle": {
+        "renderStyle": "archaeological documentation visual"
+      },
+      "negativeStyleRules": [
+        "No anime",
+        "No chibi",
+        "No modern elements inconsistent with narrated era",
+        "No text, captions, subtitles, or watermarks in frame"
+      ]
+    }
+  ]
+}

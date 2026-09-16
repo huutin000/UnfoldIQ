@@ -442,15 +442,18 @@ class TestVeoPromptGenerator(unittest.TestCase):
         status = self.generator.check_veo_status(proj)
         self.assertEqual(status["status"], "Ready")
 
-        # Mutate scene_plan.json
+        # Mutate scene_plan.json CONTENT (P0.2: per-scene invalidation —
+        # only shots of the changed scene go stale, others stay valid).
         plan_p = proj / "scene_plan.json"
         data = json.loads(plan_p.read_text(encoding="utf-8"))
-        data["scene_count"] = 99
+        data["scenes"][0]["narration"] = "A peaceful valley at dawn."
         plan_p.write_text(json.dumps(data, indent=2), encoding="utf-8")
 
         status_mutated = self.generator.check_veo_status(proj)
         self.assertEqual(status_mutated["status"], "Stale")
-        self.assertIn("scene_plan.json", status_mutated["stale_reason"])
+        self.assertIn("s1", status_mutated["stale_reason"])
+        self.assertTrue(status_mutated.get("partial"))
+        self.assertEqual(status_mutated.get("outdated_scenes"), ["s1"])
 
     def test_16_veo_manual_edit_persistence(self):
         """16. Editing a shot via update_shot preserves the edit and marks status as edited."""

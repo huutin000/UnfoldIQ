@@ -16,13 +16,13 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, Any, Optional, List
 
-from fastapi import FastAPI, HTTPException, BackgroundTasks, Request
+from fastapi import FastAPI, HTTPException, BackgroundTasks, Request, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
-from studio.config import config, PROJECTS_DIR, BASE_DIR
+from studio.config import config, PROJECTS_DIR, BASE_DIR, TEMP_DIR
 from studio.audio_service import (
     KokoroClient,
     stitch_wav_files,
@@ -54,12 +54,39 @@ from studio.project_manager import (
 from studio.pronunciation_service import PronunciationDictionary
 from studio.transcription_service import transcription_service
 from studio.scene_planner import scene_planner, ScenePlanValidationError
+from studio.narration_director import (
+    NARRATION_MODES,
+    DEFAULT_PROFILE,
+    KNOWN_PROFILES,
+    analyze_script as nd_analyze,
+    validate_plan as nd_validate,
+    save_plan as nd_save,
+    load_plan as nd_load,
+    plan_status as nd_status,
+    update_beat as nd_update_beat,
+    narration_synth_hash as nd_synth_hash,
+    compile_for_chunks as nd_compile,
+    assemble_master as nd_assemble,
+    segment_script as nd_segment,
+    beat_stats as nd_stats,
+)
 from studio.veo_prompt_generator import veo_generator, VeoPromptGenerator, VeoPlanValidationError
 from studio.voice_qa import (
     voice_qa_manager,
     VoiceQAEvaluator,
     compute_file_sha256,
 )
+from studio.visual_continuity import visual_continuity_director
+from studio.production_export import (
+    ProductionExportError,
+    execute_export as production_execute_export,
+    production_status as production_get_status,
+    validate_project_id as production_validate_project_id,
+)
+from studio.phase14_router import router as phase14_router
+from studio.phase15a_router import router as phase15a_router
+from studio.jobs_manager import jobs_manager
+from studio.graceful_shutdown import graceful_shutdown_manager
 
 
 # Setup logging
@@ -79,6 +106,16 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(phase14_router)
+app.include_router(phase15a_router)
+
+@app.on_event("startup")
+async def startup_event():
+    """Startup self-check and crash recovery for interrupted persistent jobs."""
+    recovered = jobs_manager.recover_crashed_jobs()
+    if recovered > 0:
+        logger.info(f"Phase 15A Startup: Recovered {recovered} interrupted jobs.")
 
 kokoro_client = KokoroClient()
 pron_dict = PronunciationDictionary(BASE_DIR / "config" / "pronunciation_dictionary.json")
@@ -123,6 +160,9 @@ class JobRequest(BaseModel):
     output_formats: Optional[List[str]] = Field(default=None, description="Output formats e.g. ['wav', 'mp3']")
     export_mp3: bool = Field(default=True, description="Also generate MP3")
     render_mode: str = Field(default=DEFAULT_RENDER_MODE, description="Smart Render profile: eco|balanced|fast")
+    narration_mode: str = Field(default="auto", description="Narration Director mode: auto|custom|off")
+    narration_profile: str = Field(default=DEFAULT_PROFILE, description="Narration profile")
+    narration_mode: str = Field(default="auto", description="Narration Director mode: auto|custom|off")
 
 
 class PronunciationCreateRequest(BaseModel):
@@ -153,6 +193,8 @@ class UserSettingsRequest(BaseModel):
     speed: Optional[float] = None
     preferred_format: Optional[str] = None
     render_mode: Optional[str] = None
+    narration_mode: Optional[str] = None
+    narration_profile: Optional[str] = None
 
 
 class SceneGenerateRequest(BaseModel):
@@ -171,6 +213,67 @@ class SceneUpdateRequest(BaseModel):
     continuity_group: Optional[str] = None
     image_prompt: Optional[str] = None
     negative_prompt: Optional[str] = None
+    # Phase 13: canonical visual references
+    visualType: Optional[str] = None
+    subjectIds: Optional[List[str]] = None
+    characterIds: Optional[List[str]] = None
+    environmentId: Optional[str] = None
+    objectIds: Optional[List[str]] = None
+    composition: Optional[str] = None
+    narrativePurpose: Optional[str] = None
+    recommendedOutputType: Optional[str] = None
+    selectedOutputType: Optional[str] = None
+    historicalConstraints: Optional[List[str]] = None
+    scientificConstraints: Optional[List[str]] = None
+    visualStatus: Optional[str] = None
+    notes: Optional[str] = None
+
+
+class CastCreateRequest(BaseModel):
+    name: Optional[str] = Field(default=None)
+
+
+class CastMergeRequest(BaseModel):
+    character_id: str = Field(...)
+    bind_scenes: bool = Field(default=False)
+
+
+class EditorialLockRequest(BaseModel):
+    span_type: str = Field(..., description="PROPER_NOUN|NUMBER|DATE|SPECIES|PLACE|EVIDENCE_ANCHOR|CAVEAT")
+    startOffset: int = Field(..., ge=0)
+    endOffset: int = Field(..., ge=1)
+
+
+class VisualEntityCreateRequest(BaseModel):
+    kind: str = Field(..., description="character|environment|object")
+    data: Dict[str, Any] = Field(...)
+
+
+class VisualEntityUpdateRequest(BaseModel):
+    kind: str = Field(..., description="character|environment|object")
+    entity_id: str = Field(...)
+    updates: Dict[str, Any] = Field(...)
+
+
+class VisualStyleUpdateRequest(BaseModel):
+    style: Dict[str, Any] = Field(...)
+
+
+class VisualPresetApplyRequest(BaseModel):
+    preset_id: str = Field(...)
+
+
+class VisualPromptsGenerateRequest(BaseModel):
+    scene_ids: Optional[List[str]] = Field(default=None)
+
+
+class DependencyImpactRequest(BaseModel):
+    kind: str = Field(..., description="character|environment|object|style|scene|visualType|selectedOutput|referenceAsset")
+    id: Optional[str] = Field(default=None)
+    sceneId: Optional[str] = Field(default=None)
+    entityType: Optional[str] = Field(default=None)
+    entityId: Optional[str] = Field(default=None)
+    assetId: Optional[str] = Field(default=None)
 
 
 class VeoGenerateRequest(BaseModel):
@@ -200,6 +303,12 @@ class VoiceQARunRequest(BaseModel):
 
 class VoiceQADecisionRequest(BaseModel):
     note: Optional[str] = Field(default=None, description="Optional note for human decision")
+
+
+class VisualBibleEntityUpdateRequest(BaseModel):
+    entity_type: str = Field(..., description="Type of entity: subject, environment, period, prop, continuityGroup")
+    entity_id: str = Field(..., description="Canonical ID of the entity")
+    updates: Dict[str, Any] = Field(..., description="Fields to update on the entity")
 
 
 class TimestampGenerateRequest(BaseModel):
@@ -246,6 +355,49 @@ def _seed_cache_from_siblings(
     return imported
 
 
+def _adopt_compatible_narration_plan(req: JobRequest, synthesis_text: str,
+                                     narr_mode: str, narr_profile: str
+                                     ) -> Optional[Dict[str, Any]]:
+    """Reuse a sibling project's valid narration plan (preserves manual edits).
+
+    Sibling = newest project dir sharing the request slug. Adopted only when
+    the stored plan matches the current synthesis hash, analyzer version and
+    profile, and revalidates cleanly (no ERROR). Returns None otherwise.
+    """
+    from studio.project_manager import sanitize_project_name
+    from studio.narration_director import (
+        script_content_hash as _nd_script_hash,
+        ANALYZER_VERSION as _ND_ANALYZER_VERSION,
+    )
+    try:
+        slug = sanitize_project_name(req.project_name or "unfoldiq_project")
+        want_hash = _nd_script_hash(synthesis_text)
+        candidates = sorted(
+            (p for p in PROJECTS_DIR.iterdir()
+             if p.is_dir() and p.name.endswith("_" + slug)),
+            key=lambda p: p.name, reverse=True,
+        )
+        for sib in candidates:
+            plan = nd_load(sib)
+            if not plan or plan.get("profile") != narr_profile:
+                continue
+            if plan.get("sourceScriptHash") != want_hash:
+                continue
+            if plan.get("analyzerVersion") != _ND_ANALYZER_VERSION:
+                continue
+            res = nd_validate(plan, synthesis_text)
+            if res["status"] == "ERROR":
+                continue
+            adopted = json.loads(json.dumps(plan))
+            adopted["mode"] = narr_mode
+            adopted["status"] = res["status"]
+            logger.info(f"Adopted compatible narration plan from sibling {sib.name}")
+            return adopted
+    except Exception as e:
+        logger.warning(f"Narration sibling adoption failed (non-fatal): {e}")
+    return None
+
+
 async def _run_tts_job(job_id: str, req: JobRequest):
     """Background task: Smart Render Engine (Phase 7) behind Generate Audio.
 
@@ -282,6 +434,57 @@ async def _run_tts_job(job_id: str, req: JobRequest):
         synthesis_text, applied_overrides = pron_dict.preprocess(req.script)
         synthesis_hash = hashlib.sha256(synthesis_text.encode("utf-8")).hexdigest()
 
+        # Step 2b: Narration Director (Phase 9, hidden).
+        # Auto/Custom: adopt a compatible sibling plan (preserves manual edits)
+        # or analyze fresh (deterministic). Off: bypass with a distinct hash.
+        # script.txt is never rewritten — narration produces metadata only.
+        narr_mode = str(getattr(req, "narration_mode", "auto") or "auto").lower()
+        if narr_mode not in NARRATION_MODES:
+            narr_mode = "auto"
+        narr_profile = str(getattr(req, "narration_profile", "") or "").strip()
+        if narr_profile not in KNOWN_PROFILES:
+            narr_profile = DEFAULT_PROFILE
+        narr_plan = None
+        narr_directives: Dict[int, Dict[str, Any]] = {}
+        narr_hash = nd_synth_hash(None)
+        job["narration_mode"] = narr_mode
+        job["narration_warning"] = ""
+        if narr_mode in ("auto", "custom"):
+            try:
+                narr_plan = _adopt_compatible_narration_plan(
+                    req, synthesis_text, narr_mode, narr_profile)
+                if narr_plan is None:
+                    cand = nd_analyze(synthesis_text, profile=narr_profile, mode=narr_mode)
+                    res = nd_validate(cand, synthesis_text)
+                    if res["status"] == "ERROR":
+                        raise ValueError("; ".join(res["issues"][:3]))
+                    cand["status"] = res["status"]
+                    cand["mode"] = narr_mode
+                    narr_plan = cand
+                else:
+                    narr_plan["mode"] = narr_mode
+                narr_hash = nd_synth_hash(narr_plan)
+                sentences = nd_segment(synthesis_text)
+                # chunk texts come from the same deterministic chunker Smart
+                # Render uses (no I/O, no side effects)
+                pre_manifest = build_and_verify_manifest(
+                    synthesis_text,
+                    target_chars=config.chunk_target_chars,
+                    max_chars=config.chunk_max_chars,
+                )
+                chunk_texts = [c["text"] for c in pre_manifest["chunks"]]
+                narr_directives = nd_compile(chunk_texts, sentences, narr_plan)
+            except TextIntegrityError:
+                raise
+            except Exception as e:
+                logger.warning(f"Job {job_id} narration unavailable, falling back to Off: {e}")
+                narr_plan = None
+                narr_hash = nd_synth_hash(None)
+                narr_directives = {}
+                job["narration_warning"] = (
+                    "Narration analysis unavailable; rendered with plain narration.")
+            job["narration_beats"] = len(narr_plan["beats"]) if narr_plan else 0
+
         # Step 3: Deterministic render plan (Phase 2 chunking guarantees kept)
         try:
             plan = plan_render(
@@ -291,6 +494,9 @@ async def _run_tts_job(job_id: str, req: JobRequest):
                 applied_overrides=applied_overrides,
                 target_chars=config.chunk_target_chars,
                 max_chars=config.chunk_max_chars,
+                pron_preprocess=pron_dict.preprocess,
+                narration={"directives": narr_directives,
+                           "narration_hash": narr_hash},
             )
         except TextIntegrityError as tie:
             job["state"] = "failed"
@@ -309,6 +515,14 @@ async def _run_tts_job(job_id: str, req: JobRequest):
         manifest["pronunciation_dictionary_applied"] = bool(applied_overrides)
         manifest["pronunciation_overrides"] = applied_overrides
         manifest["synthesis_text_hash"] = synthesis_hash
+        if narr_plan is not None:
+            manifest["narration"] = {
+                "mode": narr_plan.get("mode"),
+                "profile": narr_plan.get("profile"),
+                "beats": len(narr_plan.get("beats", [])),
+                "status": narr_plan.get("status"),
+                "sourceNarrationPlanHash": narr_hash,
+            }
 
         job["total_chunks"] = plan.total_chunks
         job["manifest"] = manifest
@@ -320,6 +534,13 @@ async def _run_tts_job(job_id: str, req: JobRequest):
         project_dir = create_project_directory(req.project_name)
         job["project_dir"] = str(project_dir)
         job["project_name"] = project_dir.name
+
+        # Phase 9: persist the narration plan inside the new project.
+        if narr_plan is not None:
+            try:
+                nd_save(project_dir, narr_plan)
+            except Exception as e:
+                logger.warning(f"Job {job_id} narration plan save failed (non-fatal): {e}")
 
         cache = RenderCache(project_dir)
         job_state = RenderJobState(project_dir)
@@ -357,10 +578,12 @@ async def _run_tts_job(job_id: str, req: JobRequest):
             tmp_path = cache.chunks_dir / f".tmp_{chunk.chunk_id}_{chunk.render_hash[:12]}.wav"
 
             async def synth_fn(text: str, out: Path) -> None:
+                # Phase 9: per-chunk narration rate (clamped to Kokoro-safe bounds).
+                eff_speed = min(2.0, max(0.5, float(req.speed) * float(chunk.rate_factor)))
                 await kokoro_client.synthesize_chunk(
                     text=text,
                     voice=req.voice,
-                    speed=req.speed,
+                    speed=eff_speed,
                     output_path=out,
                     cancel_event=cancel_event,
                 )
@@ -468,14 +691,20 @@ async def _run_tts_job(job_id: str, req: JobRequest):
         job["elapsed_seconds"] = round(time.time() - start_time, 1)
 
         ordered = sorted(plan.chunks, key=lambda c: c.index)
-        chunk_files = []
+        # Phase 9: master track = chunk audio + planned silence (pauses).
+        # Pause-free legacy path produces an identical track to stitch_wav_files.
+        track = []
         for chunk in ordered:
             p = cache.lookup(chunk.render_hash)
             if p is None:
                 raise RuntimeError(
                     f"Chunk {chunk.chunk_id} missing from cache at stitch time."
                 )
-            chunk_files.append(p)
+            if float(chunk.pause_before) > 0.01:
+                track.append(("silence", round(float(chunk.pause_before), 2)))
+            track.append(("wav", p))
+            if float(chunk.pause_after) > 0.01:
+                track.append(("silence", round(float(chunk.pause_after), 2)))
 
         master_tmp = project_dir / ".audio_new.wav"  # valid ext required by encoder
         try:
@@ -483,7 +712,7 @@ async def _run_tts_job(job_id: str, req: JobRequest):
                 master_tmp.unlink()
         except Exception:
             pass
-        duration_s = stitch_wav_files(chunk_files, master_tmp)
+        duration_s = nd_assemble(track, master_tmp)
         master_wav_path = project_dir / "audio.wav"
         replace_file_atomically(master_tmp, master_wav_path)
         job["final_duration_seconds"] = round(duration_s, 2)
@@ -526,6 +755,11 @@ async def _run_tts_job(job_id: str, req: JobRequest):
             "cache_hits": int(job.get("reused_chunks", 0)),
             "rendered_chunks": int(job.get("rendered_chunks", 0)),
             "retries": int(job.get("retries", 0)),
+            "narration_mode": narr_mode,
+            "narration_profile": narr_profile,
+            "sourceNarrationPlanHash": narr_hash,
+            "narration_beats": int(job.get("narration_beats", 0)),
+            "narration_warning": job.get("narration_warning", ""),
         }
         save_project_metadata(project_dir, req.script, settings, manifest)
         try:
@@ -670,6 +904,209 @@ async def get_project_render_state(dir_name: str):
         "cached_chunks": len((manifest.get("chunks") or {})),
         "render_engine_version": 1,
     }
+
+
+# ==============================================================================
+# NARRATION DIRECTOR API (Phase 9, hidden inside Voice)
+# ==============================================================================
+
+class NarrationAnalyzeRequest(BaseModel):
+    mode: Optional[str] = Field(default=None, description="auto|custom|off")
+    force: bool = Field(default=False, description="Regenerate even with manual edits")
+
+
+class NarrationBeatUpdateRequest(BaseModel):
+    style: Optional[str] = None
+    intensity: Optional[float] = None
+    rate: Optional[float] = None
+    pauseBefore: Optional[float] = None
+    pauseAfter: Optional[float] = None
+    emphasis: Optional[List[str]] = None
+    accepted: Optional[bool] = None
+
+
+class NarrationPreviewRequest(BaseModel):
+    beat_id: Optional[str] = Field(default=None, description="Beat to preview; omit for summary")
+
+
+def _narration_script_of(project_path: Path) -> str:
+    script_path = project_path / "script.txt"
+    if not script_path.is_file():
+        raise HTTPException(status_code=404, detail="Script not found.")
+    return script_path.read_text(encoding="utf-8")
+
+
+@app.get("/api/projects/{dir_name}/narration/plan")
+async def get_narration_plan(dir_name: str):
+    """Narration plan + lifecycle status (EMPTY/READY/OUTDATED/ERROR). Read-only."""
+    project_path = PROJECTS_DIR / dir_name
+    if not project_path.is_dir():
+        raise HTTPException(status_code=404, detail="Project not found.")
+    script = _narration_script_of(project_path)
+    plan = nd_load(project_path)
+    status = nd_status(project_path, script)
+    summary = None
+    if plan is not None:
+        res = nd_validate(plan, script)
+        summary = {"beats": len(plan.get("beats", [])),
+                   "validation": res["status"],
+                   "issues": res["issues"][:20],
+                   "stats": res["stats"],
+                   "manual_edited": sum(1 for b in plan.get("beats", [])
+                                        if b.get("manualEdited"))}
+    return {"project": dir_name, "status": status, "plan": plan, "summary": summary}
+
+
+@app.post("/api/projects/{dir_name}/narration/analyze")
+async def analyze_narration(dir_name: str, req: NarrationAnalyzeRequest = None):
+    """Analyze → validate → atomic commit. Refuses silent manual-edit loss."""
+    project_path = PROJECTS_DIR / dir_name
+    if not project_path.is_dir():
+        raise HTTPException(status_code=404, detail="Project not found.")
+    req = req or NarrationAnalyzeRequest()
+    mode = (req.mode or "auto").lower()
+    if mode not in NARRATION_MODES:
+        mode = "auto"
+    script = _narration_script_of(project_path)
+    existing = nd_load(project_path)
+    manual = sum(1 for b in (existing.get("beats", []) if existing else [])
+                 if b.get("manualEdited"))
+    if manual and not req.force:
+        raise HTTPException(
+            status_code=409,
+            detail={"message": "Narration Plan contains manual edits.",
+                    "manual_edits": manual, "needs_confirm": True})
+    cand = nd_analyze(script, mode=mode)
+    res = nd_validate(cand, script)
+    if res["status"] == "ERROR":
+        raise HTTPException(status_code=422, detail="; ".join(res["issues"][:5]))
+    cand["status"] = res["status"]
+    nd_save(project_path, cand)
+    return {"project": dir_name, "status": res["status"],
+            "summary": {"beats": len(cand["beats"]), "stats": res["stats"],
+                        "issues": res["issues"][:20]}}
+
+
+@app.put("/api/projects/{dir_name}/narration/beats/{beat_id}")
+async def update_narration_beat(dir_name: str, beat_id: str,
+                                req: NarrationBeatUpdateRequest):
+    """Manual beat edit (allowlisted fields); persists manualEdited. Never touches script."""
+    project_path = PROJECTS_DIR / dir_name
+    if not project_path.is_dir():
+        raise HTTPException(status_code=404, detail="Project not found.")
+    plan = nd_load(project_path)
+    if plan is None:
+        raise HTTPException(status_code=404, detail="Narration Plan not found.")
+    try:
+        beat = nd_update_beat(plan, beat_id,
+                              {k: v for k, v in req.model_dump().items()
+                               if v is not None})
+    except (KeyError, ValueError) as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    script = _narration_script_of(project_path)
+    res = nd_validate(plan, script)
+    plan["status"] = res["status"]
+    nd_save(project_path, plan)
+    return {"project": dir_name, "beat": beat, "plan_status": res["status"],
+            "issues": [i for i in res["issues"] if beat_id in i]}
+
+
+def _cleanup_narration_previews(max_age_s: float = 3600.0) -> None:
+    try:
+        preview_dir = TEMP_DIR / "narration_preview"
+        if not preview_dir.is_dir():
+            return
+        now = time.time()
+        for p in preview_dir.glob("*.wav"):
+            try:
+                if now - p.stat().st_mtime > max_age_s:
+                    p.unlink()
+            except Exception:
+                pass
+    except Exception:
+        pass
+
+
+@app.post("/api/projects/{dir_name}/narration/preview")
+async def preview_narration_beat(dir_name: str, req: NarrationPreviewRequest = None):
+    """Render one beat (or representative summary) to TEMP audio. Never touches audio.wav."""
+    project_path = PROJECTS_DIR / dir_name
+    if not project_path.is_dir():
+        raise HTTPException(status_code=404, detail="Project not found.")
+    req = req or NarrationPreviewRequest()
+    plan = nd_load(project_path)
+    if plan is None or plan.get("mode") == "off":
+        raise HTTPException(status_code=404, detail="No usable Narration Plan.")
+    beats = plan.get("beats", [])
+    if req.beat_id:
+        sel = [b for b in beats if b.get("beatId") == req.beat_id]
+        if not sel:
+            raise HTTPException(status_code=404, detail="Beat not found.")
+    else:
+        # representative summary: one per style family + highest intensity, ≤60s
+        fams = {"neutral": ("NEUTRAL", "AUTHORITATIVE"),
+                "curious": ("CURIOUS", "MYSTERIOUS"),
+                "tense": ("TENSE", "OMINOUS", "URGENT"),
+                "reveal": ("REVEAL",)}
+        sel = []
+        for fam_styles in fams.values():
+            cand = [b for b in beats if b.get("style") in fam_styles]
+            if cand:
+                sel.append(max(cand, key=lambda b: float(b.get("confidence", 0))))
+        top = max(beats, key=lambda b: float(b.get("intensity", 0)), default=None)
+        if top is not None and all(b.get("beatId") != top.get("beatId") for b in sel):
+            sel.append(top)
+        # cap ~60s at ~150wpm
+        picked, words = [], 0
+        for b in sel:
+            w = len(b.get("text", "").split())
+            if words + w > 150 and picked:
+                break
+            picked.append(b)
+            words += w
+        sel = picked or beats[:1]
+        if not sel:
+            raise HTTPException(status_code=404, detail="No beats to preview.")
+    _cleanup_narration_previews()
+    settings = {}
+    try:
+        settings = json.loads((project_path / "settings.json").read_text(encoding="utf-8"))
+    except Exception:
+        pass
+    voice = settings.get("voice", config.default_voice)
+    speed = float(settings.get("speed", config.default_speed))
+    out_dir = TEMP_DIR / "narration_preview"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    tag = req.beat_id or "summary"
+    safe_tag = "".join(c if c.isalnum() or c in ("-", "_") else "_" for c in tag)[:40]
+    out_path = out_dir / f"{dir_name}_{safe_tag}.wav"
+    if out_path.exists():
+        try:
+            out_path.unlink()
+        except Exception:
+            pass
+    pron_dict.load()
+    track = []
+    for b in sel:
+        eff_text, _ = pron_dict.preprocess(b.get("text", ""))
+        tmp = out_dir / f".tmp_{safe_tag}_{b.get('beatId')}.wav"
+        eff_speed = min(2.0, max(0.5, speed * float(b.get("rate", 1.0))))
+        await kokoro_client.synthesize_chunk(
+            text=eff_text, voice=voice, speed=eff_speed, output_path=tmp)
+        if float(b.get("pauseBefore", 0)) > 0.01:
+            track.append(("silence", float(b["pauseBefore"])))
+        track.append(("wav", tmp))
+        if float(b.get("pauseAfter", 0)) > 0.01:
+            track.append(("silence", float(b["pauseAfter"])))
+    nd_assemble(track, out_path)
+    for _, p in track:
+        if isinstance(p, Path) and p.name.startswith(".tmp_"):
+            try:
+                p.unlink()
+            except Exception:
+                pass
+    return FileResponse(path=str(out_path), media_type="audio/wav",
+                        filename=f"narration_preview_{safe_tag}.wav")
 
 
 @app.get("/api/jobs/{job_id}/events")
@@ -911,6 +1348,8 @@ async def get_user_settings():
         "speed": config.default_speed,
         "preferred_format": "mp3",
         "render_mode": DEFAULT_RENDER_MODE,
+        "narration_mode": "auto",
+        "narration_profile": DEFAULT_PROFILE,
     }
 
 
@@ -936,6 +1375,12 @@ async def save_user_settings(req: UserSettingsRequest):
     if req.render_mode is not None:
         mode = str(req.render_mode).lower()
         current["render_mode"] = mode if mode in RENDER_MODES else DEFAULT_RENDER_MODE
+    if req.narration_mode is not None:
+        nmode = str(req.narration_mode).lower()
+        current["narration_mode"] = nmode if nmode in NARRATION_MODES else "auto"
+    if req.narration_profile is not None:
+        nprof = str(req.narration_profile)
+        current["narration_profile"] = nprof if nprof in KNOWN_PROFILES else DEFAULT_PROFILE
     current["updated_at"] = datetime.now(timezone.utc).isoformat()
 
     # Atomic write
@@ -987,15 +1432,21 @@ async def _rerender_chunk_impl(dir_name: str, chunk_index: int) -> Dict[str, Any
     render_mode = settings.get("render_mode", DEFAULT_RENDER_MODE)
     export_mp3 = bool(settings.get("export_mp3", True)) or (project_dir / "audio.mp3").is_file()
 
-    applied_overrides: Dict[str, str] = {}
-    synthesis_text = pron_dict.apply(script_text, applied_map=applied_overrides)
+    applied_overrides: List[Dict[str, Any]] = []
+    synthesis_text = script_text
+    try:
+        pron_dict.load()
+        synthesis_text, applied_overrides = pron_dict.preprocess(script_text)
+    except Exception:
+        pass
     plan = plan_render(
-        script=script_text,
+        synthesis_text,
         voice=voice,
         speed=speed,
-        render_mode=render_mode,
-        pronunciation_overrides=applied_overrides,
-        synthesis_script=synthesis_text
+        applied_overrides=applied_overrides,
+        target_chars=config.chunk_target_chars,
+        max_chars=config.chunk_max_chars,
+        pron_preprocess=pron_dict.preprocess,
     )
 
     target_chunk = None
@@ -1498,7 +1949,7 @@ async def generate_project_scenes(dir_name: str, req: SceneGenerateRequest = Sce
 
 @app.put("/api/projects/{dir_name}/scenes/{scene_id}")
 async def update_project_scene(dir_name: str, scene_id: str, req: SceneUpdateRequest):
-    """Update a specific scene's visual prompt, category, summary, or framing."""
+    """Update a specific scene's visual prompt, category, summary, framing, or Phase 13 canonical visual refs."""
     project_path = PROJECTS_DIR / dir_name
     if not project_path.is_dir():
         raise HTTPException(status_code=404, detail="Project directory not found.")
@@ -1708,12 +2159,952 @@ async def download_project_veo_prompts_md(dir_name: str):
 
 
 
+@app.post("/api/projects/{dir_name}/veo/regenerate-all")
+async def regenerate_all_veo_shots(dir_name: str):
+    """
+    Regenerate ALL Veo shots from the current Scene Plan using the Phase 7 engine.
+    Archives existing veo_prompts.json before committing new data.
+    Returns the new shot list on success; does not mutate canonical data on failure.
+    """
+    project_path = PROJECTS_DIR / dir_name
+    if not project_path.is_dir():
+        raise HTTPException(status_code=404, detail="Project directory not found.")
+
+    scene_plan_path = project_path / "scene_plan.json"
+    if not scene_plan_path.is_file():
+        raise HTTPException(status_code=400, detail="Missing scene_plan.json. Run scene planning first.")
+
+    active_project_dirs.add(dir_name)
+    try:
+        plan = veo_generator.plan_project_veo_shots(project_path, force=True)
+        return {
+            "status": "Ready",
+            "shot_count": plan.get("shot_count", 0),
+            "coverage": plan.get("full_timeline_coverage", 100.0),
+            "generator_version": plan.get("generator_version"),
+            "shots": plan.get("shots", []),
+        }
+    except FileNotFoundError as fnf:
+        raise HTTPException(status_code=400, detail=str(fnf))
+    except VeoPlanValidationError as ve:
+        logger.error(f"Veo regenerate-all validation error in {dir_name}: {ve}")
+        raise HTTPException(status_code=422, detail=str(ve))
+    except Exception as e:
+        logger.exception(f"Failed to regenerate all Veo shots for {dir_name}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        active_project_dirs.discard(dir_name)
+
+
+@app.post("/api/projects/{dir_name}/veo/regenerate-scene/{scene_id}")
+async def regenerate_scene_veo_shots(dir_name: str, scene_id: str, force: bool = False):
+    """
+    Regenerate Veo shots for a single Scene without touching other Scenes.
+    Archives existing veo_prompts.json before committing.
+    P1 (§5): scene có asset LOCKED cần force=True (xác nhận rõ ràng).
+    """
+    project_path = PROJECTS_DIR / dir_name
+    if not project_path.is_dir():
+        raise HTTPException(status_code=404, detail="Project directory not found.")
+
+    active_project_dirs.add(dir_name)
+    try:
+        updated_veo = veo_generator.regenerate_scene_shots(project_path, scene_id, force=force)
+        return {
+            "status": "Ready",
+            "scene_id": scene_id,
+            "shot_count": updated_veo.get("shot_count", 0),
+            "shots": updated_veo.get("shots", []),
+        }
+    except (FileNotFoundError, ValueError) as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except VeoPlanValidationError as ve:
+        logger.error(f"Per-scene regeneration validation error for {scene_id} in {dir_name}: {ve}")
+        raise HTTPException(status_code=422, detail=str(ve))
+    except Exception as e:
+        logger.exception(f"Failed to regenerate scene {scene_id} in {dir_name}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        active_project_dirs.discard(dir_name)
+
+
+@app.post("/api/projects/{dir_name}/complete")
+async def complete_project(dir_name: str):
+    """
+    Mark a project as completed, export final audio to outputs/ if not already exported,
+    and persist completed metadata in settings.json.
+    """
+    project_path = PROJECTS_DIR / dir_name
+    if not project_path.is_dir():
+        raise HTTPException(status_code=404, detail="Project directory not found.")
+
+    settings_file = project_path / "settings.json"
+    settings_data = {}
+    if settings_file.is_file():
+        try:
+            with open(settings_file, "r", encoding="utf-8") as f:
+                settings_data = json.load(f)
+        except Exception as e:
+            logger.warning(f"Could not read settings.json for {dir_name}: {e}")
+
+    settings_data["status"] = "Completed"
+    settings_data["completed_at"] = datetime.now(timezone.utc).isoformat()
+    try:
+        with open(settings_file, "w", encoding="utf-8") as f:
+            json.dump(settings_data, f, indent=2, ensure_ascii=False)
+    except Exception as e:
+        logger.error(f"Failed to update settings.json for {dir_name}: {e}")
+
+    exported_path = None
+    if (project_path / "audio.wav").is_file():
+        try:
+            exported_path = str(export_to_outputs(project_path, "wav"))
+        except Exception as e:
+            logger.warning(f"Could not auto-export wav on complete: {e}")
+
+    return {
+        "status": "Completed",
+        "project": dir_name,
+        "completed_at": settings_data["completed_at"],
+        "exported_audio": exported_path
+    }
+
+
+@app.get("/api/projects/{dir_name}/script")
+async def get_project_script(dir_name: str):
+    """Read-only: return canonical script.txt so the editor can hydrate on open."""
+    project_path = PROJECTS_DIR / dir_name
+    script_path = project_path / "script.txt"
+    if not project_path.is_dir() or not script_path.is_file():
+        raise HTTPException(status_code=404, detail="Script not found.")
+    return {"project": dir_name, "script": script_path.read_text(encoding="utf-8")}
+
+
+@app.get("/api/projects/{dir_name}/visual-bible")
+async def get_project_visual_bible(dir_name: str):
+    """Return visual_bible.json, status, and summary counts."""
+    project_path = Path(PROJECTS_DIR) / dir_name
+    if not project_path.is_dir():
+        raise HTTPException(status_code=404, detail="Project directory not found.")
+
+    status = visual_continuity_director.check_visual_bible_status(project_path)
+    bible = visual_continuity_director.get_visual_bible(project_path)
+    return {
+        "status": status.get("status", "Not Generated"),
+        "status_info": status,
+        "visual_bible": bible,
+    }
+
+
+@app.post("/api/projects/{dir_name}/visual-bible/generate")
+async def generate_project_visual_bible(dir_name: str, force: bool = False):
+    """Derive or re-derive candidate Visual Bible from scene plan and script."""
+    project_path = Path(PROJECTS_DIR) / dir_name
+    if not project_path.is_dir():
+        raise HTTPException(status_code=404, detail="Project directory not found.")
+
+    active_project_dirs.add(dir_name)
+    try:
+        vb = visual_continuity_director.derive_and_save(project_path, force=force)
+        status = visual_continuity_director.check_visual_bible_status(project_path)
+        return {
+            "status": "Ready",
+            "visual_bible": vb,
+            "status_info": status,
+        }
+    except (FileNotFoundError, ValueError) as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        logger.exception(f"Failed to generate Visual Bible for {dir_name}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        active_project_dirs.discard(dir_name)
+
+
+@app.put("/api/projects/{dir_name}/visual-bible/entity")
+async def update_visual_bible_entity(dir_name: str, req: VisualBibleEntityUpdateRequest):
+    """Update a specific entity in the Visual Bible while preserving manual edits."""
+    project_path = Path(PROJECTS_DIR) / dir_name
+    if not project_path.is_dir():
+        raise HTTPException(status_code=404, detail="Project directory not found.")
+
+    try:
+        updated = visual_continuity_director.update_entity(
+            project_dir=project_path,
+            entity_type=req.entity_type,
+            entity_id=req.entity_id,
+            updates=req.updates,
+        )
+        return {"status": "Updated", "entity": updated}
+    except (KeyError, ValueError) as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        logger.exception(f"Failed to update Visual Bible entity for {dir_name}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/projects/{dir_name}/visual-bible/issues")
+async def get_visual_continuity_issues(dir_name: str):
+    """Run full continuity validation and return issues list."""
+    project_path = Path(PROJECTS_DIR) / dir_name
+    if not project_path.is_dir():
+        raise HTTPException(status_code=404, detail="Project directory not found.")
+
+    try:
+        report = visual_continuity_director.validate_continuity(project_path)
+        return report
+    except Exception as e:
+        logger.exception(f"Failed to validate visual continuity for {dir_name}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ==============================================================================
+# SCRIPT EDITORIAL QA + PROTECTED FACTS API (Phase 12)
+# ==============================================================================
+
+@app.get("/api/projects/{dir_name}/editorial")
+async def get_editorial_qa(dir_name: str):
+    """Read-only Editorial QA report + staleness flag. Missing -> NOT_STARTED."""
+    from studio import editorial_qa as edq
+    try:
+        project_path = edq.resolve_project_dir(dir_name)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    report = edq.load_qa(project_path)
+    if not report:
+        return {"status": "NOT_STARTED", "exists": False, "issues": []}
+    report = dict(report)
+    report["exists"] = True
+    report["stale"] = edq.check_stale(project_path)
+    return report
+
+
+@app.post("/api/projects/{dir_name}/editorial/analyze")
+async def analyze_editorial_qa(dir_name: str):
+    """Run deterministic editorial detection over canonical script.txt."""
+    from studio import editorial_qa as edq
+    try:
+        project_path = edq.resolve_project_dir(dir_name)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    if not (project_path / "script.txt").is_file():
+        raise HTTPException(status_code=400, detail="Missing script.txt.")
+    try:
+        return await asyncio.to_thread(edq.analyze_project, project_path)
+    except Exception as e:
+        logger.exception(f"Editorial QA analysis failed for {dir_name}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/projects/{dir_name}/editorial/issues/{issue_id}/apply")
+async def apply_editorial_issue(dir_name: str, issue_id: str):
+    """Apply one suggestion transactionally. 422 when a protected fact blocks."""
+    from studio import editorial_qa as edq
+    try:
+        project_path = edq.resolve_project_dir(dir_name)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    try:
+        return await asyncio.to_thread(edq.apply_suggestion, project_path, issue_id)
+    except FileNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except KeyError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=str(e))
+
+
+@app.post("/api/projects/{dir_name}/editorial/issues/{issue_id}/ignore")
+async def ignore_editorial_issue(dir_name: str, issue_id: str):
+    from studio import editorial_qa as edq
+    try:
+        project_path = edq.resolve_project_dir(dir_name)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    try:
+        return edq.ignore_issue(project_path, issue_id)
+    except FileNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except KeyError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+
+@app.get("/api/projects/{dir_name}/protection")
+async def get_protection(dir_name: str):
+    """Protected factual spans for the canonical script."""
+    from studio import editorial_qa as edq
+    try:
+        project_path = edq.resolve_project_dir(dir_name)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    data = edq.load_protection(project_path)
+    if not data:
+        return {"exists": False, "protectedSpans": []}
+    return {"exists": True, **data}
+
+
+@app.post("/api/projects/{dir_name}/protection/refresh")
+async def refresh_protection(dir_name: str):
+    from studio import editorial_qa as edq
+    try:
+        project_path = edq.resolve_project_dir(dir_name)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    script_path = project_path / "script.txt"
+    if not script_path.is_file():
+        raise HTTPException(status_code=400, detail="Missing script.txt.")
+    return await asyncio.to_thread(edq.ensure_protection, project_path,
+                                   script_path.read_text(encoding="utf-8"))
+
+
+@app.post("/api/projects/{dir_name}/protection/lock")
+async def lock_protected_span(dir_name: str, req: EditorialLockRequest):
+    from studio import editorial_qa as edq
+    try:
+        project_path = edq.resolve_project_dir(dir_name)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    try:
+        return edq.lock_span(project_path, req.span_type, req.startOffset, req.endOffset)
+    except (ValueError, FileNotFoundError) as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+# ==============================================================================
+# VISUAL BIBLE V2 + REFERENCE ASSETS + VISUAL PROMPTS API (Phase 13)
+# ==============================================================================
+
+def _vb2_error(e: Exception) -> HTTPException:
+    from studio.visual_bible_v2 import VisualBibleV2Error
+    from studio.visual_prompt import VisualPromptError
+    from studio.visual_dependencies import DependencyError
+    if isinstance(e, (VisualBibleV2Error, VisualPromptError, DependencyError)):
+        return HTTPException(status_code=400, detail=str(e))
+    if isinstance(e, KeyError):
+        return HTTPException(status_code=404, detail=str(e))
+    if isinstance(e, FileNotFoundError):
+        raise HTTPException(status_code=404, detail=str(e))
+    return HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/projects/{dir_name}/visual-bible/v2")
+async def get_visual_bible_v2(dir_name: str):
+    """Canonical V2 bible + per-character completeness. Unmigrated -> migrated:false."""
+    from studio.visual_bible_v2 import (resolve_project_dir, load_bible,
+                                        character_completeness, load_presets)
+    try:
+        project_path = resolve_project_dir(dir_name)
+    except Exception as e:
+        raise _vb2_error(e)
+    bible = load_bible(project_path)
+    if bible is None:
+        return {"exists": False, "migrated": False}
+    migrated = str(bible.get("schemaVersion", "1.0.0")).startswith("2.")
+    chars = bible.get("characters", []) or bible.get("subjects", []) or []
+    completeness = {}
+    for c in chars:
+        cid = c.get("characterId") or c.get("subjectId")
+        if cid:
+            completeness[cid] = character_completeness(bible, cid)
+    return {"exists": True, "migrated": migrated,
+            "schemaVersion": bible.get("schemaVersion"),
+            "projectStyle": bible.get("projectStyle"),
+            "characters": bible.get("characters", []),
+            "environments": bible.get("environments", []),
+            "objects": bible.get("objects", []),
+            # Closure: expose legacy alias arrays read-only so canonical tabs
+            # (subjects/groups) never depend on a parallel-merge side channel.
+            "subjects": bible.get("subjects", []),
+            "props": bible.get("props", []),
+            "referenceAssets": bible.get("referenceAssets", []),
+            "continuityGroups": bible.get("continuityGroups", []),
+            "periods": bible.get("periods", []),
+            "migration": bible.get("migration"),
+            "visualBibleHash": bible.get("visualBibleHash"),
+            "completeness": completeness,
+            "presets": [{"presetId": p["presetId"], "presetVersion": p["presetVersion"],
+                         "name": p.get("name", "")} for p in load_presets()]}
+
+
+@app.post("/api/projects/{dir_name}/visual-bible/v2/migrate")
+async def migrate_visual_bible_v2(dir_name: str):
+    from studio.visual_bible_v2 import resolve_project_dir, migrate_to_v2
+    try:
+        project_path = resolve_project_dir(dir_name)
+    except Exception as e:
+        raise _vb2_error(e)
+    try:
+        return await asyncio.to_thread(migrate_to_v2, project_path)
+    except Exception as e:
+        raise _vb2_error(e)
+
+
+@app.post("/api/projects/{dir_name}/visual-bible/v2/entities")
+async def create_visual_entity(dir_name: str, req: VisualEntityCreateRequest):
+    from studio.visual_bible_v2 import resolve_project_dir, create_entity
+    try:
+        project_path = resolve_project_dir(dir_name)
+        return create_entity(project_path, req.kind, req.data)
+    except Exception as e:
+        raise _vb2_error(e)
+
+
+@app.put("/api/projects/{dir_name}/visual-bible/v2/entities/{entity_id}")
+async def update_visual_entity_v2(dir_name: str, entity_id: str, req: VisualEntityUpdateRequest):
+    """Update a V2 entity + invalidate only dependent visual downstream."""
+    from studio.visual_bible_v2 import resolve_project_dir, update_entity_v2
+    from studio.visual_dependencies import compute_impact, apply_impact
+    try:
+        project_path = resolve_project_dir(dir_name)
+        entity, affecting = await asyncio.to_thread(
+            update_entity_v2, project_path, req.kind, entity_id, req.updates)
+        impact = {"affectedScenes": [], "affectedShots": [], "reason": "UI-only change"}
+        applied = {"markedVisualPrompts": 0, "markedShots": 0}
+        if affecting:
+            impact = await asyncio.to_thread(
+                compute_impact, project_path,
+                {"kind": req.kind, "id": entity_id})
+            applied = await asyncio.to_thread(apply_impact, project_path, impact)
+        return {"entity": entity, "promptAffecting": affecting,
+                "impact": impact, "applied": applied}
+    except Exception as e:
+        raise _vb2_error(e)
+
+
+@app.delete("/api/projects/{dir_name}/visual-bible/v2/entities/{entity_id}")
+async def delete_visual_entity_v2(dir_name: str, entity_id: str, kind: str = "character",
+                                  force: bool = False):
+    from studio.visual_bible_v2 import resolve_project_dir, delete_entity
+    try:
+        project_path = resolve_project_dir(dir_name)
+        return delete_entity(project_path, kind, entity_id, force=force)
+    except Exception as e:
+        raise _vb2_error(e)
+
+
+@app.get("/api/projects/{dir_name}/visual-bible/v2/style")
+async def get_project_style(dir_name: str):
+    from studio.visual_bible_v2 import resolve_project_dir, get_style, load_presets
+    try:
+        project_path = resolve_project_dir(dir_name)
+        return {"style": get_style(project_path),
+                "presets": [{"presetId": p["presetId"], "presetVersion": p["presetVersion"],
+                             "name": p.get("name", "")} for p in load_presets()]}
+    except Exception as e:
+        raise _vb2_error(e)
+
+
+@app.put("/api/projects/{dir_name}/visual-bible/v2/style")
+async def update_project_style(dir_name: str, req: VisualStyleUpdateRequest):
+    """Project style edit invalidates all visual downstream only (never audio/QA/ts)."""
+    from studio.visual_bible_v2 import resolve_project_dir, update_style
+    from studio.visual_dependencies import compute_impact, apply_impact
+    try:
+        project_path = resolve_project_dir(dir_name)
+        res = await asyncio.to_thread(update_style, project_path, req.style)
+        impact = await asyncio.to_thread(
+            compute_impact, project_path, {"kind": "style"})
+        applied = await asyncio.to_thread(apply_impact, project_path, impact)
+        return {**res, "impact": impact, "applied": applied}
+    except Exception as e:
+        raise _vb2_error(e)
+
+
+@app.post("/api/projects/{dir_name}/visual-bible/v2/style/apply-preset")
+async def apply_style_preset(dir_name: str, req: VisualPresetApplyRequest):
+    from studio.visual_bible_v2 import resolve_project_dir, apply_preset
+    from studio.visual_dependencies import compute_impact, apply_impact
+    try:
+        project_path = resolve_project_dir(dir_name)
+        res = await asyncio.to_thread(apply_preset, project_path, req.preset_id)
+        impact = await asyncio.to_thread(
+            compute_impact, project_path, {"kind": "style"})
+        applied = await asyncio.to_thread(apply_impact, project_path, impact)
+        return {**res, "impact": impact, "applied": applied}
+    except Exception as e:
+        raise _vb2_error(e)
+
+
+@app.get("/api/projects/{dir_name}/references")
+async def list_reference_assets(dir_name: str):
+    from studio.visual_bible_v2 import resolve_project_dir, load_bible, character_completeness
+    try:
+        project_path = resolve_project_dir(dir_name)
+        bible = load_bible(project_path) or {}
+        assets = bible.get("referenceAssets", []) or []
+        chars = bible.get("characters", []) or []
+        completeness = {}
+        for c in chars:
+            cid = c.get("characterId")
+            if cid:
+                completeness[cid] = character_completeness(bible, cid)
+        return {"assets": assets, "completeness": completeness}
+    except Exception as e:
+        raise _vb2_error(e)
+
+
+@app.post("/api/projects/{dir_name}/references/upload")
+async def upload_reference_asset(dir_name: str, entity_type: str = "CHARACTER",
+                                 entity_id: str = "", view: str = "FRONT",
+                                 file: UploadFile = File(...)):
+    from studio.visual_bible_v2 import (resolve_project_dir, add_reference_asset,
+                                        VisualBibleV2Error)
+    try:
+        project_path = resolve_project_dir(dir_name)
+        data = await file.read()
+        meta = await asyncio.to_thread(
+            add_reference_asset, project_path, entity_type, entity_id,
+            view, file.filename or "reference.png", data)
+        from studio.visual_dependencies import compute_impact, apply_impact
+        impact = await asyncio.to_thread(
+            compute_impact, project_path,
+            {"kind": "referenceAsset", "entityType": entity_type,
+             "entityId": entity_id, "assetId": meta["assetId"]})
+        applied = await asyncio.to_thread(apply_impact, project_path, impact)
+        return {"asset": meta, "impact": impact, "applied": applied}
+    except VisualBibleV2Error as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        logger.exception(f"Reference upload failed for {dir_name}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/projects/{dir_name}/references/{asset_id}/preview")
+async def preview_reference_asset(dir_name: str, asset_id: str):
+    from studio.visual_bible_v2 import resolve_project_dir, resolve_asset_path
+    try:
+        project_path = resolve_project_dir(dir_name)
+        target = resolve_asset_path(project_path, asset_id)
+    except Exception as e:
+        raise _vb2_error(e)
+    suffix = target.suffix.lower()
+    media = {"png": "image/png", "jpg": "image/jpeg",
+             "jpeg": "image/jpeg", "webp": "image/webp"}.get(suffix.lstrip("."), "image/png")
+    return FileResponse(path=str(target), media_type=media, filename=target.name)
+
+
+@app.post("/api/projects/{dir_name}/references/{asset_id}/replace")
+async def replace_reference_asset(dir_name: str, asset_id: str,
+                                  file: UploadFile = File(...)):
+    from studio.visual_bible_v2 import resolve_project_dir, replace_reference_asset
+    from studio.visual_dependencies import compute_impact, apply_impact
+    try:
+        project_path = resolve_project_dir(dir_name)
+        data = await file.read()
+        meta = await asyncio.to_thread(
+            replace_reference_asset, project_path, asset_id,
+            file.filename or "reference.png", data)
+        impact = await asyncio.to_thread(
+            compute_impact, project_path,
+            {"kind": "referenceAsset", "entityType": meta["entityType"],
+             "entityId": meta["entityId"], "assetId": asset_id})
+        applied = await asyncio.to_thread(apply_impact, project_path, impact)
+        return {"asset": meta, "impact": impact, "applied": applied}
+    except Exception as e:
+        raise _vb2_error(e)
+
+
+@app.delete("/api/projects/{dir_name}/references/{asset_id}")
+async def delete_reference_asset(dir_name: str, asset_id: str, force: bool = False):
+    """Without force: impact preview only. With force: remove + invalidate dependents."""
+    from studio.visual_bible_v2 import (resolve_project_dir, load_bible,
+                                        remove_reference_asset)
+    from studio.visual_dependencies import compute_impact, apply_impact
+    try:
+        project_path = resolve_project_dir(dir_name)
+        bible = load_bible(project_path) or {}
+        meta = next((a for a in bible.get("referenceAssets", []) or []
+                     if a.get("assetId") == asset_id), None)
+        if meta is None:
+            raise HTTPException(status_code=404, detail=f"Unknown assetId: {asset_id}")
+        impact = await asyncio.to_thread(
+            compute_impact, project_path,
+            {"kind": "referenceAsset", "entityType": meta["entityType"],
+             "entityId": meta["entityId"], "assetId": asset_id})
+        if not force:
+            return {"removed": False, "impact": impact,
+                    "confirm": "Replacing/removing affects listed scenes/shots. Retry with force=true."}
+        res = await asyncio.to_thread(remove_reference_asset, project_path, asset_id)
+        applied = await asyncio.to_thread(apply_impact, project_path, impact)
+        return {**res, "impact": impact, "applied": applied}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise _vb2_error(e)
+
+
+@app.get("/api/projects/{dir_name}/visual-prompts")
+async def get_visual_prompts(dir_name: str):
+    """Visual prompt entries with live CURRENT/OUTDATED status. Missing -> NOT_STARTED."""
+    from studio.visual_bible_v2 import resolve_project_dir, load_bible
+    from studio.visual_prompt import (load_prompts, check_entry_status,
+                                      backfill_scene_visual)
+    try:
+        project_path = resolve_project_dir(dir_name)
+    except Exception as e:
+        raise _vb2_error(e)
+    payload = load_prompts(project_path)
+    if not payload.get("entries"):
+        return {"status": "NOT_STARTED", "exists": False, "entries": []}
+    bible = load_bible(project_path) or {}
+    with open(project_path / "scene_plan.json", "r", encoding="utf-8") as f:
+        scenes = {s["scene_id"]: s for s in json.load(f).get("scenes", [])}
+    out = []
+    for e in payload["entries"]:
+        sc = scenes.get(e.get("sceneId"), {})
+        full = backfill_scene_visual(dict(sc), bible) if sc else {}
+        status, reason = check_entry_status(e, full, bible) if sc else ("OUTDATED", "scene missing")
+        out.append({**e, "liveStatus": status, "liveReason": reason})
+    outdated = sum(1 for e in out if e["liveStatus"] == "OUTDATED")
+    return {"status": "OUTDATED" if outdated else "READY", "exists": True,
+            "outdatedCount": outdated, "entries": out}
+
+
+@app.post("/api/projects/{dir_name}/visual-prompts/generate")
+async def generate_visual_prompts(dir_name: str, req: VisualPromptsGenerateRequest = None):
+    from studio.visual_bible_v2 import resolve_project_dir
+    from studio.visual_prompt import generate_all
+    try:
+        project_path = resolve_project_dir(dir_name)
+    except Exception as e:
+        raise _vb2_error(e)
+    try:
+        return await asyncio.to_thread(
+            generate_all, project_path, req.scene_ids if req else None)
+    except Exception as e:
+        raise _vb2_error(e)
+
+
+@app.get("/api/projects/{dir_name}/scenes/{scene_id}/visual")
+async def get_scene_visual(dir_name: str, scene_id: str):
+    """Backfilled scene visual refs + recommendation + override + prompt + Veo inheritance."""
+    from studio.visual_bible_v2 import resolve_project_dir, load_bible
+    from studio.visual_prompt import (backfill_scene_visual, recommend_output,
+                                      load_prompts, inherit_for_shot)
+    try:
+        project_path = resolve_project_dir(dir_name)
+    except Exception as e:
+        raise _vb2_error(e)
+    with open(project_path / "scene_plan.json", "r", encoding="utf-8") as f:
+        scenes = {s["scene_id"]: s for s in json.load(f).get("scenes", [])}
+    sc = scenes.get(scene_id)
+    if sc is None:
+        raise HTTPException(status_code=404, detail=f"Scene {scene_id} not found.")
+    bible = load_bible(project_path) or {}
+    full = backfill_scene_visual(dict(sc), bible)
+    rec, reasons = recommend_output(full)
+    entry = next((e for e in load_prompts(project_path).get("entries", [])
+                  if e.get("sceneId") == scene_id), None)
+    shots = []
+    veo_path = project_path / "veo_prompts.json"
+    if veo_path.is_file():
+        with open(veo_path, "r", encoding="utf-8") as f:
+            all_shots = json.load(f).get("shots", [])
+        for sh in all_shots:
+            parent = sh.get("parent_scene_id") or sh.get("parentSceneId") or sh.get("scene_id")
+            if parent == scene_id:
+                shots.append({**inherit_for_shot(sh, full, bible, entry),
+                              "outdated": bool(sh.get("outdated"))})
+    return {"scene": full, "recommendedOutputType": rec,
+            "recommendationReasons": reasons,
+            "effectiveOutputType": full.get("selectedOutputType") or rec,
+            "visualEntry": entry, "veoInheritance": shots}
+
+
+@app.get("/api/projects/{dir_name}/veo/shots/{shot_id}/inheritance")
+async def get_veo_shot_inheritance(dir_name: str, shot_id: str):
+    from studio.visual_bible_v2 import resolve_project_dir, load_bible
+    from studio.visual_prompt import (backfill_scene_visual, load_prompts,
+                                      inherit_for_shot)
+    try:
+        project_path = resolve_project_dir(dir_name)
+    except Exception as e:
+        raise _vb2_error(e)
+    with open(project_path / "scene_plan.json", "r", encoding="utf-8") as f:
+        scenes = {s["scene_id"]: s for s in json.load(f).get("scenes", [])}
+    with open(project_path / "veo_prompts.json", "r", encoding="utf-8") as f:
+        shots = json.load(f).get("shots", [])
+    sh = next((s for s in shots if s.get("shot_id") == shot_id), None)
+    if sh is None:
+        raise HTTPException(status_code=404, detail=f"Shot {shot_id} not found.")
+    parent = sh.get("parent_scene_id") or sh.get("parentSceneId") or sh.get("scene_id")
+    bible = load_bible(project_path) or {}
+    full = backfill_scene_visual(dict(scenes.get(parent, {})), bible)
+    entry = next((e for e in load_prompts(project_path).get("entries", [])
+                  if e.get("sceneId") == parent), None)
+    return inherit_for_shot(sh, full, bible, entry)
+
+
+@app.post("/api/projects/{dir_name}/dependencies/impact")
+async def preview_dependency_impact(dir_name: str, req: DependencyImpactRequest):
+    """Dry-run impact preview (no writes)."""
+    from studio.visual_bible_v2 import resolve_project_dir
+    from studio.visual_dependencies import compute_impact
+    try:
+        project_path = resolve_project_dir(dir_name)
+        return await asyncio.to_thread(compute_impact, project_path, req.dict())
+    except Exception as e:
+        raise _vb2_error(e)
+
+
+# ==============================================================================
+# REPRESENTATIVE CAST + VALIDATION READINESS API (Corrective §9-10, §34-35)
+# ==============================================================================
+
+@app.post("/api/projects/{dir_name}/cast/suggestions/analyze")
+async def analyze_cast_suggestions(dir_name: str):
+    """Deterministic recurring-role analysis. Suggestion-first: creates nothing."""
+    from studio.visual_bible_v2 import resolve_project_dir, analyze_cast_suggestions
+    try:
+        project_path = resolve_project_dir(dir_name)
+        return await asyncio.to_thread(analyze_cast_suggestions, project_path)
+    except Exception as e:
+        raise _vb2_error(e)
+
+
+@app.get("/api/projects/{dir_name}/cast/suggestions")
+async def list_cast_suggestions(dir_name: str):
+    from studio.visual_bible_v2 import resolve_project_dir, load_cast_suggestions
+    try:
+        project_path = resolve_project_dir(dir_name)
+        return load_cast_suggestions(project_path)
+    except Exception as e:
+        raise _vb2_error(e)
+
+
+@app.post("/api/projects/{dir_name}/cast/suggestions/{suggestion_id}/create")
+async def create_cast_from_suggestion(dir_name: str, suggestion_id: str,
+                                      req: CastCreateRequest = None):
+    from studio.visual_bible_v2 import (resolve_project_dir,
+                                        create_rep_from_suggestion)
+    try:
+        project_path = resolve_project_dir(dir_name)
+        return await asyncio.to_thread(
+            create_rep_from_suggestion, project_path, suggestion_id,
+            (req.name if req else None))
+    except Exception as e:
+        raise _vb2_error(e)
+
+
+@app.post("/api/projects/{dir_name}/cast/suggestions/{suggestion_id}/ignore")
+async def ignore_cast_suggestion(dir_name: str, suggestion_id: str):
+    from studio.visual_bible_v2 import resolve_project_dir, ignore_cast_suggestion
+    try:
+        project_path = resolve_project_dir(dir_name)
+        return ignore_cast_suggestion(project_path, suggestion_id)
+    except Exception as e:
+        raise _vb2_error(e)
+
+
+@app.post("/api/projects/{dir_name}/cast/suggestions/{suggestion_id}/merge")
+async def merge_cast_suggestion(dir_name: str, suggestion_id: str,
+                                req: CastMergeRequest):
+    from studio.visual_bible_v2 import resolve_project_dir, merge_suggestion_into_rep
+    try:
+        project_path = resolve_project_dir(dir_name)
+        return await asyncio.to_thread(
+            merge_suggestion_into_rep, project_path, suggestion_id,
+            req.character_id, req.bind_scenes)
+    except Exception as e:
+        raise _vb2_error(e)
+
+
+@app.get("/api/projects/{dir_name}/cast/{character_id}/ref-prompts")
+async def get_cast_ref_prompts(dir_name: str, character_id: str):
+    """Copyable FRONT/3-4/PROFILE prompts for one representative. No images."""
+    from studio.visual_bible_v2 import resolve_project_dir, build_ref_prompts
+    try:
+        project_path = resolve_project_dir(dir_name)
+        return build_ref_prompts(project_path, character_id)
+    except Exception as e:
+        raise _vb2_error(e)
+
+
+@app.get("/api/projects/{dir_name}/validation/readiness")
+async def get_validation_readiness(dir_name: str):
+    """Layered production/external-validation readiness (non-destructive)."""
+    from studio.visual_bible_v2 import resolve_project_dir, validation_readiness
+    try:
+        project_path = resolve_project_dir(dir_name)
+        return validation_readiness(project_path)
+    except Exception as e:
+        raise _vb2_error(e)
+
+
+# ==============================================================================
+# PRODUCTION EXPORT / FLOW HANDOFF API (Phase 11)
+# ==============================================================================
+
+@app.get("/api/projects/{dir_name}/production/status")
+async def get_production_status(dir_name: str):
+    """Read-only Production readiness, counts, blockers, and export history."""
+    try:
+        production_validate_project_id(dir_name)
+    except ProductionExportError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    project_path = Path(PROJECTS_DIR) / dir_name
+    if not project_path.is_dir():
+        raise HTTPException(status_code=404, detail="Project directory not found.")
+    try:
+        return production_get_status(dir_name)
+    except ProductionExportError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        logger.exception(f"Failed to compute production status for {dir_name}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/projects/{dir_name}/production/export")
+async def run_production_export(dir_name: str):
+    """Create a new immutable production export snapshot (never overwrites)."""
+    try:
+        production_validate_project_id(dir_name)
+    except ProductionExportError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    project_path = Path(PROJECTS_DIR) / dir_name
+    if not project_path.is_dir():
+        raise HTTPException(status_code=404, detail="Project directory not found.")
+    if _is_project_busy(dir_name):
+        raise HTTPException(status_code=409, detail="Project is busy (TTS/transcription/scene/veo/voice-QA running).")
+    target_dir = dir_name
+    try:
+        result = await asyncio.to_thread(production_execute_export, target_dir)
+        # Async ownership guard: response is project-scoped; the frontend
+        # only applies it when currentProjectDir still matches.
+        result["requestedProjectId"] = target_dir
+        return result
+    except ProductionExportError as e:
+        raise HTTPException(status_code=422, detail={"message": str(e), "blockers": e.blockers,
+                                                     "requestedProjectId": target_dir})
+    except Exception as e:
+        logger.exception(f"Production export failed for {dir_name}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/projects/{dir_name}/production/exports/{export_id}/open")
+async def open_production_export_folder(dir_name: str, export_id: str):
+    """Open the export folder in Explorer (local studio) or return its path to copy."""
+    try:
+        production_validate_project_id(dir_name)
+    except ProductionExportError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    from studio.production_export import validate_export_id
+    try:
+        clean_export = validate_export_id(export_id)
+    except ProductionExportError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    export_path = (Path(PROJECTS_DIR) / dir_name / "exports" / clean_export).resolve()
+    canonical_root = Path(PROJECTS_DIR).resolve()
+    try:
+        export_path.relative_to(canonical_root)
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid export path.")
+    if not export_path.is_dir():
+        raise HTTPException(status_code=404, detail="Export folder not found.")
+    opened = False
+    try:
+        os.startfile(str(export_path))  # Windows local studio
+        opened = True
+    except Exception:
+        opened = False
+    return {"opened": opened, "path": str(export_path)}
+
+
+@app.get("/api/projects/{dir_name}/status")
+async def get_project_dependency_status(dir_name: str):
+    """
+    Return the dependency status for all pipeline modules in a project.
+    Used by the frontend to automatically detect OUTDATED state on project open.
+    """
+    project_path = PROJECTS_DIR / dir_name
+    if not project_path.is_dir():
+        raise HTTPException(status_code=404, detail="Project directory not found.")
+
+    def file_sha256(p: Path) -> Optional[str]:
+        if not p.is_file():
+            return None
+        return compute_file_sha256(p)
+
+    script_p = project_path / "script.txt"
+    audio_p = project_path / "audio.wav"
+    ts_p = project_path / "timestamps.json"
+    scene_p = project_path / "scene_plan.json"
+    veo_p = project_path / "veo_prompts.json"
+    qa_p = project_path / "voice_qa.json"
+
+    script_hash = file_sha256(script_p)
+    audio_hash = file_sha256(audio_p)
+
+    # Timestamps status
+    ts_status = "EMPTY"
+    if ts_p.is_file():
+        with open(ts_p, encoding="utf-8") as f:
+            ts_data = json.load(f)
+        ts_audio_hash = ts_data.get("audio_sha256") or ts_data.get("source_audio_hash")
+        ts_script_hash = ts_data.get("source_script_sha256") or ts_data.get("script_sha256")
+        if (audio_hash and ts_audio_hash != audio_hash) or (script_hash and ts_script_hash and ts_script_hash != script_hash):
+            ts_status = "OUTDATED"
+        else:
+            ts_status = "READY"
+
+    # Scene Plan status
+    scene_status = "EMPTY"
+    if scene_p.is_file():
+        with open(scene_p, encoding="utf-8") as f:
+            sp_data = json.load(f)
+        ts_hash_in_sp = sp_data.get("timestamps_sha256")
+        ts_actual_hash = file_sha256(ts_p)
+        if ts_actual_hash and ts_hash_in_sp != ts_actual_hash:
+            scene_status = "OUTDATED"
+        else:
+            scene_status = "READY"
+
+    # Veo status
+    veo_status_info = veo_generator.check_veo_status(project_path)
+    veo_status = veo_status_info["status"].upper() if veo_status_info["status"] else "EMPTY"
+
+    # Voice QA status
+    qa_status = "EMPTY"
+    if qa_p.is_file():
+        with open(qa_p, encoding="utf-8") as f:
+            qa_data = json.load(f)
+        qa_audio_hash = qa_data.get("audio_sha256")
+        if audio_hash and qa_audio_hash != audio_hash:
+            qa_status = "OUTDATED"
+        else:
+            qa_status = "READY"
+
+    # Phase 10: Visual Bible status
+    vb_status_info = visual_continuity_director.check_visual_bible_status(project_path)
+    vb_status = vb_status_info["status"].upper() if vb_status_info["status"] else "EMPTY"
+
+    return {
+        "project": dir_name,
+        "script": "READY" if script_p.is_file() else "EMPTY",
+        "audio": "READY" if audio_p.is_file() else "EMPTY",
+        "voiceQa": qa_status,
+        "timestamp": ts_status,
+        "scenePlan": scene_status,
+        "visualBible": vb_status,
+        "visualBibleInfo": vb_status_info,
+        "veo": veo_status,
+        "veoPartial": bool(veo_status_info.get("partial")),
+        "veoOutdatedScenes": veo_status_info.get("outdated_scenes") or [],
+        "staleReasons": {
+            "veo": veo_status_info.get("stale_reason"),
+            "visualBible": vb_status_info.get("stale_reason"),
+        },
+    }
+
+
 @app.on_event("shutdown")
 async def shutdown_event():
-    """Cancel all active transcription workers when Studio shuts down."""
+    """Cancel all active transcription workers and safely checkpoint persistent jobs when Studio shuts down."""
     for project_id in list(transcription_service._active_procs.keys()):
         logger.info(f"Studio shutdown: terminating worker for {project_id}...")
         await transcription_service.cancel_transcription(project_id)
+    # Safe stop and checkpoint active persistent jobs
+    graceful_shutdown_manager.execute_safe_stop()
 
 
 # Mount static directory for frontend
