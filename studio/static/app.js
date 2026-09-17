@@ -1247,6 +1247,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     if (actualTargetId === "voice" && currentProjectDir) {
       loadVoiceWorkbench(currentProjectDir);
+    } else if (actualTargetId === "scenes" && currentProjectDir) {
+      loadVisualWorkbench(currentProjectDir);
     } else if (targetId === "voice-qa" && currentProjectDir) {
       loadVoiceQA(currentProjectDir);
     } else if (targetId === "timestamp" && currentProjectDir) {
@@ -5006,6 +5008,7 @@ document.addEventListener("DOMContentLoaded", () => {
     loadEditorial(dirName);
     loadStorySlice(dirName);
     loadVoiceWorkbench(dirName);
+    loadVisualWorkbench(dirName);
     loadNextBestAction(dirName);
     // 02A: nếu đang đứng ở workspace do Phase14 quản lý, tải lại để thoát empty cũ.
     try {
@@ -8143,6 +8146,801 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+
+  // ==============================================================================
+  // 13d. SUBPHASE 3C: VISUAL WORKBENCH (SCENES, SHOTS & VISUAL BIBLE)
+  // ==============================================================================
+  let visualWorkbenchSummary = null;
+  let visualScenesList = [];
+  let visualSelectedSceneId = null;
+  let visualSelectedShotId = null;
+  let visualCurrentScene = null;
+  let visualCurrentShot = null;
+  let visualBibleSliceData = null;
+  let visualExpandedSceneIds = new Set();
+  let visualDirtyPrompts = { image: false, veo: false };
+
+  const spFilterStatus = document.getElementById("sp-filter-status");
+  const vwBindingsContainer = document.getElementById("vw-bindings-container");
+  const vwBindingsCountBadge = document.getElementById("vw-bindings-count-badge");
+  const vwLockCard = document.getElementById("vw-lock-card");
+  const vwLockStatusBadge = document.getElementById("vw-lock-status-badge");
+  const btnLockShot = document.getElementById("btn-lock-shot");
+  const btnLockShotText = document.getElementById("btn-lock-shot-text");
+  const vwRevisionsContainer = document.getElementById("vw-revisions-container");
+  const vwRevisionsCountBadge = document.getElementById("vw-revisions-count-badge");
+
+  async function loadVisualWorkbench(dirName) {
+    if (!dirName) {
+      if (spRowsContainer) {
+        spRowsContainer.innerHTML = `<div class="empty-state" style="padding: 1.5rem 1rem; font-size: 0.85rem;">Chưa có dữ liệu cảnh quay. Vui lòng chọn một dự án.</div>`;
+      }
+      if (spSelectedDetail) {
+        spSelectedDetail.innerHTML = `<div class="empty-detail-state"><svg class="ui-icon ui-icon-lg"><use href="#icon-scene"/></svg><span>Chọn một cảnh từ danh sách để xem và chỉnh sửa chi tiết</span></div>`;
+      }
+      return;
+    }
+
+    if (spRowsContainer) {
+      spRowsContainer.innerHTML = `<div class="empty-state" style="padding: 1.5rem 1rem; font-size: 0.85rem;"><span class="inline-spinner"></span> Đang tải danh sách cảnh &amp; cảnh quay...</div>`;
+    }
+
+    try {
+      const [sumRes, scenesRes, vbRes] = await Promise.all([
+        fetch(`/api/projects/${encodeURIComponent(dirName)}/visual/summary`),
+        fetch(`/api/projects/${encodeURIComponent(dirName)}/visual/scenes`),
+        fetch(`/api/projects/${encodeURIComponent(dirName)}/visual/bible`)
+      ]);
+
+      if (!scenesRes.ok) {
+        throw new Error(`Mã lỗi tải cảnh: ${scenesRes.status}`);
+      }
+
+      visualWorkbenchSummary = sumRes.ok ? await sumRes.json() : null;
+      visualScenesList = await scenesRes.json();
+      visualBibleSliceData = vbRes.ok ? await vbRes.json() : null;
+
+      if (currentProjectDir !== dirName) return;
+
+      // Update counters
+      if (spCountBadge && visualWorkbenchSummary) {
+        spCountBadge.textContent = `${visualWorkbenchSummary.total_scenes} cảnh / ${visualWorkbenchSummary.total_shots} cảnh quay`;
+      }
+      if (spCoverageBadge) {
+        spCoverageBadge.textContent = "Độ phủ 100%";
+      }
+      if (spStatusPill && visualWorkbenchSummary) {
+        const isReady = visualWorkbenchSummary.visual_status === "READY" || visualWorkbenchSummary.visual_status === "Ready";
+        spStatusPill.className = isReady ? "state-pill state-ready" : "state-pill state-idle";
+        spStatusPill.textContent = isReady ? "Sẵn sàng" : (visualWorkbenchSummary.visual_status || "Chưa sẵn sàng");
+      }
+
+      // Populate Category Filter dropdown
+      if (spFilterCategory) {
+        const currentVal = spFilterCategory.value;
+        const categories = Array.from(new Set(visualScenesList.map(s => s.category).filter(Boolean)));
+        spFilterCategory.innerHTML = `<option value="">Tất cả thể loại</option>` +
+          categories.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join("");
+        if (categories.includes(currentVal)) {
+          spFilterCategory.value = currentVal;
+        }
+      }
+
+      // Render Scene Navigator tree
+      renderVisualSceneNavigator();
+
+      // Restore or initialize selection
+      let targetSceneId = visualSelectedSceneId;
+      let targetShotId = visualSelectedShotId;
+      const sceneExists = visualScenesList.some(s => s.scene_id === targetSceneId);
+      if (!targetSceneId || !sceneExists) {
+        if (visualScenesList.length > 0) {
+          targetSceneId = visualScenesList[0].scene_id;
+          targetShotId = (visualScenesList[0].shot_ids && visualScenesList[0].shot_ids[0]) || `${targetSceneId}_sh1`;
+        }
+      }
+
+      if (targetSceneId && targetShotId) {
+        selectVisualShot(targetShotId, targetSceneId);
+      }
+    } catch (err) {
+      console.error("Failed to load visual workbench:", err);
+      if (spRowsContainer) {
+        spRowsContainer.innerHTML = `<div class="empty-state" style="padding: 1.5rem 1rem; color: var(--color-error);"><p>Lỗi tải danh sách cảnh: ${escapeHtml(err.message)}</p></div>`;
+      }
+    }
+  }
+
+  function renderVisualSceneNavigator() {
+    if (!spRowsContainer) return;
+    if (!visualScenesList || visualScenesList.length === 0) {
+      spRowsContainer.innerHTML = `<p class="empty-state">Chưa có Scene Plan.<br>Sau khi có Timestamp, bấm "Tạo Scene Plan".</p>`;
+      if (spRowCountBadge) spRowCountBadge.textContent = "0/0";
+      return;
+    }
+
+    const query = (spSearchInput && spSearchInput.value) ? spSearchInput.value.trim().toLowerCase() : "";
+    const filterCat = (spFilterCategory && spFilterCategory.value) ? spFilterCategory.value : "";
+    const filterStatus = (spFilterStatus && spFilterStatus.value) ? spFilterStatus.value : "";
+
+    const filteredScenes = visualScenesList.filter(sc => {
+      if (filterCat && sc.category !== filterCat) return false;
+      if (filterStatus === "locked" && !sc.is_locked) return false;
+      if (filterStatus === "outdated" && sc.status !== "outdated") return false;
+      if (filterStatus === "ready" && (sc.is_locked || sc.status === "outdated")) return false;
+
+      if (query) {
+        const matchId = sc.scene_id.toLowerCase().includes(query);
+        const matchIdx = String(sc.index).includes(query);
+        const matchCat = (sc.category || "").toLowerCase().includes(query);
+        const matchSum = (sc.visual_summary || "").toLowerCase().includes(query);
+        const matchShot = (sc.shot_ids || []).some(sh => sh.toLowerCase().includes(query));
+        if (!matchId && !matchIdx && !matchCat && !matchSum && !matchShot) return false;
+      }
+      return true;
+    });
+
+    if (spRowCountBadge) {
+      spRowCountBadge.textContent = `${filteredScenes.length}/${visualScenesList.length}`;
+    }
+
+    if (filteredScenes.length === 0) {
+      spRowsContainer.innerHTML = `<p class="empty-state" style="padding: 1.5rem 1rem;">Không tìm thấy cảnh nào phù hợp với bộ lọc.</p>`;
+      return;
+    }
+
+    let html = "";
+    filteredScenes.forEach(sc => {
+      const isExpanded = visualExpandedSceneIds.has(sc.scene_id) || sc.scene_id === visualSelectedSceneId;
+      const isSceneSelected = sc.scene_id === visualSelectedSceneId;
+      const sFmt = formatTime(sc.start);
+      const eFmt = formatTime(sc.end);
+      const shots = sc.shot_ids || [];
+
+      html += `
+        <div class="visual-scene-group ${isExpanded ? 'is-expanded' : ''} ${isSceneSelected ? 'is-selected' : ''}" data-scene-id="${escapeHtml(sc.scene_id)}">
+          <button type="button" class="visual-scene-header-btn" data-action="select-scene" data-scene-id="${escapeHtml(sc.scene_id)}" aria-expanded="${isExpanded}">
+            <span class="visual-scene-expander" data-action="toggle-expand" data-scene-id="${escapeHtml(sc.scene_id)}" title="${isExpanded ? 'Thu gọn cảnh' : 'Mở rộng cảnh'}">&#9654;</span>
+            <span class="visual-scene-title">Cảnh ${sc.index}</span>
+            <span class="cat-badge">${escapeHtml(sc.category || 'reconstruction')}</span>
+            <span class="counter-chip" style="font-size: 0.65rem;">${shots.length} shot</span>
+            ${sc.is_locked ? '<span title="Cảnh đã khóa">🔒</span>' : ''}
+            ${sc.status === 'outdated' ? '<span title="Cảnh cần cập nhật">⚠️</span>' : ''}
+            <span class="visual-scene-time">${sFmt} &rarr; ${eFmt}</span>
+          </button>
+          <div class="visual-shots-tree" role="group" aria-label="Cảnh quay của Cảnh ${sc.index}">
+            ${shots.map(shotId => {
+              const isShotActive = shotId === visualSelectedShotId;
+              const durText = sc.duration ? (sc.duration / (shots.length || 1)).toFixed(1) + 's' : '';
+              return `
+                <button type="button" class="visual-shot-tree-btn ${isShotActive ? 'is-active' : ''}" data-action="select-shot" data-shot-id="${escapeHtml(shotId)}" data-scene-id="${escapeHtml(sc.scene_id)}" aria-pressed="${isShotActive}">
+                  <svg class="ui-icon" style="width: 12px; height: 12px;"><use href="#icon-video"/></svg>
+                  <span class="visual-shot-tree-id">${escapeHtml(shotId)}</span>
+                  <span class="visual-shot-tree-dur">${durText}</span>
+                </button>
+              `;
+            }).join("")}
+          </div>
+        </div>
+      `;
+    });
+
+    spRowsContainer.innerHTML = html;
+  }
+
+  async function selectVisualShot(shotId, sceneId) {
+    visualSelectedSceneId = sceneId;
+    visualSelectedShotId = shotId;
+    visualExpandedSceneIds.add(sceneId);
+
+    // Update active highlight classes in DOM
+    if (spRowsContainer) {
+      spRowsContainer.querySelectorAll(".visual-scene-group").forEach(group => {
+        const isMatch = group.dataset.sceneId === sceneId;
+        group.classList.toggle("is-selected", isMatch);
+        if (isMatch) group.classList.add("is-expanded");
+      });
+      spRowsContainer.querySelectorAll(".visual-shot-tree-btn").forEach(btn => {
+        const isMatch = btn.dataset.shotId === shotId;
+        btn.classList.toggle("is-active", isMatch);
+        btn.setAttribute("aria-pressed", isMatch ? "true" : "false");
+      });
+    }
+
+    if (spSelectedDetail) {
+      spSelectedDetail.innerHTML = `
+        <div class="empty-detail-state">
+          <span class="inline-spinner"></span>
+          <span>Đang tải thông tin Cảnh ${escapeHtml(sceneId)} &rarr; Cảnh quay ${escapeHtml(shotId)}...</span>
+        </div>
+      `;
+    }
+
+    try {
+      const [scRes, shRes, revRes] = await Promise.all([
+        fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/visual/scenes/${encodeURIComponent(sceneId)}`),
+        fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/visual/shots/${encodeURIComponent(shotId)}`),
+        fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/history/shot/${encodeURIComponent(shotId)}`).catch(() => null)
+      ]);
+
+      if (!scRes.ok || !shRes.ok) {
+        throw new Error(`Không thể tải chi tiết: Cảnh (${scRes.status}), Shot (${shRes.status})`);
+      }
+
+      visualCurrentScene = await scRes.json();
+      visualCurrentShot = await shRes.json();
+      const revisions = revRes && revRes.ok ? await revRes.json() : [];
+
+      renderVisualShotWorkspace(visualCurrentShot, visualCurrentScene);
+      renderVisualInspector(visualCurrentShot, visualCurrentScene, revisions);
+    } catch (err) {
+      console.error("Failed to load visual shot detail:", err);
+      if (spSelectedDetail) {
+        spSelectedDetail.innerHTML = `
+          <div class="empty-detail-state" style="color: var(--color-error);">
+            <svg class="ui-icon ui-icon-lg"><use href="#icon-alert"/></svg>
+            <span>Lỗi tải chi tiết: ${escapeHtml(err.message)}</span>
+          </div>
+        `;
+      }
+    }
+  }
+
+  function renderVisualShotWorkspace(shot, scene) {
+    if (!spSelectedDetail) return;
+    const sFmt = formatTime(shot.start != null ? shot.start : scene.start);
+    const eFmt = formatTime(shot.end != null ? shot.end : scene.end);
+    const durSec = (shot.duration != null ? shot.duration : scene.duration || 0).toFixed(2);
+
+    visualDirtyPrompts.image = false;
+    visualDirtyPrompts.veo = false;
+
+    spSelectedDetail.innerHTML = `
+      <div class="visual-shot-identity-card">
+        <div style="display: flex; flex-direction: column; gap: 4px;">
+          <div class="visual-shot-breadcrumbs">
+            <span>Cảnh ${scene.index} (${escapeHtml(scene.scene_id)})</span>
+            <span style="color: var(--text-muted);">&rarr;</span>
+            <span style="color: var(--accent-primary);">Cảnh quay ${shot.index} (${escapeHtml(shot.shot_id)})</span>
+          </div>
+          <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 4px;">
+            <span class="visual-shot-timing-pill">${sFmt} &rarr; ${eFmt} (${durSec}s)</span>
+            <span class="cat-badge">${escapeHtml(shot.category || scene.category || 'reconstruction')}</span>
+            <span class="sp-evidence-pill">${escapeHtml(shot.shot_purpose || shot.shot_type || scene.shot_type || 'medium wide')}</span>
+            <span class="sp-framing-pill">Router: ${escapeHtml(scene.visualType || 'ENVIRONMENT')}</span>
+            ${shot.outdated ? '<span class="state-pill state-stale">⚠️ Cần cập nhật</span>' : '<span class="state-pill state-ready">✓ Sẵn sàng</span>'}
+            ${shot.is_locked ? '<span class="state-pill state-locked">🔒 Đã khóa</span>' : '<span class="state-pill state-idle">🔓 Có thể sửa</span>'}
+          </div>
+        </div>
+        <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+          <button type="button" class="btn btn-secondary btn-sm btn-seek-scene uq-playbtn" data-start="${shot.start != null ? shot.start : scene.start}" title="Phát âm thanh tại thời điểm này">
+            <svg class="ui-icon" aria-hidden="true"><use href="#icon-play"/></svg>
+            <span>Phát</span>
+          </button>
+          <button type="button" class="btn btn-secondary btn-sm" id="btn-regen-veo-shot" title="Tạo lại các cảnh quay cho Cảnh này">
+            <svg class="ui-icon"><use href="#icon-refresh"/></svg>
+            <span>Tạo lại</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="visual-workspace-grid">
+        <!-- Narration Card -->
+        <div class="detail-prose-card" style="margin-bottom: 0;">
+          <div class="detail-prose-label">Lời bình Narration</div>
+          <div class="detail-prose-content narration-quote">&ldquo;${escapeHtml(shot.narration || scene.narration || 'Chưa có lời bình')}&rdquo;</div>
+        </div>
+
+        <!-- Card A: Bản thiết kế hình ảnh (Visual Blueprint) -->
+        <div class="visual-blueprint-card">
+          <div class="visual-card-header">
+            <div class="visual-card-title">
+              <svg class="ui-icon" style="color: var(--accent-primary);"><use href="#icon-scene"/></svg>
+              <span>Bản thiết kế hình ảnh (Visual Blueprint)</span>
+              <span class="cat-badge" style="font-size: 0.68rem;">Google Flow / Midjourney / SDXL</span>
+            </div>
+            <div style="display: flex; gap: 6px;">
+              <button type="button" class="btn btn-secondary btn-xs" id="btn-copy-image-prompt" title="Sao chép prompt hình ảnh">
+                <svg class="ui-icon"><use href="#icon-copy"/></svg>
+                <span>Sao chép prompt</span>
+              </button>
+              <button type="button" class="btn btn-primary btn-xs" id="btn-save-image-prompt" title="Lưu prompt hình ảnh">
+                <span>Lưu prompt</span>
+              </button>
+            </div>
+          </div>
+          <div style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.4;">
+            <strong>Mục tiêu thị giác:</strong> ${escapeHtml(shot.visual_objective || scene.visual_summary || 'Chưa có tóm tắt thị giác')}
+          </div>
+          <div>
+            <label class="form-label" for="vw-image-prompt-input" style="font-size: 0.76rem; font-weight: 600; margin-bottom: 4px;">Prompt hình ảnh (Start frame)</label>
+            <textarea id="vw-image-prompt-input" class="form-textarea" rows="4" placeholder="Nhập prompt hình ảnh...">${escapeHtml(scene.image_prompt || '')}</textarea>
+          </div>
+          <div>
+            <label class="form-label" for="vw-negative-prompt-input" style="font-size: 0.76rem; font-weight: 600; margin-bottom: 4px;">Prompt phủ định (Negative prompt)</label>
+            <textarea id="vw-negative-prompt-input" class="form-textarea" rows="2" placeholder="Nhập prompt loại trừ...">${escapeHtml(scene.negative_prompt || '')}</textarea>
+          </div>
+        </div>
+
+        <!-- Card B: Bản thiết kế chuyển động (Motion Blueprint) -->
+        <div class="motion-blueprint-card">
+          <div class="visual-card-header">
+            <div class="visual-card-title">
+              <svg class="ui-icon" style="color: #10b981;"><use href="#icon-video"/></svg>
+              <span>Bản thiết kế chuyển động (Motion Blueprint)</span>
+              <span class="cat-badge" style="font-size: 0.68rem; background: rgba(16, 185, 129, 0.15); color: #10b981;">Google Veo / Flow Motion</span>
+            </div>
+            <div style="display: flex; gap: 6px;">
+              <button type="button" class="btn btn-secondary btn-xs" id="btn-copy-motion-prompt" title="Sao chép prompt chuyển động">
+                <svg class="ui-icon"><use href="#icon-copy"/></svg>
+                <span>Sao chép prompt</span>
+              </button>
+              <button type="button" class="btn btn-primary btn-xs" id="btn-save-motion-prompt" title="Lưu prompt chuyển động">
+                <span>Lưu prompt</span>
+              </button>
+            </div>
+          </div>
+          <div class="visual-param-grid">
+            <div class="visual-param-item">
+              <span class="visual-param-label">Hành động chủ thể</span>
+              <span class="visual-param-val">${escapeHtml(shot.subject_action || 'Không có')}</span>
+            </div>
+            <div class="visual-param-item">
+              <span class="visual-param-label">Chuyển động bối cảnh</span>
+              <span class="visual-param-val">${escapeHtml(shot.environmental_action || shot.environment_motion || 'Tự nhiên')}</span>
+            </div>
+            <div class="visual-param-item">
+              <span class="visual-param-label">Chuyển động máy quay</span>
+              <span class="visual-param-val">${escapeHtml(shot.camera_motion || 'static cinematic camera')}</span>
+            </div>
+            <div class="visual-param-item">
+              <span class="visual-param-label">Ánh sáng &amp; Khí quyển</span>
+              <span class="visual-param-val">${escapeHtml(shot.lighting_atmosphere || shot.lighting || 'Tự nhiên')}</span>
+            </div>
+            <div class="visual-param-item" style="grid-column: 1 / -1;">
+              <span class="visual-param-label">Điểm neo liên tục (Continuity Anchor)</span>
+              <span class="visual-param-val">${escapeHtml(shot.continuity_anchor || 'Không có')}</span>
+            </div>
+          </div>
+          <div>
+            <label class="form-label" for="vw-veo-prompt-input" style="font-size: 0.76rem; font-weight: 600; margin-bottom: 4px;">Prompt chuyển động Veo (Motion Prompt)</label>
+            <textarea id="vw-veo-prompt-input" class="form-textarea" rows="4" placeholder="Nhập prompt chuyển động...">${escapeHtml(shot.veo_prompt || '')}</textarea>
+          </div>
+        </div>
+
+        <!-- Card C: Quy trình phối hợp Google Flow / Veo (Handoff Checklist) -->
+        <div class="handoff-checklist-card">
+          <div class="visual-card-header">
+            <div class="visual-card-title">
+              <svg class="ui-icon"><use href="#icon-script"/></svg>
+              <span>Quy trình tạo hình ngoài (Manual Generation Handoff)</span>
+            </div>
+            <button type="button" class="btn btn-secondary btn-xs" id="btn-copy-flow-package" title="Sao chép gói tham chiếu cho Flow">
+              <svg class="ui-icon"><use href="#icon-copy"/></svg>
+              <span>Sao chép gói tham chiếu</span>
+            </button>
+          </div>
+          <ol style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5; padding-left: 1.2rem; margin: 0;">
+            <li>Sao chép <strong>Prompt hình ảnh</strong> và đưa vào <strong>Google Flow</strong> kèm các thành phần tham chiếu (ingredients) đã liệt kê ở Inspector.</li>
+            <li>Xem lại kết quả ảnh tạo ra, tải ảnh start-frame đạt tiêu chuẩn về máy và duyệt.</li>
+            <li>Sao chép <strong>Prompt chuyển động Veo</strong>, đưa ảnh start-frame vào Veo để tạo hoạt cảnh video.</li>
+          </ol>
+        </div>
+      </div>
+    `;
+
+    // Wire up events in Shot Workspace
+    const imgPromptInput = document.getElementById("vw-image-prompt-input");
+    const negPromptInput = document.getElementById("vw-negative-prompt-input");
+    const veoPromptInput = document.getElementById("vw-veo-prompt-input");
+
+    if (imgPromptInput) {
+      imgPromptInput.addEventListener("input", () => {
+        visualDirtyPrompts.image = true;
+        imgPromptInput.classList.add("is-dirty");
+      });
+    }
+    if (negPromptInput) {
+      negPromptInput.addEventListener("input", () => {
+        visualDirtyPrompts.image = true;
+        negPromptInput.classList.add("is-dirty");
+      });
+    }
+    if (veoPromptInput) {
+      veoPromptInput.addEventListener("input", () => {
+        visualDirtyPrompts.veo = true;
+        veoPromptInput.classList.add("is-dirty");
+      });
+    }
+
+    // Play seek button
+    const playBtn = spSelectedDetail.querySelector(".btn-seek-scene");
+    if (playBtn) {
+      playBtn.addEventListener("click", () => {
+        const startSec = parseFloat(playBtn.dataset.start || "0");
+        if (audioPlayer && audioPlayer.duration) {
+          audioPlayer.currentTime = startSec;
+          audioPlayer.play().catch(() => {});
+        }
+      });
+    }
+
+    // Regenerate Veo shots for this scene
+    const regenBtn = document.getElementById("btn-regen-veo-shot");
+    if (regenBtn) {
+      regenBtn.addEventListener("click", async () => {
+        if (!confirm(`Tạo lại toàn bộ các cảnh quay cho Cảnh ${scene.index} (${scene.scene_id})?`)) return;
+        regenBtn.disabled = true;
+        try {
+          const res = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/veo/regenerate-scene/${encodeURIComponent(scene.scene_id)}`, {
+            method: "POST"
+          });
+          if (!res.ok) throw new Error(`Lỗi ${res.status}`);
+          showNotification(`Đã tạo lại cảnh quay cho Cảnh ${scene.index} thành công!`, "success");
+          loadVisualWorkbench(currentProjectDir);
+        } catch (err) {
+          showNotification(`Lỗi tạo lại cảnh quay: ${err.message}`, "error");
+        } finally {
+          regenBtn.disabled = false;
+        }
+      });
+    }
+
+    // Copy Image Prompt button
+    const btnCopyImagePrompt = document.getElementById("btn-copy-image-prompt");
+    if (btnCopyImagePrompt) {
+      btnCopyImagePrompt.addEventListener("click", () => {
+        const text = imgPromptInput ? imgPromptInput.value : (scene.image_prompt || "");
+        copyToClipboard(text, "Prompt hình ảnh");
+      });
+    }
+
+    // Save Image Prompt button
+    const btnSaveImagePrompt = document.getElementById("btn-save-image-prompt");
+    if (btnSaveImagePrompt) {
+      btnSaveImagePrompt.addEventListener("click", async () => {
+        btnSaveImagePrompt.disabled = true;
+        try {
+          const payload = {
+            image_prompt: imgPromptInput ? imgPromptInput.value : scene.image_prompt,
+            negative_prompt: negPromptInput ? negPromptInput.value : scene.negative_prompt
+          };
+          const res = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/scenes/${encodeURIComponent(scene.scene_id)}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+          if (!res.ok) throw new Error(`Lỗi ${res.status}`);
+          showNotification("Đã lưu prompt hình ảnh thành công!", "success");
+          visualDirtyPrompts.image = false;
+          if (imgPromptInput) imgPromptInput.classList.remove("is-dirty");
+          if (negPromptInput) negPromptInput.classList.remove("is-dirty");
+        } catch (err) {
+          showNotification(`Lỗi lưu prompt hình ảnh: ${err.message}`, "error");
+        } finally {
+          btnSaveImagePrompt.disabled = false;
+        }
+      });
+    }
+
+    // Copy Motion Prompt button
+    const btnCopyMotionPrompt = document.getElementById("btn-copy-motion-prompt");
+    if (btnCopyMotionPrompt) {
+      btnCopyMotionPrompt.addEventListener("click", () => {
+        const text = veoPromptInput ? veoPromptInput.value : (shot.veo_prompt || "");
+        copyToClipboard(text, "Prompt chuyển động");
+      });
+    }
+
+    // Save Motion Prompt button
+    const btnSaveMotionPrompt = document.getElementById("btn-save-motion-prompt");
+    if (btnSaveMotionPrompt) {
+      btnSaveMotionPrompt.addEventListener("click", async () => {
+        btnSaveMotionPrompt.disabled = true;
+        try {
+          const payload = {
+            veo_prompt: veoPromptInput ? veoPromptInput.value : shot.veo_prompt
+          };
+          const res = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/veo/shots/${encodeURIComponent(shot.shot_id)}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+          if (!res.ok) throw new Error(`Lỗi ${res.status}`);
+          showNotification("Đã lưu prompt chuyển động thành công!", "success");
+          visualDirtyPrompts.veo = false;
+          if (veoPromptInput) veoPromptInput.classList.remove("is-dirty");
+        } catch (err) {
+          showNotification(`Lỗi lưu prompt chuyển động: ${err.message}`, "error");
+        } finally {
+          btnSaveMotionPrompt.disabled = false;
+        }
+      });
+    }
+
+    // Copy Flow package
+    const btnCopyFlowPackage = document.getElementById("btn-copy-flow-package");
+    if (btnCopyFlowPackage) {
+      btnCopyFlowPackage.addEventListener("click", () => {
+        const imgP = imgPromptInput ? imgPromptInput.value : scene.image_prompt;
+        const negP = negPromptInput ? negPromptInput.value : scene.negative_prompt;
+        const subjList = (shot.subjectIds || []).join(", ") || "Không có";
+        const envStr = shot.environmentId || "Không có";
+        const propList = (shot.propIds || []).join(", ") || "Không có";
+
+        const text = [
+          `# UNFOLDIQ FLOW HANDOFF — SHOT: ${shot.shot_id} (SCENE: ${scene.scene_id})`,
+          `## Image Prompt:`,
+          imgP,
+          `## Negative Prompt:`,
+          negP,
+          `## Required Reference Ingredients:`,
+          `- Characters: ${subjList}`,
+          `- Environment: ${envStr}`,
+          `- Props: ${propList}`,
+          `## Target Aspect Ratio: 16:9`
+        ].join("\n\n");
+
+        copyToClipboard(text, "Gói tham chiếu Flow");
+      });
+    }
+  }
+
+  function renderVisualInspector(shot, scene, revisions) {
+    // 1. Visual Bible Bindings
+    if (vwBindingsContainer) {
+      const vb = (visualBibleSliceData && visualBibleSliceData.visual_bible) || {};
+      const allSubjects = vb.subjects || vb.characters || [];
+      const allEnvs = vb.environments || [];
+      const allProps = vb.props || vb.objects || [];
+
+      const boundSubjIds = shot.subjectIds || shot.subject_ids || [];
+      const boundEnvId = shot.environmentId || shot.environment_id;
+      const boundPropIds = shot.propIds || shot.prop_ids || [];
+
+      let bindingCardsHtml = "";
+      let boundCount = 0;
+
+      boundSubjIds.forEach(id => {
+        const found = allSubjects.find(s => s.subjectId === id || s.id === id || s.name === id);
+        boundCount++;
+        bindingCardsHtml += `
+          <div class="vw-binding-item">
+            <div class="vw-binding-top">
+              <span class="vw-binding-name">${escapeHtml(found ? found.name : id)}</span>
+              <span class="vw-binding-type">Nhân vật</span>
+            </div>
+            <div class="vw-binding-anchors">
+              ${found && found.species ? `<span>Loài: ${escapeHtml(found.species)}</span><br>` : ''}
+              ${found && found.visualAnchors && found.visualAnchors.length ? `<span>Điểm neo: ${escapeHtml(found.visualAnchors[0])}</span>` : `<span>ID: ${escapeHtml(id)}</span>`}
+            </div>
+          </div>
+        `;
+      });
+
+      if (boundEnvId) {
+        const found = allEnvs.find(e => e.environmentId === boundEnvId || e.id === boundEnvId || e.name === boundEnvId);
+        boundCount++;
+        bindingCardsHtml += `
+          <div class="vw-binding-item">
+            <div class="vw-binding-top">
+              <span class="vw-binding-name">${escapeHtml(found ? found.name : boundEnvId)}</span>
+              <span class="vw-binding-type">Bối cảnh</span>
+            </div>
+            <div class="vw-binding-anchors">
+              ${found && found.atmosphere ? `<span>Khí quyển: ${escapeHtml(found.atmosphere)}</span>` : `<span>ID: ${escapeHtml(boundEnvId)}</span>`}
+            </div>
+          </div>
+        `;
+      }
+
+      boundPropIds.forEach(id => {
+        const found = allProps.find(p => p.propId === id || p.id === id || p.name === id);
+        boundCount++;
+        bindingCardsHtml += `
+          <div class="vw-binding-item">
+            <div class="vw-binding-top">
+              <span class="vw-binding-name">${escapeHtml(found ? found.name : id)}</span>
+              <span class="vw-binding-type">Vật thể</span>
+            </div>
+            <div class="vw-binding-anchors">
+              <span>ID: ${escapeHtml(id)}</span>
+            </div>
+          </div>
+        `;
+      });
+
+      if (vwBindingsCountBadge) {
+        vwBindingsCountBadge.textContent = `${boundCount} liên kết`;
+      }
+      vwBindingsContainer.innerHTML = boundCount > 0 ? bindingCardsHtml : `<p class="empty-state" style="padding: 8px 0; font-size: 0.8rem;">Cảnh quay này chưa có thực thể Visual Bible nào được liên kết.</p>`;
+    }
+
+    // 2. Lock & Protection Card
+    if (vwLockStatusBadge) {
+      vwLockStatusBadge.className = shot.is_locked ? "state-pill state-locked" : "state-pill state-idle";
+      vwLockStatusBadge.textContent = shot.is_locked ? "Đã khóa" : "Mở khóa";
+    }
+    if (btnLockShotText) {
+      btnLockShotText.textContent = shot.is_locked ? "Mở khóa cảnh quay" : "Khóa cảnh quay";
+    }
+    if (btnLockShot) {
+      btnLockShot.disabled = false;
+      btnLockShot.onclick = async () => {
+        const newLockState = !shot.is_locked;
+        btnLockShot.disabled = true;
+        try {
+          const res = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/lock/shot/${encodeURIComponent(shot.shot_id)}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              locked: newLockState,
+              reason: "Thao tác người dùng tại Visual Workbench"
+            })
+          });
+          if (!res.ok) throw new Error(`Lỗi ${res.status}`);
+          showNotification(`Đã ${newLockState ? 'khóa' : 'mở khóa'} cảnh quay ${shot.shot_id} thành công!`, "success");
+          shot.is_locked = newLockState;
+          renderVisualShotWorkspace(shot, scene);
+          renderVisualInspector(shot, scene, revisions);
+        } catch (err) {
+          showNotification(`Lỗi khóa cảnh quay: ${err.message}`, "error");
+        } finally {
+          btnLockShot.disabled = false;
+        }
+      };
+    }
+
+    // 3. Revision History Card
+    if (vwRevisionsContainer && vwRevisionsCountBadge) {
+      const revList = Array.isArray(revisions) ? revisions : [];
+      vwRevisionsCountBadge.textContent = `${revList.length}`;
+      if (revList.length === 0) {
+        vwRevisionsContainer.innerHTML = `<p class="empty-state" style="padding: 8px 0; font-size: 0.8rem;">Chưa có bản sửa đổi nào.</p>`;
+      } else {
+        vwRevisionsContainer.innerHTML = revList.map(r => `
+          <div class="vw-revision-item">
+            <div class="vw-revision-info">
+              <span style="font-weight: 600;">${escapeHtml(r.reason || 'Sửa đổi prompt')}</span>
+              <span class="vw-revision-time">${escapeHtml(r.created_at ? r.created_at.slice(0, 19).replace('T', ' ') : '')}</span>
+            </div>
+            <button type="button" class="btn btn-secondary btn-xs btn-restore-shot-rev" data-rev-id="${escapeHtml(r.revision_id || r.id)}" title="Khôi phục phiên bản này">
+              Khôi phục
+            </button>
+          </div>
+        `).join("");
+
+        vwRevisionsContainer.querySelectorAll(".btn-restore-shot-rev").forEach(btn => {
+          btn.addEventListener("click", async () => {
+            const revId = btn.dataset.revId;
+            if (!confirm(`Khôi phục cảnh quay về phiên bản ${revId}?`)) return;
+            try {
+              const res = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/history/${encodeURIComponent(revId)}/restore`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ override_lock: true })
+              });
+              if (!res.ok) throw new Error(`Lỗi ${res.status}`);
+              showNotification(`Đã khôi phục phiên bản ${revId} thành công!`, "success");
+              selectVisualShot(shot.shot_id, scene.scene_id);
+            } catch (err) {
+              showNotification(`Lỗi khôi phục phiên bản: ${err.message}`, "error");
+            }
+          });
+        });
+      }
+    }
+  }
+
+  function copyToClipboard(text, label) {
+    if (!text) {
+      showNotification(`Không có nội dung để sao chép cho ${label}`, "warning");
+      return;
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text)
+        .then(() => showNotification(`Đã sao chép ${label} vào bộ nhớ tạm!`, "success"))
+        .catch(() => copyFallback(text, label));
+    } else {
+      copyFallback(text, label);
+    }
+  }
+
+  function copyFallback(text, label) {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand("copy");
+      showNotification(`Đã sao chép ${label} vào bộ nhớ tạm!`, "success");
+    } catch (e) {
+      showNotification(`Không thể sao chép ${label}`, "error");
+    }
+    document.body.removeChild(ta);
+  }
+
+  // Hook up filter and search inputs for Scene Navigator
+  if (spSearchInput) {
+    let searchDebounceTimer = null;
+    spSearchInput.addEventListener("input", () => {
+      clearTimeout(searchDebounceTimer);
+      searchDebounceTimer = setTimeout(renderVisualSceneNavigator, 150);
+    });
+  }
+  if (spFilterCategory) {
+    spFilterCategory.addEventListener("change", renderVisualSceneNavigator);
+  }
+  if (spFilterStatus) {
+    spFilterStatus.addEventListener("change", renderVisualSceneNavigator);
+  }
+
+  // Event delegation on spRowsContainer for clicks & keydowns
+  if (spRowsContainer) {
+    spRowsContainer.addEventListener("click", (e) => {
+      // 1. Toggle expander button
+      const expander = e.target.closest("[data-action='toggle-expand']");
+      if (expander) {
+        e.stopPropagation();
+        const scId = expander.dataset.sceneId;
+        if (visualExpandedSceneIds.has(scId)) {
+          visualExpandedSceneIds.delete(scId);
+        } else {
+          visualExpandedSceneIds.add(scId);
+        }
+        renderVisualSceneNavigator();
+        return;
+      }
+
+      // 2. Select shot item
+      const shotBtn = e.target.closest("[data-action='select-shot']");
+      if (shotBtn) {
+        e.stopPropagation();
+        const shotId = shotBtn.dataset.shotId;
+        const sceneId = shotBtn.dataset.sceneId;
+        if (shotId && sceneId) {
+          selectVisualShot(shotId, sceneId);
+        }
+        return;
+      }
+
+      // 3. Select scene header
+      const sceneBtn = e.target.closest("[data-action='select-scene']");
+      if (sceneBtn) {
+        const sceneId = sceneBtn.dataset.sceneId;
+        const sc = visualScenesList.find(s => s.scene_id === sceneId);
+        if (sc) {
+          const firstShotId = (sc.shot_ids && sc.shot_ids[0]) || `${sceneId}_sh1`;
+          selectVisualShot(firstShotId, sceneId);
+        }
+        return;
+      }
+    });
+
+    // Keyboard navigation (ArrowUp, ArrowDown)
+    spRowsContainer.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.preventDefault();
+        const focusables = Array.from(spRowsContainer.querySelectorAll("button"));
+        const currentIndex = focusables.indexOf(document.activeElement);
+        if (currentIndex === -1) {
+          if (focusables.length > 0) focusables[0].focus();
+        } else {
+          const nextIndex = e.key === "ArrowDown"
+            ? Math.min(currentIndex + 1, focusables.length - 1)
+            : Math.max(currentIndex - 1, 0);
+          focusables[nextIndex].focus();
+        }
+      }
+    });
+  }
+
+  // Export functions globally for browser testing and automation
+  window.loadVisualWorkbench = loadVisualWorkbench;
+  window.selectVisualShot = selectVisualShot;
+  window.renderVisualSceneNavigator = renderVisualSceneNavigator;
 
 
   // ==============================================================================

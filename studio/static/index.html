@@ -1148,9 +1148,9 @@
       <section id="ws-scenes" class="workspace-view">
         <div id="scene-planner-card" class="ws-header">
           <div class="ws-title-group">
-            <h2 class="ws-title card-title">Lập kế hoạch cảnh quay</h2>
+            <h2 class="ws-title card-title">Hình ảnh &amp; Cảnh (Visual Workbench)</h2>
             <button type="button" class="btn-module-help" data-module="scenes" title="Xem hướng dẫn lập cảnh quay" aria-label="Hướng dẫn lập cảnh quay">?</button>
-            <span class="ws-description">Phân bổ kịch bản thành các cảnh hình ảnh và prompt storyboard</span>
+            <span class="ws-description">Lập kế hoạch cảnh, cảnh quay, thiết kế hình ảnh, chuyển động và Visual Bible</span>
           </div>
           <div class="ws-status-group">
             <div class="mode-toggle-group">
@@ -1186,13 +1186,21 @@
                   type="text"
                   id="sp-search-input"
                   class="form-input form-input-sm"
-                  placeholder="Tìm cảnh (số, lời dẫn, thể loại)..."
+                  placeholder="Tìm cảnh (số, lời dẫn, thể loại, shot)..."
                   aria-label="Tìm kiếm cảnh"
                 >
               </div>
-              <select id="sp-filter-category" class="form-select form-select-sm" aria-label="Lọc theo thể loại hình ảnh">
-                <option value="">Tất cả thể loại</option>
-              </select>
+              <div style="display: flex; gap: 0.5rem;">
+                <select id="sp-filter-category" class="form-select form-select-sm" style="flex: 1;" aria-label="Lọc theo thể loại hình ảnh">
+                  <option value="">Tất cả thể loại</option>
+                </select>
+                <select id="sp-filter-status" class="form-select form-select-sm" style="flex: 1;" aria-label="Lọc theo trạng thái">
+                  <option value="">Tất cả trạng thái</option>
+                  <option value="ready">Sẵn sàng</option>
+                  <option value="outdated">Cần cập nhật</option>
+                  <option value="locked">Đã khóa</option>
+                </select>
+              </div>
             </div>
             <div class="list-header-row">
               <span class="col-num">Cảnh</span>
@@ -1906,12 +1914,52 @@
         </div>
       </div>
 
-      <!-- Context Inspector: SCENE PLANNER -->
+      <!-- Context Inspector: SCENE PLANNER (Visual Workbench Col 3) -->
       <div id="inspector-scenes" class="inspector-panel">
         <div class="inspector-header">
-          <h3 class="inspector-title">Thao tác Scene Plan</h3>
+          <h3 class="inspector-title">Thẩm định &amp; Liên kết (Visual)</h3>
         </div>
         <div class="inspector-body">
+          <!-- 1. Visual Bible Bindings for Selected Shot -->
+          <div class="visual-bible-bindings-card" id="vw-bindings-card" style="margin-bottom: 0.75rem;">
+            <div class="meta-row" style="align-items: center; justify-content: space-between; margin-bottom: 0.4rem;">
+              <span class="form-label" style="margin-bottom: 0; font-weight: 600;">LIÊN KẾT VISUAL BIBLE</span>
+              <span id="vw-bindings-count-badge" class="counter-chip">0 liên kết</span>
+            </div>
+            <div id="vw-bindings-container" class="vw-bindings-list">
+              <p class="empty-state" style="padding: 8px 0; font-size: 0.8rem;">Chọn một cảnh quay để xem thực thể liên kết.</p>
+            </div>
+          </div>
+
+          <!-- 2. Shot Lock & Protection Card -->
+          <div class="visual-lock-card" id="vw-lock-card" style="margin-bottom: 0.75rem;">
+            <div class="meta-row" style="align-items: center; justify-content: space-between; margin-bottom: 0.4rem;">
+              <span class="form-label" style="margin-bottom: 0; font-weight: 600;">KHÓA &amp; BẢO VỆ</span>
+              <span id="vw-lock-status-badge" class="state-pill state-idle">Mở khóa</span>
+            </div>
+            <button id="btn-lock-shot" class="btn btn-secondary btn-block" disabled title="Khóa/mở khóa cảnh quay để chống ghi đè tự động">
+              <svg class="ui-icon"><use href="#icon-lock"/></svg>
+              <span id="btn-lock-shot-text">Khóa cảnh quay</span>
+            </button>
+            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; line-height: 1.3;">
+              Khóa giúp bảo vệ prompt khỏi bị ghi đè tự động khi tạo lại hàng loạt.
+            </div>
+          </div>
+
+          <!-- 3. Shot Revision History Card -->
+          <div class="visual-revisions-card" id="vw-revisions-card" style="margin-bottom: 0.75rem;">
+            <div class="meta-row" style="align-items: center; justify-content: space-between; margin-bottom: 0.4rem;">
+              <span class="form-label" style="margin-bottom: 0; font-weight: 600;">LỊCH SỬ SỬA ĐỔI</span>
+              <span id="vw-revisions-count-badge" class="counter-chip">0</span>
+            </div>
+            <div id="vw-revisions-container" class="vw-revisions-list" style="max-height: 160px; overflow-y: auto;">
+              <p class="empty-state" style="padding: 8px 0; font-size: 0.8rem;">Chưa có bản sửa đổi nào.</p>
+            </div>
+          </div>
+
+          <div class="sidebar-divider"></div>
+
+          <!-- 4. Global Scene Plan Actions -->
           <div class="inspector-cta-group">
             <button id="btn-generate-scenes" class="btn btn-primary btn-block" disabled title="Tạo Scene Plan từ kịch bản và timestamp">
               <span>Tạo Scene Plan</span>

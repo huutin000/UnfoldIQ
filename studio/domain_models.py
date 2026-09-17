@@ -82,6 +82,20 @@ class Shot(BaseModel):
     end: Optional[float] = None
     duration: Optional[float] = None
     is_locked: bool = False
+    subject_ids: List[str] = Field(default_factory=list)
+    subjectIds: List[str] = Field(default_factory=list)
+    environment_id: Optional[str] = None
+    environmentId: Optional[str] = None
+    prop_ids: List[str] = Field(default_factory=list)
+    propIds: List[str] = Field(default_factory=list)
+    visual_objective: Optional[str] = None
+    shot_purpose: Optional[str] = None
+    status: str = "ready"
+    outdated: bool = False
+    narration: Optional[str] = ""
+    continuity_group: Optional[str] = None
+    category: Optional[str] = ""
+    constraints: List[str] = Field(default_factory=list)
 
     model_config = {"extra": "allow"}
 
@@ -150,6 +164,8 @@ class SceneSummary(BaseModel):
     shot_ids: List[str] = Field(default_factory=list)
     has_narration: bool = False
     evidence_mode: Optional[str] = "reconstruction"
+    is_locked: bool = False
+    status: str = "ready"
 
     model_config = {"extra": "allow"}
 

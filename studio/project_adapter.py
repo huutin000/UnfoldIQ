@@ -689,6 +689,15 @@ class ProjectAdapter:
         project_dir = self.resolve_project_dir(dir_name)
         project_id = project_dir.name
 
+        lock_mgr = None
+        try:
+            from studio.project_bootstrap import get_project_state_store
+            from studio.locking import LockManager
+            store = get_project_state_store(dir_name)
+            lock_mgr = LockManager(store)
+        except Exception:
+            pass
+
         # Read veo_prompts to map shot IDs to scenes quickly
         scene_to_shots: Dict[str, List[str]] = {}
         veo_path = project_dir / "veo_prompts.json"
@@ -712,6 +721,8 @@ class ProjectAdapter:
                     sc_id = str(sc.get("scene_id") or f"sc_{sc.get('index', idx+1):02d}")
                     shots = scene_to_shots.get(sc_id, [f"{sc_id}_sh1"])
                     v_sum = sc.get("visual_summary", "")
+                    is_locked = lock_mgr.is_locked(sc_id) if lock_mgr else False
+                    status = sc.get("status") or "ready"
                     summaries.append(
                         SceneSummary(
                             scene_id=sc_id,
@@ -725,6 +736,8 @@ class ProjectAdapter:
                             shot_ids=shots,
                             has_narration=bool(sc.get("narration")),
                             evidence_mode=sc.get("evidence_mode", "reconstruction"),
+                            is_locked=is_locked,
+                            status=status,
                         )
                     )
             except Exception as e:
@@ -738,6 +751,15 @@ class ProjectAdapter:
         Called on-demand when the user selects or edits a specific scene.
         """
         project_dir = self.resolve_project_dir(dir_name)
+
+        lock_mgr = None
+        try:
+            from studio.project_bootstrap import get_project_state_store
+            from studio.locking import LockManager
+            store = get_project_state_store(dir_name)
+            lock_mgr = LockManager(store)
+        except Exception:
+            pass
 
         # 1. Read target scene from scene_plan.json
         sp_path = project_dir / "scene_plan.json"
@@ -764,9 +786,11 @@ class ProjectAdapter:
                 for sh in veo_data.get("shots", []):
                     parent_id = str(sh.get("parent_scene_id") or sh.get("parentSceneId") or sh.get("scene_id") or "")
                     if parent_id == scene_id:
+                        cur_shot_id = str(sh.get("shot_id") or f"{scene_id}_sh1")
+                        sh_locked = lock_mgr.is_locked(cur_shot_id) if lock_mgr else False
                         matching_shots.append(
                             Shot(
-                                shot_id=str(sh.get("shot_id") or f"{scene_id}_sh1"),
+                                shot_id=cur_shot_id,
                                 parent_scene_id=scene_id,
                                 index=int(sh.get("index") or 1),
                                 shot_type=sh.get("shot_type") or found_sc.get("shot_type", "medium wide"),
@@ -776,11 +800,26 @@ class ProjectAdapter:
                                 negative_prompt=sh.get("negative_prompt") or "",
                                 continuity_anchor=sh.get("continuity_anchor"),
                                 subject_action=sh.get("subject_action"),
-                                environmental_action=sh.get("environmental_action"),
-                                lighting_atmosphere=sh.get("lighting_atmosphere"),
+                                environmental_action=sh.get("environmental_action") or sh.get("environment_motion"),
+                                lighting_atmosphere=sh.get("lighting_atmosphere") or sh.get("lighting"),
                                 start=sh.get("start") or found_sc.get("start"),
                                 end=sh.get("end") or found_sc.get("end"),
                                 duration=sh.get("duration") or found_sc.get("duration"),
+                                is_locked=sh_locked,
+                                subject_ids=sh.get("subjectIds") or sh.get("subject_ids") or [],
+                                subjectIds=sh.get("subjectIds") or sh.get("subject_ids") or [],
+                                environment_id=sh.get("environmentId") or sh.get("environment_id"),
+                                environmentId=sh.get("environmentId") or sh.get("environment_id"),
+                                prop_ids=sh.get("propIds") or sh.get("prop_ids") or [],
+                                propIds=sh.get("propIds") or sh.get("prop_ids") or [],
+                                visual_objective=sh.get("visual_objective"),
+                                shot_purpose=sh.get("shot_purpose") or sh.get("shotPurpose"),
+                                status=sh.get("status") or "ready",
+                                outdated=bool(sh.get("outdated", False)),
+                                narration=sh.get("narration") or "",
+                                continuity_group=sh.get("continuity_group") or sh.get("continuityGroupId"),
+                                category=sh.get("category") or "",
+                                constraints=sh.get("constraints") or [],
                             )
                         )
             except Exception as e:
@@ -802,6 +841,8 @@ class ProjectAdapter:
                 )
             )
 
+        is_scene_locked = lock_mgr.is_locked(scene_id) if lock_mgr else False
+
         return Scene(
             scene_id=scene_id,
             index=int(found_sc.get("index") or 1),
@@ -812,9 +853,11 @@ class ProjectAdapter:
             visual_summary=found_sc.get("visual_summary", ""),
             narration=found_sc.get("narration", ""),
             image_prompt=found_sc.get("image_prompt", ""),
+            negative_prompt=found_sc.get("negative_prompt", ""),
             evidence_mode=found_sc.get("evidence_mode", "reconstruction"),
             shot_type=found_sc.get("shot_type", "medium wide"),
             shots=matching_shots,
+            is_locked=is_scene_locked,
         )
 
     def load_shot_detail(self, dir_name: str, shot_id: str) -> Shot:
@@ -831,9 +874,36 @@ class ProjectAdapter:
                     cur_id = str(sh.get("shot_id") or "")
                     if cur_id == shot_id:
                         parent_id = str(sh.get("parent_scene_id") or sh.get("parentSceneId") or sh.get("scene_id") or "")
+                        is_locked = False
+                        try:
+                            from studio.project_bootstrap import get_project_state_store
+                            from studio.locking import LockManager
+                            store = get_project_state_store(dir_name)
+                            is_locked = LockManager(store).is_locked(cur_id)
+                        except Exception:
+                            pass
+
+                        # --- Enrich: scene_id alias, duration_sec alias, image_prompt ---
+                        duration_val = sh.get("duration")
+                        image_prompt_val = ""
+                        try:
+                            img_path = project_dir / "image_prompts.json"
+                            if img_path.is_file() and parent_id:
+                                img_data = json.loads(img_path.read_text(encoding="utf-8"))
+                                for sc in img_data.get("scenes", []):
+                                    if str(sc.get("scene_id") or "") == parent_id:
+                                        image_prompt_val = sc.get("prompt") or ""
+                                        break
+                        except Exception:
+                            pass
+
                         return Shot(
                             shot_id=cur_id,
                             parent_scene_id=parent_id,
+                            # UI-friendly aliases
+                            scene_id=parent_id,
+                            duration_sec=duration_val,
+                            image_prompt=image_prompt_val,
                             index=int(sh.get("index") or 1),
                             shot_type=sh.get("shot_type") or "medium wide",
                             camera_motion=sh.get("camera_motion") or "static cinematic camera",
@@ -842,11 +912,26 @@ class ProjectAdapter:
                             negative_prompt=sh.get("negative_prompt") or "",
                             continuity_anchor=sh.get("continuity_anchor"),
                             subject_action=sh.get("subject_action"),
-                            environmental_action=sh.get("environmental_action"),
-                            lighting_atmosphere=sh.get("lighting_atmosphere"),
+                            environmental_action=sh.get("environmental_action") or sh.get("environment_motion"),
+                            lighting_atmosphere=sh.get("lighting_atmosphere") or sh.get("lighting"),
                             start=sh.get("start"),
                             end=sh.get("end"),
-                            duration=sh.get("duration"),
+                            duration=duration_val,
+                            is_locked=is_locked,
+                            subject_ids=sh.get("subjectIds") or sh.get("subject_ids") or [],
+                            subjectIds=sh.get("subjectIds") or sh.get("subject_ids") or [],
+                            environment_id=sh.get("environmentId") or sh.get("environment_id"),
+                            environmentId=sh.get("environmentId") or sh.get("environment_id"),
+                            prop_ids=sh.get("propIds") or sh.get("prop_ids") or [],
+                            propIds=sh.get("propIds") or sh.get("prop_ids") or [],
+                            visual_objective=sh.get("visual_objective"),
+                            shot_purpose=sh.get("shot_purpose") or sh.get("shotPurpose"),
+                            status=sh.get("status") or "ready",
+                            outdated=bool(sh.get("outdated", False)),
+                            narration=sh.get("narration") or "",
+                            continuity_group=sh.get("continuity_group") or sh.get("continuityGroupId"),
+                            category=sh.get("category") or "",
+                            constraints=sh.get("constraints") or [],
                         )
             except Exception as e:
                 logger.warning(f"Failed to read veo_prompts for shot {shot_id}: {e}")
