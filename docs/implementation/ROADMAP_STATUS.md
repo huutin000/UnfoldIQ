@@ -16,7 +16,7 @@
 | **Phase 2** | **Dependency Engine, Versioning & Scheduler** | ✅ **PASS / FINAL** | `VERIFIED` | **483/483 tests PASSED (100%)** (42.72s) tại `PHASE_02_FINAL_CLOSURE_REPORT.md` & `PHASE_02_MICRO_CLOSURE_REPORT.md` (baseline ban đầu 467 tests) \| Sẵn sàng khởi động Subphase 3A |
 | **Phase 3** | **Core Workbenches Restructuring** | 🟡 **IN PROGRESS** | `IN PROGRESS` | Chuỗi 4 subphases tuần tự (3A $\rightarrow$ 3D) |
 | ↳ *Subphase 3A* | *App Shell + Overview + Story Workbench* | ✅ **PASS / FINAL** | `VERIFIED` | Sequential Execution Gate 1 (8/8 tests, browser verified) |
-| ↳ *Subphase 3B* | *Voice Workbench (Sync & Pronunciation)* | ⏭ **READY TO START** | `NOT STARTED` | Sequential Execution Gate 2 (sau 3A) |
+| ↳ *Subphase 3B* | *Voice Workbench (Sync & Pronunciation)* | ✅ **PASS / FINAL** | `VERIFIED` | Toàn bộ Cổng A-P ĐẠT (507/507 tests PASSED, browser CDP verified 3 viewports, 1422 word cues sync, 0 network overhead) tại `PHASE_03B_FINAL_VERIFICATION_REPORT.md` |
 | ↳ *Subphase 3C* | *Visual Workbench (Scenes, Shots, Bible)* | ⏭ **READY TO START** | `NOT STARTED` | Sequential Execution Gate 3 (sau 3B) |
 | ↳ *Subphase 3D* | *Export Workbench UI (Preflight & Triggers)*| ⏳ *NOT STARTED* | `NOT STARTED` | Sequential Execution Gate 4 (sau 3C) |
 | **Phase 4** | **Media, Asset & Export Pipeline** | ⏳ **NOT STARTED** | `NOT STARTED` | Thumbnail WebP, Proxy 720p, Portable Package |

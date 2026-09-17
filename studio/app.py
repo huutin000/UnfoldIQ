@@ -1843,9 +1843,11 @@ async def waive_voice_qa_issue(dir_name: str, fingerprint: str, req: Optional[Vo
     return {"status": "success", "fingerprint": fingerprint, "decision": "waived", "qa_status": res}
 
 
+@app.post("/api/projects/{dir_name}/voice/chunks/{chunk_id}/regenerate")
 @app.post("/api/projects/{dir_name}/voice-qa/rerender-chunk/{chunk_index}")
-async def rerender_chunk_endpoint(dir_name: str, chunk_index: int):
-    return await _rerender_chunk_impl(dir_name, chunk_index)
+async def rerender_chunk_endpoint(dir_name: str, chunk_id: Optional[str] = None, chunk_index: Optional[Any] = None):
+    target = chunk_id if chunk_id is not None else chunk_index
+    return await _rerender_chunk_impl(dir_name, target)
 
 
 # ==============================================================================

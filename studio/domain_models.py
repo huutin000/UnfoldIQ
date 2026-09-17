@@ -28,6 +28,9 @@ class AudioChunk(BaseModel):
     audio_file: Optional[str] = None
     duration: Optional[float] = 0.0
     is_locked: bool = False
+    status: Optional[str] = "READY"  # EMPTY, READY, OUTDATED
+    qa_issues_count: Optional[int] = 0
+    qa_issues: List[Dict[str, Any]] = Field(default_factory=list)
     words: List[WordCue] = Field(default_factory=list)
 
     model_config = {"extra": "allow"}
@@ -122,8 +125,14 @@ class VoiceSlice(BaseModel):
     total_chunks: int = 0
     total_duration_seconds: float = 0.0
     has_audio: bool = False
+    has_mp3: bool = False
     audio_status: str = "EMPTY"  # EMPTY, READY, OUTDATED
     audio_file: Optional[str] = None
+    transcript_text: Optional[str] = ""
+    segments: List[Dict[str, Any]] = Field(default_factory=list)
+    words: List[Dict[str, Any]] = Field(default_factory=list)
+    qa_summary: Optional[Dict[str, Any]] = None
+    pronunciation_count: int = 0
 
     model_config = {"extra": "allow"}
 

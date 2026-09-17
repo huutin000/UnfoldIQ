@@ -521,3 +521,379 @@ body.sidebar-collapsed[data-active-workspace="voice"] .workstation-body {
 }
 
 /* ==========================================================================
+   Subphase 3B: 3-Column Voice Workbench Grid & Components
+   ========================================================================== */
+.voice-workbench-grid {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr) 340px;
+  height: calc(100vh - 125px);
+  gap: 1px;
+  background: var(--uq-line);
+}
+@media (max-width: 1440px) {
+  .voice-workbench-grid {
+    grid-template-columns: 250px minmax(0, 1fr) 310px;
+  }
+}
+@media (max-width: 1200px) {
+  .voice-workbench-grid {
+    grid-template-columns: 220px minmax(0, 1fr) 280px;
+  }
+}
+
+/* Voice Navigator (Column 1) */
+.voice-navigator {
+  background: var(--uq-surface);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.voice-col-header {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--uq-line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--uq-surface);
+}
+.voice-col-title {
+  font-size: 12px;
+  font-weight: 650;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--uq-ink-2);
+}
+.voice-nav-filter-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--uq-line);
+  background: var(--uq-surface-2);
+}
+.voice-nav-search-input {
+  width: 100%;
+  padding: 5px 8px;
+  font-size: 12px;
+  background: var(--uq-surface);
+  border: 1px solid var(--uq-line);
+  border-radius: 4px;
+  color: var(--uq-ink-1);
+}
+.voice-nav-filter-select {
+  width: 100%;
+  padding: 4px 6px;
+  font-size: 11.5px;
+  background: var(--uq-surface);
+  border: 1px solid var(--uq-line);
+  border-radius: 4px;
+  color: var(--uq-ink-2);
+}
+.voice-chunks-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.voice-chunk-item {
+  padding: 8px 10px;
+  border-radius: var(--uq-r-card, 6px);
+  border: 1px solid var(--uq-line);
+  background: var(--uq-surface);
+  cursor: pointer;
+  transition: all var(--uq-ease);
+}
+.voice-chunk-item:hover {
+  border-color: var(--uq-line-strong);
+  background: var(--uq-hover);
+}
+.voice-chunk-item.selected {
+  border-color: var(--uq-accent);
+  background: var(--uq-accent-wash);
+}
+.voice-chunk-item:focus,
+.voice-chunk-item:focus-visible {
+  outline: 2px solid var(--uq-accent, #3b82f6);
+  outline-offset: 1px;
+}
+.voice-chunk-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.voice-chunk-id {
+  font-family: var(--uq-font-mono);
+  font-weight: 650;
+  font-size: 11.5px;
+  color: var(--uq-ink-2);
+}
+.voice-chunk-badges {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.voice-chunk-text {
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--uq-ink-1);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.voice-chunk-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--uq-ink-3);
+  margin-top: 4px;
+}
+
+/* Voice Workspace (Column 2) */
+.voice-workspace {
+  background: var(--uq-surface-2);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 14px;
+  gap: 12px;
+}
+.voice-workspace-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--uq-line);
+}
+.voice-card {
+  background: var(--uq-surface);
+  border: 1px solid var(--uq-line);
+  border-radius: var(--uq-r-card, 8px);
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+.voice-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--uq-line);
+  background: var(--uq-surface);
+}
+.voice-card-title {
+  font-size: 12.5px;
+  font-weight: 650;
+  color: var(--uq-ink-1);
+}
+.voice-card-body {
+  padding: 12px 14px;
+}
+
+/* Transport Card */
+.voice-transport-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.voice-transport-time {
+  font-family: var(--uq-font-mono);
+  font-size: 12px;
+  color: var(--uq-ink-2);
+  white-space: nowrap;
+  min-width: 85px;
+}
+.voice-transport-scrubber-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+.voice-scrubber-slider {
+  width: 100%;
+  cursor: pointer;
+  accent-color: var(--uq-accent);
+}
+.voice-speed-control {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  color: var(--uq-ink-2);
+  white-space: nowrap;
+}
+.voice-transport-context {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--uq-line);
+  font-size: 11.5px;
+  color: var(--uq-ink-3);
+}
+.voice-context-chip {
+  font-family: var(--uq-font-mono);
+  background: var(--uq-surface-2);
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--uq-line);
+}
+
+/* Transcript & Word Cues */
+.voice-stt-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.voice-stt-progress {
+  padding: 8px 14px;
+  background: var(--uq-surface-2);
+  border-bottom: 1px solid var(--uq-line);
+}
+.voice-cues-body {
+  max-height: calc(100vh - 360px);
+  overflow-y: auto;
+  line-height: 2.2;
+  font-size: 13.5px;
+  color: var(--uq-ink-1);
+  padding: 14px;
+  user-select: text;
+}
+.word-cue {
+  display: inline-block;
+  padding: 2px 5px;
+  margin: 1px 2px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.12s ease;
+  background: transparent;
+}
+.word-cue:hover {
+  background: var(--uq-hover);
+  color: var(--uq-accent-ink);
+  text-decoration: underline;
+}
+.word-cue.active {
+  background: var(--uq-accent, #3b82f6) !important;
+  color: #ffffff !important;
+  font-weight: 650;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.7);
+  transform: scale(1.06);
+}
+.word-cue.has-qa-issue {
+  border-bottom: 2px wavy var(--uq-warning, #f59e0b);
+}
+
+/* Voice Inspector (Column 3) */
+.voice-inspector {
+  background: var(--uq-surface);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+  overflow-y: auto;
+}
+.voice-gen-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+.qa-metrics-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.qa-metrics-row .metric-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--uq-surface-2);
+  padding: 6px 4px;
+  border-radius: 4px;
+  border: 1px solid var(--uq-line);
+}
+.qa-metrics-row .metric-label {
+  font-size: 10.5px;
+  color: var(--uq-ink-3);
+  text-transform: uppercase;
+}
+.qa-metrics-row strong {
+  font-size: 12px;
+  font-weight: 650;
+  color: var(--uq-ink-1);
+}
+.voice-qa-btn-row {
+  margin-bottom: 10px;
+}
+.voice-qa-issues-list {
+  max-height: 220px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.voice-qa-issue-item {
+  padding: 6px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--uq-line);
+  background: var(--uq-surface);
+  cursor: pointer;
+  font-size: 11.5px;
+  transition: all var(--uq-ease);
+}
+.voice-qa-issue-item:hover {
+  border-color: var(--uq-line-strong);
+  background: var(--uq-hover);
+}
+.voice-qa-issue-item.selected {
+  border-color: var(--uq-accent);
+  background: var(--uq-accent-wash);
+}
+.voice-pron-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.form-row-compact {
+  display: flex;
+  gap: 6px;
+}
+.form-row-compact input {
+  flex: 1;
+}
+.form-row-actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.voice-pron-list {
+  max-height: 180px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.voice-pron-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--uq-line);
+  background: var(--uq-surface-2);
+  font-size: 11.5px;
+}
+.voice-history-list {
+  max-height: 140px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+}
+

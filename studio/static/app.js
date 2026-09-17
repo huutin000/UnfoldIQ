@@ -7200,4 +7200,965 @@ document.addEventListener("DOMContentLoaded", () => {
   window.loadNextBestAction = loadNextBestAction;
 
   // ==============================================================================
-  
+  // SUBPHASE 3B: VOICE WORKBENCH CLIENT MODULE
+  // ==============================================================================
+  let currentVoiceData = null;
+  let selectedVoiceChunkId = null;
+  let isVoiceScrubberSeeking = false;
+  let voiceActiveCueIndex = -1;
+  let voiceSttPollInterval = null;
+
+  // DOM Elements
+  const voiceChunksCount = document.getElementById("voice-chunks-count");
+  const voiceChunkSearch = document.getElementById("voice-chunk-search");
+  const voiceChunkFilter = document.getElementById("voice-chunk-filter");
+  const voiceChunksContainer = document.getElementById("voice-chunks-container");
+
+  const voiceAudioStatusPill = document.getElementById("voice-audio-status-pill");
+  const btnVoiceDownloadMenu = document.getElementById("btn-voice-download-menu");
+  const voiceDownloadDropdown = document.getElementById("voice-download-dropdown");
+  const voiceDlWav = document.getElementById("voice-dl-wav");
+  const voiceDlMp3 = document.getElementById("voice-dl-mp3");
+  const voiceDlSrt = document.getElementById("voice-dl-srt");
+  const voiceDlTs = document.getElementById("voice-dl-ts");
+
+  const voiceBtnPlayPause = document.getElementById("voice-btn-play-pause");
+  const voiceCurTime = document.getElementById("voice-cur-time");
+  const voiceTotDur = document.getElementById("voice-tot-dur");
+  const voiceScrubber = document.getElementById("voice-scrubber");
+  const voicePlaybackRate = document.getElementById("voice-playback-rate");
+  const voicePlayingContext = document.getElementById("voice-playing-context");
+  const btnPlaySelectedChunk = document.getElementById("btn-play-selected-chunk");
+
+  const voiceCuesCount = document.getElementById("voice-cues-count");
+  const btnRunWhisperAlignment = document.getElementById("btn-run-whisper-alignment");
+  const btnCancelWhisperAlignment = document.getElementById("btn-cancel-whisper-alignment");
+  const voiceSttProgress = document.getElementById("voice-stt-progress");
+  const voiceSttProgressFill = document.getElementById("voice-stt-progress-fill");
+  const voiceSttProgressMsg = document.getElementById("voice-stt-progress-msg");
+  const voiceSttProgressPct = document.getElementById("voice-stt-progress-pct");
+  const voiceCuesContainer = document.getElementById("voice-cues-container");
+
+  const voiceProviderBadge = document.getElementById("voice-provider-badge");
+  const voiceSelectModel = document.getElementById("voice-select-model");
+  const voiceTtsSpeed = document.getElementById("voice-tts-speed");
+  const voiceTtsSpeedVal = document.getElementById("voice-tts-speed-val");
+  const btnGenerateSelectedChunk = document.getElementById("btn-generate-selected-chunk");
+  const btnGenerateAllVoice = document.getElementById("btn-generate-all-voice");
+
+  const voiceQaVerdictBadge = document.getElementById("voice-qa-verdict-badge");
+  const voiceQaMatch = document.getElementById("voice-qa-match");
+  const voiceQaWer = document.getElementById("voice-qa-wer");
+  const voiceQaWpm = document.getElementById("voice-qa-wpm");
+  const voiceQaIssuesCount = document.getElementById("voice-qa-issues-count");
+  const btnRunVoiceQaWorkbench = document.getElementById("btn-run-voice-qa-workbench");
+  const voiceQaIssuesList = document.getElementById("voice-qa-issues-list");
+
+  const voicePronCount = document.getElementById("voice-pron-count");
+  const voicePronAddForm = document.getElementById("voice-pron-add-form");
+  const voicePronTerm = document.getElementById("voice-pron-term");
+  const voicePronSpoken = document.getElementById("voice-pron-spoken");
+  const btnPronTestAudio = document.getElementById("btn-pron-test-audio");
+  const voicePronList = document.getElementById("voice-pron-list");
+
+  const voiceChunkLockStatus = document.getElementById("voice-chunk-lock-status");
+  const btnToggleChunkLock = document.getElementById("btn-toggle-chunk-lock");
+  const voiceHistoryList = document.getElementById("voice-history-list");
+
+  // Toggle download dropdown
+  if (btnVoiceDownloadMenu && voiceDownloadDropdown) {
+    btnVoiceDownloadMenu.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isVisible = voiceDownloadDropdown.style.display === "block";
+      voiceDownloadDropdown.style.display = isVisible ? "none" : "block";
+    });
+    document.addEventListener("click", () => {
+      if (voiceDownloadDropdown) voiceDownloadDropdown.style.display = "none";
+    });
+  }
+
+  // Speed slider display
+  if (voiceTtsSpeed && voiceTtsSpeedVal) {
+    voiceTtsSpeed.addEventListener("input", () => {
+      voiceTtsSpeedVal.textContent = `${parseFloat(voiceTtsSpeed.value).toFixed(2)}x`;
+    });
+  }
+
+  // Playback rate (preview only, no generation invalidation)
+  if (voicePlaybackRate && audioPlayer) {
+    voicePlaybackRate.addEventListener("change", () => {
+      const rate = parseFloat(voicePlaybackRate.value) || 1.0;
+      audioPlayer.playbackRate = rate;
+    });
+  }
+
+  // Play/Pause button
+  if (voiceBtnPlayPause && audioPlayer) {
+    voiceBtnPlayPause.addEventListener("click", () => {
+      if (!audioPlayer.src || audioPlayer.src.includes("undefined") || !audioPlayer.src.includes("/")) {
+        if (currentProjectDir) {
+          audioPlayer.src = `/api/projects/${encodeURIComponent(currentProjectDir)}/audio/wav?t=${Date.now()}`;
+        }
+      }
+      if (audioPlayer.paused) {
+        audioPlayer.play().catch(err => {
+          showNotification("Không thể phát âm thanh: " + err.message, "error");
+        });
+      } else {
+        audioPlayer.pause();
+      }
+    });
+  }
+
+  // Scrubber seeking
+  if (voiceScrubber && audioPlayer) {
+    voiceScrubber.addEventListener("input", () => {
+      isVoiceScrubberSeeking = true;
+      const dur = audioPlayer.duration || (currentVoiceData ? currentVoiceData.total_duration_seconds : 0);
+      const previewTime = (parseFloat(voiceScrubber.value) / 100) * dur;
+      if (voiceCurTime) voiceCurTime.textContent = formatTime(previewTime);
+    });
+    voiceScrubber.addEventListener("change", () => {
+      const dur = audioPlayer.duration || (currentVoiceData ? currentVoiceData.total_duration_seconds : 0);
+      audioPlayer.currentTime = (parseFloat(voiceScrubber.value) / 100) * dur;
+      isVoiceScrubberSeeking = false;
+    });
+  }
+
+  // Sync Voice Transport with audioPlayer events
+  if (audioPlayer) {
+    audioPlayer.addEventListener("timeupdate", () => {
+      const cur = audioPlayer.currentTime || 0;
+      const dur = audioPlayer.duration || (currentVoiceData ? currentVoiceData.total_duration_seconds : 0);
+
+      if (voiceCurTime) voiceCurTime.textContent = formatTime(cur);
+      if (voiceTotDur) voiceTotDur.textContent = formatTime(dur);
+
+      if (voiceScrubber && !isVoiceScrubberSeeking && dur > 0) {
+        voiceScrubber.value = (cur / dur) * 100;
+      }
+
+      // Sync active word cue highlight (Zero network traffic)
+      syncVoiceWordCuesHighlight(cur);
+    });
+
+    const syncTransportButtons = () => {
+      if (!voiceBtnPlayPause) return;
+      const isPlaying = !audioPlayer.paused && !audioPlayer.ended && audioPlayer.readyState > 2;
+      const playIcon = voiceBtnPlayPause.querySelector(".play-icon");
+      const pauseIcon = voiceBtnPlayPause.querySelector(".pause-icon");
+      if (playIcon && pauseIcon) {
+        playIcon.style.display = isPlaying ? "none" : "inline-block";
+        pauseIcon.style.display = isPlaying ? "inline-block" : "none";
+      }
+    };
+
+    audioPlayer.addEventListener("play", syncTransportButtons);
+    audioPlayer.addEventListener("playing", syncTransportButtons);
+    audioPlayer.addEventListener("pause", syncTransportButtons);
+    audioPlayer.addEventListener("ended", syncTransportButtons);
+  }
+
+  function syncVoiceWordCuesHighlight(currentTime) {
+    if (!currentVoiceData || !currentVoiceData.words || currentVoiceData.words.length === 0) return;
+    const words = currentVoiceData.words;
+    
+    // O(log N) Binary search across sorted word cues
+    let newIndex = -1;
+    let low = 0;
+    let high = words.length - 1;
+    while (low <= high) {
+      const mid = (low + high) >> 1;
+      const w = words[mid];
+      if (currentTime < w.start) {
+        high = mid - 1;
+      } else if (currentTime > w.end) {
+        low = mid + 1;
+      } else {
+        newIndex = mid;
+        break;
+      }
+    }
+
+    if (newIndex !== voiceActiveCueIndex) {
+      if (voiceActiveCueIndex >= 0) {
+        const prevEl = document.getElementById(`vw-cue-${voiceActiveCueIndex}`);
+        if (prevEl) prevEl.classList.remove("active");
+      }
+      if (newIndex >= 0) {
+        const nextEl = document.getElementById(`vw-cue-${newIndex}`);
+        if (nextEl) {
+          nextEl.classList.add("active");
+          nextEl.scrollIntoView({ block: "nearest", behavior: "smooth" });
+        }
+      }
+      voiceActiveCueIndex = newIndex;
+    }
+  }
+
+  // Load Voice Slice
+  async function loadVoiceWorkbench(dirName) {
+    if (!dirName) {
+      if (voiceChunksContainer) {
+        voiceChunksContainer.innerHTML = `<div class="empty-state" style="padding: 1.5rem 1rem; font-size: 0.85rem;">Chưa có dữ liệu giọng đọc. Vui lòng chọn hoặc mở một dự án.</div>`;
+      }
+      if (voiceCuesContainer) {
+        voiceCuesContainer.innerHTML = `<p class="empty-state">Chưa có dữ liệu mốc thời gian.</p>`;
+      }
+      return;
+    }
+
+    if (voiceChunksContainer) {
+      voiceChunksContainer.innerHTML = `<div class="empty-state" style="padding: 1.5rem 1rem; font-size: 0.85rem;"><span class="inline-spinner"></span> Đang tải dữ liệu giọng đọc...</div>`;
+    }
+    if (voiceCuesContainer) {
+      voiceCuesContainer.innerHTML = `<p class="empty-state"><span class="inline-spinner"></span> Đang tải bản chép lời và mốc thời gian...</p>`;
+    }
+
+    try {
+      const res = await fetch(`/api/projects/${encodeURIComponent(dirName)}/v2/voice`);
+      if (!res.ok) {
+        throw new Error(`Mã lỗi ${res.status}`);
+      }
+      currentVoiceData = await res.json();
+      if (currentProjectDir !== dirName) return;
+
+      // Update audio source
+      if (audioPlayer) {
+        const wavUrl = `/api/projects/${encodeURIComponent(dirName)}/audio/wav`;
+        if (currentVoiceData.has_audio) {
+          if (!audioPlayer.src || !audioPlayer.src.includes(encodeURIComponent(dirName))) {
+            audioPlayer.src = `${wavUrl}?t=${Date.now()}`;
+          }
+        }
+      }
+
+      // Update download links based on real file availability (Gate L)
+      if (voiceDlWav) {
+        if (currentVoiceData.has_audio) {
+          voiceDlWav.href = `/api/projects/${encodeURIComponent(dirName)}/audio/wav`;
+          voiceDlWav.style.display = "block";
+        } else {
+          voiceDlWav.style.display = "none";
+        }
+      }
+      if (voiceDlMp3) {
+        if (currentVoiceData.has_mp3) {
+          voiceDlMp3.href = `/api/projects/${encodeURIComponent(dirName)}/audio/mp3`;
+          voiceDlMp3.style.display = "block";
+        } else {
+          voiceDlMp3.style.display = "none";
+        }
+      }
+      if (voiceDlSrt) {
+        if (currentVoiceData.segments && currentVoiceData.segments.length > 0) {
+          voiceDlSrt.href = `/api/projects/${encodeURIComponent(dirName)}/timestamps/srt`;
+          voiceDlSrt.style.display = "block";
+        } else {
+          voiceDlSrt.style.display = "none";
+        }
+      }
+      if (voiceDlTs) {
+        if (currentVoiceData.words && currentVoiceData.words.length > 0) {
+          voiceDlTs.href = `/api/projects/${encodeURIComponent(dirName)}/timestamps.json`;
+          voiceDlTs.style.display = "block";
+        } else {
+          voiceDlTs.style.display = "none";
+        }
+      }
+
+      // Update status pill & total duration
+      if (voiceAudioStatusPill) {
+        if (currentVoiceData.audio_status === "READY") {
+          voiceAudioStatusPill.className = "state-pill state-ready";
+          voiceAudioStatusPill.textContent = "Sẵn sàng";
+        } else if (currentVoiceData.audio_status === "OUTDATED") {
+          voiceAudioStatusPill.className = "state-pill state-warning";
+          voiceAudioStatusPill.textContent = "Cần cập nhật";
+        } else {
+          voiceAudioStatusPill.className = "state-pill state-idle";
+          voiceAudioStatusPill.textContent = "Chưa tạo";
+        }
+      }
+
+      if (voiceTotDur) {
+        voiceTotDur.textContent = formatTime(currentVoiceData.total_duration_seconds || 0);
+      }
+
+      // Update Voice Settings
+      if (voiceSelectModel && currentVoiceData.voice_id) {
+        voiceSelectModel.value = currentVoiceData.voice_id;
+      }
+      if (voiceTtsSpeed && currentVoiceData.speed != null) {
+        voiceTtsSpeed.value = currentVoiceData.speed;
+        if (voiceTtsSpeedVal) voiceTtsSpeedVal.textContent = `${parseFloat(currentVoiceData.speed).toFixed(2)}x`;
+      }
+
+      // Render Chunks
+      renderVoiceChunks();
+
+      // Render Word Cues
+      renderVoiceWordCues();
+
+      // Render Voice QA
+      renderVoiceQAData();
+
+      // Render Pronunciations
+      renderVoicePronunciations();
+
+      // Auto-select first chunk if none selected
+      if (currentVoiceData.chunks && currentVoiceData.chunks.length > 0) {
+        if (!selectedVoiceChunkId || !currentVoiceData.chunks.some(c => c.chunk_id === selectedVoiceChunkId)) {
+          selectVoiceChunk(currentVoiceData.chunks[0].chunk_id);
+        } else {
+          selectVoiceChunk(selectedVoiceChunkId);
+        }
+      }
+    } catch (err) {
+      if (voiceChunksContainer) {
+        voiceChunksContainer.innerHTML = `
+          <div class="empty-state" style="padding: 1.5rem 1rem; font-size: 0.85rem; color: var(--uq-bad, #ef4444);">
+            Không thể tải dữ liệu giọng đọc (${err.message}).
+            <button class="btn btn-xs btn-secondary" style="margin-top: 8px; display: inline-block;" onclick="window.loadVoiceWorkbench && window.loadVoiceWorkbench(window.currentProjectDir)">Thử lại</button>
+          </div>`;
+      }
+      if (voiceCuesContainer) {
+        voiceCuesContainer.innerHTML = `<p class="empty-state" style="color: var(--uq-bad, #ef4444);">Không thể tải mốc thời gian.</p>`;
+      }
+    }
+  }
+  window.loadVoiceWorkbench = loadVoiceWorkbench;
+
+  function renderVoiceChunks() {
+    if (!voiceChunksContainer || !currentVoiceData) return;
+    const chunks = currentVoiceData.chunks || [];
+    if (voiceChunksCount) voiceChunksCount.textContent = chunks.length;
+
+    if (chunks.length === 0) {
+      voiceChunksContainer.innerHTML = `<div class="empty-state" style="padding: 1.5rem 1rem; font-size: 0.85rem;">Dự án chưa có đoạn kịch bản hoặc chưa phân đoạn.</div>`;
+      return;
+    }
+
+    const searchTerm = (voiceChunkSearch ? voiceChunkSearch.value : "").toLowerCase().trim();
+    const filterVal = voiceChunkFilter ? voiceChunkFilter.value : "all";
+
+    const filtered = chunks.filter(c => {
+      if (searchTerm) {
+        const textMatch = (c.text || "").toLowerCase().includes(searchTerm);
+        const idMatch = (c.chunk_id || "").toLowerCase().includes(searchTerm);
+        if (!textMatch && !idMatch) return false;
+      }
+      if (filterVal === "ready" && c.status !== "READY") return false;
+      if (filterVal === "empty" && c.status !== "EMPTY") return false;
+      if (filterVal === "locked" && !c.is_locked) return false;
+      if (filterVal === "qa_issue" && (!c.qa_issues_count || c.qa_issues_count === 0)) return false;
+      return true;
+    });
+
+    if (filtered.length === 0) {
+      voiceChunksContainer.innerHTML = `<div class="empty-state" style="padding: 1.5rem 1rem; font-size: 0.85rem;">Không tìm thấy đoạn đọc phù hợp với bộ lọc.</div>`;
+      return;
+    }
+
+    voiceChunksContainer.innerHTML = filtered.map((c) => {
+      const isSelected = c.chunk_id === selectedVoiceChunkId;
+      const lockBadge = c.is_locked ? `<span class="badge" title="Đoạn đã được bảo vệ">🔒 Đã khóa</span>` : "";
+      const qaBadge = (c.qa_issues_count && c.qa_issues_count > 0)
+        ? `<span class="state-pill state-warning" style="font-size: 10px; padding: 1px 4px;" title="${c.qa_issues_count} cảnh báo kiểm định">⚠️ ${c.qa_issues_count}</span>`
+        : "";
+      const statusClass = c.status === "READY" ? "state-ready" : (c.status === "OUTDATED" ? "state-warning" : "state-idle");
+      const statusLabel = c.status === "READY" ? "Sẵn sàng" : (c.status === "OUTDATED" ? "Cần cập nhật" : "Chưa có audio");
+
+      return `
+        <div
+          class="voice-chunk-item ${isSelected ? 'selected' : ''}"
+          id="vw-chunk-${c.chunk_id}"
+          data-chunk-id="${c.chunk_id}"
+          role="option"
+          aria-selected="${isSelected ? 'true' : 'false'}"
+          tabindex="${isSelected ? '0' : '-1'}"
+        >
+          <div class="voice-chunk-header">
+            <span class="voice-chunk-id">#${c.chunk_id}</span>
+            <div class="voice-chunk-badges">
+              ${lockBadge}
+              ${qaBadge}
+              <span class="state-pill ${statusClass}" style="font-size: 10px; padding: 1px 5px;">${statusLabel}</span>
+            </div>
+          </div>
+          <div class="voice-chunk-text">${escapeHtml(c.text || '')}</div>
+          <div class="voice-chunk-meta">
+            <span>${c.voice || 'af_heart'}</span>
+            <span>${c.duration ? `${c.duration.toFixed(1)}s` : '~'}</span>
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    // Attach click handlers
+    voiceChunksContainer.querySelectorAll(".voice-chunk-item").forEach(el => {
+      el.addEventListener("click", () => {
+        selectVoiceChunk(el.dataset.chunkId);
+      });
+    });
+  }
+
+  function selectVoiceChunk(chunkId) {
+    if (!currentVoiceData || !currentVoiceData.chunks) return;
+    const chunk = currentVoiceData.chunks.find(c => c.chunk_id === chunkId);
+    if (!chunk) return;
+    selectedVoiceChunkId = chunkId;
+
+    // Update navigator items
+    if (voiceChunksContainer) {
+      voiceChunksContainer.querySelectorAll(".voice-chunk-item").forEach(el => {
+        const isTarget = el.dataset.chunkId === chunkId;
+        if (isTarget) {
+          el.classList.add("selected");
+          el.setAttribute("aria-selected", "true");
+          el.setAttribute("tabindex", "0");
+          el.focus();
+        } else {
+          el.classList.remove("selected");
+          el.setAttribute("aria-selected", "false");
+          el.setAttribute("tabindex", "-1");
+        }
+      });
+    }
+
+    // Update Transport context
+    if (voicePlayingContext) {
+      voicePlayingContext.textContent = `Đoạn #${chunk.chunk_id} (${chunk.duration ? chunk.duration.toFixed(1) + 's' : 'Chưa có thời lượng'})`;
+    }
+    if (btnPlaySelectedChunk) {
+      btnPlaySelectedChunk.style.display = "inline-block";
+      btnPlaySelectedChunk.onclick = () => {
+        // Play single chunk or seek to its segment start
+        const seg = currentVoiceData.segments && currentVoiceData.segments[chunk.index - 1];
+        if (seg && seg.start != null) {
+          window.seekGlobalAudio(parseFloat(seg.start), `Đoạn #${chunk.chunk_id}`);
+        } else {
+          showNotification(`Đang phát đoạn #${chunk.chunk_id}...`, "info");
+        }
+      };
+    }
+
+    // Update Lock & History card
+    if (voiceChunkLockStatus) {
+      voiceChunkLockStatus.textContent = chunk.is_locked ? "Đã khóa" : "Mở khóa";
+      voiceChunkLockStatus.className = chunk.is_locked ? "state-pill state-ready" : "state-pill state-idle";
+    }
+    if (btnToggleChunkLock) {
+      btnToggleChunkLock.textContent = chunk.is_locked ? "Mở khóa đoạn này" : "Khóa đoạn này (Tránh ghi đè)";
+      btnToggleChunkLock.onclick = () => toggleChunkLock(chunk.chunk_id, !chunk.is_locked);
+    }
+    loadChunkHistory(chunk.chunk_id);
+  }
+
+  // Keyboard navigation on Voice Navigator listbox
+  if (voiceChunksContainer) {
+    voiceChunksContainer.addEventListener("keydown", (e) => {
+      const items = Array.from(voiceChunksContainer.querySelectorAll(".voice-chunk-item"));
+      if (items.length === 0) return;
+      const currentIndex = items.findIndex(el => el.dataset.chunkId === selectedVoiceChunkId);
+
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        const nextIndex = (currentIndex + 1) < items.length ? currentIndex + 1 : 0;
+        selectVoiceChunk(items[nextIndex].dataset.chunkId);
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        const prevIndex = (currentIndex - 1) >= 0 ? currentIndex - 1 : items.length - 1;
+        selectVoiceChunk(items[prevIndex].dataset.chunkId);
+      } else if (e.key === "Home") {
+        e.preventDefault();
+        selectVoiceChunk(items[0].dataset.chunkId);
+      } else if (e.key === "End") {
+        e.preventDefault();
+        selectVoiceChunk(items[items.length - 1].dataset.chunkId);
+      }
+    });
+  }
+
+  // Filters change
+  if (voiceChunkSearch) voiceChunkSearch.addEventListener("input", renderVoiceChunks);
+  if (voiceChunkFilter) voiceChunkFilter.addEventListener("change", renderVoiceChunks);
+
+  function renderVoiceWordCues() {
+    if (!voiceCuesContainer || !currentVoiceData) return;
+    const words = currentVoiceData.words || [];
+    if (voiceCuesCount) voiceCuesCount.textContent = `${words.length} từ`;
+
+    if (words.length === 0) {
+      const scriptText = currentVoiceData.transcript_text || "";
+      if (scriptText) {
+        voiceCuesContainer.innerHTML = `
+          <div style="line-height: 1.8; color: var(--uq-ink-2); white-space: pre-wrap;">${escapeHtml(scriptText)}</div>
+          <div class="empty-state" style="margin-top: 1rem;">Chưa có mốc thời gian từng từ. Nhấn <strong>"Căn chỉnh thời gian (Whisper)"</strong> để tạo.</div>
+        `;
+      } else {
+        voiceCuesContainer.innerHTML = `<p class="empty-state">Chưa có kịch bản hoặc mốc thời gian.</p>`;
+      }
+      return;
+    }
+
+    voiceCuesContainer.setAttribute("tabindex", "0");
+    voiceCuesContainer.innerHTML = words.map((w, idx) => {
+      return `<span
+        class="word-cue"
+        id="vw-cue-${idx}"
+        data-index="${idx}"
+        data-start="${w.start}"
+        data-end="${w.end}"
+        role="button"
+        tabindex="-1"
+        aria-label="${escapeHtml(w.word)} tại ${w.start} giây"
+        title="${w.word} (${w.start}s - ${w.end}s)"
+      >${escapeHtml(w.word)}</span>`;
+    }).join(" ");
+
+    // Ensure first cue has tabindex 0 for roving entry
+    const firstCue = voiceCuesContainer.querySelector(".word-cue");
+    if (firstCue) firstCue.setAttribute("tabindex", "0");
+
+    // Click-to-seek handler on all word cues
+    voiceCuesContainer.querySelectorAll(".word-cue").forEach(el => {
+      el.addEventListener("click", () => {
+        const start = parseFloat(el.dataset.start);
+        if (!isNaN(start)) {
+          window.seekGlobalAudio(start, `Từ: ${el.textContent.trim()} (${start.toFixed(2)}s)`);
+        }
+      });
+    });
+
+    // Keyboard navigation within word cues container (Left/Right arrow seek, Enter/Space trigger, Tab exits)
+    voiceCuesContainer.onkeydown = (e) => {
+      const cues = Array.from(voiceCuesContainer.querySelectorAll(".word-cue"));
+      if (cues.length === 0) return;
+      const focusedCue = document.activeElement && document.activeElement.classList.contains("word-cue") ? document.activeElement : null;
+      let currIdx = focusedCue ? parseInt(focusedCue.dataset.index, 10) : (voiceActiveCueIndex >= 0 ? voiceActiveCueIndex : 0);
+
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+        e.preventDefault();
+        const nextIdx = Math.min(cues.length - 1, currIdx + 1);
+        cues.forEach(c => c.setAttribute("tabindex", "-1"));
+        cues[nextIdx].setAttribute("tabindex", "0");
+        cues[nextIdx].focus();
+      } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+        e.preventDefault();
+        const prevIdx = Math.max(0, currIdx - 1);
+        cues.forEach(c => c.setAttribute("tabindex", "-1"));
+        cues[prevIdx].setAttribute("tabindex", "0");
+        cues[prevIdx].focus();
+      } else if (e.key === "Enter" || e.key === " ") {
+        if (focusedCue) {
+          e.preventDefault();
+          const start = parseFloat(focusedCue.dataset.start);
+          if (!isNaN(start)) {
+            window.seekGlobalAudio(start, `Từ: ${focusedCue.textContent.trim()} (${start.toFixed(2)}s)`);
+          }
+        }
+      }
+    };
+  }
+
+  function renderVoiceQAData() {
+    if (!currentVoiceData) return;
+    const qa = currentVoiceData.qa_summary;
+    if (!qa) {
+      if (voiceQaVerdictBadge) voiceQaVerdictBadge.textContent = "Chưa chạy";
+      if (voiceQaMatch) voiceQaMatch.textContent = "—";
+      if (voiceQaWer) voiceQaWer.textContent = "—";
+      if (voiceQaWpm) voiceQaWpm.textContent = "—";
+      if (voiceQaIssuesCount) voiceQaIssuesCount.textContent = "0";
+      if (voiceQaIssuesList) voiceQaIssuesList.innerHTML = `<p class="empty-state" style="font-size: 0.82rem; padding: 0.5rem 0;">Chưa chạy kiểm tra Voice QA.</p>`;
+      return;
+    }
+
+    const m = qa.metrics || {};
+    if (voiceQaVerdictBadge) {
+      voiceQaVerdictBadge.textContent = qa.status === "pass" ? "Đạt chuẩn" : (qa.status === "review" ? "Cần xem lại" : "Chưa đạt");
+      voiceQaVerdictBadge.className = qa.status === "pass" ? "state-pill state-ready" : "state-pill state-warning";
+    }
+    if (voiceQaMatch) voiceQaMatch.textContent = `${(m.transcript_match_pct || m.transcript_match_percent || 0).toFixed(1)}%`;
+    if (voiceQaWer) voiceQaWer.textContent = `${(m.wer_pct || (m.wer ? m.wer * 100 : 0)).toFixed(1)}%`;
+    if (voiceQaWpm) voiceQaWpm.textContent = `${(m.overall_wpm || 0).toFixed(0)} WPM`;
+    if (voiceQaIssuesCount) voiceQaIssuesCount.textContent = `${qa.total_issues || 0}`;
+
+    const issues = qa.issues || [];
+    if (!voiceQaIssuesList) return;
+    if (issues.length === 0) {
+      voiceQaIssuesList.innerHTML = `<p class="empty-state" style="font-size: 0.82rem; padding: 0.5rem 0; color: var(--uq-good, #10b981);">✓ Không có lỗi phát âm hay ngữ điệu nào.</p>`;
+      return;
+    }
+
+    voiceQaIssuesList.innerHTML = issues.slice(0, 50).map(iss => {
+      const typeLabel = iss.type || iss.category || "Cảnh báo";
+      const startSec = iss.start_seconds || iss.start_time || 0;
+      return `
+        <div class="voice-qa-issue-item" data-start="${startSec}" data-sentence="${iss.sentence_index || ''}" title="Bấm để tua đến điểm phát hiện">
+          <div style="display: flex; justify-content: space-between; font-weight: 600; color: var(--uq-ink-2);">
+            <span>${escapeHtml(typeLabel)}</span>
+            <span style="font-family: var(--uq-font-mono);">${startSec.toFixed(1)}s</span>
+          </div>
+          <div style="color: var(--uq-ink-1); margin-top: 2px;">${escapeHtml(iss.description || iss.reason || iss.context || '')}</div>
+        </div>
+      `;
+    }).join("");
+
+    voiceQaIssuesList.querySelectorAll(".voice-qa-issue-item").forEach(el => {
+      el.addEventListener("click", () => {
+        const start = parseFloat(el.dataset.start);
+        if (!isNaN(start)) {
+          window.seekGlobalAudio(start, `Vấn đề QA (${start.toFixed(1)}s)`);
+        }
+      });
+    });
+  }
+
+  // Pronunciation List rendering
+  async function renderVoicePronunciations() {
+    if (!voicePronList) return;
+    try {
+      const res = await fetch("/api/pronunciations");
+      if (!res.ok) return;
+      const data = await res.json();
+      const entries = data.entries || data || [];
+      if (voicePronCount) voicePronCount.textContent = entries.length;
+
+      if (entries.length === 0) {
+        voicePronList.innerHTML = `<p class="empty-state" style="font-size: 0.82rem;">Chưa có từ thay thế phát âm nào.</p>`;
+        return;
+      }
+
+      voicePronList.innerHTML = entries.map(e => `
+        <div class="voice-pron-item" id="vw-pron-${e.id}">
+          <div>
+            <strong>${escapeHtml(e.original)}</strong> → <span style="color: var(--uq-accent-ink);">${escapeHtml(e.spoken_form)}</span>
+          </div>
+          <button class="btn btn-xs btn-outline" onclick="window.deletePronunciationEntry('${e.id}')" title="Xóa quy tắc">✕</button>
+        </div>
+      `).join("");
+    } catch (e) {
+      console.warn("Failed to load pronunciations:", e);
+    }
+  }
+
+  // Add pronunciation entry
+  if (voicePronAddForm) {
+    voicePronAddForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const orig = voicePronTerm ? voicePronTerm.value.trim() : "";
+      const spoken = voicePronSpoken ? voicePronSpoken.value.trim() : "";
+      if (!orig || !spoken) return;
+
+      try {
+        const res = await fetch("/api/pronunciations", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ original: orig, spoken_form: spoken })
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.detail || `Lỗi ${res.status}`);
+        }
+        if (voicePronTerm) voicePronTerm.value = "";
+        if (voicePronSpoken) voicePronSpoken.value = "";
+        showNotification("Đã thêm từ phát âm vào từ điển.", "success");
+        renderVoicePronunciations();
+
+        // Check chunk impact
+        if (currentVoiceData && currentVoiceData.chunks) {
+          const impacted = currentVoiceData.chunks.filter(c => (c.text || "").toLowerCase().includes(orig.toLowerCase()));
+          if (impacted.length > 0) {
+            showNotification(`Có ${impacted.length} đoạn kịch bản bị ảnh hưởng (cần tạo lại giọng đọc khi sẵn sàng).`, "warning");
+          }
+        }
+      } catch (err) {
+        showNotification(`Lỗi thêm phát âm: ${err.message}`, "error");
+      }
+    });
+  }
+
+  // Delete pronunciation helper
+  window.deletePronunciationEntry = async function(id) {
+    if (!confirm("Bạn có chắc chắn muốn xóa quy tắc phát âm này?")) return;
+    try {
+      const res = await fetch(`/api/pronunciations/${encodeURIComponent(id)}`, { method: "DELETE" });
+      if (!res.ok) throw new Error(`Lỗi ${res.status}`);
+      showNotification("Đã xóa quy tắc phát âm.", "info");
+      renderVoicePronunciations();
+    } catch (err) {
+      showNotification(`Lỗi: ${err.message}`, "error");
+    }
+  };
+
+  // Test Pronunciation audio
+  if (btnPronTestAudio) {
+    btnPronTestAudio.addEventListener("click", async () => {
+      const spoken = voicePronSpoken ? voicePronSpoken.value.trim() : (voicePronTerm ? voicePronTerm.value.trim() : "");
+      if (!spoken) {
+        showNotification("Vui lòng nhập từ hoặc cách đọc để nghe thử.", "warning");
+        return;
+      }
+      try {
+        const res = await fetch("/api/pronunciations/test-audio", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text: spoken, voice: voiceSelectModel ? voiceSelectModel.value : "af_heart" })
+        });
+        if (!res.ok) throw new Error(`Lỗi ${res.status}`);
+        const data = await res.json();
+        if (data.audio_url) {
+          const snd = new Audio(`${data.audio_url}?t=${Date.now()}`);
+          snd.play();
+        }
+      } catch (err) {
+        showNotification(`Lỗi nghe thử: ${err.message}`, "error");
+      }
+    });
+  }
+
+  // Lock toggle
+  async function toggleChunkLock(chunkId, newLockedState) {
+    if (!currentProjectDir) return;
+    try {
+      const res = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/lock/audio_chunk/${encodeURIComponent(chunkId)}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ is_locked: newLockedState })
+      });
+      if (!res.ok) throw new Error(`Lỗi ${res.status}`);
+      showNotification(newLockedState ? `Đã khóa đoạn #${chunkId}` : `Đã mở khóa đoạn #${chunkId}`, "success");
+      loadVoiceWorkbench(currentProjectDir);
+    } catch (err) {
+      showNotification(`Lỗi đổi trạng thái khóa: ${err.message}`, "error");
+    }
+  }
+
+  // Chunk revision history
+  async function loadChunkHistory(chunkId) {
+    if (!voiceHistoryList || !currentProjectDir) return;
+    try {
+      const res = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/history/audio_chunk/${encodeURIComponent(chunkId)}`);
+      if (!res.ok) {
+        voiceHistoryList.innerHTML = `<p class="empty-state" style="font-size: 0.82rem;">Không có lịch sử sửa đổi.</p>`;
+        return;
+      }
+      const data = await res.json();
+      const revs = data.revisions || [];
+      if (revs.length === 0) {
+        voiceHistoryList.innerHTML = `<p class="empty-state" style="font-size: 0.82rem;">Chưa có bản sửa đổi nào.</p>`;
+        return;
+      }
+      voiceHistoryList.innerHTML = revs.map(r => `
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 4px; font-size: 11px; border-bottom: 1px solid var(--uq-line);">
+          <span>${new Date(r.timestamp).toLocaleTimeString()}</span>
+          <button class="btn btn-xs btn-outline" onclick="window.restoreChunkRevision('${r.revision_id}')">Khôi phục</button>
+        </div>
+      `).join("");
+    } catch (e) {
+      voiceHistoryList.innerHTML = `<p class="empty-state" style="font-size: 0.82rem;">Không thể tải lịch sử.</p>`;
+    }
+  }
+
+  window.restoreChunkRevision = async function(revId) {
+    if (!currentProjectDir || !confirm("Khôi phục bản lưu này?")) return;
+    try {
+      const res = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/history/${encodeURIComponent(revId)}/restore`, {
+        method: "POST"
+      });
+      if (!res.ok) throw new Error(`Lỗi ${res.status}`);
+      showNotification("Đã khôi phục bản lưu thành công.", "success");
+      loadVoiceWorkbench(currentProjectDir);
+    } catch (err) {
+      showNotification(`Lỗi khôi phục: ${err.message}`, "error");
+    }
+  };
+  window.loadVoiceWorkbench = loadVoiceWorkbench;
+
+  // Run Voice QA button in workbench
+  if (btnRunVoiceQaWorkbench) {
+    btnRunVoiceQaWorkbench.addEventListener("click", () => {
+      if (!currentProjectDir) return;
+      runVoiceQA(currentProjectDir, false);
+      setTimeout(() => loadVoiceWorkbench(currentProjectDir), 2000);
+    });
+  }
+
+  // STT Faster-Whisper alignment button
+  if (btnRunWhisperAlignment) {
+    btnRunWhisperAlignment.addEventListener("click", async () => {
+      if (!currentProjectDir) {
+        showNotification("Vui lòng mở dự án trước khi chạy Whisper.", "warning");
+        return;
+      }
+      try {
+        btnRunWhisperAlignment.disabled = true;
+        if (btnCancelWhisperAlignment) btnCancelWhisperAlignment.style.display = "inline-block";
+        if (voiceSttProgress) voiceSttProgress.style.display = "block";
+        if (voiceSttProgressMsg) voiceSttProgressMsg.textContent = "Khởi động Faster-Whisper...";
+
+        const res = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/timestamps/generate`, {
+          method: "POST"
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.detail || `Lỗi ${res.status}`);
+        }
+
+        // Poll Whisper status
+        if (voiceSttPollInterval) clearInterval(voiceSttPollInterval);
+        voiceSttPollInterval = setInterval(async () => {
+          try {
+            const sRes = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/timestamps/status`);
+            if (!sRes.ok) return;
+            const sData = await sRes.json();
+            const pct = sData.progress || sData.percent || 0;
+            if (voiceSttProgressFill) voiceSttProgressFill.style.width = `${pct}%`;
+            if (voiceSttProgressPct) voiceSttProgressPct.textContent = `${pct}%`;
+            if (voiceSttProgressMsg && sData.message) voiceSttProgressMsg.textContent = sData.message;
+
+            const isDone = sData.status === "Ready" || sData.state === "completed" || sData.status === "Failed" || sData.state === "failed";
+            if (isDone) {
+              clearInterval(voiceSttPollInterval);
+              voiceSttPollInterval = null;
+              btnRunWhisperAlignment.disabled = false;
+              if (btnCancelWhisperAlignment) btnCancelWhisperAlignment.style.display = "none";
+              if (voiceSttProgress) voiceSttProgress.style.display = "none";
+
+              if (sData.status === "Ready" || sData.state === "completed") {
+                showNotification("Căn chỉnh thời gian (Faster-Whisper) hoàn tất!", "success");
+              } else {
+                showNotification(`Lỗi Whisper: ${sData.error || "Thất bại"}`, "error");
+              }
+              loadVoiceWorkbench(currentProjectDir);
+            }
+          } catch (e) {
+            console.warn("Poll whisper error:", e);
+          }
+        }, 1500);
+      } catch (err) {
+        btnRunWhisperAlignment.disabled = false;
+        if (btnCancelWhisperAlignment) btnCancelWhisperAlignment.style.display = "none";
+        if (voiceSttProgress) voiceSttProgress.style.display = "none";
+        showNotification(`Lỗi Whisper: ${err.message}`, "error");
+      }
+    });
+  }
+
+  if (btnCancelWhisperAlignment) {
+    btnCancelWhisperAlignment.addEventListener("click", async () => {
+      if (!currentProjectDir) return;
+      try {
+        await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/timestamps/cancel`, { method: "POST" });
+        if (voiceSttPollInterval) {
+          clearInterval(voiceSttPollInterval);
+          voiceSttPollInterval = null;
+        }
+        btnRunWhisperAlignment.disabled = false;
+        btnCancelWhisperAlignment.style.display = "none";
+        if (voiceSttProgress) voiceSttProgress.style.display = "none";
+        showNotification("Đã yêu cầu hủy Whisper.", "info");
+      } catch (e) {
+        showNotification("Lỗi hủy Whisper: " + e.message, "error");
+      }
+    });
+  }
+
+  // TTS Generate All Voice
+  if (btnGenerateAllVoice) {
+    btnGenerateAllVoice.addEventListener("click", async () => {
+      if (!currentProjectDir) return;
+      if (!confirm("Bạn có chắc chắn muốn tạo lại toàn bộ giọng đọc kịch bản? Thao tác này sẽ ghi nhận cài đặt mới và tạo lại các đoạn audio.")) {
+        return;
+      }
+      const voice = voiceSelectModel ? voiceSelectModel.value : "af_heart";
+      const speed = voiceTtsSpeed ? parseFloat(voiceTtsSpeed.value) : 1.1;
+
+      btnGenerateAllVoice.disabled = true;
+      btnGenerateAllVoice.textContent = "Đang tạo giọng đọc...";
+      try {
+        const res = await fetch("/api/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            project_dir: currentProjectDir,
+            voice: voice,
+            speed: speed
+          })
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.detail || `Lỗi ${res.status}`);
+        }
+        const data = await res.json();
+        showNotification("Đã khởi động tiến trình tạo giọng đọc toàn bộ!", "success");
+        // Reload after a delay
+        setTimeout(() => {
+          loadVoiceWorkbench(currentProjectDir);
+          if (btnGenerateAllVoice) {
+            btnGenerateAllVoice.disabled = false;
+            btnGenerateAllVoice.textContent = "Tạo lại toàn bộ giọng đọc";
+          }
+        }, 3000);
+      } catch (err) {
+        if (btnGenerateAllVoice) {
+          btnGenerateAllVoice.disabled = false;
+          btnGenerateAllVoice.textContent = "Tạo lại toàn bộ giọng đọc";
+        }
+        showNotification(`Lỗi tạo giọng đọc: ${err.message}`, "error");
+      }
+    });
+  }
+
+  // TTS Generate Selected Chunk
+  if (btnGenerateSelectedChunk) {
+    btnGenerateSelectedChunk.addEventListener("click", async () => {
+      if (!currentProjectDir || !selectedVoiceChunkId) {
+        showNotification("Vui lòng chọn một đoạn đọc để tạo lại.", "warning");
+        return;
+      }
+      const chunk = currentVoiceData && currentVoiceData.chunks && currentVoiceData.chunks.find(c => c.chunk_id === selectedVoiceChunkId);
+      const chunkIndex = chunk ? chunk.index : 1;
+
+      btnGenerateSelectedChunk.disabled = true;
+      btnGenerateSelectedChunk.textContent = "Đang tạo...";
+      try {
+        const res = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/voice/chunks/${encodeURIComponent(selectedVoiceChunkId)}/regenerate`, {
+          method: "POST"
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          const msg = (err.detail && typeof err.detail === "object") ? err.detail.message : (err.detail || `Lỗi ${res.status}`);
+          throw new Error(msg);
+        }
+        showNotification(`Đã tạo lại đoạn #${selectedVoiceChunkId} thành công!`, "success");
+        loadVoiceWorkbench(currentProjectDir);
+      } catch (err) {
+        showNotification(`Lỗi tạo đoạn #${selectedVoiceChunkId}: ${err.message}`, "error");
+      } finally {
+        btnGenerateSelectedChunk.disabled = false;
+        btnGenerateSelectedChunk.textContent = "Tạo giọng đoạn đang chọn";
+      }
+    });
+  }
+
+
+  // ==============================================================================
+  // 14. INITIALIZATION
+  // ==============================================================================
+  checkHealth();
+  loadVoicesAndSettings();
+  loadPronunciations();
+  resolveStartupProject();
+  updateTextStats();
+  updateSlugPreview();
+  updateDependencyState();
+  loadEmbeddedStorageOverview();
+  setInterval(checkHealth, 15000);
+
+  // Onboarding first-run do UQGuide (guide.js) đảm nhiệm: welcome + migration
+  // tour cũ, Help Center. Không auto-run tour cũ tại đây nữa.
+});
+

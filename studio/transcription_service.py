@@ -197,87 +197,111 @@ class TranscriptionService:
 
     async def _run_worker_task(self, project_id: str, project_dir: Path, model_path: Path):
         job = self.jobs[project_id]
-        cmd = [
-            str(self.worker_venv_python),
-            str(self.worker_script),
-            str(project_dir),
-            "--model-path", str(model_path),
-            "--device", job["device"],
-            "--compute-type", job["compute_type"],
-            "--language", config.transcription_language
-        ]
+        from studio.resource_scheduler import resource_scheduler
+        from studio.domain_models import ResourceClass
+        rc = ResourceClass.CUDA_HEAVY.value if job.get("device") == "cuda" else ResourceClass.CPU_BOUND.value
 
-        logger.info(f"Spawning transcription worker for {project_id}: {' '.join(cmd)}")
-        try:
-            proc = await asyncio.create_subprocess_exec(
-                *cmd,
-                stdout=asyncio.subprocess.PIPE,
-                stderr=asyncio.subprocess.PIPE
-            )
-            self._active_procs[project_id] = proc
-            job["pid"] = proc.pid
+        async def _execute():
+            cmd = [
+                str(self.worker_venv_python),
+                str(self.worker_script),
+                str(project_dir),
+                "--model-path", str(model_path),
+                "--device", job["device"],
+                "--compute-type", job["compute_type"],
+                "--language", config.transcription_language
+            ]
 
-            # Record worker PID in runtime directory for launcher tracking
-            worker_pid_file = BASE_DIR / "runtime" / "transcription_worker.pid"
+            logger.info(f"Spawning transcription worker for {project_id} via LocalResourceScheduler ({rc}): {' '.join(cmd)}")
             try:
-                worker_pid_file.parent.mkdir(parents=True, exist_ok=True)
-                worker_pid_file.write_text(str(proc.pid), encoding="utf-8")
-            except Exception:
-                pass
+                proc = await asyncio.create_subprocess_exec(
+                    *cmd,
+                    stdout=asyncio.subprocess.PIPE,
+                    stderr=asyncio.subprocess.PIPE
+                )
+                self._active_procs[project_id] = proc
+                job["pid"] = proc.pid
 
-            # Read stdout line by line
-            while True:
-                line = await proc.stdout.readline()
-                if not line:
-                    break
-                decoded = line.decode("utf-8", errors="replace").strip()
-                if not decoded:
-                    continue
-
+                # Record worker PID in runtime directory for launcher tracking
+                worker_pid_file = BASE_DIR / "runtime" / "transcription_worker.pid"
                 try:
-                    data = json.loads(decoded)
-                    if data.get("event") == "progress":
-                        job["stage"] = data.get("stage", job["stage"])
-                        job["state"] = data.get("stage", job["state"])
-                        job["percent"] = data.get("percent", job["percent"])
-                        job["message"] = data.get("message", job["message"])
-                        job["elapsed_seconds"] = round(time.time() - job["start_time"], 1)
-                        if "metrics" in data:
-                            job["metrics"] = data["metrics"]
-                except json.JSONDecodeError:
-                    logger.debug(f"Worker raw output: {decoded}")
+                    worker_pid_file.parent.mkdir(parents=True, exist_ok=True)
+                    worker_pid_file.write_text(str(proc.pid), encoding="utf-8")
+                except Exception:
+                    pass
 
-            returncode = await proc.wait()
-            job["elapsed_seconds"] = round(time.time() - job["start_time"], 1)
+                # Read stdout line by line
+                while True:
+                    line = await proc.stdout.readline()
+                    if not line:
+                        break
+                    decoded = line.decode("utf-8", errors="replace").strip()
+                    if not decoded:
+                        continue
 
-            if returncode == 0:
-                job["state"] = "completed"
-                job["stage"] = "completed"
-                job["percent"] = 100
-                job["message"] = "Timestamps generated successfully."
-                logger.info(f"Transcription worker {project_id} completed in {job['elapsed_seconds']}s.")
-            elif job.get("state") == "cancelling" or job.get("state") == "cancelled":
-                job["state"] = "cancelled"
-                job["stage"] = "cancelled"
-                job["message"] = "Transcription cancelled by user."
-                logger.info(f"Transcription worker {project_id} cancelled.")
-            else:
-                stderr_bytes = await proc.stderr.read()
-                err_text = stderr_bytes.decode("utf-8", errors="replace").strip()
+                    try:
+                        data = json.loads(decoded)
+                        if data.get("event") == "progress":
+                            job["stage"] = data.get("stage", job["stage"])
+                            job["state"] = data.get("stage", job["state"])
+                            job["percent"] = data.get("percent", job["percent"])
+                            job["message"] = data.get("message", job["message"])
+                            job["elapsed_seconds"] = round(time.time() - job["start_time"], 1)
+                            if "metrics" in data:
+                                job["metrics"] = data["metrics"]
+                    except json.JSONDecodeError:
+                        logger.debug(f"Worker raw output: {decoded}")
+
+                returncode = await proc.wait()
+                job["elapsed_seconds"] = round(time.time() - job["start_time"], 1)
+
+                if returncode == 0:
+                    job["state"] = "completed"
+                    job["stage"] = "completed"
+                    job["percent"] = 100
+                    job["message"] = "Timestamps generated successfully."
+                    logger.info(f"Transcription worker {project_id} completed in {job['elapsed_seconds']}s.")
+                elif job.get("state") == "cancelling" or job.get("state") == "cancelled":
+                    job["state"] = "cancelled"
+                    job["stage"] = "cancelled"
+                    job["message"] = "Transcription cancelled by user."
+                    logger.info(f"Transcription worker {project_id} cancelled.")
+                else:
+                    stderr_bytes = await proc.stderr.read()
+                    err_text = stderr_bytes.decode("utf-8", errors="replace").strip()
+                    job["state"] = "failed"
+                    job["stage"] = "failed"
+                    job["error"] = err_text or f"Worker exited with code {returncode}"
+                    job["message"] = f"Transcription failed: {job['error']}"
+                    logger.error(f"Transcription worker {project_id} failed: {job['error']}")
+
+            except asyncio.CancelledError:
+                logger.info(f"Transcription worker task {project_id} cancelled.")
+                await self.cancel_transcription(project_id)
+            except Exception as e:
+                logger.exception(f"Unexpected error in transcription worker task for {project_id}: {e}")
                 job["state"] = "failed"
                 job["stage"] = "failed"
-                job["error"] = err_text or f"Worker exited with code {returncode}"
-                job["message"] = f"Transcription failed: {job['error']}"
-                logger.error(f"Transcription worker {project_id} failed: {job['error']}")
+                job["error"] = str(e)
+                job["message"] = f"Transcription failed: {e}"
+            finally:
+                self._active_procs.pop(project_id, None)
 
-        except asyncio.CancelledError:
-            logger.info(f"Transcription worker task {project_id} cancelled.")
-            await self.cancel_transcription(project_id)
+        try:
+            await resource_scheduler.submit_job(
+                job_id=f"whisper_{project_id}_{int(time.time()*1000)}",
+                job_type="faster_whisper_stt",
+                resource_class=rc,
+                coro_fn=_execute,
+                metadata={"project_id": project_id, "device": job["device"]}
+            )
         except Exception as e:
-            job["state"] = "failed"
-            job["stage"] = "failed"
-            job["error"] = str(e)
-            job["message"] = f"Transcription error: {str(e)}"
+            if job.get("state") not in ("cancelled", "completed"):
+                job["state"] = "failed"
+                job["stage"] = "failed"
+                job["error"] = str(e)
+                job["message"] = f"Scheduling failed: {e}"
+                logger.error(f"Failed to schedule transcription job for {project_id}: {e}")
             logger.exception(f"Transcription worker exception for {project_id}: {e}")
         finally:
             self._active_procs.pop(project_id, None)

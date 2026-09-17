@@ -405,6 +405,38 @@ class ProjectAdapter:
             except Exception as e:
                 logger.warning(f"Failed to read story_beats.json for {project_id}: {e}")
 
+        # Fallback to narration_plan.json if story_beats.json not present
+        if not beats:
+            narr_plan_path = project_dir / "narration_plan.json"
+            if narr_plan_path.is_file():
+                try:
+                    np_data = json.loads(narr_plan_path.read_text(encoding="utf-8"))
+                    raw_beats = np_data.get("beats", [])
+                    for idx, rb in enumerate(raw_beats):
+                        b_text = rb.get("text", "")
+                        w_count = len(b_text.split())
+                        dur = round(w_count / 2.33, 2)
+                        beats.append(
+                            StoryBeat(
+                                beat_id=rb.get("beatId", f"beat_{idx+1:03d}"),
+                                index=idx + 1,
+                                title=f"Beat {idx+1} ({rb.get('role', 'NHỊP')})",
+                                text=b_text,
+                                target_duration_seconds=dur,
+                                estimated_duration_sec=dur,
+                                estimated_word_count=w_count,
+                                style=rb.get("style", "NEUTRAL"),
+                                confidence=rb.get("confidence", 1.0),
+                                rate=rb.get("rate", 1.0),
+                                intensity=rb.get("intensity", 0.3),
+                                emphasis=rb.get("emphasis", []),
+                                notes=rb.get("reason", ""),
+                                is_locked=bool(rb.get("manualEdited", False) or rb.get("accepted", False)),
+                            )
+                        )
+                except Exception as e:
+                    logger.warning(f"Failed to read narration_plan.json fallback for {project_id}: {e}")
+
         word_count = len(script_text.split())
         est_duration = round(word_count / 2.33, 2)  # ~140 words per minute average
 
@@ -430,7 +462,8 @@ class ProjectAdapter:
     def load_voice_slice(self, dir_name: str) -> VoiceSlice:
         """
         Selective loader for Voice Workbench.
-        Loads manifest chunks, audio paths, and settings without loading visual assets or prompts.
+        Loads manifest chunks, audio paths, settings, transcript segments, word cues,
+        Voice QA metrics, and pronunciation counts without loading heavy visual assets or prompts.
         """
         project_dir = self.resolve_project_dir(dir_name)
         project_id = project_dir.name
@@ -446,6 +479,90 @@ class ProjectAdapter:
         voice_id = settings.get("voice", "af_sarah")
         speed = float(settings.get("speed", 1.0))
 
+        # 1. Transcript text
+        transcript_text = ""
+        script_path = project_dir / "script.txt"
+        if script_path.is_file():
+            try:
+                transcript_text = script_path.read_text(encoding="utf-8")
+            except Exception:
+                pass
+
+        # 2. Timestamps and sentence segments
+        segments: List[Dict[str, Any]] = []
+        audio_duration = 0.0
+        ts_path = project_dir / "timestamps.json"
+        if ts_path.is_file():
+            try:
+                ts_data = json.loads(ts_path.read_text(encoding="utf-8"))
+                segments = ts_data.get("segments", [])
+                audio_duration = float(ts_data.get("audio_duration", 0.0))
+            except Exception:
+                pass
+
+        # 3. Word-level cues from transcription_raw.json
+        words: List[Dict[str, Any]] = []
+        raw_ts_path = project_dir / "transcription_raw.json"
+        if raw_ts_path.is_file():
+            try:
+                raw_data = json.loads(raw_ts_path.read_text(encoding="utf-8"))
+                if not audio_duration:
+                    audio_duration = float(raw_data.get("audio_duration", 0.0))
+                for seg in raw_data.get("segments", []):
+                    for w in seg.get("words", []):
+                        words.append({
+                            "word": str(w.get("word", "")).strip(),
+                            "start": round(float(w.get("start", 0.0)), 2),
+                            "end": round(float(w.get("end", 0.0)), 2),
+                            "score": round(float(w.get("probability", 1.0)), 3)
+                        })
+            except Exception:
+                pass
+
+        # 4. Voice QA metrics, summary, and issue index
+        qa_summary = None
+        qa_issues_by_sentence: Dict[int, List[Dict[str, Any]]] = {}
+        qa_path = project_dir / "voice_qa.json"
+        if qa_path.is_file():
+            try:
+                qa_data = json.loads(qa_path.read_text(encoding="utf-8"))
+                metrics = qa_data.get("metrics", {})
+                summary = qa_data.get("summary", {})
+                issues = qa_data.get("issues", [])
+                for iss in issues:
+                    s_idx = iss.get("sentence_index")
+                    if s_idx is not None:
+                        qa_issues_by_sentence.setdefault(s_idx, []).append(iss)
+                qa_summary = {
+                    "status": qa_data.get("status", "idle"),
+                    "metrics": metrics,
+                    "summary": summary,
+                    "total_issues": len(issues),
+                    "unresolved_issues": summary.get("unresolved_fail_count", 0) + summary.get("unresolved_review_count", 0),
+                    "issues": issues[:100]  # Cap payload to keep response ultra fast
+                }
+            except Exception:
+                pass
+
+        # 5. Pronunciation count
+        pron_count = 0
+        pron_path = project_dir.parent.parent / "config" / "pronunciation_dictionary.json"
+        if pron_path.is_file():
+            try:
+                p_data = json.loads(pron_path.read_text(encoding="utf-8"))
+                pron_count = len(p_data.get("entries", []))
+            except Exception:
+                pass
+
+        # 6. Check main audio file
+        audio_file = None
+        for candidate in ("narration.wav", "audio.wav"):
+            cand_p = project_dir / candidate
+            if cand_p.is_file():
+                audio_file = candidate
+                break
+
+        # 7. Audio Chunks from manifest
         audio_chunks: List[AudioChunk] = []
         manifest_path = project_dir / "manifest.json"
         if manifest_path.is_file():
@@ -453,31 +570,40 @@ class ProjectAdapter:
                 mdata = json.loads(manifest_path.read_text(encoding="utf-8"))
                 for idx, c in enumerate(mdata.get("chunks", [])):
                     chunk_id = c.get("chunk_id") or c.get("id") or f"c_{idx+1:02d}"
+                    c_text = c.get("text") or c.get("synthesis_text", "")
+                    c_duration = float(c.get("duration", 0.0))
+
+                    # Estimate duration from matching segment if manifest chunk duration is 0
+                    matching_issues: List[Dict[str, Any]] = []
+                    if idx < len(segments):
+                        seg = segments[idx]
+                        if not c_duration and seg.get("start") is not None and seg.get("end") is not None:
+                            c_duration = round(float(seg["end"]) - float(seg["start"]), 2)
+                        s_idx = seg.get("index", idx + 1)
+                        matching_issues = qa_issues_by_sentence.get(s_idx, [])
+
                     audio_chunks.append(
                         AudioChunk(
                             chunk_id=chunk_id,
                             index=idx + 1,
-                            text=c.get("text") or c.get("synthesis_text", ""),
+                            text=c_text,
                             voice=c.get("voice") or voice_id,
                             speed=float(c.get("speed") or speed),
                             render_hash=c.get("render_hash"),
-                            audio_file=c.get("output_file"),
-                            duration=float(c.get("duration", 0.0)),
+                            audio_file=c.get("output_file") or (audio_file if audio_file else None),
+                            duration=c_duration,
                             is_locked=bool(c.get("is_locked", False)),
+                            status="READY" if (audio_file or c.get("output_file")) else "EMPTY",
+                            qa_issues_count=len(matching_issues),
+                            qa_issues=matching_issues,
                         )
                     )
             except Exception as e:
                 logger.warning(f"Failed to read manifest.json for {project_id}: {e}")
 
-        # Check main audio file
-        audio_file = None
-        for candidate in ("narration.wav", "audio.wav"):
-            if (project_dir / candidate).is_file():
-                audio_file = candidate
-                break
-
         has_audio = audio_file is not None or any(c.audio_file for c in audio_chunks)
-        total_duration = sum(c.duration or 0.0 for c in audio_chunks)
+        has_mp3 = (project_dir / "audio.mp3").is_file()
+        total_duration = audio_duration or sum(c.duration or 0.0 for c in audio_chunks)
         audio_status = "READY" if has_audio else "EMPTY"
 
         return VoiceSlice(
@@ -489,8 +615,14 @@ class ProjectAdapter:
             total_chunks=len(audio_chunks),
             total_duration_seconds=round(total_duration, 2),
             has_audio=has_audio,
+            has_mp3=has_mp3,
             audio_status=audio_status,
             audio_file=audio_file,
+            transcript_text=transcript_text,
+            segments=segments,
+            words=words,
+            qa_summary=qa_summary,
+            pronunciation_count=pron_count,
         )
 
     def load_visual_summary(self, dir_name: str) -> VisualSummarySlice:
