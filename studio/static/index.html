@@ -250,10 +250,6 @@
           <span class="nav-icon"><svg class="ui-icon"><use href="#icon-library"/></svg></span>
           <span class="nav-label">Thư viện</span>
         </button>
-        <button class="nav-item" data-workspace="activity" id="nav-step-activity" title="Nhật ký tiến trình ngầm">
-          <span class="nav-icon"><svg class="ui-icon"><use href="#icon-refresh"/></svg></span>
-          <span class="nav-label">Hoạt động</span>
-        </button>
       </nav>
 
       <div class="sidebar-divider"></div>
@@ -264,32 +260,26 @@
           <span class="nav-icon"><svg class="ui-icon"><use href="#icon-home"/></svg></span>
           <span class="nav-label">Tổng quan</span>
         </button>
-        <button class="nav-item" data-workspace="content" id="nav-step-content" data-guide-id="workflow-content" title="Nội dung: Nghiên cứu & Kịch bản">
+        <button class="nav-item" data-workspace="story" id="nav-step-story" data-guide-id="workflow-story" title="Kịch bản & Nhịp truyện">
           <span class="nav-step-num">02</span>
           <span class="nav-icon"><svg class="ui-icon"><use href="#icon-book"/></svg></span>
-          <span class="nav-label">Nội dung</span>
-          <span class="nav-status-badge" id="badge-step-content">●</span>
+          <span class="nav-label">Kịch bản</span>
+          <span class="nav-status-badge" id="badge-step-story">●</span>
         </button>
-        <button class="nav-item" data-workspace="scenes" id="nav-step-scenes" data-guide-id="workflow-scenes" title="Phân cảnh, Visual Blueprint & Prompt">
+        <button class="nav-item" data-workspace="voice" id="nav-step-voice" title="Giọng đọc (Voice Workbench - Subphase 3B)">
           <span class="nav-step-num">03</span>
+          <span class="nav-icon"><svg class="ui-icon"><use href="#icon-volume"/></svg></span>
+          <span class="nav-label">Giọng đọc</span>
+          <span class="nav-status-badge" id="badge-step-voice">○</span>
+        </button>
+        <button class="nav-item" data-workspace="scenes" id="nav-step-scenes" data-guide-id="workflow-scenes" title="Hình ảnh & Cảnh (Bề mặt tương thích 3C)">
+          <span class="nav-step-num">04</span>
           <span class="nav-icon"><svg class="ui-icon"><use href="#icon-scene"/></svg></span>
-          <span class="nav-label">Cảnh & Visual</span>
+          <span class="nav-label">Hình ảnh &amp; Cảnh</span>
           <span class="nav-status-badge" id="badge-step-scenes">○</span>
         </button>
-        <button class="nav-item" data-workspace="studio" id="nav-step-studio" data-guide-id="workflow-studio" title="Studio: Bảng phân cảnh, Dòng thời gian & Âm thanh">
-          <span class="nav-step-num">04</span>
-          <span class="nav-icon"><svg class="ui-icon"><use href="#icon-video"/></svg></span>
-          <span class="nav-label">Studio</span>
-          <span class="nav-status-badge" id="badge-step-studio">○</span>
-        </button>
-        <button class="nav-item" data-workspace="review" id="nav-step-review" data-guide-id="workflow-review" title="Kiểm định chất lượng & Xử lý lỗi mục tiêu">
+        <button class="nav-item" data-workspace="export" id="nav-step-export" data-guide-id="workflow-export" title="Xuất video (Bề mặt tương thích 3D)">
           <span class="nav-step-num">05</span>
-          <span class="nav-icon"><svg class="ui-icon"><use href="#icon-alert"/></svg></span>
-          <span class="nav-label">Kiểm tra</span>
-          <span class="nav-status-badge" id="badge-step-review">○</span>
-        </button>
-        <button class="nav-item" data-workspace="export" id="nav-step-export" data-guide-id="workflow-export" title="Render bản nháp 720p, bản chính 1080p & Gói bàn giao">
-          <span class="nav-step-num">06</span>
           <span class="nav-icon"><svg class="ui-icon"><use href="#icon-download"/></svg></span>
           <span class="nav-label">Xuất video</span>
           <span class="nav-status-badge" id="badge-step-export">○</span>
@@ -308,7 +298,7 @@
       <div class="sidebar-footer">
         <div class="project-pill-card">
           <span class="pill-label">Dự án hiện tại</span>
-          <span id="slug-preview" class="pill-val">youtube-narration-01</span>
+          <span class="pill-val" id="slug-preview">--</span>
         </div>
       </div>
     </aside>
@@ -317,43 +307,37 @@
     <!-- 2. Center Main Workspace -->
     <main id="workspace-main" class="workspace-main">
 
-      <!-- Workflow Progress Stepper (Header bar - 6 Standard Steps) -->
-      <nav id="workflow-stepper" class="workflow-stepper" aria-label="Tiến độ quy trình sản xuất">
-        <div class="stepper-item active" data-workspace="overview" id="step-node-overview">
+      <!-- Top Workbench Navigation (Canonical 5 Workbenches) -->
+      <nav id="workflow-stepper" class="workflow-stepper uq-workbench-nav" aria-label="Thanh điều hướng Workbench">
+        <button class="stepper-item active" data-workspace="overview" id="step-node-overview" type="button">
           <span class="step-num">1</span>
           <span class="step-label">Tổng quan</span>
           <span class="step-status-icon" id="step-status-overview">●</span>
-        </div>
+        </button>
         <div class="stepper-arrow">&rarr;</div>
-        <div class="stepper-item" data-workspace="content" id="step-node-content">
+        <button class="stepper-item" data-workspace="story" id="step-node-story" type="button">
           <span class="step-num">2</span>
-          <span class="step-label">Nội dung</span>
-          <span class="step-status-icon" id="step-status-content">●</span>
-        </div>
+          <span class="step-label">Kịch bản</span>
+          <span class="step-status-icon" id="step-status-story">●</span>
+        </button>
         <div class="stepper-arrow">&rarr;</div>
-        <div class="stepper-item" data-workspace="scenes" id="step-node-scenes">
+        <button class="stepper-item" data-workspace="audio" id="step-node-voice" type="button" title="Giọng đọc (Voice Workbench - Subphase 3B)">
           <span class="step-num">3</span>
-          <span class="step-label">Cảnh & Visual</span>
-          <span class="step-status-icon" id="step-status-scenes">○</span>
-        </div>
+          <span class="step-label">Giọng đọc</span>
+          <span class="step-status-icon" id="step-status-voice">○</span>
+        </button>
         <div class="stepper-arrow">&rarr;</div>
-        <div class="stepper-item" data-workspace="studio" id="step-node-studio">
+        <button class="stepper-item" data-workspace="scenes" id="step-node-visual" type="button" title="Hình ảnh & Cảnh (Bề mặt tương thích Subphase 3C)">
           <span class="step-num">4</span>
-          <span class="step-label">Studio</span>
-          <span class="step-status-icon" id="step-status-studio">○</span>
-        </div>
+          <span class="step-label">Hình ảnh &amp; Cảnh</span>
+          <span class="step-status-icon" id="step-status-visual">○</span>
+        </button>
         <div class="stepper-arrow">&rarr;</div>
-        <div class="stepper-item" data-workspace="review" id="step-node-review">
+        <button class="stepper-item" data-workspace="export" id="step-node-export" type="button" title="Xuất video (Bề mặt tương thích Subphase 3D)">
           <span class="step-num">5</span>
-          <span class="step-label">Kiểm tra</span>
-          <span class="step-status-icon" id="step-status-review">○</span>
-        </div>
-        <div class="stepper-arrow">&rarr;</div>
-        <div class="stepper-item" data-workspace="export" id="step-node-export">
-          <span class="step-num">6</span>
           <span class="step-label">Xuất video</span>
           <span class="step-status-icon" id="step-status-export">○</span>
-        </div>
+        </button>
       </nav>
 
       <!-- ============================================================== -->
@@ -392,6 +376,25 @@
             <span>Độ phân giải: <strong>1080p Full HD (16:9)</strong></span>
             <span>Tốc độ khung hình: <strong>24 fps</strong></span>
             <span>Mô hình hình ảnh: <strong>Google Flow (Thủ công)</strong></span>
+          </div>
+        </div>
+
+        <!-- Next Best Action Card (Phase 2 Deterministic NextBestActionService Integration) -->
+        <div class="stage-card uq-next-action-card" id="overview-next-action-card">
+          <div class="stage-card-header" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="pill-label uq-eyebrow" style="color: var(--uq-accent-ink, #38bdf8);">BƯỚC TIẾP THEO KHUYẾN NGHỊ (DETERMINISTIC)</span>
+            </div>
+            <span id="next-action-category-badge" class="ui-status-badge status-ready">SẴN SÀNG</span>
+          </div>
+          <div style="margin-top: 8px;">
+            <h4 id="next-action-title" style="margin: 0 0 4px 0; font-size: 15px; font-weight: 650;">Đang kiểm tra hành động tiếp theo...</h4>
+            <p id="next-action-reason" style="margin: 0; font-size: 13px; color: var(--uq-ink-2, #94a3b8); line-height: 1.5;"></p>
+          </div>
+          <div id="next-action-cta-container" style="margin-top: 12px; display: flex; gap: 8px;">
+            <button id="btn-next-action-cta" class="btn btn-primary btn-sm" type="button">
+              <span>Thực hiện ngay &rarr;</span>
+            </button>
           </div>
         </div>
 
@@ -438,6 +441,33 @@
 
         <!-- Blockers Alert Box -->
         <div id="overview-blockers-container" style="margin-top: 1.25rem;"></div>
+
+        <!-- System Maintenance Drawer (Migrated from modal-storage-manager) -->
+        <div class="stage-card uq-system-drawer" id="overview-system-maintenance" style="margin-top: 1.25rem;">
+          <div class="stage-card-header" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;" id="btn-toggle-system-drawer">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <svg class="ui-icon"><use href="#icon-settings"/></svg>
+              <h4 style="margin: 0; font-size: 14px; font-weight: 650;">Bảo trì hệ thống &amp; Quản lý bộ nhớ (System Maintenance)</h4>
+            </div>
+            <button class="btn btn-secondary btn-xs" id="btn-system-drawer-toggle-text" type="button">Thu gọn ▲</button>
+          </div>
+          <div id="system-drawer-content" style="margin-top: 12px; display: block;">
+            <div id="storage-overview-grid-embedded">
+              <!-- Populated from /api/storage/overview -->
+            </div>
+            <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--uq-line, #334155); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <span style="font-size: 12.5px; font-weight: 600;">Dọn dẹp tệp bộ nhớ đệm an toàn</span>
+                <span style="font-size: 11.5px; color: var(--uq-ink-3, #64748b); margin-left: 8px;">(Chỉ xóa tệp tạm, bảo vệ 100% tài nguyên gốc)</span>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <button id="btn-embedded-cleanup-preview" class="btn btn-secondary btn-xs" type="button">Xem trước dọn dẹp</button>
+                <button id="btn-embedded-cleanup-execute" class="btn btn-primary btn-xs" type="button" disabled>Xác nhận dọn dẹp</button>
+              </div>
+            </div>
+            <div id="storage-cleanup-preview-embedded" style="margin-top: 8px;"></div>
+          </div>
+        </div>
       </section>
 
       <!-- ============================================================== -->
@@ -502,42 +532,347 @@
       </section>
 
       <!-- ============================================================== -->
-      <!-- WORKSPACE 01: SCRIPT -->
+      <!-- WORKSPACE 01: STORY WORKBENCH (3-Column Architecture) -->
       <!-- ============================================================== -->
-      <section id="ws-script" class="workspace-view">
+      <section id="ws-story" class="workspace-view">
         <div class="ws-subnav-bar">
           <button class="ws-subnav-btn" onclick="window.switchWorkspace('research')">
             <svg class="ui-icon" style="width: 14px; height: 14px;"><use href="#icon-book"/></svg>
             <span>1. Nghiên cứu & Sổ nhận định</span>
           </button>
-          <button class="ws-subnav-btn active" onclick="window.switchWorkspace('script')">
+          <button class="ws-subnav-btn active" onclick="window.switchWorkspace('story')">
             <svg class="ui-icon" style="width: 14px; height: 14px;"><use href="#icon-script"/></svg>
-            <span>2. Kịch bản phóng sự</span>
+            <span>2. Kịch bản & Tuyến truyện</span>
           </button>
         </div>
 
-        <div class="ws-header">
-          <div class="ws-title-group">
-            <h2 class="ws-title">Kịch bản</h2>
-            <button type="button" class="btn-module-help" data-module="script" title="Xem hướng dẫn Kịch bản" aria-label="Hướng dẫn kịch bản">?</button>
-            <span class="ws-description">Nhập hoặc dán kịch bản tiếng Anh của video</span>
-          </div>
-          <div class="script-counters" data-guide-id="content-script-stats">
-            <span class="counter-chip"><strong id="char-count">0</strong> ký tự</span>
-            <span class="counter-chip"><strong id="word-count">0</strong> từ</span>
-            <span class="counter-chip highlight"><strong id="est-duration">~0s</strong> dự kiến</span>
-          </div>
-        </div>
-        <div class="editor-container">
-          <textarea
-            id="script-input"
-            data-guide-id="content-script-editor"
-            class="script-textarea"
-            placeholder="Dán kịch bản tiếng Anh của video vào đây..."
-            spellcheck="false"
-          ></textarea>
+        <div class="story-workbench-grid">
+          <!-- COLUMN 1: STORY NAVIGATOR -->
+          <aside class="story-navigator" aria-label="Bộ điều hướng nhịp truyện">
+            <div class="story-col-header">
+              <span class="story-col-title">Danh sách nhịp truyện (Beats)</span>
+              <span class="badge" id="story-beats-count">0</span>
+            </div>
+            <div class="story-beats-container" id="story-beats-container" role="listbox" aria-label="Danh sách nhịp dẫn truyện">
+              <div class="empty-state" style="padding: 1.5rem 1rem; font-size: 0.85rem;">Đang tải danh sách nhịp truyện...</div>
+            </div>
+          </aside>
+
+          <!-- COLUMN 2: STORY WORKSPACE -->
+          <main class="story-workspace" aria-label="Khu vực soạn thảo kịch bản">
+            <div class="story-workspace-header">
+              <div class="ws-title-group">
+                <h2 class="ws-title">Kịch bản phóng sự</h2>
+                <button type="button" class="btn-module-help" data-module="script" title="Xem hướng dẫn Kịch bản" aria-label="Hướng dẫn kịch bản">?</button>
+                <span class="save-status-badge saved" id="story-save-badge">Đã lưu</span>
+              </div>
+              <div class="script-counters" data-guide-id="content-script-stats">
+                <span class="counter-chip"><strong id="char-count">0</strong> ký tự</span>
+                <span class="counter-chip"><strong id="word-count">0</strong> từ</span>
+                <span class="counter-chip highlight"><strong id="est-duration">~0s</strong> dự kiến</span>
+                <button type="button" id="btn-save-story-script" class="btn btn-sm btn-primary" title="Lưu kịch bản vào dự án">
+                  <svg class="ui-icon" style="width: 12px; height: 12px; margin-right: 4px;"><use href="#icon-check"/></svg>
+                  Lưu kịch bản
+                </button>
+              </div>
+            </div>
+
+            <div class="editor-container">
+              <textarea
+                id="script-input"
+                data-guide-id="content-script-editor"
+                class="script-textarea"
+                placeholder="Dán hoặc soạn kịch bản tiếng Anh của video vào đây..."
+                spellcheck="false"
+              ></textarea>
+            </div>
+          </main>
+
+          <!-- COLUMN 3: STORY INSPECTOR -->
+          <aside class="story-inspector" aria-label="Bảng thanh tra nhịp truyện và biên tập">
+            <!-- Beat Details Card -->
+            <div class="story-card" id="story-beat-inspector-card">
+              <div class="story-card-header">
+                <span class="story-card-title">Chi tiết nhịp truyện</span>
+                <span class="state-pill state-idle" id="story-inspector-beat-id">—</span>
+              </div>
+              <div class="story-card-body" id="story-selected-beat-details">
+                <p class="empty-state" style="font-size: 0.85rem;">Chọn một nhịp ở cột trái để xem chi tiết tốc độ và phân đoạn.</p>
+              </div>
+            </div>
+
+            <!-- Inline Editorial QA Card (Migrated from edq-modal) -->
+            <div class="story-card" id="story-edq-card">
+              <div class="story-card-header">
+                <span class="story-card-title">Kiểm định biên tập kịch bản (Editorial QA)</span>
+                <span id="story-edq-score-badge" class="state-pill state-idle">—</span>
+              </div>
+              <div class="story-card-body">
+                <div class="story-edq-controls">
+                  <button type="button" id="story-edq-filter-all" class="btn btn-sm btn-secondary active">Tất cả</button>
+                  <button type="button" id="story-edq-filter-review" class="btn btn-sm btn-secondary">Cần xem xét</button>
+                  <button type="button" id="story-edq-filter-block" class="btn btn-sm btn-secondary">Chặn</button>
+                  <button type="button" id="btn-story-edq-analyze" class="btn btn-sm btn-outline" style="margin-left: auto;">Phân tích lại</button>
+                </div>
+                <div class="story-edq-issues-container" id="story-edq-issues-list" role="listbox" aria-label="Danh sách vấn đề biên tập">
+                  <p class="empty-state" style="font-size: 0.82rem; padding: 1rem 0;">Chưa có vấn đề nào được ghi nhận.</p>
+                </div>
+                <div class="story-edq-issue-detail-panel" id="story-edq-detail-panel">
+                  <p class="empty-state" style="font-size: 0.82rem;">Chọn một vấn đề biên tập để xem đề xuất sửa đổi Trước / Sau.</p>
+                </div>
+              </div>
+            </div>
+          </aside>
         </div>
       </section>
+
+
+
+      <!-- ============================================================== -->
+      <!-- WORKSPACE 03: VOICE WORKBENCH (Subphase 3B Canonical) -->
+      <!-- ============================================================== -->
+      <section id="ws-voice" class="workspace-view">
+        <div class="ws-subnav-bar">
+          <button class="ws-subnav-btn" onclick="window.switchWorkspace('story')">
+            <svg class="ui-icon" style="width: 14px; height: 14px;"><use href="#icon-script"/></svg>
+            <span>2. Kịch bản & Tuyến truyện</span>
+          </button>
+          <button class="ws-subnav-btn active" onclick="window.switchWorkspace('voice')">
+            <svg class="ui-icon" style="width: 14px; height: 14px;"><use href="#icon-volume"/></svg>
+            <span>3. Giọng đọc & Âm thanh</span>
+          </button>
+          <button class="ws-subnav-btn" onclick="window.switchWorkspace('scenes')">
+            <svg class="ui-icon" style="width: 14px; height: 14px;"><use href="#icon-scene"/></svg>
+            <span>4. Hình ảnh & Cảnh</span>
+          </button>
+        </div>
+
+        <div class="voice-workbench-grid">
+          <!-- COLUMN 1: VOICE NAVIGATOR -->
+          <aside class="voice-navigator" aria-label="Bộ điều hướng đoạn giọng đọc">
+            <div class="voice-col-header">
+              <span class="voice-col-title">Danh sách đoạn đọc (Chunks)</span>
+              <span class="badge" id="voice-chunks-count">0</span>
+            </div>
+            <div class="voice-nav-filter-bar">
+              <input type="text" id="voice-chunk-search" class="voice-nav-search-input" placeholder="Tìm đoạn hoặc từ..." aria-label="Tìm kiếm đoạn đọc">
+              <select id="voice-chunk-filter" class="voice-nav-filter-select" aria-label="Lọc theo trạng thái">
+                <option value="all">Tất cả</option>
+                <option value="ready">Đã có audio</option>
+                <option value="empty">Chưa có audio</option>
+                <option value="locked">Đã khóa</option>
+                <option value="qa_issue">Có cảnh báo QA</option>
+              </select>
+            </div>
+            <div class="voice-chunks-container" id="voice-chunks-container" role="listbox" aria-label="Danh sách đoạn đọc âm thanh" tabindex="0">
+              <div class="empty-state" style="padding: 1.5rem 1rem; font-size: 0.85rem;"><span class="inline-spinner"></span> Đang tải danh sách đoạn đọc...</div>
+            </div>
+          </aside>
+
+          <!-- COLUMN 2: VOICE WORKSPACE -->
+          <main class="voice-workspace" aria-label="Khu vực phát và mốc thời gian giọng đọc">
+            <div class="voice-workspace-header">
+              <div class="ws-title-group">
+                <h2 class="ws-title">Giọng đọc & Bản chép lời</h2>
+                <button type="button" class="btn-module-help" data-module="voice" title="Xem hướng dẫn Giọng đọc" aria-label="Hướng dẫn giọng đọc">?</button>
+                <span class="state-pill state-ready" id="voice-audio-status-pill">Sẵn sàng</span>
+              </div>
+              <div class="voice-header-actions">
+                <div class="dropdown" style="display: inline-block; position: relative;">
+                  <button type="button" id="btn-voice-download-menu" class="btn btn-sm btn-secondary" title="Tải xuống tệp giọng đọc và phụ đề">
+                    <svg class="ui-icon" style="width: 12px; height: 12px; margin-right: 4px;"><use href="#icon-download"/></svg>
+                    Tải tệp âm thanh & phụ đề ▼
+                  </button>
+                  <div class="dropdown-menu" id="voice-download-dropdown" style="display: none; position: absolute; right: 0; top: 100%; z-index: 50; background: var(--uq-surface-2); border: 1px solid var(--uq-line-strong); border-radius: 6px; padding: 4px 0; min-width: 190px; box-shadow: 0 8px 24px rgba(0,0,0,0.5);">
+                    <a class="dropdown-item" id="voice-dl-wav" href="#" download style="display: block; padding: 6px 12px; font-size: 12px; color: var(--uq-ink-1); text-decoration: none;">Tải Master WAV</a>
+                    <a class="dropdown-item" id="voice-dl-mp3" href="#" download style="display: block; padding: 6px 12px; font-size: 12px; color: var(--uq-ink-1); text-decoration: none;">Tải Master MP3</a>
+                    <a class="dropdown-item" id="voice-dl-srt" href="#" download style="display: block; padding: 6px 12px; font-size: 12px; color: var(--uq-ink-1); text-decoration: none;">Tải phụ đề SRT</a>
+                    <a class="dropdown-item" id="voice-dl-ts" href="#" download style="display: block; padding: 6px 12px; font-size: 12px; color: var(--uq-ink-1); text-decoration: none;">Tải Mốc thời gian JSON</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Audio Transport Card -->
+            <div class="voice-card voice-transport-card" id="voice-transport-card">
+              <div class="voice-transport-row">
+                <button id="voice-btn-play-pause" class="btn-play-pause" title="Phát/Tạm dừng (Phím Space)" aria-label="Phát hoặc tạm dừng giọng đọc">
+                  <svg class="ui-icon play-icon"><use href="#icon-play"/></svg>
+                  <svg class="ui-icon pause-icon" style="display: none;"><use href="#icon-pause"/></svg>
+                </button>
+                
+                <div class="voice-transport-time">
+                  <span id="voice-cur-time">00:00</span>
+                  <span class="time-sep">/</span>
+                  <span id="voice-tot-dur">00:00</span>
+                </div>
+
+                <div class="voice-transport-scrubber-wrap">
+                  <input type="range" id="voice-scrubber" class="voice-scrubber-slider" min="0" max="100" value="0" step="0.05" aria-label="Thanh tua âm thanh">
+                </div>
+
+                <div class="voice-speed-control">
+                  <label for="voice-playback-rate" class="form-label-inline" title="Chỉ thay đổi tốc độ nghe thử, không ảnh hưởng file audio gốc">Tốc độ phát:</label>
+                  <select id="voice-playback-rate" class="form-select-sm" aria-label="Tốc độ phát nghe thử">
+                    <option value="0.5">0.5x</option>
+                    <option value="0.75">0.75x</option>
+                    <option value="1.0" selected>1.0x (chuẩn)</option>
+                    <option value="1.25">1.25x</option>
+                    <option value="1.5">1.5x</option>
+                    <option value="2.0">2.0x</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div class="voice-transport-context">
+                <span class="voice-context-chip" id="voice-playing-context">Toàn bộ kịch bản (Master Audio)</span>
+                <button type="button" class="btn btn-xs btn-outline" id="btn-play-selected-chunk" style="display: none;">Chỉ phát đoạn đang chọn</button>
+              </div>
+            </div>
+
+            <!-- Transcript & Interactive Word Cues Card -->
+            <div class="voice-card voice-cues-card">
+              <div class="voice-card-header">
+                <span class="voice-card-title">Bản chép lời & Mốc thời gian từng từ (Word Cues)</span>
+                <div class="voice-stt-header-actions">
+                  <span class="badge" id="voice-cues-count">0 từ</span>
+                  <button type="button" id="btn-run-whisper-alignment" class="btn btn-xs btn-primary" title="Chạy Faster-Whisper để căn chỉnh mốc thời gian">
+                    <svg class="ui-icon" style="width: 12px; height: 12px; margin-right: 4px;"><use href="#icon-refresh"/></svg>
+                    Căn chỉnh thời gian (Whisper)
+                  </button>
+                  <button type="button" id="btn-cancel-whisper-alignment" class="btn btn-xs btn-danger" style="display: none;">Hủy Whisper</button>
+                </div>
+              </div>
+              
+              <!-- STT Progress Banner -->
+              <div id="voice-stt-progress" class="voice-stt-progress" style="display: none;">
+                <div class="progress-bar-track">
+                  <div class="progress-bar-fill" id="voice-stt-progress-fill" style="width: 0%;"></div>
+                </div>
+                <div class="progress-meta" style="display: flex; justify-content: space-between; font-size: 11px; margin-top: 4px; color: var(--uq-ink-3);">
+                  <span id="voice-stt-progress-msg">Đang chuẩn bị Whisper...</span>
+                  <span id="voice-stt-progress-pct">0%</span>
+                </div>
+              </div>
+
+              <div class="voice-card-body voice-cues-body" id="voice-cues-container" aria-label="Danh sách mốc thời gian từng từ">
+                <p class="empty-state">Đang tải bản chép lời và mốc thời gian...</p>
+              </div>
+            </div>
+          </main>
+
+          <!-- COLUMN 3: VOICE INSPECTOR -->
+          <aside class="voice-inspector" aria-label="Bảng thanh tra cấu hình giọng đọc">
+            <!-- Voice Settings Card -->
+            <div class="voice-card" id="voice-settings-card">
+              <div class="voice-card-header">
+                <span class="voice-card-title">Cấu hình Giọng đọc & TTS</span>
+                <span class="state-pill state-ready" id="voice-provider-badge">Kokoro TTS</span>
+              </div>
+              <div class="voice-card-body">
+                <div class="form-group" style="margin-bottom: 10px;">
+                  <label for="voice-select-model" class="form-label" style="font-size: 12px; margin-bottom: 4px; display: block;">Giọng đọc (Kokoro Voice)</label>
+                  <select id="voice-select-model" class="form-select" style="width: 100%; font-size: 12px;" aria-label="Chọn giọng đọc Kokoro">
+                    <option value="af_sarah">af_sarah (Nữ - Mỹ, tự nhiên)</option>
+                    <option value="af_bella">af_bella (Nữ - Mỹ, biểu cảm)</option>
+                    <option value="af_nicole">af_nicole (Nữ - Mỹ, thì thầm/trầm)</option>
+                    <option value="af_sky">af_sky (Nữ - Mỹ, sáng)</option>
+                    <option value="af_heart">af_heart (Nữ - Mỹ, ấm áp - Mặc định)</option>
+                    <option value="am_adam">am_adam (Nam - Mỹ, tường thuật)</option>
+                    <option value="am_michael">am_michael (Nam - Mỹ, phóng sự)</option>
+                  </select>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 12px;">
+                  <div class="label-with-val" style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
+                    <label for="voice-tts-speed" class="form-label" title="Tốc độ đọc khi tạo file audio mới">Tốc độ đọc (TTS Speed)</label>
+                    <span class="val-display" id="voice-tts-speed-val" style="font-family: var(--uq-font-mono);">1.10x</span>
+                  </div>
+                  <input type="range" id="voice-tts-speed" class="form-range" min="0.8" max="1.5" step="0.05" value="1.1" style="width: 100%;" aria-label="Tốc độ tạo giọng đọc">
+                </div>
+
+                <div class="voice-gen-actions">
+                  <button type="button" id="btn-generate-selected-chunk" class="btn btn-sm btn-secondary btn-block" title="Tạo lại audio cho đoạn đang chọn">
+                    Tạo giọng đoạn đang chọn
+                  </button>
+                  <button type="button" id="btn-generate-all-voice" class="btn btn-sm btn-primary btn-block" title="Tạo lại toàn bộ giọng đọc kịch bản">
+                    Tạo lại toàn bộ giọng đọc
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Voice QA Card -->
+            <div class="voice-card" id="voice-qa-card">
+              <div class="voice-card-header">
+                <span class="voice-card-title">Kiểm định giọng đọc (Voice QA)</span>
+                <span class="state-pill state-idle" id="voice-qa-verdict-badge">—</span>
+              </div>
+              <div class="voice-card-body">
+                <div class="qa-metrics-row">
+                  <div class="metric-chip"><span class="metric-label">Độ khớp</span><strong id="voice-qa-match">0%</strong></div>
+                  <div class="metric-chip"><span class="metric-label">WER</span><strong id="voice-qa-wer">0%</strong></div>
+                  <div class="metric-chip"><span class="metric-label">Tốc độ</span><strong id="voice-qa-wpm">0 WPM</strong></div>
+                  <div class="metric-chip"><span class="metric-label">Vấn đề</span><strong id="voice-qa-issues-count">0</strong></div>
+                </div>
+
+                <div class="voice-qa-btn-row">
+                  <button type="button" id="btn-run-voice-qa-workbench" class="btn btn-sm btn-outline" style="width: 100%;">
+                    Chạy kiểm tra giọng đọc (Voice QA)
+                  </button>
+                </div>
+
+                <div class="voice-qa-issues-list" id="voice-qa-issues-list" role="listbox" aria-label="Danh sách vấn đề giọng đọc">
+                  <p class="empty-state" style="font-size: 0.82rem; padding: 0.5rem 0;">Chưa có vấn đề Voice QA nào.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pronunciation Card -->
+            <div class="voice-card" id="voice-pronunciation-card">
+              <div class="voice-card-header">
+                <span class="voice-card-title">Từ điển phát âm (Pronunciation)</span>
+                <span class="badge" id="voice-pron-count">0</span>
+              </div>
+              <div class="voice-card-body">
+                <form id="voice-pron-add-form" class="voice-pron-form">
+                  <div class="form-row-compact">
+                    <input type="text" id="voice-pron-term" class="form-input-sm" placeholder="Từ gốc (vd: NASA)" required aria-label="Từ gốc">
+                    <input type="text" id="voice-pron-spoken" class="form-input-sm" placeholder="Cách đọc (vd: Na-sa)" required aria-label="Cách đọc">
+                  </div>
+                  <div class="form-row-actions">
+                    <button type="button" id="btn-pron-test-audio" class="btn btn-xs btn-secondary" title="Nghe thử cách đọc">Nghe thử</button>
+                    <button type="submit" id="btn-pron-add" class="btn btn-xs btn-primary" style="margin-left: auto;">Thêm vào từ điển</button>
+                  </div>
+                </form>
+
+                <div class="voice-pron-list" id="voice-pron-list" aria-label="Danh sách từ điển phát âm">
+                  <p class="empty-state" style="font-size: 0.82rem;">Chưa có quy tắc phát âm nào.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Lock & Revisions Card -->
+            <div class="voice-card" id="voice-lock-history-card">
+              <div class="voice-card-header">
+                <span class="voice-card-title">Bảo vệ & Lịch sử phiên bản</span>
+                <span class="state-pill state-idle" id="voice-chunk-lock-status">Mở khóa</span>
+              </div>
+              <div class="voice-card-body">
+                <div class="voice-lock-actions">
+                  <button type="button" id="btn-toggle-chunk-lock" class="btn btn-sm btn-secondary btn-block">
+                    Khóa đoạn này (Tránh ghi đè)
+                  </button>
+                </div>
+                <div class="voice-history-list" id="voice-history-list">
+                  <p class="empty-state" style="font-size: 0.82rem; padding: 0.5rem 0;">Chưa có bản lưu lịch sử nào.</p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
 
 
       <!-- ============================================================== -->

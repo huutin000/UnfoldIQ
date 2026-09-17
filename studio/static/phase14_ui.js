@@ -95,9 +95,12 @@
       <div class="stage-card" aria-hidden="true"><div class="skeleton" style="height:18px;width:45%"></div><div class="skeleton" style="height:12px;width:80%"></div><div class="skeleton" style="height:12px;width:65%"></div></div>`;
 
     try {
-      const res = await fetch(`/api/projects/${encodeURIComponent(p)}/overview`);
+      const res = await fetch(`/api/projects/${encodeURIComponent(p)}/v2/overview`);
       if (!res.ok) throw new Error(`Không tải được tổng quan dự án (mã ${res.status}).`);
       const data = await res.json();
+
+      if (window.loadNextBestAction) window.loadNextBestAction(p);
+      if (window.loadEmbeddedStorageOverview) window.loadEmbeddedStorageOverview();
 
       if (titleEl) titleEl.textContent = p.replace(/^(\d{4}-\d{2}-\d{2}_\d{6}_)/, "").toUpperCase();
       if (durEl && data.totalDuration) {
@@ -108,8 +111,8 @@
 
       const stages = [
         { id: "research", title: "1. Nghiên cứu & Bằng chứng", targetTab: "research", info: data.stages.research },
-        { id: "script", title: "2. Kịch bản phóng sự", targetTab: "script", info: data.stages.script },
-        { id: "voice", title: "3. Giọng đọc Kokoro", targetTab: "audio", info: data.stages.voice },
+        { id: "script", title: "2. Kịch bản phóng sự", targetTab: "story", info: data.stages.script },
+        { id: "voice", title: "3. Giọng đọc Kokoro", targetTab: "voice", info: data.stages.voice },
         { id: "scenes", title: "4. Cảnh quay & Visual", targetTab: "scenes", info: data.stages.scenes },
         { id: "review", title: "5. Kiểm tra chất lượng", targetTab: "review", info: data.stages.review },
         { id: "export", title: "6. Xuất bản video", targetTab: "export", info: data.stages.export }
@@ -1186,7 +1189,7 @@
     const originalSwitch = window.switchWorkspace;
     window.switchWorkspace = function (targetId) {
       let actualTargetId = targetId;
-      if (targetId === "content") actualTargetId = "research";
+      if (targetId === "content" || targetId === "script") actualTargetId = "story";
       if (targetId === "studio") actualTargetId = "timeline";
 
       if (typeof originalSwitch === "function") {
@@ -1204,6 +1207,7 @@
       }
 
       if (actualTargetId === "overview") loadOverviewData();
+      else if (actualTargetId === "story" && window.loadStorySlice && window.currentProjectDir) window.loadStorySlice(window.currentProjectDir);
       else if (actualTargetId === "research") loadResearchData();
       else if (actualTargetId === "library") loadLibraryData();
       else if (actualTargetId === "timeline") loadTimelineData();

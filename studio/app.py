@@ -563,11 +563,24 @@ async def _run_tts_job(job_id: str, req: JobRequest):
         failed: Dict[str, str] = {}
         lock = asyncio.Lock()
 
-        # Count cache hits first so progress is truthful from the start.
+        # Gate E: Check locked chunks to protect approved audio from bulk overwrite
+        from studio.project_bootstrap import bootstrap_project_graph, get_project_state_store
+        from studio.locking import LockManager
+        lm = None
+        try:
+            p_store = get_project_state_store(project_dir.name)
+            p_graph = bootstrap_project_graph(project_dir.name, state_store=p_store)
+            lm = LockManager(p_store, graph=p_graph)
+        except Exception as ex:
+            logger.debug(f"Bulk gen lock manager init skipped: {ex}")
+
+        # Count cache hits and skip locked chunks so progress is truthful from the start.
         to_render: List[Any] = []
         for chunk in plan.chunks:
+            chunk_stable_id = f"c_{chunk.index:02d}"
+            is_locked = lm and (lm.is_locked(chunk_stable_id) or lm.is_locked(chunk.chunk_id) or lm.is_locked(f"chunk_{chunk.index}"))
             hit = cache.lookup(chunk.render_hash)
-            if hit is not None:
+            if hit is not None or is_locked:
                 completed[chunk.chunk_id] = chunk.render_hash
                 job_state.mark_completed(state, chunk.chunk_id, chunk.render_hash, reused=True)
             else:
@@ -580,15 +593,24 @@ async def _run_tts_job(job_id: str, req: JobRequest):
                 return
             tmp_path = cache.chunks_dir / f".tmp_{chunk.chunk_id}_{chunk.render_hash[:12]}.wav"
 
+            from studio.resource_scheduler import resource_scheduler
+            from studio.domain_models import ResourceClass
+
             async def synth_fn(text: str, out: Path) -> None:
                 # Phase 9: per-chunk narration rate (clamped to Kokoro-safe bounds).
                 eff_speed = min(2.0, max(0.5, float(req.speed) * float(chunk.rate_factor)))
-                await tts_provider.synthesize_chunk(
-                    text=text,
-                    voice=req.voice,
-                    speed=eff_speed,
-                    output_path=out,
-                    cancel_event=cancel_event,
+                await resource_scheduler.submit_job(
+                    job_id=f"tts_bulk_{chunk.chunk_id}_{int(time.time()*1000)}",
+                    job_type="kokoro_tts_synthesis",
+                    resource_class=ResourceClass.CUDA_HEAVY.value,
+                    coro_fn=lambda: tts_provider.synthesize_chunk(
+                        text=text,
+                        voice=req.voice,
+                        speed=eff_speed,
+                        output_path=out,
+                        cancel_event=cancel_event,
+                    ),
+                    metadata={"chunk_id": chunk.chunk_id, "project_id": project_dir.name}
                 )
 
             async with semaphore:
@@ -1184,6 +1206,45 @@ async def stream_project_audio(dir_name: str, audio_format: str):
     )
 
 
+@app.get("/api/projects/{dir_name}/chunks/{chunk_id}/audio")
+async def stream_chunk_audio(dir_name: str, chunk_id: str):
+    """Stream individual audio chunk WAV if cached in render_cache or output_file."""
+    project_path = PROJECTS_DIR / dir_name
+    if not project_path.is_dir():
+        raise HTTPException(status_code=404, detail=f"Dự án không tồn tại: {dir_name}")
+
+    # Check manifest for chunk info
+    manifest_path = project_path / "manifest.json"
+    target_hash = None
+    target_output_file = None
+    if manifest_path.is_file():
+        try:
+            mdata = json.loads(manifest_path.read_text(encoding="utf-8"))
+            for idx, c in enumerate(mdata.get("chunks", [])):
+                cid = c.get("chunk_id") or c.get("id") or f"c_{idx+1:02d}"
+                if cid == chunk_id or str(idx + 1) == chunk_id:
+                    target_hash = c.get("render_hash")
+                    target_output_file = c.get("output_file")
+                    break
+        except Exception:
+            pass
+
+    # Check output_file
+    if target_output_file:
+        of_path = project_path / target_output_file
+        if of_path.is_file():
+            return FileResponse(path=str(of_path), media_type="audio/wav", filename=f"{chunk_id}.wav")
+
+    # Check render_cache
+    if target_hash:
+        cache_path = project_path / "render_cache" / "chunks" / f"{target_hash}.wav"
+        if cache_path.is_file():
+            return FileResponse(path=str(cache_path), media_type="audio/wav", filename=f"{chunk_id}.wav")
+
+    # If neither found, return 404
+    raise HTTPException(status_code=404, detail=f"Không tìm thấy file audio riêng biệt cho đoạn {chunk_id}.")
+
+
 @app.post("/api/projects/{dir_name}/export")
 async def export_project_audio(dir_name: str, request: Request):
     """Export project audio (WAV or MP3) into outputs/ directory."""
@@ -1408,7 +1469,7 @@ async def save_user_settings(req: UserSettingsRequest):
 # VOICE QA API (Phase 8.1)
 # ==============================================================================
 
-async def _rerender_chunk_impl(dir_name: str, chunk_index: int) -> Dict[str, Any]:
+async def _rerender_chunk_impl(dir_name: str, chunk_identifier: Any) -> Dict[str, Any]:
     project_dir = (PROJECTS_DIR / dir_name).resolve()
     if not project_dir.is_dir():
         raise HTTPException(status_code=404, detail=f"Project '{dir_name}' not found.")
@@ -1452,26 +1513,64 @@ async def _rerender_chunk_impl(dir_name: str, chunk_index: int) -> Dict[str, Any
         pron_preprocess=pron_dict.preprocess,
     )
 
+    # Resolve target chunk by stable chunk_id or numerical index
     target_chunk = None
+    ident_str = str(chunk_identifier).strip()
     for c in plan.chunks:
-        if c.index == chunk_index or int(c.chunk_id) == chunk_index:
+        # Match by exact chunk_id (e.g. "c_01" or "0001")
+        if c.chunk_id == ident_str or f"c_{c.index:02d}" == ident_str or f"c_{int(c.chunk_id):02d}" == ident_str:
             target_chunk = c
             break
+        # Match by 1-based or 0-based index if numerical
+        try:
+            val = int(ident_str)
+            if c.index == val or c.index == (val + 1) or int(c.chunk_id) == val:
+                target_chunk = c
+                break
+        except (ValueError, TypeError):
+            pass
 
     if target_chunk is None:
-        raise HTTPException(status_code=400, detail=f"Chunk index {chunk_index} not found in project (total {plan.total_chunks} chunks).")
+        raise HTTPException(status_code=400, detail=f"Chunk '{chunk_identifier}' not found in project (total {plan.total_chunks} chunks).")
+
+    # Gate E: Check if chunk is locked against overwrite
+    from studio.project_bootstrap import bootstrap_project_graph, get_project_state_store
+    from studio.locking import LockManager
+    try:
+        store = get_project_state_store(dir_name)
+        graph = bootstrap_project_graph(dir_name, state_store=store)
+        lm = LockManager(store, graph=graph)
+        chunk_stable_id = f"c_{target_chunk.index:02d}"
+        if lm.is_locked(chunk_stable_id) or lm.is_locked(target_chunk.chunk_id) or lm.is_locked(f"chunk_{target_chunk.index}"):
+            raise HTTPException(
+                status_code=409,
+                detail={"code": "CHUNK_LOCKED", "message": f"Đoạn #{chunk_stable_id} đã bị khóa, không thể tạo lại.", "chunk_id": chunk_stable_id}
+            )
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.warning(f"Lock check skipped/failed for chunk {target_chunk.chunk_id}: {e}")
 
     cache = RenderCache(project_dir)
     tmp_path = cache.chunks_dir / f".tmp_rerender_{target_chunk.chunk_id}_{target_chunk.render_hash[:12]}.wav"
     cancel_evt = asyncio.Event()
 
+    from studio.resource_scheduler import resource_scheduler
+    from studio.domain_models import ResourceClass
+
     async def synth_fn(text: str, out: Path) -> None:
-        await tts_provider.synthesize_chunk(
-            text=text,
-            voice=voice,
-            speed=speed,
-            output_path=out,
-            cancel_event=cancel_evt,
+        await resource_scheduler.submit_job(
+            job_id=f"tts_chunk_{target_chunk.chunk_id}_{int(time.time()*1000)}",
+            job_type="kokoro_tts_synthesis",
+            resource_class=ResourceClass.CUDA_HEAVY.value,
+            coro_fn=lambda: tts_provider.synthesize_chunk(
+                text=text,
+                voice=voice,
+                speed=speed,
+                output_path=out,
+                cancel_event=cancel_evt,
+            ),
+            metadata={"chunk_id": target_chunk.chunk_id, "project_id": dir_name}
         )
 
     res = await render_chunk_with_retry(
@@ -1484,7 +1583,7 @@ async def _rerender_chunk_impl(dir_name: str, chunk_index: int) -> Dict[str, Any
                 tmp_path.unlink()
             except Exception:
                 pass
-        raise HTTPException(status_code=500, detail=f"Failed to rerender chunk {chunk_index}: {res.get('error')}")
+        raise HTTPException(status_code=500, detail=f"Failed to rerender chunk {target_chunk.chunk_id}: {res.get('error')}")
 
     cache.store(target_chunk.render_hash, tmp_path, target_chunk.chunk_id)
     if tmp_path.exists():
@@ -1516,7 +1615,7 @@ async def _rerender_chunk_impl(dir_name: str, chunk_index: int) -> Dict[str, Any
 
     return {
         "status": "success",
-        "message": f"Chunk {chunk_index} re-rendered successfully and master audio updated.",
+        "message": f"Chunk {target_chunk.chunk_id} re-rendered successfully and master audio updated.",
         "chunk_id": target_chunk.chunk_id,
         "chunk_index": target_chunk.index
     }
@@ -2281,6 +2380,73 @@ async def get_project_script(dir_name: str):
     if not project_path.is_dir() or not script_path.is_file():
         raise HTTPException(status_code=404, detail="Script not found.")
     return {"project": dir_name, "script": script_path.read_text(encoding="utf-8")}
+
+
+class SaveScriptRequest(BaseModel):
+    text: Optional[str] = None
+    script: Optional[str] = None
+
+    @property
+    def canonical_text(self) -> str:
+        if self.script is not None:
+            return self.script
+        return self.text or ""
+
+
+@app.post("/api/projects/{dir_name}/script")
+@app.put("/api/projects/{dir_name}/script")
+async def save_project_script(dir_name: str, req: SaveScriptRequest):
+    """
+    Subphase 3A: Atomically saves script.txt for Story Workbench.
+    Updates content hash in StateStore / dependency graph and returns updated metrics.
+    """
+    project_path = PROJECTS_DIR / dir_name
+    if not project_path.is_dir():
+        raise HTTPException(
+            status_code=404,
+            detail={"code": "PROJECT_NOT_FOUND", "message": f"Dự án '{dir_name}' không tồn tại.", "project_id": dir_name}
+        )
+
+    content_text = req.canonical_text
+    script_path = project_path / "script.txt"
+    tmp_path = project_path / "script.txt.tmp"
+    tmp_path.write_text(content_text, encoding="utf-8")
+    tmp_path.replace(script_path)
+
+    # Word count and duration
+    words = content_text.split()
+    word_count = len(words)
+    est_duration = round(word_count / 2.33, 2)
+
+    # Synchronize with state graph in state.db if available
+    try:
+        from studio.project_bootstrap import get_project_state_store, bootstrap_project_graph
+        store = get_project_state_store(dir_name)
+        graph = bootstrap_project_graph(dir_name, state_store=store)
+        graph.invalidate_dependent_chain("story_beat_root", reason="Script text updated")
+    except Exception as e:
+        logger.debug(f"State graph sync on script save: {e}")
+
+    # Synchronize script.json if present
+    script_json_path = project_path / "script.json"
+    if script_json_path.is_file():
+        try:
+            sdata = json.loads(script_json_path.read_text(encoding="utf-8"))
+            sdata["updatedAt"] = datetime.now(timezone.utc).isoformat()
+            script_json_path.write_text(json.dumps(sdata, indent=2, ensure_ascii=False), encoding="utf-8")
+        except Exception:
+            pass
+
+    return {
+        "status": "SUCCESS",
+        "ok": True,
+        "project_id": dir_name,
+        "word_count": word_count,
+        "char_count": len(content_text),
+        "est_duration_sec": est_duration,
+        "estimated_duration_seconds": est_duration,
+        "saved_at": datetime.now(timezone.utc).isoformat()
+    }
 
 
 @app.get("/api/projects/{dir_name}/visual-bible")
@@ -3121,7 +3287,43 @@ async def get_project_overview(dir_name: str):
     from studio.project_adapter import project_adapter
     try:
         overview = project_adapter.load_overview_slice(dir_name)
-        return overview.model_dump()
+        data = overview.model_dump()
+        duration_sec = overview.stats.get("duration_seconds", 0.0) or 0.0
+        data["totalDuration"] = duration_sec
+        data["stages"] = {
+            "research": {
+                "status": "READY",
+                "label": "Sẵn sàng",
+                "details": "Nghiên cứu & sổ nhận định"
+            },
+            "script": {
+                "status": overview.status_summary.get("story", "DRAFT"),
+                "label": "Sẵn sàng" if overview.status_summary.get("story") == "READY" else "Bản nháp",
+                "details": f"{overview.stats.get('shot_count', 0)} nhịp dẫn truyện"
+            },
+            "voice": {
+                "status": overview.status_summary.get("voice", "DRAFT"),
+                "label": "Sẵn sàng" if overview.status_summary.get("voice") == "READY" else "Chưa tạo",
+                "details": f"Giọng đọc Kokoro ({overview.stats.get('voice_configured', 'af_sarah')})"
+            },
+            "scenes": {
+                "status": overview.status_summary.get("visual", "DRAFT"),
+                "label": "Sẵn sàng" if overview.status_summary.get("visual") == "READY" else "Chưa tạo",
+                "details": f"{overview.stats.get('shot_count', 0)} cảnh quay / {overview.stats.get('scene_count', 0)} phân đoạn"
+            },
+            "review": {
+                "status": "READY",
+                "label": "Sẵn sàng",
+                "details": "Kiểm tra chất lượng"
+            },
+            "export": {
+                "status": overview.status_summary.get("export", "DRAFT"),
+                "label": "Sẵn sàng" if overview.status_summary.get("export") == "READY" else "Chưa xuất",
+                "details": "Xuất bản gói sản xuất"
+            }
+        }
+        data["blockers"] = []
+        return data
     except FileNotFoundError as fe:
         raise HTTPException(status_code=404, detail=str(fe))
     except Exception as e:
@@ -3136,7 +3338,9 @@ async def get_project_story(dir_name: str):
     from studio.project_adapter import project_adapter
     try:
         story = project_adapter.load_story_slice(dir_name)
-        return story.model_dump()
+        data = story.model_dump()
+        data["script"] = story.script_text
+        return data
     except FileNotFoundError as fe:
         raise HTTPException(status_code=404, detail=str(fe))
     except Exception as e:
@@ -3285,7 +3489,47 @@ async def get_project_next_action(dir_name: str):
         graph = bootstrap_project_graph(dir_name, state_store=store)
         service = NextBestActionService(graph)
         action = service.get_next_action()
-        return action.model_dump()
+        raw = action.model_dump()
+
+        stage_to_wb = {
+            "Overview": "overview",
+            "Script": "story",
+            "Story": "story",
+            "Voice": "audio",
+            "Scenes": "scenes",
+            "Review": "scenes",
+            "Export": "export"
+        }
+        wb = stage_to_wb.get(action.target_stage or "", "overview")
+
+        titles = {
+            "PROCEED_TO_EXPORT": "Sẵn sàng xuất video",
+            "REMEDIATE_BLOCK": "Xử lý điểm chặn quy trình",
+            "SYNC_UPSTREAM": "Đồng bộ hóa thay đổi",
+            "REVIEW_ARTIFACT": "Kiểm tra chất lượng thành phần",
+            "COMPLETE_DRAFT": "Hoàn thiện nội dung nháp",
+            "INITIALIZE_PROJECT": "Bắt đầu tạo kịch bản"
+        }
+        labels = {
+            "PROCEED_TO_EXPORT": "Xuất video ngay →",
+            "REMEDIATE_BLOCK": "Xem điểm chặn →",
+            "SYNC_UPSTREAM": "Đồng bộ ngay →",
+            "REVIEW_ARTIFACT": "Kiểm tra ngay →",
+            "COMPLETE_DRAFT": "Mở soạn thảo →",
+            "INITIALIZE_PROJECT": "Nhập kịch bản →"
+        }
+
+        decorated = {
+            **raw,
+            "target_workbench": wb,
+            "title": titles.get(action.action_type, "Hành động đề xuất"),
+            "label": labels.get(action.action_type, "Thực hiện ngay →")
+        }
+
+        return {
+            **decorated,
+            "next_action": decorated
+        }
     except HTTPException:
         raise
     except Exception as e:

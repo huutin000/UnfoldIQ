@@ -791,7 +791,7 @@ class ProjectAdapter:
         manifest_exists = (project_dir / "manifest.json").is_file()
         scene_plan_exists = (project_dir / "scene_plan.json").is_file()
 
-        # Count scenes quickly if scene_plan.json exists
+        # Count scenes and shots quickly if files exist
         scene_count = 0
         if scene_plan_exists:
             try:
@@ -799,6 +799,25 @@ class ProjectAdapter:
                 scene_count = len(sp_data.get("scenes", []))
             except Exception:
                 pass
+
+        shot_count = 0
+        veo_path = project_dir / "veo_prompts.json"
+        if veo_path.is_file():
+            try:
+                veo_data = json.loads(veo_path.read_text(encoding="utf-8"))
+                shot_count = len(veo_data.get("shots", []))
+            except Exception:
+                pass
+
+        duration_seconds = settings.get("duration_seconds")
+        if duration_seconds is None:
+            ts_path = project_dir / "timestamps.json"
+            if ts_path.is_file():
+                try:
+                    ts_data = json.loads(ts_path.read_text(encoding="utf-8"))
+                    duration_seconds = ts_data.get("audio_duration")
+                except Exception:
+                    pass
 
         # Status summary
         status_summary = {
@@ -810,6 +829,8 @@ class ProjectAdapter:
 
         stats = {
             "scene_count": scene_count,
+            "shot_count": shot_count,
+            "duration_seconds": duration_seconds,
             "has_script": script_exists,
             "has_audio": audio_exists,
             "voice_configured": settings.get("voice", "af_sarah"),

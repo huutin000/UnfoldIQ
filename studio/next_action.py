@@ -140,7 +140,7 @@ class NextBestActionService:
         return NextAction(
             action_type="PROCEED_TO_EXPORT",
             target_stage="Export",
-            reason="Toàn bộ thực thể trong chu trình đều đồng bộ và đạt trạng thái READY. Sẵn sàng xuất bản gói sản xuất.",
+            reason="Toàn bộ thực thể trong chu trình đều đồng bộ và đạt trạng thái SẴN SÀNG. Sẵn sàng xuất bản gói sản xuất.",
             priority=5,
         )
 

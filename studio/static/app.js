@@ -770,6 +770,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Gate E: Navigation & Window Safety — warn before accidental tab close/reload if script is dirty
+  window.addEventListener("beforeunload", function (e) {
+    if (typeof isScriptDirty === "function" && isScriptDirty()) {
+      e.preventDefault();
+      e.returnValue = "";
+      return "";
+    }
+  });
+
   // P0.2: realtime dependency reconciliation (shared by open + regen flows).
   function refreshDependencyStatus(dirName) {
     if (!dirName) return;
@@ -1165,11 +1174,13 @@ document.addEventListener("DOMContentLoaded", () => {
   function switchWorkspace(targetId) {
     if (!targetId) return;
     let actualTargetId = targetId;
-    if (targetId === "content") actualTargetId = "research";
+    if (targetId === "content" || targetId === "script") actualTargetId = "story";
     if (targetId === "studio") actualTargetId = "timeline";
+    if (targetId === "audio" || targetId === "voice" || targetId === "voice-qa" || targetId === "timestamp" || targetId === "pronunciation") actualTargetId = "voice";
 
     const previousWorkspaceId = activeWorkspaceId;
     activeWorkspaceId = actualTargetId;
+    document.body.dataset.activeWorkspace = actualTargetId;
 
     // 1. Active-Only DOM Management: Unmount heavy rows from leaving workspace
     if (previousWorkspaceId === "scenes" && actualTargetId !== "scenes") {
@@ -1185,14 +1196,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const WORKSPACE_GROUPS = {
-      content: ["content", "research", "script"],
-      studio: ["studio", "timeline", "veo", "audio", "voice-qa", "timestamp"]
+      content: ["content", "research", "script", "story"],
+      story: ["story", "script"],
+      voice: ["voice", "audio", "voice-qa", "timestamp", "pronunciation"],
+      studio: ["studio", "timeline", "veo", "audio", "voice", "voice-qa", "timestamp"]
     };
 
     // 2. Update Sidebar Active Item
     document.querySelectorAll(".pipeline-nav .nav-item").forEach(btn => {
       const ws = btn.dataset.workspace;
       const isMatch = (ws === actualTargetId) ||
+        (ws === "voice" && WORKSPACE_GROUPS.voice.includes(actualTargetId)) ||
+        (ws === "audio" && WORKSPACE_GROUPS.voice.includes(actualTargetId)) ||
         (ws === "content" && WORKSPACE_GROUPS.content.includes(actualTargetId)) ||
         (ws === "studio" && WORKSPACE_GROUPS.studio.includes(actualTargetId));
       if (isMatch) {
@@ -1215,6 +1230,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".stepper-item").forEach(step => {
       const ws = step.dataset.workspace;
       const isMatch = (ws === actualTargetId) ||
+        (ws === "voice" && WORKSPACE_GROUPS.voice.includes(actualTargetId)) ||
+        (ws === "audio" && WORKSPACE_GROUPS.voice.includes(actualTargetId)) ||
         (ws === "content" && WORKSPACE_GROUPS.content.includes(actualTargetId)) ||
         (ws === "studio" && WORKSPACE_GROUPS.studio.includes(actualTargetId));
       if (isMatch) {
@@ -1228,7 +1245,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (window.Phase14 && typeof window.Phase14.handleWorkspaceSwitch === "function") {
       window.Phase14.handleWorkspaceSwitch(targetId);
     }
-    if (targetId === "voice-qa" && currentProjectDir) {
+    if (actualTargetId === "voice" && currentProjectDir) {
+      loadVoiceWorkbench(currentProjectDir);
+    } else if (targetId === "voice-qa" && currentProjectDir) {
       loadVoiceQA(currentProjectDir);
     } else if (targetId === "timestamp" && currentProjectDir) {
       loadTimestampsForProject(currentProjectDir);
@@ -2775,14 +2794,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function rerenderQAChunk(chunkIndex) {
     if (!currentProjectDir) return;
-    showNotification(`Đang render lại Chunk #${chunkIndex}...`, "info");
+    const chunkId = (typeof chunkIndex === "string" && chunkIndex.startsWith("c_")) ? chunkIndex : `c_${String(chunkIndex).padStart(2, '0')}`;
+    showNotification(`Đang render lại Chunk #${chunkId}...`, "info");
     try {
-      const res = await fetch(`/api/projects/${currentProjectDir}/voice-qa/rerender-chunk/${chunkIndex}`, {
+      const res = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/voice/chunks/${encodeURIComponent(chunkId)}/regenerate`, {
         method: "POST"
       });
       if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.detail || "Render lại chunk thất bại.");
+        const err = await res.json().catch(() => ({}));
+        const msg = (err.detail && typeof err.detail === "object") ? err.detail.message : (err.detail || "Render lại chunk thất bại.");
+        throw new Error(msg);
       }
       showNotification(`Chunk #${chunkIndex} đã được render và ghép lại audio thành công! Đang chạy lại Voice QA...`, "success");
       runVoiceQA(currentProjectDir, false);
@@ -4983,6 +5004,9 @@ document.addEventListener("DOMContentLoaded", () => {
     loadVeoForProject(dirName);
     loadVisualBible(dirName);
     loadEditorial(dirName);
+    loadStorySlice(dirName);
+    loadVoiceWorkbench(dirName);
+    loadNextBestAction(dirName);
     // 02A: nếu đang đứng ở workspace do Phase14 quản lý, tải lại để thoát empty cũ.
     try {
       if (window.Phase14 && activeWorkspaceId === "overview") window.Phase14.loadOverviewData(dirName);
@@ -6632,17 +6656,548 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ==============================================================================
-  // 14. INITIALIZATION
+  // 13c. SUBPHASE 3A: STORY WORKBENCH & OVERVIEW ENHANCEMENTS
   // ==============================================================================
-  checkHealth();
-  loadVoicesAndSettings();
-  loadPronunciations();
-  resolveStartupProject();
-  updateTextStats();
-  updateSlugPreview();
-  updateDependencyState();
-  setInterval(checkHealth, 15000);
+  let currentStoryData = null;
+  let selectedStoryBeatId = null;
+  let inlineEdqFilter = "all";
+  let selectedInlineEdqIssueId = null;
 
-  // Onboarding first-run do UQGuide (guide.js) đảm nhiệm: welcome + migration
-  // tour cũ, Help Center. Không auto-run tour cũ tại đây nữa.
-});
+  const storySaveBadge = document.getElementById("story-save-badge");
+  const btnSaveStoryScript = document.getElementById("btn-save-story-script");
+  const storyBeatsCount = document.getElementById("story-beats-count");
+  const storyBeatsContainer = document.getElementById("story-beats-container");
+  const storyInspectorBeatId = document.getElementById("story-inspector-beat-id");
+  const storySelectedBeatDetails = document.getElementById("story-selected-beat-details");
+  const storyEdqScoreBadge = document.getElementById("story-edq-score-badge");
+  const storyEdqIssuesList = document.getElementById("story-edq-issues-list");
+  const storyEdqDetailPanel = document.getElementById("story-edq-detail-panel");
+  const btnStoryEdqAnalyze = document.getElementById("btn-story-edq-analyze");
+
+  function updateScriptSaveStatus(isDirty) {
+    if (!storySaveBadge) return;
+    if (isDirty) {
+      storySaveBadge.textContent = "Chưa lưu";
+      storySaveBadge.className = "save-status-badge unsaved";
+    } else {
+      storySaveBadge.textContent = "Đã lưu";
+      storySaveBadge.className = "save-status-badge saved";
+    }
+  }
+
+  if (scriptInput) {
+    scriptInput.addEventListener("input", () => {
+      updateScriptSaveStatus(isScriptDirty());
+    });
+  }
+
+  async function saveStoryScript() {
+    if (!currentProjectDir) {
+      showNotification("Chưa mở dự án nào để lưu kịch bản.", "warning");
+      return;
+    }
+    const newScript = scriptInput ? scriptInput.value : "";
+    if (btnSaveStoryScript) {
+      btnSaveStoryScript.disabled = true;
+      btnSaveStoryScript.textContent = "Đang lưu...";
+    }
+    try {
+      const res = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/script`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ script: newScript })
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.detail || `Lỗi máy chủ (${res.status})`);
+      }
+      const data = await res.json();
+      openedScriptText = newScript;
+      updateScriptSaveStatus(false);
+      refreshDependencyStatus(currentProjectDir);
+      showNotification("Đã lưu kịch bản thành công.", "success");
+      // Reload story slice to sync beats & metrics
+      loadStorySlice(currentProjectDir);
+    } catch (err) {
+      showNotification(`Không thể lưu kịch bản: ${err.message}`, "error");
+    } finally {
+      if (btnSaveStoryScript) {
+        btnSaveStoryScript.disabled = false;
+        btnSaveStoryScript.innerHTML = `<svg class="ui-icon" style="width: 12px; height: 12px; margin-right: 4px;"><use href="#icon-check"/></svg> Lưu kịch bản`;
+      }
+    }
+  }
+
+  if (btnSaveStoryScript) {
+    btnSaveStoryScript.addEventListener("click", saveStoryScript);
+  }
+
+  async function loadStorySlice(dirName) {
+    if (!dirName) {
+      if (storyBeatsContainer) {
+        storyBeatsContainer.innerHTML = `<div class="empty-state" style="padding: 1.5rem 1rem; font-size: 0.85rem;">Chưa có đoạn kịch bản. Vui lòng chọn hoặc mở một dự án.</div>`;
+      }
+      return;
+    }
+    if (storyBeatsContainer) {
+      storyBeatsContainer.innerHTML = `<div class="empty-state" style="padding: 1.5rem 1rem; font-size: 0.85rem;"><span class="inline-spinner"></span> Đang tải danh sách nhịp truyện...</div>`;
+    }
+    try {
+      const res = await fetch(`/api/projects/${encodeURIComponent(dirName)}/story`);
+      if (!res.ok) {
+        if (storyBeatsContainer) {
+          storyBeatsContainer.innerHTML = `
+            <div class="empty-state" style="padding: 1.5rem 1rem; font-size: 0.85rem; color: var(--uq-bad, #ef4444);">
+              Không thể tải dữ liệu kịch bản (mã ${res.status}).
+              <button class="btn btn-xs btn-secondary" style="margin-top: 8px; display: inline-block;" onclick="window.loadStorySlice && window.loadStorySlice(window.currentProjectDir)">Thử lại</button>
+            </div>`;
+        }
+        return;
+      }
+      currentStoryData = await res.json();
+      if (currentProjectDir !== dirName) return;
+
+      if (scriptInput && !isScriptDirty()) {
+        hydrateScriptEditor(currentStoryData.script || "");
+        updateScriptSaveStatus(false);
+      }
+
+      renderStoryBeatsList(currentStoryData.beats || []);
+      renderInlineEditorialQA();
+    } catch (err) {
+      console.warn("Failed to load story slice:", err);
+      if (storyBeatsContainer) {
+        storyBeatsContainer.innerHTML = `
+          <div class="empty-state" style="padding: 1.5rem 1rem; font-size: 0.85rem; color: var(--uq-bad, #ef4444);">
+            Lỗi khi tải dữ liệu kịch bản: ${escapeHtml(err.message || 'Lỗi không xác định')}.
+            <button class="btn btn-xs btn-secondary" style="margin-top: 8px; display: inline-block;" onclick="window.loadStorySlice && window.loadStorySlice(window.currentProjectDir)">Thử lại</button>
+          </div>`;
+      }
+    }
+  }
+  window.loadStorySlice = loadStorySlice;
+
+  function renderStoryBeatsList(beats) {
+    if (!storyBeatsContainer) return;
+    if (storyBeatsCount) storyBeatsCount.textContent = String(beats.length);
+
+    if (!beats || beats.length === 0) {
+      storyBeatsContainer.innerHTML = `<div class="empty-state" style="padding: 1.5rem 1rem; font-size: 0.85rem;">Chưa có đoạn kịch bản nào được phân tích.</div>`;
+      if (storyInspectorBeatId) storyInspectorBeatId.textContent = "—";
+      if (storySelectedBeatDetails) storySelectedBeatDetails.innerHTML = `<p class="empty-state" style="font-size: 0.85rem;">Chưa có nhịp truyện.</p>`;
+      return;
+    }
+
+    if (!selectedStoryBeatId || !beats.some(b => b.beat_id === selectedStoryBeatId)) {
+      selectedStoryBeatId = beats[0].beat_id;
+    }
+
+    const styleLabels = {
+      NEUTRAL: "Trung tính", AUTHORITATIVE: "Dẫn dắt", CURIOUS: "Tò mò", MYSTERIOUS: "Bí ẩn",
+      OMINOUS: "U ám", TENSE: "Căng thẳng", URGENT: "Khẩn trương", SOMBER: "Trầm buồn",
+      REFLECTIVE: "Suy ngẫm", AWE: "Kinh ngạc", EXCITED: "Hào hứng", REVEAL: "Hé lộ"
+    };
+
+    storyBeatsContainer.innerHTML = beats.map(b => {
+      const isSel = b.beat_id === selectedStoryBeatId;
+      const conf = Math.round((b.confidence ?? 1) * 100);
+      const styleName = styleLabels[b.style] || b.style || "Trung tính";
+      return `
+        <div class="story-beat-item ${isSel ? 'selected' : ''}" data-beat-id="${escapeHtml(b.beat_id)}" role="option" aria-selected="${isSel}" tabindex="${isSel ? '0' : '-1'}">
+          <div class="story-beat-header">
+            <span class="story-beat-id">${escapeHtml(b.beat_id)}</span>
+            <span class="story-beat-tag">${escapeHtml(styleName)} · ${conf}%</span>
+          </div>
+          <div class="story-beat-snippet">${escapeHtml((b.text || "").slice(0, 95))}</div>
+        </div>
+      `;
+    }).join("");
+
+    storyBeatsContainer.querySelectorAll(".story-beat-item").forEach(item => {
+      item.addEventListener("click", () => {
+        const bid = item.dataset.beatId;
+        selectStoryBeat(bid, false);
+      });
+    });
+
+    // Gate B: Listbox keyboard navigation (ArrowDown, ArrowUp, Home, End) with roving tabindex
+    storyBeatsContainer.onkeydown = function (e) {
+      const beatList = (currentStoryData && currentStoryData.beats) || [];
+      if (!beatList.length) return;
+      const currIdx = beatList.findIndex(b => b.beat_id === selectedStoryBeatId);
+
+      let targetIdx = -1;
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        targetIdx = currIdx < beatList.length - 1 ? currIdx + 1 : 0;
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        targetIdx = currIdx > 0 ? currIdx - 1 : beatList.length - 1;
+      } else if (e.key === "Home") {
+        e.preventDefault();
+        targetIdx = 0;
+      } else if (e.key === "End") {
+        e.preventDefault();
+        targetIdx = beatList.length - 1;
+      }
+
+      if (targetIdx >= 0 && targetIdx < beatList.length) {
+        selectStoryBeat(beatList[targetIdx].beat_id, true);
+      }
+    };
+
+    const activeBeat = beats.find(b => b.beat_id === selectedStoryBeatId);
+    renderSelectedBeatDetails(activeBeat);
+  }
+
+  function selectStoryBeat(beatId, focus = false) {
+    selectedStoryBeatId = beatId;
+    if (storyBeatsContainer) {
+      storyBeatsContainer.querySelectorAll(".story-beat-item").forEach(item => {
+        const isMatch = item.dataset.beatId === beatId;
+        item.classList.toggle("selected", isMatch);
+        item.setAttribute("aria-selected", String(isMatch));
+        item.setAttribute("tabindex", isMatch ? "0" : "-1");
+        if (isMatch) {
+          if (typeof item.scrollIntoView === "function") {
+            item.scrollIntoView({ block: "nearest", behavior: "smooth" });
+          }
+          if (focus && typeof item.focus === "function") {
+            item.focus();
+          }
+        }
+      });
+    }
+    const beats = (currentStoryData && currentStoryData.beats) || [];
+    const beat = beats.find(b => b.beat_id === beatId);
+    renderSelectedBeatDetails(beat);
+  }
+
+  function renderSelectedBeatDetails(beat) {
+    if (!storySelectedBeatDetails) return;
+    if (!beat) {
+      if (storyInspectorBeatId) storyInspectorBeatId.textContent = "—";
+      storySelectedBeatDetails.innerHTML = `<p class="empty-state" style="font-size: 0.85rem;">Chọn một nhịp ở cột trái để xem chi tiết.</p>`;
+      return;
+    }
+    if (storyInspectorBeatId) storyInspectorBeatId.textContent = beat.beat_id;
+
+    const styleLabels = {
+      NEUTRAL: "Trung tính", AUTHORITATIVE: "Dẫn dắt", CURIOUS: "Tò mò", MYSTERIOUS: "Bí ẩn",
+      OMINOUS: "U ám", TENSE: "Căng thẳng", URGENT: "Khẩn trương", SOMBER: "Trầm buồn",
+      REFLECTIVE: "Suy ngẫm", AWE: "Kinh ngạc", EXCITED: "Hào hứng", REVEAL: "Hé lộ"
+    };
+    const styleName = styleLabels[beat.style] || beat.style || "Trung tính";
+
+    storySelectedBeatDetails.innerHTML = `
+      <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.83rem;">
+        <div>
+          <span style="color: var(--color-text-muted, #94a3b8);">Phong cách &amp; Nhịp độ:</span>
+          <strong>${escapeHtml(styleName)}</strong> (Cường độ: ${Number(beat.intensity ?? 0.3).toFixed(2)}, Tốc độ: ${Number(beat.rate ?? 1.0).toFixed(2)}x)
+        </div>
+        <div>
+          <span style="color: var(--color-text-muted, #94a3b8);">Thời lượng dự kiến:</span>
+          <strong>~${Number(beat.estimated_duration_sec ?? 0).toFixed(1)} giây</strong>
+        </div>
+        <div style="background: var(--color-bg-subtle, #1e293b); padding: 8px; border-radius: 6px; border: 1px solid var(--color-border, #334155); margin-top: 4px;">
+          <div style="font-size: 0.75rem; color: var(--color-text-muted, #94a3b8); margin-bottom: 2px;">Nội dung câu:</div>
+          <div style="line-height: 1.45; font-style: italic;">"${escapeHtml(beat.text || "")}"</div>
+        </div>
+        ${(beat.emphasis && beat.emphasis.length > 0) ? `
+          <div>
+            <span style="color: var(--color-text-muted, #94a3b8);">Nhấn âm:</span>
+            ${beat.emphasis.map(w => `<span class="vb-tag" style="display: inline-block; margin: 2px 4px;">${escapeHtml(w)}</span>`).join("")}
+          </div>
+        ` : ""}
+      </div>
+    `;
+  }
+
+  function renderInlineEditorialQA() {
+    if (!storyEdqScoreBadge || !storyEdqIssuesList) return;
+    if (!editorialData || !editorialData.exists) {
+      storyEdqScoreBadge.textContent = "—";
+      storyEdqScoreBadge.className = "state-pill state-idle";
+      storyEdqIssuesList.innerHTML = `<p class="empty-state" style="font-size: 0.82rem; padding: 1rem 0;">Chưa có cảnh báo nội dung. Bấm "Phân tích lại" để kiểm tra kịch bản.</p>`;
+      if (storyEdqDetailPanel) storyEdqDetailPanel.innerHTML = `<p class="empty-state" style="font-size: 0.82rem;">Không có dữ liệu đề xuất.</p>`;
+      return;
+    }
+
+    const sc = editorialData.score ?? 0;
+    storyEdqScoreBadge.textContent = `${sc} điểm`;
+    storyEdqScoreBadge.className = `state-pill ${sc >= 80 ? 'state-ready' : sc >= 50 ? 'state-review' : 'state-danger'}`;
+
+    const issues = editorialData.issues || [];
+    const filtered = issues.filter(i => {
+      if (inlineEdqFilter === "review") return i.severity === "REVIEW";
+      if (inlineEdqFilter === "block") return i.severity === "BLOCK";
+      return true;
+    });
+
+    if (filtered.length === 0) {
+      storyEdqIssuesList.innerHTML = `<p class="empty-state" style="font-size: 0.82rem; padding: 1rem 0;">✓ Chưa có cảnh báo nội dung trong bộ lọc này.</p>`;
+      if (storyEdqDetailPanel) storyEdqDetailPanel.innerHTML = `<p class="empty-state" style="font-size: 0.82rem;">Chọn một vấn đề biên tập để xem chi tiết.</p>`;
+      return;
+    }
+
+    if (!selectedInlineEdqIssueId || !filtered.some(i => i.issueId === selectedInlineEdqIssueId)) {
+      selectedInlineEdqIssueId = filtered[0].issueId;
+    }
+
+    storyEdqIssuesList.innerHTML = filtered.map(i => {
+      const isSel = i.issueId === selectedInlineEdqIssueId;
+      const isBlock = i.severity === "BLOCK";
+      return `
+        <div class="story-edq-issue-item ${isSel ? 'selected' : ''}" data-issue-id="${escapeHtml(i.issueId)}" role="option" aria-selected="${isSel}">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+            <span class="badge ${isBlock ? 'badge-danger' : 'badge-warning'}" style="font-size: 10px;">${escapeHtml(i.severity)}</span>
+            <span style="font-size: 10.5px; color: var(--color-text-muted, #94a3b8);">${escapeHtml(i.status)}</span>
+          </div>
+          <div style="font-size: 12px; font-weight: 500; color: var(--color-text, #f1f5f9);">${escapeHtml(i.message)}</div>
+        </div>
+      `;
+    }).join("");
+
+    storyEdqIssuesList.querySelectorAll(".story-edq-issue-item").forEach(item => {
+      item.addEventListener("click", () => {
+        selectedInlineEdqIssueId = item.dataset.issueId;
+        renderInlineEditorialQA();
+      });
+    });
+
+    const activeIssue = filtered.find(i => i.issueId === selectedInlineEdqIssueId);
+    renderInlineEdqDetail(activeIssue);
+  }
+
+  function renderInlineEdqDetail(issue) {
+    if (!storyEdqDetailPanel) return;
+    if (!issue) {
+      storyEdqDetailPanel.innerHTML = `<p class="empty-state" style="font-size: 0.82rem;">Chọn một vấn đề biên tập để xem Trước / Sau.</p>`;
+      return;
+    }
+
+    storyEdqDetailPanel.innerHTML = `
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="font-size: 11px; font-weight: 600; color: #60a5fa;">${escapeHtml(issue.issueId)} · ${escapeHtml(issue.type)}</div>
+        <div style="font-size: 11.5px; color: var(--color-text-muted, #94a3b8);">${escapeHtml(issue.message)}</div>
+        <div style="background: rgba(239, 68, 68, 0.08); border-left: 2px solid #ef4444; padding: 4px 6px; font-size: 11.5px;">
+          <strong style="color: #ef4444;">Trước:</strong> ${escapeHtml(issue.text || "")}
+        </div>
+        ${issue.suggestion ? `
+          <div style="background: rgba(16, 185, 129, 0.08); border-left: 2px solid #10b981; padding: 4px 6px; font-size: 11.5px;">
+            <strong style="color: #10b981;">Sau (đề xuất):</strong> ${escapeHtml(issue.suggestion)}
+          </div>
+        ` : ""}
+        <div style="display: flex; gap: 6px; margin-top: 4px;">
+          ${issue.suggestion && issue.status === "OPEN" ? `
+            <button class="btn btn-primary btn-xs" id="btn-inline-edq-apply">Áp dụng sửa câu</button>
+          ` : ""}
+          ${issue.status === "OPEN" ? `
+            <button class="btn btn-secondary btn-xs" id="btn-inline-edq-ignore">Bỏ qua</button>
+          ` : `<span style="font-size: 11px; color: var(--color-text-muted, #94a3b8);">${issue.status}</span>`}
+        </div>
+      </div>
+    `;
+
+    const btnApply = document.getElementById("btn-inline-edq-apply");
+    if (btnApply) {
+      btnApply.addEventListener("click", () => {
+        edqApplyIssue(issue.issueId).then(() => {
+          renderInlineEditorialQA();
+        });
+      });
+    }
+
+    const btnIgnore = document.getElementById("btn-inline-edq-ignore");
+    if (btnIgnore) {
+      btnIgnore.addEventListener("click", () => {
+        edqIgnoreIssue(issue.issueId).then(() => {
+          renderInlineEditorialQA();
+        });
+      });
+    }
+  }
+
+  // Filter buttons for inline Editorial QA
+  const btnEdqFilterAll = document.getElementById("story-edq-filter-all");
+  const btnEdqFilterReview = document.getElementById("story-edq-filter-review");
+  const btnEdqFilterBlock = document.getElementById("story-edq-filter-block");
+  if (btnEdqFilterAll) {
+    btnEdqFilterAll.addEventListener("click", () => {
+      inlineEdqFilter = "all";
+      btnEdqFilterAll.classList.add("active");
+      if (btnEdqFilterReview) btnEdqFilterReview.classList.remove("active");
+      if (btnEdqFilterBlock) btnEdqFilterBlock.classList.remove("active");
+      renderInlineEditorialQA();
+    });
+  }
+  if (btnEdqFilterReview) {
+    btnEdqFilterReview.addEventListener("click", () => {
+      inlineEdqFilter = "review";
+      btnEdqFilterReview.classList.add("active");
+      if (btnEdqFilterAll) btnEdqFilterAll.classList.remove("active");
+      if (btnEdqFilterBlock) btnEdqFilterBlock.classList.remove("active");
+      renderInlineEditorialQA();
+    });
+  }
+  if (btnEdqFilterBlock) {
+    btnEdqFilterBlock.addEventListener("click", () => {
+      inlineEdqFilter = "block";
+      btnEdqFilterBlock.classList.add("active");
+      if (btnEdqFilterAll) btnEdqFilterAll.classList.remove("active");
+      if (btnEdqFilterReview) btnEdqFilterReview.classList.remove("active");
+      renderInlineEditorialQA();
+    });
+  }
+  if (btnStoryEdqAnalyze) {
+    btnStoryEdqAnalyze.addEventListener("click", () => {
+      analyzeEditorial().then(() => {
+        renderInlineEditorialQA();
+      });
+    });
+  }
+
+  // Embedded Storage Maintenance Drawer Logic
+  const btnToggleSystemDrawer = document.getElementById("btn-toggle-system-drawer");
+  const systemDrawerContent = document.getElementById("system-drawer-content");
+  const btnSystemDrawerToggleText = document.getElementById("btn-system-drawer-toggle-text");
+  if (btnToggleSystemDrawer && systemDrawerContent) {
+    btnToggleSystemDrawer.addEventListener("click", () => {
+      const isVisible = systemDrawerContent.style.display !== "none";
+      systemDrawerContent.style.display = isVisible ? "none" : "block";
+      if (btnSystemDrawerToggleText) {
+        btnSystemDrawerToggleText.textContent = isVisible ? "Mở rộng ▼" : "Thu gọn ▲";
+      }
+    });
+  }
+
+  async function loadEmbeddedStorageOverview() {
+    const grid = document.getElementById("storage-overview-grid-embedded");
+    if (!grid) return;
+    try {
+      const res = await fetch("/api/storage/overview");
+      if (!res.ok) return;
+      const data = await res.json();
+      let html = '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px;">';
+      for (const [key, cat] of Object.entries(data.categories || {})) {
+        html += `
+          <div style="padding: 8px 10px; border-radius: 6px; background: var(--color-bg-subtle, #1e293b); border: 1px solid var(--color-border, #334155);">
+            <div style="font-size: 0.72rem; color: var(--color-text-muted, #94a3b8);">${escapeHtml(cat.labelVi)}</div>
+            <div style="font-size: 1rem; font-weight: 700; margin-top: 2px;">${cat.mb} MB</div>
+          </div>
+        `;
+      }
+      if (data.disk) {
+        html += `
+          <div style="padding: 8px 10px; border-radius: 6px; background: var(--color-bg-subtle, #1e293b); border: 1px solid var(--color-success, #10b981);">
+            <div style="font-size: 0.72rem; color: var(--color-text-muted, #94a3b8);">${escapeHtml(data.disk.labelVi)}</div>
+            <div style="font-size: 1rem; font-weight: 700; color: var(--color-success, #10b981); margin-top: 2px;">${data.disk.freeGb} GB</div>
+          </div>
+        `;
+      }
+      html += '</div>';
+      grid.innerHTML = html;
+    } catch (e) {
+      grid.innerHTML = `<div style="font-size: 12px; color: #ef4444;">Lỗi tải bộ nhớ: ${escapeHtml(e.message)}</div>`;
+    }
+  }
+  window.loadEmbeddedStorageOverview = loadEmbeddedStorageOverview;
+
+  const btnEmbeddedCleanupPreview = document.getElementById("btn-embedded-cleanup-preview");
+  const btnEmbeddedCleanupExecute = document.getElementById("btn-embedded-cleanup-execute");
+  const embeddedCleanupPreviewContainer = document.getElementById("storage-cleanup-preview-embedded");
+
+  if (btnEmbeddedCleanupPreview) {
+    btnEmbeddedCleanupPreview.addEventListener("click", async () => {
+      if (embeddedCleanupPreviewContainer) embeddedCleanupPreviewContainer.innerHTML = '<div style="font-size: 12px;">⏳ Đang quét các tệp đệm...</div>';
+      try {
+        const res = await fetch("/api/storage/cleanup/preview", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ categories: ["renderCache", "tempFiles", "testCache"], confirmed: false })
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const preview = await res.json();
+        if (embeddedCleanupPreviewContainer) {
+          embeddedCleanupPreviewContainer.innerHTML = `
+            <div style="padding: 6px 10px; border-radius: 6px; background: rgba(239, 68, 68, 0.08); border: 1px solid #ef4444; font-size: 11.5px; margin-top: 6px;">
+              <strong style="color: #ef4444;">BẢO VỆ DỮ LIỆU:</strong> ${preview.protectedWarningVi} — Phát hiện <strong>${preview.candidateCount} tệp đệm</strong> (${preview.reclaimableMb} MB).
+            </div>
+          `;
+        }
+        if (btnEmbeddedCleanupExecute) btnEmbeddedCleanupExecute.disabled = (preview.candidateCount === 0);
+      } catch (e) {
+        if (embeddedCleanupPreviewContainer) embeddedCleanupPreviewContainer.innerHTML = `<div style="font-size: 12px; color: #ef4444;">Lỗi: ${e.message}</div>`;
+      }
+    });
+  }
+
+  if (btnEmbeddedCleanupExecute) {
+    btnEmbeddedCleanupExecute.addEventListener("click", async () => {
+      if (!confirm("Bạn có chắc chắn muốn dọn dẹp các tệp đệm tạm thời an toàn?")) return;
+      try {
+        const res = await fetch("/api/storage/cleanup/execute", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ categories: ["renderCache", "tempFiles", "testCache"], confirmed: true })
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const report = await res.json();
+        showNotification(`Đã dọn dẹp ${report.deletedCount} tệp, giải phóng ${report.freedMb} MB.`, "success");
+        loadEmbeddedStorageOverview();
+        if (embeddedCleanupPreviewContainer) embeddedCleanupPreviewContainer.innerHTML = "";
+        btnEmbeddedCleanupExecute.disabled = true;
+      } catch (e) {
+        showNotification(`Lỗi dọn dẹp: ${e.message}`, "error");
+      }
+    });
+  }
+
+  // Next Best Action Card Loader
+  async function loadNextBestAction(dirName) {
+    const card = document.getElementById("overview-next-action-card");
+    const targetActionText = document.getElementById("next-action-title");
+    const targetActionReason = document.getElementById("next-action-reason");
+    const btnExecuteAction = document.getElementById("btn-next-action-cta");
+    if (!card) return;
+    if (!dirName) {
+      if (targetActionText) targetActionText.textContent = "Chưa có dữ liệu tổng quan";
+      if (targetActionReason) targetActionReason.textContent = "Vui lòng mở hoặc chọn một dự án để tính toán bước tiếp theo.";
+      if (btnExecuteAction) {
+        btnExecuteAction.textContent = "Mở dự án →";
+        btnExecuteAction.onclick = () => switchWorkspace("projects");
+      }
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/projects/${encodeURIComponent(dirName)}/next-action`);
+      if (!res.ok) {
+        if (targetActionText) targetActionText.textContent = "Không tải được bước tiếp theo";
+        if (targetActionReason) targetActionReason.textContent = `Lỗi kết nối máy chủ khi tính toán bước tiếp theo (mã ${res.status}).`;
+        return;
+      }
+      const data = await res.json();
+      const action = data.next_action;
+      if (!action) return;
+
+      if (targetActionText) targetActionText.textContent = action.title || "Hành động đề xuất";
+      if (targetActionReason) targetActionReason.textContent = action.reason || "";
+      if (btnExecuteAction) {
+        btnExecuteAction.textContent = action.label || "Thực hiện ngay →";
+        btnExecuteAction.onclick = () => {
+          if (action.target_workbench) {
+            switchWorkspace(action.target_workbench);
+          }
+        };
+      }
+    } catch (err) {
+      console.warn("Failed to load next action:", err);
+      if (targetActionText) targetActionText.textContent = "Lỗi tính toán bước tiếp theo";
+      if (targetActionReason) targetActionReason.textContent = "Không thể kết nối đến dịch vụ bước tiếp theo. Vui lòng thử lại.";
+    }
+  }
+  window.loadNextBestAction = loadNextBestAction;
+
+  // ==============================================================================
+  
