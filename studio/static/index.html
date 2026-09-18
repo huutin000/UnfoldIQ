@@ -18,13 +18,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=3.9">
-  <link rel="stylesheet" href="uq-tokens.css?v=2.0">
-  <link rel="stylesheet" href="uq-base.css?v=2.0">
-  <link rel="stylesheet" href="uq-shell.css?v=2.0">
-  <link rel="stylesheet" href="uq-components.css?v=2.0">
-  <link rel="stylesheet" href="uq-screens.css?v=2.0">
+  <link rel="stylesheet" href="uq-tokens.css?v=2.1">
+  <link rel="stylesheet" href="uq-base.css?v=2.1">
+  <link rel="stylesheet" href="uq-shell.css?v=2.2">
+  <link rel="stylesheet" href="uq-components.css?v=2.2">
+  <link rel="stylesheet" href="uq-screens.css?v=2.1">
   <link rel="stylesheet" href="uq-vb.css?v=2.0">
-  <link rel="stylesheet" href="uq-responsive.css?v=2.1">
+  <link rel="stylesheet" href="uq-responsive.css?v=2.4">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
 <body class="workstation-app">
@@ -235,7 +235,7 @@
   <div class="workstation-body">
 
     <!-- 1. Left Pipeline Sidebar -->
-    <aside id="pipeline-sidebar" class="pipeline-sidebar">
+    <aside id="pipeline-sidebar" class="pipeline-sidebar" aria-label="Menu điều hướng công việc">
       <div class="sidebar-section-title">HỆ THỐNG TOÀN CỤC</div>
       <nav class="pipeline-nav">
         <button class="nav-item active" data-workspace="overview" id="nav-step-overview" title="Trang chủ / Bảng điều khiển">
@@ -1594,6 +1594,21 @@
             <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4;">
               Kết xuất video 1080p chất lượng cao, âm thanh master hòa trộn hoàn chỉnh và đóng gói toàn bộ hồ sơ bàn giao.
             </p>
+            <div class="render-controls-group" style="margin-bottom: 0.75rem;">
+              <div style="margin-bottom: 0.5rem;">
+                <label for="export-select" style="font-size: 0.75rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Gói xuất bản (Snapshot):</label>
+                <select id="export-select" class="form-select form-select-sm" style="width: 100%; font-size: 0.8rem; padding: 0.35rem 0.5rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color); background: var(--bg-surface); color: var(--uq-ink-1);">
+                  <option value="">-- Chưa có bản xuất nào --</option>
+                </select>
+              </div>
+              <div>
+                <label for="export-final-encoder-profile" style="font-size: 0.75rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Chế độ mã hóa:</label>
+                <select id="export-final-encoder-profile" class="form-select form-select-sm" style="width: 100%; font-size: 0.8rem; padding: 0.35rem 0.5rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color); background: var(--bg-surface); color: var(--uq-ink-1);">
+                  <option value="FINAL_QUALITY" selected>Chất lượng cuối (mặc định)</option>
+                  <option value="ACCELERATED">Tăng tốc GPU</option>
+                </select>
+              </div>
+            </div>
             <button id="btn-trigger-final-render" data-guide-id="export-final-render" class="btn btn-primary btn-md">
               <svg class="ui-icon"><use href="#icon-download"/></svg>
               <span>Kết xuất video chính thức</span>
@@ -1617,6 +1632,21 @@
             <li class="deliverable-item"><svg class="ui-icon" style="color: #10b981;"><use href="#icon-check"/></svg> <span>description.txt</span> — Tiêu đề và mô tả YouTube chuẩn SEO</li>
             <li class="deliverable-item"><svg class="ui-icon" style="color: #10b981;"><use href="#icon-check"/></svg> <span>metadata.json</span> — Dữ liệu truy nguyên nguồn gốc phiên bản render</li>
           </ul>
+        </div>
+
+        <!-- Portable Production Package Box (Phase 4) -->
+        <div class="stage-card" id="export-package-box" style="margin-top: 1.5rem;">
+          <div class="stage-card-header">
+            <h4 style="font-size: 0.95rem; font-weight: 600; color: var(--uq-ink-1);">Gói sản xuất di động</h4>
+            <span class="counter-chip">ZIP</span>
+          </div>
+          <div id="export-package-body" aria-live="polite">
+            <p class="empty-state">Tải gói ZIP chứa âm thanh, phụ đề, kịch bản, shots, Visual Bible, prompts và tài nguyên.</p>
+            <button type="button" id="btn-download-portable-package" class="btn btn-secondary btn-md">
+              <svg class="ui-icon"><use href="#icon-download"/></svg>
+              <span>Tải gói sản xuất</span>
+            </button>
+          </div>
         </div>
       </section>
 
@@ -1648,7 +1678,7 @@
 
 
     <!-- 3. Right Contextual Inspector -->
-    <aside id="workspace-inspector" class="workspace-inspector">
+    <aside id="workspace-inspector" class="workspace-inspector" aria-label="Bảng thông tin Inspector">
 
       <!-- Context Inspector: SCRIPT -->
       <div id="inspector-script" class="inspector-panel active" data-guide-id="content-voice-config">
@@ -2902,15 +2932,23 @@
     </div>
   </div>
 
-  <!-- Drawer Backdrop for mobile & tablet -->
-  <div id="drawer-backdrop" class="drawer-backdrop" style="display: none;"></div>
+  <!-- Drawer Backdrop for mobile & tablet (pointer-only affordance;
+       keyboard users close via Escape or the header toggle buttons) -->
+  <div id="drawer-backdrop" class="drawer-backdrop" style="display: none;" aria-hidden="true"></div>
 
   <script src="i18n.js"></script>
-  <script src="app.js?v=4.0"></script>
-  <script src="phase14_ui.js"></script>
+  <script src="uq-virtual-list.js?v=5.0"></script>
+  <script src="uq-primitives.js?v=5.0"></script>
+  <script src="uq-palette.js?v=6.0"></script>
+  <script src="app.js?v=6.0"></script>
+  <script src="phase14_ui.js?v=6.0"></script>
   <script src="phase15a_ui.js"></script>
-  <script src="redesign.js?v=2.0"></script>
+  <script src="redesign.js?v=2.1"></script>
   <script src="guide.js?v=1.0"></script>
+  <!-- Phase 6: shared polite live region (render milestones, drawer state).
+       Visual progress bars keep updating at full rate; only meaningful
+       deltas are announced here (never assertive for normal progress). -->
+  <div id="uq-live-polite" class="uq-sr-only" role="status" aria-live="polite"></div>
   <div id="toast-container" class="toast-container" aria-live="polite"></div>
 </body>
 </html>

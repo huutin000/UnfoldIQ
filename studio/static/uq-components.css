@@ -36,11 +36,28 @@
   background: transparent; color: var(--uq-ink-3); font-size: 12px; cursor: pointer; padding: 0; }
 .btn-module-help:hover { color: var(--uq-ink-1); border-color: var(--uq-accent); }
 /* P1 (§13): touch target đủ lớn trên màn cảm ứng. */
+/* Phase 6: product coarse-pointer policy — every author-controlled control
+   reaches >=44×44 CSS px when (pointer: coarse) is true. 44px is a product
+   UX target, NOT the WCAG 2.2 AA 24px minimum (see report §15).
+   Inline sentence words (.word-cue) keep natural size per the WCAG 2.5.8
+   Inline exception (documented, keyboard path via roving arrows). */
 @media (pointer: coarse) {
-  .btn-module-help { width: 28px; height: 28px; min-width: 28px; min-height: 28px; }
-  .btn-xs { min-height: 28px; }
-  input[type="range"].form-slider { min-height: 28px; }
+  /* Policy floor: !important is intentional and confined here — it must
+     beat class-level min-heights (e.g. .form-select-sm 30px, .mode-btn
+     24px) so the product 44px target holds uniformly. */
+  button, input, select, textarea, a[href],
+  [role="button"], [role="option"] {
+    min-width: var(--uq-target-coarse) !important;
+    min-height: var(--uq-target-coarse) !important;
+  }
+  .word-cue { min-width: 0 !important; min-height: 0 !important; }
+  input[type="range"] { min-height: var(--uq-target-coarse) !important; }
 }
+
+/* Phase 6: visually-hidden utility (live regions, SR-only text). */
+.uq-sr-only { position: absolute !important; width: 1px !important; height: 1px !important;
+  padding: 0 !important; margin: -1px !important; overflow: hidden !important;
+  clip: rect(0 0 0 0) !important; white-space: nowrap !important; border: 0 !important; }
 
 /* Forms */
 .form-group { display: flex; flex-direction: column; gap: 6px; }
@@ -198,3 +215,37 @@ details.advanced-settings summary, details.advanced-settings-collapse summary { 
 .cue-play-btn .icon { width: 14px; height: 14px; }
 .cue-play-btn::before, .cue-play-btn::after { content: none !important; }
 .uq-playbtn::before, .uq-playbtn::after { content: none !important; }
+
+/* ==========================================================================
+   PHASE 5: VIRTUAL LIST + COMMAND PALETTE + SHARED PRIMITIVES
+   ========================================================================== */
+
+/* UQ virtual list spacers (windowing; heights set inline from calibration) */
+.uq-vspacer { width: 100%; flex: none; }
+
+/* UQ check row (UQ-Preflight-Checklist presentation primitive) */
+.uq-check-row { display: flex; justify-content: space-between; align-items: center; gap: 10px;
+  padding: 10px 14px; border: 1px solid var(--uq-line, rgba(148,163,184,.16));
+  border-radius: var(--uq-r-card, 10px); background: var(--uq-surface, rgba(15,23,42,.55)); }
+.uq-check-row-main { min-width: 0; }
+.uq-check-row-title { font-weight: 650; font-size: 13px; color: var(--uq-ink-1); }
+.uq-check-row-sub { font-size: 12px; color: var(--uq-ink-3); margin-top: 2px; }
+.uq-check-row-side { display: flex; gap: 8px; align-items: center; flex: none; }
+
+/* UQ command palette (Ctrl+K) */
+.uq-cmd-backdrop { position: fixed; inset: 0; background: rgba(2,6,23,.62);
+  display: flex; justify-content: center; align-items: flex-start; padding-top: 12vh; z-index: 1200; }
+.uq-cmd-dialog { width: min(560px, calc(100vw - 48px)); max-height: 60vh; display: flex; flex-direction: column;
+  background: var(--uq-surface, #0f172a); border: 1px solid var(--uq-line-strong);
+  border-radius: 12px; box-shadow: 0 24px 64px rgba(0,0,0,.5); overflow: hidden; }
+.uq-cmd-input { width: 100%; border: none; outline: none; padding: 14px 16px; font-size: 14px;
+  background: transparent; color: var(--uq-ink-1); border-bottom: 1px solid var(--uq-line-strong); }
+.uq-cmd-list { overflow-y: auto; padding: 6px; }
+.uq-cmd-item { display: flex; gap: 10px; align-items: center; width: 100%; text-align: left;
+  padding: 9px 10px; border-radius: 8px; border: none; background: transparent;
+  color: var(--uq-ink-1); cursor: pointer; font-size: 13px; }
+.uq-cmd-item.is-active { background: var(--uq-accent-wash, rgba(59,130,246,.16)); }
+.uq-cmd-kind { font-size: 11px; font-weight: 700; color: var(--uq-ink-3); flex: none; min-width: 58px; }
+.uq-cmd-label { font-weight: 600; }
+.uq-cmd-sub { font-size: 11.5px; color: var(--uq-ink-3); font-family: var(--uq-font-mono, monospace); }
+.uq-cmd-empty { padding: 18px; text-align: center; color: var(--uq-ink-3); font-size: 13px; }

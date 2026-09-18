@@ -470,3 +470,67 @@ class JobsManager:
 
 
 jobs_manager = JobsManager()
+
+
+# ---------------------------------------------------------------------------
+# Phase 8: minimal Final Render helpers through canonical storage authority.
+# ---------------------------------------------------------------------------
+
+_NON_TERMINAL_JOB_STATUSES = frozenset({
+    JobStatus.QUEUED, JobStatus.RUNNING, JobStatus.PAUSED, JobStatus.RESUMABLE,
+})
+
+
+def find_active_project_job(project_id: str, job_type: str, export_id: str,
+                            manager: "JobsManager | None" = None) -> Optional[Dict[str, Any]]:
+    """Return the existing non-terminal project job owning this export, or None.
+
+    Reads through the canonical project-job storage (never a side index).
+    """
+    mgr = manager or jobs_manager
+    want = (job_type or "").upper()
+    for job in mgr.list_jobs(project_id=project_id, limit=1000):
+        if (job.get("type") or "").upper() != want:
+            continue
+        if (job.get("metadata") or {}).get("exportId") != export_id:
+            continue
+        if job.get("status") in _NON_TERMINAL_JOB_STATUSES:
+            return job
+    return None
+
+
+def patch_project_job(project_id: str, job_id: str,
+                      manager: "JobsManager | None" = None, **fields) -> Optional[Dict[str, Any]]:
+    """Merge fields into the canonical project job via atomic persistence.
+
+    Uses the same _persist_job machinery (runtime mirror + project copy with
+    conflict resolution) as every other job mutation.
+    """
+    mgr = manager or jobs_manager
+    job = mgr.get_job(job_id)
+    if not job:
+        return None
+    if job.get("projectId") != project_id:
+        return None
+    status = fields.pop("status", None)
+    if status:
+        job["status"] = status
+        job["statusVi"] = JOB_STATUS_LABELS_VI.get(status, status)
+        if status == JobStatus.RUNNING and not job.get("startedAt"):
+            job["startedAt"] = _now_iso()
+        if status in (JobStatus.COMPLETED, JobStatus.FAILED, JobStatus.CANCELLED):
+            job["completedAt"] = job.get("completedAt") or _now_iso()
+    if "progress" in fields and fields["progress"] is not None:
+        job["progress"] = min(1.0, max(0.0, float(fields.pop("progress"))))
+    if "message" in fields and fields["message"] is not None:
+        job["message"] = fields.pop("message")
+    if "error" in fields and fields["error"] is not None:
+        job["error"] = fields.pop("error")
+    meta = fields.pop("metadata", None)
+    if isinstance(meta, dict):
+        job.setdefault("metadata", {}).update(meta)
+    for key, value in fields.items():
+        job[key] = value
+    job["updatedAt"] = _now_iso()
+    mgr._persist_job(job)
+    return job

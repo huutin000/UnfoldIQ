@@ -126,29 +126,36 @@ def test_3a_overview_slice_python_adapter():
 
 def test_3a_atomic_script_save(client, tmp_path):
     """Verify atomic script save endpoint preserves existing script or updates gracefully."""
-    # Fetch current script first
-    res = client.get(f"/api/projects/{TEST_PROJECT_ID}/script")
-    assert res.status_code == 200
-    orig_script = res.json()["script"]
+    proj_dir = Path(f"projects/{TEST_PROJECT_ID}")
+    s_json = proj_dir / "script.json"
+    orig_bytes = s_json.read_bytes() if s_json.is_file() else None
+    try:
+        # Fetch current script first
+        res = client.get(f"/api/projects/{TEST_PROJECT_ID}/script")
+        assert res.status_code == 200
+        orig_script = res.json()["script"]
 
-    # Re-save the same script (no data corruption)
-    res_save = client.post(
-        f"/api/projects/{TEST_PROJECT_ID}/script",
-        json={"script": orig_script}
-    )
-    assert res_save.status_code == 200
-    save_data = res_save.json()
-    assert save_data["ok"] is True
-    assert save_data["char_count"] == len(orig_script)
-    assert save_data["word_count"] > 0
-    assert save_data["est_duration_sec"] > 0
+        # Re-save the same script (no data corruption)
+        res_save = client.post(
+            f"/api/projects/{TEST_PROJECT_ID}/script",
+            json={"script": orig_script}
+        )
+        assert res_save.status_code == 200
+        save_data = res_save.json()
+        assert save_data["ok"] is True
+        assert save_data["char_count"] == len(orig_script)
+        assert save_data["word_count"] > 0
+        assert save_data["est_duration_sec"] > 0
 
-    # Non-existent project should return 404
-    res_404 = client.post(
-        "/api/projects/non_existent_project_99999/script",
-        json={"script": "Hello"}
-    )
-    assert res_404.status_code == 404
+        # Non-existent project should return 404
+        res_404 = client.post(
+            "/api/projects/non_existent_project_99999/script",
+            json={"script": "Hello"}
+        )
+        assert res_404.status_code == 404
+    finally:
+        if orig_bytes is not None:
+            s_json.write_bytes(orig_bytes)
 
 
 def test_3a_css_styles_exist():

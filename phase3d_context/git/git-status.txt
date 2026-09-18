@@ -1,0 +1,16 @@
+﻿ D docs/UNFOLDIQ-PHASE03A-FINAL-MINOR-CONSISTENCY-A11Y-FIX-PROMPT.md
+ M docs/implementation/PHASE_03C_VISUAL_WORKBENCH.md
+ M docs/implementation/ROADMAP_STATUS.md
+ M studio/app.py
+ M studio/domain_models.py
+ M studio/project_adapter.py
+ M studio/static/app.js
+?? docs/implementation/PHASE_03C_BROWSER_CLOSURE_REPORT.md
+?? docs/implementation/PHASE_03C_FINAL_VERIFICATION_REPORT.md
+?? phase3d_context/
+?? scripts/generate_phase03c_final_evidence.py
+?? scripts/manual_browser_closure.py
+?? scripts/probe_scroll_reach.py
+?? studio/visual_invalidation.py
+?? studio/visual_router.py
+?? tests/test_phase03c_gap_closure.py

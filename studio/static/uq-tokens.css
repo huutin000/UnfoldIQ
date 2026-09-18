@@ -13,7 +13,14 @@
   --uq-ink-1: #eef3fa;
   --uq-ink-2: #a7b4c8;
   --uq-ink-3: #7f8da3;
-  --uq-ink-4: #5b6878;
+  /* Phase 6: #75839a = lightest muted gray keeping >=4.5:1 normal-text
+     contrast on --uq-surface (#111826: 4.63) and --uq-nav (#0d121b: 4.89).
+     Master-plan #6b7a90 only reached 4.07/4.30 — insufficient, not kept. */
+  --uq-ink-4: #75839a;
+  /* Phase 6 focus + target tokens (single source; see usage rules). */
+  --uq-focus-ring: #4f8cff;
+  --uq-target-min: 24px;
+  --uq-target-coarse: 44px;
   --uq-accent: #3b82f6;
   --uq-accent-ink: #8fb4ff;
   --uq-accent-wash: rgba(59, 130, 246, 0.12);
@@ -52,10 +59,15 @@ html[data-theme="light"] {
   --uq-line: #d7dee8;
   --uq-line-strong: #bcc7d6;
   --uq-focus: #2563eb;
+  --uq-focus-ring: #2563eb;
+  --uq-target-min: 24px;
+  --uq-target-coarse: 44px;
   --uq-ink-1: #101b2e;
   --uq-ink-2: #33415c;
   --uq-ink-3: #5b6b84;
-  --uq-ink-4: #8a97ab;
+  /* Phase 6: #67748a keeps >=4.5:1 on white (4.73). Previous #8a97ab was
+     2.96 — fail. Mirrors the dark-theme ink-4 fix. */
+  --uq-ink-4: #67748a;
   --uq-accent: #1d5fd6;
   --uq-accent-ink: #1d5fd6;
   --uq-accent-wash: rgba(29, 95, 214, 0.1);

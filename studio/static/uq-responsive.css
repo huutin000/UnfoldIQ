@@ -6,7 +6,7 @@ html { overflow-x: clip; }
 body { overflow-x: clip; }
 .app-header { overflow-x: hidden; max-width: 100vw; }
 
-@media (max-width: 1439px) {
+@media (min-width: 1280px) and (max-width: 1439px) {
   .workstation-body { grid-template-columns: 64px minmax(0, 1fr) 332px; }
   .pipeline-sidebar { padding: 12px 7px; }
   .pipeline-sidebar .nav-label, .pipeline-sidebar .sidebar-section-title,
@@ -29,13 +29,20 @@ body { overflow-x: clip; }
 }
 @media (max-width: 1100px) {
   .master-detail-container, .qa-workbench-container { grid-template-columns: 1fr; overflow-y: auto; height: auto; }
+  /* Phase 6: stacked list pane keeps a usable navigator (it collapsed to
+     ~124px, starving .compact-rows-container to 0px at 390px widths).
+     The view scrolls vertically; the list keeps its internal scroll. */
+  .master-list-pane { min-height: min(440px, 72vh); }
   #ws-scenes.workspace-view, #ws-veo.workspace-view { overflow-y: auto; }
   .research-container { grid-template-columns: 1fr; }
   .vb-workspace { grid-template-columns: 190px minmax(0, 1fr); }
   #vb-tab-content-entities { grid-template-columns: 1fr; overflow-y: auto; }
   .vb-entity-list-pane { border-right: none; border-bottom: 1px solid var(--uq-line); max-height: 42vh; }
 }
-@media (max-width: 1024px) {
+/* Phase 6 canonical bands: >=1280 3-pane | 960–1279 Nav+Work + Inspector
+   Drawer | <960 Workspace full-width + 2 Sheets (Nav Sheet + Inspector
+   Sheet). Sidebar leaves in-flow flow below 960 (was 1024). */
+@media (max-width: 959px) {
   .workstation-body { grid-template-columns: minmax(0, 1fr); }
   .app-header { gap: 6px; padding: 0 8px; }
   .brand-text { display: none; }
@@ -45,6 +52,7 @@ body { overflow-x: clip; }
   .uq-appear span { display: none; }
   .uq-project .indicator-val { max-width: 120px; }
   .header-right { gap: 4px; }
+  /* Nav Sheet (off-canvas, modal behavior wired in app.js UQDrawer). */
   .pipeline-sidebar { position: fixed; left: 0; top: 54px; bottom: 58px; width: 264px;
     max-width: 84vw; z-index: var(--uq-z-drawer); transform: translateX(-105%);
     transition: transform var(--uq-ease); box-shadow: 12px 0 32px rgba(0, 0, 0, 0.5); }
@@ -54,6 +62,8 @@ body { overflow-x: clip; }
   .pipeline-sidebar .sidebar-section-title { display: block; }
   .pipeline-sidebar .nav-item { justify-content: flex-start; padding: 8px 10px; }
   .uq-page { max-width: none; }
+}
+@media (max-width: 1024px) {
   .vb-workspace { grid-template-columns: 1fr; overflow-y: auto; }
   .vb-category { border-right: none; border-bottom: 1px solid var(--uq-line);
     flex-direction: row; overflow-x: auto; overflow-y: hidden; padding: 8px; }
@@ -94,7 +104,9 @@ body { overflow-x: clip; }
 }
 /* P0 (§20 FINAL-GAPS): tablet dọc — inspector là drawer như 1024–1279,
    tránh đè layout 1 cột gây tràn ngang. */
-@media (min-width: 768px) and (max-width: 1024px) {
+/* Phase 6: inspector is a fixed Drawer at every width below 1280
+   (canonical band), not just 768–1024. */
+@media (max-width: 1279px) {
   .workspace-inspector { position: fixed; right: 0; top: 54px; bottom: 58px; width: min(352px, 92vw);
     z-index: var(--uq-z-drawer); transform: translateX(105%); transition: transform var(--uq-ease);
     border-left: 1px solid var(--uq-line); background: var(--uq-nav); }
@@ -107,7 +119,7 @@ body { overflow-x: clip; }
     display: none !important;
   }
 }
-@media (max-width: 1024px) {
+@media (max-width: 959px) {
   .pipeline-sidebar:not(.open) {
     display: none !important;
   }
@@ -120,5 +132,43 @@ body { overflow-x: clip; }
   #btn-open-settings { display: none !important; }
   .app-header { gap: 4px; padding: 0 4px; }
   .ws-header { padding: 8px 6px; }
+}
+
+/* ==========================================================================
+   PHASE 6: canonical responsive + accessibility hardening
+   ========================================================================== */
+
+/* Inspector Sheet below 960px: full modal-sheet treatment (the <1280 drawer
+   rules live in uq-shell.css; here the narrow sheet gets edge-to-edge safe
+   sizing + backdrop alignment with the Nav Sheet). */
+@media (max-width: 959px) {
+  .workspace-inspector { width: min(352px, 94vw); }
+  /* Workbench-owned 3-col grids collapse to one column (no 2D page scroll). */
+  .story-workbench-grid { grid-template-columns: minmax(0, 1fr); height: auto; }
+  /* Pronunciation table: horizontal scroll stays inside the component. */
+  .pron-table-wrapper, .ts-cues-wrapper { overflow-x: auto; }
+}
+
+/* 320 CSS px reflow (SC 1.4.10): nothing structural may force page-level
+   horizontal scrolling; local 2D exceptions stay inside components. */
+@media (max-width: 360px) {
+  .ws-status-group { flex-wrap: wrap; }
+  .stepper-wrap .workflow-stepper { overflow-x: auto; }
+  .modal-footer { flex-wrap: wrap; }
+}
+
+/* Focus must never hide under sticky/fixed chrome (SC 2.4.11 help). */
+.workspace-view, #sp-rows-container, .modal-body, .workspace-inspector {
+  scroll-padding-top: 12px;
+  scroll-padding-bottom: 76px;
+}
+
+/* Reduced motion: Drawer/Sheet/modal transitions become instant. */
+@media (prefers-reduced-motion: reduce) {
+  .pipeline-sidebar, .workspace-inspector, .drawer-backdrop,
+  .modal-overlay, .uq-cmd-backdrop {
+    transition: none !important;
+    animation: none !important;
+  }
 }
 

@@ -795,6 +795,27 @@ def execute_export(project_id: str, export_id: Optional[str] = None) -> Dict[str
             _write_text(tmp_dir / s["promptFile"], build_shot_txt(s))
         timings["metadata_s"] = round(_time.perf_counter() - t, 3)
 
+        # Phase 7: render-manifest snapshot into the same tmp export dir.
+        # Invalid render state records blockers; it never fails the export
+        # and never widens export business rules.
+        try:
+            from studio.timeline_compiler import build_render_manifest_for_export
+            _rm = build_render_manifest_for_export(
+                project_dir, plan["exportId"], created_at=plan["createdAt"])
+            if _rm.validation.valid:
+                _write_text(tmp_dir / "render-manifest.json", _rm.persisted_text)
+                render_manifest_info = {"persisted": True,
+                                        "manifestHash": _rm.manifest_hash,
+                                        "blockers": []}
+            else:
+                render_manifest_info = {
+                    "persisted": False, "manifestHash": _rm.manifest_hash,
+                    "blockers": [b.code for b in _rm.validation.blockers]}
+        except Exception as _rm_err:
+            logger.warning(f"Render manifest snapshot skipped: {_rm_err}")
+            render_manifest_info = {"persisted": False, "manifestHash": None,
+                                    "blockers": [], "error": str(_rm_err)[:200]}
+
         t = _time.perf_counter()
         audio_dir = tmp_dir / "audio"
         audio_dir.mkdir(parents=True, exist_ok=True)
@@ -836,6 +857,7 @@ def execute_export(project_id: str, export_id: Optional[str] = None) -> Dict[str
         "runtime_s": round(total, 3),
         "timings": timings,
         "size_bytes": size_bytes,
+        "renderManifest": render_manifest_info,
     }
 
 

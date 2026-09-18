@@ -32,8 +32,14 @@
     }
   }
 
-  // Shared empty/error states — mọi loader dùng chung, không fail silent (§7).
+  // Shared empty/error states — Phase 5: delegate to UQ primitives when present.
   function noProjectHtml() {
+    if (window.UQ) {
+      return window.UQ.emptyState("Chưa chọn dự án",
+        "Mở một dự án có sẵn hoặc tạo dự án mới để xem nội dung mục này.",
+        `<button class="btn btn-secondary btn-sm" onclick="window.switchWorkspace('projects')">Mở danh sách dự án</button>
+         <button class="btn btn-primary btn-sm" onclick="window.switchWorkspace('script')">Nhập kịch bản</button>`);
+    }
     return `
       <div class="overview-empty" role="status">
         <h3>Chưa chọn dự án</h3>
@@ -49,6 +55,7 @@
     return (res && res.status === 404) || /mã 404/.test(String((err && err.message) || err || ""));
   }
   function loadErrorHtml(msg, retryFn) {
+    if (window.UQ) return window.UQ.errorState(msg, retryFn);
     return `
       <div class="overview-empty" role="alert">
         <h3>Không tải được dữ liệu</h3>
@@ -508,74 +515,210 @@
   }
 
   // ---------------------------------------------------------------------------
-  // 6. EXPORT WORKSPACE
+  // 6. EXPORT WORKSPACE (Subphase 3D — Preflight & Triggers)
   // ---------------------------------------------------------------------------
+  // Trạng thái enum nội bộ → nhãn tiếng Việt (không leak raw enum lên UI).
+  const EXPORT_STATE_LABEL = {
+    READY: "Sẵn sàng", MISSING: "Chưa có dữ liệu", EMPTY: "Chưa có dữ liệu",
+    OUTDATED: "Cần cập nhật", STALE: "Cần cập nhật", BLOCKED: "Bị chặn",
+    ERROR: "Lỗi kiểm tra", NOT_READY: "Cần kiểm tra",
+    NEEDS_REVIEW: "Chờ kiểm định", PENDING_RENDER_QA: "Chờ kiểm định",
+  };
+  const EXPORT_JOB_LABEL = {
+    QUEUED: "Đang chờ", RENDERING: "Đang kết xuất", RUNNING: "Đang kết xuất",
+    FINAL_RENDER: "Đang kết xuất",
+    SUCCESS: "Hoàn tất", COMPLETED: "Hoàn tất", FAILED: "Thất bại", CANCELLED: "Đã hủy",
+    INTERRUPTED: "Bị gián đoạn",
+    NEEDS_REVIEW: "Chờ kiểm định", PENDING_RENDER_QA: "Chờ kiểm định",
+  };
+  function exportStateLabel(state) {
+    return EXPORT_STATE_LABEL[String(state || "").toUpperCase()] || "Cần kiểm tra";
+  }
+  // Token chống stale response khi đổi project giữa chừng (§20).
+  let exportLoadToken = 0;
+  // Snapshot readiness gần nhất để guard tại thời điểm bấm nút (§11.1).
+  let exportLastReadiness = null;
+  let exportLastProject = null;
+  // Chống duplicate polling loop khi bấm trigger nhiều lần (§12).
+  const exportActivePolls = {};
+
   async function loadExportData(projectDir) {
     const p = projectDir || getActiveProject();
     const readinessBox = document.getElementById("export-readiness-box");
     const delivBox = document.getElementById("export-deliverables-box");
+    const btnDraft = document.getElementById("btn-trigger-draft-render");
+    const btnFinal = document.getElementById("btn-trigger-final-render");
+    const token = ++exportLoadToken;
+    const stale = () => token !== exportLoadToken || getActiveProject() !== p;
     if (!p) {
       if (readinessBox) readinessBox.innerHTML = noProjectHtml();
       if (delivBox) delivBox.style.display = "none";
+      clearExportPlayers();
       return;
     }
-    const setNotReady = (title, msg) => {
-      if (readinessBox) readinessBox.innerHTML = `
-        <div class="overview-empty" role="status">
-          <h3>${title}</h3>
-          <p>${msg}</p>
-          <div class="empty-actions">
-            <button class="btn btn-secondary btn-sm" onclick="window.switchWorkspace('timeline')">Xem dòng thời gian</button>
-            <button class="btn btn-secondary btn-sm" onclick="window.Phase14 && window.Phase14.loadExportData()">Tải lại trạng thái</button>
-          </div>
+    // Reset preview project cũ ngay khi đổi project (§20).
+    clearExportPlayers();
+    if (readinessBox) {
+      readinessBox.innerHTML = `
+        <div class="overview-empty" role="status" aria-busy="true">
+          <h3>Đang kiểm tra điều kiện xuất...</h3>
+          <p>Vui lòng chờ trong giây lát.</p>
         </div>`;
-      if (delivBox) delivBox.style.display = "none";
-    };
+    }
     try {
-      const res = await fetch(`/api/projects/${encodeURIComponent(p)}/render/status`);
-      if (!res.ok) throw new Error(`Không tải được trạng thái render (mã ${res.status}).`);
-      const data = await res.json();
+      const [readyRes, statusRes, prodRes] = await Promise.all([
+        fetch(`/api/projects/${encodeURIComponent(p)}/export/readiness`),
+        fetch(`/api/projects/${encodeURIComponent(p)}/render/status`),
+        fetch(`/api/projects/${encodeURIComponent(p)}/production/status`).catch(() => null),
+      ]);
+      if (stale()) return;
+      if (!readyRes.ok) throw new Error(`Không tải được trạng thái xuất video (mã ${readyRes.status}).`);
+      if (!statusRes.ok) throw new Error(`Không tải được trạng thái render (mã ${statusRes.status}).`);
+      const readiness = await readyRes.json();
+      const status = await statusRes.json();
+      const prodData = (prodRes && prodRes.ok) ? await prodRes.json().catch(() => ({})) : {};
+      if (stale()) return;
+      exportLastReadiness = readiness;
+      exportLastProject = p;
 
-      const draftBox = document.getElementById("draft-render-player-container");
-      const draftVideo = document.getElementById("draft-video-player");
-      if (data.hasDraft && draftBox && draftVideo) {
-        draftBox.style.display = "block";
-        draftVideo.src = `/api/projects/${encodeURIComponent(p)}/renders/draft/draft_preview.mp4?t=${Date.now()}`;
-      }
-
-      const finalBox = document.getElementById("final-render-player-container");
-      const finalVideo = document.getElementById("final-video-player");
-      if (data.hasFinal && finalBox && finalVideo) {
-        finalBox.style.display = "block";
-        finalVideo.src = `/api/projects/${encodeURIComponent(p)}/renders/final/final.mp4?t=${Date.now()}`;
-      }
-
-      // Gói bàn giao chỉ tồn tại khi đã xuất bản chính thức — không giả vờ có sẵn.
-      if (delivBox) delivBox.style.display = data.hasFinal ? "" : "none";
-      if (readinessBox) {
-        if (data.hasFinal) {
-          readinessBox.innerHTML = `
-            <div class="alert alert-success" role="status">
-              <span>✓ Đã có bản chính thức. Gói bàn giao bên dưới đã sẵn sàng.</span>
-            </div>`;
-        } else if (data.hasDraft) {
-          readinessBox.innerHTML = `
-            <div class="alert alert-warning" role="status">
-              <span>Đã có bản nháp. Kết xuất bản chính thức để mở gói bàn giao đầy đủ.</span>
-            </div>`;
+      // Populate export snapshot select box (Phase 8 Task 10)
+      const exportSelect = document.getElementById("export-select");
+      if (exportSelect) {
+        const exportsList = prodData.exports || [];
+        if (exportsList.length > 0) {
+          exportSelect.innerHTML = exportsList.map(e =>
+            `<option value="${escapeHtml(e.exportId)}">${escapeHtml(e.exportId)} (${e.createdAt ? new Date(e.createdAt).toLocaleDateString("vi-VN") : "snapshot"})</option>`
+          ).join("");
         } else {
-          setNotReady("Chưa thể xuất video", "Dự án chưa có bản dựng nào. Kết xuất bản nháp 720p trước, rồi kết xuất bản chính thức 1080p.");
-          return;
+          exportSelect.innerHTML = `<option value="">-- Chưa có bản snapshot (hãy xuất gói trước) --</option>`;
         }
       }
+
+      renderExportPreflight(readinessBox, readiness, p);
+      applyExportGuards(btnDraft, btnFinal, readiness);
+      const selectedExp = exportSelect ? exportSelect.value : "";
+      renderExportPreviews(p, status, selectedExp);
+      renderExportDownloads(delivBox, readiness);
     } catch (err) {
+      if (stale()) return;
       if (isNotFound(err)) {
-        setNotReady("Chưa thể xuất video", "Chưa có thông tin render cho dự án này. Kết xuất bản nháp trước để bắt đầu.");
+        if (readinessBox) readinessBox.innerHTML = `
+          <div class="overview-empty" role="status">
+            <h3>Chưa thể xuất video</h3>
+            <p>Chưa có thông tin render cho dự án này. Kết xuất bản nháp trước để bắt đầu.</p>
+          </div>`;
+      } else if (readinessBox) {
+        readinessBox.innerHTML = loadErrorHtml((err && err.message) || err, "window.Phase14 && window.Phase14.loadExportData()");
+      }
+      if (delivBox) delivBox.style.display = "none";
+    }
+  }
+
+  function clearExportPlayers() {
+    ["draft-video-player", "final-video-player"].forEach(id => {
+      const v = document.getElementById(id);
+      if (v) { v.removeAttribute("src"); v.load && v.load(); }
+    });
+    ["draft-render-player-container", "final-render-player-container"].forEach(id => {
+      const box = document.getElementById(id);
+      if (box) box.style.display = "none";
+    });
+  }
+
+  function renderExportPreflight(box, readiness, projectDir) {
+    if (!box) return;
+    const checks = readiness.checks || [];
+    const blocked = readiness.blockers || [];
+    const warnings = readiness.warnings || [];
+    const head = readiness.ready
+      ? `<div class="alert alert-success" role="status"><span>✓ Sẵn sàng xuất video. Mọi mục kiểm tra đã đạt.</span></div>`
+      : `<div class="alert alert-warning" role="alert"><span>Chưa thể kết xuất video chính thức vì còn ${blocked.length} mục kiểm tra chưa đạt.</span></div>`;
+    const rows = checks.map(c => {
+      const ok = !!c.ok;
+      const cta = (c.action && c.action.workspace)
+        ? `<button class="btn btn-secondary btn-xs" onclick="window.switchWorkspace('${c.action.workspace}')">Sang ${escapeHtml(c.action.label)}</button>`
+        : "";
+      if (window.UQ && window.UQ.checkRow) {
+        return window.UQ.checkRow({ title: c.label, stateLabel: exportStateLabel(c.state), ok, actionHtml: cta });
+      }
+      return `<div class="stage-card" style="padding: 0.6rem 0.9rem; display: flex; justify-content: space-between; align-items: center; gap: 0.6rem;">
+        <div><strong style="color: var(--uq-ink-1); font-size: 0.85rem;">${escapeHtml(c.label)}</strong>
+        <div style="font-size: 0.75rem; color: var(--text-muted);">Trạng thái: ${escapeHtml(exportStateLabel(c.state))}</div></div>
+        <div style="display: flex; gap: 0.4rem; align-items: center;">
+          <span class="ui-status-badge ${ok ? "status-ready" : "status-blocked"}">${ok ? "✓" : "✕"} ${escapeHtml(exportStateLabel(c.state))}</span>${cta}
+        </div>
+      </div>`;
+    }).join("");
+    const warnHtml = warnings.length ? `<div style="margin-top: 0.6rem; font-size: 0.8rem; color: var(--text-secondary);">` +
+      warnings.map(w => `<div>• ${escapeHtml(w.message)}</div>`).join("") + `</div>` : "";
+    box.innerHTML = `
+      <h3 style="font-size: 0.95rem; font-weight: 700; color: var(--uq-ink-1); margin: 0 0 0.5rem;">Kiểm tra trước khi xuất (Preflight)</h3>
+      ${head}
+      <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.6rem;" role="list" aria-label="Danh sách kiểm tra trước khi xuất">${rows}</div>
+      ${warnHtml}`;
+  }
+
+  function applyExportGuards(btnDraft, btnFinal, readiness) {
+    const blocked = (readiness.blockers || []).length > 0;
+    const audioOk = (readiness.checks || []).some(c => c.id === "audio" && c.ok);
+    if (btnFinal) {
+      btnFinal.disabled = blocked;
+      btnFinal.title = blocked
+        ? `Bị chặn: còn ${(readiness.blockers || []).length} mục kiểm tra chưa đạt`
+        : "Kết xuất video chính thức 1080p";
+    }
+    if (btnDraft) {
+      btnDraft.disabled = !audioOk;
+      btnDraft.title = audioOk ? "Kết xuất bản nháp 720p" : "Bị chặn: thiếu âm thanh master (audio.wav)";
+    }
+  }
+
+  function renderExportPreviews(p, status, exportId) {
+    // Chỉ gắn video src khi artifact tồn tại (§13) — không probe mù để nhận 404.
+    const draftBox = document.getElementById("draft-render-player-container");
+    const draftVideo = document.getElementById("draft-video-player");
+    if (status.hasDraft && draftBox && draftVideo) {
+      draftBox.style.display = "block";
+      draftVideo.src = `/api/projects/${encodeURIComponent(p)}/renders/draft/file?t=${Date.now()}`;
+    }
+    const finalBox = document.getElementById("final-render-player-container");
+    const finalVideo = document.getElementById("final-video-player");
+    if (status.hasFinal && finalBox && finalVideo) {
+      finalBox.style.display = "block";
+      if (exportId) {
+        finalVideo.src = `/api/projects/${encodeURIComponent(p)}/exports/${encodeURIComponent(exportId)}/final/file?t=${Date.now()}`;
       } else {
-        if (readinessBox) readinessBox.innerHTML = loadErrorHtml((err && err.message) || err, "window.Phase14 && window.Phase14.loadExportData()");
-        if (delivBox) delivBox.style.display = "none";
+        finalVideo.src = `/api/projects/${encodeURIComponent(p)}/renders/final/file?t=${Date.now()}`;
       }
     }
+    if (!status.hasDraft && !status.hasFinal) {
+      const box = document.getElementById("export-readiness-box");
+      if (box) box.insertAdjacentHTML("beforeend", `
+        <div class="overview-empty" role="status" style="margin-top: 0.6rem;">
+          <h3>Chưa có bản kết xuất</h3>
+          <p>Hãy chạy kết xuất khi dự án đã sẵn sàng.</p>
+        </div>`);
+    }
+  }
+
+  function renderExportDownloads(delivBox, readiness) {    if (!delivBox) return;
+    const available = (readiness.artifacts || []).filter(a => a.exists);
+    const engine = (readiness.render && readiness.render.engine) || "FFmpeg (H.264, CPU)";
+    const items = available.map(a => {
+      const size = a.sizeBytes ? ` — ${(a.sizeBytes / 1048576).toFixed(1)} MB` : "";
+      return `<li class="deliverable-item"><svg class="ui-icon" style="color: #10b981;"><use href="#icon-check"/></svg>
+        <span>${escapeHtml(a.label)}${escapeHtml(size)}</span>
+        <a class="btn btn-secondary btn-xs" style="margin-left: auto; text-decoration: none;" href="${escapeHtml(a.url)}" download>Tải xuống</a></li>`;
+    }).join("");
+    delivBox.style.display = "";
+    delivBox.innerHTML = `
+      <div class="stage-card-header">
+        <h4 style="font-size: 0.95rem; font-weight: 600; color: var(--uq-ink-1);">Tải xuống artifact hiện có</h4>
+        <span class="counter-chip">${available.length} tệp</span>
+      </div>
+      <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">Kết xuất bằng ${escapeHtml(engine)}. Chỉ liệt kê tệp đã tồn tại.</div>
+      ${available.length ? `<ul class="deliverables-list">${items}</ul>`
+        : `<p class="empty-state">Chưa có artifact nào để tải xuống.</p>`}`;
   }
 
   // ---------------------------------------------------------------------------
@@ -955,10 +1098,18 @@
 
     // P1 (§12): poll job progress thật (jobs_manager), không setTimeout mù.
     // IDLE → LOADING (progress %) → SUCCESS (reload) / ERROR (toast).
-    async function pollRenderJob(jobId, projectDir, btn, restoreText, kind) {
+    // 3D: một loop duy nhất cho mỗi (project, kind); dừng khi đổi project (chống stale/timer leak).
+    async function pollRenderJob(jobId, projectDir, btn, restoreText, kind, exportId) {
+      if (!jobId || !projectDir) return;
+      const pollKey = `${projectDir}::${kind}`;
+      if (exportActivePolls[pollKey] === jobId) return;
+      exportActivePolls[pollKey] = jobId;
       const t0 = Date.now();
+      const finish = () => { if (exportActivePolls[pollKey] === jobId) delete exportActivePolls[pollKey]; };
       async function tick() {
-        let done = false, failed = false, msg = "";
+        // Dừng loop khi user đã chuyển project (§20).
+        if (getActiveProject() !== projectDir || exportActivePolls[pollKey] !== jobId) { finish(); return; }
+        let done = false, failed = false, msg = "", fstatus = "";
         try {
           const r = await fetch(`/api/activity/jobs?projectId=${encodeURIComponent(projectDir)}`);
           if (r.ok) {
@@ -967,32 +1118,98 @@
             if (job) {
               const pct = Math.round((job.progress || 0) * 100);
               if (btn) btn.textContent = `Đang kết xuất (${pct}%)…`;
+              // Phase 6 (§36): polite milestone announcements (25/50/75%),
+              // never assertive; visual bar keeps full-rate updates.
+              if (window.uqAnnounce && pct > 0) {
+                const step = pct >= 75 ? 75 : pct >= 50 ? 50 : pct >= 25 ? 25 : 0;
+                if (step > 0) {
+                  window.uqAnnounce(
+                    `Đang kết xuất ${kind === "final" ? "bản chính" : "bản nháp"}: ${step}%`,
+                    `render-${pollKey}`);
+                }
+              }
               msg = job.message || "";
-              if (job.status === "SUCCESS") done = true;
-              else if (job.status === "FAILED" || job.status === "CANCELLED") { failed = true; msg = job.error || job.message || ""; }
+              fstatus = job.status || "";
+              if (job.status === "SUCCESS" || job.status === "COMPLETED") done = true;
+              else if (job.status === "FAILED" || job.status === "CANCELLED" || job.status === "INTERRUPTED") { failed = true; msg = job.error || job.message || ""; }
             }
           }
         } catch (e) { /* giữ poll, job nền vẫn chạy */ }
+        if (getActiveProject() !== projectDir) { finish(); return; }
         if (done) {
           showToast(kind === "final" ? "✓ Render bản chính 1080p hoàn tất!" : "✓ Render nháp 720p hoàn tất!", "success");
           if (btn) { btn.disabled = false; btn.textContent = restoreText; }
+          if (kind === "final") {
+            const finalBox = document.getElementById("final-render-player-container");
+            const finalVideo = document.getElementById("final-video-player");
+            if (finalBox && finalVideo) {
+              finalBox.style.display = "block";
+              if (exportId) {
+                finalVideo.src = `/api/projects/${encodeURIComponent(projectDir)}/exports/${encodeURIComponent(exportId)}/final/file?t=${Date.now()}`;
+              } else {
+                finalVideo.src = `/api/projects/${encodeURIComponent(projectDir)}/renders/final/file?t=${Date.now()}`;
+              }
+            }
+          }
+          finish();
           loadExportData(projectDir);
           return;
         }
         if (failed) {
-          showToast(`Kết xuất thất bại${msg ? ": " + msg : ". Kiểm tra tab Hoạt động."}`, "error");
+          const label = EXPORT_JOB_LABEL[fstatus] || "Thất bại";
+          showToast(`Kết xuất ${label.toLowerCase()}${msg ? ": " + msg : ". Kiểm tra tab Hoạt động."} Bấm nút để Thử lại.`, "error");
           if (btn) { btn.disabled = false; btn.textContent = restoreText; }
+          finish();
           loadExportData(projectDir);
           return;
         }
         if (Date.now() - t0 > 15 * 60 * 1000) {
           showToast("Kết xuất quá lâu, hãy kiểm tra tại tab Hoạt động.", "warning");
           if (btn) { btn.disabled = false; btn.textContent = restoreText; }
+          finish();
           return;
         }
         setTimeout(tick, 2000);
       }
       tick();
+    }
+
+    // Portable Package Button (Phase 4) — download ZIP đã đóng gói sẵn server-side.
+    const btnPackage = document.getElementById("btn-download-portable-package");
+    const packageBody = document.getElementById("export-package-body");
+    if (btnPackage) {
+      btnPackage.addEventListener("click", async () => {
+        const p = getActiveProject();
+        if (!p) { showToast("Hãy chọn một dự án trước khi tải gói.", "warning"); return; }
+        btnPackage.disabled = true;
+        const label = btnPackage.querySelector("span");
+        if (label) label.textContent = "Đang đóng gói dữ liệu...";
+        try {
+          const res = await fetch(`/api/projects/${encodeURIComponent(p)}/export/portable-package`);
+          if (res.status === 422) {
+            const data = await res.json().catch(() => ({}));
+            const msg = (data.detail && data.detail.message) || "Chưa thể đóng gói sản xuất.";
+            showToast(msg, "warning");
+            return;
+          }
+          if (!res.ok) throw new Error(`Không tải được gói sản xuất (mã ${res.status}).`);
+          const blob = await res.blob();
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = `${p}_production_package.zip`;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          URL.revokeObjectURL(url);
+          showToast("✓ Đã tải xuống gói sản xuất portable thành công!", "success");
+        } catch (err) {
+          showToast(`Lỗi đóng gói: ${err.message}`, "error");
+        } finally {
+          btnPackage.disabled = false;
+          if (label) label.textContent = "Tải gói sản xuất (ZIP)";
+        }
+      });
     }
 
     // Render Draft Button
@@ -1017,20 +1234,37 @@
       });
     }
 
-    // Render Final Button
+    // Render Final Button — guard tại click: preflight còn blocker thì không trigger ngầm (§11.1).
     const btnFinalRender = document.getElementById("btn-trigger-final-render");
     if (btnFinalRender) {
       btnFinalRender.addEventListener("click", async () => {
         const p = getActiveProject();
         if (!p) { showToast("Hãy chọn một dự án trước khi kết xuất.", "warning"); return; }
+        if (exportLastProject === p && exportLastReadiness && (exportLastReadiness.blockers || []).length > 0) {
+          showToast(`Chưa thể kết xuất chính thức: còn ${exportLastReadiness.blockers.length} mục kiểm tra chưa đạt. Xem “Kiểm tra trước khi xuất”.`, "warning");
+          return;
+        }
+        const exportSelect = document.getElementById("export-select");
+        const exportId = exportSelect ? exportSelect.value : "";
+        if (!exportId) {
+          showToast("Vui lòng xuất gói sản xuất (Production Export) trước khi kết xuất chính thức.", "warning");
+          return;
+        }
+        const profileSelect = document.getElementById("export-final-encoder-profile");
+        const encoderProfile = (profileSelect && profileSelect.value) || "FINAL_QUALITY";
+
         btnFinalRender.disabled = true;
         btnFinalRender.textContent = "Đang gửi yêu cầu...";
         try {
-          const res = await fetch(`/api/projects/${encodeURIComponent(p)}/render/final`, { method: "POST" });
+          const res = await fetch(`/api/projects/${encodeURIComponent(p)}/render/final`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ exportId, encoderProfile }),
+          });
           if (!res.ok) throw new Error(await renderBlockerText(res, "Yêu cầu render chính thức thất bại."));
           const data = await res.json().catch(() => ({}));
           showToast("✓ Đã khởi chạy render video 1080p chính thức!", "info");
-          pollRenderJob(data.job && data.job.id, p, btnFinalRender, "Kết xuất video chính thức", "final");
+          pollRenderJob(data.job && data.job.id, p, btnFinalRender, "Kết xuất video chính thức", "final", exportId);
         } catch (err) {
           showToast(err.message, "error");
           btnFinalRender.disabled = false;

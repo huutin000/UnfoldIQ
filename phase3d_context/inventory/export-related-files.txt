@@ -1,0 +1,84 @@
+# Export-related source files (content search, not filename-only)
+# Repo: D:\Project\UnfoldIQ | branch main @ af5274a | 2026-09-17
+# Working-tree versions (includes uncommitted 3C work where applicable).
+
+studio/phase14_router.py
+- lý do liên quan: render/review/export HTTP API (Phase 14 Rendering & Review Loop)
+- keyword/function/route tìm thấy: POST /api/projects/{dir_name}/render/draft (trigger_draft_render, 422 khi thiếu audio.wav/timeline, 503 ResourceGuard, jobs_manager background task); POST /api/projects/{dir_name}/render/final (trigger_final_render, bắt buộc production_preflight, 422 khi preflight FAIL); GET /api/projects/{dir_name}/render/status (hasDraft/hasFinal, draft_preview.mp4/final.mp4); GET /api/projects/{dir_name}/export/package (build_export_package); review/issues CRUD (renderer_adapter)
+
+studio/renderer_adapter.py
+- lý do liên quan: FFmpegRenderer duy nhất — draft 720p / final 1080p / export package / review issues
+- keyword/function/route tìm thấy: class FFmpegRenderer (ffmpeg_path từ config); _prepare_scene_clip (libx264); render_draft (concat 1280x720, ultrafast, crf 28; fallback color card khi chưa có asset); render_final (1920x1080, preset medium, crf 18 + build_export_package); build_export_package (final.mp4, subtitles.srt, sources.md, description.txt, metadata.json); KHÔNG có NVENC ở bất kỳ đâu (chỉ libx264 CPU)
+
+studio/production_export.py
+- lý do liên quan: preflight chuẩn + production export snapshot (Phase 11) mà final render tái dùng
+- keyword/function/route tìm thấy: def preflight(project_dir) -> readiness {audio, voiceQa, timestamp, scenePlan, visualContinuity, veo} + blockers; def execute_export / build_export_plan / build_manifest / build_shot_csv / build_flow_prompt_pack / build_checklist; def production_status; exports/<exportId>/ immutable, never-overwrite
+
+studio/smart_render.py
+- lý do liên quan: TTS render cache + resumable job state (KHÔNG phải video renderer)
+- keyword/function/route tìm thấy: class RenderJobState (render_job.json: fingerprint, completed chunk_id->render_hash); plan_render/compute_render_hash (audio chunks); RenderCache; KHÔNG liên quan video/FFmpeg
+
+studio/resource_scheduler.py
+- lý do liên quan: GPU_ENCODER concurrency + CUDA_HEAVY coexistence guard
+- keyword/function/route tìm thấy: class ResourceClass (CUDA_HEAVY, GPU_ENCODER, CPU_BOUND, IO_BOUND); GPU_ENCODER concurrency=1; deny CUDA_HEAVY+GPU_ENCODER đồng thời trên VRAM 4GB (reasonVi tiếng Việt)
+
+studio/system_check.py
+- lý do liên quan: ResourceGuard cổng job nặng (draft/final render gọi trực tiếp)
+- keyword/function/route tìm thấy: class ResourceGuard; def can_start_heavy_job(job_type) -> {allowed, reasonVi, actionVi}; export_diagnostics_package (.zip diagnostics)
+
+studio/jobs_manager.py
+- lý do liên quan: background job lifecycle mà render draft/final và frontend poll dựa vào
+- keyword/function/route tìm thấy: jobs_manager.create_job/update_job; JobStatus (QUEUED/RUNNING/SUCCESS/FAILED/CANCELLED); GET /api/activity/jobs?projectId= (frontend pollRenderJob mỗi 2s, timeout 15 phút)
+
+studio/timeline_compiler.py
+- lý do liên quan: timeline mà renderer concat + draft gate kiểm tra
+- keyword/function/route tìm thấy: timeline_compiler.get_timeline(pdir); subtitlesFile timestamps.srt nếu tồn tại
+
+studio/app.py
+- lý do liên quan: production/export + download artifact + audio/subtitle routes; KHÔNG có route phục vụ /renders/*.mp4
+- keyword/function/route tìm thấy: POST /api/projects/{dir_name}/export (export_project_audio -> outputs/); GET /api/projects/{dir_name}/render-state (RenderJobState+cache diagnostics); GET .../timestamps/srt; GET .../validation/readiness (visual_bible_v2, KHÔNG phải export readiness); GET .../production/status; POST .../production/export (422 + blockers); POST .../production/exports/{export_id}/open; download_*_json/md (image_prompts, veo_prompts); audio/{format}, chunks/{id}/audio; /api/jobs*, /api/activity/jobs; "renders" xuất hiện 0 lần trong app.py
+
+studio/static/phase14_ui.js
+- lý do liên quan: Export Workbench frontend logic (Phase14.handleWorkspaceSwitch)
+- keyword/function/route tìm thấy: loadExportData() (GET render/status; gán video.src tới /renders/draft/draft_preview.mp4 và /renders/final/final.mp4 khi hasDraft/hasFinal); pollRenderJob(jobId) (poll /api/activity/jobs 2s); POST render/draft + render/final (btn-trigger-draft-render/btn-trigger-final-render); renderBlockerText (hiển thị blocker 422 tiếng Việt); empty/error states (noProjectHtml, setNotReady, loadErrorHtml)
+
+studio/static/index.html
+- lý do liên quan: Export Workbench markup (#ws-export)
+- keyword/function/route tìm thấy: section#ws-export "Xuất bản video cuối cùng"; #export-readiness-box (aria-live); #btn-trigger-draft-render "Kết xuất bản nháp 720p"; #draft-video-player; #btn-trigger-final-render "Kết xuất video chính thức"; #final-video-player; #export-deliverables-box (final.mp4/subtitles.srt/sources.md/description.txt/metadata.json, chỉ hiện khi hasFinal)
+
+studio/static/style.css, uq-components.css, uq-responsive.css, uq-screens.css
+- lý do liên quan: chứa rules .export-card-grid / .render-action-card / .deliverables-list của Export Workbench
+- keyword/function/route tìm thấy: export-card-grid, render-action-card, deliverables-list (CSS, không logic)
+
+studio/domain_models.py
+- lý do liên quan: ResourceClass.GPU_ENCODER + JobState enums mà scheduler/guard dùng
+- keyword/function/route tìm thấy: ResourceClass (CUDA_HEAVY/GPU_ENCODER/CPU_BOUND/IO_BOUND); JobState (QUEUED...)
+
+studio/project_adapter.py
+- lý do liên quan: overview/export compatibility counters (scene/shot counts, export DRAFT/READY)
+- keyword/function/route tìm thấy: load_overview_slice (status_summary export)
+
+studio/config.py
+- lý do liên quan: ffmpeg_path cấu hình cho FFmpegRenderer
+- keyword/function/route tìm thấy: ffmpeg_path
+
+studio/backup_restore.py
+- lý do liên quan: .zip backup/restore (KHÔNG phải export package 3D, nhưng liên quan artifact/zip)
+- keyword/function/route tìm thấy: .unfoldiq.zip; final.mp4 optional trong backup
+
+studio/storage_manager.py
+- lý do liên quan: protected files policy (final.mp4, audio.wav được bảo vệ khỏi xóa)
+- keyword/function/route tìm thấy: final.mp4 trong protected list
+
+studio/project_integrity.py
+- lý do liên quan: tìm final.mp4 ở renders/final.mp4, final.mp4, outputs/final.mp4
+- keyword/function/route tìm thấy: renders/final.mp4 candidate paths
+
+studio/timeline_compiler.py — xem trên (subtitles timestamps.srt)
+
+# ABSENT (đã search, KHÔNG tồn tại trong source):
+- GET /api/projects/{id}/export/readiness — NOT FOUND IN CURRENT SOURCE (chỉ có validation/readiness của visual_bible_v2 và production/status)
+- NVENC / h264_nvenc / GPU encode path — NOT FOUND IN CURRENT SOURCE (chỉ libx264 CPU)
+- Route phục vụ /api/projects/{id}/renders/draft/draft_preview.mp4 và /renders/final/final.mp4 — NOT FOUND IN CURRENT SOURCE (frontend trỏ tới path không có handler → 404, đã quan sát ở browser closure 3C)
+- timestamps.vtt generation — NOT FOUND (chỉ .srt được tạo/serve)
+- Portable Production Package mới / Asset Registry / Thumbnail WebP / Proxy 720p — NOT FOUND (Phase 4+, ngoài scope)

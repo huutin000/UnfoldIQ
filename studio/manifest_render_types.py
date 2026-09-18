@@ -1,0 +1,122 @@
+"""Phase 8 internal execution contracts — enums/dataclasses only.
+
+No FFmpeg syntax, no persisted schema authority. Timing follows Phase 7:
+frameRate 24/1, timeBase 1/24, half-open [startFrame, endFrame).
+"""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from enum import Enum
+from pathlib import Path
+from typing import Any
+
+
+class EncoderProfileName(str, Enum):
+    FINAL_QUALITY = "FINAL_QUALITY"
+    ACCELERATED = "ACCELERATED"
+
+
+class CompositionStrategy(str, Enum):
+    SIMPLE_CUT = "SIMPLE_CUT"
+    FILTER_COMPLEX = "FILTER_COMPLEX"
+    STAGED_FALLBACK = "STAGED_FALLBACK"
+
+
+class FinalRenderExecutionPhase(str, Enum):
+    PREPARING = "PREPARING"
+    WAITING_RESOURCE = "WAITING_RESOURCE"
+    ENCODING = "ENCODING"
+    CANDIDATE_READY = "CANDIDATE_READY"
+    PUBLISHING = "PUBLISHING"
+    PUBLISHED = "PUBLISHED"
+
+
+class RenderFailureCode(str, Enum):
+    INVALID_MANIFEST = "INVALID_MANIFEST"
+    MANIFEST_HASH_MISMATCH = "MANIFEST_HASH_MISMATCH"
+    INPUT_MISSING = "INPUT_MISSING"
+    INPUT_CORRUPT = "INPUT_CORRUPT"
+    INPUT_INTEGRITY_MISMATCH = "INPUT_INTEGRITY_MISMATCH"
+    SOURCE_VIDEO_UNREADABLE = "SOURCE_VIDEO_UNREADABLE"
+    SOURCE_IMAGE_UNREADABLE = "SOURCE_IMAGE_UNREADABLE"
+    INVALID_SOURCE_TRIM = "INVALID_SOURCE_TRIM"
+    INSUFFICIENT_SOURCE_DURATION = "INSUFFICIENT_SOURCE_DURATION"
+    INVALID_SPEED_FACTOR = "INVALID_SPEED_FACTOR"
+    UNSUPPORTED_FITTING_STRATEGY = "UNSUPPORTED_FITTING_STRATEGY"
+    INVALID_TRANSITION = "INVALID_TRANSITION"
+    TRANSITION_FRAME_MISMATCH = "TRANSITION_FRAME_MISMATCH"
+    NORMALIZATION_FAILED = "NORMALIZATION_FAILED"
+    FILTERGRAPH_ERROR = "FILTERGRAPH_ERROR"
+    RENDER_FRAME_UNDERRUN = "RENDER_FRAME_UNDERRUN"
+    MASTER_AUDIO_MISSING = "MASTER_AUDIO_MISSING"
+    MASTER_AUDIO_CORRUPT = "MASTER_AUDIO_CORRUPT"
+    MASTER_AUDIO_CHECKSUM_MISMATCH = "MASTER_AUDIO_CHECKSUM_MISMATCH"
+    AUDIO_DURATION_MISMATCH = "AUDIO_DURATION_MISMATCH"
+    AUDIO_RENDER_UNDERRUN = "AUDIO_RENDER_UNDERRUN"
+    AUDIO_RESAMPLE_FAILED = "AUDIO_RESAMPLE_FAILED"
+    MUSIC_INPUT_MISSING = "MUSIC_INPUT_MISSING"
+    MUSIC_INPUT_CORRUPT = "MUSIC_INPUT_CORRUPT"
+    MUSIC_CHECKSUM_MISMATCH = "MUSIC_CHECKSUM_MISMATCH"
+    INVALID_MUSIC_VOLUME = "INVALID_MUSIC_VOLUME"
+    INVALID_FADE_CONFIG = "INVALID_FADE_CONFIG"
+    INVALID_DUCKING_CONFIG = "INVALID_DUCKING_CONFIG"
+    AUDIO_FILTERGRAPH_ERROR = "AUDIO_FILTERGRAPH_ERROR"
+    AUDIO_ENCODE_ERROR = "AUDIO_ENCODE_ERROR"
+    SUBTITLE_INPUT_MISSING = "SUBTITLE_INPUT_MISSING"
+    SUBTITLE_INPUT_CORRUPT = "SUBTITLE_INPUT_CORRUPT"
+    UNSUPPORTED_SUBTITLE_FORMAT = "UNSUPPORTED_SUBTITLE_FORMAT"
+    SUBTITLE_ENCODING_ERROR = "SUBTITLE_ENCODING_ERROR"
+    SUBTITLE_FONT_UNAVAILABLE = "SUBTITLE_FONT_UNAVAILABLE"
+    SUBTITLE_BURNIN_ERROR = "SUBTITLE_BURNIN_ERROR"
+    ENCODER_HARDWARE_UNAVAILABLE = "ENCODER_HARDWARE_UNAVAILABLE"
+    ENCODER_OUT_OF_MEMORY = "ENCODER_OUT_OF_MEMORY"
+    ENCODER_INITIALIZATION_FAILED = "ENCODER_INITIALIZATION_FAILED"
+    ENCODER_BUSY = "ENCODER_BUSY"
+    VIDEO_ENCODE_ERROR = "VIDEO_ENCODE_ERROR"
+    MUX_ERROR = "MUX_ERROR"
+    OUTPUT_CANDIDATE_MISSING = "OUTPUT_CANDIDATE_MISSING"
+    OUTPUT_CANDIDATE_EMPTY = "OUTPUT_CANDIDATE_EMPTY"
+    ATOMIC_PUBLISH_FAILED = "ATOMIC_PUBLISH_FAILED"
+    ALREADY_RENDERED = "ALREADY_RENDERED"
+    CANCELLED = "CANCELLED"
+    JOB_ALREADY_COMPLETED = "JOB_ALREADY_COMPLETED"
+    UNKNOWN_RENDER_ERROR = "UNKNOWN_RENDER_ERROR"
+
+
+@dataclass(frozen=True)
+class RenderAttemptResult:
+    attempt: int
+    encoder: str
+    return_code: int
+    completed: bool
+    cancelled: bool
+    failure_code: RenderFailureCode | None
+    stderr_tail: str
+    progress: dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass(frozen=True)
+class FailureClassification:
+    code: RenderFailureCode
+    fallback_eligible: bool
+
+
+# Error codes that permit exactly one libx264 retry after an NVENC attempt.
+FALLBACK_ELIGIBLE_CODES = frozenset({
+    RenderFailureCode.ENCODER_HARDWARE_UNAVAILABLE,
+    RenderFailureCode.ENCODER_OUT_OF_MEMORY,
+    RenderFailureCode.ENCODER_INITIALIZATION_FAILED,
+    RenderFailureCode.ENCODER_BUSY,
+})
+
+
+def scratch_dir_for(project_dir: Path, job_id: str) -> Path:
+    return Path(project_dir) / "renders" / f".scratch_{job_id}"
+
+
+def candidate_path_for(project_dir: Path, job_id: str) -> Path:
+    return scratch_dir_for(project_dir, job_id) / "candidate.mp4"
+
+
+def canonical_final_for(project_dir: Path, export_id: str) -> Path:
+    return Path(project_dir) / "exports" / export_id / "final.mp4"

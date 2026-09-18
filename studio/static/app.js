@@ -312,24 +312,44 @@ document.addEventListener("DOMContentLoaded", () => {
   // Focus Trapping & Accessibility Utilities (WCAG AA Compliance)
   let activeFocusTrapCleanup = null;
 
+  // Phase 6: only truly focusable elements participate in a trap —
+  // display:none subtrees, detached nodes and visibility:hidden are out.
+  // Recomputed on every Tab (content may re-render under the trap).
+  // NOTE: `a[href]` (not bare `[href]`) + HTMLElement check keep SVG
+  // <use href="…"> icons out — they match [href] but are never tabbable.
+  const TRAP_SELECTORS = 'button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+  function trapVisibleEls(modalEl) {
+    if (!modalEl || !modalEl.querySelectorAll) return [];
+    return Array.from(modalEl.querySelectorAll(TRAP_SELECTORS)).filter(el => {
+      if (el.disabled) return false;
+      if (!(el instanceof HTMLElement)) return false;
+      try {
+        if (!el.getClientRects || el.getClientRects().length === 0) return false;
+        if (window.getComputedStyle(el).visibility === "hidden") return false;
+      } catch (e) { return false; }
+      return true;
+    });
+  }
+
   function trapFocus(modalEl) {
     if (activeFocusTrapCleanup) {
       activeFocusTrapCleanup();
       activeFocusTrapCleanup = null;
     }
     if (!modalEl) return;
-    const focusableSelectors = 'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
-    const focusableElements = Array.from(modalEl.querySelectorAll(focusableSelectors));
-    if (focusableElements.length === 0) return;
 
-    const firstEl = focusableElements[0];
-    const lastEl = focusableElements[focusableElements.length - 1];
-
-    // Focus first interactive control
-    setTimeout(() => firstEl.focus(), 50);
+    // Focus first interactive control (visible only)
+    setTimeout(() => {
+      const els = trapVisibleEls(modalEl);
+      if (els[0]) els[0].focus();
+    }, 50);
 
     function handleTabTrap(e) {
       if (e.key === "Tab") {
+        const els = trapVisibleEls(modalEl);
+        if (els.length === 0) return;
+        const firstEl = els[0];
+        const lastEl = els[els.length - 1];
         if (e.shiftKey) {
           if (document.activeElement === firstEl) {
             e.preventDefault();
@@ -365,7 +385,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let uqOpenModals = [];
   function uqLockBody() {
     try {
-      document.body.style.overflow = uqOpenModals.length ? "hidden" : "";
+      document.body.style.overflow = (uqOpenModals.length || anyDrawerModalOpen()) ? "hidden" : "";
     } catch (e) {}
   }
   function uqModalOpen(modalEl, trigger) {
@@ -1133,18 +1153,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Global Escape Key Listener for Modals & Mobile Drawers
+  // Global Escape Key Listener for legacy edit modals.
+  // Phase 6: drawers/sheets are owned SOLELY by the UQDrawer controller
+  // below (closeAllDrawers: trap release + aria cleanup + body-lock +
+  // focus return). The old raw classList drawer branches lived here and
+  // have been removed — they stripped .open without cleanup and shadowed
+  // the controller.
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       if (spEditModal && spEditModal.style.display !== "none") {
         closeEditSceneModal();
       } else if (veoEditModal && veoEditModal.style.display !== "none") {
         closeEditVeoModal();
-      } else if (pipelineSidebar && pipelineSidebar.classList.contains("open")) {
-        pipelineSidebar.classList.remove("open");
-      } else if (workspaceInspector && workspaceInspector.classList.contains("open")) {
-        workspaceInspector.classList.remove("open");
-        syncShellButtons();
       }
     }
   });
@@ -1275,25 +1295,102 @@ document.addEventListener("DOMContentLoaded", () => {
       targetPanel.classList.add("active");
     }
 
-    // Close drawers on switch khi chúng đang ở chế độ drawer
-    if (window.innerWidth < 1280) {
-      closeAllDrawers();
-    }
+  // Close drawers on switch khi chúng đang ở chế độ drawer
+  if (window.innerWidth < 1280) {
+    closeAllDrawers({ refocus: false });
+  }
   }
   window.switchWorkspace = switchWorkspace;
 
   const drawerBackdrop = document.getElementById("drawer-backdrop");
 
-  function closeAllDrawers() {
-    if (pipelineSidebar) pipelineSidebar.classList.remove("open");
-    if (workspaceInspector) workspaceInspector.classList.remove("open");
-    if (drawerBackdrop) drawerBackdrop.classList.remove("active");
+  // Phase 6: responsive Drawer/Sheet modal controller (SC 2.4.3/2.4.7/2.4.11).
+  // Canonical bands: sidebar is a Sheet below 960px, inspector a Drawer
+  // below 1280px. Drawers are mutually exclusive (opening one closes the
+  // other), so "close all" always equals "close topmost".
+  const UQ_DRAWER_LABELS = {
+    "pipeline-sidebar": "Menu điều hướng công việc",
+    "workspace-inspector": "Bảng thông tin Inspector",
+  };
+  const uqDrawerOpener = { "pipeline-sidebar": null, "workspace-inspector": null };
+  function drawerInModalMode(el) {
+    if (el === pipelineSidebar) return window.innerWidth < 960;
+    if (el === workspaceInspector) return window.innerWidth < 1280;
+    return false;
+  }
+  function anyDrawerModalOpen() {
+    return [pipelineSidebar, workspaceInspector].some(
+      el => el && el.classList.contains("open") && drawerInModalMode(el));
+  }
+  function openDrawer(el, trigger) {
+    if (!el) return;
+    [pipelineSidebar, workspaceInspector].forEach(o => {
+      if (o && o !== el) closeDrawer(o, { refocus: false });
+    });
+    uqDrawerOpener[el.id] = trigger === undefined ? document.activeElement : trigger;
+    el.classList.add("open");
+    if (drawerInModalMode(el)) {
+      el.setAttribute("role", "dialog");
+      el.setAttribute("aria-modal", "true");
+      if (UQ_DRAWER_LABELS[el.id]) el.setAttribute("aria-label", UQ_DRAWER_LABELS[el.id]);
+      trapFocus(el);
+    }
+    syncDrawerBackdrop();
     syncShellButtons();
+    uqLockBody();
+  }
+  function closeDrawer(el, opts) {
+    if (!el) return;
+    const refocus = !opts || opts.refocus === undefined ? true : opts.refocus;
+    el.classList.remove("open");
+    el.removeAttribute("role");
+    el.removeAttribute("aria-modal");
+    releaseActiveFocus();
+    syncDrawerBackdrop();
+    syncShellButtons();
+    uqLockBody();
+    if (refocus) {
+      const opener = uqDrawerOpener[el.id];
+      uqDrawerOpener[el.id] = null;
+      try {
+        if (opener && opener.isConnected && typeof opener.focus === "function") {
+          opener.focus();
+          return;
+        }
+      } catch (e) {}
+      // Never drop focus to body: fall back to the matching toggle button.
+      const fb = el === pipelineSidebar ? btnToggleSidebar
+        : el === workspaceInspector ? btnToggleInspector : null;
+      try {
+        if (fb && typeof fb.focus === "function") fb.focus();
+      } catch (e) {}
+    } else {
+      uqDrawerOpener[el.id] = null;
+    }
+  }
+  function closeAllDrawers(opts) {
+    const refocus = !opts || opts.refocus === undefined ? true : opts.refocus;
+    // If focus is inside a closing drawer and no opener-return is wanted
+    // (resize/mode change), park it on the matching toggle — never body.
+    const active = document.activeElement;
+    [pipelineSidebar, workspaceInspector].forEach(el => {
+      if (!el || !el.classList.contains("open")) return;
+      if (!refocus && active && el.contains(active)) {
+        const fb = el === pipelineSidebar ? btnToggleSidebar
+          : el === workspaceInspector ? btnToggleInspector : null;
+        closeDrawer(el, { refocus: false });
+        try {
+          if (fb && typeof fb.focus === "function") fb.focus();
+        } catch (e) {}
+      } else {
+        closeDrawer(el, { refocus: refocus });
+      }
+    });
   }
 
   function syncDrawerBackdrop() {
     if (!drawerBackdrop) return;
-    const sidebarDrawerOpen = pipelineSidebar && pipelineSidebar.classList.contains("open") && window.innerWidth < 1024;
+    const sidebarDrawerOpen = pipelineSidebar && pipelineSidebar.classList.contains("open") && window.innerWidth < 960;
     const inspectorDrawerOpen = workspaceInspector && workspaceInspector.classList.contains("open") && window.innerWidth < 1280;
     if (sidebarDrawerOpen || inspectorDrawerOpen) {
       drawerBackdrop.classList.add("active");
@@ -1373,8 +1470,8 @@ document.addEventListener("DOMContentLoaded", () => {
   })();
 
   // Toggle Sidebar / Inspector — single owner (01B).
-  // Sidebar collapse trong flow từ 1024; inspector collapse từ 1280, dưới đó là drawer.
-  // Mỗi control luôn có tác dụng ở mọi viewport (không dead control).
+  // Phase 6 canonical: sidebar collapse trong flow từ 960; inspector
+  // collapse từ 1280, dưới đó là drawer. Sidebar <960 là Nav Sheet modal.
   const SHELL_KEY = "unfoldiq_shell";
   function readShellState() {
     try { return JSON.parse(localStorage.getItem(SHELL_KEY) || "{}"); }
@@ -1384,7 +1481,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try { localStorage.setItem(SHELL_KEY, JSON.stringify({ ...readShellState(), ...patch })); }
     catch (e) { /* private mode: bỏ qua persist */ }
   }
-  const sidebarInFlow = () => window.innerWidth >= 1024;
+  const sidebarInFlow = () => window.innerWidth >= 960;
   const inspectorInFlow = () => window.innerWidth >= 1280;
   function syncShellButtons() {
     if (btnToggleSidebar) {
@@ -1413,14 +1510,13 @@ document.addEventListener("DOMContentLoaded", () => {
       if (sidebarInFlow()) {
         document.body.classList.toggle("sidebar-collapsed");
         writeShellState({ sidebarCollapsed: document.body.classList.contains("sidebar-collapsed") });
+        syncDrawerBackdrop();
+        syncShellButtons();
+      } else if (pipelineSidebar.classList.contains("open")) {
+        closeDrawer(pipelineSidebar);
       } else {
-        pipelineSidebar.classList.toggle("open");
-        if (workspaceInspector && pipelineSidebar.classList.contains("open")) {
-          workspaceInspector.classList.remove("open");
-        }
+        openDrawer(pipelineSidebar, btnToggleSidebar);
       }
-      syncDrawerBackdrop();
-      syncShellButtons();
     });
   }
 
@@ -1429,24 +1525,25 @@ document.addEventListener("DOMContentLoaded", () => {
       if (inspectorInFlow()) {
         document.body.classList.toggle("inspector-collapsed");
         writeShellState({ inspectorCollapsed: document.body.classList.contains("inspector-collapsed") });
+        syncDrawerBackdrop();
+        syncShellButtons();
+      } else if (workspaceInspector.classList.contains("open")) {
+        closeDrawer(workspaceInspector);
       } else {
-        workspaceInspector.classList.toggle("open");
-        if (pipelineSidebar && workspaceInspector.classList.contains("open")) {
-          pipelineSidebar.classList.remove("open");
-        }
+        openDrawer(workspaceInspector, btnToggleInspector);
       }
-      syncDrawerBackdrop();
-      syncShellButtons();
     });
   }
   syncShellButtons();
 
   if (drawerBackdrop) {
-    drawerBackdrop.addEventListener("click", closeAllDrawers);
+    drawerBackdrop.addEventListener("click", () => closeAllDrawers());
   }
 
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
+      // One layer at a time: real modals own Escape while any is open.
+      if (uqOpenModals.length) return;
       closeAllDrawers();
     }
   });
@@ -1460,12 +1557,35 @@ document.addEventListener("DOMContentLoaded", () => {
       const mode = (sidebarInFlow() ? "S" : "s") + (inspectorInFlow() ? "I" : "i");
       if (mode !== lastShellMode) {
         lastShellMode = mode;
-        closeAllDrawers();
+        // Phase 6: never strand focus/trap/aria on mode change.
+        closeAllDrawers({ refocus: false });
       }
       syncShellButtons();
       syncDrawerBackdrop();
     }, 150);
   });
+
+  // Phase 6: polite announcer (render milestones, drawer state). Visual
+  // indicators keep full-rate updates; only meaningful deltas go here.
+  const uqLivePolite = document.getElementById("uq-live-polite");
+  const uqAnnounceSeen = {};
+  function uqAnnounce(msg, key) {
+    if (!msg) return;
+    try {
+      if (key) {
+        if (uqAnnounceSeen[key] === msg) return;
+        uqAnnounceSeen[key] = msg;
+      }
+      if (uqLivePolite) uqLivePolite.textContent = msg;
+    } catch (e) {}
+  }
+  window.UQDrawer = { open: openDrawer, close: closeDrawer, closeAll: closeAllDrawers,
+    inModalMode: drawerInModalMode };
+  // Phase 6: testable shell-mode classifier (S/s sidebar × I/i inspector).
+  // Same inputs as the resize listener below; browser tests assert it flips
+  // across emulation widths (real window resize is verified separately).
+  window.UQShellMode = () => (sidebarInFlow() ? "S" : "s") + (inspectorInFlow() ? "I" : "i");
+  window.uqAnnounce = uqAnnounce;
 
   // ==============================================================================
   // 4. PERSISTENT BOTTOM AUDIO TRANSPORT
@@ -2091,6 +2211,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     progressFill.style.width = `${job.progress_percent || 0}%`;
     progressPct.textContent = `${job.progress_percent || 0}%`;
+    // Phase 6 (§36): polite milestones for narration render, never assertive.
+    if (typeof uqAnnounce === "function" && (job.progress_percent || 0) > 0) {
+      const p = job.progress_percent || 0;
+      const step = p >= 75 ? 75 : p >= 50 ? 50 : p >= 25 ? 25 : 0;
+      if (step > 0) uqAnnounce(`Kết xuất giọng đọc: ${step}%`, "narrate-progress");
+    }
 
     if (job.total_chunks > 0) {
       const done = (job.completed_chunks || 0);
@@ -2851,6 +2977,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (qaProgressPercent) qaProgressPercent.textContent = `${pct}%`;
     if (qaProgressBar) qaProgressBar.style.width = `${pct}%`;
     if (qaProgressMessage) qaProgressMessage.textContent = msg || "Đang kiểm định...";
+    // Phase 6 (§36): polite milestones, never assertive.
+    if (typeof uqAnnounce === "function" && (pct || 0) > 0) {
+      const step = pct >= 75 ? 75 : pct >= 50 ? 50 : pct >= 25 ? 25 : 0;
+      if (step > 0) uqAnnounce(`Kiểm định giọng đọc: ${step}%`, "voiceqa-progress");
+    }
     if (btnRunVoiceQa) btnRunVoiceQa.disabled = true;
     if (btnCancelVoiceQa) btnCancelVoiceQa.style.display = "inline-flex";
     setQaStatus("running", "Đang phân tích...");
@@ -3080,6 +3211,11 @@ document.addEventListener("DOMContentLoaded", () => {
         tsProgressFill.style.width = `${pct}%`;
         tsProgressPct.textContent = `${pct}%`;
         if (s.message) tsProgressMsg.textContent = s.message;
+        // Phase 6 (§36): polite milestones, never assertive.
+        if (typeof uqAnnounce === "function" && pct > 0) {
+          const step = pct >= 75 ? 75 : pct >= 50 ? 50 : pct >= 25 ? 25 : 0;
+          if (step > 0) uqAnnounce(`Tạo timestamp: ${step}%`, "ts-progress");
+        }
         if (s.elapsed_seconds != null) tsProgressElapsed.textContent = `Đã chạy: ${s.elapsed_seconds}s`;
 
         const rawState = (s.state || "").toLowerCase();
@@ -6445,7 +6581,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const assets = v2.referenceAssets || [];
     grid.innerHTML = assets.length ? assets.map(a => `
       <div class="vb-ref-card">
-        <img src="/api/projects/${encodeURIComponent(currentProjectDir)}/references/${encodeURIComponent(a.assetId)}/preview" alt="${escapeHtml(a.assetId)}" loading="lazy" class="vb-ref-img">
+        <img src="/api/projects/${encodeURIComponent(currentProjectDir)}/assets/${encodeURIComponent(a.assetId)}/thumbnail" onerror="this.onerror=null;this.src='/api/projects/${encodeURIComponent(currentProjectDir)}/references/${encodeURIComponent(a.assetId)}/preview'" alt="${escapeHtml(a.assetId)}" loading="lazy" class="vb-ref-img">
         <div class="vb-ref-meta"><strong>${escapeHtml(a.assetId)}</strong><br>
         <span class="prod-history-meta">${escapeHtml(a.entityId)} · ${escapeHtml(a.view)}</span></div>
         <div class="detail-actions-bar">
@@ -8021,6 +8157,11 @@ document.addEventListener("DOMContentLoaded", () => {
             if (voiceSttProgressFill) voiceSttProgressFill.style.width = `${pct}%`;
             if (voiceSttProgressPct) voiceSttProgressPct.textContent = `${pct}%`;
             if (voiceSttProgressMsg && sData.message) voiceSttProgressMsg.textContent = sData.message;
+            // Phase 6 (§36): polite milestones, never assertive.
+            if (typeof uqAnnounce === "function" && pct > 0) {
+              const step = pct >= 75 ? 75 : pct >= 50 ? 50 : pct >= 25 ? 25 : 0;
+              if (step > 0) uqAnnounce(`Căn chỉnh Whisper: ${step}%`, "stt-progress");
+            }
 
             const isDone = sData.status === "Ready" || sData.state === "completed" || sData.status === "Failed" || sData.state === "failed";
             if (isDone) {
@@ -8251,6 +8392,157 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+    // Phase 5: virtualized Scene Navigator state (stable IDs only).
+    let visualNavWin = { start: 0, end: 0 };
+    let visualNavScrollAttached = false;
+    let visualNavVirtual = false;
+    let visualNavPinWindow = false;
+    let visualFilteredScenes = [];
+
+  function visualSceneGroupHtml(sc) {
+    const allExpanded = visualExpandedSceneIds.has(sc.scene_id) || sc.scene_id === visualSelectedSceneId;
+    const isSceneSelected = sc.scene_id === visualSelectedSceneId;
+    const sFmt = formatTime(sc.start);
+    const eFmt = formatTime(sc.end);
+    const shots = sc.shot_ids || [];
+    // Phase 5: lazy-mount — collapsed trees mount no shot buttons (they are
+    // display:none anyway). Same visible UI, far fewer hidden DOM nodes.
+    const mountShots = allExpanded || shots.indexOf(visualSelectedShotId) !== -1;
+    const shotsHtml = mountShots ? shots.map(shotId => {
+      const isShotActive = shotId === visualSelectedShotId;
+      const durText = sc.duration ? (sc.duration / (shots.length || 1)).toFixed(1) + 's' : '';
+      return `
+        <button type="button" class="visual-shot-tree-btn ${isShotActive ? 'is-active' : ''}" data-action="select-shot" data-shot-id="${escapeHtml(shotId)}" data-scene-id="${escapeHtml(sc.scene_id)}" aria-pressed="${isShotActive}">
+          <svg class="ui-icon" style="width: 12px; height: 12px;"><use href="#icon-video"/></svg>
+          <span class="visual-shot-tree-id">${escapeHtml(shotId)}</span>
+          <span class="visual-shot-tree-dur">${durText}</span>
+        </button>
+      `;
+    }).join("") : "";
+    return `
+      <div class="visual-scene-group ${allExpanded ? 'is-expanded' : ''} ${isSceneSelected ? 'is-selected' : ''}" data-scene-id="${escapeHtml(sc.scene_id)}">
+        <button type="button" class="visual-scene-header-btn" data-action="select-scene" data-scene-id="${escapeHtml(sc.scene_id)}" aria-expanded="${allExpanded}">
+          <span class="visual-scene-expander" data-action="toggle-expand" data-scene-id="${escapeHtml(sc.scene_id)}" title="${allExpanded ? 'Thu gọn cảnh' : 'Mở rộng cảnh'}">&#9654;</span>
+          <span class="visual-scene-title">Cảnh ${sc.index}</span>
+          <span class="cat-badge">${escapeHtml(sc.category || 'reconstruction')}</span>
+          <span class="counter-chip" style="font-size: 0.65rem;">${shots.length} shot</span>
+          ${sc.is_locked ? '<span title="Cảnh đã khóa">🔒</span>' : ''}
+          ${sc.status === 'outdated' ? '<span title="Cảnh cần cập nhật">⚠️</span>' : ''}
+          <span class="visual-scene-time">${sFmt} &rarr; ${eFmt}</span>
+        </button>
+        <div class="visual-shots-tree" role="group" aria-label="Cảnh quay của Cảnh ${sc.index}">
+          ${shotsHtml}
+        </div>
+      </div>
+    `;
+  }
+
+    // Phase 5: exact offset layout (headers uniform; expanded shot trees add
+    // measured rows). No average-height drift: offsets derive from the same
+    // expanded set used for rendering.
+    function visualNavLayout(list) {
+      const UQVL = window.UQVirtualList;
+      let headerH = 41, shotH = 27;
+      if (spRowsContainer) {
+        const hb = spRowsContainer.querySelector(".visual-scene-header-btn");
+        if (hb && hb.offsetHeight > 0) headerH = hb.offsetHeight;
+        const sb = spRowsContainer.querySelector(".visual-shot-tree-btn");
+        if (sb && sb.offsetHeight > 0) shotH = sb.offsetHeight;
+      }
+      const counts = list.map(sc =>
+        (visualExpandedSceneIds.has(sc.scene_id) || sc.scene_id === visualSelectedSceneId)
+          ? (sc.shot_ids || []).length : 0);
+      const layout = UQVL.layoutOffsets(counts, headerH, shotH, 8);
+      return { offsets: layout.offsets, totalH: layout.totalH, headerH, shotH };
+    }
+
+    function visualNavEnsureScrollListener() {
+      if (visualNavScrollAttached || !spRowsContainer || !window.UQVirtualList) return;
+      visualNavScrollAttached = true;
+      let ticking = false;
+      spRowsContainer.addEventListener("scroll", () => {
+        if (!visualNavVirtual || ticking) return;
+        ticking = true;
+        const fire = () => {
+          ticking = false;
+          // Re-render only when the window actually changed (preserves focus).
+          const UQVL = window.UQVirtualList;
+          const list = visualFilteredScenes || [];
+          if (!list.length) return;
+          const lay = visualNavLayout(list);
+          const w = UQVL.windowForOffsets(lay.offsets, lay.totalH,
+            spRowsContainer.scrollTop, spRowsContainer.clientHeight || 600, UQVL.OVERSCAN_PX);
+          if (w.start === visualNavWin.start && w.end === visualNavWin.end) return;
+          renderVisualSceneNavigator();
+        };
+        if (window.requestAnimationFrame) window.requestAnimationFrame(fire);
+        else setTimeout(fire, 16);
+      }, { passive: true });
+    }
+
+  // Ensure a stable shot/scene target is mounted + visible (virtual mode).
+  // If the target is filtered out, navigator filters reset so selection reveals.
+  function ensureVisualShotVisible(shotId, sceneId) {
+    if (!spRowsContainer) return;
+    if (!window.UQVirtualList || !visualNavVirtual) {
+      const btn = shotId
+        ? spRowsContainer.querySelector(`[data-action="select-shot"][data-shot-id="${CSS.escape(shotId)}"]`) : null;
+      if (btn && btn.scrollIntoView) btn.scrollIntoView({ block: "nearest" });
+      return;
+    }
+    let list = visualFilteredScenes || [];
+    let idx = list.findIndex(s => s.scene_id === sceneId);
+    if (idx === -1) {
+      if (spSearchInput) spSearchInput.value = "";
+      if (spFilterCategory) spFilterCategory.value = "";
+      if (spFilterStatus) spFilterStatus.value = "";
+      renderVisualSceneNavigator();
+      list = visualFilteredScenes || [];
+      idx = list.findIndex(s => s.scene_id === sceneId);
+      if (idx === -1) return;
+    }
+      const UQVL = window.UQVirtualList;
+      const vh = spRowsContainer.clientHeight || 600;
+      // Exact target offset: the computed window provably contains idx.
+      const lay = visualNavLayout(list);
+      const wantTop = Math.max(0, Math.round(lay.offsets[idx] - vh / 2));
+      for (let pass = 0; pass < 2; pass++) {
+        spRowsContainer.scrollTop = wantTop;
+        const w = UQVL.windowForOffsets(lay.offsets, lay.totalH, wantTop, vh, UQVL.OVERSCAN_PX);
+        visualNavWin = { start: w.start, end: w.end };
+        visualNavPinWindow = true;
+        renderVisualSceneNavigator();
+        const btn = spRowsContainer.querySelector(`[data-action="select-shot"][data-shot-id="${CSS.escape(shotId)}"]`);
+        if (btn) {
+          if (btn.scrollIntoView) btn.scrollIntoView({ block: "nearest" });
+          return;
+        }
+      }
+      const sceneBtn = spRowsContainer.querySelector(`[data-action="select-scene"][data-scene-id="${CSS.escape(sceneId)}"]`);
+      if (sceneBtn && sceneBtn.scrollIntoView) sceneBtn.scrollIntoView({ block: "nearest" });
+    }
+
+    function focusVisualButton(kind, id, sceneId) {
+    if (!spRowsContainer) return false;
+    const sel = kind === "shot"
+      ? `[data-action="select-shot"][data-shot-id="${CSS.escape(id)}"]`
+      : `[data-action="select-scene"][data-scene-id="${CSS.escape(id)}"]`;
+      const btn = spRowsContainer.querySelector(sel);
+      if (btn) { btn.focus(); return true; }
+      return false;
+    }
+
+    // Phase 5 debug hook (evidence runs): exposes navigator window state.
+    window.__visualNavDebug = function () {
+      return {
+        virtual: visualNavVirtual,
+        win: { start: visualNavWin.start, end: visualNavWin.end },
+        filtered: (visualFilteredScenes || []).length,
+        scrollTop: spRowsContainer ? spRowsContainer.scrollTop : -1,
+        clientH: spRowsContainer ? spRowsContainer.clientHeight : -1,
+      };
+    };
+
   function renderVisualSceneNavigator() {
     if (!spRowsContainer) return;
     if (!visualScenesList || visualScenesList.length === 0) {
@@ -8290,48 +8582,74 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     let html = "";
-    filteredScenes.forEach(sc => {
-      const isExpanded = visualExpandedSceneIds.has(sc.scene_id) || sc.scene_id === visualSelectedSceneId;
-      const isSceneSelected = sc.scene_id === visualSelectedSceneId;
-      const sFmt = formatTime(sc.start);
-      const eFmt = formatTime(sc.end);
-      const shots = sc.shot_ids || [];
-
-      html += `
-        <div class="visual-scene-group ${isExpanded ? 'is-expanded' : ''} ${isSceneSelected ? 'is-selected' : ''}" data-scene-id="${escapeHtml(sc.scene_id)}">
-          <button type="button" class="visual-scene-header-btn" data-action="select-scene" data-scene-id="${escapeHtml(sc.scene_id)}" aria-expanded="${isExpanded}">
-            <span class="visual-scene-expander" data-action="toggle-expand" data-scene-id="${escapeHtml(sc.scene_id)}" title="${isExpanded ? 'Thu gọn cảnh' : 'Mở rộng cảnh'}">&#9654;</span>
-            <span class="visual-scene-title">Cảnh ${sc.index}</span>
-            <span class="cat-badge">${escapeHtml(sc.category || 'reconstruction')}</span>
-            <span class="counter-chip" style="font-size: 0.65rem;">${shots.length} shot</span>
-            ${sc.is_locked ? '<span title="Cảnh đã khóa">🔒</span>' : ''}
-            ${sc.status === 'outdated' ? '<span title="Cảnh cần cập nhật">⚠️</span>' : ''}
-            <span class="visual-scene-time">${sFmt} &rarr; ${eFmt}</span>
-          </button>
-          <div class="visual-shots-tree" role="group" aria-label="Cảnh quay của Cảnh ${sc.index}">
-            ${shots.map(shotId => {
-              const isShotActive = shotId === visualSelectedShotId;
-              const durText = sc.duration ? (sc.duration / (shots.length || 1)).toFixed(1) + 's' : '';
-              return `
-                <button type="button" class="visual-shot-tree-btn ${isShotActive ? 'is-active' : ''}" data-action="select-shot" data-shot-id="${escapeHtml(shotId)}" data-scene-id="${escapeHtml(sc.scene_id)}" aria-pressed="${isShotActive}">
-                  <svg class="ui-icon" style="width: 12px; height: 12px;"><use href="#icon-video"/></svg>
-                  <span class="visual-shot-tree-id">${escapeHtml(shotId)}</span>
-                  <span class="visual-shot-tree-dur">${durText}</span>
-                </button>
-              `;
-            }).join("")}
-          </div>
-        </div>
-      `;
-    });
-
-    spRowsContainer.innerHTML = html;
+    const useVirtual = !!(window.UQVirtualList &&
+      filteredScenes.length > window.UQVirtualList.THRESHOLD_GROUPS);
+    visualNavVirtual = useVirtual;
+    visualFilteredScenes = filteredScenes;
+    // Preserve scroll across re-renders (selection/detail refresh keeps context).
+    const savedScrollTop = spRowsContainer ? spRowsContainer.scrollTop : 0;
+    if (!useVirtual) {
+      filteredScenes.forEach(sc => { html += visualSceneGroupHtml(sc); });
+      visualNavWin = { start: 0, end: filteredScenes.length };
+      spRowsContainer.innerHTML = html;
+    } else {
+      visualNavEnsureScrollListener();
+      const UQVL = window.UQVirtualList;
+      const vh = spRowsContainer.clientHeight || 600;
+      const lay = visualNavLayout(filteredScenes);
+      const w = UQVL.windowForOffsets(lay.offsets, lay.totalH,
+        spRowsContainer.scrollTop, vh, UQVL.OVERSCAN_PX);
+      // One-shot pin from ensureVisualShotVisible (consumed here, never sticky).
+      if (visualNavPinWindow && visualNavWin.end > visualNavWin.start) {
+        w.start = Math.min(w.start, Math.max(0, visualNavWin.start));
+        w.end = Math.max(w.end, Math.min(visualNavWin.end, filteredScenes.length));
+      }
+      visualNavPinWindow = false;
+      visualNavWin = w;
+      // NOTE: no selected-union here on purpose. Exact offsets already map
+      // scroll position correctly, so the selection remounts faithfully on
+      // scroll-back; force-mounting a far-away selection would explode the
+      // window and defeat virtualization. Selection state itself lives in
+      // module vars + the detail panel, never only in DOM.
+      // Phase 5: preserve keyboard focus across window re-renders by stable key.
+      let focusKey = null;
+      const ae = document.activeElement;
+      if (ae && spRowsContainer.contains(ae)) {
+        focusKey = (ae.dataset.action || "?") + ":" + (ae.dataset.shotId || ae.dataset.sceneId || "?");
+      }
+      let body = "";
+      for (let i = w.start; i < w.end; i++) body += visualSceneGroupHtml(filteredScenes[i]);
+      const topH = Math.max(0, Math.round(lay.offsets[w.start] || 0));
+      const botH = Math.max(0, Math.round(lay.totalH - (lay.offsets[w.end] != null ? lay.offsets[w.end] : lay.totalH)));
+      spRowsContainer.innerHTML =
+        `<div class="uq-vspacer" style="height:${topH}px" aria-hidden="true"></div>` + body +
+        `<div class="uq-vspacer" style="height:${botH}px" aria-hidden="true"></div>`;
+      if (focusKey) {
+        const parts = focusKey.split(":");
+        const sel = parts[0] === "select-shot" && parts[1] !== "?"
+          ? `[data-action="select-shot"][data-shot-id="${CSS.escape(parts[1])}"]`
+          : (parts[1] !== "?" ? `[data-action="select-scene"][data-scene-id="${CSS.escape(parts[1])}"]` : null);
+        const back = sel && spRowsContainer.querySelector(sel);
+        if (back) back.focus();
+      }
+    }
+    if (spRowsContainer) spRowsContainer.scrollTop = savedScrollTop;
   }
 
   async function selectVisualShot(shotId, sceneId) {
+    // Gate L: Dirty-state navigation guard — warn before discarding unsaved prompts
+    if ((visualDirtyPrompts.image || visualDirtyPrompts.veo) &&
+        (shotId !== visualSelectedShotId || sceneId !== visualSelectedSceneId)) {
+      const ok = confirm(
+        'Bạn có thay đổi prompt chưa lưu (Chưa lưu).\nNếu tiếp tục, các thay đổi sẽ bị mất.\nBạn có chắc muốn chuyển sang cảnh quay khác không?'
+      );
+      if (!ok) return;
+    }
     visualSelectedSceneId = sceneId;
     visualSelectedShotId = shotId;
     visualExpandedSceneIds.add(sceneId);
+    // Phase 5: reveal the target in the navigator (mounts windowed rows when virtualized).
+    ensureVisualShotVisible(shotId, sceneId);
 
     // Update active highlight classes in DOM
     if (spRowsContainer) {
@@ -8450,15 +8768,15 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
           </div>
           <div style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.4;">
-            <strong>Mục tiêu thị giác:</strong> ${escapeHtml(shot.visual_objective || scene.visual_summary || 'Chưa có tóm tắt thị giác')}
+            <strong>Bản thiết kế hình ảnh (kế hoạch ngữ nghĩa):</strong> ${escapeHtml(shot.visual_objective || scene.visual_summary || 'Chưa có tóm tắt thị giác')}
           </div>
           <div>
-            <label class="form-label" for="vw-image-prompt-input" style="font-size: 0.76rem; font-weight: 600; margin-bottom: 4px;">Prompt hình ảnh (Start frame)</label>
-            <textarea id="vw-image-prompt-input" class="form-textarea" rows="4" placeholder="Nhập prompt hình ảnh...">${escapeHtml(scene.image_prompt || '')}</textarea>
+            <label class="form-label" for="vw-image-prompt-input" style="font-size: 0.76rem; font-weight: 600; margin-bottom: 4px;">Prompt hình ảnh (Start frame) — văn bản gửi nhà cung cấp, tách biệt khỏi Bản thiết kế</label>
+            <textarea id="vw-image-prompt-input" class="form-textarea" rows="4" placeholder="Nhập prompt hình ảnh...">${escapeHtml((shot.image_prompt != null && String(shot.image_prompt).trim() !== '') ? shot.image_prompt : (scene.image_prompt || ''))}</textarea>
           </div>
           <div>
             <label class="form-label" for="vw-negative-prompt-input" style="font-size: 0.76rem; font-weight: 600; margin-bottom: 4px;">Prompt phủ định (Negative prompt)</label>
-            <textarea id="vw-negative-prompt-input" class="form-textarea" rows="2" placeholder="Nhập prompt loại trừ...">${escapeHtml(scene.negative_prompt || '')}</textarea>
+            <textarea id="vw-negative-prompt-input" class="form-textarea" rows="2" placeholder="Nhập prompt loại trừ...">${escapeHtml(shot.negative_prompt || scene.negative_prompt || '')}</textarea>
           </div>
         </div>
 
@@ -8502,8 +8820,8 @@ document.addEventListener("DOMContentLoaded", () => {
               <span class="visual-param-val">${escapeHtml(shot.continuity_anchor || 'Không có')}</span>
             </div>
           </div>
-          <div>
-            <label class="form-label" for="vw-veo-prompt-input" style="font-size: 0.76rem; font-weight: 600; margin-bottom: 4px;">Prompt chuyển động Veo (Motion Prompt)</label>
+            <div>
+              <label class="form-label" for="vw-veo-prompt-input" style="font-size: 0.76rem; font-weight: 600; margin-bottom: 4px;">Prompt chuyển động Veo (Motion Prompt) — văn bản gửi nhà cung cấp, tách biệt khỏi Bản thiết kế chuyển động ở trên</label>
             <textarea id="vw-veo-prompt-input" class="form-textarea" rows="4" placeholder="Nhập prompt chuyển động...">${escapeHtml(shot.veo_prompt || '')}</textarea>
           </div>
         </div>
@@ -8586,31 +8904,41 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // Copy Image Prompt button
+    // Copy Image Prompt button — Gate B: shot-level first, scene fallback
     const btnCopyImagePrompt = document.getElementById("btn-copy-image-prompt");
     if (btnCopyImagePrompt) {
       btnCopyImagePrompt.addEventListener("click", () => {
-        const text = imgPromptInput ? imgPromptInput.value : (scene.image_prompt || "");
+        const text = imgPromptInput ? imgPromptInput.value : ((shot.image_prompt != null && String(shot.image_prompt).trim() !== '') ? shot.image_prompt : (scene.image_prompt || ""));
         copyToClipboard(text, "Prompt hình ảnh");
       });
     }
 
-    // Save Image Prompt button
+    // Save Image Prompt button — Gate B: writes to shot-level PATCH, NOT scene PUT
     const btnSaveImagePrompt = document.getElementById("btn-save-image-prompt");
     if (btnSaveImagePrompt) {
       btnSaveImagePrompt.addEventListener("click", async () => {
+        // Gate H: locked shots need explicit confirmation — do not silently overwrite.
+        if (shot.is_locked && !confirm(`Cảnh quay ${shot.shot_id} đang bị khóa (Đã khóa).\nBạn có chắc muốn ghi đè prompt đã khóa không?`)) return;
         btnSaveImagePrompt.disabled = true;
         try {
+          // Gate B: PATCH /visual/shots/{shot_id} writes only to this shot, sibling shots unaffected
           const payload = {
-            image_prompt: imgPromptInput ? imgPromptInput.value : scene.image_prompt,
-            negative_prompt: negPromptInput ? negPromptInput.value : scene.negative_prompt
+            image_prompt: imgPromptInput ? imgPromptInput.value : (shot.image_prompt || scene.image_prompt),
+            negative_prompt: negPromptInput ? negPromptInput.value : (shot.negative_prompt || scene.negative_prompt)
           };
-          const res = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/scenes/${encodeURIComponent(scene.scene_id)}`, {
-            method: "PUT",
+          if (shot.is_locked) payload.override_lock = true;
+          const res = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/visual/shots/${encodeURIComponent(shot.shot_id)}`, {
+            method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
           });
+          if (res.status === 409) throw new Error("Cảnh quay đang bị khóa — hãy mở khóa trước khi lưu");
           if (!res.ok) throw new Error(`Lỗi ${res.status}`);
+          // Update local shot cache to reflect saved value
+          if (visualCurrentShot) {
+            visualCurrentShot.image_prompt = payload.image_prompt;
+            visualCurrentShot.negative_prompt = payload.negative_prompt;
+          }
           showNotification("Đã lưu prompt hình ảnh thành công!", "success");
           visualDirtyPrompts.image = false;
           if (imgPromptInput) imgPromptInput.classList.remove("is-dirty");
@@ -8632,21 +8960,25 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // Save Motion Prompt button
+    // Save Motion Prompt button — Gate D: shot-level PATCH (provider prompt, not Blueprint)
     const btnSaveMotionPrompt = document.getElementById("btn-save-motion-prompt");
     if (btnSaveMotionPrompt) {
       btnSaveMotionPrompt.addEventListener("click", async () => {
+        if (shot.is_locked && !confirm(`Cảnh quay ${shot.shot_id} đang bị khóa (Đã khóa).\nBạn có chắc muốn ghi đè prompt chuyển động đã khóa không?`)) return;
         btnSaveMotionPrompt.disabled = true;
         try {
           const payload = {
             veo_prompt: veoPromptInput ? veoPromptInput.value : shot.veo_prompt
           };
-          const res = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/veo/shots/${encodeURIComponent(shot.shot_id)}`, {
-            method: "PUT",
+          if (shot.is_locked) payload.override_lock = true;
+          const res = await fetch(`/api/projects/${encodeURIComponent(currentProjectDir)}/visual/shots/${encodeURIComponent(shot.shot_id)}`, {
+            method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
           });
+          if (res.status === 409) throw new Error("Cảnh quay đang bị khóa — hãy mở khóa trước khi lưu");
           if (!res.ok) throw new Error(`Lỗi ${res.status}`);
+          if (visualCurrentShot) visualCurrentShot.veo_prompt = payload.veo_prompt;
           showNotification("Đã lưu prompt chuyển động thành công!", "success");
           visualDirtyPrompts.veo = false;
           if (veoPromptInput) veoPromptInput.classList.remove("is-dirty");
@@ -8658,27 +8990,35 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // Copy Flow package
+    // Copy Flow package — Gate G: surfaces actual bound references (stable entity IDs),
+    // approved/start-frame context and motion plan. Manual only — never uploads.
     const btnCopyFlowPackage = document.getElementById("btn-copy-flow-package");
     if (btnCopyFlowPackage) {
       btnCopyFlowPackage.addEventListener("click", () => {
-        const imgP = imgPromptInput ? imgPromptInput.value : scene.image_prompt;
-        const negP = negPromptInput ? negPromptInput.value : scene.negative_prompt;
-        const subjList = (shot.subjectIds || []).join(", ") || "Không có";
-        const envStr = shot.environmentId || "Không có";
-        const propList = (shot.propIds || []).join(", ") || "Không có";
+        const imgP = imgPromptInput ? imgPromptInput.value : ((shot.image_prompt != null && String(shot.image_prompt).trim() !== '') ? shot.image_prompt : (scene.image_prompt || ''));
+        const negP = negPromptInput ? negPromptInput.value : (shot.negative_prompt || scene.negative_prompt || '');
+        const subjList = (shot.subjectIds || shot.subject_ids || []).join(", ") || "Không có";
+        const envStr = shot.environmentId || shot.environment_id || "Không có";
+        const propList = (shot.propIds || shot.prop_ids || []).join(", ") || "Không có";
 
         const text = [
           `# UNFOLDIQ FLOW HANDOFF — SHOT: ${shot.shot_id} (SCENE: ${scene.scene_id})`,
-          `## Image Prompt:`,
+          `## Image Prompt (provider text — tách biệt Bản thiết kế hình ảnh):`,
           imgP,
           `## Negative Prompt:`,
           negP,
-          `## Required Reference Ingredients:`,
+          `## Required Reference Ingredients (stable entity IDs):`,
           `- Characters: ${subjList}`,
           `- Environment: ${envStr}`,
           `- Props: ${propList}`,
-          `## Target Aspect Ratio: 16:9`
+          `## Motion Blueprint (for Veo step):`,
+          `- Camera: ${shot.camera_motion || 'static cinematic camera'}`,
+          `- Subject: ${shot.subject_action || 'Không có'}`,
+          `- Environment: ${shot.environmental_action || shot.environment_motion || 'Tự nhiên'}`,
+          `- Veo Prompt: ${veoPromptInput ? veoPromptInput.value : (shot.veo_prompt || '')}`,
+          `## Shot State: ${shot.is_locked ? 'Đã khóa' : 'Có thể sửa'} / ${shot.outdated ? 'Cần cập nhật (OUTDATED)' : 'Sẵn sàng'} / ${shot.status || 'generated'}`,
+          `## Target Aspect Ratio: 16:9`,
+          `## Manual only — copy by hand into Google Flow/Veo. Nothing is uploaded automatically.`
         ].join("\n\n");
 
         copyToClipboard(text, "Gói tham chiếu Flow");
@@ -8702,7 +9042,10 @@ document.addEventListener("DOMContentLoaded", () => {
       let boundCount = 0;
 
       boundSubjIds.forEach(id => {
-        const found = allSubjects.find(s => s.subjectId === id || s.id === id || s.name === id);
+        // Gate K: match by characterId, subjectId, or entity_id (stable ID) — not display name
+        const found = allSubjects.find(s =>
+          s.characterId === id || s.subjectId === id || s.entity_id === id || s.id === id
+        );
         boundCount++;
         bindingCardsHtml += `
           <div class="vw-binding-item">
@@ -8719,7 +9062,10 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       if (boundEnvId) {
-        const found = allEnvs.find(e => e.environmentId === boundEnvId || e.id === boundEnvId || e.name === boundEnvId);
+        // Gate K: match by stable entity ID, not display name
+        const found = allEnvs.find(e =>
+          e.environmentId === boundEnvId || e.entity_id === boundEnvId || e.id === boundEnvId
+        );
         boundCount++;
         bindingCardsHtml += `
           <div class="vw-binding-item">
@@ -8735,7 +9081,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       boundPropIds.forEach(id => {
-        const found = allProps.find(p => p.propId === id || p.id === id || p.name === id);
+        // Gate F: match by stable entity ID only — propId/objectId/id, never display name.
+        const found = allProps.find(p => p.propId === id || p.objectId === id || p.id === id);
         boundCount++;
         bindingCardsHtml += `
           <div class="vw-binding-item">
@@ -8919,19 +9266,73 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // Keyboard navigation (ArrowUp, ArrowDown)
+    // Keyboard navigation — Gate K + Phase 5: disclosure buttons
+    // (aria-expanded / aria-pressed), NOT role=tree. ArrowUp/Down move,
+    // ArrowRight expands, ArrowLeft collapses, Home/End jump, Enter/Space
+    // activate natively. In virtual mode the window follows focus by stable ID
+    // (never body focus, never focus ghosts on recycled rows).
     spRowsContainer.addEventListener("keydown", (e) => {
+      const focusables = Array.from(spRowsContainer.querySelectorAll("button"));
+      const currentIndex = focusables.indexOf(document.activeElement);
+      const list = (visualFilteredScenes && visualFilteredScenes.length
+        ? visualFilteredScenes : (visualScenesList || []));
       if (e.key === "ArrowDown" || e.key === "ArrowUp") {
         e.preventDefault();
-        const focusables = Array.from(spRowsContainer.querySelectorAll("button"));
-        const currentIndex = focusables.indexOf(document.activeElement);
         if (currentIndex === -1) {
           if (focusables.length > 0) focusables[0].focus();
+        } else if (e.key === "ArrowDown" && currentIndex === focusables.length - 1 && visualNavVirtual) {
+          // Cross the virtual boundary: advance the window, focus first new row.
+          spRowsContainer.scrollTop = spRowsContainer.scrollTop + Math.max(80, spRowsContainer.clientHeight / 2);
+          renderVisualSceneNavigator();
+          const next = spRowsContainer.querySelectorAll("button");
+          const target = next[Math.min(next.length - 1, Math.max(0, next.length - 8))];
+          if (target) target.focus();
+          else if (next.length) next[0].focus();
+        } else if (e.key === "ArrowUp" && currentIndex === 0 && visualNavVirtual) {
+          spRowsContainer.scrollTop = Math.max(0, spRowsContainer.scrollTop - Math.max(80, spRowsContainer.clientHeight / 2));
+          renderVisualSceneNavigator();
+          const next = spRowsContainer.querySelectorAll("button");
+          const target = next[Math.min(7, next.length - 1)];
+          if (target) target.focus();
         } else {
           const nextIndex = e.key === "ArrowDown"
             ? Math.min(currentIndex + 1, focusables.length - 1)
             : Math.max(currentIndex - 1, 0);
           focusables[nextIndex].focus();
+        }
+      } else if (e.key === "Home") {
+        e.preventDefault();
+        if (visualNavVirtual && list.length) {
+          spRowsContainer.scrollTop = 0;
+          renderVisualSceneNavigator();
+        }
+        const first = spRowsContainer.querySelector("button");
+        if (first) first.focus();
+      } else if (e.key === "End") {
+        e.preventDefault();
+        if (visualNavVirtual && list.length) {
+          spRowsContainer.scrollTop = spRowsContainer.scrollHeight;
+          renderVisualSceneNavigator();
+        }
+        const all = spRowsContainer.querySelectorAll("button");
+        if (all.length) all[all.length - 1].focus();
+      } else if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+        const active = document.activeElement;
+        const group = active ? active.closest(".visual-scene-group") : null;
+        const scId = group ? group.dataset.sceneId : (active ? active.dataset.sceneId : null);
+        if (!scId) return;
+        e.preventDefault();
+        const isExpanded = visualExpandedSceneIds.has(scId) || scId === visualSelectedSceneId;
+        if (e.key === "ArrowRight" && !isExpanded) {
+          visualExpandedSceneIds.add(scId);
+          renderVisualSceneNavigator();
+          const btn = spRowsContainer.querySelector(`[data-shot-id][data-scene-id="${CSS.escape(scId)}"]`);
+          if (btn) btn.focus();
+        } else if (e.key === "ArrowLeft" && isExpanded) {
+          visualExpandedSceneIds.delete(scId);
+          renderVisualSceneNavigator();
+          const hdr = spRowsContainer.querySelector(`[data-action="select-scene"][data-scene-id="${CSS.escape(scId)}"]`);
+          if (hdr) hdr.focus();
         }
       }
     });
@@ -8941,6 +9342,12 @@ document.addEventListener("DOMContentLoaded", () => {
   window.loadVisualWorkbench = loadVisualWorkbench;
   window.selectVisualShot = selectVisualShot;
   window.renderVisualSceneNavigator = renderVisualSceneNavigator;
+  // Phase 5: read-only hooks for the Command Palette (no mutations here).
+  window.__uqPaletteScenes = function () { return visualScenesList || []; };
+  window.__uqPaletteFirstShot = function (sceneId) {
+    const sc = (visualScenesList || []).find(s => s.scene_id === sceneId);
+    return (sc && sc.shot_ids && sc.shot_ids[0]) || null;
+  };
 
 
   // ==============================================================================

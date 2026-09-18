@@ -239,7 +239,7 @@ class FFmpegRenderer:
                 "-f", "lavfi", "-i", f"color=c=0x0b0f19:s=1920x1080:d={total_dur}:r=24",
                 "-i", str(audio_file),
                 "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p",
-                "-c:a", "aac", "-b:a", "192k",
+                "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2",
                 "-shortest",
                 str(final_out)
             ]
@@ -267,7 +267,7 @@ class FFmpegRenderer:
                 "-i", str(audio_file),
                 "-vf", "scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2",
                 "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p",
-                "-c:a", "aac", "-b:a", "192k",
+                "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2",
                 "-shortest",
                 str(final_out)
             ]

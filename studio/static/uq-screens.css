@@ -153,5 +153,5 @@
 .mode-toggle-group { display: inline-flex; border: 1px solid var(--uq-line-strong);
   border-radius: var(--uq-r-ctl); overflow: hidden; }
 .mode-btn { background: transparent; border: none; color: var(--uq-ink-3); font-size: 12.5px;
-  font-weight: 600; padding: 6px 12px; cursor: pointer; }
+  font-weight: 600; padding: 6px 12px; cursor: pointer; min-height: 24px; }
 .mode-btn.active { background: var(--uq-accent-wash); color: var(--uq-accent-ink); }

@@ -163,6 +163,14 @@
         if (e.key === "Escape") closeLb();
         if (e.key === "ArrowLeft") stepLb(-1);
         if (e.key === "ArrowRight") stepLb(1);
+        // Phase 6: keep Tab cycling inside the lightbox dialog.
+        if (e.key === "Tab") {
+          var btns = Array.prototype.slice.call(lb.querySelectorAll(".lightbox-bar button"));
+          if (!btns.length) return;
+          var first = btns[0], last = btns[btns.length - 1];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
       });
     }
     var items = (gallery && gallery.length ? gallery : [{ src: src, kind: kind || "image" }]);
@@ -203,6 +211,7 @@
     makeDropzone(document.getElementById("intake-file-input"), "PNG / JPG / WEBP / MP4");
     makeDropzone(document.getElementById("vb-ref-file"), "PNG / JPG / WEBP");
     // Lightbox cho lưới tham chiếu có sẵn (delegation, kèm gallery Trước/Sau + phím ←/→)
+    // Phase 6: thumbnails are keyboard-activatable (Enter/Space), not hover/click-only.
     document.addEventListener("click", function (e) {
       var img = e.target.closest ? e.target.closest("#vb-ref-grid img, .vb-ref-grid img, .ref-carousel img") : null;
       if (img && img.src) {
@@ -211,6 +220,34 @@
         openLightbox(img.src, "image", all.map(function (x) { return { src: x.src, kind: "image" }; }));
       }
     });
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "Enter" && e.key !== " ") return;
+      var img = e.target && e.target.closest ? e.target.closest("#vb-ref-grid img, .vb-ref-grid img, .ref-carousel img") : null;
+      if (!img || !img.src) return;
+      e.preventDefault();
+      img.click();
+    });
+    var GRID_IMG_SEL = "#vb-ref-grid img, .vb-ref-grid img, .ref-carousel img";
+    function tagGridImg(img) {
+      if (img && !img.hasAttribute("tabindex")) {
+        img.setAttribute("tabindex", "0");
+        if (!img.getAttribute("role")) img.setAttribute("role", "button");
+        if (!img.getAttribute("aria-label")) {
+          img.setAttribute("aria-label", img.alt ? "Phóng to: " + img.alt : "Xem ảnh tham chiếu phóng to");
+        }
+      }
+    }
+    document.querySelectorAll(GRID_IMG_SEL).forEach(tagGridImg);
+    var gridImgMo = new MutationObserver(function (muts) {
+      muts.forEach(function (m) {
+        m.addedNodes.forEach(function (n) {
+          if (!n || n.nodeType !== 1) return;
+          if (n.matches && n.matches(GRID_IMG_SEL)) tagGridImg(n);
+          if (n.querySelectorAll) n.querySelectorAll(GRID_IMG_SEL).forEach(tagGridImg);
+        });
+      });
+    });
+    try { gridImgMo.observe(document.body, { childList: true, subtree: true }); } catch (e) {}
   }
 
   /* ---------- Modal: Escape + focus restore ---------- */

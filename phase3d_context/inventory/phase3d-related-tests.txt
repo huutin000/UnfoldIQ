@@ -1,0 +1,45 @@
+# Tests hiện có liên quan Phase 3D (export/render/download/artifact/ffmpeg/scheduler/preview/srt/zip)
+# Repo: D:\Project\UnfoldIQ | branch main @ af5274a | 2026-09-17
+
+## tests/test_production_export.py — class TestProductionExport (29 tests, preflight + snapshot determinism)
+- test_preflight_passes_on_valid_project — preflight OK trên project hợp lệ
+- test_export_creates_deterministic_directory — exports/<id> deterministic
+- test_export_never_overwrites — snapshot bất biến
+- test_manifest_schema_and_counts / test_counts_agree_across_representations / test_stable_ordering / test_source_hashes_are_sha256_and_stable / test_expected_filename_mapping_and_uniqueness / test_prompt_text_matches_canonical — manifest/determinism
+- test_audio_and_srt_copied_binary_safe / test_mp3_copied_when_canonical_exists / test_source_snapshot_copied — artifact copy
+- test_flow_pack_and_checklist_content — flow pack/checklist
+- test_blocks_on_outdated_shot / missing_prompt / missing_audio / missing_srt / invalid_parent_scene / timeline_gap / timeline_overlap / duplicate_filenames / continuity_error / stale_veo / open_voice_qa_review — preflight blockers
+- test_accepted_review_passes_gate — review accepted vượt gate
+- test_failed_export_leaves_no_partial_folder / test_old_export_unchanged_after_mutation / test_mutation_detected_as_older_snapshot / test_projects_isolated — atomicity/isolation
+
+## tests/test_phase14.py
+- TestPhase14Foundation.test_jobs_manager_lifecycle — jobs_manager lifecycle (render jobs dựa vào)
+- TestPhase14AssetIntakeAndTimeline.test_review_issues_and_export_package — review issues + export package (renderer_adapter.build_export_package)
+
+## tests/test_phase14_api.py — class TestPhase14API
+- test_activity_jobs — GET /api/activity/jobs (frontend poll đích)
+- test_review_issues_lifecycle — review issues CRUD
+- test_export_package — GET /api/projects/{id}/export/package
+- (các test còn lại: i18n, provider/cost, library, overview, research/claims, script, manifest/flow, timeline — bối cảnh Phase 14, không trực tiếp render)
+
+## tests/test_smart_render.py — TTS chunk render (KHÔNG phải video; phân biệt rõ cho 3D)
+- TestSmartRenderPlan (deterministic plan, hash sha256, voice/speed invalidation) — capability: audio chunk planning
+- TestSmartRenderCache (hit/miss/corrupt/prune) — capability: render_cache/
+- TestSmartRenderJobState (resume compatible/reject, ordered stitch, atomic replace) — capability: render_job.json (audio)
+- TestSmartRenderRetry (retry/success, bounded failure, cancellation) — capability: audio retry policy
+
+## tests/test_phase02_dependency_versioning_scheduler.py + test_phase02_gap_verification.py
+- ResourceGuard/CUDA_HEAVY+GPU_ENCODER coexistence denial; scheduler submit_job/active_counts — capability: scheduler/guard nền cho render job (không phải render)
+
+## tests/test_phase03a_app_shell_overview_story.py
+- data-workspace="export" markup tồn tại; target_workbench gồm overview/story/audio/scenes/export — capability: App Shell nav tới export (3A contract 3D phải giữ)
+
+## tests/test_phase03c_gap_closure.py — TestScopeGovernance
+- test_no_3d_export_workbench_implemented — assert KHÔNG có route export-workbench/preflight (guard chống 3D sớm; 3D implement sẽ phải update test này)
+- test_no_phase4_asset_pipeline — assert KHÔNG có thumbnail/proxy/webp routes
+
+## Ghi chú coverage gap cho 3D (KHÔNG có test hiện tại):
+- Không test nào gọi POST render/draft, POST render/final, GET render/status (trigger/status qua HTTP chưa cover).
+- Không test nào GET /renders/draft/draft_preview.mp4 hay /renders/final/final.mp4 (vì route không tồn tại).
+- Không test nào cho NVENC/CPU fallback (capability không tồn tại).
+- Không test nào cho preview player UI/polling frontend (browser-only).

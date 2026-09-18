@@ -18,7 +18,9 @@ h1, h2, h3, h4 { text-wrap: pretty; line-height: 1.3; margin: 0; }
 p { margin: 0; }
 button { font-family: inherit; }
 :focus { outline: none; }
-:focus-visible { outline: 2px solid var(--uq-focus); outline-offset: 2px; border-radius: 4px; }
+/* Phase 6: single product-consistent keyboard focus treatment (SC 2.4.7).
+   2px ring via --uq-focus-ring; every outline:none above relies on this. */
+:focus-visible { outline: 2px solid var(--uq-focus-ring, #4f8cff); outline-offset: 2px; border-radius: 4px; }
 ::selection { background: rgba(59, 130, 246, 0.35); }
 ::-webkit-scrollbar { width: 10px; height: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }

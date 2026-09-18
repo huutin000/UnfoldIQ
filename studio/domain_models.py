@@ -55,6 +55,8 @@ class AssetRef(BaseModel):
     shot_id: Optional[str] = None
     thumbnail_path: Optional[str] = None
     master_path: Optional[str] = None
+    # Phase 4: lightweight 720p preview (video only; null for still/audio per contract).
+    proxy_path: Optional[str] = None
     lifecycle_state: str = "GENERATED"  # GENERATED, SELECTED, APPROVED, LOCKED, REJECTED
     checksum: Optional[str] = None
     mime_type: Optional[str] = None
@@ -72,6 +74,10 @@ class Shot(BaseModel):
     aspect_ratio: str = "16:9"
     veo_prompt: str = ""
     negative_prompt: Optional[str] = ""
+    # Gate B: canonical Shot-level image/start-frame prompt identity.
+    # Legacy scene-level image_prompts.json prompt is a backward-compatible
+    # fallback only — each Shot inherits it iff no Shot override exists.
+    image_prompt: Optional[str] = None
     continuity_anchor: Optional[str] = None
     subject_action: Optional[str] = None
     environmental_action: Optional[str] = None

@@ -17,10 +17,11 @@ import json
 import logging
 import shutil
 import tempfile
+import asyncio
 from pathlib import Path
 from typing import Dict, Any, Optional, List
 
-from fastapi import APIRouter, HTTPException, UploadFile, File, Form, BackgroundTasks
+from fastapi import APIRouter, HTTPException, Request, UploadFile, File, Form, BackgroundTasks
 from fastapi.responses import FileResponse, JSONResponse
 from pydantic import BaseModel, Field
 
@@ -550,9 +551,24 @@ async def trigger_draft_render(dir_name: str, background_tasks: BackgroundTasks)
     return {"status": "QUEUED", "job": job}
 
 @router.post("/api/projects/{dir_name}/render/final")
-async def trigger_final_render(dir_name: str, background_tasks: BackgroundTasks):
-    # P0 (§2 FINAL-GAPS): Final Render bắt buộc qua cùng preflight chuẩn với
-    # production/export. Preflight FAIL → không render, trả blocker rõ ràng (422).
+async def trigger_final_render(dir_name: str, request: Request):
+    """Phase 8 manifest-driven Final Render (Draft path untouched).
+
+    Body: {exportId, encoderProfile}. Routes ONLY through
+    ManifestRenderService against the persisted export snapshot; never
+    compiles a manifest implicitly and never calls legacy render_final().
+    """
+    from typing import Literal as _Literal
+    from pydantic import BaseModel as _BaseModel
+    from studio import jobs_manager as _jobs_module
+    from studio.manifest_render_service import ManifestRenderService
+    from studio.production_export import validate_export_id as _validate_export_id
+
+    class FinalRenderRequest(_BaseModel):
+        exportId: str
+        encoderProfile: _Literal["FINAL_QUALITY", "ACCELERATED"] = "FINAL_QUALITY"
+
+    _validate_dir_name(dir_name)
     pdir = _get_project_dir(dir_name)
     pre = production_preflight(pdir)
     if not pre.get("ok"):
@@ -561,35 +577,75 @@ async def trigger_final_render(dir_name: str, background_tasks: BackgroundTasks)
             "blockers": pre.get("blockers", []),
             "readiness": pre.get("readiness", {}),
         })
-    guard = resource_guard.can_start_heavy_job("FINAL_RENDER")
-    if not guard.get("allowed"):
-        raise HTTPException(status_code=503, detail={"message": guard.get("reasonVi"), "action": guard.get("actionVi")})
+    try:
+        payload = await request.json()
+    except Exception:
+        raise HTTPException(status_code=400, detail="Yêu cầu render chính thức thiếu nội dung JSON.")
+    try:
+        req = FinalRenderRequest(**(payload or {}))
+    except Exception:
+        raise HTTPException(status_code=400, detail="encoderProfile phải là FINAL_QUALITY hoặc ACCELERATED.")
+    try:
+        export_id = _validate_export_id(req.exportId)
+    except Exception:
+        raise HTTPException(status_code=400, detail="exportId không hợp lệ.")
+    service = _render_service_singleton()
+    result = await service.start_final_render(
+        project_id=dir_name, export_id=export_id,
+        encoder_profile=req.encoderProfile)
+    if result.get("errorCode") == "ALREADY_RENDERED":
+        raise HTTPException(status_code=409, detail={
+            "message": "Export này đã có final.mp4 chính thức (không ghi đè).",
+            "finalPath": result.get("finalPath")})
+    if result.get("errorCode"):
+        raise HTTPException(status_code=422, detail={
+            "message": result.get("message", "Không thể khởi chạy Final Render."),
+            "errorCode": result.get("errorCode")})
+    job = _jobs_module.jobs_manager.get_job(result["jobId"]) or {}
+    return {"status": job.get("status", "QUEUED"), "job": {"id": result["jobId"], **job},
+            "jobId": result["jobId"], "exportId": export_id,
+            "encoderProfile": req.encoderProfile,
+            "reused": bool(result.get("reused"))}
 
-    job = jobs_manager.create_job(
-        "final_render",
-        project_id=dir_name,
-        provider="ffmpeg",
-        checkpoint={"stage": "rendering", "valid": True, "target": "final_master"}
+
+def _render_service_singleton():
+    """Process-wide ManifestRenderService; rebuilt if PROJECTS_DIR moves (tests)."""
+    from studio import jobs_manager as _jobs_module
+    from studio.config import PROJECTS_DIR as _ROOT
+    from studio.manifest_render_service import ManifestRenderService
+    from studio.resource_scheduler import resource_scheduler as _sched
+    cached = getattr(_render_service_singleton, "_instance", None)
+    if cached is None or cached.projects_dir != _ROOT:
+        cached = ManifestRenderService(projects_dir=_ROOT,
+                                       jobs=_jobs_module.jobs_manager,
+                                       scheduler=_sched)
+        _render_service_singleton._instance = cached
+    return cached
+
+
+@router.get("/api/projects/{project_id}/exports/{export_id}/final/file")
+async def get_export_final_file(project_id: str, export_id: str, download: int = 0):
+    """Export-explicit canonical Final resolver (fixed final.mp4, no traversal)."""
+    from studio.production_export import validate_export_id as _validate_export_id
+    _validate_dir_name(project_id)
+    try:
+        clean_export = _validate_export_id(export_id)
+    except Exception:
+        raise HTTPException(status_code=400, detail="exportId không hợp lệ.")
+    pdir = _get_project_dir(project_id)
+    target = pdir / "exports" / clean_export / "final.mp4"
+    try:
+        target.resolve().relative_to(pdir.resolve())
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Đường dẫn artifact không hợp lệ.")
+    if not target.is_file():
+        raise HTTPException(status_code=404, detail="Export này chưa có final.mp4 chính thức.")
+    return FileResponse(
+        path=str(target),
+        media_type="video/mp4",
+        filename=target.name,
+        content_disposition_type="attachment" if download else "inline",
     )
-    
-    def _run():
-        jobs_manager.update_job(job["id"], status=JobStatus.RUNNING, progress=0.2, message="Đang kết xuất bản chính 1080p Master...")
-        try:
-            res = renderer_adapter.render_final(pdir)
-            out_p = str(res.get("outputPath") or pdir / "renders" / "final" / "final.mp4")
-            jobs_manager.update_job(
-                job["id"],
-                status=JobStatus.COMPLETED,
-                progress=1.0,
-                message="Kết xuất video chính thức thành công!",
-                artifact_refs=[out_p]
-            )
-        except Exception as e:
-            logger.error(f"Final render failed: {e}")
-            jobs_manager.update_job(job["id"], status=JobStatus.FAILED, error=str(e), message="Kết xuất thất bại")
-
-    background_tasks.add_task(_run)
-    return {"status": "QUEUED", "job": job}
 
 @router.get("/api/projects/{dir_name}/render/status")
 async def get_render_status(dir_name: str):
@@ -612,3 +668,309 @@ async def get_export_package(dir_name: str):
     final_video = pdir / "renders" / "final" / "final.mp4"
     pkg = renderer_adapter.build_export_package(pdir, final_video)
     return pkg
+
+
+# ---------------------------------------------------------------------------
+# 10b. Export Readiness (Subphase 3D) — canonical preflight API for the
+# Export Workbench UI. Reuses production_export.preflight(); no second rule set.
+# ---------------------------------------------------------------------------
+
+# Render output slots served by the safe media route below. Fixed filenames —
+# the client can never request an arbitrary path (traversal impossible).
+_RENDER_SLOTS = {
+    "draft": ("renders", "draft", "draft_preview.mp4"),
+    "final": ("renders", "final", "final.mp4"),
+}
+
+# Check metadata: Vietnamese label + workspace CTA. States come from
+# production_export.preflight() verbatim (code identifiers stay English).
+_READINESS_CHECKS = (
+    ("audio", "Âm thanh master (audio.wav)", "voice", "Sang Giọng đọc"),
+    ("voiceQa", "Kiểm định giọng đọc (Voice QA)", "voice-qa", "Sang kiểm âm"),
+    ("timestamp", "Mốc thời gian (timestamps.json)", "voice", "Sang Giọng đọc"),
+    ("subtitles", "Phụ đề (timestamps.srt)", "voice", "Sang Giọng đọc"),
+    ("scenePlan", "Kế hoạch cảnh (scene_plan.json)", "scenes", "Sang Hình ảnh & Cảnh"),
+    ("visualContinuity", "Liên tục hình ảnh (Visual Bible)", "scenes", "Sang Hình ảnh & Cảnh"),
+    ("veo", "Prompt hình ảnh/chuyển động (Veo)", "scenes", "Sang Hình ảnh & Cảnh"),
+)
+
+_OPTIONAL_OK_STATES = {"READY"}
+
+
+def _validate_dir_name(dir_name: str) -> str:
+    """Reject path traversal / illegal names before touching the filesystem."""
+    if not dir_name or not isinstance(dir_name, str):
+        raise HTTPException(status_code=400, detail="Tên dự án không hợp lệ.")
+    clean = dir_name.strip()
+    if not clean or ".." in clean or "/" in clean or "\\" in clean:
+        raise HTTPException(status_code=400, detail="Tên dự án không hợp lệ (path traversal).")
+    return clean
+
+
+# ---------------------------------------------------------------------------
+# Phase 7: read-only Render Manifest preview (no side effects, no persist).
+# ---------------------------------------------------------------------------
+
+@router.get("/api/projects/{dir_name}/render-manifest")
+async def get_render_manifest_preview(dir_name: str):
+    """Preview the renderer-independent Render Manifest for a project.
+
+    Read-only: compiles in memory, validates, returns manifest +
+    validation. Never persists, never creates exportId.
+    """
+    from studio.timeline_compiler import compile_manifest_preview
+    _validate_dir_name(dir_name)
+    pdir = _get_project_dir(dir_name)
+    result = compile_manifest_preview(pdir)
+    return {
+        "manifest": result.manifest.model_dump(mode="json"),
+        "validation": result.validation.model_dump(mode="json"),
+        "persisted": False,
+    }
+
+
+@router.get("/api/projects/{dir_name}/export/readiness")
+async def get_export_readiness(dir_name: str):
+    """Canonical Export Readiness: preflight checks + warnings + render + artifacts.
+
+    Read-only. Business rules come from production_export.preflight();
+    this endpoint only shapes them for the Export Workbench UI.
+    """
+    _validate_dir_name(dir_name)
+    pdir = _get_project_dir(dir_name)
+    pre = production_preflight(pdir)
+    readiness = pre.get("readiness", {}) or {}
+
+    srt_path = pdir / "timestamps.srt"
+    srt_state = "READY" if srt_path.is_file() else "MISSING"
+
+    draft_p = pdir / "renders" / "draft" / "draft_preview.mp4"
+    final_p = pdir / "renders" / "final" / "final.mp4"
+    has_draft, has_final = draft_p.is_file(), final_p.is_file()
+
+    checks = []
+    blockers: List[str] = []
+    for cid, label, ws, cta in _READINESS_CHECKS:
+        state = readiness.get(cid, srt_state if cid == "subtitles" else "MISSING")
+        state = str(state or "MISSING").upper()
+        ok = state in _OPTIONAL_OK_STATES
+        if not ok:
+            blockers.append(cid)
+        checks.append({
+            "id": cid,
+            "label": label,
+            "state": state,
+            "ok": ok,
+            "action": {"workspace": ws, "label": cta},
+        })
+
+    warnings = []
+    if not has_draft:
+        warnings.append({"id": "draft", "message": "Chưa có bản nháp 720p. Có thể kết xuất nháp trước để kiểm tra nhịp độ."})
+    mp3_path = pdir / "audio.mp3"
+    if not mp3_path.is_file():
+        warnings.append({"id": "mp3", "message": "Chưa có bản MP3 nhẹ (tùy chọn). Bản WAV master vẫn đủ để kết xuất."})
+
+    def _dl(kind: str) -> str:
+        return f"/api/projects/{dir_name}/renders/{kind}/file?download=1"
+
+    def _pv(kind: str) -> str:
+        return f"/api/projects/{dir_name}/renders/{kind}/file"
+
+    audio_path = pdir / "audio.wav"
+    artifacts = [
+        {"id": "audio.wav", "label": "Âm thanh master (WAV)", "kind": "audio",
+         "exists": audio_path.is_file(),
+         "sizeBytes": audio_path.stat().st_size if audio_path.is_file() else 0,
+         "url": f"/api/projects/{dir_name}/audio/wav"},
+        {"id": "timestamps.srt", "label": "Phụ đề (SRT)", "kind": "subtitle",
+         "exists": srt_path.is_file(),
+         "sizeBytes": srt_path.stat().st_size if srt_path.is_file() else 0,
+         "url": f"/api/projects/{dir_name}/timestamps/srt"},
+        {"id": "draft_preview.mp4", "label": "Bản nháp 720p (MP4)", "kind": "video",
+         "exists": has_draft,
+         "sizeBytes": draft_p.stat().st_size if has_draft else 0,
+         "url": _dl("draft"), "previewUrl": _pv("draft")},
+        {"id": "final.mp4", "label": "Bản chính thức 1080p (MP4)", "kind": "video",
+         "exists": has_final,
+         "sizeBytes": final_p.stat().st_size if has_final else 0,
+         "url": _dl("final"), "previewUrl": _pv("final")},
+    ]
+    if mp3_path.is_file():
+        artifacts.append({"id": "audio.mp3", "label": "Âm thanh nhẹ (MP3)", "kind": "audio",
+                          "exists": True, "sizeBytes": mp3_path.stat().st_size,
+                          "url": f"/api/projects/{dir_name}/audio/mp3"})
+
+    ready = pre.get("ok", False) and len(blockers) == 0
+    return {
+        "project": dir_name,
+        "status": "READY" if ready else "BLOCKED",
+        "ready": ready,
+        "checks": checks,
+        "blockers": blockers,
+        "rawBlockers": pre.get("blockers", []),
+        "warnings": warnings,
+        "render": {
+            "hasDraft": has_draft,
+            "hasFinal": has_final,
+            "draftSizeBytes": draft_p.stat().st_size if has_draft else 0,
+            "finalSizeBytes": final_p.stat().st_size if has_final else 0,
+            "engine": "FFmpeg (H.264, CPU)",
+        },
+        "artifacts": artifacts,
+        "sceneCount": pre.get("sceneCount", 0),
+        "shotCount": pre.get("shotCount", 0),
+    }
+
+
+@router.get("/api/projects/{dir_name}/renders/{kind}/file")
+async def get_render_media_file(dir_name: str, kind: str, download: int = 0):
+    """Serve one fixed render output (draft/final preview or download).
+
+    Security: `kind` is whitelisted, filenames are fixed server-side, the
+    project dir is resolved server-side — no arbitrary paths, no traversal,
+    no directory exposure. 404 JSON (Vietnamese) when the artifact is absent
+    so the UI can show an empty state instead of a broken player.
+    """
+    _validate_dir_name(dir_name)
+    slot = _RENDER_SLOTS.get((kind or "").lower())
+    if slot is None:
+        raise HTTPException(status_code=404, detail="Loại bản kết xuất không hợp lệ (chỉ draft/final).")
+    pdir = _get_project_dir(dir_name)
+    target = pdir.joinpath(*slot)
+    # Belt-and-braces: resolved path must stay inside the project dir.
+    try:
+        target.resolve().relative_to(pdir.resolve())
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Đường dẫn artifact không hợp lệ.")
+    if not target.is_file():
+        raise HTTPException(status_code=404, detail="Chưa có bản kết xuất. Hãy chạy kết xuất khi dự án đã sẵn sàng.")
+    return FileResponse(
+        path=str(target),
+        media_type="video/mp4",
+        filename=target.name,
+        content_disposition_type="attachment" if download else "inline",
+    )
+
+
+# ---------------------------------------------------------------------------
+# 10c. Asset Registry & Derivatives (Phase 4) — thumbnail / proxy / registry.
+# No auto-generation on read: derivatives are built at intake or via the
+# explicit repair endpoint below (§40). All paths resolved server-side.
+# ---------------------------------------------------------------------------
+
+def _resolve_registry_file(project_dir: Path, rel: Optional[str], kind: str) -> Path:
+    if not rel:
+        raise HTTPException(status_code=404, detail="Chưa có ảnh thu nhỏ cho tài nguyên này.")
+    target = (project_dir / rel).resolve()
+    try:
+        target.relative_to(project_dir.resolve())
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Đường dẫn tài nguyên không hợp lệ.")
+    if not target.is_file():
+        raise HTTPException(status_code=404, detail="Chưa có ảnh thu nhỏ cho tài nguyên này.")
+    return target
+
+
+@router.get("/api/projects/{dir_name}/assets/registry")
+async def get_asset_registry(dir_name: str):
+    """Read the 3-tier Asset Registry (master/proxy/thumbnail by stable asset_id)."""
+    from studio.asset_registry import sync_from_intake_ledger
+    _validate_dir_name(dir_name)
+    pdir = _get_project_dir(dir_name)
+    return sync_from_intake_ledger(pdir)
+
+
+@router.get("/api/projects/{dir_name}/assets/{asset_id}/thumbnail")
+async def get_asset_thumbnail(dir_name: str, asset_id: str):
+    """Canonical thumbnail route: serves image/webp, never generates on read."""
+    from studio.asset_registry import get_asset
+    _validate_dir_name(dir_name)
+    pdir = _get_project_dir(dir_name)
+    entry = get_asset(pdir, asset_id)
+    if entry is None:
+        raise HTTPException(status_code=404, detail=f"Không tìm thấy tài nguyên: {asset_id}")
+    target = _resolve_registry_file(pdir, entry.get("thumbnail"), "thumbnail")
+    return FileResponse(path=str(target), media_type="image/webp",
+                        filename=target.name, content_disposition_type="inline")
+
+
+@router.get("/api/projects/{dir_name}/assets/{asset_id}/proxy")
+async def get_asset_proxy(dir_name: str, asset_id: str, download: int = 0):
+    """Serve the 720p proxy (video only). 404 JSON when absent or N/A."""
+    from studio.asset_registry import get_asset
+    _validate_dir_name(dir_name)
+    pdir = _get_project_dir(dir_name)
+    entry = get_asset(pdir, asset_id)
+    if entry is None:
+        raise HTTPException(status_code=404, detail=f"Không tìm thấy tài nguyên: {asset_id}")
+    if not entry.get("proxy"):
+        raise HTTPException(status_code=404, detail="Tài nguyên này không có bản xem trước nhẹ.")
+    target = _resolve_registry_file(pdir, entry.get("proxy"), "proxy")
+    return FileResponse(path=str(target), media_type="video/mp4",
+                        filename=target.name,
+                        content_disposition_type="attachment" if download else "inline")
+
+
+class DerivativesRequest(BaseModel):
+    kinds: List[str] = ["thumbnail", "proxy"]
+
+    model_config = {"extra": "ignore"}
+
+
+@router.post("/api/projects/{dir_name}/assets/{asset_id}/derivatives")
+async def build_asset_derivatives(dir_name: str, asset_id: str, req: DerivativesRequest):
+    """Explicit repair/generation of thumbnail/proxy for one stable asset_id.
+
+    Runs synchronously (single asset, seconds-scale). Master preservation is
+    verified by checksum; failures leave master + registry intact.
+    """
+    from studio.asset_registry import ensure_thumbnail, ensure_proxy
+    _validate_dir_name(dir_name)
+    pdir = _get_project_dir(dir_name)
+    kinds = [str(k or "").lower() for k in (req.kinds or [])]
+    bad = [k for k in kinds if k not in ("thumbnail", "proxy")]
+    if bad:
+        raise HTTPException(status_code=400, detail=f"Loại derived không hợp lệ: {bad}")
+    results: Dict[str, Any] = {}
+    try:
+        if "thumbnail" in kinds:
+            results["thumbnail"] = ensure_thumbnail(pdir, asset_id)
+        if "proxy" in kinds:
+            results["proxy"] = ensure_proxy(pdir, asset_id)
+    except KeyError:
+        raise HTTPException(status_code=404, detail=f"Không tìm thấy tài nguyên: {asset_id}")
+    except (FileNotFoundError, ValueError, RuntimeError) as e:
+        raise HTTPException(status_code=422, detail=f"Không thể tạo derived media: {e}")
+    return {"asset_id": asset_id, "results": results}
+
+
+# ---------------------------------------------------------------------------
+# 10d. Portable Production Package (Phase 4).
+# GET builds the ZIP off the event loop (IO-bound) then downloads it.
+# Missing REQUIRED group => 422 blocker; optional groups are skipped + noted.
+# ---------------------------------------------------------------------------
+
+@router.get("/api/projects/{dir_name}/export/portable-package")
+async def download_portable_package(dir_name: str):
+    """Build + download the portable production package (10 component groups)."""
+    from studio.portable_package import build_portable_package
+    _validate_dir_name(dir_name)
+    pdir = _get_project_dir(dir_name)
+    try:
+        result = await asyncio.to_thread(build_portable_package, pdir)
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail={
+            "message": f"Chưa thể đóng gói sản xuất: {e}",
+            "project": dir_name,
+        })
+    except Exception as e:
+        logger.exception(f"Portable package failed for {dir_name}: {e}")
+        raise HTTPException(status_code=500, detail="Không thể tạo gói sản xuất.")
+    zip_path = Path(result["zip_path"])
+    return FileResponse(
+        path=str(zip_path),
+        media_type="application/zip",
+        filename=zip_path.name,
+        content_disposition_type="attachment",
+    )

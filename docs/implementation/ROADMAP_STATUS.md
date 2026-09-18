@@ -1,8 +1,8 @@
 # BẢNG TỔNG QUAN TRẠNG THÁI LỘ TRÌNH UNFOLDIQ WORKSTATION
 ## ROADMAP EXECUTION & GOVERNANCE STATUS
 
-> **Phiên bản:** Revision 2.2.0 (Subphase 3C Visual Workbench PASS / FINAL)  
-> **Cập nhật:** 2026-09-17  
+> **Phiên bản:** Revision 2.8.1 (Phase 7 & Phase 8 PASS / FINAL / VERIFIED per external review closure; Phase 9 NOT STARTED)  
+> **Cập nhật:** 2026-09-18  
 > **Tổng số Top-Level Phases:** **9 Phases** (Phase 3 gồm 4 subphases tuần tự) + **1 Final Quality Gate** (không phải Phase 10).
 
 ---
@@ -14,16 +14,16 @@
 | **Pre-Gate** | Pre-Implementation Baseline | ✅ **PASSED** | `VERIFIED` | 43/43 tests khởi điểm (8.38s) |
 | **Phase 1** | **Workflow \& Data Foundation** | ✅ **PASS / FINAL** | `VERIFIED` | **451/451 tests PASSED (100%)** (35.34s) tại `PHASE_01_FINAL_VERIFICATION_REPORT.md` |
 | **Phase 2** | **Dependency Engine, Versioning \& Scheduler** | ✅ **PASS / FINAL** | `VERIFIED` | **483/483 tests PASSED (100%)** (42.72s) tại `PHASE_02_FINAL_CLOSURE_REPORT.md` \& `PHASE_02_MICRO_CLOSURE_REPORT.md` (baseline ban đầu 467 tests) \| Sẵn sàng khởi động Subphase 3A |
-| **Phase 3** | **Core Workbenches Restructuring** | 🟡 **IN PROGRESS** | `IN PROGRESS` | Chuỗi 4 subphases tuần tự (3A $\rightarrow$ 3D) |
+| **Phase 3** | **Core Workbenches Restructuring** | ✅ **PASS / FINAL** | `VERIFIED` | Chuỗi 4 subphases tuần tự (3A $\rightarrow$ 3D) — tất cả VERIFIED tại `PHASE_03D_FINAL_CLOSURE_REPORT.md` |
 | ↳ *Subphase 3A* | *App Shell + Overview + Story Workbench* | ✅ **PASS / FINAL** | `VERIFIED` | Sequential Execution Gate 1 (8/8 tests, browser verified) |
 | ↳ *Subphase 3B* | *Voice Workbench (Sync \& Pronunciation)* | ✅ **PASS / FINAL** | `VERIFIED` | Toàn bộ Cổng A-P ĐẠT (507/507 tests PASSED, LocalResourceScheduler integrated, 0 network overhead) — Đã phê duyệt đóng chốt tại `PHASE_03B_MICRO_CLOSURE_REPORT.md` |
-| ↳ *Subphase 3C* | *Visual Workbench (Scenes, Shots, Bible)* | ✅ **PASS / FINAL** | `VERIFIED` | **517/517 tests PASSED** (80.04s) — 10 tests mới, 79 cảnh, 5 selective API routes 200 OK, shot detail 12/12 trường OK, commit `693c7b7`. Xem `PHASE_03C_IMPLEMENTATION_REPORT.md` |
-| ↳ *Subphase 3D* | *Export Workbench UI (Preflight \& Triggers)*| ⏳ *NOT STARTED* | `NOT STARTED` | Sequential Execution Gate 4 (sau 3C) |
-| **Phase 4** | **Media, Asset & Export Pipeline** | ⏳ **NOT STARTED** | `NOT STARTED` | Thumbnail WebP, Proxy 720p, Portable Package |
-| **Phase 5** | **UI Polish, Consolidation & Virtualization**| ⏳ **NOT STARTED** | `NOT STARTED` | 7 primitives, ảo hóa DOM, Command Palette |
-| **Phase 6** | **Responsive & WCAG 2.2 AA-Oriented Accessibility Hardening** | ⏳ **NOT STARTED** | `NOT STARTED` | Thích ứng laptop 768p, kiểm thử tiếp cận 8 bước |
-| **Phase 7** | **Render Manifest & Timeline Compiler** | 🔵 **FUTURE** | `FUTURE` | Execution Note: NOT STARTED \| Manifest trung gian độc lập, 141 Shots, 10 Gates |
-| **Phase 8** | **Manifest-Driven FFmpeg Render Engine** | 🔵 **FUTURE** | `FUTURE` | Execution Note: NOT STARTED \| Tái cấu trúc engine FFmpeg hiện hữu, NVENC/CPU |
+| ↳ *Subphase 3C* | *Visual Workbench (Scenes, Shots, Bible)* | ✅ **PASS / FINAL** | `VERIFIED` | **566/566 tests PASSED** + browser closure (Chrome CDP, 3 viewports, 12 screenshots). Xem `PHASE_03C_FINAL_VERIFICATION_REPORT.md` + `PHASE_03C_BROWSER_CLOSURE_REPORT.md` |
+| ↳ *Subphase 3D* | *Export Workbench UI (Preflight \& Triggers)*| ✅ **PASS / FINAL** | `VERIFIED` | Readiness API + preflight UI + render guards/status + safe preview/downloads. 588/588 tests (replaced stale 3D-absence guard bằng governance contract). Xem `PHASE_03D_IMPLEMENTATION_REPORT.md` + `PHASE_03D_FINAL_CLOSURE_REPORT.md` |
+| **Phase 4** | **Media, Asset & Export Pipeline** | ✅ **PASS / FINAL** | `VERIFIED` | Benchmark B phân biệt quality + final-render AAC/48k/stereo ffprobe + accepted-version semantics + package re-verify. 634/634 tests. Xem `PHASE_04_IMPLEMENTATION_REPORT.md` + `PHASE_04_FINAL_CLOSURE_REPORT.md` |
+| **Phase 5** | **UI Polish, Consolidation & Virtualization**| ✅ **PASS / FINAL** | `VERIFIED` | Sustained-scroll gate: virt median 67.4 + dense 134.0 active FPS + render/DOM/functional/palette sạch + 696/696 tests. Xem `PHASE_05_IMPLEMENTATION_REPORT.md` + `PHASE_05_FINAL_CLOSURE_REPORT.md` (historical) + `PHASE_05_FINAL_EVIDENCE_CLOSURE_REPORT.md` (discrete-wheel evidence) + `PHASE_05_FINAL_PERFORMANCE_GATE_REPORT.md` (decisive) |
+| **Phase 6** | **Responsive & WCAG 2.2 AA-Oriented Accessibility Hardening** | ✅ **PASS / FINAL** | `VERIFIED` | External review PASSED (manual-closure + two-gate evidence). Xem `PHASE_06_IMPLEMENTATION_REPORT.md` + closure reports |
+| **Phase 7** | **Render Manifest & Timeline Compiler** | ✅ **PASS / FINAL** | `VERIFIED` | Renderer-independent manifest + frame-accurate compiler (24fps integer frames) + lifecycle precedence + assetRegistryHash + structured timing pre-validation + read-only preview + immutable snapshots. Final closure regression **854/854 PASS**; external review status: **PASS / FINAL / VERIFIED**. Xem `PHASE_07_IMPLEMENTATION_REPORT.md`, `PHASE_07_FINAL_CLOSURE_REPORT.md` & `PHASE_07_FINAL_EXTERNAL_CLOSURE_REPORT.md` |
+| **Phase 8** | **Manifest-Driven FFmpeg Render Engine** | ✅ **PASS / FINAL** | `VERIFIED` | Manifest-driven Final render engine consuming Phase 7 snapshots (`render-manifest.json`). Visual composition + crossfades + audio ducking + soft/hard subtitles + NVENC/libx264 dual profiles + timeline source validation + immutable atomic publish to `exports/<exportId>/final.mp4`. 120 Phase 8 tests passed, 974 full repo regression passed. External review status: **PASS / FINAL / VERIFIED**. Xem `PHASE_08_IMPLEMENTATION_REPORT.md` & `PHASE_08_FINAL_CLOSURE_REPORT.md` |
 | **Phase 9** | **Automated Render QA & Verification** | 🔵 **FUTURE** | `FUTURE` | Execution Note: NOT STARTED \| ffprobe inspection, Hard Gates vs Warnings |
 | **Final Gate** | **Final System Integration & Validation Gate** | 🏁 **NOT YET RUN** | `NOT RUN` | **Cổng Nghiệm thu Toàn diện Hệ thống** (13 tiêu chuẩn) |
 | **Future** | **Web Preview & Timeline Editor** | 💡 *CONSIDERATION* | `RESEARCH` | Nghiên cứu tương lai (Remotion / Custom Timeline) |

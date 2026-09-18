@@ -686,6 +686,9 @@ Xây dựng giao diện `Export Workbench` chuyên nghiệp với Thước đo k
   - Nút Primary CTA: "BẮT ĐẦU KẾT XUẤT VIDEO CHÍNH THỨC".
   - Danh mục tải về độc lập các artifact: Master WAV, MP3, SRT, VTT, JSON, và gói ZIP hoàn chỉnh.
 
+> [!NOTE]
+> **Ghi nhận thực thi 3D (micro-closure 2026-09-17, không rewrite lịch sử):** Subphase 3D đã thực thi đúng boundary “UI + reuse capability hiện hữu”: reuse render draft/final và `production_export.preflight()` hiện có; renderer giữ `libx264` CPU (NVENC/benchmark thuộc Phase 4, engine thuộc Phase 8 — không implement trong 3D); CTA giữ casing thường của design system (“Kết xuất video chính thức”); downloads chỉ artifact đã tồn tại (WAV/MP3/SRT/MP4 render + prompts hiện có), không VTT/ZIP Portable Package mới (thuộc Phase 4). Các mục §2 chưa thực thi (NVENC auto-prefer, VTT, ZIP) được chuyển ownership rõ ràng về Phase 4/8, không xóa khỏi roadmap.
+
 ##### 3. Affected Files
 - `studio/static/index.html`, `studio/static/app.js`.
 
