@@ -18,6 +18,9 @@ if (-not (Test-Path $RuntimeDir)) {
 }
 
 $PythonExe = Join-Path $RepoRoot "upstream\kokoro-fastapi\.venv\Scripts\python.exe"
+$PythonwExe = Join-Path $RepoRoot "upstream\kokoro-fastapi\.venv\Scripts\pythonw.exe"
+# Uu tien dung pythonw.exe de chay ngam hoan toan, khong bat tab/khung CMD den tren Windows 11
+$WorkerPython = if (Test-Path $PythonwExe) { $PythonwExe } else { $PythonExe }
 $KokoroDir = Join-Path $RepoRoot "upstream\kokoro-fastapi"
 $KokoroPidFile = Join-Path $RuntimeDir "kokoro.pid"
 $KokoroLogFile = Join-Path $RuntimeDir "kokoro.log"
@@ -128,11 +131,9 @@ if ($kokoroPortOccupied) {
     $nowStr = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
     Set-Content -Path $KokoroLogFile -Value "[$nowStr] [LAUNCHER] Starting Kokoro-FastAPI on port 8880..." -Encoding utf8
 
-    # Ghi chu: khong dung -WindowStyle Hidden cung voi -RedirectStandardOutput
-    # vi ket hop do gay deadlock pipe tren Windows. Process se chay an vi
-    # no khong duoc cap phat console window moi (inherit tu parent).
+    # Su dung WorkerPython (pythonw.exe) chay ngam hoan toan khong sinh cua so CMD tren Windows Terminal
     $procKokoro = Start-Process `
-        -FilePath $PythonExe `
+        -FilePath $WorkerPython `
         -ArgumentList "-m uvicorn api.src.main:app --host 127.0.0.1 --port 8880" `
         -WorkingDirectory $KokoroDir `
         -RedirectStandardOutput $KokoroLogFile `
@@ -142,7 +143,7 @@ if ($kokoroPortOccupied) {
     $spawnedKokoro = $true
     Set-Content -Path $KokoroPidFile -Value $procKokoro.Id -Encoding utf8
     Write-Host "  [..] Da spawn tien trinh Kokoro-FastAPI (PID: $($procKokoro.Id))." -ForegroundColor Gray
-    Write-Host "  [..] Dang cho Kokoro nap model CUDA va health check" -NoNewline -ForegroundColor Gray
+    Write-Host "  [..] Dang nap model PyTorch & CUDA vao GPU (khoang 8-12 giay)" -NoNewline -ForegroundColor Gray
 
     # Cho tai model CUDA va health check (toi da 35 giay)
     $maxKokoroWait = 35
@@ -240,8 +241,9 @@ if ($studioPortOccupied) {
     $nowStr = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
     Set-Content -Path $StudioLogFile -Value "[$nowStr] [LAUNCHER] Starting UnfoldIQ Studio on port 7860..." -Encoding utf8
 
+    # Su dung WorkerPython (pythonw.exe) chay ngam hoan toan khong sinh cua so CMD tren Windows Terminal
     $procStudio = Start-Process `
-        -FilePath $PythonExe `
+        -FilePath $WorkerPython `
         -ArgumentList "-m uvicorn studio.app:app --host 127.0.0.1 --port 7860" `
         -WorkingDirectory $RepoRoot `
         -RedirectStandardOutput $StudioLogFile `
@@ -251,7 +253,7 @@ if ($studioPortOccupied) {
     $spawnedStudio = $true
     Set-Content -Path $StudioPidFile -Value $procStudio.Id -Encoding utf8
     Write-Host "  [..] Da spawn tien trinh Studio (PID: $($procStudio.Id))." -ForegroundColor Gray
-    Write-Host "  [..] Dang cho UnfoldIQ Studio san sang" -NoNewline -ForegroundColor Gray
+    Write-Host "  [..] Dang khoi dong UnfoldIQ Studio Web UI" -NoNewline -ForegroundColor Gray
 
     # Cho health check (toi da 15 giay)
     $maxStudioWait = 15
