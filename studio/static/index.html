@@ -1616,6 +1616,30 @@
             <div id="final-render-player-container" style="display: none; margin-top: 0.5rem;">
               <video id="final-video-player" controls style="width: 100%; border-radius: var(--radius-sm); max-height: 220px; background: #000;"></video>
             </div>
+            <!-- Phase 9: Automated Technical Render QA (Export Workbench only, no new workspace) -->
+            <div id="render-qa-box" style="margin-top: 0.75rem; border-top: 1px solid var(--border-color); padding-top: 0.75rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h4 style="font-size: 0.9rem; font-weight: 700; color: var(--uq-ink-1); margin: 0;">Kiểm định kỹ thuật</h4>
+                <span id="render-qa-badge" class="ui-status-badge">Chờ kiểm định</span>
+              </div>
+              <div id="render-qa-status" role="status" aria-live="polite" style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.4rem;">Chờ kiểm định</div>
+              <div id="render-qa-progress" style="display: none; margin-top: 0.4rem;">
+                <div style="height: 6px; border-radius: 3px; background: var(--border-color); overflow: hidden;">
+                  <div id="render-qa-progress-bar" style="height: 100%; width: 0%; background: #10b981;"></div>
+                </div>
+              </div>
+              <div id="render-qa-findings" style="margin-top: 0.4rem;"></div>
+              <details id="render-qa-tech" style="margin-top: 0.4rem; display: none;">
+                <summary style="font-size: 0.8rem; cursor: pointer;">Chi tiết kỹ thuật</summary>
+                <div id="render-qa-tech-body" class="tech-mono-details" style="font-size: 0.75rem;"></div>
+              </details>
+              <div style="display: flex; gap: 0.4rem; margin-top: 0.5rem; flex-wrap: wrap;">
+                <button type="button" id="btn-qa-rerun" class="btn btn-secondary btn-sm">Chạy kiểm định lại</button>
+                <button type="button" id="btn-qa-history" class="btn btn-secondary btn-sm">Lịch sử kiểm định</button>
+                <button type="button" id="btn-qa-cancel" class="btn btn-secondary btn-sm" style="display: none;">Hủy kiểm định</button>
+              </div>
+              <div id="render-qa-history" style="margin-top: 0.4rem; display: none;"></div>
+            </div>
           </div>
         </div>
 

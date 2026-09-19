@@ -81,7 +81,7 @@ if ($kokoroPortOccupied) {
     }
 } else {
     Write-Host "  -> Starting Kokoro-FastAPI in background..." -ForegroundColor Gray
-    
+
     $nowStr = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
     Set-Content -Path $KokoroLogFile -Value "[$nowStr] [LAUNCHER] Starting Kokoro-FastAPI on port 8880..." -Encoding utf8
 
@@ -157,7 +157,7 @@ if ($studioPortOccupied) {
     }
 } else {
     Write-Host "  -> Starting UnfoldIQ Studio in background..." -ForegroundColor Gray
-    
+
     $nowStr = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
     Set-Content -Path $StudioLogFile -Value "[$nowStr] [LAUNCHER] Starting UnfoldIQ Studio on port 7860..." -Encoding utf8
 

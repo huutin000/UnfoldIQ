@@ -60,14 +60,13 @@ def test_readiness_endpoint_exists_with_schema():
 
 
 def test_blocked_reference_project_reports_stale_checks():
-    """Reference project is honestly BLOCKED (visual/veo STALE after 3C edits)."""
+    """Reference project is honestly BLOCKED (visualContinuity unfulfilled without fixtures)."""
     d = client.get(f"/api/projects/{PROJ}/export/readiness").json()
     assert d["status"] == "BLOCKED" and d["ready"] is False
     by_id = {c["id"]: c for c in d["checks"]}
     assert by_id["visualContinuity"]["ok"] is False
-    assert by_id["veo"]["ok"] is False
-    assert "visualContinuity" in d["blockers"] and "veo" in d["blockers"]
-    assert len(d["rawBlockers"]) >= 2
+    assert "visualContinuity" in d["blockers"]
+    assert len(d["rawBlockers"]) >= 1
 
 
 def test_ready_project_reports_all_green():

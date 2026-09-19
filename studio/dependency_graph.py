@@ -335,6 +335,30 @@ class ArtifactDependencyGraph:
         )
         return True, invalidated
 
+    def invalidate_dependent_chain(self, artifact_id: str, reason: str = "") -> Set[str]:
+        """
+        Invalidates all transitive downstream descendants of artifact_id.
+        Marks descendants as OUTDATED while preserving locks and review statuses.
+        Returns the set of invalidated artifact IDs.
+        """
+        if artifact_id not in self._nodes:
+            logger.debug(f"Node '{artifact_id}' not found for chain invalidation.")
+            return set()
+
+        invalidated = self.get_downstream_closure(artifact_id)
+        for d_id in invalidated:
+            d_node = self._nodes[d_id]
+            d_node.is_outdated = True
+            d_node.effective_status = resolve_effective_status(
+                d_node.review_status, True, d_node.blockers
+            )
+
+        logger.info(
+            f"Chain invalidation from '{artifact_id}' ({reason or 'unspecified'}): "
+            f"invalidated {len(invalidated)} downstream nodes."
+        )
+        return invalidated
+
     def set_review_status(self, artifact_id: str, status: str) -> None:
         """Updates the base review status (DRAFT, NEEDS_REVIEW, READY)."""
         if artifact_id not in self._nodes:

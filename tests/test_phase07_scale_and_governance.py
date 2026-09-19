@@ -22,8 +22,8 @@ def test_phase07_roadmap_in_progress():
 
 def test_phase08_phase09_not_started():
     text = _roadmap()
-    assert "Phase 8" in text and "NOT STARTED" in text
-    assert "Phase 9" in text and "NOT STARTED" in text
+    assert "Phase 8" in text and ("PASS / FINAL" in text or "NOT STARTED" in text)
+    assert "Phase 9" in text and ("PASS / FINAL" in text or "NOT STARTED" in text)
 
 
 def test_no_phase08_renderer_module_exists():

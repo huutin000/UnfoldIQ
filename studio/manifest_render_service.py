@@ -61,12 +61,14 @@ class ManifestRenderService:
     grace_seconds = 5.0
 
     def __init__(self, projects_dir: Path, jobs=None, scheduler=None,
-                 ffmpeg_path: str = "ffmpeg", run_attempt_fn=None):
+                 ffmpeg_path: str = "ffmpeg", run_attempt_fn=None,
+                 qa_service_factory=None):
         self.projects_dir = Path(projects_dir)
         self.jobs = jobs or _jobs_module.jobs_manager
         self.scheduler = scheduler
         self.ffmpeg_path = ffmpeg_path
         self.run_attempt_fn = run_attempt_fn
+        self.qa_service_factory = qa_service_factory
         self._final_gate = asyncio.Semaphore(1)
         self._cancel_events: dict[str, asyncio.Event] = {}
         self._ffmpeg_version: str | None = None
@@ -403,7 +405,30 @@ class ManifestRenderService:
                       "artifactReasonCode": "PENDING_RENDER_QA",
                       "exportId": export_id})
         self._cleanup_scratch(project_dir, job_id, keep_diagnostics=True)
+        self._enqueue_post_render_qa(project_id, export_id)
         return self._summary(self.jobs.get_job(job_id))
+
+    def _enqueue_post_render_qa(self, project_id: str, export_id: str) -> None:
+        """Phase 8 -> Phase 9 automatic handoff (direct service call).
+
+        Failure isolation: QA enqueue problems must never rollback/delete
+        the immutable Final or change the NEEDS_REVIEW/PENDING_RENDER_QA
+        artifact state set above.
+        """
+        try:
+            factory = self.qa_service_factory
+            if factory is None:
+                from studio.render_qa_service import RenderQaService
+                qa_service = RenderQaService(projects_dir=self.projects_dir,
+                                             jobs=self.jobs)
+            else:
+                qa_service = factory()
+                if qa_service is None:
+                    return
+            qa_service.request_qa(project_id, export_id, "AUTOMATIC")
+        except Exception as e:  # failure isolation: Final stays published
+            logger.warning(f"post-render QA enqueue failed for "
+                           f"{project_id}/{export_id}: {e}")
 
     async def _finish_cancelled(self, job_id, scratch) -> dict:
         job = self.jobs.get_job(job_id)

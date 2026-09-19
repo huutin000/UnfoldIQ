@@ -198,6 +198,7 @@ class RenderManifest(BaseModel):
     subtitlesTrack: SubtitlesTrack = Field(default_factory=SubtitlesTrack)
     scenes: list[SceneMetadata] = Field(default_factory=list)
     sourceHashes: dict[str, str] = Field(default_factory=dict)
+    expectedFinalFrames: int | None = None
 
     @field_validator("frameRate")
     @classmethod

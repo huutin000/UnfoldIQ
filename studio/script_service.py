@@ -110,6 +110,19 @@ class ScriptService:
                 "Kịch bản đang KHÓA (v%d). Hãy mở khóa, tạo phiên bản mới, "
                 "hoặc xác nhận ghi đè rõ ràng trước khi sửa." % data.get("version", 1)
             )
+
+        # Track modified sections for granular DAG micro-propagation
+        old_sections = data.get("sections", [])
+        old_map = {s.get("id"): s for s in old_sections if isinstance(s, dict) and s.get("id")}
+        changed_sections = []
+        for idx, s in enumerate(sections):
+            if not isinstance(s, dict):
+                continue
+            sec_id = s.get("id")
+            old_sec = old_map.get(sec_id) if sec_id else (old_sections[idx] if idx < len(old_sections) else None)
+            if not old_sec or old_sec.get("text") != s.get("text") or old_sec.get("title") != s.get("title"):
+                changed_sections.append((idx + 1, sec_id, s))
+
         version = data.get("version", 1) + (1 if new_version else 0)
         now = datetime.now(timezone.utc).isoformat()
 
@@ -129,6 +142,47 @@ class ScriptService:
         self.get_script_text_file(project_dir).write_text(full_text, encoding="utf-8")
 
         self.get_script_file(project_dir).write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
+
+        # Synchronize with persistent artifact DAG (state.db)
+        if changed_sections:
+            try:
+                from studio.project_bootstrap import get_project_state_store, bootstrap_project_graph
+                from studio.dependency_graph import compute_content_hash
+                project_id = project_dir.name
+                store = get_project_state_store(project_id)
+                graph = bootstrap_project_graph(project_id, state_store=store)
+
+                for idx_1based, sec_id, sec_dict in changed_sections:
+                    target_node_id = None
+                    if sec_id and graph.has_node(sec_id):
+                        target_node_id = sec_id
+                    elif sec_id and graph.has_node(f"beat_{idx_1based:03d}"):
+                        target_node_id = f"beat_{idx_1based:03d}"
+                    elif sec_id and graph.has_node(f"beat_{idx_1based}"):
+                        target_node_id = f"beat_{idx_1based}"
+                    elif graph.has_node(f"c_{idx_1based:02d}"):
+                        target_node_id = f"c_{idx_1based:02d}"
+                    elif graph.has_node(f"chunk_{idx_1based}"):
+                        target_node_id = f"chunk_{idx_1based}"
+
+                    if target_node_id:
+                        new_hash = compute_content_hash({
+                            "id": target_node_id,
+                            "text": sec_dict.get("text", ""),
+                            "title": sec_dict.get("title", ""),
+                        })
+                        graph.update_node_content(target_node_id, new_hash)
+
+                if graph.has_node("script_root"):
+                    new_script_hash = compute_content_hash({"script_text": full_text})
+                    node = graph.get_node("script_root")
+                    if node:
+                        node.content_hash = new_script_hash
+
+                store.save_graph(graph)
+            except Exception as e:
+                logger.debug(f"DAG sync on script update for {project_dir.name}: {e}")
+
         return data
 
     def approve_and_lock_script(self, project_dir: Path) -> Dict[str, Any]:

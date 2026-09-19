@@ -623,6 +623,99 @@ def _render_service_singleton():
     return cached
 
 
+def _qa_service_singleton():
+    """Process-wide RenderQaService; rebuilt if PROJECTS_DIR moves (tests)."""
+    from studio import jobs_manager as _jobs_module
+    from studio.config import PROJECTS_DIR as _ROOT
+    from studio.render_qa_service import RenderQaService
+    from studio.resource_scheduler import resource_scheduler as _sched
+    cached = getattr(_qa_service_singleton, "_instance", None)
+    if cached is None or cached.projects_dir != _ROOT:
+        cached = RenderQaService(projects_dir=_ROOT,
+                                 jobs=_jobs_module.jobs_manager,
+                                 scheduler=_sched)
+        _qa_service_singleton._instance = cached
+    return cached
+
+
+def _resolve_qa_export(project_id: str, export_id: str) -> Path:
+    """Validate IDs and resolve the export dir server-side (no client paths)."""
+    from studio.production_export import validate_export_id as _validate_export_id
+    _validate_dir_name(project_id)
+    try:
+        clean_export = _validate_export_id(export_id)
+    except Exception:
+        raise HTTPException(status_code=400, detail="exportId không hợp lệ.")
+    pdir = _get_project_dir(project_id)
+    export_dir = pdir / "exports" / clean_export
+    if not export_dir.is_dir():
+        raise HTTPException(status_code=404, detail="Export không tồn tại.")
+    return export_dir
+
+
+class QaRerunRequest(BaseModel):
+    mode: str = "MANUAL_RERUN"
+
+    model_config = {"extra": "ignore"}
+
+
+@router.post("/api/projects/{project_id}/exports/{export_id}/qa")
+async def request_render_qa(project_id: str, export_id: str, req: QaRerunRequest):
+    """Manual QA rerun: reuse active same-export QA job, else start new run."""
+    export_dir = _resolve_qa_export(project_id, export_id)
+    service = _qa_service_singleton()
+    result = service.request_qa(
+        project_id, export_dir.name,
+        "MANUAL_RERUN" if (req.mode or "").upper() != "AUTOMATIC" else "AUTOMATIC")
+    if result.get("errorCode"):
+        raise HTTPException(status_code=422, detail={
+            "message": result.get("message", "Không thể khởi chạy kiểm định."),
+            "errorCode": result.get("errorCode")})
+    job = jobs_manager.get_job(result["jobId"]) or {} if result.get("jobId") else {}
+    return {"jobId": result.get("jobId"), "qaRunId": result.get("qaRunId"),
+            "exportId": result.get("exportId"), "reused": bool(result.get("reused")),
+            "status": job.get("status", "QUEUED"),
+            "verdict": result.get("verdict")}
+
+
+@router.get("/api/projects/{project_id}/exports/{export_id}/qa/latest")
+async def get_render_qa_latest(project_id: str, export_id: str):
+    """Latest committed QA summary for the export (404 when none)."""
+    from studio.render_qa_report_store import RenderQaReportStore
+    export_dir = _resolve_qa_export(project_id, export_id)
+    latest = RenderQaReportStore().read_latest(export_dir)
+    if latest is None:
+        raise HTTPException(status_code=404, detail="Chưa có báo cáo kiểm định.")
+    return latest
+
+
+@router.get("/api/projects/{project_id}/exports/{export_id}/qa/runs")
+async def list_render_qa_runs(project_id: str, export_id: str):
+    """Immutable QA history summaries (newest last)."""
+    from studio.render_qa_report_store import RenderQaReportStore
+    export_dir = _resolve_qa_export(project_id, export_id)
+    return {"exportId": export_dir.name,
+            "runs": RenderQaReportStore().list_reports(export_dir)}
+
+
+@router.get("/api/projects/{project_id}/exports/{export_id}/qa/runs/{qa_run_id}")
+async def get_render_qa_run(project_id: str, export_id: str, qa_run_id: str):
+    """Exact committed QA report. Scoped to the URL export; no file serving."""
+    from studio.render_qa_report_store import RenderQaReportStore
+    export_dir = _resolve_qa_export(project_id, export_id)
+    try:
+        report = RenderQaReportStore().read_report(export_dir, qa_run_id)
+    except ValueError:
+        raise HTTPException(status_code=400, detail="qaRunId không hợp lệ.")
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="Báo cáo kiểm định không tồn tại.")
+    except OSError:
+        raise HTTPException(status_code=404, detail="Báo cáo kiểm định không tồn tại.")
+    return report
+
+
+
+
 @router.get("/api/projects/{project_id}/exports/{export_id}/final/file")
 async def get_export_final_file(project_id: str, export_id: str, download: int = 0):
     """Export-explicit canonical Final resolver (fixed final.mp4, no traversal)."""

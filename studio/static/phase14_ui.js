@@ -542,6 +542,254 @@
   // Chống duplicate polling loop khi bấm trigger nhiều lần (§12).
   const exportActivePolls = {};
 
+  // Phase 9: Automated Technical Render QA (Export Workbench only).
+  const RENDER_QA_PHASE_LABEL = {
+    PENDING_RENDER_QA: "Chờ kiểm định",
+    QUEUED: "Đang chờ kiểm định",
+    RUNNING: "Đang kiểm định",
+    WAITING_RESOURCE: "Đang chờ tài nguyên",
+    HASHING_FINAL: "Đang xác minh tệp video",
+    PROBING: "Đang kiểm tra thông số",
+    FULL_DECODING: "Đang kiểm tra toàn bộ video",
+    DETECTING: "Đang kiểm tra toàn bộ video",
+    EVALUATING: "Đang đánh giá kết quả",
+    WRITING_REPORT: "Đang lưu báo cáo",
+    REPORT_COMMITTED: "Đang lưu báo cáo",
+    APPLYING_VERDICT: "Đang áp dụng kết quả",
+    PASS: "Đạt",
+    PASS_WITH_WARNINGS: "Đạt, có cảnh báo",
+    FAIL: "Không đạt",
+    ENGINE_FAILED: "Kiểm định chưa hoàn tất",
+    INTERRUPTED: "Kiểm định chưa hoàn tất",
+    CANCELLED: "Đã hủy kiểm định",
+  };
+  const RENDER_QA_CODE_LABEL = {
+    QA_BLACK_EXCESSIVE: "Video có đoạn đen quá dài",
+    QA_VIDEO_FREEZE_EXCESSIVE: "Video bị đứng hình quá lâu",
+    QA_AUDIO_SILENCE_EXCESSIVE: "Âm thanh bị ngắt quá lâu",
+    QA_FULL_DECODE_FAILED: "Video bị lỗi, không giải mã được toàn bộ",
+    QA_FRAME_COUNT_MISMATCH: "Số khung hình không khớp với kịch bản render",
+    QA_FINAL_CHANGED_DURING_RUN: "Tệp video thay đổi trong lúc kiểm định",
+  };
+  function qaCurrentExport() {
+    const sel = document.getElementById("export-select");
+    return sel ? sel.value : "";
+  }
+  function qaFormatTime(sec) {
+    const s = Math.max(0, Number(sec) || 0);
+    const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60);
+    const ss = (s % 60).toFixed(1).padStart(4, "0");
+    return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${ss}`;
+  }
+  function qaSetBadge(text, kind) {
+    const badge = document.getElementById("render-qa-badge");
+    if (badge) { badge.textContent = text; badge.className = `ui-status-badge ${kind || ""}`; }
+  }
+  function qaSetStatus(html, isAlert) {
+    const box = document.getElementById("render-qa-status");
+    if (box) {
+      box.innerHTML = html;
+      box.setAttribute("role", isAlert ? "alert" : "status");
+    }
+  }
+  function qaShowProgress(pct) {
+    const wrap = document.getElementById("render-qa-progress");
+    const bar = document.getElementById("render-qa-progress-bar");
+    if (wrap) wrap.style.display = "block";
+    if (bar) bar.style.width = `${Math.max(0, Math.min(100, pct))}%`;
+  }
+  function qaHideProgress() {
+    const wrap = document.getElementById("render-qa-progress");
+    if (wrap) wrap.style.display = "none";
+  }
+  function qaFindingRow(f) {
+    const human = RENDER_QA_CODE_LABEL[f.code] || f.code || "Vấn đề kỹ thuật";
+    const when = (f.start_time != null)
+      ? `<div>Thời gian: ${qaFormatTime(f.start_time)} – ${qaFormatTime(f.end_time)}${f.shot_id ? ` · Shot: ${escapeHtml(f.shot_id)}` : ""}</div>` : "";
+    const seek = (f.start_time != null)
+      ? `<button type="button" class="btn btn-secondary btn-xs qa-seek" data-t="${Number(f.start_time) || 0}">Xem tại ${qaFormatTime(f.start_time)}</button>` : "";
+    return `<div class="qa-finding" style="font-size: 0.8rem; margin-top: 0.3rem;">
+      <div><strong>${escapeHtml(human)}</strong></div>${when}
+      ${f.observed ? `<div>Quan sát: ${escapeHtml(String(f.observed))}${f.expected ? ` · Ngưỡng: ${escapeHtml(String(f.expected))}` : ""}</div>` : ""}
+      <div style="font-size: 0.72rem; color: var(--text-muted);">${escapeHtml(f.code || "")}</div>
+      <div style="margin-top: 0.2rem;">${seek}</div></div>`;
+  }
+  function qaBindSeekButtons(scope) {
+    (scope || document).querySelectorAll(".qa-seek").forEach(btn => {
+      if (btn.dataset.qaBound) return;
+      btn.dataset.qaBound = "1";
+      btn.addEventListener("click", () => {
+        const v = document.getElementById("final-video-player");
+        if (v && v.src) {
+          try { v.currentTime = Number(btn.dataset.t) || 0; } catch (e) { /* ignore */ }
+          v.scrollIntoView({ block: "nearest" });
+        } else {
+          showToast("Chưa có video chính thức để xem lại.", "warning");
+        }
+      });
+    });
+  }
+  function qaToggleButtons({ rerun, cancel }) {
+    const bR = document.getElementById("btn-qa-rerun");
+    const bC = document.getElementById("btn-qa-cancel");
+    if (bR) bR.disabled = !rerun;
+    if (bC) bC.style.display = cancel ? "" : "none";
+  }
+  async function loadRenderQa(projectDir, exportId) {
+    const box = document.getElementById("render-qa-box");
+    if (!box) return;
+    const exp = exportId || qaCurrentExport();
+    if (!projectDir || !exp) {
+      qaSetBadge("Chờ kiểm định", "");
+      qaSetStatus("Chờ kiểm định", false);
+      qaHideProgress();
+      qaToggleButtons({ rerun: false, cancel: false });
+      return;
+    }
+    try {
+      const [latestRes, jobsRes] = await Promise.all([
+        fetch(`/api/projects/${encodeURIComponent(projectDir)}/exports/${encodeURIComponent(exp)}/qa/latest`),
+        fetch(`/api/activity/jobs?projectId=${encodeURIComponent(projectDir)}`),
+      ]);
+      const active = (() => {
+        if (!jobsRes.ok) return null;
+        return null;
+      })();
+      if (latestRes.ok) {
+        const latest = await latestRes.json();
+        await renderQaResult(projectDir, exp, latest);
+        // Active rerun on top of a committed result keeps polling.
+        const jobs = jobsRes.ok ? (await jobsRes.json().catch(() => ({}))).jobs || [] : [];
+        const running = jobs.find(j => j.type === "RENDER_QA"
+          && (j.metadata || {}).exportId === exp
+          && ["QUEUED", "RUNNING"].includes(j.status));
+        if (running) pollQaJob(running.id || running.jobId, projectDir, exp);
+        return active;
+      }
+      const jobs = jobsRes.ok ? (await jobsRes.json().catch(() => ({}))).jobs || [] : [];
+      const qaJob = jobs.find(j => j.type === "RENDER_QA"
+        && (j.metadata || {}).exportId === exp
+        && !["COMPLETED", "FAILED", "CANCELLED"].includes(j.status));
+      const lastQa = jobs.find(j => j.type === "RENDER_QA"
+        && (j.metadata || {}).exportId === exp);
+      if (qaJob) {
+        pollQaJob(qaJob.id || qaJob.jobId, projectDir, exp);
+      } else if (lastQa && lastQa.status === "FAILED") {
+        qaSetBadge("Kiểm định chưa hoàn tất", "status-blocked");
+        qaSetStatus(`<div role="alert"><strong>Kiểm định chưa hoàn tất</strong><div>Bộ kiểm định gặp sự cố, video chưa bị đánh giá “Không đạt”.</div></div>`, true);
+        qaHideProgress();
+        qaToggleButtons({ rerun: true, cancel: false });
+      } else if (lastQa && lastQa.status === "CANCELLED") {
+        qaSetBadge("Đã hủy kiểm định", "");
+        qaSetStatus("Đã hủy kiểm định", false);
+        qaHideProgress();
+        qaToggleButtons({ rerun: true, cancel: false });
+      } else {
+        qaSetBadge("Chờ kiểm định", "");
+        qaSetStatus("Video cuối: hoàn tất · Kiểm định: chờ kiểm định. Hệ thống tự chạy kiểm định, không cần thao tác.", false);
+        qaHideProgress();
+        qaToggleButtons({ rerun: true, cancel: false });
+      }
+    } catch (err) {
+      qaSetStatus("Chờ kiểm định", false);
+      qaToggleButtons({ rerun: true, cancel: false });
+    }
+  }
+  async function renderQaResult(projectDir, exportId, latest) {
+    const findingsBox = document.getElementById("render-qa-findings");
+    const techBox = document.getElementById("render-qa-tech");
+    const techBody = document.getElementById("render-qa-tech-body");
+    const verdict = latest.verdict;
+    qaHideProgress();
+    let detail = null;
+    try {
+      const r = await fetch(`/api/projects/${encodeURIComponent(projectDir)}/exports/${encodeURIComponent(exportId)}/qa/runs/${encodeURIComponent(latest.qaRunId)}`);
+      if (r.ok) detail = await r.json();
+    } catch (e) { /* summary-only */ }
+    const warns = (detail && (detail.warnings || [])).length ? detail.warnings : [];
+    const hards = (detail && (detail.hardFailures || [])).length ? detail.hardFailures : [];
+    if (verdict === "PASS") {
+      qaSetBadge("Đạt", "status-ready");
+      qaSetStatus(`<div>✓ <strong>Đạt</strong> · Trạng thái: READY<div style="font-size: 0.75rem;">Chính sách ${escapeHtml(latest.qaPolicyVersion || "")} · ${escapeHtml(latest.completedAt || "")}</div></div>`, false);
+      if (findingsBox) findingsBox.innerHTML = "";
+    } else if (verdict === "PASS_WITH_WARNINGS") {
+      qaSetBadge("Đạt, có cảnh báo", "status-ready");
+      qaSetStatus(`<div>⚠ <strong>Đạt, có cảnh báo</strong> · Trạng thái: READY<div style="font-size: 0.75rem;">${warns.length} cảnh báo · Chính sách ${escapeHtml(latest.qaPolicyVersion || "")}</div></div>`, false);
+      if (findingsBox) findingsBox.innerHTML = warns.map(qaFindingRow).join("");
+    } else {
+      qaSetBadge("Không đạt", "status-blocked");
+      qaSetStatus(`<div role="alert">✕ <strong>Không đạt</strong> · Trạng thái: BLOCKED<div style="font-size: 0.75rem;">Cần sửa và kết xuất lại, không thể phát hành bản này.</div></div>`, true);
+      if (findingsBox) findingsBox.innerHTML = hards.map(qaFindingRow).join("");
+    }
+    if (findingsBox) qaBindSeekButtons(findingsBox);
+    if (detail && techBox && techBody) {
+      techBox.style.display = "";
+      techBody.textContent = JSON.stringify({
+        qaRunId: detail.qaRunId, verdict: detail.verdict,
+        manifestHash: detail.manifestHash,
+        finalSha256: (detail.final || {}).sha256Commit,
+        qaPolicyVersion: detail.qaPolicyVersion,
+        completedAt: detail.completedAt,
+      }, null, 2);
+    }
+    qaToggleButtons({ rerun: true, cancel: false });
+  }
+  async function pollQaJob(jobId, projectDir, exportId) {
+    if (!jobId || !projectDir) return;
+    const pollKey = `${projectDir}::qa`;
+    if (exportActivePolls[pollKey] === jobId) return;
+    exportActivePolls[pollKey] = jobId;
+    const finish = () => { if (exportActivePolls[pollKey] === jobId) delete exportActivePolls[pollKey]; };
+    qaToggleButtons({ rerun: false, cancel: true });
+    const cancelBtn = document.getElementById("btn-qa-cancel");
+    if (cancelBtn && !cancelBtn.dataset.qaBound) {
+      cancelBtn.dataset.qaBound = "1";
+      cancelBtn.addEventListener("click", async () => {
+        const cur = exportActivePolls[`${getActiveProject()}::qa`];
+        if (!cur) return;
+        await fetch(`/api/activity/jobs/${encodeURIComponent(cur)}/cancel`, { method: "POST" });
+      });
+    }
+    async function tick() {
+      if (getActiveProject() !== projectDir || exportActivePolls[pollKey] !== jobId) { finish(); return; }
+      try {
+        const r = await fetch(`/api/activity/jobs?projectId=${encodeURIComponent(projectDir)}`);
+        if (r.ok) {
+          const d = await r.json();
+          const job = (d.jobs || []).find(j => (j.id || j.jobId) === jobId);
+          if (job) {
+            const pct = Math.round((job.progress || 0) * 100);
+            const phase = ((job.metadata || {}).executionPhase) || job.status;
+            const label = RENDER_QA_PHASE_LABEL[phase] || RENDER_QA_PHASE_LABEL[job.status] || "Đang kiểm định";
+            qaSetBadge(label, "");
+            qaSetStatus(`<div><strong>Kiểm định kỹ thuật</strong><div>${escapeHtml(label)} · ${pct}%</div><div style="font-size: 0.75rem;">Đang kiểm tra toàn bộ video</div></div>`, false);
+            qaShowProgress(pct);
+            qaToggleButtons({ rerun: false, cancel: true });
+            if (window.uqAnnounce && pct > 0) {
+              const step = pct >= 75 ? 75 : pct >= 50 ? 50 : pct >= 25 ? 25 : 0;
+              if (step > 0) window.uqAnnounce(`Kiểm định kỹ thuật: ${step}%`, `render-qa-${pollKey}`);
+            }
+            if (job.status === "COMPLETED") {
+              finish();
+              showToast("✓ Kiểm định kỹ thuật hoàn tất!", "success");
+              loadRenderQa(projectDir, exportId);
+              loadExportData(projectDir);
+              return;
+            }
+            if (job.status === "FAILED" || job.status === "CANCELLED" || job.status === "INTERRUPTED") {
+              finish();
+              loadRenderQa(projectDir, exportId);
+              return;
+            }
+          }
+        }
+      } catch (e) { /* keep polling */ }
+      if (getActiveProject() !== projectDir) { finish(); return; }
+      setTimeout(tick, 2000);
+    }
+    tick();
+  }
+
   async function loadExportData(projectDir) {
     const p = projectDir || getActiveProject();
     const readinessBox = document.getElementById("export-readiness-box");
@@ -599,6 +847,7 @@
       const selectedExp = exportSelect ? exportSelect.value : "";
       renderExportPreviews(p, status, selectedExp);
       renderExportDownloads(delivBox, readiness);
+      loadRenderQa(p, selectedExp);
     } catch (err) {
       if (stale()) return;
       if (isNotFound(err)) {
@@ -1153,6 +1402,7 @@
           }
           finish();
           loadExportData(projectDir);
+          loadRenderQa(projectDir, exportId);
           return;
         }
         if (failed) {
@@ -1173,6 +1423,7 @@
       }
       tick();
     }
+
 
     // Portable Package Button (Phase 4) — download ZIP đã đóng gói sẵn server-side.
     const btnPackage = document.getElementById("btn-download-portable-package");
@@ -1270,6 +1521,79 @@
           btnFinalRender.disabled = false;
           btnFinalRender.textContent = "Kết xuất video chính thức";
         }
+      });
+    }
+
+    // Phase 9 QA controls: rerun / history / export snapshot switch.
+    const btnQaRerun = document.getElementById("btn-qa-rerun");
+    if (btnQaRerun) {
+      btnQaRerun.addEventListener("click", async () => {
+        const p = getActiveProject();
+        const exp = qaCurrentExport();
+        if (!p || !exp) { showToast("Hãy chọn dự án và gói xuất bản trước khi kiểm định lại.", "warning"); return; }
+        btnQaRerun.disabled = true;
+        try {
+          const res = await fetch(`/api/projects/${encodeURIComponent(p)}/exports/${encodeURIComponent(exp)}/qa`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ mode: "MANUAL_RERUN" }),
+          });
+          if (!res.ok) throw new Error("Không thể khởi chạy kiểm định lại.");
+          const data = await res.json().catch(() => ({}));
+          showToast("✓ Đã khởi chạy kiểm định lại!", "info");
+          if (data.jobId) pollQaJob(data.jobId, p, exp);
+        } catch (err) {
+          showToast(err.message, "error");
+        } finally {
+          btnQaRerun.disabled = false;
+        }
+      });
+    }
+    const btnQaHistory = document.getElementById("btn-qa-history");
+    if (btnQaHistory) {
+      btnQaHistory.addEventListener("click", async () => {
+        const p = getActiveProject();
+        const exp = qaCurrentExport();
+        const histBox = document.getElementById("render-qa-history");
+        if (!p || !exp || !histBox) return;
+        try {
+          const res = await fetch(`/api/projects/${encodeURIComponent(p)}/exports/${encodeURIComponent(exp)}/qa/runs`);
+          if (!res.ok) throw new Error("Không tải được lịch sử kiểm định.");
+          const data = await res.json().catch(() => ({}));
+          const runs = data.runs || [];
+          histBox.style.display = "";
+          histBox.innerHTML = runs.length
+            ? `<div style="font-size: 0.8rem; font-weight: 600;">Lịch sử kiểm định (${runs.length})</div>` + runs.map(r =>
+              `<div style="font-size: 0.78rem; margin-top: 0.25rem;">
+                <button type="button" class="btn btn-secondary btn-xs qa-history-run" data-run="${escapeHtml(r.qaRunId || "")}">${escapeHtml(r.qaRunId || "")}</button>
+                <span> · ${escapeHtml(RENDER_QA_PHASE_LABEL[r.verdict] || r.verdict || "")} · ${escapeHtml(r.completedAt || "")}</span>
+              </div>`).join("")
+            : `<div style="font-size: 0.8rem;">Chưa có lịch sử kiểm định.</div>`;
+          histBox.querySelectorAll(".qa-history-run").forEach(btn => {
+            btn.addEventListener("click", async () => {
+              const rr = await fetch(`/api/projects/${encodeURIComponent(p)}/exports/${encodeURIComponent(exp)}/qa/runs/${encodeURIComponent(btn.dataset.run)}`);
+              if (!rr.ok) { showToast("Không tải được báo cáo.", "error"); return; }
+              const detail = await rr.json();
+              const techBox = document.getElementById("render-qa-tech");
+              const techBody = document.getElementById("render-qa-tech-body");
+              if (techBox && techBody) {
+                techBox.style.display = "";
+                techBox.open = true;
+                techBody.textContent = JSON.stringify(detail, null, 2);
+              }
+            });
+          });
+        } catch (err) {
+          showToast(err.message, "error");
+        }
+      });
+    }
+    const exportSelectEl = document.getElementById("export-select");
+    if (exportSelectEl && !exportSelectEl.dataset.qaBound) {
+      exportSelectEl.dataset.qaBound = "1";
+      exportSelectEl.addEventListener("change", () => {
+        const p = getActiveProject();
+        if (p) loadRenderQa(p, exportSelectEl.value);
       });
     }
 

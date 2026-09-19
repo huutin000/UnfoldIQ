@@ -1,8 +1,8 @@
 # BẢNG TỔNG QUAN TRẠNG THÁI LỘ TRÌNH UNFOLDIQ WORKSTATION
 ## ROADMAP EXECUTION & GOVERNANCE STATUS
 
-> **Phiên bản:** Revision 2.8.1 (Phase 7 & Phase 8 PASS / FINAL / VERIFIED per external review closure; Phase 9 NOT STARTED)  
-> **Cập nhật:** 2026-09-18  
+> **Phiên bản:** Revision 2.9.3 (Phases 1–9 PASS / FINAL / VERIFIED; Final System Gate PASS / FINAL / VERIFIED, Candidate verdict: PRODUCTION READY)
+> **Cập nhật:** 2026-09-19
 > **Tổng số Top-Level Phases:** **9 Phases** (Phase 3 gồm 4 subphases tuần tự) + **1 Final Quality Gate** (không phải Phase 10).
 
 ---
@@ -24,8 +24,8 @@
 | **Phase 6** | **Responsive & WCAG 2.2 AA-Oriented Accessibility Hardening** | ✅ **PASS / FINAL** | `VERIFIED` | External review PASSED (manual-closure + two-gate evidence). Xem `PHASE_06_IMPLEMENTATION_REPORT.md` + closure reports |
 | **Phase 7** | **Render Manifest & Timeline Compiler** | ✅ **PASS / FINAL** | `VERIFIED` | Renderer-independent manifest + frame-accurate compiler (24fps integer frames) + lifecycle precedence + assetRegistryHash + structured timing pre-validation + read-only preview + immutable snapshots. Final closure regression **854/854 PASS**; external review status: **PASS / FINAL / VERIFIED**. Xem `PHASE_07_IMPLEMENTATION_REPORT.md`, `PHASE_07_FINAL_CLOSURE_REPORT.md` & `PHASE_07_FINAL_EXTERNAL_CLOSURE_REPORT.md` |
 | **Phase 8** | **Manifest-Driven FFmpeg Render Engine** | ✅ **PASS / FINAL** | `VERIFIED` | Manifest-driven Final render engine consuming Phase 7 snapshots (`render-manifest.json`). Visual composition + crossfades + audio ducking + soft/hard subtitles + NVENC/libx264 dual profiles + timeline source validation + immutable atomic publish to `exports/<exportId>/final.mp4`. 120 Phase 8 tests passed, 974 full repo regression passed. External review status: **PASS / FINAL / VERIFIED**. Xem `PHASE_08_IMPLEMENTATION_REPORT.md` & `PHASE_08_FINAL_CLOSURE_REPORT.md` |
-| **Phase 9** | **Automated Render QA & Verification** | 🔵 **FUTURE** | `FUTURE` | Execution Note: NOT STARTED \| ffprobe inspection, Hard Gates vs Warnings |
-| **Final Gate** | **Final System Integration & Validation Gate** | 🏁 **NOT YET RUN** | `NOT RUN` | **Cổng Nghiệm thu Toàn diện Hệ thống** (13 tiêu chuẩn) |
+| **Phase 9** | **Automated Render QA & Verification** | ✅ **PASS / FINAL** | `VERIFIED` | Deterministic manifest-aware full-file technical QA (`RENDER_QA`, `RENDER_QA_POLICY_V1`): ffprobe inspection + one-pass full decode (black/freeze/silence) + immutable reports + PASS/PASS_WITH_WARNINGS→READY, FAIL→BLOCKED. Corrective closure (EOF freeze §45.1, process-wide gate §45.2, automatic browser handoff §45.3) on branch `phase09-render-qa`. Focused suite 88/88, nearby 337/337, full repo 1062/1062, browser 22/22. External review FINAL: **PHASE 9: PASS / FINAL / VERIFIED**. Xem `PHASE_09_IMPLEMENTATION_REPORT.md` (§§45–46) |
+| **Final Gate** | **Final System Integration & Validation Gate** | ✅ **PASS / FINAL** | `VERIFIED` | **Cổng Nghiệm thu Toàn diện Hệ thống**: **13/13 PASS (100%)**. Đã đóng toàn bộ FG-001 (DAG micro-propagation), FG-002 (hồi quy 1062/1062 PASS), FG-003 (render manifest 10/10 gates PASS), FG-004 (launcher safety). Thẩm định độc lập chính thức phê chuẩn: **PASS / FINAL / VERIFIED** (Candidate verdict: **PRODUCTION READY**). Xem `FINAL_SYSTEM_GATE_CORRECTIVE_CLOSURE_REPORT.md` & `FINAL_SYSTEM_GATE_EXTERNAL_REVIEW_FINAL.md` |
 | **Future** | **Web Preview & Timeline Editor** | 💡 *CONSIDERATION* | `RESEARCH` | Nghiên cứu tương lai (Remotion / Custom Timeline) |
 
 ---

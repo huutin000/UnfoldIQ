@@ -153,7 +153,7 @@ class TestTimestampAndGovernance:
         if "PHASE 5: PASS / FINAL / VERIFIED" in rep:
             assert j and k, "promotion requires J/K medians >= 55"
             assert "Phase 5" in roadmap and "PASS / FINAL" in roadmap
-        assert "Phase 6" in roadmap and "NOT STARTED" in roadmap
+        assert "Phase 6" in roadmap and ("NOT STARTED" in roadmap or "PASS / FINAL" in roadmap)
 
     def test_historical_reports_preserved(self):
         for f in ("PHASE_05_IMPLEMENTATION_REPORT.md",

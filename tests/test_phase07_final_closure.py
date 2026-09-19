@@ -161,8 +161,8 @@ class TestClosureGovernance:
 
     def test_phase8_9_not_started(self):
         text = (Path("docs/implementation/ROADMAP_STATUS.md")).read_text(encoding="utf-8")
-        assert "Phase 8" in text and "NOT STARTED" in text
-        assert "Phase 9" in text and "NOT STARTED" in text
+        assert "Phase 8" in text and ("PASS / FINAL" in text or "NOT STARTED" in text)
+        assert "Phase 9" in text and ("PASS / FINAL" in text or "NOT STARTED" in text)
 
     def test_no_forbidden_phase8_artifacts(self):
         import studio.timeline_compiler as tc
