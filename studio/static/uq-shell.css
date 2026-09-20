@@ -19,9 +19,7 @@
 .uq-appear { display: inline-flex; align-items: center; gap: 7px; font-size: 12px;
   color: var(--uq-ink-3); }
 .uq-appear select { width: auto; min-height: 30px; }
-.cost-policy-pill { font-size: var(--uq-t-support); font-weight: 600; color: #fbbf24;
-  background: var(--uq-warn-wash); border: 1px solid rgba(245, 158, 11, 0.35);
-  padding: 4px 10px; border-radius: var(--uq-r-pill); white-space: nowrap; }
+
 .status-indicator { display: flex; align-items: center; gap: 7px; font-size: var(--uq-t-support);
   font-weight: 600; padding: 4px 10px; border-radius: var(--uq-r-pill);
   background: var(--uq-surface); border: 1px solid var(--uq-line); }

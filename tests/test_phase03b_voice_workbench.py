@@ -30,6 +30,13 @@ from studio.pronunciation_service import PronunciationDictionary
 REFERENCE_PROJECT = "2026-09-12_210003_youtube-narration-01"
 
 
+@pytest.fixture(autouse=True)
+def hermetic_project():
+    from tests.fixtures.project_factory import hermetic_canonical_project_in_projects_dir
+    with hermetic_canonical_project_in_projects_dir(REFERENCE_PROJECT) as p:
+        yield p
+
+
 @pytest.fixture(scope="module")
 def client():
     with TestClient(app) as c:

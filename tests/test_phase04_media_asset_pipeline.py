@@ -19,10 +19,17 @@ import pytest
 from starlette.testclient import TestClient
 
 from studio.app import app
+from tests.fixtures.project_factory import hermetic_canonical_project_in_projects_dir
 
 client = TestClient(app)
 PROJ = "2026-09-12_210003_youtube-narration-01"
 PROJ_DIR = Path("projects") / PROJ
+
+
+@pytest.fixture(autouse=True)
+def hermetic_project():
+    with hermetic_canonical_project_in_projects_dir(PROJ) as p:
+        yield p
 
 
 def _ffmpeg():
@@ -334,9 +341,9 @@ class TestPortablePackage:
         srt = (PROJ_DIR / "timestamps.srt").read_text(encoding="utf-8")
         vtt, stats = srt_to_vtt(srt)
         assert vtt.startswith("WEBVTT")
-        assert stats["cues"] == 142
-        assert "00:00:00.000 --> 00:00:02.520" in vtt
-        assert "leopard" in vtt  # content preserved
+        assert stats["cues"] == 135  # canonical hermetic chunk/segment count
+        assert "00:00:00.000 --> 00:00:05.000" in vtt
+        assert "Humans" in vtt  # content preserved
         assert (PROJ_DIR / "timestamps.srt").read_text(encoding="utf-8") == srt  # untouched
 
     def test_package_endpoint_download(self, work_project):

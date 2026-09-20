@@ -562,6 +562,25 @@ class TestContinuityValidatorComprehensive(unittest.TestCase):
     - Cinematic camera & shotPurpose progression false-positive immunity
     - Anachronistic modern element blocking
     """
+    PROJ = "2026-09-12_210003_youtube-narration-01"
+
+    @classmethod
+    def setUpClass(cls):
+        from tests.fixtures.project_factory import hermetic_canonical_project_in_projects_dir
+        cls._hermetic = hermetic_canonical_project_in_projects_dir(cls.PROJ)
+        cls._hermetic.__enter__()
+
+    @classmethod
+    def tearDownClass(cls):
+        try:
+            cls._hermetic.__exit__(None, None, None)
+        finally:
+            from studio.config import PROJECTS_DIR
+            PROJECTS_DIR.mkdir(parents=True, exist_ok=True)
+            gitkeep = PROJECTS_DIR / ".gitkeep"
+            if not gitkeep.exists():
+                gitkeep.touch()
+
     def setUp(self):
         self.director = VisualContinuityDirector()
         self.sample_bible = {

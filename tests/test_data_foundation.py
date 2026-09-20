@@ -19,8 +19,15 @@ from studio.config import PROJECTS_DIR
 from studio.domain_models import Scene, Shot, AudioChunk, ProjectV2State
 from studio.project_adapter import project_adapter, ProjectAdapter
 from studio.transcription_service import transcription_service, get_audio_sha256_fast, _audio_hash_cache
+from tests.fixtures.project_factory import hermetic_canonical_project_in_projects_dir
 
 SAMPLE_PROJECT = "2026-09-12_210003_youtube-narration-01"
+
+
+@pytest.fixture(autouse=True)
+def hermetic_project():
+    with hermetic_canonical_project_in_projects_dir(SAMPLE_PROJECT) as p:
+        yield p
 
 
 def test_domain_models_instantiation():

@@ -2499,7 +2499,6 @@ body.workstation-app {
   }
   .brand-subtitle,
   .header-project-indicator .indicator-label,
-  #btn-open-tour span,
   #service-status-text {
     display: none;
   }
@@ -4114,20 +4113,7 @@ body.workstation-app {
    Phase 14 — Free-first Automated Production Pipeline Styles
    ========================================================================== */
 
-.cost-policy-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.25rem 0.65rem;
-  background: rgba(16, 185, 129, 0.15);
-  border: 1px solid rgba(16, 185, 129, 0.35);
-  color: #10b981;
-  font-size: 0.75rem;
-  font-weight: 600;
-  border-radius: var(--radius-full);
-  margin-right: 0.75rem;
-  letter-spacing: 0.02em;
-}
+
 
 .mode-toggle-group {
   display: inline-flex;

@@ -164,6 +164,12 @@ class StorageManager:
             cutoff = datetime.now() - timedelta(hours=1)
             for fp in TEMP_DIR.glob("**/*"):
                 if fp.is_file():
+                    path_str = str(fp).lower()
+                    if any(marker in path_str for marker in [
+                        "final_system_validation", "edge_cdp_profile", "browser_profile",
+                        "phase", "evidence", "closure", "verification", "audit", "screenreader", "zoom", "keyboard", "performance"
+                    ]):
+                        continue
                     try:
                         mtime = datetime.fromtimestamp(fp.stat().st_mtime)
                         if mtime < cutoff:
@@ -248,19 +254,24 @@ class StorageManager:
         # Strict blacklist / protected markers
         PROTECTED_MARKERS = [
             ".git", ".env", "models", "script.json", "script.txt",
-            "final.mp4", "intake_ledger.json", "audio.wav", "manifest.json"
+            "final.mp4", "intake_ledger.json", "audio.wav", "manifest.json",
+            "final_system_validation", "edge_cdp_profile", "browser_profile", "tests"
         ]
 
         target_items = preview.get("allCandidates", preview.get("candidatesSample", []))
+        protected_skipped: List[str] = []
+
         for item in target_items:
             abs_p = Path(item["absPath"])
             # Strict protection: exact active project files
             if abs_p.name in ["visual_bible.json", "veo_prompts.json", "script.json", "settings.json", "manifest.json", "audio.wav", "final.mp4"]:
                 logger.warning(f"Prevented deletion of protected file: {abs_p}")
+                protected_skipped.append(str(abs_p))
                 continue
             path_str = str(abs_p).lower()
             if any(marker in path_str for marker in PROTECTED_MARKERS):
                 logger.warning(f"Prevented deletion of protected file: {abs_p}")
+                protected_skipped.append(str(abs_p))
                 continue
 
             if abs_p.exists() and abs_p.is_file():
@@ -271,14 +282,30 @@ class StorageManager:
                 except Exception as e:
                     errors.append(f"{abs_p.name}: {e}")
 
-        logger.info(f"Storage cleanup completed: {deleted_count} files removed, {freed_bytes} bytes freed")
+        # Determine machine-readable status according to Master Spec §36
+        if errors and deleted_count > 0:
+            status = "PARTIAL_FAILURE"
+            status_vi = "Dọn dẹp hoàn tất một phần"
+        elif errors and deleted_count == 0:
+            status = "FAILURE"
+            status_vi = "Dọn dẹp thất bại"
+        else:
+            status = "SUCCESS"
+            status_vi = "Đã dọn dẹp thành công"
+
+        logger.info(f"Storage cleanup [{status}]: {deleted_count} files removed, {freed_bytes} bytes freed, {len(errors)} errors")
         return {
-            "status": "SUCCESS",
-            "statusVi": "Đã dọn dẹp thành công",
+            "status": status,
+            "statusVi": status_vi,
             "deletedCount": deleted_count,
             "freedBytes": freed_bytes,
             "freedMb": round(freed_bytes / (1024 * 1024), 2),
-            "errors": errors
+            "errors": errors,
+            "bytes_reclaimed": freed_bytes,
+            "items_deleted": deleted_count,
+            "items_failed": len(errors),
+            "failed_items": errors,
+            "protected_items_skipped": protected_skipped
         }
 
 

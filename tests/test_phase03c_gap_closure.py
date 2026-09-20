@@ -15,12 +15,19 @@ from starlette.testclient import TestClient
 
 from studio.app import app
 from studio.visual_router import VisualRouter, ROUTE_VEO, ROUTE_STATIC_IMAGE, ROUTE_EDITOR_MOTION, ROUTE_EVIDENCE
+from tests.fixtures.project_factory import hermetic_canonical_project_in_projects_dir
 
 client = TestClient(app)
 
 PROJ = "2026-09-12_210003_youtube-narration-01"
 PROJECTS_DIR = Path("projects")
 PROJ_DIR = PROJECTS_DIR / PROJ
+
+
+@pytest.fixture(autouse=True)
+def hermetic_project():
+    with hermetic_canonical_project_in_projects_dir(PROJ) as p:
+        yield p
 
 
 # ===========================================================================

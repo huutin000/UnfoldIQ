@@ -129,7 +129,7 @@ Xác minh hành vi giao diện người dùng theo chuẩn trải nghiệm:
 ---
 
 ## 8. UI Language Audit (Cổng G — Kiểm toán tiếng Việt chuẩn hóa)
-Đối chiếu toàn bộ văn bản hiển thị trên các bề mặt 3A với `docs/UI_LANGUAGE_GLOSSARY.md`:
+Đối chiếu toàn bộ văn bản hiển thị trên các bề mặt 3A với `docs/implementation/UI_LANGUAGE_GLOSSARY.md`:
 - Nhãn 5 Workbench: `Tổng quan`, `Kịch bản`, `Giọng đọc`, `Hình ảnh & Cảnh`, `Xuất video` (100% chuẩn).
 - Thuật ngữ biên tập: `Lưu kịch bản`, `Đã lưu`, `Chưa lưu`, `Kiểm định biên tập kịch bản`, `Áp dụng sửa câu`, `Bỏ qua`, `Phân tích lại`.
 - Hành động tối ưu: `Xuất video ngay →`, lý do đề xuất đã chuyển đổi toàn bộ enum nội bộ sang tiếng Việt (`"SẴN SÀNG"` thay vì `"READY"`).

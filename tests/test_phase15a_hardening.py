@@ -130,7 +130,8 @@ def test_a_persistent_job_and_restart(tmp_path):
     job exists in history and is not lost; RUNNING job recovered to INTERRUPTED/RESUMABLE.
     """
     runtime_dir = tmp_path / "runtime_jobs"
-    jm1 = JobsManager(runtime_dir=runtime_dir)
+    projects_dir = tmp_path / "projects"
+    jm1 = JobsManager(runtime_dir=runtime_dir, projects_dir=projects_dir)
 
     job = jm1.create_job("FINAL_RENDER", project_id="proj_alpha", metadata={"quality": "1080p"})
     job_id = job["jobId"]
@@ -142,7 +143,7 @@ def test_a_persistent_job_and_restart(tmp_path):
     jm1.set_checkpoint(job_id, checkpoint_data={"valid": True, "completed_chunks": [0, 1], "stage": "render"})
 
     # Simulate server crash/restart by creating new JobsManager instance
-    jm2 = JobsManager(runtime_dir=runtime_dir)
+    jm2 = JobsManager(runtime_dir=runtime_dir, projects_dir=projects_dir)
     recovered_job = jm2.get_job(job_id)
 
     assert recovered_job is not None
@@ -161,7 +162,8 @@ def test_b_resume_crash_recovery(tmp_path):
     Test B: Interrupt at ~40% -> restart -> validate checkpoint -> resume -> no duplicate chunk.
     """
     runtime_dir = tmp_path / "runtime_jobs"
-    jm = JobsManager(runtime_dir=runtime_dir)
+    projects_dir = tmp_path / "projects"
+    jm = JobsManager(runtime_dir=runtime_dir, projects_dir=projects_dir)
 
     job = jm.create_job("TTS", project_id="proj_beta")
     job_id = job["jobId"]
@@ -337,6 +339,38 @@ def test_g_safe_storage_cleanup(temp_project, tmp_path):
     assert (temp_project / "audio.wav").exists()
 
 
+def test_g2_required_evidence_never_offered():
+    """
+    Test G2 (§9 Evidence Ownership): required regression evidence paths are
+    never offered as cleanup candidates, while genuinely disposable temp
+    files still are. Uses the real TEMP_DIR with guaranteed cleanup.
+    """
+    import os
+    import time
+    from studio.config import TEMP_DIR
+    probe = TEMP_DIR / "phase06_final_closure" / "screenreader" / "__evidence_pin_probe__.json"
+    control = TEMP_DIR / "__disposable_pin_probe__.tmp"
+    try:
+        probe.parent.mkdir(parents=True, exist_ok=True)
+        probe.write_bytes(b'{"probe": true}')
+        control.write_bytes(b"disposable")
+        old = time.time() - 7200
+        os.utime(probe, (old, old))
+        os.utime(control, (old, old))
+        sm = StorageManager()
+        preview = sm.preview_cleanup()
+        offered = [c["absPath"] for c in preview.get("allCandidates", [])]
+        assert str(probe) not in offered
+        assert str(control) in offered
+    finally:
+        probe.unlink(missing_ok=True)
+        control.unlink(missing_ok=True)
+        try:
+            probe.parent.rmdir()
+        except OSError:
+            pass
+
+
 # ===========================================================================
 # TEST H — Graceful Shutdown & Safe Stop
 # ===========================================================================
@@ -345,7 +379,8 @@ def test_h_graceful_shutdown(tmp_path):
     Test H: Active jobs detected on shutdown -> safe stop checkpoints and sets RESUMABLE -> safe to exit.
     """
     runtime_dir = tmp_path / "runtime_jobs"
-    jm = JobsManager(runtime_dir=runtime_dir)
+    projects_dir = tmp_path / "projects"
+    jm = JobsManager(runtime_dir=runtime_dir, projects_dir=projects_dir)
     gsm = GracefulShutdownManager(jobs_mgr=jm)
 
     job = jm.create_job("FINAL_RENDER", project_id="proj_shutdown_test")

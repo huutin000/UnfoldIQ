@@ -24,8 +24,15 @@ from studio.project_adapter import project_adapter
 from studio.domain_models import Scene, Shot, SceneSummary, VisualSummarySlice, VisualBibleSlice
 from studio.locking import LockManager
 from studio.project_bootstrap import get_project_state_store
+from tests.fixtures.project_factory import hermetic_canonical_project_in_projects_dir
 
 REFERENCE_PROJECT = "2026-09-12_210003_youtube-narration-01"
+
+
+@pytest.fixture(autouse=True)
+def hermetic_project():
+    with hermetic_canonical_project_in_projects_dir(REFERENCE_PROJECT) as p:
+        yield p
 
 
 @pytest.fixture(scope="module")
@@ -69,8 +76,8 @@ def test_visual_scenes_lightweight_route(client):
     first_sc = scenes[0]
     assert first_sc["scene_id"] == "scene_001"
     assert first_sc["index"] == 1
-    assert first_sc["shot_count"] == 3
-    assert first_sc["shot_ids"] == ["shot_001", "shot_002", "shot_003"]
+    assert first_sc["shot_count"] == 2
+    assert first_sc["shot_ids"] == ["shot_001", "shot_002"]
     assert "is_locked" in first_sc
     assert "status" in first_sc
     # Verify no heavy payloads leaked into lightweight scene summary
@@ -86,7 +93,7 @@ def test_visual_scene_detail_route(client):
     data = resp.json()
     assert data["scene_id"] == "scene_001"
     assert data["index"] == 1
-    assert len(data["shots"]) == 3
+    assert len(data["shots"]) == 2
     assert data["image_prompt"] != ""
     assert data["negative_prompt"] != ""
     assert data["visual_summary"] != ""
@@ -110,7 +117,7 @@ def test_visual_shot_detail_route(client):
     assert shot["shot_id"] == "shot_001"
     assert shot["parent_scene_id"] == "scene_001"
     assert shot["index"] == 1
-    assert shot["duration"] == pytest.approx(3.153, 0.01)
+    assert shot["duration"] == pytest.approx(4.89, 0.01)
     assert shot["veo_prompt"] != ""
     assert shot["subject_action"] != ""
     assert shot["environmental_action"] != ""

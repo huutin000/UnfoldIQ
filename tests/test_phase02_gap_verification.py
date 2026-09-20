@@ -38,6 +38,15 @@ from studio.project_bootstrap import bootstrap_project_graph, get_project_state_
 from studio.resource_scheduler import LocalResourceScheduler, ResourceGuard
 from studio.state_store import StateStore
 from studio.version_manager import VersionManager, RevisionNotFoundError
+from tests.fixtures.project_factory import hermetic_canonical_project_in_projects_dir
+
+PROJ = "2026-09-12_210003_youtube-narration-01"
+
+
+@pytest.fixture(autouse=True)
+def hermetic_project():
+    with hermetic_canonical_project_in_projects_dir(PROJ) as p:
+        yield p
 
 
 # ==============================================================================

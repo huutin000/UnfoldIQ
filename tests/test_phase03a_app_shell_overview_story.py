@@ -21,6 +21,51 @@ def client():
     return TestClient(app)
 
 
+@pytest.fixture(autouse=True)
+def setup_test_project():
+    p = Path(f"projects/{TEST_PROJECT_ID}")
+    had_existed = p.exists()
+    p.mkdir(parents=True, exist_ok=True)
+
+    beats = [
+        {
+            "beat_id": f"beat_{i:03d}",
+            "index": i,
+            "title": f"Beat {i}",
+            "text": f"Sentence number {i} for narration.",
+            "style": "cinematic",
+            "confidence": 0.95,
+            "estimated_duration_sec": 5.0
+        }
+        for i in range(1, 139)
+    ]
+    (p / "story_beats.json").write_text(json.dumps({"schema_version": "2.0.0", "beats": beats}), encoding="utf-8")
+    (p / "script.txt").write_text(" ".join(b["text"] for b in beats), encoding="utf-8")
+    (p / "script.json").write_text(json.dumps({"text": " ".join(b["text"] for b in beats), "version": "1.0"}), encoding="utf-8")
+    (p / "settings.json").write_text(json.dumps({"name": "Test Project", "schemaVersion": "15.0", "duration_seconds": 690.0}), encoding="utf-8")
+
+    shots = [
+        {
+            "shot_id": f"shot_{i:03d}",
+            "scene_id": f"scene_{(i-1)//2 + 1:03d}",
+            "duration": 5.0
+        }
+        for i in range(1, 142)
+    ]
+    (p / "veo_prompts.json").write_text(json.dumps({"schema_version": "2.0.0", "shots": shots, "total_shots": 141}), encoding="utf-8")
+
+    scenes = [{"scene_id": f"scene_{i:03d}", "duration": 10.0} for i in range(1, 72)]
+    (p / "scene_plan.json").write_text(json.dumps({"schema_version": "2.0.0", "scenes": scenes}), encoding="utf-8")
+    (p / "manifest.json").write_text(json.dumps({"chunks": []}), encoding="utf-8")
+    (p / "timeline.json").write_text(json.dumps({"scenes": scenes}), encoding="utf-8")
+
+    yield
+
+    if not had_existed:
+        import shutil
+        shutil.rmtree(p, ignore_errors=True)
+
+
 def test_3a_workbench_nav_in_index_html():
     """Verify index.html contains canonical 5 workbenches and Story Workbench 3-column markup."""
     index_path = Path("studio/static/index.html")

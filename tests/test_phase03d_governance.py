@@ -17,9 +17,16 @@ import pytest
 from starlette.testclient import TestClient
 
 from studio.app import app
+from tests.fixtures.project_factory import hermetic_canonical_project_in_projects_dir
 
 client = TestClient(app)
 PROJ = "2026-09-12_210003_youtube-narration-01"
+
+
+@pytest.fixture(autouse=True)
+def hermetic_project():
+    with hermetic_canonical_project_in_projects_dir(PROJ) as p:
+        yield p
 
 
 def _paths():

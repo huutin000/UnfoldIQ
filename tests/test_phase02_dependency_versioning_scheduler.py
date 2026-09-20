@@ -567,47 +567,53 @@ def test_resource_guard_denies_cuda_encoder_coexistence():
 
 def test_reference_project_bootstrap_idempotence():
     """Verify reference 79-scene project bootstraps without modifying Phase 1 stable IDs."""
-    store = get_project_state_store(SAMPLE_PROJECT)
-    graph1 = bootstrap_project_graph(SAMPLE_PROJECT, state_store=store, force_rebuild=True)
+    from tests.fixtures.project_factory import hermetic_canonical_project_in_projects_dir
 
-    nodes1 = graph1.list_nodes()
-    assert len(nodes1) >= 79  # At least 79 scenes + beats + chunks
+    with hermetic_canonical_project_in_projects_dir(SAMPLE_PROJECT):
+        store = get_project_state_store(SAMPLE_PROJECT)
+        graph1 = bootstrap_project_graph(SAMPLE_PROJECT, state_store=store, force_rebuild=True)
 
-    # Bootstrap second time (must return existing graph idempotently)
-    graph2 = bootstrap_project_graph(SAMPLE_PROJECT, state_store=store, force_rebuild=False)
-    assert len(graph2.list_nodes()) == len(nodes1)
+        nodes1 = graph1.list_nodes()
+        assert len(nodes1) >= 79  # At least 79 scenes + beats + chunks
+
+        # Bootstrap second time (must return existing graph idempotently)
+        graph2 = bootstrap_project_graph(SAMPLE_PROJECT, state_store=store, force_rebuild=False)
+        assert len(graph2.list_nodes()) == len(nodes1)
 
 
 def test_phase02_rest_api_contracts():
     """Verify Phase 2 REST API endpoints return structured payloads and proper 4xx error codes."""
-    client = TestClient(app)
+    from tests.fixtures.project_factory import hermetic_canonical_project_in_projects_dir
 
-    # 1. Graph endpoint
-    resp_graph = client.get(f"/api/projects/{SAMPLE_PROJECT}/dependencies/graph")
-    assert resp_graph.status_code == 200
-    graph_data = resp_graph.json()
-    assert "nodes" in graph_data
-    assert "edges" in graph_data
-    assert len(graph_data["nodes"]) > 0
+    with hermetic_canonical_project_in_projects_dir(SAMPLE_PROJECT):
+        client = TestClient(app)
 
-    # 2. Next action endpoint
-    resp_nba = client.get(f"/api/projects/{SAMPLE_PROJECT}/next-action")
-    assert resp_nba.status_code == 200
-    nba_data = resp_nba.json()
-    assert "action_type" in nba_data
-    assert "priority" in nba_data
+        # 1. Graph endpoint
+        resp_graph = client.get(f"/api/projects/{SAMPLE_PROJECT}/dependencies/graph")
+        assert resp_graph.status_code == 200
+        graph_data = resp_graph.json()
+        assert "nodes" in graph_data
+        assert "edges" in graph_data
+        assert len(graph_data["nodes"]) > 0
 
-    # 3. History endpoint
-    resp_hist = client.get(f"/api/projects/{SAMPLE_PROJECT}/history/audio_chunk/chunk_0001")
-    assert resp_hist.status_code == 200
-    assert isinstance(resp_hist.json(), list)
+        # 2. Next action endpoint
+        resp_nba = client.get(f"/api/projects/{SAMPLE_PROJECT}/next-action")
+        assert resp_nba.status_code == 200
+        nba_data = resp_nba.json()
+        assert "action_type" in nba_data
+        assert "priority" in nba_data
 
-    # 4. Lock endpoint
-    resp_lock = client.post(
-        f"/api/projects/{SAMPLE_PROJECT}/lock/audio_chunk/chunk_0001",
-        json={"locked": True},
-    )
-    assert resp_lock.status_code == 200
+        # 3. History endpoint
+        resp_hist = client.get(f"/api/projects/{SAMPLE_PROJECT}/history/audio_chunk/chunk_0001")
+        assert resp_hist.status_code == 200
+        assert isinstance(resp_hist.json(), list)
+
+        # 4. Lock endpoint
+        resp_lock = client.post(
+            f"/api/projects/{SAMPLE_PROJECT}/lock/audio_chunk/chunk_0001",
+            json={"locked": True},
+        )
+        assert resp_lock.status_code == 200
     assert resp_lock.json()["is_locked"] is True
 
     # Unlock again

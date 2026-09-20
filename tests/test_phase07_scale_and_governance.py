@@ -4,8 +4,18 @@ Baseline for this task: 756/756 PASS (observed inline; summary recorded in
 temp/phase07_verification/tests/baseline_pytest.log).
 """
 from pathlib import Path
+import pytest
+
+from tests.fixtures.project_factory import hermetic_canonical_project_in_projects_dir
 
 ROOT = Path(__file__).resolve().parents[1]
+PROJ = "2026-09-12_210003_youtube-narration-01"
+
+
+@pytest.fixture(autouse=True)
+def hermetic_project():
+    with hermetic_canonical_project_in_projects_dir(PROJ) as p:
+        yield p
 
 
 def _roadmap():

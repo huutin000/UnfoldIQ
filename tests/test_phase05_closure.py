@@ -17,6 +17,14 @@ import pytest
 REPO = Path(__file__).resolve().parents[1]
 NODE = r"D:\Downloads\NodeJS\node.exe"
 CLOSURE_PERF = REPO / "temp" / "phase05_final_closure" / "performance"
+PROJ = "2026-09-12_210003_youtube-narration-01"
+
+
+@pytest.fixture(autouse=True)
+def hermetic_project():
+    from tests.fixtures.project_factory import hermetic_canonical_project_in_projects_dir
+    with hermetic_canonical_project_in_projects_dir(PROJ) as p:
+        yield p
 
 NODE_PREAMBLE = """
 const fs = require('fs');

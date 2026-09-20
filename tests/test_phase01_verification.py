@@ -39,11 +39,10 @@ SAMPLE_PROJECT = "2026-09-12_210003_youtube-narration-01"
 
 @pytest.fixture
 def temp_project_dir(tmp_path):
-    """Copies the baseline project to an isolated temp directory under tmp_path."""
-    from studio.config import PROJECTS_DIR
-    src = PROJECTS_DIR / SAMPLE_PROJECT
+    """Generates the baseline project in an isolated temp directory under tmp_path."""
+    from tests.fixtures.project_factory import create_canonical_scale_project
     dst = tmp_path / SAMPLE_PROJECT
-    shutil.copytree(src, dst)
+    create_canonical_scale_project(dst, name=SAMPLE_PROJECT)
     return tmp_path, SAMPLE_PROJECT
 
 
@@ -431,11 +430,13 @@ def test_gate_b_provider_injection(temp_project_dir, tmp_path):
     """Gate B: Verify business routes work when FakeTTS and FakeSTT are injected."""
     import studio.app as app_module
     from starlette.testclient import TestClient
+    from tests.fixtures.project_factory import hermetic_canonical_project_in_projects_dir
 
     fake_tts = FakeTTS()
     fake_stt = FakeSTT()
 
-    with patch.object(app_module, "tts_provider", fake_tts), \
+    with hermetic_canonical_project_in_projects_dir(SAMPLE_PROJECT), \
+         patch.object(app_module, "tts_provider", fake_tts), \
          patch.object(app_module, "stt_provider", fake_stt):
         client = TestClient(app_module.app)
 
@@ -520,23 +521,25 @@ def test_gate_d_api_contract_consistency():
     """Gate D: Verify /v2/overview is canonical and selective visual routes return expected schemas."""
     import studio.app as app_module
     from starlette.testclient import TestClient
+    from tests.fixtures.project_factory import hermetic_canonical_project_in_projects_dir
 
-    client = TestClient(app_module.app)
+    with hermetic_canonical_project_in_projects_dir(SAMPLE_PROJECT):
+        client = TestClient(app_module.app)
 
-    # 1. Canonical /v2/overview
-    resp_v2 = client.get(f"/api/projects/{SAMPLE_PROJECT}/v2/overview")
-    assert resp_v2.status_code == 200
-    assert resp_v2.json()["project_id"] == SAMPLE_PROJECT
+        # 1. Canonical /v2/overview
+        resp_v2 = client.get(f"/api/projects/{SAMPLE_PROJECT}/v2/overview")
+        assert resp_v2.status_code == 200
+        assert resp_v2.json()["project_id"] == SAMPLE_PROJECT
 
-    # 2. Visual summary
-    resp_sum = client.get(f"/api/projects/{SAMPLE_PROJECT}/visual/summary")
-    assert resp_sum.status_code == 200
-    assert resp_sum.json()["total_scenes"] == 79
+        # 2. Visual summary
+        resp_sum = client.get(f"/api/projects/{SAMPLE_PROJECT}/visual/summary")
+        assert resp_sum.status_code == 200
+        assert resp_sum.json()["total_scenes"] == 79
 
-    # 3. Visual scenes lightweight list
-    resp_scenes = client.get(f"/api/projects/{SAMPLE_PROJECT}/visual/scenes")
-    assert resp_scenes.status_code == 200
-    assert len(resp_scenes.json()) == 79
+        # 3. Visual scenes lightweight list
+        resp_scenes = client.get(f"/api/projects/{SAMPLE_PROJECT}/visual/scenes")
+        assert resp_scenes.status_code == 200
+        assert len(resp_scenes.json()) == 79
 
 
 # ============================================================================

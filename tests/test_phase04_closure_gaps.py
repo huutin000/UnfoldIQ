@@ -14,6 +14,13 @@ PROJ = "2026-09-12_210003_youtube-narration-01"
 PROJ_DIR = Path("projects") / PROJ
 
 
+@pytest.fixture(autouse=True)
+def hermetic_project():
+    from tests.fixtures.project_factory import hermetic_canonical_project_in_projects_dir
+    with hermetic_canonical_project_in_projects_dir(PROJ) as p:
+        yield p
+
+
 @pytest.fixture()
 def work_project(tmp_path):
     dst = Path("projects") / f"_p4c_{tmp_path.name[-6:]}"

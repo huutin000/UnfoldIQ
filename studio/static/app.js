@@ -216,7 +216,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const pipelineSidebar = document.getElementById("pipeline-sidebar");
   const workspaceInspector = document.getElementById("workspace-inspector");
   const btnOpenSettings = document.getElementById("btn-open-settings");
-  const btnOpenTour = document.getElementById("btn-open-tour");
   const workflowStepper = document.getElementById("workflow-stepper");
 
   // Confirm Modal Elements
@@ -226,24 +225,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const confirmBtnCancel = document.getElementById("confirm-btn-cancel");
   const confirmBtnConfirm = document.getElementById("confirm-btn-confirm");
   const confirmModalCloseBtn = document.getElementById("confirm-modal-close-btn");
-
-  // Tour Elements
-  const tourOverlay = document.getElementById("onboarding-tour-overlay");
-  const tourSpotlight = document.getElementById("tour-spotlight");
-  const tourCard = document.getElementById("tour-card");
-  const tourStepBadge = document.getElementById("tour-step-badge");
-  const tourBtnSkip = document.getElementById("tour-btn-skip");
-  const tourCardTitle = document.getElementById("tour-card-title");
-  const tourCardBody = document.getElementById("tour-card-body");
-  const tourBtnPrev = document.getElementById("tour-btn-prev");
-  const tourBtnNext = document.getElementById("tour-btn-next");
-
-  // Contextual Help Elements
-  const helpModal = document.getElementById("contextual-help-modal");
-  const helpModalTitle = document.getElementById("help-modal-title");
-  const helpModalCloseBtn = document.getElementById("help-modal-close-btn");
-  const helpModalBody = document.getElementById("help-modal-body");
-  const helpModalActionBtn = document.getElementById("help-modal-action-btn");
 
   // ==============================================================================
   // 2. STATE MANAGEMENT & UTILITIES
@@ -365,7 +346,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (modalEl === spEditModal) closeEditSceneModal();
         else if (modalEl === veoEditModal) closeEditVeoModal();
         else if (modalEl === confirmModal) closeConfirmDialog();
-        else if (modalEl === helpModal) closeModuleHelp();
       }
     }
 
@@ -412,7 +392,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       if (t && t.isConnected && typeof t.focus === "function") t.focus();
       else {
-        const fb = document.querySelector("#btn-open-tour, .nav-item, .stepper-item");
+        const fb = document.querySelector(".nav-item, .stepper-item");
         if (fb && typeof fb.focus === "function") fb.focus();
       }
     } catch (e) {}
@@ -921,198 +901,15 @@ document.addEventListener("DOMContentLoaded", () => {
       // P0.1: dirty check FIRST — nested confirm dialogs would be closed
       // immediately by the shared modal manager, so chain explicitly.
       if (isScriptDirty()) {
-        confirmDiscardScriptIfDirty("Đóng dự án", () => doCloseProject());
+        confirmDiscardScriptIfDirty("Đóng dự án", () => resetWorkstationToCleanState());
       } else {
-        doCloseProject();
-      }
-    });
-  }
-
-  function doCloseProject() {
-    showConfirmDialog({
-      variant: "warning",
-      title: "Đóng dự án hiện tại?",
-      message: "Bạn có muốn đóng dự án hiện tại và đưa Workstation về trạng thái ban đầu? Các thay đổi đã lưu trong tệp dự án không bị mất.",
-      confirmText: "Đóng dự án",
-      cancelText: "Hủy",
-      onConfirm: () => {
         resetWorkstationToCleanState();
-        showNotification("Đã đóng dự án.", "info");
       }
     });
-  }
-
-  // Contextual Help System
-  const MODULE_HELP_CONTENT = {
-    script: {
-      title: "1. Kịch bản lồng tiếng",
-      sections: [
-        { label: "Mục đích", text: "Nhập nội dung văn bản kịch bản tiếng Việt hoặc tiếng Anh để tạo giọng đọc lồng tiếng và phân tích thị giác." },
-        { label: "Khi nào sử dụng", text: "Bước đầu tiên của mọi dự án sản xuất video UnfoldIQ." },
-        { label: "Điều kiện tiên quyết", text: "Không có. Bạn có thể gõ trực tiếp hoặc dán kịch bản từ clipboard." },
-        { label: "Đầu ra (Output)", text: "Văn bản được tính toán ký tự, số từ, thời lượng ước tính và tự động phân tách câu chuẩn xác." },
-        { label: "Bước tiếp theo", text: "Kiểm tra phát âm nếu có từ viết tắt, cấu hình giọng đọc và bấm 'Tạo giọng đọc'." }
-      ]
-    },
-    audio: {
-      title: "2. Audio Studio & Kết xuất (Audio QA)",
-      sections: [
-        { label: "Mục đích", text: "Theo dõi tiến độ kết xuất giọng đọc theo từng đoạn (chunk streaming), kiểm tra cache reuse và nghe thử âm thanh chất lượng cao." },
-        { label: "Khi nào sử dụng", text: "Sau khi bấm 'Tạo giọng đọc' hoặc khi mở lại một dự án đã có audio." },
-        { label: "Điều kiện tiên quyết", text: "Đã có kịch bản và dịch vụ Kokoro TTS Server đang hoạt động." },
-        { label: "Đầu ra (Output)", text: "Tệp âm thanh WAV (24kHz studio master) và MP3 (320kbps) trong thư mục dự án." },
-        { label: "Bước tiếp theo", text: "Chuyển sang bước 'Voice QA' để kiểm định chất lượng phát âm." }
-      ]
-    },
-    "voice-qa": {
-      title: "3. Voice QA (Kiểm định giọng đọc)",
-      sections: [
-        { label: "Mục đích", text: "Kiểm tra tính chính xác của âm thanh narration đối chiếu với văn bản gốc kịch bản trước khi tạo Timestamp." },
-        { label: "Khi nào sử dụng", text: "Tự động chạy sau khi tạo giọng đọc hoặc chạy thủ công bất cứ lúc nào." },
-        { label: "Phát hiện", text: "Thiếu từ, thừa từ, từ thay thế, lặp đoạn/câu, WPM bất thường, khoảng lặng quá dài và câu bị cắt ngắn." },
-        { label: "Thao tác sửa lỗi", text: "Nghe từng đoạn nghi vấn, Chấp nhận (nếu phát âm đúng), Sửa phát âm qua Từ điển, hoặc Render lại riêng đoạn đó." },
-        { label: "Bước tiếp theo", text: "Sau khi kiểm định đạt PASS hoặc giải quyết xong các cảnh báo, tiếp tục sang bước Timestamp." }
-      ]
-    },
-    timestamp: {
-      title: "4. Mốc thời gian phụ đề (Whisper Alignment)",
-      sections: [
-        { label: "Mục đích", text: "Sử dụng mô hình Whisper để nhận dạng và gán mốc thời gian bắt đầu - kết thúc chính xác cho từng câu và từng từ." },
-        { label: "Khi nào sử dụng", text: "Sau khi đã tạo xong file audio WAV." },
-        { label: "Điều kiện tiên quyết", text: "Dự án đã có file audio master." },
-        { label: "Đầu ra (Output)", text: "File phụ đề chuẩn SRT (subtitles.srt) và mảng câu thời gian JSON (timestamps.json)." },
-        { label: "Bước tiếp theo", text: "Chuyển sang 'Scene Planner' để storyboard phân cảnh khớp từng giây với lời đọc." }
-      ]
-    },
-    scenes: {
-      title: "4. Phân bổ storyboard (Visual Scene Planner)",
-      sections: [
-        { label: "Mục đích", text: "Tự động phân bổ kịch bản thành các cảnh quay (storyboard) ngắn có mục tiêu thị giác, thể loại, góc máy và prompt sinh ảnh." },
-        { label: "Khi nào sử dụng", text: "Sau khi đã có mốc thời gian timestamp hoàn chỉnh." },
-        { label: "Điều kiện tiên quyết", text: "Dự án đã hoàn tất bước Audio và Timestamp." },
-        { label: "Đầu ra (Output)", text: "Danh sách scene chi tiết, file scenes.json và storyboard.md xuất bản." },
-        { label: "Bước tiếp theo", text: "Chuyển sang 'Veo Prompt' để sinh bộ câu lệnh tạo video AI chuyển động." }
-      ]
-    },
-    veo: {
-      title: "5. Câu lệnh video AI (Veo Prompt Generator)",
-      sections: [
-        { label: "Mục đích", text: "Dựng câu lệnh sinh video AI độ phân giải cao tương thích Google Veo 2, Runway Gen-3 với đầy đủ framing, camera motion, lighting và negative prompt." },
-        { label: "Khi nào sử dụng", text: "Sau khi đã hoàn tất phân bổ storyboard scenes." },
-        { label: "Điều kiện tiên quyết", text: "Đã có Scene Plan hợp lệ." },
-        { label: "Đầu ra (Output)", text: "Danh sách shot video chi tiết, file veo_prompts.json và export markdown." },
-        { label: "Bước tiếp theo", text: "Sao chép prompt vào công cụ tạo video AI hoặc xuất bản gói dự án." }
-      ]
-    },
-    projects: {
-      title: "6. Lịch sử dự án & Quản lý an toàn (Project Manager)",
-      sections: [
-        { label: "Mục đích", text: "Duyệt danh sách các dự án sản xuất đã tạo, mở nghe lại audio và xóa vĩnh viễn các dự án không còn sử dụng." },
-        { label: "Khi nào sử dụng", text: "Khi muốn chuyển đổi qua lại giữa các dự án hoặc dọn dẹp dung lượng đĩa." },
-        { label: "Điều kiện tiên quyết", text: "Không có. Danh sách tự động quét thư mục projects/." },
-        { label: "Đầu ra (Output)", text: "Xem nhanh thông tin giọng đọc, số ký tự, thời lượng audio và nút xóa an toàn." },
-        { label: "Bước tiếp theo", text: "Bấm 'Mở dự án' để nạp toàn bộ dữ liệu vào workstation." }
-      ]
-    },
-    pronunciation: {
-      title: "7. Từ điển phát âm (Pronunciation Dictionary)",
-      sections: [
-        { label: "Mục đích", text: "Định nghĩa quy tắc thay thế cho từ viết tắt, thuật ngữ khoa học hoặc tên riêng tiếng nước ngoài (ví dụ: AI → ây ai, CPU → xi pi u)." },
-        { label: "Khi nào sử dụng", text: "Trước khi tạo giọng đọc để đảm bảo AI đọc chuẩn xác không vấp." },
-        { label: "Điều kiện tiên quyết", text: "Không có. Quy tắc được lưu trong từ điển toàn cục hệ thống." },
-        { label: "Đầu ra (Output)", text: "Kịch bản tự động được chuẩn hóa trước khi đưa vào Kokoro engine." },
-        { label: "Bước tiếp theo", text: "Bấm 'Nghe thử' để kiểm âm phát âm của từ vừa thêm." }
-      ]
-    },
-    voice: {
-      title: "8. Cấu hình Giọng đọc & Tốc độ (Voice Settings)",
-      sections: [
-        { label: "Mục đích", text: "Lựa chọn giọng đọc AI yêu thích và tinh chỉnh tốc độ đọc phù hợp với phong cách và nhịp điệu của video." },
-        { label: "Khi nào sử dụng", text: "Khi bắt đầu một kịch bản mới hoặc thử nghiệm các phong cách đọc khác nhau." },
-        { label: "Điều kiện tiên quyết", text: "Kokoro TTS Server đang chạy." },
-        { label: "Đầu ra (Output)", text: "Giọng đọc và tốc độ mong muốn được áp dụng cho bản thu âm tiếp theo." },
-        { label: "Bước tiếp theo", text: "Bấm 'Tạo giọng đọc' để bắt đầu kết xuất." }
-      ]
-    }
-  };
-
-  function showModuleHelp(moduleId) {
-    const data = MODULE_HELP_CONTENT[moduleId];
-    if (!data || !helpModal || !helpModalTitle || !helpModalBody) return;
-    lastFocusedElement = document.activeElement;
-    helpModalTitle.textContent = data.title;
-    helpModalBody.innerHTML = `
-      <div class="help-sections-list">
-        ${data.sections.map(s => `
-          <div class="help-section">
-            <div class="help-section-title">${escapeHtml(s.label)}</div>
-            <div class="help-section-content">${escapeHtml(s.text)}</div>
-          </div>
-        `).join("")}
-      </div>
-    `;
-    helpModal.style.display = "flex";
-    helpModal.classList.add("open");
-    uqOpenModals.push({ el: helpModal, trigger: lastFocusedElement });
-    uqLockBody();
-    trapFocus(helpModal);
-  }
-  window.showModuleHelp = showModuleHelp;
-
-  function closeModuleHelp() {
-    uqModalClose(helpModal);
-  }
-  window.closeModuleHelp = closeModuleHelp;
-
-  if (helpModalCloseBtn) helpModalCloseBtn.addEventListener("click", closeModuleHelp);
-  if (helpModalActionBtn) helpModalActionBtn.addEventListener("click", closeModuleHelp);
-  if (helpModal) {
-    helpModal.addEventListener("click", (e) => {
-      if (e.target === helpModal) closeModuleHelp();
-    });
-  }
-
-  // Attach contextual help button listeners
-  document.querySelectorAll(".btn-module-help").forEach(btn => {
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const mod = btn.dataset.module;
-      if (mod) showModuleHelp(mod);
-    });
-  });
-
-  // Guided Onboarding Tour System — DEPRECATED (12 bước cũ đã gỡ nội dung).
-  // Nội dung tour mới nằm trong guide.js (window.UQGuide). Mảng TOUR_STEPS cũ bị xóa để
-  // tránh nhầm lẫn; DOM overlay (#onboarding-tour-overlay) được UQGuide tái sử dụng.
-
-  // ---------------------------------------------------------------------------
-  // DEPRECATED: tour 12 bước cũ (onboarding revamp spec 04 §15).
-  // Hệ mới: window.UQGuide trong guide.js (product-overview ≤6 bước + mini tours,
-  // Help Center, per-tour versioning unfoldiq.onboarding.v2, migration giữ state cũ).
-  // Các hàm dưới chỉ còn là shim tương thích, không auto-run tour cũ nữa.
-  // ---------------------------------------------------------------------------
-  function startTour(stepIndex = 0) {
-    if (window.UQGuide && typeof window.UQGuide.start === "function") {
-      window.UQGuide.start("product-overview", 0);
-      return;
-    }
-    if (tourOverlay) {
-      tourOverlay.style.display = "block";
-      tourOverlay.classList.add("open");
-    }
-  }
-  window.startTour = startTour;
-
-  function closeTour() {
-    if (window.UQGuide && typeof window.UQGuide.dismiss === "function") {
-      try { window.UQGuide.dismiss(); } catch (e) {}
-    }
-    if (tourOverlay) {
-      tourOverlay.style.display = "none";
-      tourOverlay.classList.remove("open");
-    }
     try { localStorage.setItem("unfoldiq_tour_completed", "true"); } catch (e) {}
   }
+  // Tour engine removed with guide.js; keep a no-op stub for legacy callers.
+  function closeTour() {}
   window.closeTour = closeTour;
 
   function renderTourStep(index) {
@@ -7272,22 +7069,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (btnEmbeddedCleanupExecute) {
-    btnEmbeddedCleanupExecute.addEventListener("click", async () => {
-      if (!confirm("Bạn có chắc chắn muốn dọn dẹp các tệp đệm tạm thời an toàn?")) return;
-      try {
-        const res = await fetch("/api/storage/cleanup/execute", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ categories: ["renderCache", "tempFiles", "testCache"], confirmed: true })
-        });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const report = await res.json();
-        showNotification(`Đã dọn dẹp ${report.deletedCount} tệp, giải phóng ${report.freedMb} MB.`, "success");
-        loadEmbeddedStorageOverview();
-        if (embeddedCleanupPreviewContainer) embeddedCleanupPreviewContainer.innerHTML = "";
-        btnEmbeddedCleanupExecute.disabled = true;
-      } catch (e) {
-        showNotification(`Lỗi dọn dẹp: ${e.message}`, "error");
+    btnEmbeddedCleanupExecute.addEventListener("click", () => {
+      if (window.openCleanupConfirmModal) {
+        window.openCleanupConfirmModal();
+      } else if (window.phase15a && window.phase15a.openCleanupConfirmModal) {
+        window.phase15a.openCleanupConfirmModal();
       }
     });
   }

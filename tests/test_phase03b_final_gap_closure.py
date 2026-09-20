@@ -10,6 +10,13 @@ from studio.locking import LockManager
 client = TestClient(app)
 SAMPLE_PROJECT = "2026-09-12_210003_youtube-narration-01"
 
+
+@pytest.fixture(autouse=True)
+def hermetic_project():
+    from tests.fixtures.project_factory import hermetic_canonical_project_in_projects_dir
+    with hermetic_canonical_project_in_projects_dir(SAMPLE_PROJECT) as p:
+        yield p
+
 def test_gate_b_canonical_chunk_regenerate_route():
     """Test Gate B: Canonical POST /api/projects/{dir_name}/voice/chunks/{chunk_id}/regenerate with stable ID."""
     store = get_project_state_store(SAMPLE_PROJECT)

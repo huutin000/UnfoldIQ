@@ -20,11 +20,34 @@ from starlette.testclient import TestClient
 
 from studio.app import app
 
+from pathlib import Path
+
 class TestPhase14API(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.client = TestClient(app)
         cls.project_id = "2026-09-12_210003_youtube-narration-01"
+        cls.p_dir = Path(f"projects/{cls.project_id}")
+        cls.p_dir.mkdir(parents=True, exist_ok=True)
+
+        (cls.p_dir / "settings.json").write_text(json.dumps({"name": "Test Project", "schemaVersion": "15.0"}), encoding="utf-8")
+        (cls.p_dir / "script.txt").write_text("Test narration script.", encoding="utf-8")
+        (cls.p_dir / "script.json").write_text(json.dumps({"text": "Test narration script.", "version": "2.0", "contentLanguage": "en-US", "sections": [{"section_id": "sec_01", "title": "Intro", "content": "Test narration script."}]}), encoding="utf-8")
+        (cls.p_dir / "manifest.json").write_text(json.dumps({"chunks": []}), encoding="utf-8")
+        (cls.p_dir / "scene_plan.json").write_text(json.dumps({"scenes": [{"scene_id": "scene_001", "duration": 5.0}]}), encoding="utf-8")
+        (cls.p_dir / "timeline.json").write_text(json.dumps({"timelineVersion": "1.0.0", "audioPolicy": {"narrationMaster": True, "muteGeneratedAudio": True}, "scenes": [{"scene_id": "scene_001", "duration": 5.0}]}), encoding="utf-8")
+        (cls.p_dir / "research.json").write_text(json.dumps({"notes": [], "claims": []}), encoding="utf-8")
+        (cls.p_dir / "review_issues.json").write_text(json.dumps({"issues": []}), encoding="utf-8")
+
+        exp_pkg = cls.p_dir / "exports" / "package"
+        exp_pkg.mkdir(parents=True, exist_ok=True)
+        (exp_pkg / "manifest.json").write_text(json.dumps({"status": "ready"}), encoding="utf-8")
+
+    @classmethod
+    def tearDownClass(cls):
+        import shutil
+        if cls.p_dir.exists():
+            shutil.rmtree(cls.p_dir, ignore_errors=True)
 
     def test_i18n_endpoint(self):
         resp = self.client.get("/api/i18n/vi-VN")

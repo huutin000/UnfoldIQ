@@ -323,13 +323,27 @@ class StateStore:
     # --------------------------------------------------------------------------
 
     def set_lock(self, artifact_id: str, is_locked: bool) -> bool:
-        """Sets is_locked flag on a node. Returns True if node was found and updated."""
+        """Sets is_locked flag on a node. Returns True if node was found and updated.
+        Upserts a minimal node row when the artifact was never bootstrapped
+        (e.g. hermetic fixture projects without state.db graph), so explicit
+        locks are never silently dropped."""
         with self.transaction() as conn:
             cur = conn.execute(
                 "UPDATE nodes SET is_locked = ? WHERE artifact_id = ?",
                 (1 if is_locked else 0, artifact_id)
             )
-            return cur.rowcount > 0
+            if cur.rowcount > 0:
+                return True
+            now = datetime.now(timezone.utc).isoformat()
+            conn.execute(
+                """INSERT OR IGNORE INTO nodes (
+                    artifact_id, artifact_type, content_hash, review_status,
+                    is_outdated, is_locked, blockers_json, metadata_json, updated_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                (artifact_id, "shot", "", "READY",
+                 0, 1 if is_locked else 0, "[]", "{}", now)
+            )
+            return True
 
     def get_lock(self, artifact_id: str) -> bool:
         """Checks whether an artifact is locked."""
