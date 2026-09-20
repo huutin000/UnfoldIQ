@@ -66,7 +66,16 @@ class WhisperSTTProvider(STTProvider):
         }
 
     async def start_transcription(self, project_id: str, script_text: str = "", force: bool = False, **kwargs) -> Dict[str, Any]:
-        return await self.service.start_transcription(project_id, script_text=script_text, force=force, **kwargs)
+        # Adapter translation (v1.0.1 corrective): the provider-level contract
+        # exposes script_text/force, but the concrete TranscriptionService has
+        # the intentionally narrower API (project_id, is_tts_active_fn). The
+        # service reads the script from disk (script.txt) and has no force
+        # semantics, so those provider-level args are intentionally consumed
+        # here — never leaked into the service call (see
+        # tests/test_stt_provider_delegation.py).
+        is_tts_active_fn = kwargs.get("is_tts_active_fn")
+        return await self.service.start_transcription(
+            project_id, is_tts_active_fn=is_tts_active_fn)
 
     async def cancel_transcription(self, project_id: str) -> bool:
         return await self.service.cancel_transcription(project_id)
