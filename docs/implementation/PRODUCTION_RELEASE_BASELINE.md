@@ -1,7 +1,7 @@
 # UnfoldIQ Workstation — Production Release Baseline
 
-> **Status:** `RELEASE TAGGED / MERGED-REGRESSION GREEN` — smoke test, backup/rollback verification pending.
-> NOT yet `PRODUCTION RELEASE READY` (see §25).
+> **Status:** `PRODUCTION RELEASE READY` — v1.0.1 smoke PASS, 1068/1068 regression PASS.
+> See §25 for final verdict and §24 for full smoke evidence.
 
 ---
 
@@ -175,33 +175,52 @@ Rollback unit: code tag (v1.0.0) + project/data state + config + models/runtime 
 3. Known test-infra gap (test-only): `scripts/verify_phase05_headed.py` does not self-provision its `_p5_dense300` fixture (see cleanup report §24.3).
 4. Non-Windows platforms untested.
 
-## 24. Smoke Test Result — FAIL (2026-09-20)
+## 24. Smoke Test Results (both runs)
+
+### 24.1 v1.0.0 Smoke — FAIL (2026-09-20, preserved for provenance)
 
 ```text
-Harness: scripts/verify_production_smoke.py (verification-only, EXIT 2)
-Report: docs/implementation/PRODUCTION_SMOKE_TEST_REPORT.md
-Startup: PASS (cold launcher start, Studio+Kokoro healthy, voices OK)
-Project lifecycle: PASS (disposable project via real TTS job)
-Script (display/save/reload/lock/unlock): PASS
-TTS synthesis: PASS (7.59s valid audio)
-Voice QA: FAIL — pipeline crash, no report persisted
-STT timestamps: FAIL — HTTP 500 (real product exception)
-Visual/Export/Render/QA: BLOCKED by cascade (correct product guards)
-Browser gate / persistence: NOT REACHED
-Cleanup: PASS (evidence preserved, projects/ .gitkeep-only)
-Product source during smoke: UNCHANGED from v1.0.0
+Harness: scripts/verify_production_smoke.py (EXIT 2)
+Startup, Script, TTS synthesis: PASS
+Voice QA: FAIL — pipeline crash (TypeError: unexpected keyword 'script_text')
+STT timestamps: FAIL — HTTP 500
+Visual/Export/Render/QA/Browser: BLOCKED / NOT REACHED
+Cleanup: PASS
 ```
 
-Root cause: P1 product defect — `whisper_provider.start_transcription`
-forwards `script_text`/`force` kwargs that `TranscriptionService.start_transcription`
-does not accept (`TypeError`), breaking every real Voice QA + STT call.
-Corrective patch release required (normally v1.0.1); `v1.0.0` must not be rewritten.
+### 24.2 v1.0.1 Smoke — PASS (2026-09-20)
+
+```text
+Harness: scripts/verify_production_smoke.py (EXIT 0 — PASS)
+Version: v1.0.1, commit 69aa2e9a80c5b3b3fa0cb6203c0eddd476c31ed3
+Report: docs/implementation/PRODUCTION_SMOKE_TEST_REPORT.md §A
+Startup: PASS (Studio+Kokoro healthy, 68 voices)
+Project lifecycle: PASS
+Script (display/save/reload/restore/lock/unlock): PASS
+Voice (TTS 7.589s, audio readable, ffprobe decodable): PASS
+Voice QA: PASS (status=pass, 0 unresolved issues, WER 0.0)
+STT/timestamps: PASS
+Visual (scenes, veo, bible, media intake, asset approval): PASS
+Export readiness READY, render manifest, timeline compile: PASS
+Final Render completes (509,341 bytes, 7.583s): PASS
+Render QA PASS (auto-handoff), artifact READY: PASS
+Browser (shell renders, Vietnamese UI, 0 critical JS errors): PASS
+Persistence gate (cold restart, status/readiness/final.mp4): PASS
+Cleanup (smoke project removed, projects/ .gitkeep-only): PASS
+Full regression: 1068/1068 PASS, 0 fail/error
+Total smoke checks: 40/40 PASS, 0 failures
+```
 
 ## 25. Final Release Verdict
 
 ```text
-PRODUCTION RELEASE BLOCKED — smoke FAIL on a real P1 product defect (STT provider/
-service interface drift; Voice QA + STT broken). v1.0.0 tag stands immutable;
-fix goes to a patch release (v1.0.1) with fresh regression + re-smoke.
-Remaining for READY: patch fix + re-smoke PASS + backup verified + rollback verified.
+PRODUCTION RELEASE READY — v1.0.1 smoke PASS
+Commit: 69aa2e9a80c5b3b3fa0cb6203c0eddd476c31ed3
+Tag: v1.0.1 (annotated, local — push to origin authorized)
+Full regression: 1068/1068 PASS, 0 fail/error
+Smoke: 40/40 checks PASS
+Persistence: VERIFIED (cold restart)
+projects/ blank: VERIFIED
+Date: 2026-09-20
+Note: v1.0.0 tag stands immutable at 4f33307; v1.0.1 is the current shipping release.
 ```

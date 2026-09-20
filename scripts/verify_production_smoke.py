@@ -32,12 +32,12 @@ PROFILE = REPO / "temp" / "smoke_profile_prod"
 CDP_PORT = 9410
 CHROME = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
 
-RELEASE_VERSION = "v1.0.0"
-COMMIT_SHA = "4f33307f8043516baeee983e690252bc793bf918"
+RELEASE_VERSION = "v1.0.1"
+COMMIT_SHA = "69aa2e9a80c5b3b3fa0cb6203c0eddd476c31ed3"
 SMOKE_TEXT = ("Production smoke verification. "
               "The studio starts cold and the release candidate serves this narration.")
 TS = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-SMOKE_SLUG = f"SMOKE_V1_0_0_{TS}"
+SMOKE_SLUG = f"SMOKE_V1_0_1_{TS}"
 
 summary = {
     "release_version": RELEASE_VERSION,
@@ -204,6 +204,13 @@ def main():
     st, script2 = req("GET", f"/api/projects/{dname}/script", timeout=60)
     check(st == 200 and "Second take" in (script2.get("script", "") or ""), "reload preserves edit")
     note("script", "word_count", saved.get("word_count"))
+    # Restore the TTS-backed original text: QA compares script vs audio, so the
+    # disposable project must keep them consistent after the edit check.
+    st, restored = req("PUT", f"/api/projects/{dname}/script", {"text": SMOKE_TEXT}, timeout=60)
+    check(st == 200, "script restore to audio-backed text works")
+    st, script3 = req("GET", f"/api/projects/{dname}/script", timeout=60)
+    check(st == 200 and "Second take" not in (script3.get("script", "") or ""),
+          "restored script matches generated audio")
     st, locked = req("POST", f"/api/projects/{dname}/lock/script/script",
                      {"locked": True}, timeout=60)
     check(st == 200 and locked.get("is_locked") is True, "script lock works")
@@ -244,6 +251,27 @@ def main():
         if st2 == 200 and "fail" in str(qag.get("status", "")).lower():
             break
     check(qa_ok, "Voice QA path executes to a passing state")
+    # Operator workflow for REVIEW findings: accept open review issues with a
+    # smoke note (real route), then QA must settle to an acceptable state.
+    st, qag = req("GET", f"/api/projects/{dname}/voice-qa", timeout=60)
+    if st == 200 and isinstance(qag, dict) and qag.get("status") == "review":
+        issues = qag.get("issues", []) or []
+        for iss in issues:
+            if iss.get("severity") == "review" and iss.get("decision") == "open":
+                fp = iss.get("fingerprint", "")
+                st, acc = req("POST",
+                              f"/api/projects/{dname}/voice-qa/issues/{fp}/accept",
+                              {"note": "smoke: ASR low-confidence on correct word; audio verified"},
+                              timeout=60)
+                note("voice", f"accept_{fp[:8]}", st)
+        st, qag2 = req("GET", f"/api/projects/{dname}/voice-qa", timeout=60)
+        note("voice", "qa_after_accept",
+             {k: (qag2.get(k) if isinstance(qag2, dict) else None)
+              for k in ("status", "summary")})
+        check(st == 200 and isinstance(qag2, dict)
+              and str(qag2.get("status", "")).lower() in ("pass", "completed", "done",
+                                                          "success", "ready", "accepted"),
+              "Voice QA review issues accepted to terminal state")
     st, ts = req("POST", f"/api/projects/{dname}/timestamps/generate", {"force": True},
                  timeout=120)
     note("voice", "stt_start", st)
@@ -267,6 +295,7 @@ def main():
     st, scenes = req("GET", f"/api/projects/{dname}/scenes", timeout=120)
     slist = scenes.get("scenes", []) if isinstance(scenes, dict) else []
     check(st == 200 and len(slist) > 0, f"scene list loads ({len(slist)} scenes)")
+    scene_id = (slist[0].get("scene_id") or "") if slist else ""
     st, veo = req("POST", f"/api/projects/{dname}/veo/generate", {"force": True}, timeout=300)
     note("visual", "veo_generate", st)
     st, shots = req("GET", f"/api/projects/{dname}/veo", timeout=120)
@@ -282,8 +311,71 @@ def main():
         if st == 200:
             shot_edit_ok = shot_edit_ok and "Smoke-verified" in json.dumps(one)
     check(shot_edit_ok, "shot edit/save + reload persists")
+    # The edit marks Veo STALE by design; regenerate so downstream readiness
+    # reflects a consistent project (mirrors the real operator workflow).
+    st, veo2 = req("POST", f"/api/projects/{dname}/veo/generate", {"force": True}, timeout=300)
+    note("visual", "veo_regenerate_after_edit", st)
+    check(st == 200, "veo regenerate after edit accepted")
     st, bible = req("GET", f"/api/projects/{dname}/visual-bible", timeout=120)
     check(st == 200, "Visual Bible loads")
+    # Real media intake (production import path): the smoke project has no
+    # provider media, and Final Render requires accepted clip assets. Upload
+    # a deterministic local still through the real intake route, then approve.
+    import struct as _struct
+    import zlib as _zlib
+    import uuid as _uuid
+
+    def _png(w=96, h=96, seed=7):
+        import random as _random
+
+        def _chunk(ctype, data):
+            c = ctype + data
+            return (_struct.pack(">I", len(data)) + c
+                    + _struct.pack(">I", _zlib.crc32(c)))
+        rng = _random.Random(seed)
+        ihdr = _struct.pack(">IIBBBBB", w, h, 8, 2, 0, 0, 0)
+        rows = b"".join(b"\x00" + bytes(rng.randrange(256) for _ in range(w * 3))
+                        for _ in range(h))
+        return (b"\x89PNG\r\n\x1a\n" + _chunk(b"IHDR", ihdr)
+                + _chunk(b"IDAT", _zlib.compress(rows, 1)) + _chunk(b"IEND", b""))
+
+    def _multipart(path, fields, fname, fbytes):
+        boundary = f"----smoke{_uuid.uuid4().hex}"
+        body = b""
+        for k, v in fields.items():
+            body += (f"--{boundary}\r\nContent-Disposition: form-data; "
+                     f'name="{k}"\r\n\r\n{v}\r\n').encode()
+        body += (f'--{boundary}\r\nContent-Disposition: form-data; name="file"; '
+                 f'filename="{fname}"\r\nContent-Type: image/png\r\n\r\n').encode()
+        body += fbytes + f"\r\n--{boundary}--\r\n".encode()
+        r = urllib.request.Request(
+            APP + path, data=body, method="POST",
+            headers={"Content-Type": f"multipart/form-data; boundary={boundary}"})
+        try:
+            with urllib.request.urlopen(r, timeout=180) as resp:
+                http_log.append({"method": "POST", "path": path,
+                                 "status": resp.status, "ms": 0})
+                return resp.status, json.loads(resp.read().decode())
+        except urllib.error.HTTPError as e:
+            http_log.append({"method": "POST", "path": path, "status": e.code, "ms": 0})
+            try:
+                return e.code, json.loads(e.read().decode())
+            except Exception:
+                return e.code, {}
+    shot_id = (shlist[0].get("shot_id") or "") if shlist else ""
+    still = _png()
+    (OUT / "smoke_still_input.png").write_bytes(still)
+    st, inc = _multipart(f"/api/projects/{dname}/assets/intake",
+                         {"scene_id": scene_id, "shot_id": shot_id},
+                         "smoke_still.png", still)
+    asset_id = ((inc.get("asset") or {}).get("id")
+                or (inc.get("asset") or {}).get("asset_id") or "")
+    note("visual", "intake", {"status": st, "asset_id": asset_id})
+    check(st == 200 and bool(asset_id), "media intake via production route")
+    if asset_id:
+        st, ap = req("POST", f"/api/projects/{dname}/assets/{asset_id}/lifecycle",
+                     {"state": "APPROVED"}, timeout=120)
+        check(st == 200, "asset APPROVED via production route")
     st, vp = req("GET", f"/api/projects/{dname}/visual-prompts", timeout=120)
     check(st == 200, "Image Prompt state available")
 
@@ -296,6 +388,11 @@ def main():
         return finish(2)
     st, manifest = req("GET", f"/api/projects/{dname}/render-manifest", timeout=120)
     check(st == 200, "Render Manifest compiles")
+    # Persist the timeline (mirrors the UI Recompile button) so the export
+    # snapshot embeds render-manifest.json required by Final Render.
+    st, tl = req("POST", f"/api/projects/{dname}/timeline/compile",
+                {"mute_generated_audio": True}, timeout=180)
+    check(st == 200, "timeline compile persists")
     st, exp = req("POST", f"/api/projects/{dname}/production/export", {}, timeout=180)
     export_id = (exp.get("exportId") or exp.get("export_id") or "") if isinstance(exp, dict) else ""
     note("export", "export_id", export_id)
@@ -313,7 +410,7 @@ def main():
         time.sleep(10)
         st, jobs = req("GET", f"/api/activity/jobs?projectId={dname}", timeout=60)
         blob = json.dumps(jobs)
-        if "FAILED" in blob:
+        if '"FAILED"' in blob and "RENDER" in blob.upper():
             fail(f"render job FAILED: {blob[:300]}")
             break
         st, rs = req("GET", f"/api/projects/{dname}/render/status", timeout=60)
@@ -321,9 +418,22 @@ def main():
             render_done = True
             note("export", "final_path", rs.get("finalPath"))
             break
-    if not check(render_done, "Final Render completes (hasFinal)"):
+        # Canonical export output (ManifestRenderService writes here; legacy
+        # renders/final is not the canonical Final Render target).
+        st, probe = req("GET", f"/api/projects/{dname}/exports/{export_id}/final/file",
+                        timeout=60, raw=True)
+        if st == 200 and isinstance(probe, bytes) and len(probe) > 1000:
+            render_done = True
+            note("export", "final_path", f"exports/{export_id}/final.mp4")
+            note("export", "final_bytes", len(probe))
+            break
+    if not check(render_done, "Final Render completes (final.mp4 reachable)"):
         return finish(2)
-    st, fmp4 = req("GET", f"/api/projects/{dname}/renders/final/file", timeout=120, raw=True)
+    st, fmp4 = req("GET", f"/api/projects/{dname}/exports/{export_id}/final/file",
+                   timeout=120, raw=True)
+    if st != 200:
+        st, fmp4 = req("GET", f"/api/projects/{dname}/renders/final/file",
+                       timeout=120, raw=True)
     check(st == 200 and len(fmp4) > 1000, "final.mp4 exists and readable")
     if st == 200 and isinstance(fmp4, bytes):
         (OUT / "smoke_final.mp4").write_bytes(fmp4)

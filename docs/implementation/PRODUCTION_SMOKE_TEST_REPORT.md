@@ -1,145 +1,177 @@
-# Production Smoke Test Report — UnfoldIQ v1.0.0
+# Production Smoke Test Report — UnfoldIQ v1.0.0 / v1.0.1
 
-> **Final Smoke Verdict:** **`PRODUCTION SMOKE TEST FAIL`**
-> **Release status:** **`PRODUCTION RELEASE BLOCKED`** (real product defect, see §15)
+> **Latest Smoke Verdict:** **`PRODUCTION SMOKE TEST PASS`** (v1.0.1)
+> **Release status:** **`PRODUCTION RELEASE READY`** (v1.0.1)
 
 ---
 
-## 1. Release Identity
+## A. v1.0.1 Smoke Run (2026-09-20 — PASS)
+
+### A.1. Release Identity
+
+```text
+Version: v1.0.1 (annotated tag, local — push authorized on PASS)
+Branch: main
+Commit: 69aa2e9a80c5b3b3fa0cb6203c0eddd476c31ed3
+Tag: v1.0.1 → 69aa2e9 (fix(stt): translate provider transcription contract at whisper adapter boundary)
+Smoke date: 2026-09-20
+Harness: scripts/verify_production_smoke.py (EXIT 0 — PASS)
+Smoke duration: ~56 seconds (16:48:27 → 16:49:23 +07:00)
+```
+
+### A.2. Environment
+
+```text
+Windows 11 64-bit | Python 3.12.14 | torch 2.8.0+cu126 (CUDA avail, RTX 3050)
+FFmpeg/ffprobe 8.1.1 | Kokoro :8880 healthy (68 voices) | Studio :7860 healthy
+Launcher: manual daemon start (pythonw.exe, uvicorn, pid-tracked)
+No --reload in production processes. Product code identical to v1.0.1 tag.
+```
+
+### A.3. Full Smoke Results — All PASS
+
+| Gate | Check | Result |
+|------|-------|--------|
+| Startup | Studio /health healthy | **PASS** |
+| Startup | Kokoro healthy via studio | **PASS** |
+| Startup | Voice list responds (68 voices) | **PASS** |
+| Project | TTS job accepted (project create) | **PASS** |
+| Project | Job reports project_dir | **PASS** |
+| Project | Project directory exists on disk | **PASS** |
+| Project | Project status opens | **PASS** |
+| Project | Project v2 state opens | **PASS** |
+| Script | Script displays | **PASS** |
+| Script | Script save works | **PASS** |
+| Script | Reload preserves edit | **PASS** |
+| Script | Script restore to audio-backed text | **PASS** |
+| Script | Restored script matches audio | **PASS** |
+| Script | Script lock works | **PASS** |
+| Script | Script unlock works | **PASS** |
+| Voice | Candidate audio readable (364,332 bytes) | **PASS** |
+| Voice | Audio decodable, duration 7.589s | **PASS** |
+| Voice QA | Voice QA path executes to passing state | **PASS** |
+| STT | Transcription/STT path available | **PASS** |
+| Visual | Scene list loads (1 scene) | **PASS** |
+| Visual | Shot list loads (1 shot) | **PASS** |
+| Visual | Shot edit/save + reload persists | **PASS** |
+| Visual | Veo regenerate after edit accepted | **PASS** |
+| Visual | Visual Bible loads | **PASS** |
+| Visual | Media intake via production route | **PASS** |
+| Visual | Asset APPROVED via production route | **PASS** |
+| Visual | Image Prompt state available | **PASS** |
+| Export | Export readiness READY | **PASS** |
+| Export | Render Manifest compiles | **PASS** |
+| Export | Timeline compile persists | **PASS** |
+| Export | Production export snapshot created | **PASS** |
+| Render | Final Render starts | **PASS** |
+| Render | Final Render completes (final.mp4 reachable) | **PASS** |
+| Render | final.mp4 exists and readable (509,341 bytes, 7.583s) | **PASS** |
+| Render QA | Render QA PASS (auto-handoff) | **PASS** |
+| Render QA | Artifact at READY after QA PASS | **PASS** |
+| Browser | Application shell renders | **PASS** |
+| Browser | Vietnamese-first UI preserved | **PASS** |
+| Browser | Primary navigation present | **PASS** |
+| Browser | 0 uncaught critical JS exceptions | **PASS** |
+
+**Total: 40/40 checks PASS, 0 failures**
+
+### A.4. Persistence Gate
+
+Post-restart verification (Studio restarted cold after smoke run):
+- `GET /api/projects/{smoke_dir}/status` → **200** ✅
+- `GET /api/projects/{smoke_dir}/export/readiness` → **200, status=READY** ✅
+- `GET /api/projects/{smoke_dir}/exports/export_001/final/file` → **200** ✅
+
+Project data, export snapshot, and final.mp4 fully persistent across cold restart.
+
+### A.5. Cleanup
+
+Smoke project `2026-09-20_164827_SMOKE_V1_0_1_20260920_164827` removed post-run.
+`projects/` verified `.gitkeep`-only after cleanup. **PASS**.
+
+### A.6. Full Regression (post-smoke)
+
+```text
+1068 passed, 0 failed, 0 errors, 9 warnings
+Duration: 307.67s (5:07)
+projects/ blank: verified
+```
+
+### A.7. Corrective Fix Applied (v1.0.1)
+
+Root cause (P1, fixed in commit `69aa2e9`):
+```text
+studio/providers/whisper_provider.py:69
+  start_transcription(project_id, script_text="", force=False, **kwargs)
+  → forwarded script_text/force to TranscriptionService.start_transcription
+    → TypeError: unexpected keyword argument 'script_text'
+Fix: adapter strips provider-only kwargs before delegating to service.
+```
+
+New regression tests: `tests/test_stt_provider_delegation.py` (5 tests, RED-before/GREEN-after verified).
+
+---
+
+## B. v1.0.0 Smoke Run (2026-09-20 — FAIL, preserved for provenance)
+
+> **Smoke Verdict (v1.0.0):** **`PRODUCTION SMOKE TEST FAIL`**
+> **Release status:** **`PRODUCTION RELEASE BLOCKED`** (real P1 product defect)
+
+### B.1. Release Identity
 
 ```text
 Version: v1.0.0 (annotated tag, pushed)
 Branch: main
 Commit: 4f33307f8043516baeee983e690252bc793bf918
-Tag verified: YES (HEAD == v1.0.0 target; studio+transcription byte-equivalent to tag)
 Smoke date: 2026-09-20
-Harness: scripts/verify_production_smoke.py (verification-only, EXIT 2)
+Harness: scripts/verify_production_smoke.py (EXIT 2 — FAIL)
 ```
 
-## 2. Environment
+### B.2. Environment
 
 ```text
 Windows 10/11 64-bit | Python 3.12.14 | torch 2.8.0+cu126 (CUDA avail, RTX 3050)
 FFmpeg/ffprobe 8.1.1 | Kokoro :8880 healthy | Studio :7860 healthy
-Launcher: start-unfoldiq-tts.bat -NoBrowser (pid-tracked, single listener per port)
-No --reload in launchers. No secrets embedded. No runtime-critical dev paths
-(config/app.json absolute ffmpeg paths resolve via PATH fallback — non-blocking).
 ```
 
-## 3. Startup
+### B.3. Failures (7 critical)
 
-**PASS** — cold start via release launcher after stopping stale services; Studio `/health`
-healthy, Kokoro healthy through Studio, voice list returns 60+ voices, no startup
-exception (only INFO health polls), no duplicate listeners.
+| Gate | Result |
+|------|--------|
+| Startup, Script, TTS synthesis | **PASS** |
+| Voice QA | **FAIL** — pipeline crash, no report persisted |
+| STT timestamps | **FAIL** — HTTP 500 (TypeError: unexpected keyword 'script_text') |
+| Visual/Export/Render/QA | **BLOCKED** (correct product guards downstream) |
+| Browser gate / Persistence | **NOT REACHED** |
 
-## 4. Browser Runtime
-
-**NOT EXECUTED** — harness stopped at the export gate (FAIL) before the headed-Chrome
-CDP gate. No browser evidence claimed.
-
-## 5. Project Lifecycle
-
-**PASS (partial)** — disposable project `2026-09-20_105629_SMOKE_V1_0_0_*` created via real
-`POST /api/generate` TTS job (completed in 1.9s, 7.59s audio); status/v2-state open;
-directory exists on disk.
-
-## 6. Script Workflow
-
-**PASS** — display/save/reload/lock/unlock all verified through real routes
-(`GET/PUT .../script`, `POST .../lock/script/script`).
-
-## 7. Voice/TTS/STT
-
-**PARTIAL/FAIL** —
-TTS synthesis works (audio.wav 364,328 bytes, ffprobe duration 7.589s, decodable).
-Voice QA (`POST .../voice-qa/run`) accepted but its pipeline crashed and persisted
-nothing (`GET .../voice-qa` → `exists:false`).
-STT (`POST .../timestamps/generate`) → **HTTP 500**.
-
-## 8. Visual Workflow
-
-**FAIL (cascade)** — `scenes/generate` → 400, `veo/generate` → 400 (product guards
-require timestamps/QA first); 0 scenes / 0 shots. Visual Bible + visual-prompts GETs pass.
-
-## 9. Export/Final Render
-
-**NOT REACHED** — readiness `BLOCKED` (`voiceQa, timestamp, subtitles, scenePlan,
-visualContinuity, veo`). No render started; no state fabricated.
-
-## 10. Render QA
-
-**NOT REACHED** (blocked upstream).
-
-## 11. Persistence After Restart
-
-**NOT TESTED** (no READY artifact produced).
-
-## 12. Browser Console / HTTP 5xx
+### B.4. Root Cause
 
 ```text
-Uncaught critical JS exceptions: not measured (browser gate not reached)
-Unexpected server 5xx: 1 (POST .../timestamps/generate → 500, real product exception)
+studio/providers/whisper_provider.py:69 forwarded script_text/force kwargs
+→ TranscriptionService.start_transcription (project_id, is_tts_active_fn=None)
+→ TypeError: unexpected keyword argument 'script_text'
+Every real Voice QA + STT call crashed. Corrected in v1.0.1.
 ```
 
-## 13. Cleanup / Blank Workspace
-
-Disposable project removed after evidence preservation
-(audio/script/traceback copied to `temp/production_smoke/failure_evidence_*`).
-`projects/` verified `.gitkeep`-only after run. **PASS**.
-
-## 14. Evidence Inventory
+### B.5. Final Verdict
 
 ```text
-temp/production_smoke/smoke_summary.json        (status FAIL, 7 critical failures)
-temp/production_smoke/http_results.json         (all request/response codes)
-temp/production_smoke/runtime_environment.json  (platform/python/ffmpeg/torch)
-temp/production_smoke/artifact_checks.json
-temp/production_smoke/smoke_audio.wav           (real TTS output, 7.59s)
-temp/production_smoke/failure_evidence_audio.wav / _script.txt / _traceback.txt
-runtime/studio_err.log                          (live server traceback, 10:56/11:03)
+PRODUCTION SMOKE TEST FAIL — v1.0.0 BLOCKED
+v1.0.0 tag stands immutable; fix shipped as patch release v1.0.1.
 ```
 
-## 15. Failures / Corrective Findings
+---
 
-**Root cause (PRODUCT DEFECT, severity P1 — core workflow broken):**
-interface drift between the STT provider contract and its service implementation.
+## C. Final Release Verdict
 
 ```text
-studio/app.py:1659 (_run_voice_qa_pipeline) and :1879 (generate_project_timestamps)
-  → providers/whisper_provider.py:69
-      start_transcription(project_id, script_text="", force=False, **kwargs)
-    → TranscriptionService.start_transcription(project_id, is_tts_active_fn=None)
-      → TypeError: ... got an unexpected keyword argument 'script_text'
+PRODUCTION SMOKE TEST PASS — v1.0.1
+PRODUCTION RELEASE READY
+Commit: 69aa2e9a80c5b3b3fa0cb6203c0eddd476c31ed3
+Tag: v1.0.1 (local, push authorized conditionally on PASS — condition met)
+Full regression: 1068/1068 PASS, 0 fail/error
+Smoke: 40/40 checks PASS, 0 failures
+Persistence: VERIFIED (cold restart, all artifacts accessible)
+projects/ blank: VERIFIED
+Date: 2026-09-20
 ```
-
-The provider (and `providers/base.py:72`) promises `script_text`/`force`; the concrete
-service accepts only `is_tts_active_fn`. Every real Voice QA run and every STT request
-crashes; downstream scenes/veo/export/render/QA are unreachable. Unit/integration tests
-never caught it (they do not exercise the real provider→service call chain).
-
-**Cascade (not independent defects):** 400s on scenes/veo generate are correct product
-guards; BLOCKED readiness is correct given missing QA/timestamps.
-
-**Corrective plan (patch release, normally v1.0.1):**
-
-```text
-1. Align the interface (minimal, one side):
-   (a) TranscriptionService.start_transcription accepts and ignores/forwards
-       script_text/force, OR
-   (b) whisper_provider strips provider-only kwargs before delegating.
-2. Add a regression test invoking the REAL provider→service chain
-   (service mocked at the boundary, asserting call kwargs) for both
-   voice-qa/run and timestamps/generate paths.
-3. Fresh full regression (1063+), new annotated tag (v1.0.1), push, re-run smoke.
-```
-
-`v1.0.0` MUST NOT be rewritten, force-updated, or moved.
-
-## 16. Final Smoke Verdict
-
-```text
-PRODUCTION SMOKE TEST FAIL
-PRODUCTION RELEASE BLOCKED
-```
-
-STOP. Do not begin Backup/Restore. Do not commit/push. Wait for explicit user instruction.
