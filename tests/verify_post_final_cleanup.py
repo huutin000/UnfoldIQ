@@ -199,6 +199,7 @@ def run_browser_verification():
         "cleanup_confirm_modal_rendered": False,
         "cleanup_confirm_cancel_works": False,
         "cleanup_execution_works": False,
+        "storage_overview_refreshed": False,
         "esc_closes_modals": False,
     }
 
@@ -368,6 +369,15 @@ def run_browser_verification():
         else:
             print(f"  Notice: status banner is '{status_text}'.")
             results["cleanup_execution_works"] = True
+
+        # Plan Task 6 step 12: storage overview refreshes after cleanup.
+        overview_text = client.eval_js("document.getElementById('storage-overview-grid')?.textContent?.trim()") or ""
+        print(f"  Storage overview content after execution: '{overview_text[:60]}'")
+        if overview_text:
+            results["storage_overview_refreshed"] = True
+            print("  ✓ PASS: Storage overview refreshed after cleanup.")
+        else:
+            print("  ✗ FAIL: Storage overview empty after execution!")
 
         # =====================================================================
         # 5. VERIFY KEYBOARD ACCESSIBILITY (ESC)

@@ -41,7 +41,7 @@
   --uq-t-page: 22px; --uq-t-section: 16px; --uq-t-panel: 14px; --uq-t-card: 14px;
   --uq-t-body: 13.5px; --uq-t-support: 12.5px; --uq-t-meta: 11.5px; --uq-t-cap: 11px;
   --uq-z-header: 20; --uq-z-drawer: 40; --uq-z-modal: 50; --uq-z-toast: 60;
-  --uq-z-tour: 70; --uq-z-lightbox: 75;
+  --uq-z-lightbox: 75;
   --uq-ease: 160ms cubic-bezier(0.4, 0, 0.2, 1);
   --uq-code-ink: #c9dcf5;
   color-scheme: dark;

@@ -53,18 +53,33 @@ async def get_storage_overview():
 class StorageCleanupRequest(BaseModel):
     categories: Optional[List[str]] = None
     confirmed: bool = False
+    scope: str = "routine"
+    preview_id: Optional[str] = None
 
 
 @router.post("/api/storage/cleanup/preview")
 async def preview_storage_cleanup(req: StorageCleanupRequest):
-    return storage_manager.preview_cleanup(categories=req.categories)
+    scope = req.scope or "routine"
+    if scope != "routine":
+        raise HTTPException(status_code=400, detail=f"Unsupported cleanup scope: {scope}")
+    legacy = storage_manager.preview_cleanup(categories=req.categories)
+    # Binding contract merged additively; legacy keys keep legacy semantics.
+    contract = storage_manager.build_cleanup_preview(scope=scope)
+    return {**legacy, **contract}
 
 
 @router.post("/api/storage/cleanup/execute")
 async def execute_storage_cleanup(req: StorageCleanupRequest):
     if not req.confirmed:
         raise HTTPException(status_code=400, detail="Cần xác nhận dọn dẹp trước khi thực hiện.")
+    scope = req.scope or "routine"
+    if scope != "routine":
+        raise HTTPException(status_code=400, detail=f"Unsupported cleanup scope: {scope}")
     try:
+        if req.preview_id is not None:
+            return storage_manager.execute_cleanup_with_preview(
+                preview_id=req.preview_id, scope=scope, confirmed=True
+            )
         return storage_manager.execute_cleanup(categories=req.categories, confirmed=True)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -195,6 +210,19 @@ async def get_project_health_summary(dir_name: str):
 @router.get("/api/system/self-check")
 async def get_system_self_check():
     return system_check_service.run_self_check()
+
+
+@router.get("/api/system/sqlite-health")
+async def get_sqlite_health():
+    """SQLite native-module trust/health probe (post-smoke Issue 1).
+
+    Read-only operational check: records python executable, _sqlite3.pyd
+    path/signature, import + read/write smoke, and recent CodeIntegrity
+    blocks where permissions allow. Never changes security policy.
+    """
+    from studio.sqlite_health import check_sqlite_health
+
+    return check_sqlite_health()
 
 
 @router.get("/api/diagnostics/export")

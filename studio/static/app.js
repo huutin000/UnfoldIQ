@@ -906,17 +906,9 @@ document.addEventListener("DOMContentLoaded", () => {
         resetWorkstationToCleanState();
       }
     });
-    try { localStorage.setItem("unfoldiq_tour_completed", "true"); } catch (e) {}
   }
-  // Tour engine removed with guide.js; keep a no-op stub for legacy callers.
-  function closeTour() {}
-  window.closeTour = closeTour;
-
-  function renderTourStep(index) {
-    // No-op: tour cũ đã deprecated, render do UQGuide đảm nhiệm.
-    if (window.UQGuide) return;
-    closeTour();
-  }
+  // Post-final-gate cleanup: guided tour engine (guide.js) removed; no stub,
+  // no tour persistence. Exact obsolete key purged once at startup (see init).
 
   // Universal fast copy helper with inline confirmation
   async function copyTextToClipboard(text, btnEl) {
@@ -1745,22 +1737,71 @@ document.addEventListener("DOMContentLoaded", () => {
   // ==============================================================================
   // 6. HEALTH CHECK & VOICES
   // ==============================================================================
+  // Kokoro health: condition-based polling with bounded fast-retry.
+  // Never leaves the badge at the initial "Kiểm tra Kokoro..." text:
+  // every outcome (READY / RETRYING / ERROR / OFFLINE) updates the DOM,
+  // null-safe so an unrelated init failure cannot freeze the status.
+  let kokoroRetryCount = 0;
+  let kokoroHealthTimer = null;
+  const KOKORO_FAST_RETRY_MAX = 20; // ~60s at 3s intervals before settling
+  const KOKORO_FAST_RETRY_MS = 3000;
+  function setKokoroStatus(mode) {
+    const badge = document.getElementById("service-status-badge") || statusBadge;
+    const text = document.getElementById("service-status-text") || statusText;
+    if (!badge || !text) return false;
+    if (mode === "ready") {
+      badge.className = "status-indicator status-online";
+      text.textContent = "Kokoro GPU ●";
+    } else if (mode === "retrying") {
+      badge.className = "status-indicator status-checking";
+      text.textContent = "Đang thử lại Kokoro...";
+    } else if (mode === "offline") {
+      badge.className = "status-indicator status-offline";
+      text.textContent = "Kokoro ngoại tuyến";
+    } else {
+      badge.className = "status-indicator status-offline";
+      text.textContent = "Mất kết nối Kokoro";
+    }
+    return true;
+  }
   async function checkHealth() {
     try {
-      const res = await fetch("/api/health");
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), 8000);
+      let res;
+      try {
+        res = await fetch("/api/health", { signal: ctrl.signal });
+      } finally {
+        clearTimeout(timer);
+      }
+      if (!res || !res.ok) throw new Error(`HTTP ${res ? res.status : "no-response"}`);
       const data = await res.json();
-      if (data.kokoro && data.kokoro.healthy) {
-        statusBadge.className = "status-indicator status-online";
-        statusText.textContent = "Kokoro GPU ●";
+      if (data && data.kokoro && data.kokoro.healthy) {
+        kokoroRetryCount = 0;
+        setKokoroStatus("ready");
+        if (window.__kokoroHealth) window.__kokoroHealth.state = "READY";
       } else {
-        statusBadge.className = "status-indicator status-offline";
-        statusText.textContent = "Kokoro ngoại tuyến";
+        throw new Error("kokoro-unhealthy");
       }
     } catch (err) {
-      statusBadge.className = "status-indicator status-offline";
-      statusText.textContent = "Mất kết nối Kokoro";
+      kokoroRetryCount += 1;
+      if (kokoroRetryCount <= KOKORO_FAST_RETRY_MAX) {
+        setKokoroStatus("retrying");
+        if (window.__kokoroHealth) window.__kokoroHealth.state = "RETRYING";
+        if (!kokoroHealthTimer) {
+          kokoroHealthTimer = setTimeout(async () => {
+            kokoroHealthTimer = null;
+            await checkHealth();
+          }, KOKORO_FAST_RETRY_MS);
+        }
+      } else {
+        const msg = err && err.name === "AbortError" ? "disconnect" : "offline";
+        setKokoroStatus(msg === "disconnect" ? "disconnect" : "offline");
+        if (window.__kokoroHealth) window.__kokoroHealth.state = "ERROR";
+      }
     }
   }
+  window.__kokoroHealth = window.__kokoroHealth || { state: "CHECKING", retry: () => checkHealth() };
 
   async function loadVoicesAndSettings() {
     try {
@@ -4732,9 +4773,9 @@ document.addEventListener("DOMContentLoaded", () => {
         projectsList.innerHTML = "";
         projectsList.appendChild(frag);
 
-        if (autoSelect && !currentProjectDir && data.projects.length > 0) {
-          loadPreviewAudio(data.projects[0].directory_name, data.projects[0].duration_seconds || 0, false);
-        }
+        // Post-final-gate cleanup: no auto-open. Opening a project always
+        // requires an explicit user action or a validated persisted selection
+        // (resolveStartupProject). The autoSelect flag is retained unused.
       } else {
         projectsList.innerHTML = `<p class="empty-state">Chưa có dự án nào trong hệ thống. Hãy nhập kịch bản và bấm "Tạo giọng đọc" để bắt đầu.</p>`;
       }
@@ -7054,6 +7095,12 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const preview = await res.json();
+        // Share the fingerprint with the phase15a confirm-modal flow.
+        if (window.__cleanupState) {
+          window.__cleanupState.previewId = preview.preview_id || null;
+          window.__cleanupState.scope = preview.scope || "routine";
+          window.__cleanupState.lastPreview = preview;
+        }
         if (embeddedCleanupPreviewContainer) {
           embeddedCleanupPreviewContainer.innerHTML = `
             <div style="padding: 6px 10px; border-radius: 6px; background: rgba(239, 68, 68, 0.08); border: 1px solid #ef4444; font-size: 11.5px; margin-top: 6px;">
@@ -7061,8 +7108,13 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
           `;
         }
-        if (btnEmbeddedCleanupExecute) btnEmbeddedCleanupExecute.disabled = (preview.candidateCount === 0);
+        if (btnEmbeddedCleanupExecute) btnEmbeddedCleanupExecute.disabled = !(preview.preview_id && preview.candidateCount > 0);
       } catch (e) {
+        if (window.__cleanupState) {
+          window.__cleanupState.previewId = null;
+          window.__cleanupState.lastPreview = null;
+        }
+        if (btnEmbeddedCleanupExecute) btnEmbeddedCleanupExecute.disabled = true;
         if (embeddedCleanupPreviewContainer) embeddedCleanupPreviewContainer.innerHTML = `<div style="font-size: 12px; color: #ef4444;">Lỗi: ${e.message}</div>`;
       }
     });
@@ -9139,17 +9191,32 @@ document.addEventListener("DOMContentLoaded", () => {
   // ==============================================================================
   // 14. INITIALIZATION
   // ==============================================================================
-  checkHealth();
-  loadVoicesAndSettings();
-  loadPronunciations();
-  resolveStartupProject();
-  updateTextStats();
-  updateSlugPreview();
-  updateDependencyState();
-  loadEmbeddedStorageOverview();
-  setInterval(checkHealth, 15000);
+  async function safeInit(fn, label) {
+    try {
+      await fn();
+    } catch (e) {
+      console.warn(`Init step failed (${label}):`, e);
+    }
+  }
+  // Health polling registers first and independently so no other init
+  // failure can freeze the badge at "Kiểm tra Kokoro...".
+  try { checkHealth(); } catch (e) { console.warn("checkHealth init failed:", e); }
+  try { setInterval(checkHealth, 15000); } catch (e) { console.warn("health interval failed:", e); }
+  safeInit(loadVoicesAndSettings, "voices");
+  safeInit(loadPronunciations, "pronunciations");
+  safeInit(async () => resolveStartupProject(), "startup-project");
+  try { updateTextStats(); } catch (e) { console.warn("updateTextStats failed:", e); }
+  try { updateSlugPreview(); } catch (e) { console.warn("updateSlugPreview failed:", e); }
+  try { updateDependencyState(); } catch (e) { console.warn("updateDependencyState failed:", e); }
+  safeInit(async () => loadEmbeddedStorageOverview(), "storage-overview");
 
-  // Onboarding first-run do UQGuide (guide.js) đảm nhiệm: welcome + migration
-  // tour cũ, Help Center. Không auto-run tour cũ tại đây nữa.
+  // Post-final-gate cleanup: no onboarding, no tour, no Help Center.
+  // Purge the exact obsolete onboarding key (migration release, idempotent).
+  try {
+    for (const k of ["unfoldiq_tour_completed"]) {
+      try { localStorage.removeItem(k); } catch (e) {}
+      try { sessionStorage.removeItem(k); } catch (e) {}
+    }
+  } catch (e) { console.warn("obsolete key purge failed:", e); }
 });
 

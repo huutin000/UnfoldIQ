@@ -42,14 +42,25 @@
     }
   }
 
-  // Keyboard accessibility: ESC closes active modal
+  // Keyboard accessibility: ESC closes active modal (never implies
+  // cancellation of an in-flight cleanup) and restores focus to the opener.
+  function restoreCleanupFocus() {
+    const opener = window.__cleanupReturnFocus;
+    if (opener && document.contains(opener) && typeof opener.focus === "function") {
+      opener.focus();
+    }
+    window.__cleanupReturnFocus = null;
+  }
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       const openModals = document.querySelectorAll('.modal-overlay[style*="display: flex"]');
+      let cleanupClosed = false;
       openModals.forEach((m) => {
+        if (m.id === "modal-cleanup-confirm") cleanupClosed = true;
         m.style.display = "none";
         m.setAttribute("aria-hidden", "true");
       });
+      if (cleanupClosed) restoreCleanupFocus();
     }
   });
 
@@ -202,6 +213,11 @@
 
   let latestCleanupPreviewData = null;
 
+  // Post-final-gate cleanup state machine:
+  // IDLE -> PREVIEW_READY -> CONFIRMATION_OPEN -> CLEANING -> SUCCESS|PARTIAL_FAILURE|FAILURE
+  const cleanupState = { previewId: null, scope: "routine", inFlight: false, returnFocus: null };
+  window.__cleanupState = cleanupState;
+
   async function previewStorageCleanup() {
     const previewContainer = document.getElementById("storage-cleanup-preview-results");
     if (previewContainer) previewContainer.innerHTML = '<div>⏳ Đang quét các tệp đệm có thể dọn dẹp...</div>';
@@ -215,6 +231,9 @@
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const preview = await res.json();
       latestCleanupPreviewData = preview;
+      // Fingerprint-gated flow: confirmation/execute require this preview_id.
+      cleanupState.previewId = preview.preview_id || null;
+      cleanupState.scope = preview.scope || "routine";
 
       let sampleList = "";
       (preview.candidatesSample || []).slice(0, 10).forEach(c => {
@@ -234,9 +253,13 @@
           </ul>
         `;
       }
+      // Confirmation opens only after a valid preview (fingerprint present).
       const btnExec = document.getElementById("btn-execute-cleanup");
-      if (btnExec) btnExec.disabled = (preview.candidateCount === 0);
+      if (btnExec) btnExec.disabled = !(preview.preview_id && preview.candidateCount > 0);
     } catch (e) {
+      cleanupState.previewId = null;
+      const btnExec = document.getElementById("btn-execute-cleanup");
+      if (btnExec) btnExec.disabled = true;
       if (previewContainer) previewContainer.innerHTML = `<div style="color: #ef4444;">Lỗi xem trước: ${e.message}</div>`;
     }
   }
@@ -247,7 +270,10 @@
     const btnDo = document.getElementById("btn-confirm-do-cleanup");
     const btnCancel = document.getElementById("btn-confirm-cancel-cleanup");
 
-    const data = previewData || latestCleanupPreviewData;
+    const data = previewData || latestCleanupPreviewData || cleanupState.lastPreview || null;
+    cleanupState.returnFocus = document.activeElement || null;
+    window.__cleanupReturnFocus = cleanupState.returnFocus;
+    const previewId = (data && data.preview_id) || cleanupState.previewId;
     if (summaryBox) {
       if (data) {
         summaryBox.innerHTML = `Phát hiện <strong>${data.candidateCount} tệp đệm</strong> có thể giải phóng an toàn <strong>${data.reclaimableMb} MB</strong>.`;
@@ -261,8 +287,16 @@
     }
     if (btnDo) {
       btnDo.style.display = "inline-flex";
-      btnDo.disabled = false;
+      // Never confirm without a valid preview fingerprint.
+      btnDo.disabled = !previewId;
       btnDo.innerHTML = "<span>Dọn dẹp</span>";
+      if (!previewId && statusBox) {
+        statusBox.style.display = "block";
+        statusBox.style.background = "rgba(239, 68, 68, 0.1)";
+        statusBox.style.border = "1px solid #ef4444";
+        statusBox.style.color = "#f87171";
+        statusBox.innerHTML = `✗ <strong>Chưa có xem trước hợp lệ.</strong> Vui lòng bấm “Xem trước dọn dẹp” trước.`;
+      }
     }
     if (btnCancel) {
       btnCancel.disabled = false;
@@ -276,6 +310,24 @@
     const btnDo = document.getElementById("btn-confirm-do-cleanup");
     const btnCancel = document.getElementById("btn-confirm-cancel-cleanup");
     const statusBox = document.getElementById("cleanup-confirm-status");
+
+    // Double-submit guard: a second click while CLEANING is a no-op.
+    if (cleanupState.inFlight) return;
+    cleanupState.inFlight = true;
+
+    const previewId = (latestCleanupPreviewData && latestCleanupPreviewData.preview_id)
+      || cleanupState.previewId;
+    if (!previewId) {
+      cleanupState.inFlight = false;
+      if (statusBox) {
+        statusBox.style.display = "block";
+        statusBox.style.background = "rgba(239, 68, 68, 0.1)";
+        statusBox.style.border = "1px solid #ef4444";
+        statusBox.style.color = "#f87171";
+        statusBox.innerHTML = `✗ <strong>Chưa có xem trước hợp lệ.</strong> Vui lòng bấm “Xem trước dọn dẹp” trước.`;
+      }
+      return;
+    }
 
     if (btnDo) {
       btnDo.disabled = true;
@@ -295,15 +347,76 @@
       const res = await fetch("/api/storage/cleanup/execute", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ categories: ["renderCache", "tempFiles", "testCache"], confirmed: true })
+        body: JSON.stringify({ preview_id: previewId, scope: cleanupState.scope || "routine", confirmed: true })
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const report = await res.json();
 
-      const deletedCount = report.items_deleted ?? report.deletedCount ?? 0;
-      const failedCount = report.items_failed ?? (report.failed_items ? report.failed_items.length : 0);
+      // Stale fingerprint: server deleted nothing. Refresh preview, ask to confirm again.
+      if (report.reason === "STALE_PREVIEW") {
+        cleanupState.inFlight = false;
+        cleanupState.previewId = report.preview_id || null;
+        if (latestCleanupPreviewData) latestCleanupPreviewData.preview_id = cleanupState.previewId;
+        if (statusBox) {
+          statusBox.style.background = "rgba(239, 68, 68, 0.1)";
+          statusBox.style.border = "1px solid #ef4444";
+          statusBox.style.color = "#f87171";
+          statusBox.innerHTML = `✗ <strong>Xem trước đã cũ:</strong> Tệp đã thay đổi sau khi xem trước nên không xóa gì cả. Đang tải xem trước mới — vui lòng xác nhận lại.`;
+        }
+        showToast("Xem trước đã cũ — đã tải fingerprint mới. Vui lòng xác nhận lại.", "warning");
+        if (btnDo) {
+          btnDo.disabled = false;
+          btnDo.innerHTML = "<span>Thử lại</span>";
+        }
+        if (btnCancel) btnCancel.disabled = false;
+        try { await previewStorageCleanup(); } catch (e) { /* preview panel shows the error */ }
+        return;
+      }
+
+      // Binding contract returns lists; legacy shape returns counts — accept both.
+      const deletedCount = Array.isArray(report.items_deleted)
+        ? report.items_deleted.length
+        : (report.items_deleted ?? report.deletedCount ?? 0);
+      const failedCount = Array.isArray(report.items_failed)
+        ? report.items_failed.length
+        : (report.items_failed ?? (report.failed_items ? report.failed_items.length : 0));
       const freedMb = report.freedMb ?? (report.bytes_reclaimed ? (report.bytes_reclaimed / (1024 * 1024)).toFixed(1) : 0);
-      const protectedSkipped = report.protected_items_skipped ?? 0;
+      const protectedSkippedRaw = report.protected_items_skipped ?? [];
+      const protectedCount = report.protected_items_skipped_count
+        ?? (Array.isArray(protectedSkippedRaw) ? protectedSkippedRaw.length : (protectedSkippedRaw || 0));
+      const failedItems = Array.isArray(report.failed_items)
+        ? report.failed_items
+        : (Array.isArray(report.errors) ? report.errors : []);
+      const protectedList = Array.isArray(protectedSkippedRaw) ? protectedSkippedRaw : [];
+
+      function escapeHtml(s) {
+        return String(s).replace(/[&<>"']/g, (c) => ({
+          "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+        }[c]));
+      }
+      // Concise summary only — raw absolute paths stay behind an opt-in,
+      // scroll-bounded, capped details element (never inline in the banner).
+      function buildDetailsHtml(paths, failed) {
+        if ((!paths || paths.length === 0) && (!failed || failed.length === 0)) return "";
+        const CAP = 100;
+        let items = "";
+        const shownPaths = (paths || []).slice(0, CAP);
+        shownPaths.forEach((p) => {
+          items += `<li style="font-size: 0.75rem; font-family: monospace; word-break: break-all;">${escapeHtml(p)}</li>`;
+        });
+        const remainingPaths = (paths || []).length - shownPaths.length;
+        if (remainingPaths > 0) {
+          items += `<li style="font-size: 0.75rem;">… và ${remainingPaths} mục khác</li>`;
+        }
+        const shownFailed = (failed || []).slice(0, CAP);
+        shownFailed.forEach((f) => {
+          items += `<li style="font-size: 0.75rem; font-family: monospace; word-break: break-all;">${escapeHtml(f)}</li>`;
+        });
+        return `<details style="margin-top: 0.5rem;">`
+          + `<summary style="cursor: pointer; font-size: 0.8rem;">Xem chi tiết</summary>`
+          + `<ul style="max-height: 160px; overflow-y: auto; padding-left: 1.25rem; margin-top: 0.25rem;">${items}</ul>`
+          + `</details>`;
+      }
 
       if (report.status === "FAILURE") {
         if (statusBox) {
@@ -313,11 +426,15 @@
           statusBox.innerHTML = `✗ <strong>Thất bại:</strong> Không thể dọn dẹp: ${report.error || 'Lỗi không xác định'}`;
         }
         showToast("Dọn dẹp thất bại!", "error");
+        cleanupState.inFlight = false;
         if (btnDo) {
           btnDo.disabled = false;
           btnDo.innerHTML = "<span>Thử lại</span>";
         }
-        if (btnCancel) btnCancel.disabled = false;
+        if (btnCancel) {
+          btnCancel.disabled = false;
+          btnCancel.focus();
+        }
         return;
       }
 
@@ -326,7 +443,8 @@
           statusBox.style.background = "rgba(245, 158, 11, 0.1)";
           statusBox.style.border = "1px solid #f59e0b";
           statusBox.style.color = "#fbbf24";
-          statusBox.innerHTML = `⚠ <strong>Dọn dẹp một phần:</strong> Đã dọn dẹp ${deletedCount} tệp (${freedMb} MB), ${failedCount} tệp đang bận/khóa không thể xóa.`;
+          statusBox.innerHTML = `⚠ <strong>Dọn dẹp một phần:</strong> Đã dọn dẹp ${deletedCount} tệp (${freedMb} MB), ${failedCount} tệp đang bận/khóa không thể xóa.`
+            + buildDetailsHtml([], failedItems);
         }
         showToast(`Dọn dẹp một phần: Đã xóa ${deletedCount} tệp, ${failedCount} tệp không xóa được.`, "warning");
       } else {
@@ -334,7 +452,8 @@
           statusBox.style.background = "rgba(16, 185, 129, 0.1)";
           statusBox.style.border = "1px solid #10b981";
           statusBox.style.color = "#34d399";
-          statusBox.innerHTML = `✓ <strong>Hoàn tất:</strong> Đã dọn dẹp ${deletedCount} tệp, giải phóng ${freedMb} MB. (${protectedSkipped} tài nguyên được bảo vệ an toàn)`;
+          statusBox.innerHTML = `✓ <strong>Dọn dẹp hoàn tất.</strong> Đã xóa: ${deletedCount} tệp. Dung lượng giải phóng: ${freedMb} MB. Tài nguyên được bảo vệ: ${protectedCount}.`
+            + buildDetailsHtml(protectedList, []);
         }
         showToast(`Đã dọn dẹp ${deletedCount} tệp, giải phóng ${freedMb} MB.`, "success");
       }
@@ -354,11 +473,15 @@
       if (btnEmbedExec) btnEmbedExec.disabled = true;
 
       if (btnDo) btnDo.style.display = "none";
+      cleanupState.inFlight = false;
       if (btnCancel) {
         btnCancel.disabled = false;
         btnCancel.textContent = "Đóng";
+        // Focus returns to a logical control after the operation.
+        btnCancel.focus();
       }
     } catch (e) {
+      cleanupState.inFlight = false;
       if (statusBox) {
         statusBox.style.background = "rgba(239, 68, 68, 0.1)";
         statusBox.style.border = "1px solid #ef4444";
@@ -582,10 +705,10 @@
     if (btnExecuteCleanup) btnExecuteCleanup.addEventListener("click", () => openCleanupConfirmModal());
 
     const btnCloseConfirmCleanup = document.getElementById("cleanup-confirm-close-btn");
-    if (btnCloseConfirmCleanup) btnCloseConfirmCleanup.addEventListener("click", () => closeModal("modal-cleanup-confirm"));
+    if (btnCloseConfirmCleanup) btnCloseConfirmCleanup.addEventListener("click", () => { closeModal("modal-cleanup-confirm"); restoreCleanupFocus(); });
 
     const btnCancelConfirmCleanup = document.getElementById("btn-confirm-cancel-cleanup");
-    if (btnCancelConfirmCleanup) btnCancelConfirmCleanup.addEventListener("click", () => closeModal("modal-cleanup-confirm"));
+    if (btnCancelConfirmCleanup) btnCancelConfirmCleanup.addEventListener("click", () => { closeModal("modal-cleanup-confirm"); restoreCleanupFocus(); });
 
     const btnDoConfirmCleanup = document.getElementById("btn-confirm-do-cleanup");
     if (btnDoConfirmCleanup) btnDoConfirmCleanup.addEventListener("click", performConfirmedCleanup);

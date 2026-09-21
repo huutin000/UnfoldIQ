@@ -215,10 +215,10 @@
       <button id="btn-export-diagnostics" class="btn-icon-ghost" title="Xuất gói chẩn đoán hệ thống (Sanitized)" aria-label="Xuất gói chẩn đoán">
         <svg class="ui-icon" style="width: 16px; height: 16px;"><use href="#icon-alert"/></svg>
       </button>
-      <button id="btn-open-settings" class="btn-icon-ghost" data-guide-tip="Mở cài đặt dự án và giọng đọc." title="Cài đặt giọng đọc nâng cao" aria-label="Cài đặt giọng đọc nâng cao">
+      <button id="btn-open-settings" class="btn-icon-ghost" title="Cài đặt giọng đọc nâng cao" aria-label="Cài đặt giọng đọc nâng cao">
         <svg class="ui-icon"><use href="#icon-settings"/></svg>
       </button>
-      <button id="btn-toggle-inspector" data-guide-tip="Mở hoặc đóng bảng thông tin phụ của workspace." class="btn-icon-ghost active" title="Ẩn/Hiện Bảng Inspector" aria-label="Ẩn hoặc hiện Bảng Inspector" aria-expanded="true" aria-controls="workspace-inspector">
+      <button id="btn-toggle-inspector" class="btn-icon-ghost active" title="Ẩn/Hiện Bảng Inspector" aria-label="Ẩn hoặc hiện Bảng Inspector" aria-expanded="true" aria-controls="workspace-inspector">
         <svg class="ui-icon"><use href="#icon-panel"/></svg>
       </button>
     </div>
@@ -248,12 +248,12 @@
       <div class="sidebar-divider"></div>
       <div class="sidebar-section-title">QUY TRÌNH SẢN XUẤT DỰ ÁN</div>
       <nav class="pipeline-nav">
-        <button class="nav-item active" data-workspace="overview" id="nav-step-project-overview" data-guide-id="workflow-overview" title="Tổng quan dự án">
+        <button class="nav-item active" data-workspace="overview" id="nav-step-project-overview" title="Tổng quan dự án">
           <span class="nav-step-num">01</span>
           <span class="nav-icon"><svg class="ui-icon"><use href="#icon-home"/></svg></span>
           <span class="nav-label">Tổng quan</span>
         </button>
-        <button class="nav-item" data-workspace="story" id="nav-step-story" data-guide-id="workflow-story" title="Kịch bản & Nhịp truyện">
+        <button class="nav-item" data-workspace="story" id="nav-step-story" title="Kịch bản & Nhịp truyện">
           <span class="nav-step-num">02</span>
           <span class="nav-icon"><svg class="ui-icon"><use href="#icon-book"/></svg></span>
           <span class="nav-label">Kịch bản</span>
@@ -265,13 +265,13 @@
           <span class="nav-label">Giọng đọc</span>
           <span class="nav-status-badge" id="badge-step-voice">○</span>
         </button>
-        <button class="nav-item" data-workspace="scenes" id="nav-step-scenes" data-guide-id="workflow-scenes" title="Hình ảnh & Cảnh (Bề mặt tương thích 3C)">
+        <button class="nav-item" data-workspace="scenes" id="nav-step-scenes" title="Hình ảnh & Cảnh (Bề mặt tương thích 3C)">
           <span class="nav-step-num">04</span>
           <span class="nav-icon"><svg class="ui-icon"><use href="#icon-scene"/></svg></span>
           <span class="nav-label">Hình ảnh &amp; Cảnh</span>
           <span class="nav-status-badge" id="badge-step-scenes">○</span>
         </button>
-        <button class="nav-item" data-workspace="export" id="nav-step-export" data-guide-id="workflow-export" title="Xuất video (Bề mặt tương thích 3D)">
+        <button class="nav-item" data-workspace="export" id="nav-step-export" title="Xuất video (Bề mặt tương thích 3D)">
           <span class="nav-step-num">05</span>
           <span class="nav-icon"><svg class="ui-icon"><use href="#icon-download"/></svg></span>
           <span class="nav-label">Xuất video</span>
@@ -466,7 +466,7 @@
       <!-- ============================================================== -->
       <!-- WORKSPACE: NGHIÊN CỨU & CLAIM LEDGER — Phase 14 -->
       <!-- ============================================================== -->
-      <section id="ws-research" class="workspace-view" data-guide-id="content-research-optional">
+      <section id="ws-research" class="workspace-view">
         <div class="ws-subnav-bar">
           <button class="ws-subnav-btn active" onclick="window.switchWorkspace('research')">
             <svg class="ui-icon" style="width: 14px; height: 14px;"><use href="#icon-book"/></svg>
@@ -556,10 +556,10 @@
             <div class="story-workspace-header">
               <div class="ws-title-group">
                 <h2 class="ws-title">Kịch bản phóng sự</h2>
-                <button type="button" class="btn-module-help" data-module="script" title="Xem hướng dẫn Kịch bản" aria-label="Hướng dẫn kịch bản">?</button>
+
                 <span class="save-status-badge saved" id="story-save-badge">Đã lưu</span>
               </div>
-              <div class="script-counters" data-guide-id="content-script-stats">
+              <div class="script-counters">
                 <span class="counter-chip"><strong id="char-count">0</strong> ký tự</span>
                 <span class="counter-chip"><strong id="word-count">0</strong> từ</span>
                 <span class="counter-chip highlight"><strong id="est-duration">~0s</strong> dự kiến</span>
@@ -573,7 +573,6 @@
             <div class="editor-container">
               <textarea
                 id="script-input"
-                data-guide-id="content-script-editor"
                 class="script-textarea"
                 placeholder="Dán hoặc soạn kịch bản tiếng Anh của video vào đây..."
                 spellcheck="false"
@@ -667,7 +666,7 @@
             <div class="voice-workspace-header">
               <div class="ws-title-group">
                 <h2 class="ws-title">Giọng đọc & Bản chép lời</h2>
-                <button type="button" class="btn-module-help" data-module="voice" title="Xem hướng dẫn Giọng đọc" aria-label="Hướng dẫn giọng đọc">?</button>
+
                 <span class="state-pill state-ready" id="voice-audio-status-pill">Sẵn sàng</span>
               </div>
               <div class="voice-header-actions">
@@ -898,7 +897,7 @@
         <div class="ws-header">
           <div class="ws-title-group">
             <h2 class="ws-title">Giọng đọc & dựng tiếng</h2>
-            <button type="button" class="btn-module-help" data-module="audio" title="Xem hướng dẫn Audio" aria-label="Hướng dẫn Audio">?</button>
+
             <span class="ws-description">Theo dõi tiến trình tổng hợp giọng đọc Kokoro và xem chi tiết âm thanh</span>
           </div>
           <div class="ws-status-group">
@@ -985,7 +984,7 @@
         <div class="ws-header">
           <div class="ws-title-group">
             <h2 class="ws-title">Voice QA (Kiểm định giọng đọc)</h2>
-            <button type="button" class="btn-module-help" data-module="voice-qa" title="Xem hướng dẫn Voice QA" aria-label="Hướng dẫn Voice QA">?</button>
+
             <span class="ws-description">Kiểm tra tính chính xác của âm thanh narration so với kịch bản gốc trước khi làm Timestamp</span>
           </div>
           <div class="ws-status-group">
@@ -1090,7 +1089,7 @@
         <div class="ws-header">
           <div class="ws-title-group">
             <h2 class="ws-title">Timestamp & Phụ đề</h2>
-            <button type="button" class="btn-module-help" data-module="timestamp" title="Xem hướng dẫn Timestamp" aria-label="Hướng dẫn Timestamp">?</button>
+
             <span class="ws-description">Căn chỉnh câu lời dẫn khớp chính xác theo timeline audio</span>
           </div>
           <div class="ws-status-group">
@@ -1142,7 +1141,7 @@
         <div id="scene-planner-card" class="ws-header">
           <div class="ws-title-group">
             <h2 class="ws-title card-title">Hình ảnh &amp; Cảnh (Visual Workbench)</h2>
-            <button type="button" class="btn-module-help" data-module="scenes" title="Xem hướng dẫn lập cảnh quay" aria-label="Hướng dẫn lập cảnh quay">?</button>
+
             <span class="ws-description">Lập kế hoạch cảnh, cảnh quay, thiết kế hình ảnh, chuyển động và Visual Bible</span>
           </div>
           <div class="ws-status-group">
@@ -1150,7 +1149,7 @@
               <button id="btn-scene-simple-mode" class="mode-btn active" title="Chế độ làm việc đơn giản thường ngày">Đơn giản</button>
               <button id="btn-scene-advanced-mode" class="mode-btn" title="Chế độ kỹ thuật nâng cao">Nâng cao</button>
             </div>
-            <button id="btn-open-flow-modal-global" data-guide-id="scene-flow-actions" class="btn btn-secondary btn-xs" title="Xem hướng dẫn Google Flow">
+            <button id="btn-open-flow-modal-global" class="btn btn-secondary btn-xs" title="Xem hướng dẫn Google Flow">
               <span>Google Flow</span>
             </button>
             <span id="sp-count-badge" class="counter-chip">0 cảnh</span>
@@ -1203,13 +1202,13 @@
               <span class="col-status">Trạng thái</span>
               <span class="counter-chip" id="sp-row-count-badge">0/0</span>
             </div>
-            <div id="sp-rows-container" data-guide-id="scene-list" class="compact-rows-container" role="listbox" aria-label="Danh sách cảnh" tabindex="0">
+            <div id="sp-rows-container" class="compact-rows-container" role="listbox" aria-label="Danh sách cảnh" tabindex="0">
               <p class="empty-state">Chưa có Scene Plan.<br>Sau khi có Timestamp, bấm "Tạo Scene Plan".</p>
             </div>
           </div>
 
           <!-- Right: Selected Scene Detail Pane -->
-          <div id="sp-selected-detail" data-guide-id="scene-detail scene-visual-blueprint" class="detail-pane" aria-label="Chi tiết Scene đã chọn">
+          <div id="sp-selected-detail" class="detail-pane" aria-label="Chi tiết Scene đã chọn">
             <div class="empty-detail-state">
               <svg class="ui-icon ui-icon-lg"><use href="#icon-scene"/></svg>
               <span>Chọn một cảnh từ danh sách để xem và chỉnh sửa chi tiết</span>
@@ -1246,10 +1245,10 @@
           </button>
         </div>
 
-        <div id="veo-card" data-guide-id="scene-motion-blueprint" class="ws-header">
+        <div id="veo-card" class="ws-header">
           <div class="ws-title-group">
             <h2 class="ws-title card-title">Tạo prompt Flow / Veo</h2>
-            <button type="button" class="btn-module-help" data-module="veo" title="Xem hướng dẫn Veo Prompt" aria-label="Hướng dẫn Veo Prompt">?</button>
+
             <span class="ws-description">Tạo prompt video chuyển động chuẩn tiếng Anh cho Google Flow & Veo</span>
           </div>
           <div class="ws-status-group">
@@ -1301,7 +1300,7 @@
               <span class="col-status">Trạng thái</span>
               <span class="counter-chip" id="veo-row-count-badge">0/0</span>
             </div>
-            <div id="veo-rows-container" data-guide-id="scene-veo-actions" class="compact-rows-container" role="listbox" aria-label="Danh sách cảnh quay" tabindex="0">
+            <div id="veo-rows-container" class="compact-rows-container" role="listbox" aria-label="Danh sách cảnh quay" tabindex="0">
               <p class="empty-state">Chưa có Veo Prompt.<br>Tạo Scene Plan trước, sau đó tạo gói prompt.</p>
             </div>
           </div>
@@ -1324,7 +1323,7 @@
         <div class="ws-header">
           <div class="ws-title-group">
             <h2 class="ws-title">Quản lý Dự án</h2>
-            <button type="button" class="btn-module-help" data-module="projects" title="Xem hướng dẫn Quản lý dự án" aria-label="Hướng dẫn Quản lý dự án">?</button>
+
             <span class="ws-description">Xem và mở các dự án giọng đọc đã tạo trong máy</span>
           </div>
           <button id="btn-refresh-history" class="btn btn-secondary btn-sm" title="Tải lại danh sách dự án">
@@ -1345,7 +1344,7 @@
         <div class="ws-header">
           <div class="ws-title-group">
             <h2 class="ws-title">Từ điển phát âm</h2>
-            <button type="button" class="btn-module-help" data-module="pronunciation" title="Xem hướng dẫn Phát âm" aria-label="Hướng dẫn Phát âm">?</button>
+
             <span class="ws-description">Tùy biến cách đọc tên riêng, thuật ngữ kỹ thuật cho Kokoro</span>
           </div>
           <div class="pron-header-actions">
@@ -1502,7 +1501,7 @@
           <span>Chính sách âm thanh: <strong style="color: #10b981;">Giọng đọc Kokoro = CHÍNH</strong></span>
           <span>Âm thanh clip tạo sinh: <strong style="color: #f59e0b;">Tắt tiếng</strong></span>
           <span>Phụ đề: <strong style="color: #3b82f6;">Khớp từ tự động (.SRT)</strong></span>
-          <span id="timeline-status-badge" data-guide-id="studio-asset-qc"></span>
+          <span id="timeline-status-badge"></span>
         </div>
 
         <div id="timeline-missing-alert" class="alert alert-warning" style="display: none; margin-top: 0.75rem;">
@@ -1511,12 +1510,12 @@
         </div>
 
         <!-- Timeline Clips Track -->
-        <div class="timeline-track-view" data-guide-id="studio-asset-intake">
+        <div class="timeline-track-view">
           <div class="ts-cues-header">
             <span class="section-subtitle">Danh sách phân đoạn hình & tiếng (master)</span>
             <span id="timeline-scenes-count" class="counter-chip">0 cảnh</span>
           </div>
-          <div id="timeline-clips-list" data-guide-id="studio-timeline" style="max-height: 520px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.5rem;">
+          <div id="timeline-clips-list" style="max-height: 520px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.5rem;">
             <!-- Rendered dynamically -->
           </div>
         </div>
@@ -1538,7 +1537,7 @@
           </div>
         </div>
 
-        <div id="review-issues-container" data-guide-id="review-issues review-targeted-fix" style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.75rem;">
+        <div id="review-issues-container" style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.75rem;">
           <!-- Review issues rendered dynamically -->
         </div>
       </section>
@@ -1556,7 +1555,7 @@
           </div>
         </div>
 
-        <div id="export-readiness-box" data-guide-id="export-readiness" aria-live="polite"></div>
+        <div id="export-readiness-box" aria-live="polite"></div>
 
         <div class="export-card-grid">
           <!-- Draft Render Card -->
@@ -1568,7 +1567,7 @@
             <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4;">
               Kết xuất nhanh video 720p với giọng đọc và visual hiện có để kiểm tra nhịp độ và nội dung trước khi xuất bản chính.
             </p>
-            <button id="btn-trigger-draft-render" data-guide-id="studio-draft-render export-render-types" class="btn btn-secondary btn-md">
+            <button id="btn-trigger-draft-render" class="btn btn-secondary btn-md">
               <svg class="ui-icon"><use href="#icon-play"/></svg>
               <span>Kết xuất bản nháp 720p</span>
             </button>
@@ -1601,7 +1600,7 @@
                 </select>
               </div>
             </div>
-            <button id="btn-trigger-final-render" data-guide-id="export-final-render" class="btn btn-primary btn-md">
+            <button id="btn-trigger-final-render" class="btn btn-primary btn-md">
               <svg class="ui-icon"><use href="#icon-download"/></svg>
               <span>Kết xuất video chính thức</span>
             </button>
@@ -1697,10 +1696,10 @@
     <aside id="workspace-inspector" class="workspace-inspector" aria-label="Bảng thông tin Inspector">
 
       <!-- Context Inspector: SCRIPT -->
-      <div id="inspector-script" class="inspector-panel active" data-guide-id="content-voice-config">
+      <div id="inspector-script" class="inspector-panel active">
         <div class="inspector-header">
           <h3 class="inspector-title">Cấu hình Dự án & Giọng đọc</h3>
-          <button type="button" class="btn-module-help" data-module="voice" title="Xem hướng dẫn Cấu hình Giọng đọc" aria-label="Hướng dẫn Giọng đọc">?</button>
+
         </div>
         <div class="inspector-body">
           <div class="form-group">
@@ -1773,7 +1772,7 @@
           </div>
 
           <div class="inspector-cta-group">
-            <button id="btn-generate" data-guide-id="content-generate-voice" class="btn btn-primary btn-block">
+            <button id="btn-generate" class="btn btn-primary btn-block">
               <span>Tạo giọng đọc</span>
             </button>
             <button id="btn-stop" class="btn btn-danger btn-block" disabled>
@@ -1897,7 +1896,7 @@
             </div>
           </div>
           <div class="inspector-cta-group">
-            <button id="btn-run-voice-qa" data-guide-id="review-audio" class="btn btn-primary btn-block">
+            <button id="btn-run-voice-qa" class="btn btn-primary btn-block">
               <svg class="ui-icon"><use href="#icon-play"/></svg>
               <span>Chạy Voice QA</span>
             </button>
@@ -2040,7 +2039,7 @@
               <div class="vc-metric-item"><span id="vc-groups-count-scenes" class="vc-num">0</span> <span class="vc-lbl">nhóm</span></div>
               <div class="vc-metric-item"><span id="vc-conflicts-count-scenes" class="vc-num">0</span> <span class="vc-lbl">xung đột</span></div>
             </div>
-            <button type="button" class="btn btn-secondary btn-block btn-open-visual-bible" data-guide-id="scene-visual-bible scene-character-reference" style="margin-top: 8px;">
+            <button type="button" class="btn btn-secondary btn-block btn-open-visual-bible" style="margin-top: 8px;">
               <svg class="ui-icon"><use href="#icon-scene"/></svg>
               <span>Xem Visual Bible</span>
             </button>
@@ -2092,7 +2091,7 @@
               <div class="vc-metric-item"><span id="vc-groups-count-veo" class="vc-num">0</span> <span class="vc-lbl">nhóm</span></div>
               <div class="vc-metric-item"><span id="vc-conflicts-count-veo" class="vc-num">0</span> <span class="vc-lbl">xung đột</span></div>
             </div>
-            <button type="button" class="btn btn-secondary btn-block btn-open-visual-bible" data-guide-id="scene-visual-bible scene-character-reference" style="margin-top: 8px;">
+            <button type="button" class="btn btn-secondary btn-block btn-open-visual-bible" style="margin-top: 8px;">
               <svg class="ui-icon"><use href="#icon-scene"/></svg>
               <span>Xem Visual Bible</span>
             </button>
@@ -2109,7 +2108,7 @@
               <div class="vc-metric-item"><span id="prod-shot-count" class="vc-num">0</span> <span class="vc-lbl">cảnh quay</span></div>
               <div class="vc-metric-item"><span id="prod-blocker-count" class="vc-num">0</span> <span class="vc-lbl">lỗi chặn</span></div>
             </div>
-            <div id="prod-readiness-list" data-guide-id="export-package" class="prod-readiness-list" aria-live="polite"></div>
+            <div id="prod-readiness-list" class="prod-readiness-list" aria-live="polite"></div>
             <div id="prod-blockers-list" class="prod-blockers-list" style="display: none;" role="alert"></div>
             <div class="inspector-cta-group" style="margin-top: 8px;">
               <button id="btn-production-export" class="btn btn-primary btn-block" disabled

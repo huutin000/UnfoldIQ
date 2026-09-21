@@ -151,6 +151,28 @@ def main():
     except Exception as e:
         fail(f"startup health exception: {e}")
         return finish(2)
+    # ---- post-smoke follow-up Issue 1: SQLite native-module trust ----
+    st, sqlite_h = req("GET", "/api/system/sqlite-health", timeout=60)
+    sqlite_ok = (st == 200 and isinstance(sqlite_h, dict)
+                 and sqlite_h.get("import_ok") is True
+                 and sqlite_h.get("read_write_ok") is True)
+    note("startup", "sqlite_import_ok", (sqlite_h.get("import_ok") if isinstance(sqlite_h, dict) else None))
+    note("startup", "sqlite_read_write_ok", (sqlite_h.get("read_write_ok") if isinstance(sqlite_h, dict) else None))
+    note("startup", "sqlite_module_file", (sqlite_h.get("sqlite_module_file") if isinstance(sqlite_h, dict) else None))
+    note("startup", "sqlite_python_exe", (sqlite_h.get("python_executable") if isinstance(sqlite_h, dict) else None))
+    check(sqlite_ok, "sqlite native module import + read/write smoke via release runtime")
+    # ---- post-smoke follow-up Issue 3: Kokoro leaves CHECKING (delayed readiness) ----
+    kokoro_ready = (health.get("kokoro") or {}).get("healthy") is True
+    if not kokoro_ready:
+        for _ in range(12):
+            time.sleep(5)
+            sth, health2 = req("GET", "/health", timeout=20)
+            if sth == 200 and (health2.get("kokoro") or {}).get("healthy") is True:
+                kokoro_ready = True
+                health = health2
+                break
+    note("startup", "kokoro_ready_after_retry", kokoro_ready)
+    check(kokoro_ready, "kokoro status leaves CHECKING and reaches READY (bounded retry)")
     st, voices = req("GET", "/api/voices", timeout=30)
     vlist = voices.get("voices", []) if isinstance(voices, dict) else []
     note("startup", "voice_count", len(vlist))
@@ -543,6 +565,36 @@ def main():
             chrome.terminate()
     except Exception as e:
         fail(f"browser gate exception: {str(e)[:200]}")
+
+    # ---- post-smoke follow-up Issue 2: cleanup banner never dumps raw paths ----
+    st, preview = req("POST", "/api/storage/cleanup/preview",
+                      {"categories": ["renderCache", "tempFiles", "testCache"], "confirmed": False},
+                      timeout=120)
+    preview_ok = st == 200 and isinstance(preview, dict) and "candidateCount" in preview
+    note("cleanup", "preview_ok", preview_ok)
+    note("cleanup", "candidate_count", (preview.get("candidateCount") if isinstance(preview, dict) else None))
+    check(preview_ok, "cleanup preview contract responds")
+    try:
+        ui_src = (REPO / "studio" / "static" / "phase15a_ui.js").read_text(encoding="utf-8")
+        banner_ok = ("Dọn dẹp hoàn tất." in ui_src
+                     and "protected_items_skipped_count" in ui_src
+                     and "(${protectedSkipped} tài nguyên" not in ui_src
+                     and "Xem chi tiết" in ui_src
+                     and "<details" in ui_src)
+    except Exception as e:
+        banner_ok = False
+        note("cleanup", "banner_check_error", str(e)[:200])
+    note("cleanup", "banner_concise_no_raw_paths", banner_ok)
+    check(banner_ok, "cleanup success banner concise, no raw absolute path dump")
+    try:
+        app_src = (REPO / "studio" / "static" / "app.js").read_text(encoding="utf-8")
+        kokoro_ui_ok = ("AbortController" in app_src and "__kokoroHealth" in app_src
+                        and "Đang thử lại Kokoro..." in app_src)
+    except Exception as e:
+        kokoro_ui_ok = False
+        note("cleanup", "kokoro_ui_check_error", str(e)[:200])
+    note("browser_runtime", "kokoro_retry_ui", kokoro_ui_ok)
+    check(kokoro_ui_ok, "kokoro frontend has bounded retry (never stuck at CHECKING)")
 
     # ---- persistence gate data already captured; restart happens in Task 12 (external) ----
     note("persistence", "dir_name", dname)

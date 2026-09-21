@@ -10,8 +10,8 @@
 .btn-secondary { background: var(--uq-surface-2); border-color: var(--uq-line-strong); color: var(--uq-ink-1); }
 .btn-secondary:hover { background: var(--uq-hover); border-color: #3b4c68; }
 .btn-secondary:active { background: #232f45; }
-.btn-ghost, .btn-help-guide { background: transparent; border-color: transparent; color: var(--uq-ink-2); }
-.btn-ghost:hover, .btn-help-guide:hover { background: var(--uq-hover); color: var(--uq-ink-1); }
+.btn-ghost { background: transparent; border-color: transparent; color: var(--uq-ink-2); }
+.btn-ghost:hover { background: var(--uq-hover); color: var(--uq-ink-1); }
 .btn-danger { background: var(--uq-bad-wash); border-color: rgba(239, 68, 68, 0.4); color: #fca5a5; }
 .btn-danger:hover { background: rgba(239, 68, 68, 0.22); }
 .btn:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -30,11 +30,6 @@
   transition: background var(--uq-ease), color var(--uq-ease); }
 .btn-icon-ghost:hover { background: var(--uq-hover); color: var(--uq-ink-1); }
 .btn-icon-ghost.active { background: var(--uq-accent-wash); color: var(--uq-accent-ink); }
-.btn-module-help { display: inline-flex; align-items: center; justify-content: center;
-  width: 24px; height: 24px; min-width: 24px; min-height: 24px; border-radius: 50%;
-  border: 1px solid var(--uq-line-strong);
-  background: transparent; color: var(--uq-ink-3); font-size: 12px; cursor: pointer; padding: 0; }
-.btn-module-help:hover { color: var(--uq-ink-1); border-color: var(--uq-accent); }
 /* P1 (§13): touch target đủ lớn trên màn cảm ứng. */
 /* Phase 6: product coarse-pointer policy — every author-controlled control
    reaches >=44×44 CSS px when (pointer: coarse) is true. 44px is a product
