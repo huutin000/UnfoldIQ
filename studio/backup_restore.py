@@ -17,6 +17,7 @@ import json
 import logging
 import os
 import shutil
+import sqlite3
 import time
 import zipfile
 from datetime import datetime, timezone
@@ -30,6 +31,13 @@ logger = logging.getLogger("unfoldiq.backup_restore")
 
 BACKUPS_DIR = BASE_DIR / "backups"
 BACKUPS_DIR.mkdir(parents=True, exist_ok=True)
+
+# SQLite files must never be archived by raw byte copy: a live database file
+# read while a write transaction is open can yield a torn or journal-divergent
+# snapshot. Such files are snapshotted via the SQLite Backup API instead, and
+# rollback-journal / WAL sidecars are never archived (the snapshot is complete).
+SQLITE_DB_SUFFIXES = (".db",)
+SQLITE_SIDECAR_SUFFIXES = ("-journal", "-wal", "-shm")
 
 LIGHT_BACKUP_PATTERNS = [
     "*.json",
@@ -50,6 +58,52 @@ def _file_sha256(path: Path) -> str:
         while chunk := f.read(65536):
             h.update(chunk)
     return h.hexdigest()
+
+
+def _snapshot_sqlite_db(src_path: Path, work_dir: Path) -> Path:
+    """
+    Create a transactionally consistent snapshot of a live SQLite database.
+
+    Uses the SQLite Backup API, which serializes against concurrent writers
+    (it waits for the write lock instead of copying torn bytes), then verifies
+    the snapshot before it is archived. Opening the source lets SQLite perform
+    its standard lock negotiation and stale-journal recovery — the same thing
+    the application itself does on next open — so a leftover journal from a
+    crashed writer can never be archived as a divergent sidecar.
+    """
+    work_dir.mkdir(parents=True, exist_ok=True)
+    snap_path = work_dir / f".tmp_snapshot_{src_path.stem}_{os.getpid()}.db"
+    if snap_path.exists():
+        snap_path.unlink()
+    src_conn = None
+    dst_conn = None
+    try:
+        src_conn = sqlite3.connect(str(src_path), timeout=30.0)
+        dst_conn = sqlite3.connect(str(snap_path), timeout=30.0)
+        src_conn.backup(dst_conn)
+    except sqlite3.Error as e:
+        raise RuntimeError(f"SQLite snapshot failed for {src_path.name}: {e}")
+    finally:
+        try:
+            if src_conn is not None:
+                src_conn.close()
+        finally:
+            if dst_conn is not None:
+                dst_conn.close()
+    check_conn = sqlite3.connect(str(snap_path), timeout=10.0)
+    try:
+        check_conn.execute("PRAGMA foreign_keys = ON;")
+        integrity = check_conn.execute("PRAGMA integrity_check;").fetchone()[0]
+        if integrity != "ok":
+            raise ValueError(f"Snapshot integrity_check failed for {src_path.name}: {integrity}")
+        violations = check_conn.execute("PRAGMA foreign_key_check;").fetchall()
+        if violations:
+            raise ValueError(
+                f"Snapshot foreign_key_check found {len(violations)} violations for {src_path.name}"
+            )
+    finally:
+        check_conn.close()
+    return snap_path
 
 
 class BackupRestoreService:
@@ -110,38 +164,58 @@ class BackupRestoreService:
                         continue
                     files_to_pack.append(fp)
 
-        # Build manifest
-        file_manifest = []
-        for fp in files_to_pack:
-            try:
-                rel_p = str(fp.relative_to(project_dir)).replace("\\", "/")
-                file_manifest.append({
-                    "path": rel_p,
-                    "sha256": _file_sha256(fp),
-                    "size": fp.stat().st_size
-                })
-            except Exception as e:
-                logger.warning(f"Could not hash {fp}: {e}")
+        # SQLite sidecars (hot journals / WAL files) are never archived: the
+        # Backup-API snapshot below is already a complete, consistent database.
+        files_to_pack = [
+            fp for fp in files_to_pack
+            if not fp.name.endswith(SQLITE_SIDECAR_SUFFIXES)
+        ]
 
-        manifest_data = {
-            "manifestVersion": "1.0",
-            "schemaVersion": "15.0",
-            "backupType": backup_type,
-            "projectId": project_id,
-            "createdAt": datetime.now(timezone.utc).isoformat(),
-            "fileCount": len(file_manifest),
-            "files": file_manifest
-        }
-
-        # Write zip atomically
-        temp_zip = target_dir / f".tmp_{zip_filename}"
-        with zipfile.ZipFile(temp_zip, "w", compression=zipfile.ZIP_DEFLATED) as zf:
-            zf.writestr("backup_manifest.json", json.dumps(manifest_data, indent=2, ensure_ascii=False))
+        # Snapshot live SQLite databases via the Backup API so an overlapping
+        # write transaction cannot produce a torn snapshot. The manifest hash
+        # and the archived bytes both come from the verified snapshot.
+        work_dir = target_dir / f".tmp_snap_{project_id}_{timestamp}"
+        db_snapshots: Dict[Path, Path] = {}
+        try:
             for fp in files_to_pack:
-                rel_p = str(fp.relative_to(project_dir)).replace("\\", "/")
-                zf.write(fp, arcname=f"project/{rel_p}")
+                if fp.suffix.lower() in SQLITE_DB_SUFFIXES:
+                    db_snapshots[fp] = _snapshot_sqlite_db(fp, work_dir)
 
-        temp_zip.replace(zip_path)
+            # Build manifest
+            file_manifest = []
+            for fp in files_to_pack:
+                try:
+                    rel_p = str(fp.relative_to(project_dir)).replace("\\", "/")
+                    hash_src = db_snapshots.get(fp, fp)
+                    file_manifest.append({
+                        "path": rel_p,
+                        "sha256": _file_sha256(hash_src),
+                        "size": hash_src.stat().st_size
+                    })
+                except Exception as e:
+                    logger.warning(f"Could not hash {fp}: {e}")
+
+            manifest_data = {
+                "manifestVersion": "1.0",
+                "schemaVersion": "15.0",
+                "backupType": backup_type,
+                "projectId": project_id,
+                "createdAt": datetime.now(timezone.utc).isoformat(),
+                "fileCount": len(file_manifest),
+                "files": file_manifest
+            }
+
+            # Write zip atomically
+            temp_zip = target_dir / f".tmp_{zip_filename}"
+            with zipfile.ZipFile(temp_zip, "w", compression=zipfile.ZIP_DEFLATED) as zf:
+                zf.writestr("backup_manifest.json", json.dumps(manifest_data, indent=2, ensure_ascii=False))
+                for fp in files_to_pack:
+                    rel_p = str(fp.relative_to(project_dir)).replace("\\", "/")
+                    zf.write(db_snapshots.get(fp, fp), arcname=f"project/{rel_p}")
+
+            temp_zip.replace(zip_path)
+        finally:
+            shutil.rmtree(work_dir, ignore_errors=True)
         logger.info(f"Backup created: {zip_path} ({backup_type}, {len(files_to_pack)} files)")
         return zip_path
 
