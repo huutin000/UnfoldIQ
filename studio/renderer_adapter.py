@@ -8,6 +8,7 @@ Principles:
 - Complete Export Package: final.mp4, subtitles.srt, sources.md, description.txt, metadata.json.
 """
 
+import hashlib
 import json
 import logging
 import os
@@ -118,6 +119,20 @@ class FFmpegRenderer:
             rfile.write_text(json.dumps({"issues": issues}, indent=2, ensure_ascii=False), encoding="utf-8")
         return updated
 
+    def _resolve_scene_id(self, sc: Dict[str, Any], idx: int) -> str:
+        """Timeline scenes carry `sceneId` (camelCase); accept legacy keys and
+        fall back to the stable scene index so clip filenames never collapse
+        to a single shared file."""
+        return str(sc.get("sceneId") or sc.get("scene_id") or sc.get("id") or f"sc{idx:03d}")
+
+    @staticmethod
+    def _asset_cache_key(asset_path: Path) -> str:
+        h = hashlib.sha256()
+        with open(asset_path, "rb") as f:
+            while chunk := f.read(65536):
+                h.update(chunk)
+        return h.hexdigest()[:12]
+
     def _prepare_scene_clip(
         self,
         project_dir: Path,
@@ -130,7 +145,7 @@ class FFmpegRenderer:
     ) -> Path:
         """Ensure the asset is a valid video clip, converting static image artifacts if needed."""
         if asset_path.suffix.lower() in [".png", ".jpg", ".jpeg", ".webp"]:
-            clip_out = temp_dir / f"img_clip_{scene_id}_{target_w}.mp4"
+            clip_out = temp_dir / f"img_clip_{scene_id}_{self._asset_cache_key(asset_path)}_{target_w}.mp4"
             if not clip_out.exists():
                 cmd = [
                     self.ffmpeg_path, "-y",
@@ -179,8 +194,8 @@ class FFmpegRenderer:
             # Build concat script with visual clips
             concat_txt = draft_dir / "concat_draft.txt"
             with open(concat_txt, "w", encoding="utf-8") as f:
-                for sc in scenes:
-                    sc_id = sc.get("scene_id") or sc.get("id") or "sc"
+                for idx, sc in enumerate(scenes):
+                    sc_id = self._resolve_scene_id(sc, idx)
                     sc_dur = float(sc.get("duration") or 5.0)
                     if sc.get("assetFilePath") and (project_dir / sc["assetFilePath"]).exists():
                         target_clip = self._prepare_scene_clip(
@@ -247,8 +262,8 @@ class FFmpegRenderer:
         else:
             concat_txt = final_dir / "concat_final.txt"
             with open(concat_txt, "w", encoding="utf-8") as f:
-                for sc in scenes:
-                    sc_id = sc.get("scene_id") or sc.get("id") or "sc"
+                for idx, sc in enumerate(scenes):
+                    sc_id = self._resolve_scene_id(sc, idx)
                     sc_dur = float(sc.get("duration") or 5.0)
                     if sc.get("assetFilePath") and (project_dir / sc["assetFilePath"]).exists():
                         target_clip = self._prepare_scene_clip(
