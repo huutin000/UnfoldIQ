@@ -1,0 +1,534 @@
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - main [ref=e4]:
+    - generic [ref=e6]:
+      - navigation "Main navigation" [ref=e10]:
+        - generic [ref=e17]:
+          - link "Overview" [ref=e18] [cursor=pointer]:
+            - /url: "#overview"
+          - link "Models" [ref=e19] [cursor=pointer]:
+            - /url: "#models"
+          - link "Capabilities" [ref=e20] [cursor=pointer]:
+            - /url: "#capabilities"
+          - link "Tools" [ref=e21] [cursor=pointer]:
+            - /url: "#tools"
+          - link "Flow Sessions" [ref=e22] [cursor=pointer]:
+            - /url: "#flow-sessions"
+          - link "Pricing" [ref=e23] [cursor=pointer]:
+            - /url: "#pricing"
+        - generic [ref=e24]:
+          - link "X (Twitter)" [ref=e25] [cursor=pointer]:
+            - /url: https://x.com/FlowbyGoogle
+          - link "Instagram" [ref=e28] [cursor=pointer]:
+            - /url: https://www.instagram.com/googleflow
+          - link "Discord" [ref=e31] [cursor=pointer]:
+            - /url: https://discord.com/invite/googlelabs
+          - button "More options" [ref=e34] [cursor=pointer]:
+            - img [aria-hidden] [ref=e36]: more_vert
+      - generic [ref=e38]:
+        - heading "Google Flow" [level=1] [ref=e39]
+        - generic [ref=e49]:
+          - paragraph [ref=e50]: Your AI creative studio built with Google's advanced generative models.
+          - button "Create with Google Flow" [ref=e52] [cursor=pointer]
+          - paragraph [ref=e54]:
+            - generic [ref=e55]:
+              - text: Explore
+              - link "Google AI Subscriptions" [ref=e56] [cursor=pointer]:
+                - /url: https://one.google.com/ai?utm_source=flow&utm_medium=web&utm_campaign=vfx_landing_page_offer
+              - text: . See
+              - link "FAQ" [ref=e57] [cursor=pointer]:
+                - /url: https://support.google.com/flow
+              - text: .
+            - generic [ref=e58]: Features may vary by Google AI subscription tier, platform (web vs. mobile), and region. 18+.
+          - button "Pause video" [ref=e60] [cursor=pointer]
+        - img [aria-hidden] [ref=e66]: keyboard_arrow_down
+      - generic [ref=e68]:
+        - heading "Unlock your best creative work" [level=2]:
+          - generic: Unlock your
+          - generic: best creative work
+        - figure [ref=e70] [cursor=pointer]:
+          - img "Play feature video" [ref=e71]
+          - button "Play feature video" [ref=e72]:
+            - img [aria-hidden] [ref=e74]: play_arrow
+      - generic [ref=e76]:
+        - generic [ref=e78]:
+          - heading "Our Models" [level=3] [ref=e79]
+          - paragraph [ref=e80]: Google Flow collaborates with creatives at every stage, from idea to execution—all using Google’s advanced generative models.
+        - generic [ref=e82]:
+          - generic [ref=e83]:
+            - generic [ref=e86]:
+              - heading "Gemini Omni" [level=3] [ref=e87]
+              - paragraph [ref=e88]: Create and edit videos from any input reference — real or generated. Omni is a leap forward in world understanding, multimodality, and conversational editing.
+            - generic [ref=e89]:
+              - button "Try in Google Flow" [ref=e91] [cursor=pointer]
+              - button "Learn more" [ref=e94] [cursor=pointer]
+          - generic [ref=e96]:
+            - img "Nano Banana" [ref=e97]
+            - generic [ref=e99]:
+              - heading "Nano Banana" [level=3] [ref=e100]
+              - paragraph [ref=e101]: Powerful image generation and precise editing control. Our image models excel at subject consistency, text rendering, enhanced reasoning, and much more.
+            - generic [ref=e102]:
+              - button "Try in Google Flow" [ref=e104] [cursor=pointer]
+              - button "Learn more" [ref=e107] [cursor=pointer]
+          - generic [ref=e109]:
+            - generic [ref=e112]:
+              - heading "Veo 3.1" [level=3] [ref=e113]
+              - paragraph [ref=e114]: Veo delivers expanded creative controls, native audio, and quality videos. It excels in physics, realism and prompt adherence.
+            - generic [ref=e115]:
+              - button "Try in Google Flow" [ref=e117] [cursor=pointer]
+              - button "Learn more" [ref=e120] [cursor=pointer]
+          - generic [ref=e122]:
+            - generic [ref=e125]:
+              - heading "Gemini Omni" [level=3] [ref=e126]
+              - paragraph [ref=e127]: Create and edit videos from any input reference — real or generated. Omni is a leap forward in world understanding, multimodality, and conversational editing.
+            - generic [ref=e128]:
+              - button "Try in Google Flow" [ref=e130] [cursor=pointer]
+              - button "Learn more" [ref=e133] [cursor=pointer]
+          - generic [ref=e135]:
+            - img "Nano Banana" [ref=e136]
+            - generic [ref=e138]:
+              - heading "Nano Banana" [level=3] [ref=e139]
+              - paragraph [ref=e140]: Powerful image generation and precise editing control. Our image models excel at subject consistency, text rendering, enhanced reasoning, and much more.
+            - generic [ref=e141]:
+              - button "Try in Google Flow" [ref=e143] [cursor=pointer]
+              - button "Learn more" [ref=e146] [cursor=pointer]
+          - generic [ref=e148]:
+            - generic [ref=e151]:
+              - heading "Veo 3.1" [level=3] [ref=e152]
+              - paragraph [ref=e153]: Veo delivers expanded creative controls, native audio, and quality videos. It excels in physics, realism and prompt adherence.
+            - generic [ref=e154]:
+              - button "Try in Google Flow" [ref=e156] [cursor=pointer]
+              - button "Learn more" [ref=e159] [cursor=pointer]
+          - generic [ref=e161]:
+            - generic [ref=e164]:
+              - heading "Gemini Omni" [level=3] [ref=e165]
+              - paragraph [ref=e166]: Create and edit videos from any input reference — real or generated. Omni is a leap forward in world understanding, multimodality, and conversational editing.
+            - generic [ref=e167]:
+              - button "Try in Google Flow" [ref=e169] [cursor=pointer]
+              - button "Learn more" [ref=e172] [cursor=pointer]
+          - generic [ref=e174]:
+            - img "Nano Banana" [ref=e175]
+            - generic [ref=e177]:
+              - heading "Nano Banana" [level=3] [ref=e178]
+              - paragraph [ref=e179]: Powerful image generation and precise editing control. Our image models excel at subject consistency, text rendering, enhanced reasoning, and much more.
+            - generic [ref=e180]:
+              - button "Try in Google Flow" [ref=e182] [cursor=pointer]
+              - button "Learn more" [ref=e185] [cursor=pointer]
+          - generic [ref=e187]:
+            - generic [ref=e190]:
+              - heading "Veo 3.1" [level=3] [ref=e191]
+              - paragraph [ref=e192]: Veo delivers expanded creative controls, native audio, and quality videos. It excels in physics, realism and prompt adherence.
+            - generic [ref=e193]:
+              - button "Try in Google Flow" [ref=e195] [cursor=pointer]
+              - button "Learn more" [ref=e198] [cursor=pointer]
+          - generic [ref=e200]:
+            - generic [ref=e203]:
+              - heading "Gemini Omni" [level=3] [ref=e204]
+              - paragraph [ref=e205]: Create and edit videos from any input reference — real or generated. Omni is a leap forward in world understanding, multimodality, and conversational editing.
+            - generic [ref=e206]:
+              - button "Try in Google Flow" [ref=e208] [cursor=pointer]
+              - button "Learn more" [ref=e211] [cursor=pointer]
+          - generic [ref=e213]:
+            - img "Nano Banana" [ref=e214]
+            - generic [ref=e216]:
+              - heading "Nano Banana" [level=3] [ref=e217]
+              - paragraph [ref=e218]: Powerful image generation and precise editing control. Our image models excel at subject consistency, text rendering, enhanced reasoning, and much more.
+            - generic [ref=e219]:
+              - button "Try in Google Flow" [ref=e221] [cursor=pointer]
+              - button "Learn more" [ref=e224] [cursor=pointer]
+          - generic [ref=e226]:
+            - generic [ref=e229]:
+              - heading "Veo 3.1" [level=3] [ref=e230]
+              - paragraph [ref=e231]: Veo delivers expanded creative controls, native audio, and quality videos. It excels in physics, realism and prompt adherence.
+            - generic [ref=e232]:
+              - button "Try in Google Flow" [ref=e234] [cursor=pointer]
+              - button "Learn more" [ref=e237] [cursor=pointer]
+          - generic [ref=e239]:
+            - generic [ref=e242]:
+              - heading "Gemini Omni" [level=3] [ref=e243]
+              - paragraph [ref=e244]: Create and edit videos from any input reference — real or generated. Omni is a leap forward in world understanding, multimodality, and conversational editing.
+            - generic [ref=e245]:
+              - button "Try in Google Flow" [ref=e247] [cursor=pointer]
+              - button "Learn more" [ref=e250] [cursor=pointer]
+          - generic [ref=e252]:
+            - img "Nano Banana" [ref=e253]
+            - generic [ref=e255]:
+              - heading "Nano Banana" [level=3] [ref=e256]
+              - paragraph [ref=e257]: Powerful image generation and precise editing control. Our image models excel at subject consistency, text rendering, enhanced reasoning, and much more.
+            - generic [ref=e258]:
+              - button "Try in Google Flow" [ref=e260] [cursor=pointer]
+              - button "Learn more" [ref=e263] [cursor=pointer]
+          - generic [ref=e265]:
+            - generic [ref=e268]:
+              - heading "Veo 3.1" [level=3] [ref=e269]
+              - paragraph [ref=e270]: Veo delivers expanded creative controls, native audio, and quality videos. It excels in physics, realism and prompt adherence.
+            - generic [ref=e271]:
+              - button "Try in Google Flow" [ref=e273] [cursor=pointer]
+              - button "Learn more" [ref=e276] [cursor=pointer]
+        - generic [ref=e280]:
+          - button "Previous model" [ref=e281] [cursor=pointer]:
+            - img [aria-hidden] [ref=e283]: chevron_left
+          - button "Next model" [ref=e284] [cursor=pointer]:
+            - img [aria-hidden] [ref=e286]: chevron_right
+      - generic [ref=e288]:
+        - generic [ref=e289]: Capabilities
+        - generic [ref=e293]:
+          - generic:
+            - heading "Plan" [level=3]
+          - generic [ref=e296]:
+            - paragraph [ref=e297]: Meet your agent
+            - separator [ref=e298]
+            - paragraph [ref=e299]: Your agent in Google Flow is an intelligent, creative partner. It’s built with Gemini’s intelligence and a deep understanding of your project to help unlock some of your best work while you stay in the flow.
+          - generic [ref=e311]:
+            - paragraph [ref=e312]: Explore and iterate on ideas with your agent.
+            - generic [ref=e315]:
+              - button "Previous slide" [ref=e316] [cursor=pointer]:
+                - img [aria-hidden] [ref=e318]: chevron_left
+              - button "Next slide" [ref=e319] [cursor=pointer]:
+                - img [aria-hidden] [ref=e321]: chevron_right
+        - generic [ref=e323]:
+          - generic:
+            - heading "Create" [level=3]
+          - generic [ref=e326]:
+            - paragraph [ref=e327]: Create without bounds
+            - separator [ref=e328]
+            - paragraph [ref=e329]: Turn your inspiration into reality. Whether you’re blending text, image, and video inputs with Gemini Omni or building custom tools, Google Flow gives you an adaptable canvas to build with your imagination.
+          - generic [ref=e341]:
+            - paragraph [ref=e342]: Create high-fidelity images and videos using Google’s advanced models
+            - generic [ref=e345]:
+              - button "Previous slide" [ref=e346] [cursor=pointer]:
+                - img [aria-hidden] [ref=e348]: chevron_left
+              - button "Next slide" [ref=e349] [cursor=pointer]:
+                - img [aria-hidden] [ref=e351]: chevron_right
+        - generic [ref=e353]:
+          - generic:
+            - heading "Refine" [level=3]
+          - generic [ref=e356]:
+            - paragraph [ref=e357]: Refine with confidence
+            - separator [ref=e358]
+            - paragraph [ref=e359]: Use natural language to perform complex, iterative edits, tweak individual assets with professional controls, and easily scale those changes across your entire project.
+          - generic [ref=e371]:
+            - paragraph [ref=e372]: Use natural language edit your images and videos
+            - generic [ref=e375]:
+              - button "Previous slide" [ref=e376] [cursor=pointer]:
+                - img [aria-hidden] [ref=e378]: chevron_left
+              - button "Next slide" [ref=e379] [cursor=pointer]:
+                - img [aria-hidden] [ref=e381]: chevron_right
+        - navigation "Capabilities categories navigation" [ref=e382]:
+          - button "Plan" [ref=e383] [cursor=pointer]
+          - button "Create" [ref=e385] [cursor=pointer]
+          - button "Refine" [ref=e387] [cursor=pointer]
+          - button "Create with Google Flow" [ref=e389] [cursor=pointer]
+      - generic [ref=e391]:
+        - generic [ref=e393]:
+          - generic [ref=e394]: Tools
+          - heading "Create tools using natural language" [level=3] [ref=e395]
+          - paragraph [ref=e396]: Build tools for your specific creative workflows. From creative tasks, like designing video effects, to hand drawn animations, to layering, you can build, share and remix tools directly in Google Flow.
+        - generic [ref=e397]:
+          - generic [ref=e398]:
+            - generic [ref=e399]:
+              - generic:
+                - img "Type Overlays"
+              - generic [ref=e400]:
+                - img "Google" [ref=e401]
+                - generic [ref=e402]:
+                  - generic [ref=e403]: Created by
+                  - heading "Google" [level=4] [ref=e404]
+            - generic [ref=e405]:
+              - generic [ref=e406]:
+                - button "Type Overlays Add animated text to your videos" [ref=e407] [cursor=pointer]:
+                  - generic [ref=e408]:
+                    - heading "Type Overlays" [level=4] [ref=e409]
+                    - generic [ref=e410]: Add animated text to your videos
+                - link "Explore" [ref=e412] [cursor=pointer]:
+                  - /url: https://flow.google.com/shared/tool/075ead65-520a-4f5e-88bd-f150caa24dc4
+              - generic [ref=e414]:
+                - button "Video Resizer Resize your videos into any aspect ratio" [ref=e415] [cursor=pointer]:
+                  - generic [ref=e416]:
+                    - heading "Video Resizer" [level=4] [ref=e417]
+                    - generic [ref=e418]: Resize your videos into any aspect ratio
+                - link "Explore" [ref=e420] [cursor=pointer]:
+                  - /url: https://flow.google.com/shared/tool/b78766c3-4cd7-4c1e-b597-769d4cfcf37a
+              - generic [ref=e422]:
+                - button "Image Editor Transform objects, add text, and adjust image sizing with a layer based editor" [ref=e423] [cursor=pointer]:
+                  - generic [ref=e424]:
+                    - heading "Image Editor" [level=4] [ref=e425]
+                    - generic [ref=e426]: Transform objects, add text, and adjust image sizing with a layer based editor
+                - link "Explore" [ref=e428] [cursor=pointer]:
+                  - /url: https://flow.google.com/shared/tool/1b12bbd4-51d7-4c76-8b62-24ac2473e07e
+              - generic [ref=e430]:
+                - button "Storyboard Studio Write a script, create the cast, and visualize a storyboard" [ref=e431] [cursor=pointer]:
+                  - generic [ref=e432]:
+                    - heading "Storyboard Studio" [level=4] [ref=e433]
+                    - generic [ref=e434]: Write a script, create the cast, and visualize a storyboard
+                - link "Explore" [ref=e436] [cursor=pointer]:
+                  - /url: https://flow.google.com/shared/tool/79c9d2e6-4ad6-4636-ad05-22022f8a5a74
+              - generic [ref=e438]:
+                - button "Shader Effects Apply customizable visual filters to your videos and images" [ref=e439] [cursor=pointer]:
+                  - generic [ref=e440]:
+                    - heading "Shader Effects" [level=4] [ref=e441]
+                    - generic [ref=e442]: Apply customizable visual filters to your videos and images
+                - link "Explore" [ref=e444] [cursor=pointer]:
+                  - /url: https://flow.google.com/shared/tool/63ca3af5-0058-4c7f-b104-dfc417db2e22
+              - generic [ref=e446]:
+                - button "Mockup Comp your image into different environments" [ref=e447] [cursor=pointer]:
+                  - generic [ref=e448]:
+                    - heading "Mockup" [level=4] [ref=e449]
+                    - generic [ref=e450]: Comp your image into different environments
+                - link "Explore" [ref=e452] [cursor=pointer]:
+                  - /url: https://flow.google.com/shared/tool/611fa902-797c-457d-92de-71a3dc714894
+              - generic [ref=e454]:
+                - button "Ribbit Perform videos live as the beat drives playback." [ref=e455] [cursor=pointer]:
+                  - generic [ref=e456]:
+                    - heading "Ribbit" [level=4] [ref=e457]
+                    - generic [ref=e458]: Perform videos live as the beat drives playback.
+                - link "Explore" [ref=e460] [cursor=pointer]:
+                  - /url: https://flow.google.com/shared/tool/46270263-54a1-46fb-a68c-dae111f650fb
+              - generic [ref=e462]:
+                - button "Converge Render your sketches" [ref=e463] [cursor=pointer]:
+                  - generic [ref=e464]:
+                    - heading "Converge" [level=4] [ref=e465]
+                    - generic [ref=e466]: Render your sketches
+                - link "Explore" [ref=e468] [cursor=pointer]:
+                  - /url: https://flow.google.com/shared/tool/f260ed2b-2a14-4ece-a8d3-88b8cf6e660f
+              - generic [ref=e470]:
+                - button "Character X-ray Develop your characters and their backstory" [ref=e471] [cursor=pointer]:
+                  - generic [ref=e472]:
+                    - heading "Character X-ray" [level=4] [ref=e473]
+                    - generic [ref=e474]: Develop your characters and their backstory
+                - link "Explore" [ref=e476] [cursor=pointer]:
+                  - /url: https://flow.google.com/shared/tool/32f2b8f8-a1a9-43ed-899f-c0fbff2e9599
+              - generic [ref=e478]:
+                - button "pixelBento Apply post-processing effects like lo-fi and glitch" [ref=e479] [cursor=pointer]:
+                  - generic [ref=e480]:
+                    - heading "pixelBento" [level=4] [ref=e481]
+                    - generic [ref=e482]: Apply post-processing effects like lo-fi and glitch
+                - link "Explore" [ref=e484] [cursor=pointer]:
+                  - /url: https://flow.google.com/shared/tool/44b73cc0-ad82-49a6-b118-86c31ec49a71
+              - generic [ref=e486]:
+                - button "Grid Architect Create image grids and extract individual images from them" [ref=e487] [cursor=pointer]:
+                  - generic [ref=e488]:
+                    - heading "Grid Architect" [level=4] [ref=e489]
+                    - generic [ref=e490]: Create image grids and extract individual images from them
+                - link "Explore" [ref=e492] [cursor=pointer]:
+                  - /url: https://flow.google.com/shared/tool/52da09f1-1da1-4a40-96c6-41d36b3b2392
+              - generic [ref=e494]:
+                - button "Scout360 Capture a 360 degree environment from an image" [ref=e495] [cursor=pointer]:
+                  - generic [ref=e496]:
+                    - heading "Scout360" [level=4] [ref=e497]
+                    - generic [ref=e498]: Capture a 360 degree environment from an image
+                - link "Explore" [ref=e500] [cursor=pointer]:
+                  - /url: https://flow.google.com/shared/tool/2102cb9f-a06e-4590-8a53-aa34bdcb0dff
+          - button "Explore Tools in Google Flow" [ref=e504] [cursor=pointer]
+      - generic [ref=e508]:
+        - heading "Flow Sessions" [level=3] [ref=e510]: FlowSessions
+        - generic [ref=e511]:
+          - paragraph [ref=e512]: Flow Sessions is an artist program that invites a select group of boundary-pushing creatives to experiment with Google Flow, collaborate directly with Google, and bring a passion project to life. Terms Apply.
+          - button "Apply here" [ref=e514] [cursor=pointer]
+        - generic [ref=e516]:
+          - navigation "Partner names" [ref=e518]:
+            - button "Calvin Herbst" [ref=e519] [cursor=pointer]
+            - button "COMBO & Charline Prat" [ref=e520] [cursor=pointer]
+            - button "Léo Cannone" [ref=e521] [cursor=pointer]
+            - button "Katie Luo" [ref=e522] [cursor=pointer]
+            - button "OLD NEW RARE" [ref=e523] [cursor=pointer]
+            - button "Julie Wieland" [ref=e524] [cursor=pointer]
+            - button "Calvin Herbst" [ref=e525] [cursor=pointer]
+            - button "COMBO & Charline Prat" [ref=e526] [cursor=pointer]
+            - button "Léo Cannone" [ref=e527] [cursor=pointer]
+            - button "Katie Luo" [ref=e528] [cursor=pointer]
+            - button "OLD NEW RARE" [ref=e529] [cursor=pointer]
+            - button "Julie Wieland" [ref=e530] [cursor=pointer]
+            - button "Calvin Herbst" [ref=e531] [cursor=pointer]
+            - button "COMBO & Charline Prat" [ref=e532] [cursor=pointer]
+            - button "Léo Cannone" [ref=e533] [cursor=pointer]
+            - button "Katie Luo" [ref=e534] [cursor=pointer]
+          - generic [ref=e536]:
+            - generic [ref=e537] [cursor=pointer]
+            - generic [ref=e539] [cursor=pointer]
+            - generic [ref=e541] [cursor=pointer]
+            - generic [ref=e543] [cursor=pointer]
+            - generic [ref=e545] [cursor=pointer]
+            - button "Watch video" [ref=e550] [cursor=pointer]:
+              - img [aria-hidden] [ref=e552]: play_arrow
+            - generic [ref=e553] [cursor=pointer]
+            - generic [ref=e555] [cursor=pointer]
+            - generic [ref=e557] [cursor=pointer]
+            - generic [ref=e559] [cursor=pointer]
+            - generic [ref=e561] [cursor=pointer]
+            - generic [ref=e563] [cursor=pointer]
+            - generic [ref=e565] [cursor=pointer]
+            - generic [ref=e567] [cursor=pointer]
+            - generic [ref=e569] [cursor=pointer]
+            - generic [ref=e571] [cursor=pointer]
+            - generic [ref=e573] [cursor=pointer]
+            - generic [ref=e575] [cursor=pointer]
+            - generic [ref=e577] [cursor=pointer]
+            - generic [ref=e579] [cursor=pointer]
+            - generic [ref=e581] [cursor=pointer]
+            - generic [ref=e583] [cursor=pointer]
+            - generic [ref=e585] [cursor=pointer]
+            - generic [ref=e587] [cursor=pointer]
+            - generic [ref=e589] [cursor=pointer]
+            - generic [ref=e591] [cursor=pointer]
+            - generic [ref=e593] [cursor=pointer]
+            - generic [ref=e595] [cursor=pointer]
+            - generic [ref=e597] [cursor=pointer]
+            - generic [ref=e599] [cursor=pointer]
+          - generic [ref=e602]:
+            - heading "Until We Meet Again" [level=3] [ref=e603]
+            - paragraph [ref=e604]: Deep in a forgotten forest lives an unassuming friendship between a stone golem and a dandelion who breaks through the soil every spring.
+            - link [ref=e605] [cursor=pointer]:
+              - /url: https://www.youtube.com/watch?v=mi-1OPsj-_o
+              - text: Watch
+              - img [aria-hidden] [ref=e607]: play_arrow
+            - generic [ref=e608]:
+              - button "Previous partner" [ref=e609] [cursor=pointer]:
+                - img [aria-hidden] [ref=e611]: arrow_upward
+              - button "Next partner" [ref=e612] [cursor=pointer]:
+                - img [aria-hidden] [ref=e614]: arrow_downward
+      - generic [ref=e616]:
+        - generic [ref=e618]:
+          - heading "Pricing" [level=3] [ref=e619]
+          - paragraph [ref=e620]: Try Google Flow free of charge or upgrade to one of our plans below.
+        - generic [ref=e621]:
+          - button "Try Google Flow" [ref=e623] [cursor=pointer]
+          - paragraph [ref=e625]: with a Google Account
+        - generic [ref=e626]:
+          - generic [ref=e627]:
+            - heading "Without a Google AI Subscription" [level=3] [ref=e628]
+            - generic [ref=e630]: Free of Charge
+            - button "Without a Google AI Subscription" [ref=e634] [cursor=pointer]:
+              - generic [ref=e635]: Get started
+            - list [ref=e639]:
+              - listitem [ref=e640]:
+                - generic [ref=e641]: "Included Features:"
+                - generic [ref=e645]: 50 daily Google Flow credits
+              - listitem [ref=e647]: Gemini Omni Flash
+              - listitem [ref=e648]: Nano Banana Pro
+              - listitem [ref=e649]: Veo 3.1
+              - listitem [ref=e650]: Google Flow Tools (Usage only)
+              - listitem [ref=e651]: Agent
+              - listitem [ref=e652]: Text to Video
+              - listitem [ref=e653]: Frames to Video
+              - listitem [ref=e654]: Ingredients to Video
+              - listitem [ref=e655]: Video Extension
+              - listitem [ref=e656]: Video-to-video editing
+              - listitem [ref=e657]: Scenebuilder
+              - listitem [ref=e658]: 2K image upscaling
+              - listitem [ref=e659]: Characters
+              - listitem [ref=e660]: Avatars
+          - generic [ref=e661]:
+            - heading "Google AI Plus" [level=3] [ref=e662]
+            - generic [ref=e664]: $4.99/mo*
+            - link "Google AI Plus" [ref=e668] [cursor=pointer]:
+              - /url: https://one.google.com/ai?utm_source=flow&utm_medium=web&utm_campaign=vfx_landing_page_offer
+              - generic [ref=e669]: Get started
+            - list [ref=e673]:
+              - listitem [ref=e674]:
+                - generic [ref=e675]: "Included Features:"
+                - generic [ref=e679]:
+                  - generic [ref=e680]: 50 daily Google Flow credits
+                  - generic [ref=e681]: +
+                  - generic [ref=e682]: 200 monthly Google Flow credits
+              - listitem [ref=e683]: Everything for free users
+              - listitem [ref=e684]: +
+              - listitem [ref=e685]: Google Flow Tools (Creation)
+              - listitem [ref=e686]: 1080p video upscaling
+              - listitem [ref=e687]: Higher image generation limits
+              - listitem [ref=e688]: Higher access to agent
+          - generic [ref=e689]:
+            - heading "Google AI Pro" [level=3] [ref=e690]
+            - generic [ref=e692]: $19.99/mo*
+            - link "Google AI Pro" [ref=e696] [cursor=pointer]:
+              - /url: https://one.google.com/ai?utm_source=flow&utm_medium=web&utm_campaign=vfx_landing_page_offer
+              - generic [ref=e697]: Get started
+            - generic [ref=e700]:
+              - list [ref=e701]:
+                - listitem [ref=e702]:
+                  - generic [ref=e703]: "Included Features:"
+                  - generic [ref=e707]:
+                    - generic [ref=e708]: 50 daily Google Flow credits
+                    - generic [ref=e709]: +
+                    - generic [ref=e710]: 1,000 monthly Google Flow credits
+                - listitem [ref=e711]: Everything in Plus
+                - listitem [ref=e712]: +
+                - listitem [ref=e713]: AI credits available (top-ups)
+              - generic [ref=e714]:
+                - paragraph [ref=e715]: "Also included in this plan:"
+                - paragraph [ref=e716]: Gemini app with 3.1 Pro
+                - paragraph [ref=e717]: YouTube Premium Lite
+                - paragraph [ref=e718]: Gemini in Gmail, Docs, and more
+                - paragraph [ref=e719]: 5 TB of total storage for Photos, Drive, and Gmail
+                - paragraph [ref=e720]: And other AI Pro benefits
+          - generic [ref=e721]:
+            - heading "Google AI Ultra" [level=3] [ref=e722]
+            - generic [ref=e724]: $99.99/mo*
+            - link "Google AI Ultra" [ref=e728] [cursor=pointer]:
+              - /url: https://one.google.com/ai?utm_source=flow&utm_medium=web&utm_campaign=vfx_landing_page_offer
+              - generic [ref=e729]: Get started
+            - generic [ref=e732]:
+              - list [ref=e733]:
+                - listitem [ref=e734]:
+                  - generic [ref=e735]: "Included Features:"
+                  - generic [ref=e739]:
+                    - generic [ref=e740]: 50 daily Google Flow credits
+                    - generic [ref=e741]: +
+                    - generic [ref=e742]: 10,000 monthly Google Flow credits
+                - listitem [ref=e743]: Everything in Pro
+                - listitem [ref=e744]: +
+                - listitem [ref=e745]: 4K image and video upscaling
+                - listitem [ref=e746]: Highest image generation limits
+                - listitem [ref=e747]: Highest access to agent
+              - generic [ref=e748]:
+                - paragraph [ref=e749]: "Also included in this plan:"
+                - paragraph [ref=e750]: Gemini app with 3.1 Pro Deep Think
+                - paragraph [ref=e751]: YouTube Premium
+                - paragraph [ref=e752]: 20 TB of total storage for Photos, Drive, and Gmail
+                - paragraph [ref=e753]: And other AI Ultra $99.99 benefits
+          - generic [ref=e754]:
+            - heading "Google AI Ultra" [level=3] [ref=e755]
+            - generic [ref=e757]: $199.99/mo*
+            - link "Google AI Ultra" [ref=e761] [cursor=pointer]:
+              - /url: https://one.google.com/ai?utm_source=flow&utm_medium=web&utm_campaign=vfx_landing_page_offer
+              - generic [ref=e762]: Get started
+            - generic [ref=e765]:
+              - list [ref=e766]:
+                - listitem [ref=e767]:
+                  - generic [ref=e768]: "Included Features:"
+                  - generic [ref=e772]:
+                    - generic [ref=e773]: 50 daily Google Flow credits
+                    - generic [ref=e774]: +
+                    - generic [ref=e775]: 25,000 monthly Google Flow credits
+                - listitem [ref=e776]: Everything in Ultra $99.99
+              - generic [ref=e777]:
+                - paragraph [ref=e778]: "Also included in this plan:"
+                - paragraph [ref=e779]: Gemini app with 3.1 Pro Deep Think
+                - paragraph [ref=e780]: YouTube Premium
+                - paragraph [ref=e781]: 30 TB of total storage for Photos, Drive, and Gmail
+                - paragraph [ref=e782]: And other AI Ultra $199.99 benefits
+        - paragraph [ref=e783]: "* Prices may vary by market"
+        - paragraph [ref=e784]:
+          - text: See
+          - link "FAQ." [ref=e785] [cursor=pointer]:
+            - /url: https://support.google.com/flow
+      - generic [ref=e787]:
+        - heading "Questions?" [level=2] [ref=e788]
+        - generic [ref=e789]:
+          - group [ref=e790]:
+            - generic "+ Who is Google Flow for?" [ref=e791] [cursor=pointer]
+          - group [ref=e792]:
+            - generic "+ How much does it cost to generate images and videos?" [ref=e793] [cursor=pointer]
+          - group [ref=e794]:
+            - generic "+ Where is Google Flow available?" [ref=e795] [cursor=pointer]
+      - generic [ref=e798]:
+        - generic [ref=e799]: "Disclaimer: AI outputs may be offensive or inaccurate."
+        - generic [ref=e800]:
+          - text: This site is protected by reCAPTCHA. The Google
+          - link "Privacy Policy" [ref=e801] [cursor=pointer]:
+            - /url: https://policies.google.com/privacy
+          - text: and
+          - link "Terms of Service" [ref=e802] [cursor=pointer]:
+            - /url: https://policies.google.com/terms
+          - text: apply.

@@ -1,0 +1,178 @@
+{
+  "$id": "https://unfoldiq.io/schemas/media-preflight.schema.json",
+  "title": "UNFOLDIQ Media Preflight Contract",
+  "description": "Pre-render media readiness gate: file existence, probe metadata, rights, provenance, continuity, and aspect checks per asset",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "projectId", "platform", "generatedAt", "status", "assets", "timelineSummary", "blockingIssues", "warnings"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semantic version of this contract"
+    },
+    "projectId": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique project identifier"
+    },
+    "platform": {
+      "type": "string",
+      "enum": ["youtube", "tiktok"],
+      "description": "Target platform"
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when this preflight was generated"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["READY", "REVIEW_REQUIRED", "BLOCKED"],
+      "description": "Aggregate preflight status"
+    },
+    "generatedClipAudioPolicy": {
+      "type": "string",
+      "enum": ["MUTE_GENERATED_CLIP_AUDIO", "USE_AS_PLANNED", "MIX", "REPLACE"],
+      "description": "Policy for embedded audio found in generated video clips"
+    },
+    "assets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["assetId", "sceneId", "type", "path", "exists", "sourceProvider", "provenanceStatus", "rightsStatus", "continuityStatus", "structuralStatus"],
+        "properties": {
+          "assetId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sceneId": {
+            "type": "string",
+            "description": "Primary scene using this asset (empty when orphaned)"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["image", "video", "voice", "music", "sfx", "caption", "timing"]
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Project-relative path to the asset file"
+          },
+          "exists": {
+            "type": "boolean"
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "sourceProvider": {
+            "type": "string",
+            "minLength": 1
+          },
+          "provenanceStatus": {
+            "type": "string",
+            "enum": ["VERIFIED", "UNVERIFIED", "UNKNOWN", "NOT_APPLICABLE"]
+          },
+          "rightsStatus": {
+            "type": "string",
+            "enum": ["VERIFIED", "UNVERIFIED", "UNKNOWN", "NOT_APPLICABLE", "BLOCKED"]
+          },
+          "continuityStatus": {
+            "type": "string",
+            "enum": ["LOCKED", "REVIEW_REQUIRED", "NOT_APPLICABLE", "UNRESOLVED"]
+          },
+          "structuralStatus": {
+            "type": "string",
+            "enum": ["VALID", "MISSING", "CORRUPT", "UNREADABLE", "UNKNOWN"]
+          },
+          "metadataStatus": {
+            "type": "string",
+            "enum": ["MEASURED", "UNKNOWN"]
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Measured probe metadata (present only when metadataStatus is MEASURED)"
+          },
+          "timingEvidence": {
+            "type": "object",
+            "description": "Probe evidence: source, measuredAt, toolVersion"
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["code", "message"],
+              "properties": {
+                "code": { "type": "string" },
+                "message": { "type": "string" },
+                "severity": { "type": "string" }
+              }
+            }
+          },
+          "normalizationPlan": {
+            "type": "object",
+            "description": "Suggested path normalization (never rewrites the source manifest)"
+          },
+          "aspectTreatment": {
+            "type": "object",
+            "description": "Source vs platform-canvas aspect handling"
+          },
+          "embeddedAudio": {
+            "type": "string",
+            "enum": ["PRESENT", "ABSENT", "UNKNOWN"],
+            "description": "Embedded audio stream state for video assets"
+          },
+          "clipAudioPolicy": {
+            "type": "string",
+            "description": "Effective clip-audio policy for this asset's scene"
+          }
+        }
+      }
+    },
+    "timelineSummary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assetCount", "readyCount", "requiredCount", "missingRequired", "voiceMeasured"],
+      "properties": {
+        "assetCount": { "type": "integer", "minimum": 0 },
+        "readyCount": { "type": "integer", "minimum": 0 },
+        "requiredCount": { "type": "integer", "minimum": 0 },
+        "missingRequired": { "type": "integer", "minimum": 0 },
+        "voiceMeasured": { "type": "boolean" },
+        "notes": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "blockingIssues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "message"],
+        "properties": {
+          "code": { "type": "string" },
+          "message": { "type": "string" },
+          "assetId": { "type": "string" }
+        }
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "message"],
+        "properties": {
+          "code": { "type": "string" },
+          "message": { "type": "string" },
+          "assetId": { "type": "string" }
+        }
+      }
+    }
+  }
+}

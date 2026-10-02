@@ -1,0 +1,25 @@
+{
+  "version": "1.0.0",
+  "projectId": "pilot-sky-blue",
+  "voiceEndMs": 65332,
+  "visualPlannedEndMs": 65332,
+  "captionEndMs": 65332,
+  "musicEndMs": 0,
+  "sfxEndMs": 0,
+  "intentionalOutroEndMs": 0,
+  "actualTimelineEndMs": 65332,
+  "sources": [
+    "windows-sapi WAV header durations (8 clips)",
+    "ffprobe voice probes",
+    "scene-script PLANNED scene spans",
+    "caption-builder measured segments",
+    "audio-mix-plan voice clips"
+  ],
+  "status": "MEASURED",
+  "generatedAt": "2026-09-26T07:24:37.327Z",
+  "targetMsReference": 60000,
+  "note": "target never pads timeline",
+  "notes": [
+    "target never pads timeline"
+  ]
+}

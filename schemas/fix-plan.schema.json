@@ -1,0 +1,49 @@
+{
+  "$id": "https://unfoldiq.io/schemas/fix-plan.schema.json",
+  "title": "UNFOLDIQ Fix Plan Contract (STEP-13)",
+  "description": "Classified fix plan for a render attempt: ordered reversible actions plus a risk class.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "projectId", "attemptId", "issues", "actions", "riskClass", "requiresApproval", "createdAt"],
+  "properties": {
+    "version": { "type": "string", "const": "1.0.0" },
+    "projectId": { "type": "string", "minLength": 1 },
+    "attemptId": { "type": "string", "minLength": 1 },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["issueId", "category", "severity", "status", "note"],
+        "properties": {
+          "issueId": { "type": "string", "minLength": 1 },
+          "category": { "type": "string", "minLength": 1 },
+          "severity": { "type": "string", "minLength": 1 },
+          "status": { "type": "string", "minLength": 1 },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["actionId", "type", "target", "reason", "reversible"],
+        "properties": {
+          "actionId": { "type": "string", "minLength": 1 },
+          "type": { "type": "string", "minLength": 1 },
+          "target": { "type": "string", "minLength": 1 },
+          "reason": { "type": "string", "minLength": 1 },
+          "before": { },
+          "after": { },
+          "reversible": { "type": "boolean" },
+          "evidence": { "type": "string" }
+        }
+      }
+    },
+    "riskClass": { "type": "string", "enum": ["SAFE_AUTOMATIC", "REVIEW_REQUIRED", "UPSTREAM_REQUIRED"] },
+    "requiresApproval": { "type": "boolean" },
+    "createdAt": { "type": "string", "format": "date-time" }
+  }
+}

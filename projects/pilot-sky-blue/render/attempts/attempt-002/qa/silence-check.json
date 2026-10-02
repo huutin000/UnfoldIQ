@@ -1,0 +1,15 @@
+{
+  "status": "FAIL",
+  "silentRegions": [
+    {
+      "startMs": 0,
+      "endMs": 65387,
+      "durationMs": 65387,
+      "voiceOverlapMs": 9394,
+      "intentional": false,
+      "label": null
+    }
+  ],
+  "analyzer": "ffmpeg-silencedetect",
+  "detail": "unexpected narration silence 65387ms at 0ms overlapping voiceRanges"
+}

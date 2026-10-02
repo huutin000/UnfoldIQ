@@ -1,0 +1,194 @@
+{
+  "$id": "https://unfoldiq.io/schemas/story-handoff.schema.json",
+  "title": "UNFOLDIQ Story Handoff (1G.1M/1G.1N/1G.1O/1G.1P)",
+  "description": "Research Pack, Script Evidence Policy, Narrative Brief, Story Draft, Story Evidence Audit. Traceability in sidecar metadata; viewer text carries no internal IDs. Draft is editorial, not TTS-ready spoken script.",
+  "type": "object",
+  "anyOf": [
+    { "$ref": "#/$defs/packFile" },
+    { "$ref": "#/$defs/policyFile" },
+    { "$ref": "#/$defs/narrativeFile" },
+    { "$ref": "#/$defs/draftFile" },
+    { "$ref": "#/$defs/auditFile" }
+  ],
+  "$defs": {
+    "traceEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["claimId", "statement", "sourceIds", "contentHashes", "evidenceStatus", "corroborationStatus", "claimClass"],
+      "properties": {
+        "claimId": { "type": "string", "pattern": "^clm-[0-9a-f]{12}$" },
+        "statement": { "type": "string", "minLength": 1 },
+        "sourceIds": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "contentHashes": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 8 } },
+        "evidenceStatus": { "type": "string", "enum": ["SUPPORTED", "MIXED", "WEAK", "UNSUPPORTED"] },
+        "corroborationStatus": { "type": "string", "enum": ["PRIMARY_CONFIRMED", "MULTI_SOURCE_CONFIRMED", "SINGLE_SOURCE", "CONFLICTED", "UNSUPPORTED"] },
+        "claimClass": { "type": "string", "enum": ["DIRECT_EVIDENCE", "SUPPORTED_FACT", "SCHOLARLY_INTERPRETATION", "HYPOTHESIS", "CONTESTED", "UNVERIFIED"] },
+        "materiality": { "type": "string" },
+        "caveat": { "type": "string" },
+        "classification": { "type": "string", "enum": ["FACT", "FOLKLORE", "TESTIMONY", "SPECULATION", "FICTIONALIZED_ELEMENT"] },
+        "verifiedQuotes": { "type": "array", "items": { "type": "string", "minLength": 1, "maxLength": 280 } },
+        "disputeNote": { "type": "string" }
+      }
+    },
+    "packFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["packId", "packVersion", "packHash", "contentClass", "verifiedFacts", "sourceRefs", "generatedAt"],
+      "properties": {
+        "packId": { "type": "string", "pattern": "^pack-[0-9a-f]{12}$" },
+        "packVersion": { "type": "string" },
+        "packHash": { "type": "string", "minLength": 8 },
+        "projectId": { "type": ["string", "null"] },
+        "contentClass": { "type": "string", "enum": ["FACTUAL", "HYBRID"] },
+        "contentMode": { "type": ["string", "null"] },
+        "creativeBriefRef": { "type": ["object", "null"] },
+        "researchPlanRef": { "type": "object" },
+        "evidencePolicyVersion": { "type": "string" },
+        "sufficiencyRef": { "type": "object" },
+        "generatedAt": { "type": "string", "format": "date-time" },
+        "researchObjective": { "type": "string" },
+        "viewerContext": { "type": "object" },
+        "verifiedFacts": { "type": "array", "items": { "$ref": "#/$defs/traceEntry" } },
+        "primarySourceFacts": { "type": "array" },
+        "independentlyCorroboratedFacts": { "type": "array" },
+        "derivedContext": { "type": "array" },
+        "conflictingClaims": { "type": "array" },
+        "unverifiedClaims": { "type": "array" },
+        "timeline": { "type": "array" },
+        "people": { "type": "array" },
+        "places": { "type": "array" },
+        "usefulContext": { "type": "array" },
+        "unknowns": { "type": "array" },
+        "sourceLimitations": { "type": "array" },
+        "sourceRefs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sourceId", "url", "sourceType", "independenceStatus", "contentHash"],
+            "properties": {
+              "sourceId": { "type": "string" },
+              "url": { "type": "string" },
+              "title": { "type": ["string", "null"] },
+              "sourceType": { "type": "string" },
+              "independenceStatus": { "type": "string" },
+              "contentHash": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "policyFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gateId", "gateVersion", "contentClass", "researchPackRef", "allowedClaims", "forbiddenAsFact", "generatedAt"],
+      "properties": {
+        "gateId": { "type": "string" },
+        "gateVersion": { "type": "string" },
+        "contentClass": { "type": "string" },
+        "researchPackRef": { "type": "object" },
+        "generatedAt": { "type": "string", "format": "date-time" },
+        "allowedClaims": { "type": "array" },
+        "restrictedClaims": { "type": "array" },
+        "disputedClaims": { "type": "array" },
+        "forbiddenAsFact": { "type": "array" },
+        "requiredAttributions": { "type": "array" },
+        "requiredQualifiers": { "type": "array" },
+        "fictionalizationBoundaries": { "type": "array" },
+        "unknownsToPreserve": { "type": "array" }
+      }
+    },
+    "narrativeFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["briefId", "briefVersion", "contentClass", "coreViewerQuestion", "editorialAngle", "narrativeProgression", "selectedClaimIds"],
+      "properties": {
+        "briefId": { "type": "string" },
+        "briefVersion": { "type": "string" },
+        "projectId": { "type": ["string", "null"] },
+        "contentClass": { "type": "string", "enum": ["FACTUAL", "FICTION", "HYBRID"] },
+        "contentMode": { "type": ["string", "null"] },
+        "audience": { "type": ["string", "null"] },
+        "platform": { "type": ["string", "null"] },
+        "targetDuration": { "type": ["string", "null"] },
+        "viewerPromise": { "type": ["string", "null"] },
+        "primaryLearningGoal": { "type": ["string", "null"] },
+        "desiredFeeling": { "type": ["string", "null"] },
+        "contentDensity": { "type": ["string", "null"] },
+        "coreViewerQuestion": { "type": "string", "minLength": 1 },
+        "editorialAngle": { "type": "string", "minLength": 1 },
+        "mainInsight": { "type": "string" },
+        "hookBasis": { "type": ["object", "null"] },
+        "narrativeProgression": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["stepId", "purpose", "claimIds"],
+            "properties": {
+              "stepId": { "type": "string" },
+              "purpose": { "type": "string" },
+              "claimIds": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        },
+        "payoff": { "type": "string" },
+        "endingIntent": { "type": ["string", "null"] },
+        "ctaIntent": { "type": ["string", "null"] },
+        "selectedClaimIds": { "type": "array", "items": { "type": "string" } },
+        "claimsToOmit": { "type": "array" },
+        "disputesToPreserve": { "type": "array" },
+        "unknownsToPreserve": { "type": "array" },
+        "requiredAttributions": { "type": "array" },
+        "fictionalizationBoundary": { "type": ["object", "null"] },
+        "storytellingConstraints": { "type": "array" }
+      }
+    },
+    "draftSection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sectionId", "draftText", "claimRefs"],
+      "properties": {
+        "sectionId": { "type": "string" },
+        "purpose": { "type": "string" },
+        "draftText": { "type": "string", "minLength": 1 },
+        "claimRefs": { "type": "array", "items": { "type": "string" } },
+        "classificationRefs": { "type": "array" },
+        "requiredAttributionsSatisfied": { "type": "array" },
+        "storyFunction": { "type": "string" }
+      }
+    },
+    "draftFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["draftId", "draftVersion", "contentClass", "narrativeBriefRef", "sections"],
+      "properties": {
+        "draftId": { "type": "string", "pattern": "^drf-[0-9a-f]{12}$" },
+        "draftVersion": { "type": "string" },
+        "templateVersion": { "type": "string" },
+        "contentClass": { "type": "string", "enum": ["FACTUAL", "FICTION", "HYBRID"] },
+        "narrativeBriefRef": { "type": "object" },
+        "researchPackRef": { "type": ["object", "null"] },
+        "platform": { "type": ["string", "null"] },
+        "providerId": { "type": "string" },
+        "generatedAt": { "type": "string", "format": "date-time" },
+        "sections": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/draftSection" } }
+      }
+    },
+    "auditFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["auditId", "auditVersion", "draftId", "state", "issues", "checkedSections", "checkedAt"],
+      "properties": {
+        "auditId": { "type": "string" },
+        "auditVersion": { "type": "string" },
+        "draftId": { "type": ["string", "null"] },
+        "state": { "type": "string", "enum": ["PASS", "NEEDS_REVISION", "BLOCKED"] },
+        "issues": { "type": "array" },
+        "checkedSections": { "type": "number" },
+        "checkedAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  }
+}

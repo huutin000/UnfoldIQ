@@ -1,0 +1,978 @@
+{
+  "version": "1.0.0",
+  "projectId": "pilot-sky-blue",
+  "createdAt": "2026-09-26T07:26:46.292Z",
+  "updatedAt": "2026-09-26T07:43:49.086Z",
+  "status": "FINAL_RENDER_READY",
+  "currentStage": "POST_RENDER_TECHNICAL_QA",
+  "inputFingerprint": {
+    "renderInput": "240be8a2c3230a15",
+    "renderPlan": "5be3533b9964dfe8",
+    "stagingManifest": "dbd94677586ff3b1",
+    "timeline": null,
+    "captions": null,
+    "audioMix": null,
+    "visualBible": "a88c0c2453e2e39d",
+    "continuity": "e075ecb0c9ef1c35",
+    "platformProfile": "1.0.0",
+    "remotion": "8a6168234b0f62eb",
+    "fingerprintId": "b39ef41b3f5572e2"
+  },
+  "checkpoints": {
+    "INPUT_VALIDATION": {
+      "stage": "INPUT_VALIDATION",
+      "status": "VALID",
+      "inputHash": "b39ef41b3f5572e2",
+      "artifactPaths": [],
+      "completedAt": "2026-09-26T07:34:42.903Z",
+      "metadata": {
+        "status": "READY"
+      }
+    },
+    "ASSET_STAGING": {
+      "stage": "ASSET_STAGING",
+      "status": "VALID",
+      "inputHash": "b39ef41b3f5572e2",
+      "artifactPaths": [
+        "projects/pilot-sky-blue/render/staging-manifest.json"
+      ],
+      "completedAt": "2026-09-26T07:34:42.903Z",
+      "metadata": {
+        "entries": 8
+      }
+    },
+    "RENDER_PLAN": {
+      "stage": "RENDER_PLAN",
+      "status": "VALID",
+      "inputHash": "b39ef41b3f5572e2",
+      "artifactPaths": [
+        "projects/pilot-sky-blue/render/render-plan.json"
+      ],
+      "completedAt": "2026-09-26T07:34:42.903Z",
+      "metadata": {
+        "planHash": "f6ccb726ffb79f3f",
+        "planStatus": "READY"
+      }
+    },
+    "RENDER_OUTPUT": {
+      "stage": "RENDER_OUTPUT",
+      "status": "VALID",
+      "inputHash": "79530ab446cad08c",
+      "artifactPaths": [
+        "projects/pilot-sky-blue/render/attempts/attempt-005/output.mp4"
+      ],
+      "completedAt": "2026-09-26T07:40:11.418Z",
+      "metadata": {
+        "attemptId": "attempt-005",
+        "frameCount": 1960,
+        "planHash": "f6ccb726ffb79f3f"
+      }
+    },
+    "TECHNICAL_QA": {
+      "stage": "TECHNICAL_QA",
+      "status": "VALID",
+      "inputHash": "79530ab446cad08c",
+      "artifactPaths": [],
+      "completedAt": "2026-09-26T07:40:11.472Z",
+      "metadata": {
+        "attemptId": "attempt-005",
+        "technical": "PASS"
+      }
+    },
+    "VISUAL_EVIDENCE": {
+      "stage": "VISUAL_EVIDENCE",
+      "status": "INVALIDATED",
+      "inputHash": null,
+      "artifactPaths": [],
+      "completedAt": null,
+      "metadata": {
+        "invalidatedAt": "2026-09-26T07:34:42.903Z",
+        "invalidatedBy": "image-asset"
+      }
+    },
+    "FINAL_ACCEPTANCE": {
+      "stage": "FINAL_ACCEPTANCE",
+      "status": "INVALIDATED",
+      "inputHash": null,
+      "artifactPaths": [],
+      "completedAt": null,
+      "metadata": {
+        "invalidatedAt": "2026-09-26T07:34:42.903Z",
+        "invalidatedBy": "image-asset"
+      }
+    }
+  },
+  "attempts": [
+    {
+      "attemptId": "attempt-001",
+      "projectId": "pilot-sky-blue",
+      "number": 1,
+      "inputFingerprint": {
+        "renderInput": "9cb212896d52f7ac",
+        "renderPlan": "2099aa1160f02007",
+        "stagingManifest": "6e003022188ccea0",
+        "timeline": null,
+        "captions": null,
+        "audioMix": null,
+        "visualBible": "df7684f7003e3dd6",
+        "continuity": "e075ecb0c9ef1c35",
+        "platformProfile": "1.0.0",
+        "remotion": "8a6168234b0f62eb",
+        "fingerprintId": "9070a121f14f487e"
+      },
+      "renderPlanHash": "ba81acf6698701db",
+      "startedAt": "2026-09-26T07:26:46.448Z",
+      "status": "FAILED",
+      "outputPath": "D:\\Project\\UNFOLDIQ\\projects\\pilot-sky-blue\\render\\attempts\\attempt-001\\output.mp4",
+      "renderConfig": {
+        "codec": "h264",
+        "concurrency": 2,
+        "pixelFormat": "yuv420p",
+        "overwrite": false,
+        "timeoutMs": 600000,
+        "logLevel": "verbose",
+        "crf": null,
+        "x264Preset": null
+      },
+      "progress": {
+        "fraction": 0,
+        "renderedFrames": 0,
+        "encodedFrames": 0,
+        "stitchStage": "encoding",
+        "t": "2026-09-26T07:26:49.720Z",
+        "frameCount": 1960,
+        "parallelEncoding": false,
+        "resolvedConcurrency": 2,
+        "started": true,
+        "failed": true
+      },
+      "artifacts": [],
+      "testOnly": true,
+      "endedAt": "2026-09-26T07:26:49.969Z",
+      "error": {
+        "errorClass": "UNKNOWN",
+        "retryable": false,
+        "detail": "Error: render failed [UNKNOWN]: trimAfter must be a positive number, instead got 0."
+      },
+      "fixPlan": {
+        "version": "1.0.0",
+        "planId": "fix-1790407609974-1",
+        "attemptId": "attempt-001",
+        "projectId": "pilot-sky-blue",
+        "createdAt": "2026-09-26T07:26:49.974Z",
+        "riskClass": "REVIEW_REQUIRED",
+        "requiresApproval": true,
+        "actions": [
+          {
+            "type": "REBUILD_METADATA_CACHE",
+            "params": {},
+            "evidence": "errorClass=UNKNOWN diagnostic"
+          }
+        ],
+        "reason": "UNKNOWN error class: diagnose before retry",
+        "cyclesUsed": 0
+      }
+    },
+    {
+      "attemptId": "attempt-002",
+      "projectId": "pilot-sky-blue",
+      "number": 2,
+      "inputFingerprint": {
+        "renderInput": "9cb212896d52f7ac",
+        "renderPlan": "cdb79e56bfa22f6e",
+        "stagingManifest": "213b36dbd175f8b8",
+        "timeline": null,
+        "captions": null,
+        "audioMix": null,
+        "visualBible": "df7684f7003e3dd6",
+        "continuity": "e075ecb0c9ef1c35",
+        "platformProfile": "1.0.0",
+        "remotion": "8a6168234b0f62eb",
+        "fingerprintId": "b8795bfc610010d5"
+      },
+      "renderPlanHash": "ba81acf6698701db",
+      "startedAt": "2026-09-26T07:27:47.859Z",
+      "status": "RENDERED",
+      "outputPath": "D:\\Project\\UNFOLDIQ\\projects\\pilot-sky-blue\\render\\attempts\\attempt-002\\output.mp4",
+      "renderConfig": {
+        "codec": "h264",
+        "concurrency": 2,
+        "pixelFormat": "yuv420p",
+        "overwrite": false,
+        "timeoutMs": 600000,
+        "logLevel": "verbose",
+        "crf": null,
+        "x264Preset": null
+      },
+      "progress": {
+        "fraction": 1,
+        "renderedFrames": 1960,
+        "encodedFrames": 1960,
+        "stitchStage": "encoding",
+        "t": "2026-09-26T07:29:05.726Z",
+        "frameCount": 1960,
+        "parallelEncoding": false,
+        "resolvedConcurrency": 2,
+        "started": true,
+        "done": true
+      },
+      "artifacts": [],
+      "testOnly": true,
+      "endedAt": "2026-09-26T07:29:06.096Z",
+      "technicalQa": {
+        "version": "1.0.0",
+        "projectId": "pilot-sky-blue",
+        "attemptId": "attempt-002",
+        "generatedAt": "2026-09-26T07:29:06.148Z",
+        "checks": [
+          {
+            "check": "file-exists",
+            "result": "PASS",
+            "detail": "output present: D:\\Project\\UNFOLDIQ\\projects\\pilot-sky-blue\\render\\attempts\\attempt-002\\output.mp4"
+          },
+          {
+            "check": "non-zero-size",
+            "result": "PASS",
+            "detail": "sizeBytes=3136289"
+          },
+          {
+            "check": "readable-container",
+            "result": "PASS",
+            "detail": "ffprobe parsed streams+format"
+          },
+          {
+            "check": "video-stream",
+            "result": "PASS",
+            "detail": "codec=h264"
+          },
+          {
+            "check": "dims-match",
+            "result": "PASS",
+            "detail": "expected=1920x1080 actual=1920x1080"
+          },
+          {
+            "check": "fps-match",
+            "result": "PASS",
+            "detail": "expected=30 actual=30.000"
+          },
+          {
+            "check": "audio-expected",
+            "result": "PASS",
+            "detail": "audio stream present as expected"
+          },
+          {
+            "check": "output-correlation",
+            "result": "PASS",
+            "detail": "inside attempt dir; sizeBytes=3136289 matches probe"
+          },
+          {
+            "check": "truncation",
+            "result": "PASS",
+            "detail": "actualMs=65387 expectedMs=65332 floor50%=32666"
+          }
+        ],
+        "summary": {
+          "pass": 9,
+          "fail": 0,
+          "review": 0,
+          "unknown": 0
+        },
+        "duration": {
+          "expectedMs": 65332,
+          "actualMs": 65387,
+          "deltaMs": 55,
+          "toleranceMs": 1307,
+          "result": "PASS"
+        },
+        "status": "PASS",
+        "reviewState": "MACHINE_CHECKED",
+        "outputPath": "D:\\Project\\UNFOLDIQ\\projects\\pilot-sky-blue\\render\\attempts\\attempt-002\\output.mp4",
+        "sizeBytes": 3136289
+      }
+    },
+    {
+      "attemptId": "attempt-003",
+      "projectId": "pilot-sky-blue",
+      "number": 3,
+      "inputFingerprint": {
+        "renderInput": "ad5502e7b0239185",
+        "renderPlan": "5bba8601f03bb37b",
+        "stagingManifest": "6e0a00f109314849",
+        "timeline": null,
+        "captions": null,
+        "audioMix": null,
+        "visualBible": "a88c0c2453e2e39d",
+        "continuity": "e075ecb0c9ef1c35",
+        "platformProfile": "1.0.0",
+        "remotion": "8a6168234b0f62eb",
+        "fingerprintId": "e618133111102ba7"
+      },
+      "renderPlanHash": "f6ccb726ffb79f3f",
+      "startedAt": "2026-09-26T07:31:30.978Z",
+      "status": "FAILED",
+      "outputPath": "D:\\Project\\UNFOLDIQ\\projects\\pilot-sky-blue\\render\\attempts\\attempt-003\\output.mp4",
+      "renderConfig": {
+        "codec": "h264",
+        "concurrency": 2,
+        "pixelFormat": "yuv420p",
+        "overwrite": false,
+        "timeoutMs": 600000,
+        "logLevel": "verbose",
+        "crf": null,
+        "x264Preset": null
+      },
+      "progress": {
+        "fraction": 0,
+        "renderedFrames": 0,
+        "encodedFrames": 0,
+        "stitchStage": "encoding",
+        "t": "2026-09-26T07:31:34.695Z",
+        "frameCount": 1960,
+        "parallelEncoding": false,
+        "resolvedConcurrency": 2,
+        "started": true,
+        "failed": true
+      },
+      "artifacts": [],
+      "testOnly": true,
+      "endedAt": "2026-09-26T07:31:34.978Z",
+      "error": {
+        "errorClass": "UNKNOWN",
+        "retryable": false,
+        "detail": "Error: render failed [UNKNOWN]: INVALID_TIME: ms must be finite and >= 0 and fps must be finite and > 0 (got ms=NaN, fps=30)"
+      },
+      "fixPlan": {
+        "version": "1.0.0",
+        "planId": "fix-1790407894984-1",
+        "attemptId": "attempt-003",
+        "projectId": "pilot-sky-blue",
+        "createdAt": "2026-09-26T07:31:34.984Z",
+        "riskClass": "REVIEW_REQUIRED",
+        "requiresApproval": true,
+        "actions": [
+          {
+            "type": "REBUILD_METADATA_CACHE",
+            "params": {},
+            "evidence": "errorClass=UNKNOWN diagnostic"
+          }
+        ],
+        "reason": "UNKNOWN error class: diagnose before retry",
+        "cyclesUsed": 1
+      }
+    },
+    {
+      "attemptId": "attempt-004",
+      "projectId": "pilot-sky-blue",
+      "number": 4,
+      "inputFingerprint": {
+        "renderInput": "240be8a2c3230a15",
+        "renderPlan": "5be3533b9964dfe8",
+        "stagingManifest": "dbd94677586ff3b1",
+        "timeline": null,
+        "captions": null,
+        "audioMix": null,
+        "visualBible": "a88c0c2453e2e39d",
+        "continuity": "e075ecb0c9ef1c35",
+        "platformProfile": "1.0.0",
+        "remotion": "8a6168234b0f62eb",
+        "fingerprintId": "b39ef41b3f5572e2"
+      },
+      "renderPlanHash": "f6ccb726ffb79f3f",
+      "startedAt": "2026-09-26T07:34:42.911Z",
+      "status": "RENDERED",
+      "outputPath": "D:\\Project\\UNFOLDIQ\\projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\output.mp4",
+      "renderConfig": {
+        "codec": "h264",
+        "concurrency": 2,
+        "pixelFormat": "yuv420p",
+        "overwrite": false,
+        "timeoutMs": 600000,
+        "logLevel": "verbose",
+        "crf": null,
+        "x264Preset": null
+      },
+      "progress": {
+        "fraction": 1,
+        "renderedFrames": 1960,
+        "encodedFrames": 1960,
+        "stitchStage": "encoding",
+        "t": "2026-09-26T07:36:00.918Z",
+        "frameCount": 1960,
+        "parallelEncoding": false,
+        "resolvedConcurrency": 2,
+        "started": true,
+        "done": true
+      },
+      "artifacts": [],
+      "testOnly": true,
+      "endedAt": "2026-09-26T07:36:01.312Z",
+      "technicalQa": {
+        "version": "1.0.0",
+        "projectId": "pilot-sky-blue",
+        "attemptId": "attempt-004",
+        "generatedAt": "2026-09-26T07:36:01.370Z",
+        "checks": [
+          {
+            "check": "file-exists",
+            "result": "PASS",
+            "detail": "output present: D:\\Project\\UNFOLDIQ\\projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\output.mp4"
+          },
+          {
+            "check": "non-zero-size",
+            "result": "PASS",
+            "detail": "sizeBytes=3287359"
+          },
+          {
+            "check": "readable-container",
+            "result": "PASS",
+            "detail": "ffprobe parsed streams+format"
+          },
+          {
+            "check": "video-stream",
+            "result": "PASS",
+            "detail": "codec=h264"
+          },
+          {
+            "check": "dims-match",
+            "result": "PASS",
+            "detail": "expected=1920x1080 actual=1920x1080"
+          },
+          {
+            "check": "fps-match",
+            "result": "PASS",
+            "detail": "expected=30 actual=30.000"
+          },
+          {
+            "check": "audio-expected",
+            "result": "PASS",
+            "detail": "audio stream present as expected"
+          },
+          {
+            "check": "output-correlation",
+            "result": "PASS",
+            "detail": "inside attempt dir; sizeBytes=3287359 matches probe"
+          },
+          {
+            "check": "truncation",
+            "result": "PASS",
+            "detail": "actualMs=65387 expectedMs=65332 floor50%=32666"
+          }
+        ],
+        "summary": {
+          "pass": 9,
+          "fail": 0,
+          "review": 0,
+          "unknown": 0
+        },
+        "duration": {
+          "expectedMs": 65332,
+          "actualMs": 65387,
+          "deltaMs": 55,
+          "toleranceMs": 1307,
+          "result": "PASS"
+        },
+        "status": "PASS",
+        "reviewState": "MACHINE_CHECKED",
+        "outputPath": "D:\\Project\\UNFOLDIQ\\projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\output.mp4",
+        "sizeBytes": 3287359
+      }
+    },
+    {
+      "attemptId": "attempt-005",
+      "projectId": "pilot-sky-blue",
+      "number": 5,
+      "inputFingerprint": {
+        "renderInput": "44497c8b2901b304",
+        "renderPlan": "ed25697095b45f36",
+        "stagingManifest": "6df8f443d02b0ea1",
+        "timeline": null,
+        "captions": null,
+        "audioMix": null,
+        "visualBible": "a88c0c2453e2e39d",
+        "continuity": "e075ecb0c9ef1c35",
+        "platformProfile": "1.0.0",
+        "remotion": "8a6168234b0f62eb",
+        "fingerprintId": "79530ab446cad08c"
+      },
+      "renderPlanHash": "f6ccb726ffb79f3f",
+      "startedAt": "2026-09-26T07:38:53.571Z",
+      "status": "RENDERED",
+      "outputPath": "D:\\Project\\UNFOLDIQ\\projects\\pilot-sky-blue\\render\\attempts\\attempt-005\\output.mp4",
+      "renderConfig": {
+        "codec": "h264",
+        "concurrency": 2,
+        "pixelFormat": "yuv420p",
+        "overwrite": false,
+        "timeoutMs": 600000,
+        "logLevel": "verbose",
+        "crf": null,
+        "x264Preset": null
+      },
+      "progress": {
+        "fraction": 1,
+        "renderedFrames": 1960,
+        "encodedFrames": 1960,
+        "stitchStage": "encoding",
+        "t": "2026-09-26T07:40:11.038Z",
+        "frameCount": 1960,
+        "parallelEncoding": false,
+        "resolvedConcurrency": 2,
+        "started": true,
+        "done": true
+      },
+      "artifacts": [
+        "attempts/attempt-005/qa/visual-review.json"
+      ],
+      "testOnly": true,
+      "endedAt": "2026-09-26T07:40:11.418Z",
+      "technicalQa": {
+        "version": "1.0.0",
+        "projectId": "pilot-sky-blue",
+        "attemptId": "attempt-005",
+        "generatedAt": "2026-09-26T07:40:11.472Z",
+        "checks": [
+          {
+            "check": "file-exists",
+            "result": "PASS",
+            "detail": "output present: D:\\Project\\UNFOLDIQ\\projects\\pilot-sky-blue\\render\\attempts\\attempt-005\\output.mp4"
+          },
+          {
+            "check": "non-zero-size",
+            "result": "PASS",
+            "detail": "sizeBytes=3289216"
+          },
+          {
+            "check": "readable-container",
+            "result": "PASS",
+            "detail": "ffprobe parsed streams+format"
+          },
+          {
+            "check": "video-stream",
+            "result": "PASS",
+            "detail": "codec=h264"
+          },
+          {
+            "check": "dims-match",
+            "result": "PASS",
+            "detail": "expected=1920x1080 actual=1920x1080"
+          },
+          {
+            "check": "fps-match",
+            "result": "PASS",
+            "detail": "expected=30 actual=30.000"
+          },
+          {
+            "check": "audio-expected",
+            "result": "PASS",
+            "detail": "audio stream present as expected"
+          },
+          {
+            "check": "output-correlation",
+            "result": "PASS",
+            "detail": "inside attempt dir; sizeBytes=3289216 matches probe"
+          },
+          {
+            "check": "truncation",
+            "result": "PASS",
+            "detail": "actualMs=65387 expectedMs=65332 floor50%=32666"
+          }
+        ],
+        "summary": {
+          "pass": 9,
+          "fail": 0,
+          "review": 0,
+          "unknown": 0
+        },
+        "duration": {
+          "expectedMs": 65332,
+          "actualMs": 65387,
+          "deltaMs": 55,
+          "toleranceMs": 1307,
+          "result": "PASS"
+        },
+        "status": "PASS",
+        "reviewState": "MACHINE_CHECKED",
+        "outputPath": "D:\\Project\\UNFOLDIQ\\projects\\pilot-sky-blue\\render\\attempts\\attempt-005\\output.mp4",
+        "sizeBytes": 3289216
+      },
+      "visualQa": {
+        "decision": "APPROVE",
+        "reviewer": "agent",
+        "reviewState": "AGENT_REVIEWED",
+        "notes": null,
+        "at": "2026-09-26T15:30:00+07:00"
+      }
+    }
+  ],
+  "qa": {
+    "visual": {
+      "decision": "APPROVE",
+      "reviewer": "agent",
+      "reviewState": "AGENT_REVIEWED",
+      "notes": null,
+      "at": "2026-09-26T15:30:00+07:00"
+    }
+  },
+  "issues": [
+    {
+      "issueId": "issue-1",
+      "category": "render",
+      "severity": "BLOCKER",
+      "status": "RESOLVED",
+      "note": "Fixed by AudioTrack/VideoLayer trim guards; verified by attempt-002 rendering 1960 frames"
+    },
+    {
+      "issueId": "issue-2",
+      "category": "render",
+      "severity": "BLOCKER",
+      "status": "RESOLVED",
+      "note": "RESOLVED by builder durationMs propagation plus AudioTrack explicit range guard; attempt-004 rendered 1960 frames"
+    },
+    {
+      "issueId": "issue-3",
+      "category": "render-input-check",
+      "severity": "BLOCKER",
+      "status": "RESOLVED",
+      "note": "RESOLVED: render-input schema now permits audioClip.durationMs (additive); input validates"
+    },
+    {
+      "issueId": "issue-4",
+      "category": "render-input-check",
+      "severity": "BLOCKER",
+      "status": "RESOLVED",
+      "note": "RESOLVED: same schema fix as issue-3"
+    },
+    {
+      "issueId": "issue-5",
+      "category": "render-input-check",
+      "severity": "BLOCKER",
+      "status": "RESOLVED",
+      "note": "RESOLVED: same schema fix as issue-3"
+    },
+    {
+      "issueId": "issue-6",
+      "category": "render-input-check",
+      "severity": "BLOCKER",
+      "status": "RESOLVED",
+      "note": "RESOLVED: same schema fix as issue-3"
+    },
+    {
+      "issueId": "issue-7",
+      "category": "render-input-check",
+      "severity": "BLOCKER",
+      "status": "RESOLVED",
+      "note": "RESOLVED: same schema fix as issue-3"
+    },
+    {
+      "issueId": "issue-8",
+      "category": "render-input-check",
+      "severity": "BLOCKER",
+      "status": "RESOLVED",
+      "note": "RESOLVED: same schema fix as issue-3"
+    },
+    {
+      "issueId": "issue-9",
+      "category": "render-input-check",
+      "severity": "BLOCKER",
+      "status": "RESOLVED",
+      "note": "RESOLVED: same schema fix as issue-3"
+    },
+    {
+      "issueId": "issue-10",
+      "category": "render-input-check",
+      "severity": "BLOCKER",
+      "status": "RESOLVED",
+      "note": "RESOLVED: same render-input schema durationMs fix; attempt-004 input validates"
+    }
+  ],
+  "blockers": [],
+  "history": [
+    {
+      "at": "2026-09-26T07:26:46.292Z",
+      "event": "STATE_INITIALIZED"
+    },
+    {
+      "at": "2026-09-26T07:26:46.325Z",
+      "event": "TRANSITION_PREPARING",
+      "detail": "prepare requested"
+    },
+    {
+      "at": "2026-09-26T07:26:46.443Z",
+      "event": "TRANSITION_READY_TO_RENDER",
+      "detail": "prepare ok planHash=ba81acf6698701db"
+    },
+    {
+      "at": "2026-09-26T07:26:46.444Z",
+      "event": "PREPARED",
+      "detail": {
+        "planHash": "ba81acf6698701db",
+        "fingerprintId": "9070a121f14f487e",
+        "invalidatedBy": []
+      }
+    },
+    {
+      "at": "2026-09-26T07:26:46.450Z",
+      "event": "TRANSITION_RENDERING",
+      "detail": "attempt-001 started"
+    },
+    {
+      "at": "2026-09-26T07:26:49.971Z",
+      "event": "TRANSITION_FAILED",
+      "detail": "attempt-001 failed [UNKNOWN]"
+    },
+    {
+      "at": "2026-09-26T07:26:49.975Z",
+      "event": "FIX_REQUIRES_REVIEW",
+      "detail": {
+        "riskClass": "REVIEW_REQUIRED"
+      }
+    },
+    {
+      "at": "2026-09-26T07:27:47.738Z",
+      "event": "TRANSITION_PREPARING",
+      "detail": "prepare requested"
+    },
+    {
+      "at": "2026-09-26T07:27:47.852Z",
+      "event": "CHECKPOINTS_INVALIDATED",
+      "detail": {
+        "changeKind": "image-asset",
+        "invalidatedCheckpoints": [
+          "ASSET_STAGING",
+          "RENDER_PLAN",
+          "RENDER_OUTPUT",
+          "TECHNICAL_QA",
+          "VISUAL_EVIDENCE",
+          "FINAL_ACCEPTANCE"
+        ],
+        "reason": "change 'image-asset' invalidates ASSET_STAGING, RENDER_PLAN, RENDER_OUTPUT, TECHNICAL_QA, VISUAL_EVIDENCE, FINAL_ACCEPTANCE"
+      }
+    },
+    {
+      "at": "2026-09-26T07:27:47.853Z",
+      "event": "TRANSITION_READY_TO_RENDER",
+      "detail": "prepare ok planHash=ba81acf6698701db"
+    },
+    {
+      "at": "2026-09-26T07:27:47.854Z",
+      "event": "PREPARED",
+      "detail": {
+        "planHash": "ba81acf6698701db",
+        "fingerprintId": "b8795bfc610010d5",
+        "invalidatedBy": [
+          "image-asset"
+        ]
+      }
+    },
+    {
+      "at": "2026-09-26T07:27:47.861Z",
+      "event": "TRANSITION_FORCED",
+      "detail": {
+        "to": "RE_RENDERING",
+        "reason": "attempt-002 retry queued"
+      }
+    },
+    {
+      "at": "2026-09-26T07:27:47.863Z",
+      "event": "TRANSITION_RENDERING",
+      "detail": "attempt-002 started"
+    },
+    {
+      "at": "2026-09-26T07:29:06.098Z",
+      "event": "TRANSITION_RENDERED",
+      "detail": "attempt-002 rendered"
+    },
+    {
+      "at": "2026-09-26T07:29:06.150Z",
+      "event": "QA_DEFERRED",
+      "detail": {
+        "attemptId": "attempt-002",
+        "reason": "QA_DEFERRED: visual QA hook has no runnable export"
+      }
+    },
+    {
+      "at": "2026-09-26T07:29:06.153Z",
+      "event": "TRANSITION_QA_RUNNING",
+      "detail": "attempt-002 QA passed, accepting"
+    },
+    {
+      "at": "2026-09-26T07:29:06.156Z",
+      "event": "TRANSITION_QA_REVIEW_REQUIRED",
+      "detail": "attempt-002 visual review pending"
+    },
+    {
+      "at": "2026-09-26T07:31:31.012Z",
+      "event": "TRANSITION_RE_RENDERING",
+      "detail": "attempt-003 retry queued"
+    },
+    {
+      "at": "2026-09-26T07:31:31.014Z",
+      "event": "TRANSITION_RENDERING",
+      "detail": "attempt-003 started"
+    },
+    {
+      "at": "2026-09-26T07:31:34.980Z",
+      "event": "TRANSITION_FAILED",
+      "detail": "attempt-003 failed [UNKNOWN]"
+    },
+    {
+      "at": "2026-09-26T07:31:34.987Z",
+      "event": "FIX_REQUIRES_REVIEW",
+      "detail": {
+        "riskClass": "REVIEW_REQUIRED"
+      }
+    },
+    {
+      "at": "2026-09-26T07:33:55.406Z",
+      "event": "TRANSITION_PREPARING",
+      "detail": "prepare requested"
+    },
+    {
+      "at": "2026-09-26T07:33:55.473Z",
+      "event": "TRANSITION_BLOCKED",
+      "detail": "prepare checks blocked"
+    },
+    {
+      "at": "2026-09-26T07:34:42.775Z",
+      "event": "TRANSITION_PREPARING",
+      "detail": "prepare requested"
+    },
+    {
+      "at": "2026-09-26T07:34:42.902Z",
+      "event": "CHECKPOINTS_INVALIDATED",
+      "detail": {
+        "changeKind": "platform-dims",
+        "invalidatedCheckpoints": [
+          "INPUT_VALIDATION",
+          "ASSET_STAGING",
+          "RENDER_PLAN",
+          "RENDER_OUTPUT",
+          "TECHNICAL_QA",
+          "VISUAL_EVIDENCE",
+          "FINAL_ACCEPTANCE"
+        ],
+        "reason": "change 'platform-dims' invalidates INPUT_VALIDATION, ASSET_STAGING, RENDER_PLAN, RENDER_OUTPUT, TECHNICAL_QA, VISUAL_EVIDENCE, FINAL_ACCEPTANCE"
+      }
+    },
+    {
+      "at": "2026-09-26T07:34:42.903Z",
+      "event": "CHECKPOINTS_INVALIDATED",
+      "detail": {
+        "changeKind": "image-asset",
+        "invalidatedCheckpoints": [
+          "ASSET_STAGING",
+          "RENDER_PLAN",
+          "RENDER_OUTPUT",
+          "TECHNICAL_QA",
+          "VISUAL_EVIDENCE",
+          "FINAL_ACCEPTANCE"
+        ],
+        "reason": "change 'image-asset' invalidates ASSET_STAGING, RENDER_PLAN, RENDER_OUTPUT, TECHNICAL_QA, VISUAL_EVIDENCE, FINAL_ACCEPTANCE"
+      }
+    },
+    {
+      "at": "2026-09-26T07:34:42.904Z",
+      "event": "TRANSITION_READY_TO_RENDER",
+      "detail": "prepare ok planHash=f6ccb726ffb79f3f"
+    },
+    {
+      "at": "2026-09-26T07:34:42.905Z",
+      "event": "PREPARED",
+      "detail": {
+        "planHash": "f6ccb726ffb79f3f",
+        "fingerprintId": "b39ef41b3f5572e2",
+        "invalidatedBy": [
+          "platform-dims",
+          "image-asset"
+        ]
+      }
+    },
+    {
+      "at": "2026-09-26T07:34:42.913Z",
+      "event": "TRANSITION_FORCED",
+      "detail": {
+        "to": "RE_RENDERING",
+        "reason": "attempt-004 retry queued"
+      }
+    },
+    {
+      "at": "2026-09-26T07:34:42.916Z",
+      "event": "TRANSITION_RENDERING",
+      "detail": "attempt-004 started"
+    },
+    {
+      "at": "2026-09-26T07:36:01.314Z",
+      "event": "TRANSITION_RENDERED",
+      "detail": "attempt-004 rendered"
+    },
+    {
+      "at": "2026-09-26T07:36:01.373Z",
+      "event": "QA_DEFERRED",
+      "detail": {
+        "attemptId": "attempt-004",
+        "reason": "QA_DEFERRED: visual QA hook has no runnable export"
+      }
+    },
+    {
+      "at": "2026-09-26T07:36:01.377Z",
+      "event": "TRANSITION_QA_RUNNING",
+      "detail": "attempt-004 QA passed, accepting"
+    },
+    {
+      "at": "2026-09-26T07:36:01.381Z",
+      "event": "TRANSITION_QA_REVIEW_REQUIRED",
+      "detail": "attempt-004 visual review pending"
+    },
+    {
+      "at": "2026-09-26T07:38:53.610Z",
+      "event": "TRANSITION_RE_RENDERING",
+      "detail": "attempt-005 retry queued"
+    },
+    {
+      "at": "2026-09-26T07:38:53.614Z",
+      "event": "TRANSITION_RENDERING",
+      "detail": "attempt-005 started"
+    },
+    {
+      "at": "2026-09-26T07:40:11.420Z",
+      "event": "TRANSITION_RENDERED",
+      "detail": "attempt-005 rendered"
+    },
+    {
+      "at": "2026-09-26T07:40:11.474Z",
+      "event": "QA_DEFERRED",
+      "detail": {
+        "attemptId": "attempt-005",
+        "reason": "QA_DEFERRED: visual QA hook has no runnable export"
+      }
+    },
+    {
+      "at": "2026-09-26T07:40:11.478Z",
+      "event": "TRANSITION_QA_RUNNING",
+      "detail": "attempt-005 QA passed, accepting"
+    },
+    {
+      "at": "2026-09-26T07:40:11.480Z",
+      "event": "TRANSITION_QA_REVIEW_REQUIRED",
+      "detail": "attempt-005 visual review pending"
+    },
+    {
+      "at": "2026-09-26T07:40:41.600Z",
+      "event": "stale-blocker-cleared",
+      "detail": "PREPARE_CHECKS_BLOCKED from pre-schema-fix prepare; current input validates READY and attempt-005 rendered 1960 frames"
+    },
+    {
+      "at": "2026-09-26T07:43:00.697Z",
+      "event": "visual-review-submitted",
+      "detail": {
+        "attemptId": "attempt-005",
+        "decision": "APPROVE",
+        "reviewer": "agent"
+      }
+    },
+    {
+      "at": "2026-09-26T07:43:49.084Z",
+      "event": "final acceptance: attempt-005 tech PASS, agent APPROVE, 0 open issues/blockers, fingerprint current, final.mp4 promoted"
+    }
+  ]
+}

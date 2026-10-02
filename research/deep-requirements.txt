@@ -1,0 +1,27 @@
+# UNFOLDIQ DEEP provider dependencies (PHASE 1G.1 Prompt 05).
+# Dedicated deep venv: research/.venv-deep (never committed, never the Crawl4AI env).
+# Official project: assafelovic/gpt-researcher (pip package). Pinned, minimal.
+# Verified 2026-10-02 against the local deep venv (Python 3.12.10):
+#   - 0.16.0 (latest PyPI) is BROKEN upstream: gpt_researcher/actions/query_processing.py
+#     uses typing.Any without importing it -> NameError on `import gpt_researcher`.
+#   - 0.15.1 imports cleanly and exposes the required Deep API:
+#     GPTResearcher(report_type="deep").conduct_research(), get_source_urls(),
+#     get_research_sources(), get_costs(), get_research_context().
+# Docs: https://docs.gptr.dev/docs/gpt-researcher/gptr/pip-package and /deep_research
+# (DEEP_RESEARCH_BREADTH / DEPTH / CONCURRENCY env + config).
+# Bump only after a doctor import check passes (npm run research:deep:doctor).
+gpt-researcher==0.15.1
+# No-key retriever runtime for RETRIEVER=duckduckgo (gpt-researcher raises
+# ImportError without it). Verified 2026-10-02: ddgs 9.7.0 imports in deep venv.
+ddgs==9.7.0
+# Adapter for the google_genai LLM provider (FAST/SMART/STRATEGIC_LLM).
+# Official PyPI package; required because gpt-researcher delegates to
+# langchain_google_genai.ChatGoogleGenerativeAI. Verified 2026-10-02.
+langchain-google-genai==4.4.0
+# NOTE (SAC fix 2026-10-02): spacy (transitive via unstructured <- 
+# langchain_community) is intentionally NOT installed. Its Windows .pyd
+# binaries are Authenticode-unsigned and hard-blocked by Windows Smart App
+# Control on this machine (CodeIntegrity 3033/3077, file hash verified
+# pristine). Nothing in the DEEP web-research path imports spacy (sole
+# importer: unstructured/nlp/tokenize.py, try/except-guarded downstream);
+# keeping unloadable binaries only generates policy violations.

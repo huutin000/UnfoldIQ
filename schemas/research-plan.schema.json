@@ -1,0 +1,101 @@
+{
+  "$id": "https://unfoldiq.io/schemas/research-plan.schema.json",
+  "title": "UNFOLDIQ Research Plan Contract (ROADMAP V5 PRE-FLIGHT — contract only)",
+  "description": "Research Plan + Question Planner contract. No runtime; consumed by future 1G.1 engine.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "projectId",
+    "topic",
+    "researchGoal",
+    "contentClass",
+    "criticalQuestions"
+  ],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "projectId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "topic": {
+      "type": "string",
+      "minLength": 1
+    },
+    "researchGoal": {
+      "type": "string",
+      "minLength": 1
+    },
+    "audience": {
+      "type": "string"
+    },
+    "platform": {
+      "type": "string",
+      "enum": ["youtube", "tiktok"]
+    },
+    "contentClass": {
+      "type": "string",
+      "enum": ["FACTUAL", "FICTION", "HYBRID"]
+    },
+    "contentMode": {
+      "type": "string"
+    },
+    "timeScope": {
+      "type": "string"
+    },
+    "geographicScope": {
+      "type": "string"
+    },
+    "freshnessRequirement": {
+      "type": "string"
+    },
+    "sourcePriority": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "criticalQuestions": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 1
+    },
+    "supportingQuestions": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "optionalQuestions": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "stopCriteria": {
+      "type": "string"
+    },
+    "researchBudget": {
+      "type": "string"
+    },
+    "deepResearchAllowed": {
+      "type": "boolean"
+    },
+    "researchRequired": {
+      "type": "string",
+      "enum": ["REQUIRED", "OPTIONAL_TARGETED", "NOT_REQUIRED"]
+    },
+    "researchMode": {
+      "type": "string",
+      "enum": ["STANDARD", "DEEP"]
+    },
+    "creativeBriefRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["briefId", "briefHash", "briefVersion"],
+      "description": "ROADMAP V6 lightweight link: stable reference to the Creative Brief (no duplicated mutable values). Absent for pre-V6 projects.",
+      "properties": {
+        "briefId": { "type": "string", "minLength": 1 },
+        "briefHash": { "type": "string", "minLength": 8 },
+        "briefVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" }
+      }
+    }
+  }
+}

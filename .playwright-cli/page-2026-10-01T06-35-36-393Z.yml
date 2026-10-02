@@ -1,0 +1,4 @@
+- generic [ref=f5e1]:
+  - link "Skip to main content" [ref=f5e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - main [ref=f5e4]

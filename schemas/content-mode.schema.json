@@ -1,0 +1,163 @@
+{
+  "$id": "https://unfoldiq.io/schemas/content-mode.schema.json",
+  "title": "UNFOLDIQ Content Mode Contract",
+  "description": "Resolved content mode for a video production",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "projectId",
+    "platform",
+    "topic",
+    "modeId",
+    "modeLabel",
+    "rationale",
+    "storyApproach",
+    "hookApproach",
+    "visualLanguage",
+    "cameraAndMotionDirection",
+    "voiceDirection",
+    "musicDirection",
+    "sfxDirection",
+    "pacingDirection",
+    "transitionDirection",
+    "typographyDirection",
+    "captionDirection",
+    "emotionalArcMode"
+  ],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semantic version of this contract"
+    },
+    "projectId": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique project identifier"
+    },
+    "platform": {
+      "type": "string",
+      "enum": ["youtube", "tiktok"],
+      "description": "Target platform"
+    },
+    "topic": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Resolved topic"
+    },
+    "niche": {
+      "type": "string",
+      "description": "Niche if provided (Mode B)"
+    },
+    "contentClass": {
+      "type": "string",
+      "enum": ["FACTUAL", "FICTION", "HYBRID"],
+      "default": "FACTUAL",
+      "description": "ROADMAP V5 content class. Optional for backward compatibility (default FACTUAL). modeId remains the domain/genre treatment mode."
+    },
+    "modeId": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[a-z0-9-]+$",
+      "description": "Mode identifier (suggested or custom)"
+    },
+    "modeLabel": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human-readable mode label"
+    },
+    "rationale": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Why this mode fits topic/niche/platform/evidence"
+    },
+    "storyApproach": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Narrative structure approach"
+    },
+    "hookApproach": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Opening hook strategy"
+    },
+    "visualLanguage": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Visual style: color, composition, era accuracy, graphics style"
+    },
+    "cameraAndMotionDirection": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Camera behavior: static, dolly, handheld, kinetic, abstract"
+    },
+    "voiceDirection": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Voice delivery: pace, emphasis, intimacy, emotional coloring"
+    },
+    "musicDirection": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Music genre, instrumentation, emotional function, energy curve"
+    },
+    "sfxDirection": {
+      "type": "string",
+      "minLength": 1,
+      "description": "SFX usage: punctuation, immersion, humor, tension, transition"
+    },
+    "pacingDirection": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Default rhythm: when to linger, when to cut fast"
+    },
+    "transitionDirection": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Scene transitions: hard cuts, crossfades, match cuts, audio-led"
+    },
+    "typographyDirection": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Font personality, hierarchy, animation, color, positioning"
+    },
+    "captionDirection": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Caption style: burn-in vs separate, position, max lines, visual style"
+    },
+    "emotionalArcMode": {
+      "type": "string",
+      "enum": ["STRONG", "LIGHT", "MINIMAL", "ADAPTIVE"],
+      "description": "Emotional arc intensity and pattern"
+    },
+    "constraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "noReconstruction": {
+          "type": "boolean",
+          "description": "Disallow speculative visual reconstruction"
+        },
+        "voiceOnlySegments": {
+          "type": "boolean",
+          "description": "Segments must be voice-only (no visuals)"
+        },
+        "maxDurationSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Hard duration limit"
+        },
+        "noMusic": {
+          "type": "boolean",
+          "description": "No background music allowed"
+        },
+        "noSFX": {
+          "type": "boolean",
+          "description": "No sound effects allowed"
+        }
+      }
+    }
+  }
+}

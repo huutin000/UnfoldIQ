@@ -1,0 +1,72 @@
+{
+  "$id": "https://unfoldiq.io/schemas/creative-brief.schema.json",
+  "title": "UNFOLDIQ Creative Brief Contract (ROADMAP V6 lightweight delta)",
+  "description": "Lightweight pre-research brief: audience/platform/intent context. Informs the Research Plan; never alters factual truth. Optional for pre-V6 projects.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "briefId",
+    "audience",
+    "platform"
+  ],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "briefId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "projectId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "audience": {
+      "type": "string",
+      "minLength": 1
+    },
+    "knowledgeLevel": {
+      "type": "string",
+      "enum": ["beginner", "intermediate", "advanced", "mixed"]
+    },
+    "platform": {
+      "type": "string",
+      "enum": ["youtube", "tiktok"]
+    },
+    "videoType": {
+      "type": "string",
+      "minLength": 1
+    },
+    "targetDuration": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human duration intent, e.g. 60-90s. Informational only; duration planning owns numbers."
+    },
+    "viewerPromise": {
+      "type": "string",
+      "minLength": 1
+    },
+    "primaryLearningGoal": {
+      "type": "string",
+      "minLength": 1
+    },
+    "narratorPersona": {
+      "type": "string"
+    },
+    "desiredFeeling": {
+      "type": "string"
+    },
+    "contentDensity": {
+      "type": "string",
+      "enum": ["lean", "balanced", "dense"]
+    },
+    "visualLanguage": {
+      "type": "string"
+    },
+    "ctaGoal": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "version": "1.0.0",
+  "jobId": "FLOW-GUIDE-MOTION-A01",
+  "requestId": "REQ-POSTV1-FLOW-VID-01",
+  "projectId": "postv1-flow-live-validation",
+  "sceneId": "CHAR_UNFOLDIQ_GUIDE_01",
+  "capability": "video",
+  "mode": "MANUAL_ASSIST",
+  "attempt": 1,
+  "maxAttempts": 2,
+  "referenceAssetId": "REF_GUIDE_MASTER_3Q_01",
+  "referencePath": "projects/postv1-flow-live-validation/assets/image/CHAR_UNFOLDIQ_GUIDE_01/REF_GUIDE_MASTER_3Q_01_attempt-02.png",
+  "referenceSha256": "35a3f078f96cc48c31c35506bb14e7a2a9581d178621e58baae7554872f01242",
+  "referenceMechanism": "Attach REF_GUIDE_MASTER_3Q_01 via reusable Character if correctly mapped, otherwise via Ingredients / References. Do not use text-only generation when a working reference-driven route is available.",
+  "prompt": "Use the approved UNFOLDIQ Guide reference as the character identity.\n\nCreate a short controlled motion shot of the SAME stylized adult guide in a clean educational studio-like environment.\n\nThe guide looks toward an empty diagram area, makes one small natural explanatory hand gesture, then looks back toward camera.\n\nPreserve:\n- same adult facial identity\n- same short dark hairstyle\n- same mustard-yellow outerwear\n- same dark charcoal inner shirt\n- same body proportions\n- same 2.5D stylized educational/editorial art style\n\nMotion:\n- subtle natural breathing\n- small controlled hand gesture\n- light cloth movement\n- slow camera push-in\n\nDo not change:\n- age\n- hairstyle\n- wardrobe\n- face proportions\n- body proportions\n- art-style family\n\nNo text.\nNo logos.\nNo additional accessories.\nNo additional people.\nNo photoreal drift.\nNo anime/chibi/toy-like drift.",
+  "modelSelection": "UNKNOWN — record the exact selected live-UI video model label at generation time. Do not finalize as Veo / Gemini Omni (live UI default).",
+  "suggestedAspectRatio": "16:9",
+  "suggestedResolution": "1080p or 720p per live UI options",
+  "suggestedDuration": "per live UI options (target validation composition 8-15s total: 0-2s still + video)",
+  "visibleCreditCost": "UNKNOWN — record the exact visible credit cost shown in Flow UI before generating",
+  "expectedDestination": "projects/postv1-flow-live-validation/assets/video/CHAR_UNFOLDIQ_GUIDE_01/CHAR_UNFOLDIQ_GUIDE_01_motion_attempt-01.mp4",
+  "continuity": {
+    "strictness": "STRICT",
+    "requiredEntities": [
+      "CHAR_UNFOLDIQ_GUIDE_01",
+      "WARDROBE_GUIDE_CORE_01",
+      "STYLE_UNFOLDIQ_GUIDE_01"
+    ],
+    "referenceAssetIds": [
+      "REF_GUIDE_MASTER_3Q_01"
+    ]
+  },
+  "liveUICapabilityCheck": "Before generating, record exact observed values: reference-driven video mode, Ingredients/References availability, reusable Character availability, compatible video models, exact selected model label, aspect ratio, resolution, duration, visible credit cost, upscaling behavior, Flow Agent / Instructions state.",
+  "nextAction": "User: approve this attempt, generate manually in Flow UI, then place the MP4 at expectedDestination (or projects/postv1-flow-live-validation/_incoming/) and report observed values.",
+  "returnInstructions": "Report: exact model label, resolution, duration, aspect ratio, visible credit cost, job/request correlation, and the delivered file path."
+}

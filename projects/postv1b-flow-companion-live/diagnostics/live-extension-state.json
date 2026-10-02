@@ -1,0 +1,21 @@
+{
+  "extensionVersion": "0.2.0",
+  "adapterVersion": "0.2.0-postv1b",
+  "flowOrigin": null,
+  "contentScriptInjected": "NOT_VERIFIED",
+  "contentScriptStatus": "CONTENT_SCRIPT_NOT_VERIFIED",
+  "bridgeLoopbackVerified": true,
+  "bridgeLiveHandshake": "LOCALHOST_ONLY",
+  "currentJobId": "FLOW-COMPANION-LIVE-GEN-01",
+  "jobState": "PREPARED",
+  "dryRunJob": {
+    "jobId": "FLOW-COMPANION-LIVE-DRYRUN-01",
+    "status": "AWAITING_USER_APPROVAL"
+  },
+  "promptControlFound": "NOT_VERIFIED_LIVE",
+  "generateControlFound": "NOT_VERIFIED_LIVE",
+  "resultControlFound": "NOT_VERIFIED_LIVE",
+  "downloadControlFound": "NOT_VERIFIED_LIVE",
+  "flowAgentMode": "UNKNOWN",
+  "lastError": "BLOCKED-LIVE-RUN-PENDING-USER-BROWSER"
+}

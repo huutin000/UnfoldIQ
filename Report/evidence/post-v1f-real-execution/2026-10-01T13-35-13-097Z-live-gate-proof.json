@@ -1,0 +1,25 @@
+{
+  "capturedAt": "2026-10-01T13:35:13.097Z",
+  "jobId": "FLOW-COMPANION-LIVE-GEN-01-RECONCILE",
+  "projectId": "postv1b-flow-companion-live",
+  "creditsConsumed": 0,
+  "results": [
+    {
+      "name": "32x32 avatar bytes cannot reach READY",
+      "status": 400,
+      "error": "ARTIFACT_BELOW_MIN_RESOLUTION: 32x32 short edge < 256px, treated as UI thumbnail rather than a generated asset",
+      "expected": "400 /ARTIFACT_BELOW_MIN_RESOLUTION/",
+      "pass": true
+    },
+    {
+      "name": "unknown candidateId is refused",
+      "status": 400,
+      "error": "RESULT_CORRELATION_REQUIRED: no persisted candidate at RESULT_DETECTED",
+      "expected": "400 /RESULT_CORRELATION_REQUIRED/",
+      "pass": true
+    }
+  ],
+  "jobStatusAfter": "MANUAL_ASSIST_REQUIRED",
+  "generationCountAfter": 0,
+  "liveGateProof": "HOLDS"
+}

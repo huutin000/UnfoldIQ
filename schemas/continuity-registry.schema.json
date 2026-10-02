@@ -1,0 +1,148 @@
+{
+  "$id": "https://unfoldiq.io/schemas/continuity-registry.schema.json",
+  "title": "UNFOLDIQ Continuity Registry Contract",
+  "description": "Locked reference identities for recurring visual consistency. Never implies AI reconstruction is factual evidence.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "projectId",
+    "visualBibleVersion",
+    "entities",
+    "relationships",
+    "lockStatus"
+  ],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "projectId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "visualBibleVersion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "entities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "entityId",
+          "type",
+          "name",
+          "description",
+          "lockStatus",
+          "referenceAssets",
+          "attributes"
+        ],
+        "properties": {
+          "entityId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "type": "string",
+            "enum": ["CHARACTER", "WARDROBE", "LOCATION", "PROP", "CREATURE", "OBJECT", "STYLE_ANCHOR"]
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "lockStatus": {
+            "type": "string",
+            "enum": ["DRAFT", "LOCKED", "RETIRED"]
+          },
+          "referenceAssets": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["assetId", "path", "role", "status"],
+              "properties": {
+                "assetId": { "type": "string", "minLength": 1 },
+                "path": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Project-relative path to the reference asset"
+                },
+                "role": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "E.g. MASTER, FRONT, PROFILE, THREE_QUARTER, WARDROBE_REFERENCE, LOCATION_REFERENCE, PROP_REFERENCE, STYLE_REFERENCE"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": ["CANDIDATE", "APPROVED", "REJECTED"]
+                },
+                "view": { "type": "string" },
+                "notes": { "type": "string" },
+                "assetClassification": {
+                  "type": "string",
+                  "enum": ["EVIDENCE_ASSET", "RECONSTRUCTION", "ILLUSTRATION", "GENERIC_BROLL"],
+                  "description": "Step 09 policy classification. AI master references are usually RECONSTRUCTION, never EVIDENCE_ASSET."
+                }
+              }
+            }
+          },
+          "attributes": {
+            "type": "object",
+            "description": "Type-relevant attributes (age range, hair, wardrobe IDs, layout, era restrictions, ...). Only what is needed; no sensitive identity inference."
+          },
+          "variants": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["variantId", "description"],
+              "properties": {
+                "variantId": { "type": "string" },
+                "description": { "type": "string" },
+                "referenceAssetIds": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                }
+              }
+            }
+          },
+          "allowedChanges": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "forbiddenChanges": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "relationships": {
+      "type": "array",
+      "description": "Explicit entity relations, e.g. CHARACTER wears WARDROBE",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["from", "relation", "to"],
+        "properties": {
+          "from": { "type": "string", "minLength": 1 },
+          "relation": { "type": "string", "minLength": 1 },
+          "to": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "lockStatus": {
+      "type": "string",
+      "enum": ["DRAFT", "LOCKED", "RETIRED"],
+      "description": "Overall registry lock state"
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

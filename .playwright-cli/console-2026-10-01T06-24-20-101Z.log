@@ -1,0 +1,2 @@
+[ 1871780ms] [ERROR] Failed to load resource: the server responded with a status of 502 () @ https://flow.google.com/_/AiSandboxAngularFrontend/data/batchexecute?rpcids=mrlkwd&source-path=%2Fproject%2F8221824c-a1a6-4aa9-8d6b-fac24860d49e&bl=boq_labs-ai-sandbox-frontend_20260929.10_p0&f.sid=-5939404995509837642&hl=en&_reqid=1250131&rt=c:0
+[11661285ms] [WARNING] Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently @ :6

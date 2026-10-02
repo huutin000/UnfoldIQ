@@ -1,0 +1,42 @@
+[2026-10-01T07:32:26.410Z] connected Flow tabs: 1
+[2026-10-01T07:32:26.424Z] liveTab: matched=1 tabId=47261522 origin=https://flow.google.com ping=true source=SESSION_REVALIDATED
+[2026-10-01T07:32:26.442Z] bridge token remembered on this device (storage.local)
+[2026-10-01T07:32:26.449Z] liveTab: matched=1 tabId=47261522 origin=https://flow.google.com ping=true source=SESSION_REVALIDATED
+[2026-10-01T07:32:26.449Z] job fetched: FLOW-COMPANION-LIVE-GEN-01 (PREPARED)
+[2026-10-01T07:32:26.450Z] autoPrepare: start job=FLOW-COMPANION-LIVE-GEN-01 state=PREPARED
+[2026-10-01T07:32:26.452Z] connected Flow tabs: 1
+[2026-10-01T07:32:26.452Z] autoPrepare: liveTab resolved ping=true source=SESSION_REVALIDATED
+[2026-10-01T07:32:26.452Z] autoPrepare: waiting for prompt composer
+[2026-10-01T07:32:31.591Z] liveTab: matched=1 tabId=47261522 origin=https://flow.google.com ping=true source=SESSION_REVALIDATED
+[2026-10-01T07:32:31.592Z] autoPrepare: prompt input resolved
+[2026-10-01T07:32:31.592Z] autoPrepare: prompt verified=true
+[2026-10-01T07:32:31.592Z] flowMode: value=UNKNOWN verified=false evidence=[...]
+[2026-10-01T07:32:31.592Z] autoPrepare: generationReady=NOT_EVALUATED missing=[FLOW_MODE_UNKNOWN]
+[2026-10-01T07:32:31.592Z] autoPrepare: preparation failed stage=flow-mode code=FLOW_MODE_UNKNOWN
+[2026-10-01T07:33:26.599Z] connected Flow tabs: 1
+[2026-10-01T07:33:26.608Z] liveTab: matched=1 tabId=47261522 origin=https://flow.google.com ping=true source=SESSION_REVALIDATED
+[2026-10-01T07:33:26.616Z] bridge token remembered on this device (storage.local)
+[2026-10-01T07:33:26.621Z] liveTab: matched=1 tabId=47261522 origin=https://flow.google.com ping=true source=SESSION_REVALIDATED
+[2026-10-01T07:33:26.622Z] job fetched: FLOW-COMPANION-LIVE-GEN-01 (PREPARED)
+[2026-10-01T07:33:26.622Z] autoPrepare: start job=FLOW-COMPANION-LIVE-GEN-01 state=PREPARED
+[2026-10-01T07:33:26.624Z] connected Flow tabs: 1
+[2026-10-01T07:33:26.624Z] autoPrepare: liveTab resolved ping=true source=SESSION_REVALIDATED
+[2026-10-01T07:33:26.624Z] autoPrepare: waiting for prompt composer
+[2026-10-01T07:33:27.586Z] liveTab: matched=1 tabId=47261522 origin=https://flow.google.com ping=true source=SESSION_REVALIDATED
+[2026-10-01T07:33:27.586Z] autoPrepare: prompt input resolved
+[2026-10-01T07:33:27.586Z] autoPrepare: prompt verified=true
+[2026-10-01T07:33:27.586Z] autoPrepare: standardMode=true
+[2026-10-01T07:33:27.586Z] autoPrepare: generationType=NOT_APPLICABLE verified=true
+[2026-10-01T07:33:27.586Z] autoPrepare: aspect=1:1
+[2026-10-01T07:33:27.586Z] autoPrepare: outputCount=1
+[2026-10-01T07:33:27.586Z] autoPrepare: model=Nano Banana 2
+[2026-10-01T07:33:27.586Z] autoPrepare: visibleCost=UNKNOWN
+[2026-10-01T07:33:27.586Z] autoPrepare: generateFound=true enabled=true
+[2026-10-01T07:33:27.586Z] autoPrepare: generationReady=true missing=[]
+[2026-10-01T07:33:27.586Z] approval snapshot frozen: fingerprint={"aspect":"1:1","attempt":1,"jobId":"FLOW-COMPAN… at=2026-10-01T07:33:27.586Z
+[2026-10-01T07:33:27.590Z] bridge state: AWAITING_USER_APPROVAL
+[2026-10-01T07:33:27.590Z] autoPrepare: await-approval transition=success
+[2026-10-01T07:33:27.591Z] autoPrepare: snapshot frozen
+[2026-10-01T07:37:47.977Z] recording explicit APPROVE for FLOW-COMPANION-LIVE-GEN-01 attempt 1
+[2026-10-01T07:37:47.986Z] bridge approval recorded, status=GENERATING
+[2026-10-01T07:37:48.016Z] approval/generation failed: APPROVAL_STALE_CHANGED: type,aspect,outputCount,model [cmds=0.4.11-postv1f-cmds2 agent-read=NO_AGENT_SURFACE]

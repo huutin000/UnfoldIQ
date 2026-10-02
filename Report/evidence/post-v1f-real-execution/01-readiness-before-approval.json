@@ -1,0 +1,31 @@
+{
+  "_note": "Transcribed verbatim from the live in-page readiness probe executed immediately before the paid action (2026-08-01T07:20:2x, run 'v1f-execute.js' BEFORE capture). The original --raw capture was later overwritten by a subsequent run's console error text; these are the exact values the probe returned, not a re-measurement.",
+  "capturedAt": "2026-10-01T07:20:29Z",
+  "url": "https://flow.google.com/project/8221824c-a1a6-4aa9-8d6b-fac24860d49e",
+  "promptLogical": ["Create a simple minimal blue circle centered on a clean light background.\nNo text."],
+  "promptExact": true,
+  "promptLen": [82],
+  "domShape": [["P"]],
+  "confirmAlways": { "value": "1", "checked": true },
+  "confirmNever": { "value": "2", "checked": false },
+  "aspect": [
+    { "t": "crop_16_916:9", "on": false },
+    { "t": "crop_landscape4:3", "on": false },
+    { "t": "crop_square1:1", "on": true },
+    { "t": "crop_portrait3:4", "on": false },
+    { "t": "crop_9_169:9:16", "on": false }
+  ],
+  "outputs": [
+    { "t": "x1", "on": true },
+    { "t": "x2", "on": false },
+    { "t": "x3", "on": false },
+    { "t": "x4", "on": false }
+  ],
+  "modelRaw": "🍌 Nano Banana 2 arrow_drop_down",
+  "modelNormalizedByAdapter": "Nano Banana 2",
+  "startDisabled": false,
+  "mediaCount": 0,
+  "agentPanelOpen": true,
+  "jobState": "AWAITING_USER_APPROVAL",
+  "generationCount": 0
+}

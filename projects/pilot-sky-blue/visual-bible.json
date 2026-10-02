@@ -1,0 +1,41 @@
+{
+  "cameraLanguage": "slow push-in on diagrams, gentle pans, no handheld",
+  "color": {
+    "accent": "#ffb020",
+    "backgroundEnd": "#0b3d91",
+    "backgroundStart": "#2f7fe0",
+    "foreground": "#f5f7fa",
+    "muted": "#9fb3c8",
+    "spectrum": [
+      "#3b2fb5",
+      "#2f7fe0",
+      "#35c26e",
+      "#ffd23f",
+      "#ff7a1a",
+      "#e23b3b"
+    ]
+  },
+  "domain": "everyday physics, flat vector illustration",
+  "evidenceVsReconstruction": "All visuals are labeled ILLUSTRATION (diagrams). No photorealistic reconstruction, no evidence imagery claims.",
+  "lighting": "bright clean daylight gradients",
+  "projectId": "pilot-sky-blue",
+  "typography": {
+    "body": "system-ui, sans-serif",
+    "display": "system-ui, sans-serif"
+  },
+  "visualBibleVersion": "vb-pilot-1",
+  "visualStyle": "flat vector diagrams on sky gradients; molecules as dots; light as rays; spectrum as labeled bar",
+  "tokens": {
+    "background": "#1c5fa8",
+    "foreground": "#f5f7fa",
+    "muted": "#cfe0f2",
+    "accent": "#ffd23f",
+    "fontFamily": "system-ui, sans-serif",
+    "titleSize": 72,
+    "bodySize": 36,
+    "captionSize": 34,
+    "cornerRadius": 12,
+    "spacing": 24,
+    "overlayOpacity": 0.55
+  }
+}

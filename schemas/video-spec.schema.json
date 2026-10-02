@@ -1,0 +1,307 @@
+{
+"$id": "https://unfoldiq.io/schemas/video-spec.schema.json",
+  "title": "UNFOLDIQ Video Spec Contract",
+  "description": "Technical render specification for Remotion",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "project", "platform", "composition", "scenes", "globalStyle", "render"],
+  "properties":
+{
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semantic version of this contract"
+    },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "slug", "title"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Unique project identifier"
+        },
+        "slug": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[a-z0-9-]+$",
+          "description": "URL-safe project slug"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Video title"
+        }
+      }
+    },
+    "platform": {
+      "type": "string",
+      "enum": ["youtube", "tiktok"],
+      "description": "Target platform"
+    },
+    "composition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["width", "height", "fps", "aspectRatio", "durationMode"],
+      "properties": {
+        "width": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Composition width in pixels"
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Composition height in pixels"
+        },
+        "fps": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 120,
+          "description": "Frames per second"
+        },
+        "aspectRatio": {
+          "type": "string",
+          "pattern": "^\\d+:\\d+$",
+          "description": "Aspect ratio as W:H string"
+        },
+        "durationMode": {
+          "type": "string",
+          "enum": ["content-driven", "fixed"],
+          "description": "How duration is determined"
+        },
+        "durationMs": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Total duration in milliseconds (required when durationMode is fixed or all scene timings are MEASURED)"
+        },
+        "targetDurationMs": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Optional planning target (what was wanted)"
+        },
+        "estimatedDurationMs": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Optional script/narration-based estimate (calculated, not measured)"
+        },
+        "durationSource": {
+          "type": "string",
+          "enum": ["MEASURED_TIMELINE", "PLANNED"],
+          "description": "Render-ready final video must use MEASURED_TIMELINE"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "durationSource": { "const": "MEASURED_TIMELINE" } },
+            "required": ["durationSource"]
+          },
+          "then": { "required": ["durationMs"] }
+        }
+      ]
+    },
+    "scenes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["sceneId", "order", "timing", "assetIds"],
+        "properties": {
+          "sceneId": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9_-]+$",
+            "description": "Unique scene identifier (matches scene-script.json)"
+          },
+          "order": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Scene order in sequence"
+          },
+          "timing": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["startMs", "endMs", "status"],
+            "properties": {
+              "startMs": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Scene start time in milliseconds"
+              },
+              "endMs": {
+                "type": "integer",
+                "minimum": 1,
+                "description": "Scene end time in milliseconds"
+              },
+              "status": {
+                "type": "string",
+                "enum": ["PLANNED", "MEASURED"],
+                "description": "Timing status for render (must be MEASURED for final render)"
+              }
+            }
+          },
+          "assetIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "description": "Asset IDs from asset-manifest.json used in this scene"
+          },
+          "onScreenText": {
+            "type": "string",
+            "description": "Text overlay content for this scene"
+          },
+          "animationIntent": {
+            "type": "string",
+            "description": "Animation behavior for this scene (e.g., 'ken-burns', 'fade-in', 'slide-left')"
+          },
+          "transitionIntent": {
+            "type": "string",
+            "description": "Transition to next scene (e.g., 'cut', 'crossfade', 'match-cut')"
+          },
+          "audioIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "description": "Audio track IDs from audio-manifest.json for this scene"
+          }
+        }
+      }
+    },
+    "globalStyle": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "safeArea": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "top": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Top safe area percentage"
+            },
+            "bottom": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Bottom safe area percentage"
+            },
+            "left": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Left safe area percentage"
+            },
+            "right": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "Right safe area percentage"
+            }
+          }
+        },
+        "captionStyle": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "fontFamily": {
+              "type": "string",
+              "description": "Font family for captions"
+            },
+            "fontSize": {
+              "type": "number",
+              "minimum": 8,
+              "description": "Font size in pixels"
+            },
+            "color": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$",
+              "description": "Caption text color (hex)"
+            },
+            "backgroundColor": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$",
+              "description": "Caption background color (hex, optional alpha)"
+            },
+            "position": {
+              "type": "string",
+              "enum": ["bottom", "top", "center"],
+              "default": "bottom",
+              "description": "Caption vertical position"
+            },
+            "maxLines": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 4,
+              "default": 2,
+              "description": "Maximum caption lines"
+            }
+          }
+        },
+        "motionStyle": {
+          "type": "string",
+          "description": "Global motion style reference (e.g., 'cinematic-slow', 'energetic-fast')"
+        },
+        "typography": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "primaryFont": {
+              "type": "string",
+              "description": "Primary font family"
+            },
+            "headingFont": {
+              "type": "string",
+              "description": "Heading font family"
+            },
+            "scaleRatio": {
+              "type": "number",
+              "minimum": 1,
+              "default": 1.25,
+              "description": "Type scale ratio"
+            }
+          }
+        },
+        "background": {
+          "type": "string",
+          "description": "Default background color/pattern"
+        }
+      }
+    },
+    "render": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["compositionId", "outputName"],
+      "properties": {
+        "compositionId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Remotion composition ID to render"
+        },
+        "outputName": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Output filename (without extension)"
+        },
+        "codec": {
+          "type": "string",
+          "description": "Video codec (e.g., 'h264', 'prores')"
+        },
+        "container": {
+          "type": "string",
+          "description": "Container format (e.g., 'mp4', 'mov')"
+        }
+      }
+    }
+  }
+}
+
+

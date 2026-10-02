@@ -1,0 +1,366 @@
+{
+  "version": "1.0.0",
+  "projectId": "pilot-sky-blue",
+  "platform": "youtube",
+  "generatedAt": "2026-09-26T07:38:53.307Z",
+  "composition": {
+    "id": "UNFOLDIQVideo",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "durationMs": 65332,
+    "durationInFrames": 1960,
+    "background": "#1c5fa8",
+    "outputName": "pilot-sky-blue"
+  },
+  "scenes": [
+    {
+      "sceneId": "S01",
+      "startFrame": 0,
+      "endFrame": 282,
+      "layers": [
+        {
+          "layerId": "S01_bg",
+          "kind": "BACKGROUND",
+          "startFrame": 0,
+          "endFrame": 282
+        },
+        {
+          "layerId": "S01_text",
+          "kind": "TEXT",
+          "startFrame": 0,
+          "endFrame": 282,
+          "text": "WHY IS THE SKY BLUE?"
+        }
+      ]
+    },
+    {
+      "sceneId": "S02",
+      "startFrame": 281,
+      "endFrame": 544,
+      "layers": [
+        {
+          "layerId": "S02_bg",
+          "kind": "BACKGROUND",
+          "startFrame": 281,
+          "endFrame": 544
+        },
+        {
+          "layerId": "S02_text",
+          "kind": "TEXT",
+          "startFrame": 281,
+          "endFrame": 544,
+          "text": "THE AIR IS FULL OF MOLECULES"
+        }
+      ]
+    },
+    {
+      "sceneId": "S03",
+      "startFrame": 543,
+      "endFrame": 1020,
+      "layers": [
+        {
+          "layerId": "S03_bg",
+          "kind": "BACKGROUND",
+          "startFrame": 543,
+          "endFrame": 1020
+        },
+        {
+          "layerId": "S03_text",
+          "kind": "TEXT",
+          "startFrame": 543,
+          "endFrame": 1020,
+          "text": "BLUE LIGHT SCATTERS MOST"
+        }
+      ]
+    },
+    {
+      "sceneId": "S04",
+      "startFrame": 1019,
+      "endFrame": 1243,
+      "layers": [
+        {
+          "layerId": "S04_bg",
+          "kind": "BACKGROUND",
+          "startFrame": 1019,
+          "endFrame": 1243
+        },
+        {
+          "layerId": "S04_text",
+          "kind": "TEXT",
+          "startFrame": 1019,
+          "endFrame": 1243,
+          "text": "WHY NOT VIOLET?"
+        }
+      ]
+    },
+    {
+      "sceneId": "S05",
+      "startFrame": 1242,
+      "endFrame": 1504,
+      "layers": [
+        {
+          "layerId": "S05_bg",
+          "kind": "BACKGROUND",
+          "startFrame": 1242,
+          "endFrame": 1504
+        },
+        {
+          "layerId": "S05_text",
+          "kind": "TEXT",
+          "startFrame": 1242,
+          "endFrame": 1504,
+          "text": "SUNSETS BURN RED"
+        }
+      ]
+    },
+    {
+      "sceneId": "S06",
+      "startFrame": 1503,
+      "endFrame": 1960,
+      "layers": [
+        {
+          "layerId": "S06_bg",
+          "kind": "BACKGROUND",
+          "startFrame": 1503,
+          "endFrame": 1960
+        },
+        {
+          "layerId": "S06_text",
+          "kind": "TEXT",
+          "startFrame": 1503,
+          "endFrame": 1960,
+          "text": "SUNLIGHT, REARRANGED"
+        }
+      ]
+    }
+  ],
+  "audioTracks": {
+    "voice": [
+      {
+        "clipId": "VO_B1",
+        "startFrame": 0,
+        "endFrame": 1960,
+        "path": "unfoldiq/pilot-sky-blue/80138344/B1.wav"
+      },
+      {
+        "clipId": "VO_B2",
+        "startFrame": 281,
+        "endFrame": 1960,
+        "path": "unfoldiq/pilot-sky-blue/6820720f/B2.wav"
+      },
+      {
+        "clipId": "VO_B3",
+        "startFrame": 543,
+        "endFrame": 1960,
+        "path": "unfoldiq/pilot-sky-blue/4efe6833/B3.wav"
+      },
+      {
+        "clipId": "VO_B4",
+        "startFrame": 794,
+        "endFrame": 1960,
+        "path": "unfoldiq/pilot-sky-blue/24aff353/B4.wav"
+      },
+      {
+        "clipId": "VO_B5",
+        "startFrame": 1019,
+        "endFrame": 1960,
+        "path": "unfoldiq/pilot-sky-blue/2f265d52/B5.wav"
+      },
+      {
+        "clipId": "VO_B6",
+        "startFrame": 1242,
+        "endFrame": 1960,
+        "path": "unfoldiq/pilot-sky-blue/5c9db148/B6.wav"
+      },
+      {
+        "clipId": "VO_B7",
+        "startFrame": 1503,
+        "endFrame": 1960,
+        "path": "unfoldiq/pilot-sky-blue/d390c129/B7.wav"
+      },
+      {
+        "clipId": "VO_B8",
+        "startFrame": 1702,
+        "endFrame": 1960,
+        "path": "unfoldiq/pilot-sky-blue/683c831c/B8.wav"
+      }
+    ],
+    "music": [],
+    "sfx": []
+  },
+  "captionTrack": {
+    "mode": "BOTH",
+    "frames": [
+      {
+        "captionId": "cap-1",
+        "startFrame": 0,
+        "endFrame": 195
+      },
+      {
+        "captionId": "cap-2",
+        "startFrame": 194,
+        "endFrame": 282
+      },
+      {
+        "captionId": "cap-3",
+        "startFrame": 281,
+        "endFrame": 467
+      },
+      {
+        "captionId": "cap-4",
+        "startFrame": 466,
+        "endFrame": 544
+      },
+      {
+        "captionId": "cap-5",
+        "startFrame": 543,
+        "endFrame": 716
+      },
+      {
+        "captionId": "cap-6",
+        "startFrame": 715,
+        "endFrame": 795
+      },
+      {
+        "captionId": "cap-7",
+        "startFrame": 794,
+        "endFrame": 941
+      },
+      {
+        "captionId": "cap-8",
+        "startFrame": 940,
+        "endFrame": 1020
+      },
+      {
+        "captionId": "cap-9",
+        "startFrame": 1019,
+        "endFrame": 1161
+      },
+      {
+        "captionId": "cap-10",
+        "startFrame": 1160,
+        "endFrame": 1243
+      },
+      {
+        "captionId": "cap-11",
+        "startFrame": 1242,
+        "endFrame": 1422
+      },
+      {
+        "captionId": "cap-12",
+        "startFrame": 1421,
+        "endFrame": 1504
+      },
+      {
+        "captionId": "cap-13",
+        "startFrame": 1503,
+        "endFrame": 1604
+      },
+      {
+        "captionId": "cap-14",
+        "startFrame": 1603,
+        "endFrame": 1703
+      },
+      {
+        "captionId": "cap-15",
+        "startFrame": 1702,
+        "endFrame": 1903
+      },
+      {
+        "captionId": "cap-16",
+        "startFrame": 1902,
+        "endFrame": 1960
+      }
+    ]
+  },
+  "assetMap": {
+    "VOICE_B1": {
+      "assetId": "VOICE_B1",
+      "type": "audio",
+      "stagedPath": "unfoldiq/pilot-sky-blue/80138344/B1.wav",
+      "staticFilePath": "unfoldiq/pilot-sky-blue/80138344/B1.wav",
+      "sourcePath": "assets/voice/B1.wav"
+    },
+    "VOICE_B2": {
+      "assetId": "VOICE_B2",
+      "type": "audio",
+      "stagedPath": "unfoldiq/pilot-sky-blue/6820720f/B2.wav",
+      "staticFilePath": "unfoldiq/pilot-sky-blue/6820720f/B2.wav",
+      "sourcePath": "assets/voice/B2.wav"
+    },
+    "VOICE_B3": {
+      "assetId": "VOICE_B3",
+      "type": "audio",
+      "stagedPath": "unfoldiq/pilot-sky-blue/4efe6833/B3.wav",
+      "staticFilePath": "unfoldiq/pilot-sky-blue/4efe6833/B3.wav",
+      "sourcePath": "assets/voice/B3.wav"
+    },
+    "VOICE_B4": {
+      "assetId": "VOICE_B4",
+      "type": "audio",
+      "stagedPath": "unfoldiq/pilot-sky-blue/24aff353/B4.wav",
+      "staticFilePath": "unfoldiq/pilot-sky-blue/24aff353/B4.wav",
+      "sourcePath": "assets/voice/B4.wav"
+    },
+    "VOICE_B5": {
+      "assetId": "VOICE_B5",
+      "type": "audio",
+      "stagedPath": "unfoldiq/pilot-sky-blue/2f265d52/B5.wav",
+      "staticFilePath": "unfoldiq/pilot-sky-blue/2f265d52/B5.wav",
+      "sourcePath": "assets/voice/B5.wav"
+    },
+    "VOICE_B6": {
+      "assetId": "VOICE_B6",
+      "type": "audio",
+      "stagedPath": "unfoldiq/pilot-sky-blue/5c9db148/B6.wav",
+      "staticFilePath": "unfoldiq/pilot-sky-blue/5c9db148/B6.wav",
+      "sourcePath": "assets/voice/B6.wav"
+    },
+    "VOICE_B7": {
+      "assetId": "VOICE_B7",
+      "type": "audio",
+      "stagedPath": "unfoldiq/pilot-sky-blue/d390c129/B7.wav",
+      "staticFilePath": "unfoldiq/pilot-sky-blue/d390c129/B7.wav",
+      "sourcePath": "assets/voice/B7.wav"
+    },
+    "VOICE_B8": {
+      "assetId": "VOICE_B8",
+      "type": "audio",
+      "stagedPath": "unfoldiq/pilot-sky-blue/683c831c/B8.wav",
+      "staticFilePath": "unfoldiq/pilot-sky-blue/683c831c/B8.wav",
+      "sourcePath": "assets/voice/B8.wav"
+    }
+  },
+  "styleTokens": {
+    "background": "#1c5fa8",
+    "foreground": "#f5f7fa",
+    "muted": "#cfe0f2",
+    "accent": "#ffd23f",
+    "fontFamily": "system-ui, sans-serif",
+    "titleSize": 72,
+    "bodySize": 36,
+    "captionSize": 34,
+    "cornerRadius": 12,
+    "spacing": 24,
+    "overlayOpacity": 0.55
+  },
+  "validation": {
+    "preflightStatus": "READY",
+    "timelineStatus": "MEASURED",
+    "checks": [
+      {
+        "name": "render-input-check",
+        "status": "READY",
+        "detail": "0 issue(s)"
+      },
+      {
+        "name": "render-gap-check",
+        "status": "CLEAN",
+        "detail": "0 gap(s)"
+      }
+    ]
+  },
+  "planHash": "f6ccb726ffb79f3f",
+  "status": "READY"
+}

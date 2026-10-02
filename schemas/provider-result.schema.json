@@ -1,0 +1,134 @@
+{
+  "$id": "https://unfoldiq.io/schemas/provider-result.schema.json",
+  "title": "UNFOLDIQ Provider Result Contract",
+  "description": "Vendor-neutral result of a provider request. No chain-of-thought, no raw API responses, no secrets.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "requestId",
+    "projectId",
+    "sceneId",
+    "capability",
+    "providerId",
+    "status",
+    "sourceType",
+    "provenanceNote",
+    "rightsStatus",
+    "costClass"
+  ],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "requestId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "projectId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sceneId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "capability": {
+      "type": "string",
+      "enum": ["image", "video", "tts", "stt", "music", "sfx"]
+    },
+    "providerId": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Logical provider ID used"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["READY", "FAILED", "BLOCKED", "NOT_AVAILABLE", "HANDOFF_REQUIRED", "AWAITING_USER_APPROVAL"]
+    },
+    "artifactPath": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Required if READY: project-relative path to the persistent artifact"
+    },
+    "mimeType": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "generationDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "modelOrVersion": {
+      "type": "string"
+    },
+    "sourceType": {
+      "type": "string",
+      "enum": ["existing", "generated", "local-library", "external-handoff"]
+    },
+    "provenanceNote": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rightsStatus": {
+      "type": "string",
+      "enum": ["VERIFIED", "UNVERIFIED", "UNKNOWN", "NOT_APPLICABLE"]
+    },
+    "costClass": {
+      "type": "string",
+      "enum": ["ZERO_LOCAL", "INCLUDED_SUBSCRIPTION", "FREE_TIER", "PAID", "UNKNOWN"]
+    },
+    "timingArtifactPath": {
+      "type": "string",
+      "description": "Project-relative path to structured timing artifact (e.g., STT timestamps)"
+    },
+    "handoffPath": {
+      "type": "string",
+      "description": "Required if HANDOFF_REQUIRED: project-relative path to the handoff JSON"
+    },
+    "approval": {
+      "type": "object",
+      "description": "Required if AWAITING_USER_APPROVAL: what action needs approval",
+      "properties": {
+        "action": { "type": "string" },
+        "reason": { "type": "string" },
+        "estimatedCost": { "type": "string" }
+      }
+    },
+    "continuity": {
+      "type": "object",
+      "description": "Continuity metadata for the produced asset",
+      "properties": {
+        "registryVersion": { "type": "string" },
+        "entitiesUsed": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "referenceAssetIds": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "continuityStatus": {
+          "type": "string",
+          "enum": ["PASS", "REVIEW_REQUIRED", "FAIL", "NOT_APPLICABLE"]
+        },
+        "issues": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "error": {
+      "type": "object",
+      "description": "Machine-readable error for non-READY results",
+      "properties": {
+        "errorCode": { "type": "string" },
+        "errorSummary": { "type": "string" },
+        "errorClass": { "type": "string" }
+      }
+    }
+  }
+}

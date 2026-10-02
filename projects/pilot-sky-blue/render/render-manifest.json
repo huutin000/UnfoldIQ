@@ -1,0 +1,43 @@
+{
+  "version": "1.0.0",
+  "mode": "validate",
+  "projectId": "pilot-sky-blue",
+  "status": "READY",
+  "composition": {
+    "id": "UNFOLDIQVideo",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "durationMs": 65332,
+    "durationInFrames": 1960,
+    "background": "#0b0e14",
+    "outputName": "pilot-sky-blue"
+  },
+  "checks": {
+    "inputCheck": {
+      "status": "READY",
+      "issues": []
+    },
+    "gapCheck": {
+      "status": "CLEAN",
+      "gaps": []
+    }
+  },
+  "provenance": {
+    "preflightVersion": "1.0.0",
+    "timelineHash": "816816c4",
+    "assetManifestHash": "2bc99d45",
+    "audioMixHash": "37bf7aaf",
+    "captionsHash": "4734e0b7",
+    "visualBibleVersion": "default",
+    "continuityRegistryVersion": "none",
+    "durationContractVersion": "1.0.0",
+    "platformProfileVersion": "1.0.0",
+    "remotionVersions": {
+      "remotion": "^4.0.529",
+      "@remotion/renderer": "^4.0.529",
+      "@remotion/bundler": "^4.0.529",
+      "@remotion/cli": "^4.0.529"
+    }
+  }
+}

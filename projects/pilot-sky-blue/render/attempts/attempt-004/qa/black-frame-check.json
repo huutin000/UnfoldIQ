@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "regions": [],
+  "analyzer": "ffmpeg-blackdetect",
+  "detail": "no black regions detected (minDurationMs=500)"
+}

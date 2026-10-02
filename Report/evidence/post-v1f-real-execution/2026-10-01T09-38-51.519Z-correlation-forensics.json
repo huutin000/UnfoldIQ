@@ -1,0 +1,52 @@
+{
+  "capturedAt": "2026-10-01T09:38:51.519Z",
+  "phase": "zero-credit correlation forensics",
+  "creditsConsumed": 0,
+  "realGenerationsUsed": "1/1",
+  "secondGenerationSubmitted": false,
+  "newGenerateClicks": 0,
+  "rootCause": "The result detector only matched 'googleusercontent' media, but Flow serves generated project media from flow.google.com/asb/*. The only 'googleusercontent' element on the page was the account avatar (lh3.googleusercontent.com/ogw/...). Therefore the 32x32 artifact imported earlier was the ACCOUNT AVATAR, and the real generated asset was never a candidate at all.",
+  "previousImportedArtifact": {
+    "path": "projects/postv1b-flow-companion-live/assets/image/GEN01/GEN01_attempt-01.png",
+    "sha256": "1186233d1af671fcb50ff5084ded613777105ba87cf0d951481ab236ba5b322e",
+    "bytes": 2080,
+    "dims": "32x32",
+    "identity": "account avatar (lh3.googleusercontent.com/ogw/AF2bZyga0_...=s32-c-mo, class gb_X gbii, rendered 32x32)",
+    "validForCorrelation": false
+  },
+  "pageImagesAtForensics": [
+    { "url": "https://ssl.gstatic.com/gb/images/ring/pr_32px_asknjuyerc.png", "role": "google UI ring", "reject": true },
+    { "url": "https://lh3.googleusercontent.com/ogw/AF2bZyga0_kwainzDxR7rvbvrJyaZoOqT3XV97bdjg5rvqJ_Gg=s64-c-mo", "role": "account avatar", "natural": "32x32", "reject": true, "reason": "ogw avatar chrome" },
+    { "url": "https://flow.google.com/asb/ANqvLOabAWhGZcDqU4X6bXs_Wp5k6CQmSYyEmdTDutThjVv6y-8jGpdjf8fQc5Dyrn0NY5UtK2PNHMn9PnDCpDs8i10vcqLARihb3mkIhf8nerCp2GduSRL8f3Oa5_cWQia59lBPKUFsc4uxDu6aOeKVqc7cVEe1cQasaGWd4bHS9g=s512-rw", "role": "GENERATED ASSET for our turn", "natural": "512x512", "type": "image/webp", "bytes": 4522, "sha256": "803b8db7080be4d23dca62c82136f3da5c0b46adfb1a4d0765ac4112e8c4ec37", "alt": "Option 1", "class": "image-thumbnail" },
+    { "url": "https://flow.google.com/asb/ANqvLOacQ_W40PdxGekEKTUqstXKYHCEGnqcHTPHHbfSX-T6M6TuefX-aZ6UJ6cve0fP4_GW6Y35GOv2CCrDULJ_2uno3c9aDrVWGdhMJo0-8xbDg48E77S9zuD_V0o_YdYRjbjigG4WdAY6oiXJWDtPYs1YndrE4KWNN_UlRCkqbw=s512-rw", "role": "pre-existing user reference image tile", "natural": "512x512", "alt": "Tile displaying a user's image", "reject": true, "reason": "not in our agent turn; pre-existing upload" },
+    { "url": "https://flow.google.com/asb/ANqvLOa35jEnLDdpsbOYJhcGqFo3MrBPeAZjXujhMSc9wkb6mVVuExm2bAfWQINyy1J7VwiP0il2Cm7-SDxQYNUWkaoB6yez817OiPonvyADLC9qeKIksHAk0JhiPOpbIcgNP5f4-gjdhzQTCMeg3xIMxphtcEYBHmrLRnfk685GFg", "role": "sizeless /asb/ asset requested on reload", "natural": "512x288", "type": "image/jpeg", "bytes": 11238, "sha256": "609b70a1e27ac72d58b9751ed2327e649a82657fa522cf345c7ecff14489fd64", "reject": true, "reason": "different logical asset: 512x288 aspect + meanAbsDiff 44 vs turn asset" }
+  ],
+  "correlationProof": {
+    "sameProject": true,
+    "projectUrl": "https://flow.google.com/project/8221824c-a1a6-4aa9-8d6b-fac24860d49e",
+    "sameAgentTurnAsSentPrompt": true,
+    "turnContainer": "div.messages-list containing the sent prompt span.prompt-text 'Create a simple minimal blue circle centered on a clean light background. No text.' and agent reply 'I've created the minimal blue circle. Now that we have this visual starting point, would you like to use it for the storyboard we were discussing?'",
+    "mediaInsideThatTurn": 1,
+    "notInPreSubmitBaseline": true,
+    "mediaType": "IMAGE",
+    "resolutionEvidence": "DOM naturalWidth/Height and in-page Image decode both 512x512; no API or network response exposes a larger original, so the app-served 512x512 variant is the canonical available asset",
+    "semanticMatch": {
+      "prompt": "simple minimal blue circle centered on a clean light background. No text.",
+      "centerPixel": { "r": 3, "g": 131, "b": 186 },
+      "cornerPixel": { "r": 234, "g": 234, "b": 234 },
+      "edgeMidPixel": { "r": 239, "g": 239, "b": 239 },
+      "blueFractionOfGrid": 0.125,
+      "verdict": "BLUE_SHAPE_ON_LIGHT_BACKGROUND"
+    },
+    "resultBelongsToCurrentAttempt": true
+  },
+  "fullResolutionInvestigation": {
+    "srcsetOnResult": "",
+    "enclosingAnchorHref": null,
+    "downloadControlFound": false,
+    "apiMetadataSearched": true,
+    "apiMetadataResult": "no JSON/protobuf response exposed a resourceName, originalUrl or generationId for this asset",
+    "conclusion": "512x512 is the highest evidence-backed variant; no string-rewriting of the Google URL was used to invent a larger one",
+    "rejectedGuess": "the sizeless /asb/ URL of a DIFFERENT asset (512x288) was tested and rejected on aspect + pixel diff, not assumed to be the original"
+  }
+}

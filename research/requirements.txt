@@ -1,0 +1,4 @@
+# UNFOLDIQ research acquisition dependencies (PHASE 1G.1 Prompt 02).
+# Dedicated research venv: research/.venv (never committed).
+# Proven 2026-10-02 via crawl4ai-doctor (live crawl PASS). Pinned, minimal.
+crawl4ai==0.9.4

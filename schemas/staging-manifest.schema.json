@@ -1,0 +1,31 @@
+{
+  "$id": "https://unfoldiq.io/schemas/staging-manifest.schema.json",
+  "title": "UNFOLDIQ Staging Manifest Contract (STEP-12)",
+  "description": "Record of project assets copied into remotion/public/unfoldiq for rendering. Sources are never modified.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "projectId", "generatedAt", "root", "entries"],
+  "properties": {
+    "version": { "type": "string", "const": "1.0.0" },
+    "projectId": { "type": "string", "minLength": 1 },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "root": { "type": "string", "minLength": 1 },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["assetId", "sourcePath", "stagedPath", "staticFilePath", "contentHash", "size", "type"],
+        "properties": {
+          "assetId": { "type": "string", "minLength": 1 },
+          "sourcePath": { "type": "string", "minLength": 1 },
+          "stagedPath": { "type": "string", "minLength": 1 },
+          "staticFilePath": { "type": "string", "minLength": 1 },
+          "contentHash": { "type": "string", "minLength": 1 },
+          "size": { "type": "integer", "minimum": 1 },
+          "type": { "type": "string", "enum": ["image", "video", "audio"] }
+        }
+      }
+    }
+  }
+}

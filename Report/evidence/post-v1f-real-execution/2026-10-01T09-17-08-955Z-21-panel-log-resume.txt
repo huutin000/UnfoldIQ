@@ -1,0 +1,14 @@
+[2026-10-01T09:17:24.551Z] connected Flow tabs: 1
+[2026-10-01T09:17:24.562Z] liveTab: matched=1 tabId=47261522 origin=https://flow.google.com ping=true source=SESSION_REVALIDATED
+[2026-10-01T09:17:24.581Z] bridge token remembered on this device (storage.local)
+[2026-10-01T09:17:24.588Z] liveTab: matched=1 tabId=47261522 origin=https://flow.google.com ping=true source=SESSION_REVALIDATED
+[2026-10-01T09:17:24.588Z] job fetched: FLOW-COMPANION-LIVE-GEN-01 (GENERATING)
+[2026-10-01T09:17:24.588Z] autoPrepare: resume job=FLOW-COMPANION-LIVE-GEN-01 state=GENERATING
+[2026-10-01T09:17:24.592Z] liveTab: matched=1 tabId=47261522 origin=https://flow.google.com ping=true source=SESSION_REVALIDATED
+[2026-10-01T09:17:24.592Z] resume: result baseline captured (2 pre-existing)
+[2026-10-01T09:17:24.592Z] resume: adopting 2 result(s) for a job the bridge already counted as GENERATING at 2026-10-01T09:12:40.099Z (generationCount=1)
+[2026-10-01T09:17:24.599Z] liveTab: matched=1 tabId=47261522 origin=https://flow.google.com ping=true source=SESSION_REVALIDATED
+[2026-10-01T09:17:24.600Z] bytes fetched in-page: mime=image/png bytes=2080
+[2026-10-01T09:17:24.618Z] DOWNLOADING → IMPORTED → READY: assets/image/GEN01/GEN01_attempt-01.png sha256=1186233d1af671fcb50ff5084ded613777105ba87cf0d951481ab236ba5b322e bytes=2080
+[2026-10-01T09:17:24.622Z] liveTab: matched=1 tabId=47261522 origin=https://flow.google.com ping=true source=SESSION_REVALIDATED
+[2026-10-01T09:17:24.622Z] Flow Download-UI copy: DOWNLOAD_CONTROL_NOT_FOUND

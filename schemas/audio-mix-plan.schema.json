@@ -1,0 +1,107 @@
+{
+  "$id": "https://unfoldiq.io/schemas/audio-mix-plan.schema.json",
+  "title": "UNFOLDIQ Audio Mix Plan Contract",
+  "description": "Planned audio mix: voice, music, and sfx clips with levels, fades, ducking, and loudness evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "projectId", "tracks", "status"],
+  "definitions": {
+    "clip": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["clipId", "path"],
+      "properties": {
+        "clipId": { "type": "string", "minLength": 1 },
+        "path": { "type": "string", "minLength": 1 },
+        "fromMs": { "type": "integer", "minimum": 0 },
+        "trimStartMs": { "type": "integer", "minimum": 0 },
+        "trimEndMs": { "type": "integer", "minimum": 0 },
+        "gainDb": { "type": "number", "minimum": -60, "maximum": 12 },
+        "volume": { "type": "number", "minimum": 0, "maximum": 2 },
+        "fadeInMs": { "type": "integer", "minimum": 0 },
+        "fadeOutMs": { "type": "integer", "minimum": 0 },
+        "loop": { "type": "boolean" },
+        "ducking": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": { "type": "boolean" },
+            "targetAudioId": { "type": "string" },
+            "reductionDb": { "type": "number" },
+            "ranges": {
+              "type": "array",
+              "items": { "type": "object" }
+            }
+          }
+        },
+        "purpose": { "type": "string" },
+        "rightsStatus": { "type": "string" },
+        "language": { "type": "string" },
+        "voiceId": { "type": "string" },
+        "providerId": { "type": "string" },
+        "timingStatus": { "type": "string", "enum": ["PLANNED", "MEASURED", "UNKNOWN"] },
+        "timingSource": { "type": "string" },
+        "durationMs": { "type": "integer", "minimum": 0 }
+      }
+    }
+  },
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semantic version of this contract"
+    },
+    "projectId": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique project identifier"
+    },
+    "tracks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["voice", "music", "sfx"],
+      "properties": {
+        "voice": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/clip" }
+        },
+        "music": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/clip" }
+        },
+        "sfx": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/clip" }
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["READY", "REVIEW_REQUIRED", "BLOCKED", "PLANNED"],
+      "description": "Aggregate mix-plan status"
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "generatedClipAudioPolicy": {
+      "type": "string",
+      "enum": ["MUTE_GENERATED_CLIP_AUDIO", "USE_AS_PLANNED", "MIX", "REPLACE"]
+    },
+    "loudness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status"],
+      "properties": {
+        "status": { "type": "string", "enum": ["MEASURED", "NOT_MEASURED"] },
+        "peakDb": { "type": "number" },
+        "integratedLufs": { "type": "number" },
+        "tool": { "type": "string" }
+      }
+    },
+    "timelineEvidence": {
+      "type": "object",
+      "description": "Evidence linking mix ranges to the measured timeline"
+    }
+  }
+}

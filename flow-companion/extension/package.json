@@ -1,0 +1,10 @@
+{
+  "name": "unfoldiq-flow-companion",
+  "version": "0.5.0",
+  "private": true,
+  "description": "UNFOLDIQ Flow Companion extension (approval-gated, local-only)",
+  "scripts": {
+    "test": "node tests/run.js",
+    "build": "node build.js"
+  }
+}

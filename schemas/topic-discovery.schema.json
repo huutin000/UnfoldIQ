@@ -1,0 +1,226 @@
+{
+  "$id": "https://unfoldiq.io/schemas/topic-discovery.schema.json",
+  "title": "UNFOLDIQ Topic Discovery Contract",
+  "description": "Topic discovery output with candidates, validation, and selection",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "platform", "niche", "researchStatus", "sources", "candidates", "selection"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semantic version of this contract"
+    },
+    "platform": {
+      "type": "string",
+      "enum": ["youtube", "tiktok"],
+      "description": "Target platform"
+    },
+    "niche": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Niche provided by user"
+    },
+    "researchStatus": {
+      "type": "string",
+      "enum": ["VERIFIED", "PARTIALLY_VERIFIED", "NOT_VERIFIED"],
+      "description": "Overall research verification status"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["sourceId", "type", "title", "verificationStatus"],
+        "properties": {
+          "sourceId": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Unique source identifier"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["platform_official", "platform_discovery", "web_search", "user_provided", "competitor", "inference"],
+            "description": "Source type"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Source title/description"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Source URL if available"
+          },
+          "accessDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Date source was accessed"
+          },
+          "verificationStatus": {
+            "type": "string",
+            "enum": ["VERIFIED", "NOT_VERIFIED", "USER_PROVIDED"],
+            "description": "Source verification status"
+          }
+        }
+      }
+    },
+    "candidates": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["candidateId", "topic", "canonicalTopic", "subject", "audienceQuestion", "corePromise", "angle", "audienceReason", "evidenceSummary", "contentGapStatus", "storyPotential", "visualPotential", "productionNotes", "rightsRisk", "platformFit", "duplicateCheck", "decision"],
+        "properties": {
+          "candidateId": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9_-]+$",
+            "description": "Unique candidate identifier"
+          },
+          "topic": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Display topic/title"
+          },
+          "canonicalTopic": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Normalized canonical topic for dedup"
+          },
+          "subject": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Core subject/entity"
+          },
+          "audienceQuestion": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Primary audience question addressed"
+          },
+          "corePromise": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Core promise/value delivered"
+          },
+          "angle": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Specific angle/approach"
+          },
+          "timeScope": {
+            "type": "string",
+            "description": "Temporal scope if relevant"
+          },
+          "audienceReason": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Why audience cares"
+          },
+          "evidenceSummary": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Summary of supporting evidence"
+          },
+          "contentGapStatus": {
+            "type": "string",
+            "enum": ["SUPPORTED", "POSSIBLE", "NOT_SUPPORTED", "UNKNOWN"],
+            "description": "Content gap evidence level"
+          },
+          "storyPotential": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2,
+            "description": "Story potential score (0-2)"
+          },
+          "visualPotential": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2,
+            "description": "Visual potential score (0-2)"
+          },
+          "productionNotes": {
+            "type": "string",
+            "description": "Production considerations"
+          },
+          "rightsRisk": {
+            "type": "string",
+            "description": "Rights/legal risk notes"
+          },
+          "platformFit": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2,
+            "description": "Platform fit score (0-2)"
+          },
+          "duplicateCheck": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["classification", "decision", "rationale"],
+            "properties": {
+              "classification": {
+                "type": "string",
+                "enum": ["EXACT_DUPLICATE", "SAME_TOPIC_SAME_ANGLE", "SAME_TOPIC_NEW_ANGLE", "NEW_TOPIC", "REVISIT_UPDATE"],
+                "description": "Duplicate classification result"
+              },
+              "decision": {
+                "type": "string",
+                "enum": ["BLOCK", "ALLOW_CROSS_PLATFORM", "ALLOW_NEW_ANGLE", "ALLOW_NEW_TOPIC", "ALLOW_REVISIT", "REVISE"],
+                "description": "Duplicate gate decision"
+              },
+              "matchedTopicId": {
+                "type": "string",
+                "description": "Registry topic ID if matched"
+              },
+              "matchedPlatforms": {
+                "type": "array",
+                "items": { "type": "string", "enum": ["youtube", "tiktok"] },
+                "description": "Platforms where match exists"
+              },
+              "rationale": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Reason for classification/decision"
+              }
+            }
+          },
+          "decision": {
+            "type": "string",
+            "enum": ["GO", "REVISE", "HOLD"],
+            "description": "Final validation decision"
+          }
+        }
+      }
+    },
+    "selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "rationale"],
+      "properties": {
+        "selectedCandidateId": {
+          "type": "string",
+          "description": "ID of selected candidate"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["SELECTED", "REVISE_REQUIRED", "BLOCKED"],
+          "description": "Selection outcome"
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Selection rationale"
+        },
+        "alternatives": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Alternative candidate IDs kept for future"
+        }
+      }
+    }
+  }
+}

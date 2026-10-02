@@ -1,0 +1,42 @@
+platform: youtube
+
+platformFacts:
+  standardAspectRatio: "16:9"
+  standardResolution: "1920x1080"
+  blackBarsNotRequired: true
+
+projectDefaults:
+  orientation: landscape
+  aspectRatio: "16:9"
+  width: 1920
+  height: 1080
+  fps: 30
+  durationMode: content-driven
+  addBlackBars: false
+
+overrides:
+  allowed:
+    - width
+    - height
+    - fps
+    - duration
+    - aspectRatio
+  notes: "Explicit user request always overrides project defaults if technically feasible."
+
+sourceVerification:
+  checkedDate: "25/09/2026"
+  officialSources:
+    - "https://support.google.com/youtube/answer/6375112"
+
+captionProfile:
+  profileVersion: "1.0.0"
+  profileDate: "2026-09-26"
+  note: "Versioned defaults for caption builds; not permanent platform policy."
+  mode: SIDECAR
+  style: sentence
+  maxChars: 84
+  maxLines: 2
+  sidecarFormat: srt
+  burnIn: false
+  safeZone:
+    note: "16:9 landscape; keep captions clear of player chrome"

@@ -1,0 +1,55 @@
+{
+  "packId": "pack-1daade0f8442",
+  "packHash": "1daade0f84427375",
+  "briefId": "nb-e08354fe30ca",
+  "draftId": "drf-5170890fb970",
+  "audit": "PASS",
+  "issues": [],
+  "claims": [
+    {
+      "claimId": "clm-8935cbdd21be",
+      "corroborationStatus": "PRIMARY_CONFIRMED",
+      "independentGroups": 2,
+      "rationale": "primary/official support present"
+    },
+    {
+      "claimId": "clm-18900323a523",
+      "corroborationStatus": "SINGLE_SOURCE",
+      "independentGroups": 1,
+      "rationale": "one origin group behind all support"
+    },
+    {
+      "claimId": "clm-f3482021bcb5",
+      "corroborationStatus": "PRIMARY_CONFIRMED",
+      "independentGroups": 1,
+      "rationale": "primary/official support present"
+    },
+    {
+      "claimId": "clm-c4ec41213815",
+      "corroborationStatus": "SINGLE_SOURCE",
+      "independentGroups": 1,
+      "rationale": "one origin group behind all support"
+    }
+  ],
+  "sufficiency": "SUFFICIENT",
+  "sources": [
+    {
+      "id": "src-1114d819459b",
+      "type": "OFFICIAL",
+      "indep": "INDEPENDENT",
+      "hash": "1ffad4aa74b2"
+    },
+    {
+      "id": "src-fa4eaaea98a4",
+      "type": "UNKNOWN",
+      "indep": "INDEPENDENT",
+      "hash": "274c8cee5b66"
+    },
+    {
+      "id": "src-048e66b5112e",
+      "type": "UNKNOWN",
+      "indep": "INDEPENDENT",
+      "hash": "359cf28aed3b"
+    }
+  ]
+}

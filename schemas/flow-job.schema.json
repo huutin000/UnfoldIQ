@@ -1,0 +1,194 @@
+{
+  "$id": "https://unfoldiq.io/schemas/flow-job.schema.json",
+  "title": "UNFOLDIQ Flow Job Contract",
+  "description": "Human-in-the-loop generation job executed through Google Flow via the Flow Companion. No unattended full-auto generation by default.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "jobId",
+    "requestId",
+    "projectId",
+    "sceneId",
+    "capability",
+    "mode",
+    "prompt",
+    "platform",
+    "flowProject",
+    "outputRequirements",
+    "creativeContext",
+    "expectedOutputPath",
+    "status",
+    "attempt"
+  ],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "jobId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "requestId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "projectId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sceneId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "capability": {
+      "type": "string",
+      "enum": ["image", "video"]
+    },
+    "mode": {
+      "type": "string",
+      "enum": ["ASSISTED_APPROVAL", "MANUAL_ASSIST"]
+    },
+    "prompt": {
+      "type": "string",
+      "minLength": 1
+    },
+    "platform": {
+      "type": "string",
+      "minLength": 1
+    },
+    "flowProject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode"],
+      "properties": {
+        "mode": { "type": "string", "enum": ["REUSE", "NEW"] },
+        "flowProjectId": { "type": "string" },
+        "displayName": { "type": "string" }
+      }
+    },
+    "outputRequirements": {
+      "type": "object"
+    },
+    "creativeContext": {
+      "type": "object",
+      "description": "Normalized summaries only, never full documents"
+    },
+    "continuityContext": {
+      "type": "object",
+      "properties": {
+        "strictness": { "type": "string" },
+        "requiredEntities": { "type": "array", "items": { "type": "string" } },
+        "referenceAssetIds": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "referenceAssets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["assetId", "path"],
+        "properties": {
+          "assetId": { "type": "string" },
+          "path": { "type": "string" }
+        }
+      }
+    },
+    "startFrame": {
+      "type": "object",
+      "properties": {
+        "assetId": { "type": "string" },
+        "path": { "type": "string" }
+      }
+    },
+    "endFrame": {
+      "type": "object",
+      "properties": {
+        "assetId": { "type": "string" },
+        "path": { "type": "string" }
+      }
+    },
+    "ingredients": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["assetId", "path"],
+        "properties": {
+          "assetId": { "type": "string" },
+          "path": { "type": "string" }
+        }
+      }
+    },
+    "modelPreference": {
+      "type": "string"
+    },
+    "generationLength": {
+      "type": "string"
+    },
+    "aspectRatio": {
+      "type": "string"
+    },
+    "outputCount": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "expectedOutputPath": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Project-relative expected destination"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["PENDING", "VALIDATED", "PREPARED", "AWAITING_USER_APPROVAL", "GENERATING", "RESULT_DETECTED", "DOWNLOADING", "IMPORTED", "READY", "PAUSED", "RETRYABLE_ERROR", "FAILED", "CANCELLED", "MANUAL_ASSIST_REQUIRED", "REJECTED_BY_USER", "REJECTED_BY_QA", "RECONCILIATION_REQUIRED", "PROVIDER_SAFETY_REFUSED", "SAFETY_ADAPTATION_REQUIRED", "SAFETY_ADAPTATION_PREPARED", "SAFE_FALLBACK_REQUIRED"]
+    },
+    "attempt": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "generationCount": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["from", "to"],
+        "properties": {
+          "from": { "type": ["string", "null"] },
+          "to": { "type": "string" },
+          "at": { "type": "string" },
+          "actor": { "type": "string" },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "approval": {
+      "type": "object",
+      "properties": {
+        "jobId": { "type": "string" },
+        "attempt": { "type": "integer" },
+        "approvedAt": { "type": "string" },
+        "approvedBy": { "type": "string" },
+        "used": { "type": "boolean" }
+      }
+    },
+    "creditMetadata": {
+      "type": "object",
+      "properties": {
+        "source": { "type": "string" },
+        "model": { "type": "string" },
+        "estimatedCredits": { "type": ["number", "null"] },
+        "verifiedAt": { "type": "string" },
+        "stale": { "type": "boolean" }
+      }
+    },
+    "error": {
+      "type": "object",
+      "properties": {
+        "errorCode": { "type": "string" },
+        "errorSummary": { "type": "string" }
+      }
+    }
+  }
+}

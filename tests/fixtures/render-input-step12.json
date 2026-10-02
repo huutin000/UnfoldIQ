@@ -1,0 +1,232 @@
+{
+  "version": "1.0.0",
+  "projectId": "__step12_fixture__",
+  "platform": "youtube",
+  "composition": {
+    "id": "UNFOLDIQVideo",
+    "width": 640,
+    "height": 360,
+    "fps": 30,
+    "durationMs": 4000,
+    "durationInFrames": 120,
+    "background": "#0b0e14",
+    "outputName": "__step12_fixture__"
+  },
+  "timeline": {
+    "actualTimelineEndMs": 4000,
+    "sources": ["voice-measured:wav-header", "visual-planned:scene-script"]
+  },
+  "scenes": [
+    {
+      "sceneId": "scene_001",
+      "startMs": 0,
+      "endMs": 2000,
+      "durationMs": 2000,
+      "background": "#0b0e14",
+      "purpose": "hook",
+      "layers": [
+        {
+          "layerId": "scene_001_bg",
+          "kind": "BACKGROUND",
+          "fill": { "kind": "solid", "color": "#0b0e14" },
+          "startMs": 0,
+          "endMs": 2000
+        },
+        {
+          "layerId": "scene_001_visual",
+          "kind": "IMAGE",
+          "assetId": "IMG01",
+          "fit": "cover",
+          "position": { "x": 0.5, "y": 0.5 },
+          "opacity": 1,
+          "scale": 1,
+          "motion": "NONE",
+          "startMs": 0,
+          "endMs": 2000
+        },
+        {
+          "layerId": "scene_001_text",
+          "kind": "TEXT",
+          "text": "What protected the little ones?",
+          "position": { "xPct": 50, "yPct": 85 },
+          "widthPct": 80,
+          "align": "center",
+          "typographyToken": "body",
+          "startMs": 0,
+          "endMs": 2000
+        }
+      ],
+      "transition": { "type": "CUT" }
+    },
+    {
+      "sceneId": "scene_002",
+      "startMs": 2000,
+      "endMs": 4000,
+      "durationMs": 2000,
+      "background": "#0b0e14",
+      "purpose": "evidence",
+      "layers": [
+        {
+          "layerId": "scene_002_bg",
+          "kind": "BACKGROUND",
+          "fill": { "kind": "solid", "color": "#0b0e14" },
+          "startMs": 0,
+          "endMs": 2000
+        },
+        {
+          "layerId": "scene_002_visual",
+          "kind": "VIDEO",
+          "assetId": "VID01",
+          "fit": "cover",
+          "position": { "x": 0.5, "y": 0.5 },
+          "opacity": 1,
+          "trimStartMs": 0,
+          "trimEndMs": 2000,
+          "muted": true,
+          "audioPolicy": "MUTED",
+          "loop": false,
+          "startMs": 0,
+          "endMs": 2000
+        }
+      ],
+      "transition": { "type": "FADE", "durationMs": 300 }
+    }
+  ],
+  "assets": {
+    "IMG01": {
+      "assetId": "IMG01",
+      "type": "image",
+      "stagedPath": "unfoldiq/__step12_fixture__/a1b2c3d4/scene1.png",
+      "staticFilePath": "unfoldiq/__step12_fixture__/a1b2c3d4/scene1.png",
+      "width": 640,
+      "height": 360
+    },
+    "VID01": {
+      "assetId": "VID01",
+      "type": "video",
+      "stagedPath": "unfoldiq/__step12_fixture__/e5f6a7b8/scene2.mp4",
+      "staticFilePath": "unfoldiq/__step12_fixture__/e5f6a7b8/scene2.mp4",
+      "width": 640,
+      "height": 360,
+      "durationMs": 2000
+    },
+    "AUD_V1": {
+      "assetId": "AUD_V1",
+      "type": "audio",
+      "stagedPath": "unfoldiq/__step12_fixture__/c9d0e1f2/voice.wav",
+      "staticFilePath": "unfoldiq/__step12_fixture__/c9d0e1f2/voice.wav",
+      "durationMs": 3800
+    },
+    "AUD_M1": {
+      "assetId": "AUD_M1",
+      "type": "audio",
+      "stagedPath": "unfoldiq/__step12_fixture__/0a1b2c3d/music.wav",
+      "staticFilePath": "unfoldiq/__step12_fixture__/0a1b2c3d/music.wav",
+      "durationMs": 4000
+    },
+    "AUD_S1": {
+      "assetId": "AUD_S1",
+      "type": "audio",
+      "stagedPath": "unfoldiq/__step12_fixture__/4d5e6f7a/sfx.wav",
+      "staticFilePath": "unfoldiq/__step12_fixture__/4d5e6f7a/sfx.wav",
+      "durationMs": 500
+    }
+  },
+  "audio": {
+    "voice": [
+      {
+        "clipId": "clip_v01",
+        "path": "unfoldiq/__step12_fixture__/c9d0e1f2/voice.wav",
+        "fromMs": 0,
+        "trimStartMs": 0,
+        "trimEndMs": 3800,
+        "gainDb": 0,
+        "fadeInMs": 50,
+        "fadeOutMs": 150,
+        "loop": false
+      }
+    ],
+    "music": [
+      {
+        "clipId": "clip_m01",
+        "path": "unfoldiq/__step12_fixture__/0a1b2c3d/music.wav",
+        "fromMs": 0,
+        "trimStartMs": 0,
+        "trimEndMs": 4000,
+        "gainDb": -12,
+        "fadeInMs": 300,
+        "fadeOutMs": 500,
+        "loop": false,
+        "ducking": {
+          "enabled": true,
+          "targetAudioId": "clip_v01",
+          "reductionDb": -6,
+          "ranges": [{ "startMs": 0, "endMs": 3800 }]
+        }
+      }
+    ],
+    "sfx": [
+      {
+        "clipId": "clip_s01",
+        "path": "unfoldiq/__step12_fixture__/4d5e6f7a/sfx.wav",
+        "fromMs": 2000,
+        "trimStartMs": 0,
+        "trimEndMs": 500,
+        "gainDb": -6,
+        "fadeInMs": 10,
+        "fadeOutMs": 100,
+        "loop": false
+      }
+    ],
+    "generatedClipAudioPolicy": "MUTE_GENERATED_CLIP_AUDIO"
+  },
+  "captions": {
+    "mode": "BOTH",
+    "items": [
+      {
+        "captionId": "cap_001",
+        "startMs": 100,
+        "endMs": 1900,
+        "text": "What protected the little ones?",
+        "sceneId": "scene_001"
+      },
+      {
+        "captionId": "cap_002",
+        "startMs": 2100,
+        "endMs": 3900,
+        "text": "The group stayed close, always watching.",
+        "sceneId": "scene_002"
+      }
+    ]
+  },
+  "visualSystem": {
+    "background": "#0b0e14",
+    "foreground": "#f5f7fa",
+    "muted": "#8a93a6",
+    "accent": "#4da3ff",
+    "fontFamily": "system-ui, sans-serif",
+    "titleSize": 64,
+    "bodySize": 32,
+    "captionSize": 28,
+    "cornerRadius": 8,
+    "spacing": 16,
+    "overlayOpacity": 0.55
+  },
+  "provenance": {
+    "preflightVersion": "1.0.0",
+    "timelineHash": "01234567",
+    "assetManifestHash": "89abcdef",
+    "audioMixHash": "00112233",
+    "captionsHash": "44556677",
+    "visualBibleVersion": "vb-1",
+    "continuityRegistryVersion": "1.0.0",
+    "durationContractVersion": "1.0.0",
+    "platformProfileVersion": "1.0.0",
+    "remotionVersions": {
+      "remotion": "4.0.529",
+      "@remotion/renderer": "4.0.529",
+      "@remotion/bundler": "4.0.529"
+    }
+  },
+  "status": "READY"
+}

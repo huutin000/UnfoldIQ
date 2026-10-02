@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "jobId": "FLOW-COMPANION-LIVE-GEN-01",
+  "attempt": 1,
+  "artifactPath": "assets/image/GEN01/GEN01_attempt-01.png",
+  "sha256": "1186233d1af671fcb50ff5084ded613777105ba87cf0d951481ab236ba5b322e",
+  "bytes": 2080,
+  "mime": "image/png",
+  "width": 32,
+  "height": 32,
+  "downloadId": null,
+  "promptFingerprint": "bef331eddf38ca3d9b7e6cc9509181081039221ed9d95f8c33dbe3798686359d",
+  "checkedAt": "2026-10-01T09:17:24.602Z"
+}

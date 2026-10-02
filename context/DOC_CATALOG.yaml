@@ -1,0 +1,336 @@
+# UNFOLDIQ runtime document catalog (STEP 09 V2)
+# Single source of truth for what each runtime doc is and when it loads.
+# Historical reports/prompts are NOT catalogued individually; see developmentHistory below.
+version: "1.0.0"
+documents:
+  - id: agents
+    path: "AGENTS.md"
+    class: "ROUTER_INVARIANT"
+    purpose: "Thin entrypoint router: stage determination and context-routing rules"
+    stages: ["1", "2", "3A", "3B", "3C", "3D", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"]
+  - id: workflow
+    path: "core/WORKFLOW.md"
+    class: "ROUTER_INVARIANT"
+    purpose: "Canonical production flow and stage execution rules"
+    stages: ["1", "2", "3A", "3B", "3C", "3D", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"]
+  - id: context-router
+    path: "core/CONTEXT_ROUTER.md"
+    class: "ROUTER_INVARIANT"
+    purpose: "Context classes, routing procedure, manifest and PASS-gate rules"
+    stages: ["1", "2", "3A", "3B", "3C", "3D", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"]
+  - id: platform-index
+    path: "platforms/INDEX.md"
+    class: "STAGE_REQUIRED"
+    purpose: "Platform router: aliases, resolution rules, profile routes"
+    stages: ["1", "2"]
+  - id: platform-profile-youtube
+    path: "platforms/youtube/PROFILE.yaml"
+    class: "STAGE_CONDITIONAL"
+    purpose: "YouTube technical/output defaults for the requested platform"
+    stages: ["1", "2", "3A", "3C"]
+    conditions: ["platform == youtube"]
+  - id: platform-profile-tiktok
+    path: "platforms/tiktok/PROFILE.yaml"
+    class: "STAGE_CONDITIONAL"
+    purpose: "TikTok technical/output defaults for the requested platform"
+    stages: ["1", "2", "3A", "3C"]
+    conditions: ["platform == tiktok"]
+  - id: topic-discovery
+    path: "core/TOPIC_DISCOVERY.md"
+    class: "STAGE_REQUIRED"
+    purpose: "Topic discovery and idea-validation rules"
+    stages: ["3A"]
+  - id: topic-registry
+    path: "core/TOPIC_REGISTRY.md"
+    class: "STAGE_REQUIRED"
+    purpose: "Registry duplicate/history rules and lifecycle statuses"
+    stages: ["3A"]
+  - id: topic-registry-json
+    path: "projects/TOPIC_REGISTRY.json"
+    class: "STAGE_REQUIRED"
+    purpose: "Registry data: duplicate checks and selection upserts"
+    stages: ["3A"]
+  - id: research-quality
+    path: "core/RESEARCH_QUALITY.md"
+    class: "STAGE_REQUIRED"
+    purpose: "Research gate: source hierarchy, claim classes, semantic invariants"
+    stages: ["3B"]
+  - id: research-brief-schema
+    path: "schemas/research-brief.schema.json"
+    class: "STAGE_REQUIRED"
+    purpose: "Research-brief contract for validation"
+    stages: ["3B"]
+  - id: content-mode
+    path: "core/CONTENT_MODE.md"
+    class: "STAGE_REQUIRED"
+    purpose: "Content Mode resolution and cross-modal propagation"
+    stages: ["3C", "4", "5", "6", "7", "8", "12"]
+  - id: editorial-value
+    path: "core/EDITORIAL_VALUE.md"
+    class: "STAGE_REQUIRED"
+    purpose: "Beyond-search value gate, conditional examples, insight chain"
+    stages: ["3D", "4", "5"]
+  - id: storytelling
+    path: "core/STORYTELLING.md"
+    class: "STAGE_REQUIRED"
+    purpose: "Story structure, script quality, scene handoff contract"
+    stages: ["4", "5"]
+  - id: duration-planning
+    path: "core/DURATION_PLANNING.md"
+    class: "STAGE_REQUIRED"
+    purpose: "Duration modes, capacity, working duration, timeline rules"
+    stages: ["4", "13"]
+  - id: duration-planning-conditional
+    path: "core/DURATION_PLANNING.md"
+    class: "STAGE_CONDITIONAL"
+    purpose: "Duration/timeline validation for final duration"
+    stages: ["14"]
+    conditions: ["duration/timeline validation needed for final duration"]
+  - id: creative-direction
+    path: "core/CREATIVE_DIRECTION.md"
+    class: "STAGE_REQUIRED"
+    purpose: "Global creative direction, emotional arc, cross-modal consistency"
+    stages: ["6", "7", "8", "10", "12"]
+  - id: visual-bible
+    path: "core/VISUAL_BIBLE.md"
+    class: "STAGE_REQUIRED"
+    purpose: "Visual continuity, reconstruction labeling, provenance boundary"
+    stages: ["6", "7", "8", "10"]
+  - id: production-contracts
+    path: "core/PRODUCTION_CONTRACTS.md"
+    class: "STAGE_REQUIRED"
+    purpose: "Artifact contract reference for scene/asset/audio/caption/video-spec"
+    stages: ["8", "9", "10", "11", "12", "13"]
+  - id: pipeline-13
+    path: "core/PIPELINE_13.md"
+    class: "STAGE_REQUIRED"
+    purpose: "Step 12 to Step 13 chain: attempt, QA, fix, final promotion rules"
+    stages: ["13"]
+  - id: render-orchestrator
+    path: "pipeline/render-orchestrator.js"
+    class: "STAGE_REQUIRED"
+    purpose: "Pipeline orchestration: prepare, render, resume, cancel, QA ops"
+    stages: ["13"]
+  - id: pipeline-state-store
+    path: "pipeline/state-store.js"
+    class: "STAGE_REQUIRED"
+    purpose: "Durable pipeline state, transitions, attempt and checkpoint records"
+    stages: ["13"]
+  - id: render-config
+    path: "pipeline/render-config.js"
+    class: "STAGE_REQUIRED"
+    purpose: "Render configuration defaults, bounded overrides, retry policy"
+    stages: ["13"]
+  - id: technical-qa
+    path: "qa/technical-qa.js"
+    class: "STAGE_REQUIRED"
+    purpose: "Machine technical QA for render attempts (bytes, not meaning)"
+    stages: ["13"]
+  - id: visual-qa
+    path: "qa/visual-qa.js"
+    class: "STAGE_CONDITIONAL"
+    purpose: "Visual review packets and agent/human review submission"
+    stages: ["13"]
+    conditions: ["visual QA evidence or review submission is required"]
+  - id: auto-fix
+    path: "pipeline/auto-fix.js"
+    class: "STAGE_CONDITIONAL"
+    purpose: "Classified fix planning and bounded safe-automatic remediation"
+    stages: ["13"]
+    conditions: ["a render attempt failed with a classified error"]
+  - id: render-input-schema
+    path: "schemas/render-input.schema.json"
+    class: "STAGE_REQUIRED"
+    purpose: "Step 12 render input contract consumed by the Step 13 pipeline"
+    stages: ["13"]
+  - id: render-qa-schema
+    path: "schemas/render-qa.schema.json"
+    class: "STAGE_REQUIRED"
+    purpose: "Machine technical QA verdict contract for render attempts"
+    stages: ["13"]
+  - id: render-plan-cli
+    path: "scripts/cli/render-plan-cli.js"
+    class: "STAGE_CONDITIONAL"
+    purpose: "Render plan derivation and rebuild (Step 12 contract, Step 13 reuse)"
+    stages: ["13"]
+    conditions: ["render plan derivation or rebuild is required"]
+  - id: audio-timeline-measured
+    path: "lib/audio-timeline.js"
+    class: "STAGE_CONDITIONAL"
+    purpose: "Measured timeline math backing duration QA expectations"
+    stages: ["13"]
+    conditions: ["measured timeline evidence is required for duration QA"]
+  - id: media-preflight
+    path: "lib/media-preflight.js"
+    class: "STAGE_REQUIRED"
+    purpose: "Media preflight engine: structural validation, probe metadata, rights/provenance/continuity gates, clip-audio policy"
+    stages: ["11"]
+  - id: media-preflight-schema
+    path: "schemas/media-preflight.schema.json"
+    class: "STAGE_REQUIRED"
+    purpose: "Media-preflight contract for validation"
+    stages: ["11", "12"]
+  - id: transcript-alignment
+    path: "lib/transcript-alignment.js"
+    class: "STAGE_CONDITIONAL"
+    purpose: "Planned-script vs measured-transcript alignment (MATCH/MINOR/MATERIAL)"
+    stages: ["11", "12"]
+    conditions: ["voice/captions active"]
+  - id: caption-builder
+    path: "lib/caption-builder.js"
+    class: "STAGE_CONDITIONAL"
+    purpose: "Canonical captions JSON + SRT/VTT from measured timing only"
+    stages: ["11", "12"]
+    conditions: ["voice/captions active"]
+  - id: audio-timeline
+    path: "lib/audio-timeline.js"
+    class: "STAGE_CONDITIONAL"
+    purpose: "Audio mix assembly and measured-timeline math (no fabrication)"
+    stages: ["11", "12"]
+    conditions: ["voice/captions active"]
+  - id: audio-mix-plan-schema
+    path: "schemas/audio-mix-plan.schema.json"
+    class: "STAGE_CONDITIONAL"
+    purpose: "Audio mix-plan contract for validation"
+    stages: ["11", "12"]
+    conditions: ["voice/captions active"]
+  - id: provider-index
+    path: "providers/INDEX.md"
+    class: "STAGE_REQUIRED"
+    purpose: "Provider routing entrypoint"
+    stages: ["9", "10"]
+  - id: provider-config
+    path: "providers/CONFIG.yaml"
+    class: "STAGE_REQUIRED"
+    purpose: "Provider selection and capability configuration"
+    stages: ["9", "10"]
+  - id: provider-contract
+    path: "providers/PROVIDER_CONTRACT.md"
+    class: "STAGE_REQUIRED"
+    purpose: "Provider I/O and provenance output contract"
+    stages: ["9", "10"]
+  - id: provider-notes
+    path: "providers/PROVIDERS.md"
+    class: "STAGE_CONDITIONAL"
+    purpose: "Provider capability notes, loaded when capability choice is material"
+    stages: ["9", "10"]
+    conditions: ["provider capability selection is material"]
+  - id: provider-runtime
+    path: "providers/runtime/README.md"
+    class: "STAGE_REQUIRED"
+    purpose: "Universal provider runtime: registry, resolver, artifact store, adapters"
+    stages: ["9", "10"]
+  - id: flow-companion
+    path: "flow-companion/README.md"
+    class: "STAGE_CONDITIONAL"
+    purpose: "Flow Companion: approval-gated Flow generation via bridge + extension"
+    stages: ["10"]
+    conditions: ["selected provider is flow-web"]
+  - id: flow-job-schema
+    path: "schemas/flow-job.schema.json"
+    class: "STAGE_CONDITIONAL"
+    purpose: "Flow job contract for validation"
+    stages: ["10"]
+    conditions: ["selected provider is flow-web"]
+  - id: flow-web-adapter
+    path: "providers/runtime/adapters/flow-web.js"
+    class: "STAGE_CONDITIONAL"
+    purpose: "flow-web provider adapter: job creation, approval gate, manual assist"
+    stages: ["10"]
+    conditions: ["selected provider is flow-web"]
+  - id: comfyui-docs
+    path: "providers/local/comfyui/README.md"
+    class: "STAGE_CONDITIONAL"
+    purpose: "Local ComfyUI workflow backend (image/video), registry-driven"
+    stages: ["10"]
+    conditions: ["selected provider is local-comfyui"]
+  - id: kokoro-docs
+    path: "providers/local/SETUP_KOKORO.md"
+    class: "STAGE_CONDITIONAL"
+    purpose: "Local Kokoro TTS setup and language constraints"
+    stages: ["10"]
+    conditions: ["selected provider is local-kokoro"]
+  - id: whisper-docs
+    path: "providers/local/SETUP_WHISPER.md"
+    class: "STAGE_CONDITIONAL"
+    purpose: "Local whisper.cpp STT setup and timing artifacts"
+    stages: ["10"]
+    conditions: ["selected provider is local-whisper"]
+  - id: mcp-docs
+    path: "mcp/unfoldiq-media/README.md"
+    class: "STAGE_CONDITIONAL"
+    purpose: "UNFOLDIQ Media MCP bridge: tools delegating to provider runtime"
+    stages: ["10"]
+    conditions: ["agent/MCP route is used"]
+  - id: capability-matrix
+    path: "providers/CAPABILITY_MATRIX.md"
+    class: "STAGE_CONDITIONAL"
+    purpose: "Provider capability matrix: implementation vs live availability"
+    stages: ["10"]
+    conditions: ["cloud provider is selected or configured"]
+  - id: continuity
+    path: "core/CONTINUITY.md"
+    class: "STAGE_CONDITIONAL"
+    purpose: "Continuity pipeline, entity types, lock process, scene strictness"
+    stages: ["7", "8", "9", "10"]
+    conditions: ["scene requires recurring visual consistency"]
+  - id: continuity-registry-schema
+    path: "schemas/continuity-registry.schema.json"
+    class: "STAGE_CONDITIONAL"
+    purpose: "Continuity registry contract for validation"
+    stages: ["9", "10"]
+    conditions: ["scene requires recurring visual consistency"]
+  - id: policy-rights
+    path: "core/POLICY_RIGHTS.md"
+    class: "STAGE_CONDITIONAL"
+    purpose: "Rights/AI/originality invariants for pre-production and final QA gates"
+    stages: ["9", "10", "17"]
+    conditions: ["asset uses third-party, AI-generated, or likeness-bearing material"]
+  - id: policy-router
+    path: "policy/ROUTER.md"
+    class: "STAGE_CONDITIONAL"
+    purpose: "Policy category routing across the 4 axes"
+    stages: ["9", "10", "17"]
+    conditions: ["rights, AI, likeness, or monetization-sensitive material present"]
+  - id: policy-sources
+    path: "policy/SOURCES.yaml"
+    class: "STAGE_CONDITIONAL"
+    purpose: "Official policy source registry with verification metadata"
+    stages: ["17"]
+    conditions: ["final QA / policy review runs"]
+  - id: manual-publish-checklist
+    path: "core/MANUAL_PUBLISH_CHECKLIST.md"
+    class: "STAGE_CONDITIONAL"
+    purpose: "Manual upload checklist for the publishing user"
+    stages: ["17", "19"]
+    conditions: ["final handoff prepared"]
+  - id: research-plan-schema
+    path: "schemas/research-plan.schema.json"
+    class: "STAGE_CONDITIONAL"
+    purpose: "V5 Research Plan + Question Planner contract for validation"
+    stages: ["3B"]
+    conditions: ["research planning active"]
+  - id: platform-overlay-youtube
+    path: "platforms/youtube/OVERLAY.md"
+    class: "STAGE_CONDITIONAL"
+    purpose: "YouTube overlay: metadata/packaging/policy/monetization + prompt contracts (shared core stays in core/*)"
+    stages: ["3B", "4"]
+    conditions: ["platform == youtube and platform governance applies"]
+  - id: platform-overlay-tiktok
+    path: "platforms/tiktok/OVERLAY.md"
+    class: "STAGE_CONDITIONAL"
+    purpose: "TikTok overlay: aspect/safe-zone/packaging/creative constraints (shared core stays in core/*)"
+    stages: ["3B", "4"]
+    conditions: ["platform == tiktok and platform governance applies"]
+  - id: v5-contract-check
+    path: "lib/v5-contract-check.js"
+    class: "STAGE_CONDITIONAL"
+    purpose: "V5 semantic contract checks S1-S15 (deterministic, no runtime)"
+    stages: ["3B", "4"]
+    conditions: ["V5 contract validation runs"]
+developmentHistory:
+  excludeFromRuntime:
+    - "Report/**"
+    - "**/STEP-*_PROMPT.md"
+    - "**/STEP-*_FIX*.md"
+    - "setup/history/**"

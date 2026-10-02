@@ -1,0 +1,93 @@
+/* UNFOLDIQ Flow Companion — base layer (POST-v1D).
+ * App shell, typography, responsive shell, zero-horizontal-scroll guards.
+ * Vietnamese readability fix: text no longer cramped — relaxed line-height,
+ * letter-spacing and word-spacing on body copy, safe line boxes for
+ * stacked diacritics (á, ằ, ể, ữ…).
+ */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-stack);
+  font-size: var(--font-body);
+  line-height: var(--line-body);
+  letter-spacing: var(--tracking-body);
+  word-spacing: 0.02em;
+  color: var(--color-text);
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* App shell consumes the full side-panel width at any size. */
+#app {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  min-height: 100vh;
+  margin: 0;
+  padding: var(--space-3);
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3 {
+  line-height: var(--line-heading);
+  letter-spacing: var(--tracking-heading);
+  margin: 0;
+}
+
+p {
+  margin: 0 0 var(--space-2);
+  line-height: var(--line-body);
+  letter-spacing: var(--tracking-body);
+}
+
+/* Long values never force page-level horizontal scrolling. */
+#app * {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* Visible keyboard focus everywhere. */
+#app :focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Comfortable touch/keyboard hit targets for main actions. */
+#app button {
+  min-height: 36px;
+  font-family: inherit;
+  letter-spacing: var(--tracking-body);
+  line-height: 1.5;
+}
+
+/* Narrow: single column (default). */
+.view {
+  width: 100%;
+  min-width: 0;
+}
+
+/* Medium: airier cards, inline metadata. */
+@media (min-width: 560px) {
+  #app {
+    padding: var(--space-4);
+  }
+}
+
+/* Wide: optional two-column content (job | reference), no filler panels. */
+@media (min-width: 720px) {
+  #view-main .split {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: var(--space-3);
+    align-items: start;
+  }
+}

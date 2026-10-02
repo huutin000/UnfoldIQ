@@ -1,0 +1,47 @@
+[
+  {
+    "query": "What official documentation or authoritative reference defines correct behavior for \"Crawl4AI markdown generation result API\"?",
+    "url": "https://api.crawl4ai.com/docs",
+    "title": "Docs · Crawl4AI Cloud",
+    "snippet": "Crawl4AI Cloud API reference. One key, plain JSON, one fast endpoint.",
+    "provider": "agent-exchange",
+    "retrievedAt": "2026-10-02T03:03:19.826Z",
+    "searchRank": 1
+  },
+  {
+    "query": "What official documentation or authoritative reference defines correct behavior for \"Crawl4AI markdown generation result API\"?",
+    "url": "https://api.crawl4ai.com/docs/reference/models",
+    "title": "Docs · Crawl4AI Cloud",
+    "snippet": "Scrape request and response models with fit_markdown support.",
+    "provider": "agent-exchange",
+    "retrievedAt": "2026-10-02T03:03:19.826Z",
+    "searchRank": 2
+  },
+  {
+    "query": "What official documentation or authoritative reference defines correct behavior for \"Crawl4AI markdown generation result API\"?",
+    "url": "https://docs.crawl4ai.com/api/crawl-result",
+    "title": "CrawlResult - Crawl4AI Documentation (v0.9.x)",
+    "snippet": "The CrawlResult class encapsulates everything returned after a single crawl operation.",
+    "provider": "agent-exchange",
+    "retrievedAt": "2026-10-02T03:03:19.826Z",
+    "searchRank": 3
+  },
+  {
+    "query": "What official documentation or authoritative reference defines correct behavior for \"Crawl4AI markdown generation result API\"?",
+    "url": "https://docs.crawl4ai.com/core/markdown-generation",
+    "title": "Markdown Generation - Crawl4AI Documentation (v0.9.x)",
+    "snippet": "How to configure the Default Markdown Generator with BM25 or Pruning filters.",
+    "provider": "agent-exchange",
+    "retrievedAt": "2026-10-02T03:03:19.826Z",
+    "searchRank": 4
+  },
+  {
+    "query": "What official documentation or authoritative reference defines correct behavior for \"Crawl4AI markdown generation result API\"?",
+    "url": "https://docs.crawl4ai.com/",
+    "title": "Home - Crawl4AI Documentation (v0.9.x)",
+    "snippet": "Crawl4AI open-source crawler home page.",
+    "provider": "agent-exchange",
+    "retrievedAt": "2026-10-02T03:03:19.826Z",
+    "searchRank": 5
+  }
+]

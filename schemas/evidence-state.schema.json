@@ -1,0 +1,151 @@
+{
+  "$id": "https://unfoldiq.io/schemas/evidence-state.schema.json",
+  "title": "UNFOLDIQ Evidence State (1G.1I/1G.1J/1G.1K/1G.1L)",
+  "description": "Claim/evidence ledger, contradictions, unknowns, and sufficiency evaluations. Structured evidence state, not prose. Claim class, evidence strength, and corroboration stay three separate axes (canonical brief enums).",
+  "type": "object",
+  "anyOf": [
+    { "$ref": "#/$defs/claimsFile" },
+    { "$ref": "#/$defs/contradictionsFile" },
+    { "$ref": "#/$defs/unknownsFile" },
+    { "$ref": "#/$defs/sufficiencyFile" }
+  ],
+  "$defs": {
+    "evidenceLink": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceId", "contentHash", "excerpt"],
+      "properties": {
+        "sourceId": { "type": "string", "minLength": 1 },
+        "contentHash": { "type": "string", "minLength": 8 },
+        "locator": { "type": ["string", "null"] },
+        "excerpt": { "type": "string", "minLength": 1, "maxLength": 280 }
+      }
+    },
+    "claimRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["claimId", "claim", "claimClass", "evidenceStatus", "corroborationStatus", "materiality"],
+      "properties": {
+        "claimId": { "type": "string", "pattern": "^clm-[0-9a-f]{12}$" },
+        "researchQuestionIds": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "claim": { "type": "string", "minLength": 1 },
+        "claimClass": {
+          "type": "string",
+          "enum": ["DIRECT_EVIDENCE", "SUPPORTED_FACT", "SCHOLARLY_INTERPRETATION", "HYPOTHESIS", "CONTESTED", "UNVERIFIED"]
+        },
+        "evidenceStatus": {
+          "type": "string",
+          "enum": ["SUPPORTED", "MIXED", "WEAK", "UNSUPPORTED"]
+        },
+        "corroborationStatus": {
+          "type": "string",
+          "enum": ["PRIMARY_CONFIRMED", "MULTI_SOURCE_CONFIRMED", "SINGLE_SOURCE", "CONFLICTED", "UNSUPPORTED"]
+        },
+        "supportingEvidence": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/evidenceLink" }
+        },
+        "contradictingEvidence": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/evidenceLink" }
+        },
+        "confidenceReason": { "type": "string" },
+        "materiality": {
+          "type": "string",
+          "enum": ["critical", "high", "medium", "low"]
+        },
+        "needsReevaluation": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "contradictionRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contradictionId", "claimIds", "sourceIds", "description", "materiality", "status"],
+      "properties": {
+        "contradictionId": { "type": "string", "pattern": "^ctr-[0-9a-f]{12}$" },
+        "claimIds": { "type": "array", "minItems": 2, "items": { "type": "string", "minLength": 1 } },
+        "sourceIds": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "description": { "type": "string", "minLength": 1 },
+        "materiality": { "type": "string", "enum": ["critical", "non-critical"] },
+        "status": {
+          "type": "string",
+          "enum": ["OPEN", "FRAMED_AS_DISPUTED", "RESOLVED_WITH_REASON", "BLOCKING"]
+        },
+        "resolution": { "type": ["string", "null"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "unknownRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["unknownId", "description", "materiality", "status"],
+      "properties": {
+        "unknownId": { "type": "string", "pattern": "^unk-[0-9a-f]{12}$" },
+        "researchQuestionId": { "type": ["string", "null"] },
+        "description": { "type": "string", "minLength": 1 },
+        "materiality": { "type": "string", "enum": ["critical", "material", "non-material"] },
+        "whyUnknown": { "type": "string" },
+        "recommendedAction": { "type": "string" },
+        "status": { "type": "string", "enum": ["OPEN", "ANSWERED", "ACCEPTED"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "sufficiencyResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision", "rationale", "policyVersion", "evaluatedAt"],
+      "properties": {
+        "decision": { "type": "string", "enum": ["SUFFICIENT", "NEEDS_MORE_RESEARCH", "BLOCKED"] },
+        "rationale": { "type": "string", "minLength": 1 },
+        "factors": { "type": "object" },
+        "gaps": { "type": "object" },
+        "blocker": { "type": ["string", "null"] },
+        "policyVersion": { "type": "string", "minLength": 1 },
+        "planRef": { "type": "object" },
+        "briefRef": { "type": ["object", "null"] },
+        "evaluatedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "claimsFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "projectId", "claims"],
+      "properties": {
+        "version": { "type": "string" },
+        "projectId": { "type": "string" },
+        "claims": { "type": "array", "items": { "$ref": "#/$defs/claimRecord" } }
+      }
+    },
+    "contradictionsFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "projectId", "contradictions"],
+      "properties": {
+        "version": { "type": "string" },
+        "projectId": { "type": "string" },
+        "contradictions": { "type": "array", "items": { "$ref": "#/$defs/contradictionRecord" } }
+      }
+    },
+    "unknownsFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "projectId", "unknowns"],
+      "properties": {
+        "version": { "type": "string" },
+        "projectId": { "type": "string" },
+        "unknowns": { "type": "array", "items": { "$ref": "#/$defs/unknownRecord" } }
+      }
+    },
+    "sufficiencyFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "projectId", "evaluation"],
+      "properties": {
+        "version": { "type": "string" },
+        "projectId": { "type": "string" },
+        "evaluation": { "$ref": "#/$defs/sufficiencyResult" }
+      }
+    }
+  }
+}

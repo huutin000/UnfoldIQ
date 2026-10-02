@@ -1,0 +1,32 @@
+{
+  "$id": "https://unfoldiq.io/schemas/thumbnail-package.schema.json",
+  "title": "UNFOLDIQ Thumbnail Plan / QA Record (POST-v1C)",
+  "description": "Thumbnail plan, artifact, and QA for the publish package. Thumbnails must be readable at small size, accurate to content, and policy-safe (no misleading clickbait).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "file",
+    "width",
+    "height",
+    "aspectRatio",
+    "readableAtSmallSize",
+    "accurateToContent",
+    "policySafe",
+    "status"
+  ],
+  "properties": {
+    "file": { "type": "string", "minLength": 1, "description": "Project-relative thumbnail artifact path (publish/thumbnail.png)" },
+    "width": { "type": "integer", "minimum": 640 },
+    "height": { "type": "integer", "minimum": 360 },
+    "aspectRatio": { "type": "string", "enum": ["16:9"] },
+    "readableAtSmallSize": { "type": "boolean" },
+    "accurateToContent": { "type": "boolean" },
+    "policySafe": { "type": "boolean" },
+    "titleConsistent": { "type": "boolean" },
+    "notes": { "type": "string" },
+    "status": {
+      "type": "string",
+      "enum": ["READY", "REVIEW_REQUIRED", "BLOCKED"]
+    }
+  }
+}

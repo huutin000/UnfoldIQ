@@ -1,0 +1,158 @@
+{
+"$id": "https://unfoldiq.io/schemas/asset-manifest.schema.json",
+  "title": "UNFOLDIQ Asset Manifest Contract",
+  "description": "Complete inventory of all assets with provenance and rights tracking",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "projectId", "assets"],
+  "properties":
+{
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semantic version of this contract"
+    },
+    "projectId": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique project identifier"
+    },
+    "assets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["assetId", "type", "status", "sourceType", "provenance", "rights"],
+        "properties": {
+          "assetId": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9_-]+$",
+            "description": "Unique asset identifier"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["image", "video", "voice", "music", "sfx", "font", "other"],
+            "description": "Asset type category"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["MISSING", "PLANNED", "GENERATING", "READY", "REJECTED", "FAILED"],
+            "description": "Asset readiness status"
+          },
+          "sourceType": {
+            "type": "string",
+            "enum": ["existing", "generated", "local-library", "third-party"],
+            "description": "Origin of the asset"
+          },
+          "path": {
+            "type": "string",
+            "description": "Project-relative path to asset file (required for READY status)"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "External URL if third-party source"
+          },
+          "providerId": {
+            "type": "string",
+            "description": "Logical provider ID that generated this asset"
+          },
+          "mimeType": {
+            "type": "string",
+            "description": "MIME type of the asset"
+          },
+          "width": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Width in pixels (for visual assets)"
+          },
+          "height": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Height in pixels (for visual assets)"
+          },
+          "durationMs": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Duration in milliseconds (for time-based assets)"
+          },
+          "sceneIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "description": "Scene IDs that use this asset"
+          },
+          "provenance": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "requestId": {
+                "type": "string",
+                "description": "Generation request ID"
+              },
+              "providerId": {
+                "type": "string",
+                "description": "Provider that generated this asset"
+              },
+              "modelOrVersion": {
+                "type": "string",
+                "description": "Model name/version used"
+              },
+              "generationDate": {
+                "type": "string",
+                "format": "date-time",
+                "description": "ISO 8601 generation timestamp"
+              },
+              "sourceUrl": {
+                "type": "string",
+                "format": "uri",
+                "description": "Source URL if third-party"
+              },
+              "promptFile": {
+                "type": "string",
+                "description": "Path to prompt file used for generation"
+              },
+              "notes": {
+                "type": "string",
+                "description": "Additional provenance notes"
+              }
+            }
+          },
+          "rights": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["status"],
+            "properties": {
+              "status": {
+                "type": "string",
+                "enum": ["VERIFIED", "UNVERIFIED", "UNKNOWN", "NOT_APPLICABLE"],
+                "description": "Rights verification status"
+              },
+              "license": {
+                "type": "string",
+                "description": "License identifier (e.g., CC0, custom, commercial)"
+              },
+              "usageScope": {
+                "type": "string",
+                "description": "Intended usage scope (e.g., commercial, editorial, personal)"
+              },
+              "evidencePath": {
+                "type": "string",
+                "description": "Path to rights evidence document"
+              },
+              "notes": {
+                "type": "string",
+                "description": "Additional rights notes"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+

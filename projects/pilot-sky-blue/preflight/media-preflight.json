@@ -1,0 +1,255 @@
+{
+  "version": "1.0.0",
+  "projectId": "pilot-sky-blue",
+  "platform": "youtube",
+  "generatedAt": "2026-09-26T07:24:30.318Z",
+  "status": "READY",
+  "generatedClipAudioPolicy": "MUTE_GENERATED_CLIP_AUDIO",
+  "assets": [
+    {
+      "assetId": "VOICE_B1",
+      "sceneId": "S01",
+      "type": "voice",
+      "path": "assets/voice/B1.wav",
+      "exists": true,
+      "required": false,
+      "sourceProvider": "windows-sapi",
+      "provenanceStatus": "VERIFIED",
+      "rightsStatus": "NOT_APPLICABLE",
+      "continuityStatus": "NOT_APPLICABLE",
+      "structuralStatus": "VALID",
+      "metadataStatus": "MEASURED",
+      "issues": [],
+      "timingEvidence": {
+        "source": "FFPROBE",
+        "measuredAt": "2026-09-26T07:24:30.016Z",
+        "toolVersion": "ffprobe version 8.1.1-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers"
+      },
+      "metadata": {
+        "durationMs": 9393,
+        "codec": "pcm_s16le",
+        "container": "wav",
+        "sampleRate": 22050,
+        "channels": 1,
+        "fileSize": 414298,
+        "loudnessStatus": "NOT_MEASURED"
+      }
+    },
+    {
+      "assetId": "VOICE_B2",
+      "sceneId": "S02",
+      "type": "voice",
+      "path": "assets/voice/B2.wav",
+      "exists": true,
+      "required": false,
+      "sourceProvider": "windows-sapi",
+      "provenanceStatus": "VERIFIED",
+      "rightsStatus": "NOT_APPLICABLE",
+      "continuityStatus": "NOT_APPLICABLE",
+      "structuralStatus": "VALID",
+      "metadataStatus": "MEASURED",
+      "issues": [],
+      "timingEvidence": {
+        "source": "FFPROBE",
+        "measuredAt": "2026-09-26T07:24:30.062Z",
+        "toolVersion": "ffprobe version 8.1.1-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers"
+      },
+      "metadata": {
+        "durationMs": 8733,
+        "codec": "pcm_s16le",
+        "container": "wav",
+        "sampleRate": 22050,
+        "channels": 1,
+        "fileSize": 385188,
+        "loudnessStatus": "NOT_MEASURED"
+      }
+    },
+    {
+      "assetId": "VOICE_B3",
+      "sceneId": "S03",
+      "type": "voice",
+      "path": "assets/voice/B3.wav",
+      "exists": true,
+      "required": false,
+      "sourceProvider": "windows-sapi",
+      "provenanceStatus": "VERIFIED",
+      "rightsStatus": "NOT_APPLICABLE",
+      "continuityStatus": "NOT_APPLICABLE",
+      "structuralStatus": "VALID",
+      "metadataStatus": "MEASURED",
+      "issues": [],
+      "timingEvidence": {
+        "source": "FFPROBE",
+        "measuredAt": "2026-09-26T07:24:30.104Z",
+        "toolVersion": "ffprobe version 8.1.1-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers"
+      },
+      "metadata": {
+        "durationMs": 8363,
+        "codec": "pcm_s16le",
+        "container": "wav",
+        "sampleRate": 22050,
+        "channels": 1,
+        "fileSize": 368864,
+        "loudnessStatus": "NOT_MEASURED"
+      }
+    },
+    {
+      "assetId": "VOICE_B4",
+      "sceneId": "S03",
+      "type": "voice",
+      "path": "assets/voice/B4.wav",
+      "exists": true,
+      "required": false,
+      "sourceProvider": "windows-sapi",
+      "provenanceStatus": "VERIFIED",
+      "rightsStatus": "NOT_APPLICABLE",
+      "continuityStatus": "NOT_APPLICABLE",
+      "structuralStatus": "VALID",
+      "metadataStatus": "MEASURED",
+      "issues": [],
+      "timingEvidence": {
+        "source": "FFPROBE",
+        "measuredAt": "2026-09-26T07:24:30.145Z",
+        "toolVersion": "ffprobe version 8.1.1-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers"
+      },
+      "metadata": {
+        "durationMs": 7489,
+        "codec": "pcm_s16le",
+        "container": "wav",
+        "sampleRate": 22050,
+        "channels": 1,
+        "fileSize": 330290,
+        "loudnessStatus": "NOT_MEASURED"
+      }
+    },
+    {
+      "assetId": "VOICE_B5",
+      "sceneId": "S04",
+      "type": "voice",
+      "path": "assets/voice/B5.wav",
+      "exists": true,
+      "required": false,
+      "sourceProvider": "windows-sapi",
+      "provenanceStatus": "VERIFIED",
+      "rightsStatus": "NOT_APPLICABLE",
+      "continuityStatus": "NOT_APPLICABLE",
+      "structuralStatus": "VALID",
+      "metadataStatus": "MEASURED",
+      "issues": [],
+      "timingEvidence": {
+        "source": "FFPROBE",
+        "measuredAt": "2026-09-26T07:24:30.188Z",
+        "toolVersion": "ffprobe version 8.1.1-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers"
+      },
+      "metadata": {
+        "durationMs": 7423,
+        "codec": "pcm_s16le",
+        "container": "wav",
+        "sampleRate": 22050,
+        "channels": 1,
+        "fileSize": 327414,
+        "loudnessStatus": "NOT_MEASURED"
+      }
+    },
+    {
+      "assetId": "VOICE_B6",
+      "sceneId": "S05",
+      "type": "voice",
+      "path": "assets/voice/B6.wav",
+      "exists": true,
+      "required": false,
+      "sourceProvider": "windows-sapi",
+      "provenanceStatus": "VERIFIED",
+      "rightsStatus": "NOT_APPLICABLE",
+      "continuityStatus": "NOT_APPLICABLE",
+      "structuralStatus": "VALID",
+      "metadataStatus": "MEASURED",
+      "issues": [],
+      "timingEvidence": {
+        "source": "FFPROBE",
+        "measuredAt": "2026-09-26T07:24:30.232Z",
+        "toolVersion": "ffprobe version 8.1.1-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers"
+      },
+      "metadata": {
+        "durationMs": 8708,
+        "codec": "pcm_s16le",
+        "container": "wav",
+        "sampleRate": 22050,
+        "channels": 1,
+        "fileSize": 384084,
+        "loudnessStatus": "NOT_MEASURED"
+      }
+    },
+    {
+      "assetId": "VOICE_B7",
+      "sceneId": "S06",
+      "type": "voice",
+      "path": "assets/voice/B7.wav",
+      "exists": true,
+      "required": false,
+      "sourceProvider": "windows-sapi",
+      "provenanceStatus": "VERIFIED",
+      "rightsStatus": "NOT_APPLICABLE",
+      "continuityStatus": "NOT_APPLICABLE",
+      "structuralStatus": "VALID",
+      "metadataStatus": "MEASURED",
+      "issues": [],
+      "timingEvidence": {
+        "source": "FFPROBE",
+        "measuredAt": "2026-09-26T07:24:30.276Z",
+        "toolVersion": "ffprobe version 8.1.1-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers"
+      },
+      "metadata": {
+        "durationMs": 6633,
+        "codec": "pcm_s16le",
+        "container": "wav",
+        "sampleRate": 22050,
+        "channels": 1,
+        "fileSize": 292582,
+        "loudnessStatus": "NOT_MEASURED"
+      }
+    },
+    {
+      "assetId": "VOICE_B8",
+      "sceneId": "S06",
+      "type": "voice",
+      "path": "assets/voice/B8.wav",
+      "exists": true,
+      "required": false,
+      "sourceProvider": "windows-sapi",
+      "provenanceStatus": "VERIFIED",
+      "rightsStatus": "NOT_APPLICABLE",
+      "continuityStatus": "NOT_APPLICABLE",
+      "structuralStatus": "VALID",
+      "metadataStatus": "MEASURED",
+      "issues": [],
+      "timingEvidence": {
+        "source": "FFPROBE",
+        "measuredAt": "2026-09-26T07:24:30.318Z",
+        "toolVersion": "ffprobe version 8.1.1-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers"
+      },
+      "metadata": {
+        "durationMs": 8588,
+        "codec": "pcm_s16le",
+        "container": "wav",
+        "sampleRate": 22050,
+        "channels": 1,
+        "fileSize": 378792,
+        "loudnessStatus": "NOT_MEASURED"
+      }
+    }
+  ],
+  "timelineSummary": {
+    "assetCount": 8,
+    "readyCount": 8,
+    "requiredCount": 0,
+    "missingRequired": 0,
+    "voiceMeasured": true,
+    "notes": [
+      "8 assets checked",
+      "generatedClipAudioPolicy=MUTE_GENERATED_CLIP_AUDIO"
+    ]
+  },
+  "blockingIssues": [],
+  "warnings": []
+}

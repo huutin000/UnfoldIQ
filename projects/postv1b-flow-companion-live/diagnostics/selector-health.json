@@ -1,0 +1,107 @@
+{
+  "source": "FIXTURE-NOT-LIVE",
+  "note": "Mock-DOM health only. Live health requires authenticated Flow tab; see live-extension-state.json.",
+  "adapterVersion": "0.2.0-postv1b",
+  "health": {
+    "PROMPT_INPUT": {
+      "status": "PASS",
+      "primary": "[data-testid=\"flow-prompt-input\"]",
+      "fallbackUsed": null
+    },
+    "GENERATE_BUTTON": {
+      "status": "PASS",
+      "primary": "[data-testid=\"flow-generate-button\"]",
+      "fallbackUsed": null
+    },
+    "MODE_IMAGE": {
+      "status": "PASS",
+      "primary": "[data-testid=\"flow-mode-image\"]",
+      "fallbackUsed": null
+    },
+    "MODE_VIDEO": {
+      "status": "PASS",
+      "primary": "[data-testid=\"flow-mode-video\"]",
+      "fallbackUsed": null
+    },
+    "GENERATION_TYPE": {
+      "status": "FAIL",
+      "primary": "[data-testid=\"flow-generation-type\"]",
+      "fallbackUsed": null
+    },
+    "MODEL_CONTROL": {
+      "status": "FAIL",
+      "primary": "[data-testid=\"flow-model-control\"]",
+      "fallbackUsed": null
+    },
+    "ASPECT_CONTROL": {
+      "status": "PASS",
+      "primary": "[data-testid=\"flow-aspect-control\"]",
+      "fallbackUsed": null
+    },
+    "OUTPUT_COUNT": {
+      "status": "FAIL",
+      "primary": "[data-testid=\"flow-output-count\"]",
+      "fallbackUsed": null
+    },
+    "LENGTH_CONTROL": {
+      "status": "PASS",
+      "primary": "[data-testid=\"flow-length-control\"]",
+      "fallbackUsed": null
+    },
+    "CREDIT_DISPLAY": {
+      "status": "FAIL",
+      "primary": "[data-testid=\"flow-credit-display\"]",
+      "fallbackUsed": null
+    },
+    "REFERENCE_INPUT": {
+      "status": "PASS",
+      "primary": "[data-testid=\"flow-reference-input\"]",
+      "fallbackUsed": null
+    },
+    "START_FRAME_INPUT": {
+      "status": "PASS",
+      "primary": "[data-testid=\"flow-start-frame-input\"]",
+      "fallbackUsed": null
+    },
+    "END_FRAME_INPUT": {
+      "status": "PASS",
+      "primary": "[data-testid=\"flow-end-frame-input\"]",
+      "fallbackUsed": null
+    },
+    "RESULT_CONTAINER": {
+      "status": "PASS",
+      "primary": "[data-testid=\"flow-result-container\"]",
+      "fallbackUsed": null
+    },
+    "RESULT_MEDIA": {
+      "status": "FAIL",
+      "primary": "[data-testid=\"flow-result-media\"]",
+      "fallbackUsed": null
+    },
+    "DOWNLOAD_CONTROL": {
+      "status": "FAIL",
+      "primary": "[data-testid=\"flow-download-control\"]",
+      "fallbackUsed": null
+    },
+    "AGENT_MODE": {
+      "status": "FAIL",
+      "primary": "[data-testid=\"flow-agent-mode\"]",
+      "fallbackUsed": null
+    },
+    "SAFETY_MESSAGE": {
+      "status": "FAIL",
+      "primary": "[data-testid=\"flow-safety-message\"]",
+      "fallbackUsed": null
+    },
+    "POLICY_STATE": {
+      "status": "FAIL",
+      "primary": "[data-testid=\"flow-policy-state\"]",
+      "fallbackUsed": null
+    },
+    "FAILURE_STATE": {
+      "status": "FAIL",
+      "primary": "[data-testid=\"flow-failure-state\"]",
+      "fallbackUsed": null
+    }
+  }
+}

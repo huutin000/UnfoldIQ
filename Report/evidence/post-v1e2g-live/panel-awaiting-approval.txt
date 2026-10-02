@@ -1,0 +1,38 @@
+[2026-10-01T05:38:36.590Z] connected Flow tabs: 1
+[2026-10-01T05:38:36.610Z] liveTab: matched=1 tabId=47261522 origin=https://flow.google.com ping=true source=SESSION_REVALIDATED
+[2026-10-01T05:38:36.620Z] fetch job failed: Unexpected token '﻿', "﻿{
+    "v"... is not valid JSON
+[2026-10-01T05:38:36.705Z] connected Flow tabs: 1
+[2026-10-01T05:38:36.711Z] liveTab: matched=1 tabId=47261522 origin=https://flow.google.com ping=true source=SESSION_REVALIDATED
+[2026-10-01T05:38:36.716Z] fetch job failed: Unexpected token '﻿', "﻿{
+    "v"... is not valid JSON
+[2026-10-01T05:38:37.203Z] autoPrepare: bridge token entered — recovering without reload
+[2026-10-01T05:38:37.203Z] autoPrepare: state reset (recovery re-entry allowed)
+[2026-10-01T05:38:37.208Z] connected Flow tabs: 1
+[2026-10-01T05:38:37.218Z] liveTab: matched=1 tabId=47261522 origin=https://flow.google.com ping=true source=SESSION_REVALIDATED
+[2026-10-01T05:38:37.222Z] fetch job failed: Unexpected token '﻿', "﻿{
+    "v"... is not valid JSON
+[2026-10-01T05:42:45.221Z] connected Flow tabs: 1
+[2026-10-01T05:42:45.228Z] liveTab: matched=1 tabId=47261522 origin=https://flow.google.com ping=true source=SESSION_REVALIDATED
+[2026-10-01T05:42:45.234Z] bridge token remembered on this device (storage.local)
+[2026-10-01T05:42:45.239Z] liveTab: matched=1 tabId=47261522 origin=https://flow.google.com ping=true source=SESSION_REVALIDATED
+[2026-10-01T05:42:45.239Z] job fetched: FLOW-COMPANION-LIVE-GEN-01 (PREPARED)
+[2026-10-01T05:42:45.239Z] autoPrepare: start job=FLOW-COMPANION-LIVE-GEN-01 state=PREPARED
+[2026-10-01T05:42:45.241Z] connected Flow tabs: 1
+[2026-10-01T05:42:45.241Z] autoPrepare: liveTab resolved ping=true source=SESSION_REVALIDATED
+[2026-10-01T05:42:45.241Z] autoPrepare: waiting for prompt composer
+[2026-10-01T05:42:45.773Z] liveTab: matched=1 tabId=47261522 origin=https://flow.google.com ping=true source=SESSION_REVALIDATED
+[2026-10-01T05:42:45.773Z] autoPrepare: prompt input resolved
+[2026-10-01T05:42:45.773Z] autoPrepare: prompt verified=true
+[2026-10-01T05:42:45.773Z] autoPrepare: standardMode=true
+[2026-10-01T05:42:45.773Z] autoPrepare: generationType=NOT_APPLICABLE verified=true
+[2026-10-01T05:42:45.773Z] autoPrepare: aspect=1:1
+[2026-10-01T05:42:45.773Z] autoPrepare: outputCount=1
+[2026-10-01T05:42:45.773Z] autoPrepare: model=Nano Banana 2
+[2026-10-01T05:42:45.773Z] autoPrepare: visibleCost=UNKNOWN
+[2026-10-01T05:42:45.773Z] autoPrepare: generateFound=true enabled=true
+[2026-10-01T05:42:45.773Z] autoPrepare: generationReady=true missing=[]
+[2026-10-01T05:42:45.773Z] approval snapshot frozen: fingerprint={"aspect":"1:1","attempt":1,"jobId":"FLOW-COMPAN… at=2026-10-01T05:42:45.773Z
+[2026-10-01T05:42:45.778Z] bridge state: AWAITING_USER_APPROVAL
+[2026-10-01T05:42:45.778Z] autoPrepare: await-approval transition=success
+[2026-10-01T05:42:45.779Z] autoPrepare: snapshot frozen

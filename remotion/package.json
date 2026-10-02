@@ -1,0 +1,25 @@
+{
+  "name": "remotion",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "start": "remotion studio",
+    "build": "remotion render blank out/video.mp4",
+    "preview": "remotion preview blank",
+    "check": "remotion check"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@remotion/bundler": "^4.0.529",
+    "@remotion/cli": "^4.0.529",
+    "@remotion/player": "^4.0.529",
+    "@remotion/renderer": "^4.0.529",
+    "@remotion/zod-types": "^4.0.529",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "remotion": "^4.0.529"
+  }
+}

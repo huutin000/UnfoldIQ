@@ -1,0 +1,58 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - generic [ref=e4]:
+      - heading "Extensions" [level=1] [ref=e9]
+      - generic [ref=e12]:
+        - button [aria-hidden] [ref=e13] [cursor=pointer]
+        - generic [ref=e14]:
+          - generic [aria-hidden] [ref=e15]: Search extensions
+          - searchbox "Search extensions" [ref=e16]
+      - generic [ref=e19]:
+        - generic [ref=e20]: Developer mode
+        - button "Developer mode" [pressed] [ref=e21] [cursor=pointer]
+    - generic [ref=e25]:
+      - button "Load unpacked" [ref=e26] [cursor=pointer]
+      - button "Pack extension" [ref=e28] [cursor=pointer]
+      - button "Update" [ref=e30] [cursor=pointer]
+  - generic [ref=e32]:
+    - navigation [ref=e34]:
+      - menu [ref=e35]:
+        - generic:
+          - menuitem "My extensions" [ref=e36] [cursor=pointer]
+          - menuitem "Site permissions" [ref=e37] [cursor=pointer]
+          - menuitem "Keyboard shortcuts" [ref=e38] [cursor=pointer]
+      - generic [ref=e41]:
+        - text: Using AI coding agents to build extensions? Install the
+        - link "Chrome Extensions and Chrome Web Store skill" [ref=e42] [cursor=pointer]:
+          - /url: https://developer.chrome.com/docs/extensions/ai/build-with-ai?utm_source=ext_sidebar&hl=en-US#modern_web_guidance
+        - text: to teach your coding agent the latest API updates and best practices.
+      - generic [ref=e45]:
+        - text: Discover more extensions and themes on the
+        - link "Chrome Web Store" [ref=e46] [cursor=pointer]:
+          - /url: https://chromewebstore.google.com/category/extensions?utm_source=ext_sidebar&hl=en-US
+    - main [ref=e47]:
+      - generic [ref=e52]:
+        - heading "All Extensions Pin new extensions to Toolbar" [level=2] [ref=e53]:
+          - generic [ref=e54]:
+            - generic [ref=e55]: All Extensions
+            - generic [ref=e56]:
+              - generic [ref=e57]: Pin new extensions to Toolbar
+              - button "Pin new extensions to Toolbar" [pressed] [ref=e58] [cursor=pointer]
+        - generic [ref=e63]:
+          - generic [ref=e64]:
+            - img "Unpacked extension" [ref=e68]
+            - generic [ref=e70]:
+              - generic [ref=e72]:
+                - heading "UNFOLDIQ Flow Companion" [level=3] [ref=e73]
+                - generic [ref=e74]: 0.5.1
+              - generic [ref=e75]: Companion extension for connecting UNFOLDIQ with Google Flow, with live diagnostics, approval-gated generation, result download and asset import.
+              - generic [ref=e76]: "ID: caokkkcclnfdpecnjhbcekphlfkcjiic"
+              - generic [ref=e78]:
+                - generic [ref=e79]: Inspect views
+                - link "service worker (Inactive)" [ref=e80] [cursor=pointer]
+          - generic [ref=e81]:
+            - generic [ref=e82]:
+              - button "Details" [ref=e83] [cursor=pointer]
+              - button "Remove" [ref=e85] [cursor=pointer]
+            - button "Reload" [ref=e87] [cursor=pointer]
+            - button "On, extension enabled" [pressed] [ref=e88] [cursor=pointer]

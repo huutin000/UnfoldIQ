@@ -1,0 +1,49 @@
+{
+  "version": "1.0.0",
+  "status": "AWAITING_USER_APPROVAL",
+  "attempt": 1,
+  "generationCount": 0,
+  "history": [
+    {
+      "from": null,
+      "to": "PENDING",
+      "at": "2026-09-28T03:55:56.336Z",
+      "actor": "system"
+    },
+    {
+      "from": "PENDING",
+      "to": "VALIDATED",
+      "at": "2026-09-28T03:55:56.337Z",
+      "actor": "system"
+    },
+    {
+      "from": "VALIDATED",
+      "to": "PREPARED",
+      "at": "2026-09-28T03:55:56.338Z",
+      "actor": "system"
+    },
+    {
+      "from": "PREPARED",
+      "to": "AWAITING_USER_APPROVAL",
+      "at": "2026-09-28T03:55:56.338Z",
+      "actor": "system"
+    }
+  ],
+  "projectId": "postv1b-flow-companion-live",
+  "jobId": "FLOW-COMPANION-LIVE-DRYRUN-01",
+  "requestId": "REQ-POSTV1B-DRYRUN-01",
+  "sceneId": "DRYRUN",
+  "capability": "image",
+  "mode": "ASSISTED_APPROVAL",
+  "prompt": "UNFOLDIQ Flow Companion live automation dry-run. Create a simple minimal blue circle on a clean light background. No text.",
+  "platform": "youtube",
+  "flowProject": {
+    "mode": "REUSE"
+  },
+  "outputRequirements": {
+    "aspectRatio": "1:1",
+    "outputCount": 1
+  },
+  "creativeContext": {},
+  "expectedOutputPath": "assets/FLOW-COMPANION-LIVE-DRYRUN-01.png"
+}

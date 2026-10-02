@@ -1,0 +1,78 @@
+version: 1
+
+server:
+  host: 127.0.0.1
+  port: 8188
+
+workflows:
+  - workflowId: mock-image-test
+    capability: image
+    displayName: "Mock image test (TEST-ONLY, no real model)"
+    enabled: true
+    workflowPath: workflows/mock-image-test.json
+    requiredModels: []
+    hardwareRequirements:
+      heavy: false
+    supportedAspectRatios:
+      - "1:1"
+      - "16:9"
+      - "9:16"
+    parameterBindings:
+      prompt: "6.inputs.text"
+      width: "3.inputs.width"
+      height: "3.inputs.height"
+      seed: "3.inputs.seed"
+    outputNode: "9"
+    notes: "TEST-ONLY mock; no real model"
+
+  - workflowId: example-image-sdxl
+    capability: image
+    displayName: "Example SDXL image (DISABLED example)"
+    enabled: false
+    workflowPath: workflows/example-image-sdxl.json
+    requiredModels:
+      - path: models/checkpoints/sdxl-example.safetensors
+        required: true
+    hardwareRequirements:
+      heavy: false
+      minVramGB: 8
+      minRamGB: 16
+    supportedAspectRatios:
+      - "1:1"
+      - "16:9"
+      - "9:16"
+    parameterBindings:
+      prompt: "6.inputs.text"
+      width: "3.inputs.width"
+      height: "3.inputs.height"
+      seed: "3.inputs.seed"
+    outputNode: "9"
+    notes: "example only; model NOT bundled"
+
+  - workflowId: example-video-wan
+    capability: video
+    displayName: "Example video (DISABLED heavy example)"
+    enabled: false
+    workflowPath: workflows/example-video-wan.json
+    requiredModels:
+      - path: models/checkpoints/video-example.safetensors
+        required: true
+    hardwareRequirements:
+      heavy: true
+      minVramGB: 12
+      minRamGB: 16
+    supportedAspectRatios:
+      - "16:9"
+      - "9:16"
+    supportedDurations:
+      - 2s
+      - 4s
+      - 8s
+    parameterBindings:
+      prompt: "6.inputs.text"
+      width: "3.inputs.width"
+      height: "3.inputs.height"
+      seed: "3.inputs.seed"
+      frames: "3.inputs.frames"
+    outputNode: "9"
+    notes: "heavy; unsuitable by default policy"

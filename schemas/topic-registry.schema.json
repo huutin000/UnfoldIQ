@@ -1,0 +1,118 @@
+{
+  "$id": "https://unfoldiq.io/schemas/topic-registry.schema.json",
+  "title": "UNFOLDIQ Topic Registry Contract",
+  "description": "Topic history and deduplication registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "topics"],
+  "properties": {
+    "version": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Registry schema version"
+    },
+    "topics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["topicId", "canonicalTopic", "niche", "subject", "audienceQuestion", "angle", "corePromise", "platforms", "createdAt", "updatedAt"],
+        "properties": {
+          "topicId": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9_-]+$",
+            "description": "Unique topic identifier"
+          },
+          "canonicalTopic": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Normalized canonical topic for dedup"
+          },
+          "niche": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Niche/category this topic belongs to"
+          },
+          "subject": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Core subject/entity"
+          },
+          "audienceQuestion": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Primary audience question addressed"
+          },
+          "angle": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Specific angle/approach"
+          },
+          "corePromise": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Core promise/value delivered"
+          },
+          "timeScope": {
+            "type": "string",
+            "description": "Temporal scope if relevant"
+          },
+          "platforms": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["status"],
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": ["DISCOVERED", "SELECTED", "IN_PRODUCTION", "RENDERED", "PUBLISHED", "ABANDONED"],
+                  "description": "Lifecycle status on this platform"
+                },
+                "projectId": {
+                  "type": "string",
+                  "description": "Associated project ID"
+                },
+                "selectedAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "When topic was selected for this platform"
+                },
+                "renderedAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "When video was rendered for this platform"
+                },
+                "publishedAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "When video was published on this platform"
+                },
+                "artifactPath": {
+                  "type": "string",
+                  "description": "Path to rendered video artifact"
+                },
+                "notes": {
+                  "type": "string",
+                  "description": "Additional notes"
+                }
+              }
+            },
+            "description": "Per-platform lifecycle status"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Registry entry creation timestamp"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last update timestamp"
+          }
+        }
+      }
+    }
+  }
+}

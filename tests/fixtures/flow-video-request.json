@@ -1,0 +1,32 @@
+{
+  "version": "1.0.0",
+  "requestId": "FIXTURE-FLOW-S05",
+  "projectId": "__flow_fixture__",
+  "sceneId": "S05",
+  "capability": "video",
+  "providerPreference": ["flow-web"],
+  "input": {
+    "prompt": "TEST-ONLY fixture: riverside camp at dusk, mother and infant by firelight, slow push-in"
+  },
+  "outputRequirements": {
+    "aspectRatio": "16:9",
+    "generationLength": "8s",
+    "outputCount": 1
+  },
+  "creativeContext": {
+    "contentModeSummary": "historical-documentary",
+    "creativeDirectionSummary": "measured, warm, evidence-led",
+    "creativeDirectionVersion": "cd-test-1",
+    "visualBibleVersion": "vb-test-1"
+  },
+  "continuityContext": {
+    "registryVersion": "cr-test-1",
+    "requiredEntities": ["CHAR_MOTHER_01", "CHAR_INFANT_01", "WARDROBE_MOTHER_01", "LOC_CAMP_01"],
+    "requiredReferences": ["REF_MOTHER_MASTER", "REF_INFANT_MASTER", "REF_CAMP_NIGHT"],
+    "continuityStrictness": "STRICT"
+  },
+  "rightsContext": {
+    "sourceType": "AI_GENERATED",
+    "policyClassification": "historical-reconstruction"
+  }
+}

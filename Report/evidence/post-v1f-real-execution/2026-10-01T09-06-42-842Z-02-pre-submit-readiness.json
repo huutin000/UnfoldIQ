@@ -1,0 +1,27 @@
+{
+  "probe": {
+    "url": "https://flow.google.com/project/8221824c-a1a6-4aa9-8d6b-fac24860d49e",
+    "drawerOpen": false,
+    "promptLogical": [
+      "Create a simple minimal blue circle centered on a clean light background.\nNo text."
+    ],
+    "promptExact": true,
+    "startVisible": true,
+    "startDisabled": false,
+    "startLabel": "Start generation",
+    "overlayOverStart": null,
+    "composerControlsVisible": [
+      "Clear prompt",
+      "Agent instructions",
+      "Settings",
+      "Add ingredients to the prompt box"
+    ],
+    "media": 1
+  },
+  "panel": {
+    "status": "Chờ duyệt",
+    "primary": "Duyệt & Tạo",
+    "err": "",
+    "diag": "Content script: Đã kết nối\n  tabId: 47261522\n  Origin: https://flow.google.com\n  Nguồn: SESSION_REVALIDATED\n  Ping lần cuối: 2026-10-01T09:07:01.300Z\n\nextensionVersion: 0.5.1\nadapterVersion: 0.4.11-postv1f\nflowOrigin: https://flow.google.com\ncontentScriptInjected: true\nbridgeReachable: true\ncurrentJobId: FLOW-COMPANION-LIVE-GEN-01\njobState: PREPARED\npromptControlFound: true\ngenerateControlFound: true (enabled=false)\ngenerationType: UNKNOWN (verified=false)\nmodelLabel: UNKNOWN\naspect: UNKNOWN\noutputCount: UNKNOWN\ncreditCost: UNKNOWN\ncomposer: anchor=true root=true editor=true (contenteditable) writable=true\nresultControlFound: true\ndownloadControlFound: false\nagentMode: STANDARD\nlastError: none"
+  }
+}

@@ -1,0 +1,64 @@
+[
+  {
+    "label": "t+0s",
+    "at": "2026-10-01T07:37:48.004Z",
+    "status": "Chờ duyệt",
+    "err": "",
+    "flow": {
+      "startLabel": "Start generation",
+      "startDisabled": false,
+      "media": 0,
+      "buttons": [
+        "Home",
+        "More options for the project",
+        "Search",
+        "Filtering and sorting options",
+        "Add media menu",
+        "Product help",
+        "Tile grid settings",
+        "More options",
+        "Account details",
+        "Favorite",
+        "Reuse prompt",
+        "Clear prompt",
+        "Expand",
+        "Add ingredients to the prompt box",
+        "Agent",
+        "Agent instructions",
+        "Settings",
+        "Start generation"
+      ]
+    }
+  },
+  {
+    "label": "t+3s",
+    "at": "2026-10-01T07:37:51.013Z",
+    "status": "Có lỗi",
+    "err": "Có lỗi xảy ra.Hãy thử lại. Nếu lỗi tiếp diễn, mở Cài đặt để xem chi tiết.Chi tiết kỹ thuậtAPPROVAL_STALE_CHANGED: type,aspect,outputCount,model [cmds=0.4.11-postv1f-cmds2 agent-read=NO_AGENT_SURFACE]",
+    "flow": {
+      "startLabel": "Start generation",
+      "startDisabled": false,
+      "media": 0,
+      "buttons": [
+        "Home",
+        "More options for the project",
+        "Search",
+        "Filtering and sorting options",
+        "Add media menu",
+        "Product help",
+        "Tile grid settings",
+        "More options",
+        "Account details",
+        "Favorite",
+        "Reuse prompt",
+        "Clear prompt",
+        "Expand",
+        "Add ingredients to the prompt box",
+        "Agent",
+        "Agent instructions",
+        "Settings",
+        "Start generation"
+      ]
+    }
+  }
+]

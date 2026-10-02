@@ -1,0 +1,80 @@
+{
+  "version": "1.0.0",
+  "projectId": "pilot-sky-blue",
+  "generatedAt": "2026-09-26T07:38:53.381Z",
+  "root": "remotion/public/unfoldiq",
+  "entries": [
+    {
+      "assetId": "VOICE_B1",
+      "sourcePath": "assets/voice/B1.wav",
+      "stagedPath": "unfoldiq/pilot-sky-blue/80138344/B1.wav",
+      "staticFilePath": "unfoldiq/pilot-sky-blue/80138344/B1.wav",
+      "contentHash": "801383448e8113117a9eea7fc7672a2dc175f9483dfffee8301e11c91967430e",
+      "size": 414298,
+      "type": "audio"
+    },
+    {
+      "assetId": "VOICE_B2",
+      "sourcePath": "assets/voice/B2.wav",
+      "stagedPath": "unfoldiq/pilot-sky-blue/6820720f/B2.wav",
+      "staticFilePath": "unfoldiq/pilot-sky-blue/6820720f/B2.wav",
+      "contentHash": "6820720f45bdab9f411613fbdb67d9b7857e6d355b7bf9ef2086af77259c2bb2",
+      "size": 385188,
+      "type": "audio"
+    },
+    {
+      "assetId": "VOICE_B3",
+      "sourcePath": "assets/voice/B3.wav",
+      "stagedPath": "unfoldiq/pilot-sky-blue/4efe6833/B3.wav",
+      "staticFilePath": "unfoldiq/pilot-sky-blue/4efe6833/B3.wav",
+      "contentHash": "4efe68334eca1b42749c21bbea3160f0561b3761b3c49486450dfa29603d925e",
+      "size": 368864,
+      "type": "audio"
+    },
+    {
+      "assetId": "VOICE_B4",
+      "sourcePath": "assets/voice/B4.wav",
+      "stagedPath": "unfoldiq/pilot-sky-blue/24aff353/B4.wav",
+      "staticFilePath": "unfoldiq/pilot-sky-blue/24aff353/B4.wav",
+      "contentHash": "24aff3533c32d80a6fc838daeedead0e0e82317692ad1ae041f690cf2a689ab2",
+      "size": 330290,
+      "type": "audio"
+    },
+    {
+      "assetId": "VOICE_B5",
+      "sourcePath": "assets/voice/B5.wav",
+      "stagedPath": "unfoldiq/pilot-sky-blue/2f265d52/B5.wav",
+      "staticFilePath": "unfoldiq/pilot-sky-blue/2f265d52/B5.wav",
+      "contentHash": "2f265d52eff9648e2d94354eb18d2f49e3ea8da049a5c97c0ed7c77101b12629",
+      "size": 327414,
+      "type": "audio"
+    },
+    {
+      "assetId": "VOICE_B6",
+      "sourcePath": "assets/voice/B6.wav",
+      "stagedPath": "unfoldiq/pilot-sky-blue/5c9db148/B6.wav",
+      "staticFilePath": "unfoldiq/pilot-sky-blue/5c9db148/B6.wav",
+      "contentHash": "5c9db148d646183c98cd9104ba73db8136f5a59bdab5725c17a6cc61c537a51c",
+      "size": 384084,
+      "type": "audio"
+    },
+    {
+      "assetId": "VOICE_B7",
+      "sourcePath": "assets/voice/B7.wav",
+      "stagedPath": "unfoldiq/pilot-sky-blue/d390c129/B7.wav",
+      "staticFilePath": "unfoldiq/pilot-sky-blue/d390c129/B7.wav",
+      "contentHash": "d390c129c50e8446e087f0633094eb2a936aa20dd7d11a89e8a27ea2308ee734",
+      "size": 292582,
+      "type": "audio"
+    },
+    {
+      "assetId": "VOICE_B8",
+      "sourcePath": "assets/voice/B8.wav",
+      "stagedPath": "unfoldiq/pilot-sky-blue/683c831c/B8.wav",
+      "staticFilePath": "unfoldiq/pilot-sky-blue/683c831c/B8.wav",
+      "contentHash": "683c831c4e39c43ad27dae8053420729e92d6dcd008d7fd7a501dbf1ada542fe",
+      "size": 378792,
+      "type": "audio"
+    }
+  ]
+}

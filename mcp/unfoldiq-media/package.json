@@ -1,0 +1,14 @@
+{
+  "name": "unfoldiq-media-mcp",
+  "version": "0.1.0",
+  "description": "UNFOLDIQ media provider bridge over MCP stdio (STEP-10C Branch C)",
+  "type": "commonjs",
+  "bin": {
+    "unfoldiq-media": "server.js"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "node tests/run.js"
+  },
+  "license": "ISC"
+}

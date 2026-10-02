@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "topics": [
+    {
+      "topicId": "TOPIC-008",
+      "canonicalTopic": "Test Topic",
+      "niche": "Test",
+      "subject": "Test",
+      "audienceQuestion": "Test?",
+      "angle": "Test",
+      "corePromise": "Test",
+      "platforms": {
+        "youtube": {
+          "status": "DISCOVERED"
+        }
+      },
+      "createdAt": "2025-01-01T10:00:00Z",
+      "updatedAt": "2026-10-02T08:17:31.114Z"
+    }
+  ]
+}

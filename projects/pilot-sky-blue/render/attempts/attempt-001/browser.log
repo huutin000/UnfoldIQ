@@ -1,0 +1,8 @@
+{"t":"2026-09-26T07:26:49.898Z","type":"debug","text":"JSHandle@symbol JSHandle@symbol \"Loading root component - See https://remotion.dev/docs/troubleshooting/loading-root-component if you experience a timeout\" handle was cleared after 1ms"}
+{"t":"2026-09-26T07:26:49.906Z","type":"debug","text":"JSHandle@symbol JSHandle@symbol \"Loading root component - See https://remotion.dev/docs/troubleshooting/loading-root-component if you experience a timeout\" handle was cleared after 0ms"}
+{"t":"2026-09-26T07:26:49.934Z","type":"debug","text":"JSHandle@symbol JSHandle@symbol \"Waiting for Composition \"UNFOLDIQVideo\"\" handle was cleared after 13ms"}
+{"t":"2026-09-26T07:26:49.935Z","type":"debug","text":"JSHandle@symbol JSHandle@symbol \"Waiting for root component to load - See https://remotion.dev/docs/troubleshooting/loading-root-component if you experience a timeout\" handle was cleared after 24ms"}
+{"t":"2026-09-26T07:26:49.945Z","type":"debug","text":"JSHandle@symbol JSHandle@symbol \"Setting the current frame to 1\" handle was cleared after 0ms"}
+{"t":"2026-09-26T07:26:49.977Z","type":"debug","text":"JSHandle@symbol JSHandle@symbol \"Waiting for Composition \"UNFOLDIQVideo\"\" handle was cleared after 29ms"}
+{"t":"2026-09-26T07:26:49.977Z","type":"debug","text":"JSHandle@symbol JSHandle@symbol \"Waiting for root component to load - See https://remotion.dev/docs/troubleshooting/loading-root-component if you experience a timeout\" handle was cleared after 38ms"}
+{"t":"2026-09-26T07:26:49.980Z","type":"debug","text":"JSHandle@symbol JSHandle@symbol \"Setting the current frame to 0\" handle was cleared after 0ms"}

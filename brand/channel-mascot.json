@@ -1,0 +1,88 @@
+{
+  "continuityStrictness": "STRICT",
+  "defaultWardrobeId": "WARDROBE_GUIDE_CORE_01",
+  "explicitlyNotGeneratedYet": [
+    "WARDROBE_GUIDE_FIELD_01",
+    "WARDROBE_GUIDE_LAB_01",
+    "WARDROBE_GUIDE_FORMAL_01",
+    "expression pack renders",
+    "pose pack renders"
+  ],
+  "expressionSet": [
+    "NEUTRAL",
+    "CURIOUS",
+    "THINKING",
+    "EXPLAINING",
+    "SURPRISED_LIGHT",
+    "CONCERNED",
+    "POSITIVE"
+  ],
+  "flowNotes": {
+    "agentInstruction": "Preserve CHAR_UNFOLDIQ_GUIDE_01: adult identity, short dark hair, mustard-yellow outerwear, dark charcoal inner shirt, simplified-realistic body proportions, 2.5D stylized illustration. Do not change age, hairstyle, core outfit, proportions, or art-style family unless explicitly requested.",
+    "agentInstructionStatus": "DRAFT_FOR_POST_V1",
+    "flowCharacter": "Detect during POST-v1 whether Flow UI supports a reusable Flow Character; UNFOLDIQ registry stays source of truth.",
+    "usePersonalAvatar": false
+  },
+  "identity": {
+    "apparentAgeRange": "27-33",
+    "artStyle": {
+      "family": "2.5D-stylized",
+      "realism": "stylized"
+    },
+    "body": {
+      "proportions": "simplified-realistic",
+      "silhouette": "stable"
+    },
+    "face": {
+      "eyebrowStyle": "expressive",
+      "eyeStyle": "stylized-expressive",
+      "proportions": "stable"
+    },
+    "hair": {
+      "color": "dark",
+      "length": "short",
+      "shape": "stable"
+    },
+    "presentation": "adult"
+  },
+  "lockStatus": "LOCKED",
+  "masterReferenceSpec": {
+    "background": "clean/plain or segmented",
+    "expression": "neutral-curious",
+    "extraPeople": false,
+    "identity": "adult, face clearly visible, short dark hair",
+    "logos": false,
+    "outfit": "mustard outerwear, dark inner shirt",
+    "pose": "simple",
+    "referenceId": "REF_GUIDE_MASTER_3Q_01",
+    "text": false,
+    "unnecessaryProps": false,
+    "view": "three-quarter",
+    "approvedReferenceId": "REF_GUIDE_MASTER_3Q_01",
+    "selectedCandidate": "Candidate B",
+    "attempt": 2,
+    "artifactPath": "projects/postv1-flow-live-validation/assets/image/CHAR_UNFOLDIQ_GUIDE_01/REF_GUIDE_MASTER_3Q_01_attempt-02.png",
+    "sha256": "35a3f078f96cc48c31c35506bb14e7a2a9581d178621e58baae7554872f01242",
+    "rejectedCandidate": "Candidate A (attempt-01, unapproved/superseded)"
+  },
+  "poseSet": [
+    "FRONT",
+    "THREE_QUARTER",
+    "PROFILE",
+    "POINTING",
+    "PRESENTING",
+    "THINKING",
+    "WALKING"
+  ],
+  "referenceStatus": "APPROVED",
+  "role": "CHANNEL_MASCOT",
+  "scope": "GLOBAL_BRAND",
+  "signature": {
+    "accent": "dark-teal",
+    "inner": "dark-charcoal",
+    "outerwear": "mustard-yellow"
+  },
+  "styleAnchorId": "STYLE_UNFOLDIQ_GUIDE_01",
+  "version": "1.0.0",
+  "characterId": "CHAR_UNFOLDIQ_GUIDE_01"
+}

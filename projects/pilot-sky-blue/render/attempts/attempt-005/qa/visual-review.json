@@ -1,0 +1,20 @@
+{
+  "attemptId": "attempt-005",
+  "decision": "APPROVE",
+  "issues": [
+    {
+      "category": "LAYOUT",
+      "evidencePath": "qa/contact-sheet.html",
+      "issueId": "VR-LAYOUT-001",
+      "note": "Scene title cards are text-only on solid background; matches narration and is fully readable, but visual richness is below the visualIntent diagrams (molecule field, spectrum bar). Recorded as WARNING for future polish; not a blocker for pipeline validation.",
+      "sceneId": "S03",
+      "severity": "WARNING",
+      "status": "OPEN",
+      "timestampMs": 30000
+    }
+  ],
+  "projectId": "pilot-sky-blue",
+  "reviewedAt": "2026-09-26T15:30:00+07:00",
+  "reviewer": "agent",
+  "version": "1.0.0"
+}

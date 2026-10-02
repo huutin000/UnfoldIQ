@@ -1,0 +1,122 @@
+version: 1
+
+costPolicy:
+  preferZeroMarginalCost: true
+  allowPaidCloud: false
+
+hardwarePolicy:
+  avoidHeavyLocalVideoByDefault: true
+
+safetyRetryPolicy:
+  maxAdaptedGenerationAttempts: 2
+
+selection:
+  preferExistingAssets: true
+  allowAgentNativeTools: true
+  allowConfiguredApiProviders: true
+  allowRemotionNativeVisualFallback: true
+  blockWhenRequiredCapabilityMissing: true
+
+capabilities:
+  image:
+    enabled: true
+    preferredOrder:
+      - existing
+      - approved-local
+      - agent-native-image
+      - local-comfyui-image
+      - flow-web
+      - configured-cloud-image
+      - openai-image
+      - external-handoff
+
+  video:
+    enabled: true
+    preferredOrder:
+      - existing
+      - approved-local
+      - flow-web
+      - agent-native-video
+      - remote-mcp-video
+      - local-comfyui-video
+      - configured-cloud-video
+      - google-veo
+      - external-handoff
+
+  tts:
+    enabled: true
+    preferredOrder:
+      - existing
+      - local-kokoro
+      - agent-native-tts
+      - configured-cloud-tts
+      - elevenlabs-tts
+      - external-handoff
+
+  stt:
+    enabled: true
+    preferredOrder:
+      - existing-timestamps
+      - local-whisper
+      - agent-native-stt
+      - configured-cloud-stt
+      - elevenlabs-stt
+      - external-handoff
+
+  music:
+    enabled: true
+    preferredOrder:
+      - approved-local
+      - external-handoff
+
+  sfx:
+    enabled: true
+    preferredOrder:
+      - approved-local
+      - external-handoff
+
+providerNotes:
+  openai-image:
+    logicalId: openai-image
+    documentation: "https://developers.openai.com/api/docs/guides/image-generation"
+    notes: "Model ID may change; implementation must check current docs; output must be saved as project file."
+
+  google-veo:
+    logicalId: google-veo
+    documentation: "https://ai.google.dev/gemini-api/docs/veo"
+    notes: "Model/version may change; implementation must verify current docs; generated video must be downloaded/saved as project file before Remotion use."
+
+  elevenlabs:
+    logicalId: elevenlabs
+    documentation:
+      tts: "https://elevenlabs.io/docs/api-reference/text-to-speech/convert"
+      stt: "https://elevenlabs.io/docs/api-reference/speech-to-text/convert"
+    notes: "TTS output must be saved as audio file; STT/timestamps must be saved as structured timing artifact; key from environment/secret store."
+
+  agent-native:
+    logicalId: agent-native
+    notes: "Capability only available if agent runtime actually exposes corresponding tool and can create persistent artifacts in workspace. Do not assume all agents (Codex/OpenCode/Antigravity/ChatGPT) have same native capabilities."
+
+  approved-local:
+    logicalId: approved-local
+    notes: "For music, SFX, user-provided assets, or assets with sufficient provenance/rights. Do not auto-download from web just because public URL is accessible."
+
+  local-kokoro:
+    logicalId: local-kokoro
+    notes: "Local Kokoro TTS slot (planned). Multi-language synthesis on local hardware; language list verified at runtime via availability check, never claimed statically."
+
+  local-whisper:
+    logicalId: local-whisper
+    notes: "Local Whisper STT slot (planned). Timestamp/timing artifacts written under timing/; model download/hardware requirements verified at runtime."
+
+  local-comfyui:
+    logicalId: local-comfyui
+    notes: "Local ComfyUI image/video slots (planned). Require a running local ComfyUI instance; heavy local video avoided by default per hardwarePolicy."
+
+  flow-web-vs-google-veo:
+    logicalId: flow-web-vs-google-veo
+    notes: "flow-web (INCLUDED_SUBSCRIPTION, human-in-the-loop via Flow Companion, approval-gated) is distinct from google-veo (PAID direct API, double opt-in). Prefer flow-web when a Google subscription path is available; direct Veo API only with explicit paid-cloud enable."
+
+  configured-cloud:
+    logicalId: configured-cloud
+    notes: "Operator-configured generic cloud slots (configured-cloud-image/video/tts/stt). Cost class UNKNOWN — never a FREE_TIER claim; verify cost with the operator. Enabled only when endpoint+key env are both set AND ctx.enableCloud AND request allowPaidCloud."

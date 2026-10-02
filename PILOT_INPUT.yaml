@@ -1,0 +1,17 @@
+platform: youtube
+inputMode: TOPIC
+
+topic: Why the sky is blue
+niche: null
+
+language: en
+audience: curious general viewers, ages 12 and up
+
+duration:
+  mode: FLEXIBLE_TARGET
+  minMinutes: 0.5
+  preferredMinutes: 1
+  maxMinutes: 2
+
+contentIntent: educational explainer
+publishMode: MANUAL_ONLY

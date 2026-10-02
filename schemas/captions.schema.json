@@ -1,0 +1,80 @@
+{
+"$id": "https://unfoldiq.io/schemas/captions.schema.json",
+  "title": "UNFOLDIQ Captions Contract",
+  "description": "Caption items with evidence-based timing",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "projectId", "language", "timingSource", "items"],
+  "properties":
+{
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semantic version of this contract"
+    },
+    "projectId": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique project identifier"
+    },
+    "language": {
+      "type": "string",
+      "pattern": "^[a-z]{2}(-[A-Z]{2})?$",
+      "description": "Language code (e.g., 'en', 'en-US', 'vi')"
+    },
+    "timingSource": {
+      "type": "string",
+      "enum": ["STT", "TTS_alignment", "manual", "forced_alignment", "UNKNOWN"],
+      "description": "Source of caption timing evidence"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["captionId", "startMs", "endMs", "text"],
+        "properties": {
+          "captionId": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9_-]+$",
+            "description": "Unique caption item identifier"
+          },
+          "startMs": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Start time in milliseconds"
+          },
+          "endMs": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "End time in milliseconds"
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Caption text content"
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Confidence score for this caption item"
+          },
+          "speaker": {
+            "type": "string",
+            "description": "Speaker identifier if diarization available"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["speech", "sound", "music", "other"],
+            "default": "speech",
+            "description": "Caption type category"
+          }
+        }
+      }
+    }
+  }
+}
+
+

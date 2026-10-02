@@ -1,0 +1,45 @@
+platform: tiktok
+
+platformFacts:
+  preferredOrientation: vertical
+  standardAspectRatio: "9:16"
+  minimumResolution: "720p or higher"
+  uiSafeZoneRequired: true
+
+projectDefaults:
+  orientation: portrait
+  aspectRatio: "9:16"
+  width: 1080
+  height: 1920
+  fps: 30
+  durationMode: content-driven
+  uiSafeZoneRequired: true
+
+overrides:
+  allowed:
+    - width
+    - height
+    - fps
+    - duration
+  notes: |
+    Explicit user request always overrides project defaults if technically feasible.
+    If user overrides layout, agent MUST warn if essential content risks falling into TikTok UI region.
+
+sourceVerification:
+  checkedDate: "25/09/2026"
+  officialSources:
+    - "https://ads.tiktok.com/business/en/creative-codes"
+
+captionProfile:
+  profileVersion: "1.0.0"
+  profileDate: "2026-09-26"
+  note: "Versioned defaults for caption builds; not permanent platform policy."
+  mode: BOTH
+  style: tiktok
+  maxChars: 42
+  maxLines: 2
+  sidecarFormat: srt
+  burnIn: false
+  safeZone:
+    bottomPct: 20
+    note: "Keep captions above bottom UI overlay region"

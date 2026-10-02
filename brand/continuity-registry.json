@@ -1,0 +1,127 @@
+{
+  "entities": [
+    {
+      "attributes": {
+        "apparentAgeRange": "27-33",
+        "artStyleFamily": "2.5D-stylized",
+        "bodyProportions": "simplified-realistic",
+        "defaultWardrobeId": "WARDROBE_GUIDE_CORE_01",
+        "eyeStyle": "stylized-expressive",
+        "hair": "short dark, stable shape",
+        "presentation": "adult",
+        "role": "CHANNEL_MASCOT",
+        "scope": "GLOBAL_BRAND",
+        "styleAnchorId": "STYLE_UNFOLDIQ_GUIDE_01"
+      },
+      "description": "Recurring UNFOLDIQ channel guide: adult 2.5D-stylized host with short dark hair and mustard-yellow outerwear. Brand anchor, not a per-video character.",
+      "entityId": "CHAR_UNFOLDIQ_GUIDE_01",
+      "forbiddenChanges": [
+        "face proportions",
+        "apparent age",
+        "hairstyle identity",
+        "body proportions",
+        "art-style family",
+        "core silhouette"
+      ],
+      "lockStatus": "LOCKED",
+      "name": "UNFOLDIQ Guide",
+      "referenceAssets": [
+        {
+          "assetId": "REF_GUIDE_MASTER_3Q_01",
+          "path": "projects/postv1-flow-live-validation/assets/image/CHAR_UNFOLDIQ_GUIDE_01/REF_GUIDE_MASTER_3Q_01_attempt-02.png",
+          "role": "MASTER",
+          "status": "APPROVED",
+          "view": "THREE_QUARTER",
+          "assetClassification": "RECONSTRUCTION",
+          "notes": "Approved mascot master reference (Candidate B, attempt-02). SHA-256: 35a3f078f96cc48c31c35506bb14e7a2a9581d178621e58baae7554872f01242. Model: Google Flow Imagen 3. Correlation: REQ-POSTV1-FLOW-IMG-01 / FLOW-MASCOT-MASTER-A01."
+        },
+        {
+          "assetId": "REF_GUIDE_MASTER_3Q_01_ATTEMPT_01",
+          "path": "projects/postv1-flow-live-validation/assets/image/CHAR_UNFOLDIQ_GUIDE_01/REF_GUIDE_MASTER_3Q_01_attempt-01.png",
+          "role": "THREE_QUARTER",
+          "status": "REJECTED",
+          "view": "THREE_QUARTER",
+          "assetClassification": "RECONSTRUCTION",
+          "notes": "Candidate A (attempt-01). Superseded and rejected in favor of Candidate B. Not active."
+        }
+      ],
+      "type": "CHARACTER"
+    },
+    {
+      "attributes": {
+        "inner": {
+          "color": "dark-charcoal",
+          "type": "simple-shirt"
+        },
+        "logos": "none",
+        "outerwear": {
+          "color": "mustard-yellow",
+          "type": "light-jacket-or-overshirt"
+        },
+        "scope": "GLOBAL_BRAND",
+        "shoes": {
+          "color": "dark-neutral",
+          "style": "simple"
+        },
+        "trousers": {
+          "color": "dark-neutral"
+        }
+      },
+      "description": "V1 core wardrobe for the channel mascot. Only wardrobe approved for POST-v1 validation.",
+      "entityId": "WARDROBE_GUIDE_CORE_01",
+      "forbiddenChanges": [
+        "outerwear color",
+        "inner color",
+        "random per-video replacement"
+      ],
+      "lockStatus": "DRAFT",
+      "name": "Guide Core Wardrobe",
+      "referenceAssets": [],
+      "type": "WARDROBE"
+    },
+    {
+      "attributes": {
+        "depth": "moderate",
+        "facialExpression": "readable",
+        "forbiddenDrift": [
+          "photoreal",
+          "anime",
+          "chibi",
+          "clay",
+          "3D toy",
+          "flat stick figure"
+        ],
+        "lighting": "soft-cinematic",
+        "lineTreatment": "clean-soft",
+        "proportions": "simplified-realistic",
+        "realism": "stylized",
+        "scope": "GLOBAL_BRAND",
+        "styleFamily": "2.5D-stylized",
+        "surfaceDetail": "low-medium"
+      },
+      "description": "Global style anchor governing the channel mascot rendering style.",
+      "entityId": "STYLE_UNFOLDIQ_GUIDE_01",
+      "lockStatus": "DRAFT",
+      "name": "UNFOLDIQ Guide Style",
+      "referenceAssets": [],
+      "type": "STYLE_ANCHOR"
+    }
+  ],
+  "lockStatus": "LOCKED",
+  "notes": "Global brand registry. Master reference REF_GUIDE_MASTER_3Q_01 APPROVED and LOCKED with Candidate B (attempt-02). Candidate A superseded/rejected. CHAR_UNFOLDIQ_GUIDE_01 LOCKED.",
+  "projectId": "global-brand",
+  "relationships": [
+    {
+      "from": "CHAR_UNFOLDIQ_GUIDE_01",
+      "relation": "uses",
+      "to": "WARDROBE_GUIDE_CORE_01"
+    },
+    {
+      "from": "CHAR_UNFOLDIQ_GUIDE_01",
+      "relation": "governedBy",
+      "to": "STYLE_UNFOLDIQ_GUIDE_01"
+    }
+  ],
+  "version": "1.0.0",
+  "visualBibleVersion": "brand/CHANNEL_MASCOT_BRIEF.md"
+}

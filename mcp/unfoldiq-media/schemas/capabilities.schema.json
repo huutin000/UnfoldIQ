@@ -1,0 +1,27 @@
+{
+  "$id": "https://unfoldiq.io/schemas/mcp-capabilities.schema.json",
+  "title": "UNFOLDIQ MCP media_capabilities response",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["status", "providers"],
+  "properties": {
+    "status": { "type": "string", "enum": ["READY"] },
+    "providers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["provider", "capability", "availability", "costClass", "approvalRequired"],
+        "properties": {
+          "provider": { "type": "string", "minLength": 1 },
+          "capability": { "type": "string", "enum": ["image", "video", "tts", "stt", "music", "sfx"] },
+          "availability": { "type": "string", "enum": ["AVAILABLE", "UNAVAILABLE", "UNKNOWN"] },
+          "costClass": { "type": "string", "enum": ["ZERO_LOCAL", "INCLUDED_SUBSCRIPTION", "FREE_TIER", "PAID", "UNKNOWN"] },
+          "languages": { "type": "string" },
+          "hardwareOrPolicy": { "type": "string" },
+          "approvalRequired": { "type": "boolean" }
+        }
+      }
+    }
+  }
+}

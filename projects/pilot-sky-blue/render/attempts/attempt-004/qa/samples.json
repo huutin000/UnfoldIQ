@@ -1,0 +1,125 @@
+{
+  "timestamps": [
+    0,
+    3249,
+    4697,
+    7946,
+    9394,
+    12474,
+    13761,
+    16841,
+    18127,
+    20986,
+    25168,
+    26053,
+    33979,
+    37691,
+    41402,
+    45756,
+    50110,
+    57721,
+    65287
+  ],
+  "samples": [
+    {
+      "timestampMs": 0,
+      "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-0ms.png",
+      "method": "ffmpeg-seek"
+    },
+    {
+      "timestampMs": 3249,
+      "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-3249ms.png",
+      "method": "ffmpeg-seek"
+    },
+    {
+      "timestampMs": 4697,
+      "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-4697ms.png",
+      "method": "ffmpeg-seek"
+    },
+    {
+      "timestampMs": 7946,
+      "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-7946ms.png",
+      "method": "ffmpeg-seek"
+    },
+    {
+      "timestampMs": 9394,
+      "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-9394ms.png",
+      "method": "ffmpeg-seek"
+    },
+    {
+      "timestampMs": 12474,
+      "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-12474ms.png",
+      "method": "ffmpeg-seek"
+    },
+    {
+      "timestampMs": 13761,
+      "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-13761ms.png",
+      "method": "ffmpeg-seek"
+    },
+    {
+      "timestampMs": 16841,
+      "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-16841ms.png",
+      "method": "ffmpeg-seek"
+    },
+    {
+      "timestampMs": 18127,
+      "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-18127ms.png",
+      "method": "ffmpeg-seek"
+    },
+    {
+      "timestampMs": 20986,
+      "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-20986ms.png",
+      "method": "ffmpeg-seek"
+    },
+    {
+      "timestampMs": 25168,
+      "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-25168ms.png",
+      "method": "ffmpeg-seek"
+    },
+    {
+      "timestampMs": 26053,
+      "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-26053ms.png",
+      "method": "ffmpeg-seek"
+    },
+    {
+      "timestampMs": 33979,
+      "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-33979ms.png",
+      "method": "ffmpeg-seek"
+    },
+    {
+      "timestampMs": 37691,
+      "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-37691ms.png",
+      "method": "ffmpeg-seek"
+    },
+    {
+      "timestampMs": 41402,
+      "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-41402ms.png",
+      "method": "ffmpeg-seek"
+    },
+    {
+      "timestampMs": 45756,
+      "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-45756ms.png",
+      "method": "ffmpeg-seek"
+    },
+    {
+      "timestampMs": 50110,
+      "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-50110ms.png",
+      "method": "ffmpeg-seek"
+    },
+    {
+      "timestampMs": 57721,
+      "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-57721ms.png",
+      "method": "ffmpeg-seek"
+    },
+    {
+      "timestampMs": 65287,
+      "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-65287ms.png",
+      "method": "ffmpeg-seek"
+    }
+  ],
+  "failures": [],
+  "sheet": {
+    "sheetPath": "projects/pilot-sky-blue/render/attempts/attempt-004/qa/contact-sheet.html",
+    "count": 19
+  }
+}

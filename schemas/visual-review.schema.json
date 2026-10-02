@@ -1,0 +1,39 @@
+{
+  "$id": "https://unfoldiq.io/schemas/visual-review.schema.json",
+  "title": "UNFOLDIQ Visual Review Contract (STEP-13)",
+  "description": "Agent/human/system visual review verdict for a render attempt.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "projectId", "attemptId", "reviewer", "reviewedAt", "decision", "issues"],
+  "properties": {
+    "version": { "type": "string", "const": "1.0.0" },
+    "projectId": { "type": "string", "minLength": 1 },
+    "attemptId": { "type": "string", "minLength": 1 },
+    "reviewer": { "type": "string", "enum": ["agent", "human", "system"] },
+    "reviewedAt": { "type": "string", "format": "date-time" },
+    "decision": { "type": "string", "enum": ["APPROVE", "REQUEST_CHANGES", "REJECT"] },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["issueId", "category", "severity", "status"],
+        "properties": {
+          "issueId": { "type": "string", "minLength": 1 },
+          "attemptId": { "type": "string" },
+          "sceneId": { "type": "string" },
+          "timestampMs": { "type": "number", "minimum": 0 },
+          "frame": { "type": "integer", "minimum": 0 },
+          "category": {
+            "type": "string",
+            "enum": ["CONTINUITY", "CONTENT_MATCH", "TEXT_CLIPPING", "CAPTION_READABILITY", "LAYOUT", "AI_ARTIFACT", "BLACK_FRAME", "VISUAL_GAP", "SAFE_ZONE", "OTHER"]
+          },
+          "severity": { "type": "string", "enum": ["INFO", "WARNING", "ERROR", "BLOCKER"] },
+          "status": { "type": "string", "enum": ["OPEN", "RESOLVED", "WAIVED"] },
+          "note": { "type": "string" },
+          "evidencePath": { "type": "string" }
+        }
+      }
+    }
+  }
+}

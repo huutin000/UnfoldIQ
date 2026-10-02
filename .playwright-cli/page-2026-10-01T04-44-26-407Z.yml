@@ -1,0 +1,78 @@
+- generic [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - main [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e7]:
+        - heading [level=1] [ref=e8]:
+          - link "Google Flow" [ref=e9] [cursor=pointer]:
+            - /url: /
+        - generic [ref=e10]:
+          - link "Flow Music" [ref=e11] [cursor=pointer]:
+            - /url: https://www.flowmusic.app/?utm_source=flow
+          - link "Flow TV" [ref=e15] [cursor=pointer]:
+            - /url: https://labs.google/flow/tv
+            - img [aria-hidden] [ref=e16]: tv
+          - generic [ref=e20]:
+            - link "Link to Google Labs Discord server" [ref=e21] [cursor=pointer]:
+              - /url: https://discord.com/invite/googlelabs
+            - link "Link to Flow on Instagram" [ref=e25] [cursor=pointer]:
+              - /url: https://www.instagram.com/googleflow
+            - link "Link to Flow on X (Twitter)" [ref=e29] [cursor=pointer]:
+              - /url: https://x.com/FlowbyGoogle
+            - button "Product help" [ref=e33] [cursor=pointer]:
+              - img [aria-hidden] [ref=e34]: help
+            - button "More options" [ref=e37] [cursor=pointer]:
+              - img [aria-hidden] [ref=e38]: more_vert
+          - button "Account details" [ref=e41] [cursor=pointer]:
+            - generic "PRO tier" [ref=e43]: PRO
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - 'button "Google Account: Hữu Tín Nguyễn (huutin108@gmail.com), Google membership"'
+      - generic [ref=e44]:
+        - region "Promotional banner" [ref=e46]:
+          - generic [ref=e47]:
+            - generic [ref=e50]:
+              - generic [ref=e51]:
+                - heading "Introducing Gemini Omni Flash" [level=2] [ref=e52]
+                - paragraph [ref=e53]: "Cinematic realism, powerful editing, world knowledge: try our latest video generation model!"
+              - button "Try Omni now" [ref=e55]
+            - generic [ref=e58]:
+              - button "Go to banner" [ref=e59] [cursor=pointer]
+              - button "Go to banner" [ref=e60] [cursor=pointer]
+              - button "Go to banner" [ref=e61] [cursor=pointer]
+              - button "Go to banner" [ref=e63] [cursor=pointer]
+              - button "Go to banner" [ref=e64] [cursor=pointer]
+              - button "Go to banner" [ref=e65] [cursor=pointer]
+              - button "Go to banner" [ref=e66] [cursor=pointer]
+            - button "Dismiss banner" [ref=e67] [cursor=pointer]:
+              - img [aria-hidden] [ref=e68]: close
+        - generic [ref=e72]:
+          - generic [ref=e75]:
+            - link "Open project" [ref=e76] [cursor=pointer]:
+              - /url: /project/5558d15b-2b9f-4917-9d01-c3392f0d3fae
+            - generic [ref=e78]:
+              - generic [ref=e79]:
+                - text: Sep 30 - 16:13
+                - button "Edit project title" [ref=e80] [cursor=pointer]:
+                  - img [aria-hidden] [ref=e81]: edit
+              - button "Delete project" [ref=e83] [cursor=pointer]:
+                - img [aria-hidden] [ref=e84]: delete
+          - generic [ref=e88]:
+            - link "Open project" [ref=e89] [cursor=pointer]:
+              - /url: /project/8221824c-a1a6-4aa9-8d6b-fac24860d49e
+              - img "image thumbnail for a flow project" [ref=e90]
+            - generic [ref=e92]:
+              - generic [ref=e93]:
+                - text: UNFOLDIQ — Mascot Live Validation
+                - button "Edit project title" [ref=e94] [cursor=pointer]:
+                  - img [aria-hidden] [ref=e95]: edit
+              - button "Delete project" [ref=e97] [cursor=pointer]:
+                - img [aria-hidden] [ref=e98]: delete
+        - button "New project" [ref=e100] [cursor=pointer]:
+          - img [aria-hidden] [ref=e101]: add

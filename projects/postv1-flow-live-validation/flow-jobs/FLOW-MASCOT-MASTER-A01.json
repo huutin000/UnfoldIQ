@@ -1,0 +1,100 @@
+{
+  "version": "1.0.0",
+  "status": "READY",
+  "attempt": 2,
+  "generationCount": 0,
+  "history": [
+    {
+      "from": null,
+      "to": "PENDING",
+      "at": "2026-09-26T09:13:18.886Z",
+      "actor": "system"
+    },
+    {
+      "from": "PENDING",
+      "to": "VALIDATED",
+      "at": "2026-09-26T09:13:18.888Z",
+      "actor": "flow-web"
+    },
+    {
+      "from": "VALIDATED",
+      "to": "PREPARED",
+      "at": "2026-09-26T09:13:18.888Z",
+      "actor": "flow-web"
+    },
+    {
+      "from": "PREPARED",
+      "to": "MANUAL_ASSIST_REQUIRED",
+      "at": "2026-09-26T09:13:18.889Z",
+      "actor": "flow-web"
+    },
+    {
+      "from": "MANUAL_ASSIST_REQUIRED",
+      "to": "MANUAL_ASSIST_REQUIRED",
+      "at": "2026-09-26T09:16:11.826Z",
+      "actor": "user",
+      "note": "approval-recorded"
+    },
+    {
+      "from": "MANUAL_ASSIST_REQUIRED",
+      "to": "IMPORTED",
+      "at": "2026-09-26T09:43:56.826Z",
+      "actor": "importer"
+    },
+    {
+      "from": "IMPORTED",
+      "to": "READY",
+      "at": "2026-09-26T09:43:56.832Z",
+      "actor": "qa-review"
+    }
+  ],
+  "jobId": "FLOW-MASCOT-MASTER-A01",
+  "requestId": "REQ-POSTV1-FLOW-IMG-01",
+  "projectId": "postv1-flow-live-validation",
+  "sceneId": "CHAR_UNFOLDIQ_GUIDE_01",
+  "capability": "image",
+  "mode": "MANUAL_ASSIST",
+  "prompt": "Create a clean 2.5D stylized illustration of the recurring UNFOLDIQ adult guide.\n\nThe guide appears approximately 27–33 years old, has short dark hair, expressive but mature stylized eyes and eyebrows, simplified-realistic body proportions, and a readable silhouette.\n\nWardrobe:\nmustard-yellow light jacket or overshirt,\ndark charcoal inner shirt,\ndark neutral trousers and shoes,\nsubtle dark-teal accent,\nno logos,\nno text.\n\nPose:\nthree-quarter view,\nsimple relaxed stance,\nneutral-curious expression,\nface clearly visible.\n\nStyle:\nclean shapes,\nsubtle depth,\nsoft volumetric lighting,\nlow-to-medium surface detail,\nmature educational/editorial look,\nnot photoreal,\nnot chibi,\nnot anime,\nnot toy-like,\nnot stick figure.\n\nBackground:\nclean and visually simple so the character can be reused as a reference.",
+  "platform": "youtube",
+  "flowProject": {
+    "mode": "REUSE",
+    "displayName": "UNFOLDIQ — Mascot Live Validation"
+  },
+  "outputRequirements": {
+    "aspectRatio": "16:9",
+    "outputCount": 1
+  },
+  "creativeContext": {
+    "characterId": "CHAR_UNFOLDIQ_GUIDE_01",
+    "wardrobeId": "WARDROBE_GUIDE_CORE_01",
+    "styleAnchorId": "STYLE_UNFOLDIQ_GUIDE_01"
+  },
+  "continuityContext": {
+    "strictness": "STRICT",
+    "requiredEntities": [
+      "CHAR_UNFOLDIQ_GUIDE_01"
+    ],
+    "referenceAssetIds": [],
+    "registryVersion": "1.0.0"
+  },
+  "referenceAssets": [],
+  "aspectRatio": "16:9",
+  "outputCount": 1,
+  "expectedOutputPath": "assets/image/CHAR_UNFOLDIQ_GUIDE_01/REF_GUIDE_MASTER_3Q_01_attempt-01.png",
+  "creditMetadata": {
+    "source": "FLOW_UI_OR_VERIFIED_POLICY",
+    "estimatedCredits": "UNKNOWN",
+    "stale": false
+  },
+  "approval": {
+    "jobId": "FLOW-MASCOT-MASTER-A01",
+    "attempt": 1,
+    "approvedBy": "user",
+    "approvedAt": "2026-09-26T09:16:11.825Z",
+    "decision": "APPROVED",
+    "costClass": "INCLUDED_SUBSCRIPTION",
+    "used": false
+  },
+  "deliveredArtifact": "assets/image/CHAR_UNFOLDIQ_GUIDE_01/REF_GUIDE_MASTER_3Q_01_attempt-02.png",
+  "modelPreference": "Imagen 3"
+}

@@ -1,0 +1,298 @@
+# UNFOLDIQ stage routes (STEP 09 V2) — canonical stages 1..19, 3A..3D
+# required[]: always load. conditional[]: load only when trigger holds (trigger describes when).
+version: "1.0.0"
+routes:
+  "1":
+    required:
+      - "AGENTS.md"
+      - "core/WORKFLOW.md"
+      - "core/CONTEXT_ROUTER.md"
+      - "platforms/INDEX.md"
+      - "platforms/<platform>/PROFILE.yaml"
+    conditional: []
+  "2":
+    required:
+      - "AGENTS.md"
+      - "core/WORKFLOW.md"
+      - "core/CONTEXT_ROUTER.md"
+      - "platforms/INDEX.md"
+      - "platforms/<platform>/PROFILE.yaml"
+    conditional: []
+  "3A":
+    required:
+      - "AGENTS.md"
+      - "core/WORKFLOW.md"
+      - "core/CONTEXT_ROUTER.md"
+      - "core/TOPIC_DISCOVERY.md"
+      - "core/TOPIC_REGISTRY.md"
+      - "projects/TOPIC_REGISTRY.json"
+      - "platforms/<platform>/PROFILE.yaml"
+    conditional:
+      - path: "web/current discovery sources"
+        trigger: "niche requires current-event or competitor evidence"
+  "3B":
+    required:
+      - "AGENTS.md"
+      - "core/WORKFLOW.md"
+      - "core/CONTEXT_ROUTER.md"
+      - "core/RESEARCH_QUALITY.md"
+      - "schemas/research-brief.schema.json"
+    conditional:
+      - path: "domain official/scholarly sources"
+        trigger: "topic requires domain evidence"
+      - path: "policy/ROUTER.md"
+        trigger: "topic touches regulated or sensitive policy categories"
+      - path: "schemas/research-plan.schema.json"
+        trigger: "research planning active (V5 Research Plan contract)"
+      - path: "platforms/<platform>/OVERLAY.md"
+        trigger: "platform-specific research/packaging governance applies"
+  "3C":
+    required:
+      - "AGENTS.md"
+      - "core/WORKFLOW.md"
+      - "core/CONTEXT_ROUTER.md"
+      - "core/CONTENT_MODE.md"
+      - "research-brief.json"
+      - "platforms/<platform>/PROFILE.yaml"
+    conditional: []
+  "3D":
+    required:
+      - "AGENTS.md"
+      - "core/WORKFLOW.md"
+      - "core/CONTEXT_ROUTER.md"
+      - "core/EDITORIAL_VALUE.md"
+      - "research-brief.json"
+      - "content-mode.json"
+    conditional: []
+  "4":
+    required:
+      - "AGENTS.md"
+      - "core/WORKFLOW.md"
+      - "core/CONTEXT_ROUTER.md"
+      - "core/STORYTELLING.md"
+      - "research-brief.json"
+      - "content-mode.json"
+      - "editorial-strategy.json"
+      - "core/DURATION_PLANNING.md"
+      - "duration-contract.json"
+    conditional:
+      - path: "platforms/<platform>/OVERLAY.md"
+        trigger: "platform-specific script/packaging constraints apply"
+  "5":
+    required:
+      - "AGENTS.md"
+      - "core/WORKFLOW.md"
+      - "core/CONTEXT_ROUTER.md"
+      - "core/STORYTELLING.md"
+      - "research-brief.json"
+      - "content-mode.json"
+      - "editorial-strategy.json"
+    conditional: []
+  "6":
+    required:
+      - "AGENTS.md"
+      - "core/WORKFLOW.md"
+      - "core/CONTEXT_ROUTER.md"
+      - "core/CREATIVE_DIRECTION.md"
+      - "core/VISUAL_BIBLE.md"
+      - "script.json"
+      - "content-mode.json"
+      - "research-brief.json"
+    conditional: []
+  "7":
+    required:
+      - "AGENTS.md"
+      - "core/WORKFLOW.md"
+      - "core/CONTEXT_ROUTER.md"
+      - "core/CREATIVE_DIRECTION.md"
+      - "core/VISUAL_BIBLE.md"
+      - "script.json"
+      - "content-mode.json"
+      - "research-brief.json"
+    conditional: []
+  "8":
+    required:
+      - "AGENTS.md"
+      - "core/WORKFLOW.md"
+      - "core/CONTEXT_ROUTER.md"
+      - "core/CREATIVE_DIRECTION.md"
+      - "core/VISUAL_BIBLE.md"
+      - "script.json"
+      - "content-mode.json"
+      - "research-brief.json"
+      - "core/PRODUCTION_CONTRACTS.md"
+    conditional: []
+  "9":
+    required:
+      - "AGENTS.md"
+      - "core/WORKFLOW.md"
+      - "core/CONTEXT_ROUTER.md"
+      - "scene-script.json"
+      - "providers/INDEX.md"
+      - "providers/CONFIG.yaml"
+      - "providers/PROVIDER_CONTRACT.md"
+      - "providers/runtime/README.md"
+      - "core/POLICY_RIGHTS.md"
+      - "policy/ROUTER.md"
+    conditional:
+      - path: "providers/PROVIDERS.md"
+        trigger: "provider capability selection is material"
+      - path: "core/CONTINUITY.md"
+        trigger: "scene requires recurring visual consistency"
+      - path: "schemas/continuity-registry.schema.json"
+        trigger: "scene requires recurring visual consistency"
+  "10":
+    required:
+      - "AGENTS.md"
+      - "core/WORKFLOW.md"
+      - "core/CONTEXT_ROUTER.md"
+      - "providers/INDEX.md"
+      - "providers/CONFIG.yaml"
+      - "providers/PROVIDER_CONTRACT.md"
+      - "providers/runtime/README.md"
+      - "core/CREATIVE_DIRECTION.md"
+      - "core/VISUAL_BIBLE.md"
+      - "core/POLICY_RIGHTS.md"
+      - "policy/ROUTER.md"
+    conditional:
+      - path: "providers/PROVIDERS.md"
+        trigger: "provider capability selection is material"
+      - path: "core/CONTINUITY.md"
+        trigger: "scene requires recurring visual consistency"
+      - path: "schemas/continuity-registry.schema.json"
+        trigger: "scene requires recurring visual consistency"
+      - path: "flow-companion/README.md"
+        trigger: "selected provider is flow-web"
+      - path: "schemas/flow-job.schema.json"
+        trigger: "selected provider is flow-web"
+      - path: "providers/runtime/adapters/flow-web.js"
+        trigger: "selected provider is flow-web"
+      - path: "providers/local/comfyui/README.md"
+        trigger: "selected provider is local-comfyui"
+      - path: "providers/local/SETUP_KOKORO.md"
+        trigger: "selected provider is local-kokoro"
+      - path: "providers/local/SETUP_WHISPER.md"
+        trigger: "selected provider is local-whisper"
+      - path: "mcp/unfoldiq-media/README.md"
+        trigger: "agent/MCP route is used"
+      - path: "providers/CAPABILITY_MATRIX.md"
+        trigger: "cloud provider is selected or configured"
+  "11":
+    required:
+      - "AGENTS.md"
+      - "core/WORKFLOW.md"
+      - "core/CONTEXT_ROUTER.md"
+      - "asset-manifest.json"
+      - "core/PRODUCTION_CONTRACTS.md"
+      - "lib/media-preflight.js"
+      - "schemas/media-preflight.schema.json"
+    conditional:
+      - path: "lib/transcript-alignment.js"
+        trigger: "voice/captions active (measured timing, alignment)"
+      - path: "lib/caption-builder.js"
+        trigger: "voice/captions active (captions build)"
+      - path: "lib/audio-timeline.js"
+        trigger: "voice/captions active (mix plan, measured timeline)"
+      - path: "schemas/audio-mix-plan.schema.json"
+        trigger: "voice/captions active (mix plan validation)"
+    # NOTE: do not load Flow/ComfyUI implementation docs unless provider repair/regeneration is triggered.
+  "12":
+    required:
+      - "AGENTS.md"
+      - "core/WORKFLOW.md"
+      - "core/CONTEXT_ROUTER.md"
+      - "providers/INDEX.md"
+      - "providers/CONFIG.yaml"
+      - "core/CONTENT_MODE.md"
+      - "core/CREATIVE_DIRECTION.md"
+      - "asset-manifest.json"
+      - "audio-manifest.json"
+    conditional: []
+  "13":
+    required:
+      - "AGENTS.md"
+      - "core/WORKFLOW.md"
+      - "core/CONTEXT_ROUTER.md"
+      - "core/PIPELINE_13.md"
+      - "core/PRODUCTION_CONTRACTS.md"
+      - "core/DURATION_PLANNING.md"
+      - "pipeline/render-orchestrator.js"
+      - "pipeline/state-store.js"
+      - "pipeline/render-config.js"
+      - "qa/technical-qa.js"
+      - "schemas/render-qa.schema.json"
+      - "schemas/render-input.schema.json"
+    conditional:
+      - path: "qa/visual-qa.js"
+        trigger: "visual QA evidence or review submission is required"
+      - path: "pipeline/auto-fix.js"
+        trigger: "a render attempt failed with a classified error"
+      - path: "lib/audio-timeline.js"
+        trigger: "measured timeline evidence is required for duration QA"
+      - path: "scripts/cli/render-plan-cli.js"
+        trigger: "render plan derivation or rebuild is required"
+    # NOTE: do not load Flow/ComfyUI internals unless upstream repair is selected.
+  "14":
+    required:
+      - "AGENTS.md"
+      - "core/WORKFLOW.md"
+      - "core/CONTEXT_ROUTER.md"
+      - "video-spec.json"
+      - "core/PRODUCTION_CONTRACTS.md"
+      - "remotion build/render docs"
+    conditional:
+      - path: "core/DURATION_PLANNING.md"
+        trigger: "duration/timeline validation needed for final duration"
+  "15":
+    required:
+      - "AGENTS.md"
+      - "core/WORKFLOW.md"
+      - "core/CONTEXT_ROUTER.md"
+      - "video-spec.json"
+      - "remotion preview docs"
+    conditional: []
+  "16":
+    required:
+      - "AGENTS.md"
+      - "core/WORKFLOW.md"
+      - "core/CONTEXT_ROUTER.md"
+      - "video-spec.json"
+      - "remotion render docs"
+    conditional: []
+  "17":
+    required:
+      - "AGENTS.md"
+      - "core/WORKFLOW.md"
+      - "core/CONTEXT_ROUTER.md"
+      - "asset-manifest.json"
+      - "render evidence"
+      - "core/POLICY_RIGHTS.md"
+      - "policy/ROUTER.md"
+      - "policy/SOURCES.yaml"
+      - "current platform policy snapshot(s)"
+    conditional: []
+  "18":
+    required:
+      - "AGENTS.md"
+      - "core/WORKFLOW.md"
+      - "core/CONTEXT_ROUTER.md"
+      - "qa-report.json (failed gates)"
+    conditional:
+      - path: "fix docs relevant to failed gates"
+        trigger: "a QA gate failed"
+  "19":
+    required:
+      - "AGENTS.md"
+      - "core/WORKFLOW.md"
+      - "core/CONTEXT_ROUTER.md"
+      - "final handoff (render + QA evidence + policy review)"
+      - "core/MANUAL_PUBLISH_CHECKLIST.md"
+    conditional: []
+excludedFromRuntime:
+  - "Report/**"
+  - "**/STEP-*_PROMPT.md"
+  - "**/STEP-*_FIX*.md"
+  - "setup/history/**"
+  - "remotion implementation docs (except stages 14-16)"
+  - "media preflight docs (except stage 11)"
+  - "audio processing docs (except stage 12)"

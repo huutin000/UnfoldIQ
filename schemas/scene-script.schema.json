@@ -1,0 +1,152 @@
+{
+"$id": "https://unfoldiq.io/schemas/scene-script.schema.json",
+  "title": "UNFOLDIQ Scene Script Contract",
+  "description": "Editorial scene plan with narration, visual intent, and timing status",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "projectId", "platform", "topic", "scenes"],
+  "properties":
+{
+    "durationContractVersion": {
+      "type": "string",
+      "description": "Version of duration-contract.json this scene plan was budgeted against (reference only; never a full contract duplicate)"
+    },
+    "workingDurationMs": {
+      "type": "object",
+      "description": "Working duration reference passed from the Duration Planning Gate",
+      "properties": {
+        "minMs": { "type": "integer", "minimum": 0 },
+        "preferredMs": { "type": "integer", "minimum": 0 },
+        "maxMs": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "scriptTimingSummary": {
+      "type": "object",
+      "description": "Optional planned narration timing summary (PLANNED only; measured audio is authoritative later)",
+      "properties": {
+        "estimatedNarrationMs": { "type": "integer", "minimum": 0 },
+        "timingStatus": { "type": "string", "enum": ["PLANNED", "MEASURED"] }
+      }
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semantic version of this contract"
+    },
+    "projectId": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique project identifier"
+    },
+    "platform": {
+      "type": "string",
+      "enum": ["youtube", "tiktok"],
+      "description": "Target platform"
+    },
+    "topic": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Video topic/subject"
+    },
+    "scenes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["sceneId", "order", "purpose", "narration", "visualIntent", "assetRequirement", "emotionIntent", "timing"],
+        "properties": {
+          "sceneId": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9_-]+$",
+            "description": "Unique scene identifier"
+          },
+          "order": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Scene order in sequence"
+          },
+          "purpose": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Narrative function of this scene"
+          },
+          "narration": {
+            "type": "string",
+            "description": "Voiceover/dialogue text for this scene"
+          },
+          "visualIntent": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Creative description of what should be shown"
+          },
+          "assetRequirement": {
+            "type": "string",
+            "minLength": 1,
+            "description": "What assets are needed for this scene"
+          },
+          "emotionIntent": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Primary emotion this scene should evoke"
+          },
+          "timing": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["status"],
+            "properties": {
+              "status": {
+                "type": "string",
+                "enum": ["PLANNED", "MEASURED", "UNKNOWN"],
+                "description": "Timing reliability status"
+              },
+              "startMs": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Start time in milliseconds (when status supports)"
+              },
+              "endMs": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "End time in milliseconds (when status supports)"
+              },
+              "durationMs": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Duration in milliseconds (when status supports)"
+              },
+              "evidence": {
+                "type": "string",
+                "description": "Source of timing evidence (e.g., 'TTS output', 'manual alignment')"
+              }
+            },
+            "dependencies": {
+              "startMs": ["status"],
+              "endMs": ["status"],
+              "durationMs": ["status"]
+            }
+          },
+          "onScreenText": {
+            "type": "string",
+            "description": "Text overlays, captions, or key phrases to display"
+          },
+          "audioCue": {
+            "type": "string",
+            "description": "Music shift, SFX, silence, or voice emphasis points"
+          },
+          "transitionIntent": {
+            "type": "string",
+            "description": "How this scene flows to the next (creative transition idea)"
+          },
+          "evidenceNotes": {
+            "type": "string",
+            "description": "Citations, source references, or verification status for factual claims"
+          }
+        }
+      }
+    }
+  }
+}
+
+

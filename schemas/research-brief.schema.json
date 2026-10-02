@@ -1,0 +1,352 @@
+{
+  "$id": "https://unfoldiq.io/schemas/research-brief.schema.json",
+  "title": "UNFOLDIQ Research Brief Contract",
+  "description": "Structured research output for factual/historical/scientific topics",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "projectId",
+    "topic",
+    "researchDate",
+    "researchStatus",
+    "researchQuestions",
+    "sources",
+    "claims",
+    "handoff"
+  ],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semantic version of this contract"
+    },
+    "projectId": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique project identifier"
+    },
+    "topic": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Resolved topic"
+    },
+    "niche": {
+      "type": "string",
+      "description": "Niche if applicable"
+    },
+    "contentClass": {
+      "type": "string",
+      "enum": ["FACTUAL", "FICTION", "HYBRID"],
+      "default": "FACTUAL",
+      "description": "ROADMAP V5 content class (optional, backward compatible, default FACTUAL)"
+    },
+    "researchRequired": {
+      "type": "string",
+      "enum": ["REQUIRED", "OPTIONAL_TARGETED", "NOT_REQUIRED"],
+      "description": "ROADMAP V5 Research Required gate (optional, backward compatible)"
+    },
+    "researchMode": {
+      "type": "string",
+      "enum": ["STANDARD", "DEEP"],
+      "description": "ROADMAP V5 research mode (optional, backward compatible)"
+    },
+    "researchSufficiency": {
+      "type": "string",
+      "enum": ["SUFFICIENT", "NEEDS_MORE_RESEARCH", "BLOCKED"],
+      "description": "ROADMAP V5 sufficiency gate (optional, backward compatible)"
+    },
+    "researchDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When research was conducted"
+    },
+    "researchStatus": {
+      "type": "string",
+      "enum": ["READY", "PARTIAL", "BLOCKED"],
+      "description": "Overall research readiness for storytelling"
+    },
+    "researchQuestions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["coreFactual", "interpretation", "narrative"],
+      "properties": {
+        "coreFactual": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "description": "Facts needed for correctness"
+        },
+        "interpretation": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "description": "What evidence permits inferring; scholarly disagreements"
+        },
+        "narrative": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "description": "What helps viewer understand significance/mechanism/stakes"
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["sourceId", "title", "sourceType", "verificationStatus", "qualityNotes"],
+        "properties": {
+          "sourceId": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Unique source identifier"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Source title"
+          },
+          "sourceType": {
+            "type": "string",
+            "enum": [
+              "primary_evidence",
+              "peer_reviewed",
+              "institutional",
+              "expert_analysis",
+              "official_documentation",
+              "secondary_journalism",
+              "general_web",
+              "user_provided"
+            ],
+            "description": "Source type category"
+          },
+          "author": {
+            "type": "string",
+            "description": "Author(s) if applicable"
+          },
+          "publisher": {
+            "type": "string",
+            "description": "Publisher/institution"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Source URL if available"
+          },
+          "publicationDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Publication date if known"
+          },
+          "accessDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Date agent accessed source"
+          },
+          "verificationStatus": {
+            "type": "string",
+            "enum": ["VERIFIED", "PARTIALLY_VERIFIED", "NOT_VERIFIED", "USER_PROVIDED"],
+            "description": "Source verification status"
+          },
+          "independenceStatus": {
+            "type": "string",
+            "enum": ["INDEPENDENT", "DERIVED", "SYNDICATED", "COPY_CHAIN", "UNKNOWN"],
+            "description": "ROADMAP V5 source independence (optional, backward compatible)"
+          },
+          "originGroup": {
+            "type": "string",
+            "description": "ROADMAP V5 underlying origin chain identifier (optional; same value = same origin)"
+          },
+          "canonicalUrl": {
+            "type": "string",
+            "format": "uri",
+            "description": "ROADMAP V5 canonical URL (optional)"
+          },
+          "qualityNotes": {
+            "type": "string",
+            "description": "Notes on source quality, bias, limitations"
+          }
+        }
+      }
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "claimId",
+          "statement",
+          "claimClass",
+          "sourceIds",
+          "evidenceStatus",
+          "scriptUse"
+        ],
+        "properties": {
+          "claimId": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9_-]+$",
+            "description": "Unique claim identifier"
+          },
+          "statement": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The factual/interpretive claim"
+          },
+          "claimClass": {
+            "type": "string",
+            "enum": [
+              "DIRECT_EVIDENCE",
+              "SUPPORTED_FACT",
+              "SCHOLARLY_INTERPRETATION",
+              "HYPOTHESIS",
+              "CONTESTED",
+              "UNVERIFIED"
+            ],
+            "description": "Claim classification"
+          },
+          "sourceIds": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 },
+            "minItems": 1,
+            "description": "Source IDs supporting this claim"
+          },
+          "evidenceStatus": {
+            "type": "string",
+            "enum": ["SUPPORTED", "MIXED", "WEAK", "UNSUPPORTED"],
+            "description": "Overall evidence strength"
+          },
+          "corroborationStatus": {
+            "type": "string",
+            "enum": ["PRIMARY_CONFIRMED", "MULTI_SOURCE_CONFIRMED", "SINGLE_SOURCE", "CONFLICTED", "UNSUPPORTED"],
+            "description": "ROADMAP V5 corroboration axis, orthogonal to evidenceStatus (optional, backward compatible)"
+          },
+          "hybridLabel": {
+            "type": "string",
+            "enum": ["FACT", "FOLKLORE", "TESTIMONY", "SPECULATION", "FICTIONALIZED_ELEMENT"],
+            "description": "ROADMAP V5 HYBRID classification label (optional; required on hybrid factual-handoff claims)"
+          },
+          "caveat": {
+            "type": "string",
+            "description": "Required caveat if claimClass requires it"
+          },
+          "competingInterpretation": {
+            "type": "string",
+            "description": "Material competing interpretation if CONTESTED"
+          },
+          "scriptUse": {
+            "type": "string",
+            "enum": [
+              "CAN_STATE",
+              "STATE_WITH_CAVEAT",
+              "DO_NOT_STATE_AS_FACT",
+              "DO_NOT_USE"
+            ],
+            "description": "How this claim may be used in script"
+          }
+        }
+      }
+    },
+    "contradictions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["claimIds", "description"],
+        "properties": {
+          "claimIds": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 },
+            "description": "Claim IDs involved in contradiction"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Nature of contradiction"
+          }
+        }
+      }
+    },
+    "openQuestions": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Material questions remaining unanswered"
+    },
+    "exampleCandidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["exampleId", "type", "description", "sourceIds", "relevance", "evidenceStatus"],
+        "properties": {
+          "exampleId": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9_-]+$",
+            "description": "Unique example identifier"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "CASE",
+              "ARTIFACT",
+              "SITE",
+              "STUDY",
+              "EXPERIMENT",
+              "DEMO",
+              "SCENARIO",
+              "COMPARISON",
+              "OTHER"
+            ],
+            "description": "Example type"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Example description"
+          },
+          "sourceIds": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 },
+            "description": "Supporting source IDs"
+          },
+          "relevance": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Why this example matters for the topic"
+          },
+          "evidenceStatus": {
+            "type": "string",
+            "enum": ["SUPPORTED", "MIXED", "WEAK", "UNSUPPORTED"],
+            "description": "Evidence status for this example"
+          },
+          "usageNote": {
+            "type": "string",
+            "description": "How to use in script (e.g., 'label as reconstruction')"
+          }
+        }
+      }
+    },
+    "handoff": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["readyForStorytelling", "materialUncertainties", "recommendedValueAngles"],
+      "properties": {
+        "readyForStorytelling": {
+          "type": "boolean",
+          "description": "Whether research is ready for script handoff"
+        },
+"materialUncertainties": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "description": "Material uncertainties affecting script"
+        },
+        "recommendedValueAngles": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "description": "Recommended editorial value angles for storytelling"
+        }
+      }
+    }
+  }
+}

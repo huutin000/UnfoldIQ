@@ -1,0 +1,33 @@
+{
+  "version": "1.0.0",
+  "jobId": "FLOW-MASCOT-MASTER-A01",
+  "requestId": "REQ-POSTV1-FLOW-IMG-01",
+  "projectId": "postv1-flow-live-validation",
+  "sceneId": "CHAR_UNFOLDIQ_GUIDE_01",
+  "capability": "image",
+  "prompt": "Create a clean 2.5D stylized illustration of the recurring UNFOLDIQ adult guide.\n\nThe guide appears approximately 27–33 years old, has short dark hair, expressive but mature stylized eyes and eyebrows, simplified-realistic body proportions, and a readable silhouette.\n\nWardrobe:\nmustard-yellow light jacket or overshirt,\ndark charcoal inner shirt,\ndark neutral trousers and shoes,\nsubtle dark-teal accent,\nno logos,\nno text.\n\nPose:\nthree-quarter view,\nsimple relaxed stance,\nneutral-curious expression,\nface clearly visible.\n\nStyle:\nclean shapes,\nsubtle depth,\nsoft volumetric lighting,\nlow-to-medium surface detail,\nmature educational/editorial look,\nnot photoreal,\nnot chibi,\nnot anime,\nnot toy-like,\nnot stick figure.\n\nBackground:\nclean and visually simple so the character can be reused as a reference.",
+  "modelPreference": null,
+  "aspectRatio": "16:9",
+  "generationLength": null,
+  "outputCount": 1,
+  "references": [],
+  "startFrame": null,
+  "endFrame": null,
+  "continuity": {
+    "strictness": "STRICT",
+    "requiredEntities": [
+      "CHAR_UNFOLDIQ_GUIDE_01"
+    ],
+    "referenceAssetIds": []
+  },
+  "expectedFilename": "CHAR_UNFOLDIQ_GUIDE_01_attempt-01.png",
+  "expectedDestination": "assets/image/CHAR_UNFOLDIQ_GUIDE_01/REF_GUIDE_MASTER_3Q_01_attempt-01.png",
+  "flowProject": {
+    "mode": "REUSE",
+    "displayName": "UNFOLDIQ — Mascot Live Validation"
+  },
+  "refusal": null,
+  "adaptationStatus": null,
+  "nextAction": "Complete generation manually, then import the result.",
+  "returnInstructions": "Download the result, then import it through the bridge result endpoint or the existing adapter."
+}

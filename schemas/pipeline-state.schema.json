@@ -1,0 +1,79 @@
+{
+  "$id": "https://unfoldiq.io/schemas/pipeline-state.schema.json",
+  "title": "UNFOLDIQ Pipeline State Contract (STEP-13)",
+  "description": "Durable pipeline state for projects/<id>/pipeline/state.json. Top-level is closed; nested metadata is permissive.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "projectId", "createdAt", "updatedAt", "status", "currentStage", "inputFingerprint", "checkpoints", "attempts", "qa", "issues", "blockers", "history"],
+  "properties": {
+    "version": { "type": "string", "const": "1.0.0" },
+    "projectId": { "type": "string", "minLength": 1 },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "updatedAt": { "type": "string", "format": "date-time" },
+    "status": {
+      "type": "string",
+      "enum": ["NEW", "PREPARING", "READY_TO_RENDER", "RENDERING", "RENDER_INTERRUPTED", "RENDERED", "QA_RUNNING", "QA_REVIEW_REQUIRED", "FIX_REQUIRED", "RE_RENDERING", "FINAL_RENDER_READY", "BLOCKED", "CANCELLED", "FAILED"]
+    },
+    "currentStage": {
+      "enum": ["VALIDATE_INPUTS", "STAGE_ASSETS", "BUILD_RENDER_PLAN", "PRE_RENDER_QA", "RENDER", "POST_RENDER_TECHNICAL_QA", "GENERATE_VISUAL_QA_EVIDENCE", "VISUAL_QA", "FIX_CLASSIFICATION", "AUTO_FIX", "RE_RENDER", "FINAL_ACCEPTANCE", null]
+    },
+    "inputFingerprint": { "type": ["object", "null"] },
+    "checkpoints": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["stage", "status", "inputHash", "artifactPaths", "completedAt"],
+        "properties": {
+          "stage": { "type": "string", "minLength": 1 },
+          "status": { "type": "string", "enum": ["VALID", "INVALIDATED", "MISSING", "FAILED"] },
+          "inputHash": { "type": ["string", "null"] },
+          "artifactPaths": { "type": "array", "items": { "type": "string" } },
+          "completedAt": { "type": ["string", "null"], "format": "date-time" },
+          "metadata": { "type": "object" }
+        }
+      }
+    },
+    "attempts": { "type": "array", "items": { "type": "object" } },
+    "qa": { "type": ["object", "null"] },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["issueId", "category", "severity", "status", "note"],
+        "properties": {
+          "issueId": { "type": "string", "minLength": 1 },
+          "category": { "type": "string", "minLength": 1 },
+          "severity": { "type": "string", "minLength": 1 },
+          "status": { "type": "string", "minLength": 1 },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "blockers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "detail"],
+        "properties": {
+          "code": { "type": "string", "minLength": 1 },
+          "detail": { "type": "string" }
+        }
+      }
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["at", "event"],
+        "properties": {
+          "at": { "type": "string", "format": "date-time" },
+          "event": { "type": "string", "minLength": 1 },
+          "detail": { }
+        }
+      }
+    }
+  }
+}

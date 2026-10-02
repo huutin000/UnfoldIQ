@@ -1,0 +1,13 @@
+[
+  {
+    "t": 3,
+    "panelStatus": "Có lỗi",
+    "err": "Có lỗi xảy ra.Hãy thử lại. Nếu lỗi tiếp diễn, mở Cài đặt để xem chi tiết.Chi tiết kỹ thuậtAPPROVAL_STALE_CHANGED: type,aspect,outputCount,model [cmds=0.4.11-postv1f-cmds2 agent-read=NO_AGENT_SURFACE]",
+    "jobStatus": "AWAITING_USER_APPROVAL",
+    "generationCount": 0,
+    "startLabel": "Start generation",
+    "startDisabled": false,
+    "mediaCount": 1,
+    "promptLen": 82
+  }
+]

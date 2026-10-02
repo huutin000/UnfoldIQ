@@ -1,0 +1,90 @@
+{
+  "$id": "https://unfoldiq.io/schemas/safety-prompt-adaptation.schema.json",
+  "title": "UNFOLDIQ Safety Prompt Adaptation Contract",
+  "description": "Context-preserving visual rewrite after a provider safety refusal. Adaptation, never evasion: claims, continuity, and Visual Bible version are preserved.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "projectId",
+    "sceneId",
+    "jobId",
+    "refusalClass",
+    "originalPrompt",
+    "adaptedPrompt",
+    "originalSceneIntent",
+    "preservedClaims",
+    "preservedContinuity",
+    "removedOrChangedElements",
+    "adaptationLevel",
+    "reason",
+    "policyDecision",
+    "attempt",
+    "requiresApproval"
+  ],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "projectId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sceneId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "jobId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "refusalClass": {
+      "type": "string",
+      "enum": ["MINOR_SAFETY", "GRAPHIC_VIOLENCE", "SEXUAL_CONTENT", "SELF_HARM", "IDENTIFIABLE_PERSON_RESTRICTION", "UPLOAD_RESTRICTION", "UNKNOWN_SAFETY", "NON_SAFETY_TECHNICAL"]
+    },
+    "originalPrompt": {
+      "type": "string",
+      "minLength": 1
+    },
+    "adaptedPrompt": {
+      "type": ["string", "null"],
+      "description": "Null for Level 3 safe substitute (no prompt retry)"
+    },
+    "originalSceneIntent": {
+      "type": "string",
+      "minLength": 1
+    },
+    "preservedClaims": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "preservedContinuity": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "removedOrChangedElements": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "adaptationLevel": {
+      "type": "integer",
+      "enum": [0, 1, 2, 3]
+    },
+    "reason": {
+      "type": "string",
+      "minLength": 1
+    },
+    "policyDecision": {
+      "type": "string",
+      "enum": ["ALLOW_ADAPTED_RETRY", "BLOCK", "SAFE_FALLBACK_ONLY"]
+    },
+    "attempt": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "requiresApproval": {
+      "type": "boolean"
+    }
+  }
+}

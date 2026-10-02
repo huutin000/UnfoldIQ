@@ -1,0 +1,132 @@
+{
+  "version": "1.0.0",
+  "project": "pilot-sky-blue",
+  "platform": "youtube",
+  "composition": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "aspectRatio": "16:9",
+    "durationMode": "measured",
+    "durationMs": 65332
+  },
+  "scenes": [
+    {
+      "sceneId": "S01",
+      "order": 0,
+      "timing": {
+        "startMs": 0,
+        "endMs": 9394,
+        "durationMs": 9394,
+        "status": "MEASURED",
+        "evidence": "SAPI measured clip durations"
+      },
+      "assetIds": [
+        "VOICE_B1"
+      ],
+      "audioIds": [
+        "VO_B1"
+      ]
+    },
+    {
+      "sceneId": "S02",
+      "order": 1,
+      "timing": {
+        "startMs": 9394,
+        "endMs": 18127,
+        "durationMs": 8733,
+        "status": "MEASURED",
+        "evidence": "SAPI measured clip durations"
+      },
+      "assetIds": [
+        "VOICE_B2"
+      ],
+      "audioIds": [
+        "VO_B2"
+      ]
+    },
+    {
+      "sceneId": "S03",
+      "order": 2,
+      "timing": {
+        "startMs": 18127,
+        "endMs": 33979,
+        "durationMs": 15852,
+        "status": "MEASURED",
+        "evidence": "SAPI measured clip durations"
+      },
+      "assetIds": [
+        "VOICE_B3",
+        "VOICE_B4"
+      ],
+      "audioIds": [
+        "VO_B3",
+        "VO_B4"
+      ]
+    },
+    {
+      "sceneId": "S04",
+      "order": 3,
+      "timing": {
+        "startMs": 33979,
+        "endMs": 41402,
+        "durationMs": 7423,
+        "status": "MEASURED",
+        "evidence": "SAPI measured clip durations"
+      },
+      "assetIds": [
+        "VOICE_B5"
+      ],
+      "audioIds": [
+        "VO_B5"
+      ]
+    },
+    {
+      "sceneId": "S05",
+      "order": 4,
+      "timing": {
+        "startMs": 41402,
+        "endMs": 50110,
+        "durationMs": 8708,
+        "status": "MEASURED",
+        "evidence": "SAPI measured clip durations"
+      },
+      "assetIds": [
+        "VOICE_B6"
+      ],
+      "audioIds": [
+        "VO_B6"
+      ]
+    },
+    {
+      "sceneId": "S06",
+      "order": 5,
+      "timing": {
+        "startMs": 50110,
+        "endMs": 65332,
+        "durationMs": 15222,
+        "status": "MEASURED",
+        "evidence": "SAPI measured clip durations"
+      },
+      "assetIds": [
+        "VOICE_B7",
+        "VOICE_B8"
+      ],
+      "audioIds": [
+        "VO_B7",
+        "VO_B8"
+      ]
+    }
+  ],
+  "globalStyle": {
+    "background": "#0b3d91",
+    "captionStyle": "sentence-subtitle",
+    "motionStyle": "slow-push",
+    "typography": "system-ui",
+    "safeArea": "youtube-default"
+  },
+  "render": {
+    "compositionId": "UNFOLDIQVideo",
+    "outputName": "pilot-sky-blue-final"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "projectId": "postv1-flow-live-validation",
+  "imageAttempts": 2,
+  "videoAttempts": 1,
+  "modelsUsed": [
+    "UNKNOWN"
+  ],
+  "resolutions": [
+    "1024x1024",
+    "1280x720"
+  ],
+  "generationLengths": [
+    "10s"
+  ],
+  "costClass": "UNKNOWN",
+  "visibleCostPerGeneration": "UNKNOWN",
+  "totalKnownCredits": "UNKNOWN",
+  "notes": "Real Flow mascot master image generation (2 attempts) + real reference-driven video generation attempt-01 (1 attempt, 1280x720, 10s, h264). Exact live-UI model labels not observed/evidenced for image or video. No verified per-generation deduction or account credit-activity evidence; subscription access is not evidence of zero usage. Job/request correlation NOT_VISIBLE in Flow UI. Zero credentials stored."
+}

@@ -1,0 +1,18 @@
+{
+  "url": "https://flow.google.com/project/8221824c-a1a6-4aa9-8d6b-fac24860d49e",
+  "drawerOpen": false,
+  "promptLogical": [
+    ""
+  ],
+  "promptExact": false,
+  "startVisible": true,
+  "startDisabled": true,
+  "startLabel": "Start generation",
+  "overlayOverStart": "FLOW-GENERATE-ICON-BUTTON.",
+  "composerControlsVisible": [
+    "Agent instructions",
+    "Settings",
+    "Add ingredients to the prompt box"
+  ],
+  "media": 1
+}

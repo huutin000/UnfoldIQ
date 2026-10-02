@@ -1,0 +1,183 @@
+{
+  "packetPath": "D:\\Project\\UNFOLDIQ\\projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\visual-review-packet.json",
+  "packet": {
+    "version": "1.0.0",
+    "projectId": "pilot-sky-blue",
+    "attemptId": "attempt-004",
+    "generatedAt": "2026-09-26T07:37:11.770Z",
+    "contactSheet": null,
+    "contactSheetCount": 0,
+    "sampledFrames": [
+      {
+        "timestampMs": 0,
+        "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-0ms.png",
+        "label": null,
+        "method": "ffmpeg-seek"
+      },
+      {
+        "timestampMs": 3249,
+        "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-3249ms.png",
+        "label": null,
+        "method": "ffmpeg-seek"
+      },
+      {
+        "timestampMs": 4697,
+        "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-4697ms.png",
+        "label": null,
+        "method": "ffmpeg-seek"
+      },
+      {
+        "timestampMs": 7946,
+        "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-7946ms.png",
+        "label": null,
+        "method": "ffmpeg-seek"
+      },
+      {
+        "timestampMs": 9394,
+        "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-9394ms.png",
+        "label": null,
+        "method": "ffmpeg-seek"
+      },
+      {
+        "timestampMs": 12474,
+        "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-12474ms.png",
+        "label": null,
+        "method": "ffmpeg-seek"
+      },
+      {
+        "timestampMs": 13761,
+        "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-13761ms.png",
+        "label": null,
+        "method": "ffmpeg-seek"
+      },
+      {
+        "timestampMs": 16841,
+        "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-16841ms.png",
+        "label": null,
+        "method": "ffmpeg-seek"
+      },
+      {
+        "timestampMs": 18127,
+        "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-18127ms.png",
+        "label": null,
+        "method": "ffmpeg-seek"
+      },
+      {
+        "timestampMs": 20986,
+        "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-20986ms.png",
+        "label": null,
+        "method": "ffmpeg-seek"
+      },
+      {
+        "timestampMs": 25168,
+        "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-25168ms.png",
+        "label": null,
+        "method": "ffmpeg-seek"
+      },
+      {
+        "timestampMs": 26053,
+        "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-26053ms.png",
+        "label": null,
+        "method": "ffmpeg-seek"
+      },
+      {
+        "timestampMs": 33979,
+        "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-33979ms.png",
+        "label": null,
+        "method": "ffmpeg-seek"
+      },
+      {
+        "timestampMs": 37691,
+        "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-37691ms.png",
+        "label": null,
+        "method": "ffmpeg-seek"
+      },
+      {
+        "timestampMs": 41402,
+        "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-41402ms.png",
+        "label": null,
+        "method": "ffmpeg-seek"
+      },
+      {
+        "timestampMs": 45756,
+        "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-45756ms.png",
+        "label": null,
+        "method": "ffmpeg-seek"
+      },
+      {
+        "timestampMs": 50110,
+        "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-50110ms.png",
+        "label": null,
+        "method": "ffmpeg-seek"
+      },
+      {
+        "timestampMs": 57721,
+        "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-57721ms.png",
+        "label": null,
+        "method": "ffmpeg-seek"
+      },
+      {
+        "timestampMs": 65287,
+        "framePath": "projects\\pilot-sky-blue\\render\\attempts\\attempt-004\\qa\\frames\\frame-65287ms.png",
+        "label": null,
+        "method": "ffmpeg-seek"
+      }
+    ],
+    "sceneTimeMapping": [
+      {
+        "sceneId": "S01",
+        "startMs": 0,
+        "endMs": 9394
+      },
+      {
+        "sceneId": "S02",
+        "startMs": 9394,
+        "endMs": 18127
+      },
+      {
+        "sceneId": "S03",
+        "startMs": 18127,
+        "endMs": 33979
+      },
+      {
+        "sceneId": "S04",
+        "startMs": 33979,
+        "endMs": 41402
+      },
+      {
+        "sceneId": "S05",
+        "startMs": 41402,
+        "endMs": 50110
+      },
+      {
+        "sceneId": "S06",
+        "startMs": 50110,
+        "endMs": 65332
+      }
+    ],
+    "technicalIssues": [],
+    "reviewChecklist": [
+      {
+        "item": "caption-readability",
+        "status": "PENDING"
+      },
+      {
+        "item": "safe-zone",
+        "status": "PENDING"
+      },
+      {
+        "item": "text-clipping",
+        "status": "PENDING"
+      },
+      {
+        "item": "continuity-spot",
+        "status": "PENDING"
+      },
+      {
+        "item": "black-silence-regions",
+        "status": "PENDING"
+      }
+    ],
+    "reviewState": "MACHINE_CHECKED"
+  }
+}

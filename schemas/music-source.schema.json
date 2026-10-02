@@ -1,0 +1,36 @@
+{
+  "$id": "https://unfoldiq.io/schemas/music-source.schema.json",
+  "title": "UNFOLDIQ Music Source / License Resolution Record (POST-v1C)",
+  "description": "Provenance and license gate for every music track used in a publishable video. UNKNOWN music rights block publish-ready status.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "trackId",
+    "title",
+    "source",
+    "licenseType",
+    "commercialUseAllowed",
+    "attributionRequired",
+    "status"
+  ],
+  "properties": {
+    "trackId": { "type": "string", "minLength": 1 },
+    "title": { "type": "string", "minLength": 1 },
+    "artist": { "type": "string" },
+    "source": { "type": "string", "minLength": 1, "description": "e.g. YouTube Audio Library, original music, licensed third-party library" },
+    "sourceUrl": { "type": "string" },
+    "sourceReference": { "type": "string" },
+    "licenseType": { "type": "string", "minLength": 1 },
+    "commercialUseAllowed": { "type": "boolean" },
+    "platformRestrictions": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "attributionRequired": { "type": "boolean" },
+    "attributionText": { "type": "string" },
+    "licenseEvidence": { "type": "string", "description": "Path or reference to the license proof artifact" },
+    "downloadedAt": { "type": "string" },
+    "sha256": { "type": "string" },
+    "status": {
+      "type": "string",
+      "enum": ["APPROVED", "REVIEW_REQUIRED", "BLOCKED", "UNKNOWN"]
+    }
+  }
+}

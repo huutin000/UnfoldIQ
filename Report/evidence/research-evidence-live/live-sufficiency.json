@@ -1,0 +1,38 @@
+{
+  "decision": "SUFFICIENT",
+  "rationale": "critical questions answered: true (4/4); important claims supported: true (1/1); blocking contradictions: 0; material open unknowns: 0; freshness adequate: true; budget remaining: true",
+  "factors": {
+    "criticalQuestionsAnswered": true,
+    "importantClaimsSupported": true,
+    "criticalContradictionsResolvedOrFramed": true,
+    "remainingUnknownsMaterial": false,
+    "freshnessAdequate": true,
+    "budgetRemaining": true,
+    "stopCriteriaReached": true
+  },
+  "gaps": {},
+  "blocker": null,
+  "policyVersion": "evidence-policy-1.0.0",
+  "claimStatuses": [
+    {
+      "claimId": "clm-8935cbdd21be",
+      "status": "PRIMARY_CONFIRMED",
+      "groups": 2
+    },
+    {
+      "claimId": "clm-f3482021bcb5",
+      "status": "PRIMARY_CONFIRMED",
+      "groups": 1
+    },
+    {
+      "claimId": "clm-2af747181678",
+      "status": "PRIMARY_CONFIRMED",
+      "groups": 1
+    },
+    {
+      "claimId": "clm-d1ee7564f5a8",
+      "status": "SINGLE_SOURCE",
+      "groups": 1
+    }
+  ]
+}

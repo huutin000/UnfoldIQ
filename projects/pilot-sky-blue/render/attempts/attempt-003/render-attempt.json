@@ -1,0 +1,37 @@
+{
+  "attemptId": "attempt-003",
+  "projectId": "pilot-sky-blue",
+  "number": 3,
+  "inputFingerprint": {
+    "renderInput": "ad5502e7b0239185",
+    "renderPlan": "5bba8601f03bb37b",
+    "stagingManifest": "6e0a00f109314849",
+    "timeline": null,
+    "captions": null,
+    "audioMix": null,
+    "visualBible": "a88c0c2453e2e39d",
+    "continuity": "e075ecb0c9ef1c35",
+    "platformProfile": "1.0.0",
+    "remotion": "8a6168234b0f62eb",
+    "fingerprintId": "e618133111102ba7"
+  },
+  "renderPlanHash": "f6ccb726ffb79f3f",
+  "startedAt": "2026-09-26T07:31:30.978Z",
+  "status": "PENDING",
+  "outputPath": "D:\\Project\\UNFOLDIQ\\projects\\pilot-sky-blue\\render\\attempts\\attempt-003\\output.mp4",
+  "renderConfig": {
+    "codec": "h264",
+    "concurrency": 2,
+    "pixelFormat": "yuv420p",
+    "overwrite": false,
+    "timeoutMs": 600000,
+    "logLevel": "verbose",
+    "crf": null,
+    "x264Preset": null
+  },
+  "progress": {
+    "fraction": 0
+  },
+  "artifacts": [],
+  "testOnly": true
+}

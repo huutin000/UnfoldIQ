@@ -1,0 +1,143 @@
+{
+  "status": "PASS",
+  "silentRegions": [
+    {
+      "startMs": 2958,
+      "endMs": 3946,
+      "durationMs": 988,
+      "voiceOverlapMs": 988,
+      "intentional": false,
+      "label": null
+    },
+    {
+      "startMs": 5675,
+      "endMs": 6658,
+      "durationMs": 983,
+      "voiceOverlapMs": 983,
+      "intentional": false,
+      "label": null
+    },
+    {
+      "startMs": 8575,
+      "endMs": 9543,
+      "durationMs": 968,
+      "voiceOverlapMs": 819,
+      "intentional": false,
+      "label": null
+    },
+    {
+      "startMs": 11489,
+      "endMs": 12580,
+      "durationMs": 1091,
+      "voiceOverlapMs": 1091,
+      "intentional": false,
+      "label": null
+    },
+    {
+      "startMs": 15017,
+      "endMs": 15581,
+      "durationMs": 564,
+      "voiceOverlapMs": 564,
+      "intentional": false,
+      "label": null
+    },
+    {
+      "startMs": 17285,
+      "endMs": 18270,
+      "durationMs": 985,
+      "voiceOverlapMs": 842,
+      "intentional": false,
+      "label": null
+    },
+    {
+      "startMs": 25634,
+      "endMs": 26651,
+      "durationMs": 1017,
+      "voiceOverlapMs": 856,
+      "intentional": false,
+      "label": null
+    },
+    {
+      "startMs": 30100,
+      "endMs": 31113,
+      "durationMs": 1013,
+      "voiceOverlapMs": 1013,
+      "intentional": false,
+      "label": null
+    },
+    {
+      "startMs": 33154,
+      "endMs": 34143,
+      "durationMs": 989,
+      "voiceOverlapMs": 825,
+      "intentional": false,
+      "label": null
+    },
+    {
+      "startMs": 35834,
+      "endMs": 36355,
+      "durationMs": 521,
+      "voiceOverlapMs": 521,
+      "intentional": false,
+      "label": null
+    },
+    {
+      "startMs": 40577,
+      "endMs": 41559,
+      "durationMs": 982,
+      "voiceOverlapMs": 825,
+      "intentional": false,
+      "label": null
+    },
+    {
+      "startMs": 44788,
+      "endMs": 45782,
+      "durationMs": 994,
+      "voiceOverlapMs": 994,
+      "intentional": false,
+      "label": null
+    },
+    {
+      "startMs": 49293,
+      "endMs": 50258,
+      "durationMs": 965,
+      "voiceOverlapMs": 817,
+      "intentional": false,
+      "label": null
+    },
+    {
+      "startMs": 55911,
+      "endMs": 56901,
+      "durationMs": 990,
+      "voiceOverlapMs": 833,
+      "intentional": false,
+      "label": null
+    },
+    {
+      "startMs": 58742,
+      "endMs": 59726,
+      "durationMs": 984,
+      "voiceOverlapMs": 984,
+      "intentional": false,
+      "label": null
+    },
+    {
+      "startMs": 62428,
+      "endMs": 63462,
+      "durationMs": 1034,
+      "voiceOverlapMs": 1034,
+      "intentional": false,
+      "label": null
+    },
+    {
+      "startMs": 64508,
+      "endMs": 65387,
+      "durationMs": 879,
+      "voiceOverlapMs": 824,
+      "intentional": false,
+      "label": null
+    }
+  ],
+  "analyzer": "ffmpeg-silencedetect",
+  "detail": "17 silence region(s) outside voice ranges (intro/outro gaps never fail)"
+}

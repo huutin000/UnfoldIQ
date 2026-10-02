@@ -1,0 +1,3 @@
+[     111ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://127.0.0.1:4317/jobs/FLOW-COMPANION-LIVE-GEN-01?projectId=postv1b-flow-companion-live:0
+[     207ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://127.0.0.1:4317/jobs/FLOW-COMPANION-LIVE-GEN-01?projectId=postv1b-flow-companion-live:0
+[     713ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://127.0.0.1:4317/jobs/FLOW-COMPANION-LIVE-GEN-01?projectId=postv1b-flow-companion-live:0

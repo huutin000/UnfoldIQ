@@ -1,0 +1,128 @@
+{
+  "$id": "https://unfoldiq.io/schemas/duration-contract.schema.json",
+  "title": "UNFOLDIQ Duration Contract",
+  "description": "Planning-time duration agreement between user target, research capacity, and working script budget. Target, estimated, and actual durations are never collapsed.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "projectId",
+    "platform",
+    "durationMode",
+    "contentCapacity",
+    "workingDuration",
+    "scriptBudget",
+    "policy",
+    "status"
+  ],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "projectId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "platform": {
+      "type": "string",
+      "minLength": 1
+    },
+    "durationMode": {
+      "type": "string",
+      "enum": ["AUTO", "FLEXIBLE_TARGET", "APPROXIMATE_TARGET", "HARD_LIMIT"]
+    },
+    "userTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "minMs": { "type": "integer", "minimum": 0 },
+        "preferredMs": { "type": "integer", "minimum": 0 },
+        "maxMs": { "type": "integer", "minimum": 0 },
+        "tolerancePercent": { "type": "number", "minimum": 0, "maximum": 100 }
+      }
+    },
+    "contentCapacity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "recommendedMinMs", "recommendedMaxMs", "basis", "coverage"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["INSUFFICIENT", "SUFFICIENT", "OVER_CAPACITY", "UNCERTAIN"]
+        },
+        "recommendedMinMs": { "type": "integer", "minimum": 0 },
+        "recommendedMaxMs": { "type": "integer", "minimum": 0 },
+        "basis": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Meaningful editorial units (claims, mechanisms, walkthroughs, ...). Never raw search volume."
+        },
+        "coverage": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expansionOpportunities": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "omissionCandidates": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "workingDuration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minMs", "preferredMs", "maxMs", "derivedFrom", "confidence"],
+      "properties": {
+        "minMs": { "type": "integer", "minimum": 0 },
+        "preferredMs": { "type": "integer", "minimum": 0 },
+        "maxMs": { "type": "integer", "minimum": 0 },
+        "derivedFrom": { "type": "string", "minLength": 1 },
+        "confidence": { "type": "string", "enum": ["HIGH", "MEDIUM", "LOW"] }
+      }
+    },
+    "scriptBudget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["estimatedWordsMin", "estimatedWordsMax", "estimatedNarrationMs", "speakingRateAssumption", "rateSource", "timingStatus"],
+      "properties": {
+        "estimatedWordsMin": { "type": "integer", "minimum": 0 },
+        "estimatedWordsMax": { "type": "integer", "minimum": 0 },
+        "estimatedNarrationMs": { "type": "integer", "minimum": 0 },
+        "speakingRateAssumption": { "type": "string", "minLength": 1 },
+        "rateSource": { "type": "string", "minLength": 1 },
+        "timingStatus": { "type": "string", "enum": ["PLANNED", "MEASURED"] }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["allowScopeExpansion", "fillerForbidden"],
+      "properties": {
+        "allowScopeExpansion": { "type": "boolean" },
+        "fillerForbidden": { "type": "boolean" }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["FIT", "TARGET_TOO_LONG_FOR_CONTENT", "TARGET_TOO_SHORT_FOR_CONTENT", "RESEARCH_INCOMPLETE", "HARD_LIMIT_REQUIRES_COMPRESSION"]
+    },
+    "resolution": {
+      "type": "object",
+      "description": "Documented resolution for non-FIT states (shorter final, prioritization, split, expansion, ...)",
+      "properties": {
+        "decision": { "type": "string" },
+        "note": { "type": "string" },
+        "prioritization": { "type": "boolean" },
+        "recommendedSplit": { "type": "boolean" }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "description": "Supporting notes: capacity units, rate justification, platform guidance refs"
+    }
+  }
+}

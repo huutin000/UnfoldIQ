@@ -1,0 +1,109 @@
+{
+  "$id": "https://unfoldiq.io/schemas/provider-request.schema.json",
+  "title": "UNFOLDIQ Provider Request Contract",
+  "description": "Vendor-neutral asset generation request for the universal provider runtime",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "requestId",
+    "projectId",
+    "sceneId",
+    "capability",
+    "input",
+    "outputRequirements"
+  ],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "requestId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "projectId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sceneId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "capability": {
+      "type": "string",
+      "enum": ["image", "video", "tts", "stt", "music", "sfx"]
+    },
+    "providerPreference": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Optional ordered provider ID hints; resolver still enforces cost/availability/policy"
+    },
+    "input": {
+      "type": "object",
+      "description": "Capability input: prompt/text, input asset paths, parameters"
+    },
+    "outputRequirements": {
+      "type": "object",
+      "description": "Required output specs: dimensions, format, duration, fps, sample rate, etc."
+    },
+    "creativeContext": {
+      "type": "object",
+      "description": "Normalized summaries only (content mode, creative direction, visual bible, platform). Never full Markdown documents.",
+      "properties": {
+        "contentModeSummary": { "type": "string" },
+        "creativeDirectionSummary": { "type": "string" },
+        "visualBibleConstraints": { "type": "object" },
+        "platformConstraints": { "type": "object" },
+        "creativeDirectionVersion": { "type": "string" },
+        "visualBibleVersion": { "type": "string" }
+      }
+    },
+    "continuityContext": {
+      "type": "object",
+      "description": "Continuity requirements by reference (IDs/paths). Never image binary/base64.",
+      "properties": {
+        "registryPath": { "type": "string" },
+        "registryVersion": { "type": "string" },
+        "requiredEntities": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "requiredReferences": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "continuityStrictness": {
+          "type": "string",
+          "enum": ["STRICT", "NORMAL", "LOOSE", "NOT_APPLICABLE"]
+        },
+        "startFrameRef": { "type": "string" },
+        "endFrameRef": { "type": "string" }
+      }
+    },
+    "rightsContext": {
+      "type": "object",
+      "description": "Intended use, license requirements, commercial flag, policy classification",
+      "properties": {
+        "intendedUse": { "type": "string" },
+        "commercial": { "type": "boolean" },
+        "licenseRequirements": { "type": "string" },
+        "policyClassification": { "type": "string" },
+        "sourceType": { "type": "string" }
+      }
+    },
+    "costConstraints": {
+      "type": "object",
+      "description": "Per-request cost overrides; project cost policy still applies",
+      "properties": {
+        "allowPaidCloud": { "type": "boolean" },
+        "maxCostClass": { "type": "string" }
+      }
+    },
+    "attempt": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Retry attempt number (1 for first try)"
+    }
+  }
+}

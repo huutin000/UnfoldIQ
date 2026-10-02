@@ -1,0 +1,32 @@
+{
+  "query": "What official documentation or authoritative reference defines correct behavior for \"Crawl4AI markdown generation result API\"?",
+  "provider": "agent-exchange",
+  "pickedUrl": "https://api.crawl4ai.com/docs",
+  "ok": true,
+  "code": null,
+  "summary": {
+    "requestId": "srq-muqdolgy-9bb39507",
+    "host": "api.crawl4ai.com",
+    "route": "crawl4ai-direct",
+    "status": "ACQUIRED",
+    "statusCode": 308,
+    "errorCode": null,
+    "retryCount": 0,
+    "contentLength": 33646,
+    "contentHash": "33a3220b6977e1eecfca1b335d1ff57e372649d2e3e69a44919a01d08e25fa02",
+    "elapsedMs": 5964
+  },
+  "planTopic": "Crawl4AI markdown generation result API",
+  "documentMeta": {
+    "finalUrl": "https://api.crawl4ai.com/docs/",
+    "statusCode": 308,
+    "route": "crawl4ai-direct",
+    "extractionMethod": "crawl4ai-direct",
+    "crawlerVersion": "0.9.4",
+    "rawChars": 33646,
+    "fitChars": 4653,
+    "title": "Crawl4AI - API Docs",
+    "linkCount": 6
+  },
+  "elapsedMs": 5964
+}

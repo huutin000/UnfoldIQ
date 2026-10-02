@@ -1,0 +1,178 @@
+[
+  {
+    "t": 3,
+    "panelStatus": "Chờ duyệt",
+    "err": "",
+    "jobStatus": "AWAITING_USER_APPROVAL",
+    "generationCount": 0,
+    "startLabel": "Start generation",
+    "startDisabled": false,
+    "mediaCount": 1,
+    "promptLen": 82
+  },
+  {
+    "t": 6,
+    "panelStatus": "Chờ duyệt",
+    "err": "",
+    "jobStatus": "AWAITING_USER_APPROVAL",
+    "generationCount": 0,
+    "startLabel": "Start generation",
+    "startDisabled": false,
+    "mediaCount": 1,
+    "promptLen": 82
+  },
+  {
+    "t": 9,
+    "panelStatus": "Chờ duyệt",
+    "err": "",
+    "jobStatus": "AWAITING_USER_APPROVAL",
+    "generationCount": 0,
+    "startLabel": "Start generation",
+    "startDisabled": false,
+    "mediaCount": 1,
+    "promptLen": 82
+  },
+  {
+    "t": 12,
+    "panelStatus": "Chờ duyệt",
+    "err": "",
+    "jobStatus": "AWAITING_USER_APPROVAL",
+    "generationCount": 0,
+    "startLabel": "Start generation",
+    "startDisabled": false,
+    "mediaCount": 1,
+    "promptLen": 82
+  },
+  {
+    "t": 15,
+    "panelStatus": "Chờ duyệt",
+    "err": "",
+    "jobStatus": "AWAITING_USER_APPROVAL",
+    "generationCount": 0,
+    "startLabel": "Start generation",
+    "startDisabled": false,
+    "mediaCount": 1,
+    "promptLen": 82
+  },
+  {
+    "t": 18,
+    "panelStatus": "Chờ duyệt",
+    "err": "",
+    "jobStatus": "AWAITING_USER_APPROVAL",
+    "generationCount": 0,
+    "startLabel": "Start generation",
+    "startDisabled": false,
+    "mediaCount": 1,
+    "promptLen": 82
+  },
+  {
+    "t": 21,
+    "panelStatus": "Chờ duyệt",
+    "err": "",
+    "jobStatus": "AWAITING_USER_APPROVAL",
+    "generationCount": 0,
+    "startLabel": "Start generation",
+    "startDisabled": false,
+    "mediaCount": 1,
+    "promptLen": 82
+  },
+  {
+    "t": 24,
+    "panelStatus": "Chờ duyệt",
+    "err": "",
+    "jobStatus": "AWAITING_USER_APPROVAL",
+    "generationCount": 0,
+    "startLabel": "Start generation",
+    "startDisabled": false,
+    "mediaCount": 1,
+    "promptLen": 82
+  },
+  {
+    "t": 27,
+    "panelStatus": "Chờ duyệt",
+    "err": "",
+    "jobStatus": "AWAITING_USER_APPROVAL",
+    "generationCount": 0,
+    "startLabel": "Start generation",
+    "startDisabled": false,
+    "mediaCount": 1,
+    "promptLen": 82
+  },
+  {
+    "t": 30,
+    "panelStatus": "Chờ duyệt",
+    "err": "",
+    "jobStatus": "AWAITING_USER_APPROVAL",
+    "generationCount": 0,
+    "startLabel": "Start generation",
+    "startDisabled": false,
+    "mediaCount": 1,
+    "promptLen": 82
+  },
+  {
+    "t": 33,
+    "panelStatus": "Chờ duyệt",
+    "err": "",
+    "jobStatus": "AWAITING_USER_APPROVAL",
+    "generationCount": 0,
+    "startLabel": "Start generation",
+    "startDisabled": false,
+    "mediaCount": 1,
+    "promptLen": 82
+  },
+  {
+    "t": 36,
+    "panelStatus": "Chờ duyệt",
+    "err": "",
+    "jobStatus": "AWAITING_USER_APPROVAL",
+    "generationCount": 0,
+    "startLabel": "Start generation",
+    "startDisabled": false,
+    "mediaCount": 1,
+    "promptLen": 82
+  },
+  {
+    "t": 39,
+    "panelStatus": "Chờ duyệt",
+    "err": "",
+    "jobStatus": "AWAITING_USER_APPROVAL",
+    "generationCount": 0,
+    "startLabel": "Start generation",
+    "startDisabled": false,
+    "mediaCount": 1,
+    "promptLen": 82
+  },
+  {
+    "t": 42,
+    "panelStatus": "Chờ duyệt",
+    "err": "",
+    "jobStatus": "AWAITING_USER_APPROVAL",
+    "generationCount": 0,
+    "startLabel": "Start generation",
+    "startDisabled": false,
+    "mediaCount": 1,
+    "promptLen": 82
+  },
+  {
+    "t": 45,
+    "panelStatus": "Chờ duyệt",
+    "err": "",
+    "jobStatus": "AWAITING_USER_APPROVAL",
+    "generationCount": 0,
+    "startLabel": "Start generation",
+    "startDisabled": false,
+    "mediaCount": 1,
+    "promptLen": 82
+  },
+  {
+    "t": 48,
+    "panelStatus": "Có lỗi",
+    "err": "Có lỗi xảy ra.Hãy thử lại. Nếu lỗi tiếp diễn, mở Cài đặt để xem chi tiết.Chi tiết kỹ thuậtSUBMIT_NOT_ACCEPTED: SUBMIT_NOT_ACCEPTED",
+    "jobStatus": "AWAITING_USER_APPROVAL",
+    "generationCount": 0,
+    "startLabel": "Start generation",
+    "startDisabled": false,
+    "mediaCount": 1,
+    "promptLen": 82
+  }
+]

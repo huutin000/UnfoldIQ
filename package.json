@@ -1,0 +1,50 @@
+{
+  "name": "unfoldiq",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node scripts/run-tests.js",
+    "test:flow": "node scripts/run-tests.js flow",
+    "test:providers": "node scripts/run-tests.js providers",
+    "test:pipeline": "node scripts/run-tests.js pipeline",
+    "test:remotion": "node scripts/run-tests.js remotion",
+    "test:media": "node scripts/run-tests.js media",
+    "test:policy": "node scripts/run-tests.js policy",
+    "test:qa": "node scripts/run-tests.js qa",
+    "test:topic": "node scripts/run-tests.js topic",
+    "test:research": "node scripts/run-tests.js research",
+    "test:story": "node scripts/run-tests.js story",
+    "test:research-deep": "node scripts/run-tests.js research-deep",
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:ui": "playwright test --ui",
+    "check:repo-structure": "node scripts/checks/repository-structure-check.js",
+    "doctor:flow": "node scripts/diagnostics/flow-companion-doctor.js",
+    "doctor:provider": "node scripts/diagnostics/provider-doctor.js",
+    "doctor:media": "node scripts/diagnostics/media-tool-doctor.js",
+    "doctor:local": "node scripts/diagnostics/local-media-doctor.js",
+    "doctor:research": "node scripts/diagnostics/research-acquisition-doctor.js",
+    "research:setup": "node scripts/maintenance/setup-research-env.js",
+    "research:verify": "node scripts/diagnostics/research-acquisition-doctor.js --smoke",
+    "research:deep:setup": "node scripts/maintenance/setup-deep-env.js",
+    "research:deep:doctor": "node scripts/diagnostics/deep-provider-doctor.js",
+    "research:deep:live-smoke": "node scripts/diagnostics/deep-live-smoke.js",
+    "flow:bridge": "node flow-companion/bridge/run.js --port 4317",
+    "flow:bridge:reset-token": "node flow-companion/bridge/run.js --port 4317 --reset-token",
+    "research:deep:live-probes": "node scripts/diagnostics/deep-live-probes.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1",
+    "js-yaml": "^5.4.2"
+  },
+  "devDependencies": {
+    "@playwright/cli": "^0.1.22",
+    "@playwright/test": "^1.63.0"
+  }
+}

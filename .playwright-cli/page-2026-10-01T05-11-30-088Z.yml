@@ -1,0 +1,21 @@
+- generic [ref=e2]:
+  - generic "Thông báo" [ref=e3]:
+    - status [ref=e4]:
+      - generic [ref=e5]: Đang chuẩn bị…
+    - status [ref=e6]:
+      - generic [ref=e9]: Đã kết nối Google Flow
+      - button "Đóng thông báo" [ref=e10] [cursor=pointer]: ×
+  - generic [ref=e11]:
+    - banner [ref=e12]:
+      - heading "UNFOLDIQ" [level=1] [ref=e13]
+      - button "Trạng thái kết nối, nhấn để xem chi tiết" [ref=e14] [cursor=pointer]:
+        - generic [ref=e16]: Đang kết nối
+      - button "Cài đặt" [ref=e17] [cursor=pointer]
+    - region "Công việc hiện tại" [ref=e23]:
+      - generic [ref=e24]: Chưa có công việc nào. Nhấn “Tìm công việc” để bắt đầu.
+      - list "Tiến trình" [ref=e27]:
+        - listitem [ref=e28]:
+          - generic [ref=e30]: Chuẩn bị
+    - region "Hành động chính" [ref=e31]:
+      - button "Đang kết nối…" [disabled] [ref=e32]
+      - button "Từ chối" [ref=e33] [cursor=pointer]

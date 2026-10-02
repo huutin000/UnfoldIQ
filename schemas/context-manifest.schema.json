@@ -1,0 +1,70 @@
+{
+  "$id": "https://unfoldiq.io/schemas/context-manifest.schema.json",
+  "title": "UNFOLDIQ Context Manifest Contract",
+  "description": "Records which context was resolved and loaded for a stage execution",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "projectId",
+    "stage",
+    "platform",
+    "generatedAt",
+    "required",
+    "conditional",
+    "loaded",
+    "missingRequired"
+  ],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "projectId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stage": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Canonical stage: 1-19 or 3A-3D"
+    },
+    "platform": {
+      "type": "string",
+      "minLength": 1
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "required": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "conditional": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "loaded": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "purpose", "loadStatus"],
+        "properties": {
+          "path": { "type": "string", "minLength": 1 },
+          "purpose": { "type": "string", "minLength": 1 },
+          "loadStatus": {
+            "type": "string",
+            "enum": ["LOADED", "NOT_NEEDED", "FAILED"]
+          }
+        }
+      }
+    },
+    "missingRequired": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Required paths not loaded; non-empty blocks stage PASS"
+    }
+  }
+}

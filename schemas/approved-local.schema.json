@@ -1,0 +1,41 @@
+{
+  "$id": "https://unfoldiq.io/schemas/approved-local.schema.json",
+  "title": "UNFOLDIQ Approved Local Asset Library",
+  "description": "Pre-cleared local assets with documented provenance and rights. Unknown/blocked rights are never READY for final use.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "assets"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "assets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["assetId", "path", "type", "rightsStatus"],
+        "properties": {
+          "assetId": { "type": "string", "minLength": 1 },
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Project-relative path to the asset"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["image", "video", "voice", "music", "sfx", "font", "other"]
+          },
+          "rightsStatus": {
+            "type": "string",
+            "enum": ["VERIFIED", "UNVERIFIED", "UNKNOWN", "NOT_APPLICABLE"]
+          },
+          "license": { "type": "string" },
+          "attribution": { "type": "string" },
+          "notes": { "type": "string" }
+        }
+      }
+    }
+  }
+}

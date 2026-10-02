@@ -1,0 +1,111 @@
+{
+  "durationContractVersion": "1.0.0",
+  "platform": "youtube",
+  "projectId": "pilot-sky-blue",
+  "scenes": [
+    {
+      "assetRequirement": "blue gradient backdrop, title text",
+      "emotionIntent": "curiosity",
+      "narration": "Look up on a clear day, and the sky is blue. But sunlight itself is white. So where does the blue come from?",
+      "order": 0,
+      "purpose": "hook question",
+      "sceneId": "S01",
+      "timing": {
+        "status": "MEASURED",
+        "startMs": 0,
+        "endMs": 9394,
+        "durationMs": 9394,
+        "evidence": "SAPI measured narration durations"
+      },
+      "visualIntent": "Full-bleed day-sky gradient with title text WHY IS THE SKY BLUE",
+      "onScreenText": "WHY IS THE SKY BLUE?"
+    },
+    {
+      "assetRequirement": "molecule dots, sun rays",
+      "emotionIntent": "wonder",
+      "narration": "The answer is written in the air itself. Tiny molecules of nitrogen and oxygen, far smaller than a wave of light.",
+      "order": 1,
+      "purpose": "mechanism setup",
+      "sceneId": "S02",
+      "timing": {
+        "status": "MEASURED",
+        "startMs": 9394,
+        "endMs": 18127,
+        "durationMs": 8733,
+        "evidence": "SAPI measured narration durations"
+      },
+      "visualIntent": "Sun rays entering a field of molecule dots",
+      "onScreenText": "THE AIR IS FULL OF MOLECULES"
+    },
+    {
+      "assetRequirement": "scattering diagram, spectrum bar",
+      "emotionIntent": "understanding",
+      "narration": "When sunlight hits them, they scatter short blue wavelengths in every direction, several times more strongly than red. That scattered blue light reaches your eyes from everywhere overhead. That is why the whole sky glows blue.",
+      "order": 2,
+      "purpose": "core mechanism",
+      "sceneId": "S03",
+      "timing": {
+        "status": "MEASURED",
+        "startMs": 18127,
+        "endMs": 33979,
+        "durationMs": 15852,
+        "evidence": "SAPI measured narration durations"
+      },
+      "visualIntent": "Ray hits molecule, blue rays fan out; spectrum bar highlights blue",
+      "onScreenText": "BLUE LIGHT SCATTERS MOST"
+    },
+    {
+      "assetRequirement": "spectrum bar with violet dimmed, eye hint",
+      "emotionIntent": "aha",
+      "narration": "Violet is scattered even more, but there is less of it in sunlight, and your eyes are less sensitive to it.",
+      "order": 3,
+      "purpose": "misconception correction",
+      "sceneId": "S04",
+      "timing": {
+        "status": "MEASURED",
+        "startMs": 33979,
+        "endMs": 41402,
+        "durationMs": 7423,
+        "evidence": "SAPI measured narration durations"
+      },
+      "visualIntent": "Spectrum bar, violet segment dimmed, simple eye glyph",
+      "onScreenText": "WHY NOT VIOLET?"
+    },
+    {
+      "assetRequirement": "sunset gradient, long-path arrow",
+      "emotionIntent": "beauty",
+      "narration": "At sunset, sunlight crosses much more air. The blue is scattered away, and the reds and oranges remain.",
+      "order": 4,
+      "purpose": "geometry proof",
+      "sceneId": "S05",
+      "timing": {
+        "status": "MEASURED",
+        "startMs": 41402,
+        "endMs": 50110,
+        "durationMs": 8708,
+        "evidence": "SAPI measured narration durations"
+      },
+      "visualIntent": "Low sun, long slanted path arrow through atmosphere band, orange horizon",
+      "onScreenText": "SUNSETS BURN RED"
+    },
+    {
+      "assetRequirement": "haze panel, closing card",
+      "emotionIntent": "satisfaction",
+      "narration": "Dust and pollution scatter all colors equally, which is why a hazy sky looks pale and white. So the blue sky is not a thing. It is sunlight, rearranged by the air. Thanks for watching.",
+      "order": 5,
+      "purpose": "contrast plus payoff",
+      "sceneId": "S06",
+      "timing": {
+        "status": "MEASURED",
+        "startMs": 50110,
+        "endMs": 65332,
+        "durationMs": 15222,
+        "evidence": "SAPI measured narration durations"
+      },
+      "visualIntent": "Split pale haze panel, then closing card SUNLIGHT, REARRANGED",
+      "onScreenText": "SUNLIGHT, REARRANGED"
+    }
+  ],
+  "topic": "Why the sky is blue",
+  "version": "1.0.0"
+}

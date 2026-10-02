@@ -1,0 +1,124 @@
+{
+  "$id": "https://unfoldiq.io/schemas/policy-review.schema.json",
+  "title": "UNFOLDIQ Policy Review Contract",
+  "description": "Pre-production or pre-final policy/rights/AI/originality review with separated axes",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "projectId",
+    "platform",
+    "gate",
+    "policySnapshotId",
+    "policyVerification",
+    "axes",
+    "rights",
+    "aiDisclosure",
+    "likeness",
+    "originality",
+    "reconstruction",
+    "issues",
+    "handoff"
+  ],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "projectId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "platform": {
+      "type": "string",
+      "minLength": 1
+    },
+    "gate": {
+      "type": "string",
+      "enum": ["PRE_PRODUCTION", "PRE_FINAL"]
+    },
+    "policySnapshotId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "policyVerification": {
+      "type": "string",
+      "enum": ["CURRENT_LIVE_VERIFIED", "SNAPSHOT_ONLY", "STALE", "NOT_VERIFIED"]
+    },
+    "axes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["PLATFORM_ALLOWEDNESS", "RIGHTS", "AI_TRANSPARENCY", "MONETIZATION_AD_SUITABILITY"],
+      "properties": {
+        "PLATFORM_ALLOWEDNESS": { "type": "string", "enum": ["PASS", "REVIEW_REQUIRED", "BLOCKED", "NOT_APPLICABLE"] },
+        "RIGHTS": { "type": "string", "enum": ["PASS", "REVIEW_REQUIRED", "BLOCKED", "NOT_APPLICABLE"] },
+        "AI_TRANSPARENCY": { "type": "string", "enum": ["PASS", "REVIEW_REQUIRED", "BLOCKED", "NOT_APPLICABLE"] },
+        "MONETIZATION_AD_SUITABILITY": { "type": "string", "enum": ["PASS", "REVIEW_REQUIRED", "BLOCKED", "NOT_APPLICABLE"] }
+      }
+    },
+    "rights": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision", "sourceType"],
+      "properties": {
+        "decision": { "type": "string", "enum": ["VERIFIED", "REVIEW_REQUIRED", "BLOCKED", "NOT_APPLICABLE"] },
+        "sourceType": { "type": "string" },
+        "notes": { "type": "string" }
+      }
+    },
+    "aiDisclosure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision"],
+      "properties": {
+        "decision": { "type": "string", "enum": ["NOT_REQUIRED", "REQUIRED", "REVIEW_REQUIRED", "NOT_APPLICABLE"] },
+        "userAction": { "type": "string" },
+        "notes": { "type": "string" }
+      }
+    },
+    "likeness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision"],
+      "properties": {
+        "decision": { "type": "string", "enum": ["CLEAR", "REVIEW_REQUIRED", "BLOCKED", "NOT_APPLICABLE"] },
+        "notes": { "type": "string" }
+      }
+    },
+    "originality": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["risk"],
+      "properties": {
+        "risk": { "type": "string", "enum": ["LOW_RISK", "REVIEW_REQUIRED", "HIGH_RISK"] },
+        "notes": { "type": "string" }
+      }
+    },
+    "reconstruction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["classification"],
+      "properties": {
+        "classification": { "type": "string", "enum": ["EVIDENCE_ASSET", "RECONSTRUCTION", "ILLUSTRATION", "GENERIC_BROLL", "NOT_APPLICABLE"] },
+        "labeledAsReconstruction": { "type": "boolean" },
+        "notes": { "type": "string" }
+      }
+    },
+    "issues": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "handoff": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status"],
+      "properties": {
+        "status": { "type": "string", "enum": ["RENDER_READY", "PUBLISH_READY", "PUBLISH_REVIEW_REQUIRED", "BLOCKED"] },
+        "requiredUserActions": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

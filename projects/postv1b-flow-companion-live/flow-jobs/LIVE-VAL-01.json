@@ -1,0 +1,33 @@
+{
+  "version": "1.0.0",
+  "status": "PENDING",
+  "attempt": 1,
+  "generationCount": 0,
+  "history": [
+    {
+      "from": null,
+      "to": "PENDING",
+      "at": "2026-10-01T02:55:20.009Z",
+      "actor": "system"
+    }
+  ],
+  "projectId": "postv1b-flow-companion-live",
+  "jobId": "LIVE-VAL-01",
+  "requestId": "LIVE-VAL-REQ-1",
+  "sceneId": "S01",
+  "capability": "image",
+  "mode": "ASSISTED_APPROVAL",
+  "prompt": "LIVE-VALIDATION-ONLY test prompt",
+  "platform": "youtube",
+  "flowProject": {
+    "mode": "REUSE",
+    "displayName": "UNFOLDIQ — live val"
+  },
+  "outputRequirements": {
+    "aspectRatio": "16:9"
+  },
+  "creativeContext": {
+    "contentModeSummary": "live-val"
+  },
+  "expectedOutputPath": "assets/image/S01/S01_attempt-01.png"
+}

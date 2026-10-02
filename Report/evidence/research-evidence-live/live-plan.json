@@ -1,0 +1,36 @@
+{
+  "version": "1.0.0",
+  "projectId": "live-ev-1",
+  "topic": "HTTP 308 Permanent Redirect semantics",
+  "researchGoal": "Establish the documented timeline, primary evidence, major interpretations, and unresolved disputes about \"HTTP 308 Permanent Redirect semantics\" needed to support a general youtube video (technical-explainer), without stating unverified claims as fact.",
+  "contentClass": "FACTUAL",
+  "criticalQuestions": [
+    "What are the exact prerequisites, steps, and expected outcomes for \"HTTP 308 Permanent Redirect semantics\"?",
+    "What official documentation or authoritative reference defines correct behavior for \"HTTP 308 Permanent Redirect semantics\"?",
+    "What common errors, edge cases, or version differences affect \"HTTP 308 Permanent Redirect semantics\"?",
+    "What must be verified (commands, APIs, observable behavior) before demonstrating \"HTTP 308 Permanent Redirect semantics\"?"
+  ],
+  "platform": "youtube",
+  "contentMode": "technical-explainer",
+  "audience": "general",
+  "freshnessRequirement": "EVERGREEN_OK; CURRENT_STATE claims require dated sources with access dates.",
+  "sourcePriority": [
+    "PRIMARY",
+    "OFFICIAL",
+    "peer-reviewed / institutional",
+    "reputable secondary",
+    "community / social only when the question requires testimony or sentiment"
+  ],
+  "supportingQuestions": [
+    "What audience skill level does \"HTTP 308 Permanent Redirect semantics\" assume, and what background must be established?",
+    "What minimal demonstration scope proves \"HTTP 308 Permanent Redirect semantics\" without unnecessary breadth?"
+  ],
+  "optionalQuestions": [
+    "What advanced tips or alternatives around \"HTTP 308 Permanent Redirect semantics\" help if budget allows?"
+  ],
+  "stopCriteria": "Stop when: all critical questions have at least one viable evidence path; high-impact claims have source requirements defined; freshness requirement can be satisfied; remaining optional questions are non-blocking; research budget is reached. (Actual SUFFICIENT / NEEDS_MORE_RESEARCH / BLOCKED evaluation belongs to a later stage.)",
+  "researchBudget": "maxQueries:12; maxSources:20; maxDeepResearchEscalations:1; maxTimeMin:120",
+  "deepResearchAllowed": false,
+  "researchRequired": "REQUIRED",
+  "researchMode": "STANDARD"
+}

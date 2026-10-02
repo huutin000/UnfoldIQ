@@ -1,0 +1,14 @@
+{
+  "status": "FAIL",
+  "regions": [
+    {
+      "startMs": 0,
+      "endMs": 65300,
+      "durationMs": 65300,
+      "intentional": false,
+      "label": null
+    }
+  ],
+  "analyzer": "ffmpeg-blackdetect",
+  "detail": "max unexpected black=65300ms; long dark content is not auto-passed as intentional unless inside intentionalRanges"
+}

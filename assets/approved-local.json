@@ -1,0 +1,30 @@
+{
+  "version": "1.0.0",
+  "assets": [
+    {
+      "assetId": "LIB-MUSIC-001",
+      "path": "assets/approved-local/music/test-only-ambient.wav",
+      "type": "music",
+      "rightsStatus": "VERIFIED",
+      "license": "TEST-ONLY sample entry: original test tone, no third-party rights involved",
+      "attribution": "UNFOLDIQ test fixture",
+      "notes": "TEST-ONLY sample entry for Step 10A executable tests. Fixture file is generated at test runtime."
+    },
+    {
+      "assetId": "LIB-SFX-001",
+      "path": "assets/approved-local/sfx/test-only-click.wav",
+      "type": "sfx",
+      "rightsStatus": "VERIFIED",
+      "license": "TEST-ONLY sample entry: original test tone, no third-party rights involved",
+      "attribution": "UNFOLDIQ test fixture",
+      "notes": "TEST-ONLY sample entry for Step 10A executable tests. Fixture file is generated at test runtime."
+    },
+    {
+      "assetId": "LIB-MUSIC-UNKNOWN",
+      "path": "assets/approved-local/music/test-only-unknown.wav",
+      "type": "music",
+      "rightsStatus": "UNKNOWN",
+      "notes": "TEST-ONLY negative fixture: UNKNOWN rights must never be READY for final use."
+    }
+  ]
+}

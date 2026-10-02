@@ -1,0 +1,107 @@
+{
+  "version": "1.0.0",
+  "projectId": "live-story-1",
+  "sources": [
+    {
+      "sourceId": "src-1114d819459b",
+      "requestedUrl": "https://www.rfc-editor.org/rfc/rfc7538.html",
+      "canonicalUrl": "https://www.rfc-editor.org/rfc/rfc7538.html",
+      "finalUrl": "https://www.rfc-editor.org/rfc/rfc7538.html",
+      "title": null,
+      "publisher": null,
+      "author": null,
+      "publishedAt": null,
+      "retrievedAt": "2026-10-02T04:37:44.670338Z",
+      "sourceType": "OFFICIAL",
+      "classificationReason": "host matches configured official domain rfc-editor.org",
+      "independenceStatus": "INDEPENDENT",
+      "originGroup": null,
+      "searchQuery": "What official documentation or authoritative reference defines correct behavior for \"HTTP 308 Permanent Redirect semantics\"?",
+      "searchProvider": "agent-exchange",
+      "searchRank": 1,
+      "contentHash": "1ffad4aa74b20f416ecd5eed5b8b46efc4131097fffd769e86320334e54c6901",
+      "currentVersionHash": "1ffad4aa74b20f416ecd5eed5b8b46efc4131097fffd769e86320334e54c6901",
+      "versions": [
+        {
+          "contentHash": "1ffad4aa74b20f416ecd5eed5b8b46efc4131097fffd769e86320334e54c6901",
+          "retrievedAt": "2026-10-02T04:37:44.670338Z",
+          "rawContentRef": "research/sources/src-1114d819459b/content-1ffad4aa74b2.md",
+          "fitContentRef": "research/sources/src-1114d819459b/fit-1ffad4aa74b2.md",
+          "supersedes": null
+        }
+      ],
+      "acquisitionRoute": "crawl4ai-direct",
+      "crawlerVersion": "0.9.4",
+      "fitQuery": "What official documentation or authoritative reference defines correct behavior for \"HTTP 308 Permanent Redirect semantics\"?",
+      "acquisitionWarnings": []
+    },
+    {
+      "sourceId": "src-fa4eaaea98a4",
+      "requestedUrl": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status",
+      "canonicalUrl": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status",
+      "finalUrl": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status",
+      "title": "HTTP response status codes - HTTP | MDN",
+      "publisher": null,
+      "author": null,
+      "publishedAt": null,
+      "retrievedAt": "2026-10-02T04:37:47.035061Z",
+      "sourceType": "UNKNOWN",
+      "classificationReason": "insufficient evidence for confident classification",
+      "independenceStatus": "INDEPENDENT",
+      "originGroup": null,
+      "searchQuery": "What official documentation or authoritative reference defines correct behavior for \"HTTP 308 Permanent Redirect semantics\"?",
+      "searchProvider": "agent-exchange",
+      "searchRank": 2,
+      "contentHash": "274c8cee5b665019b76f647fccf7da037fc31538932c1d5361d4e1e246a5da0f",
+      "currentVersionHash": "274c8cee5b665019b76f647fccf7da037fc31538932c1d5361d4e1e246a5da0f",
+      "versions": [
+        {
+          "contentHash": "274c8cee5b665019b76f647fccf7da037fc31538932c1d5361d4e1e246a5da0f",
+          "retrievedAt": "2026-10-02T04:37:47.035061Z",
+          "rawContentRef": "research/sources/src-fa4eaaea98a4/content-274c8cee5b66.md",
+          "fitContentRef": "research/sources/src-fa4eaaea98a4/fit-274c8cee5b66.md",
+          "supersedes": null
+        }
+      ],
+      "acquisitionRoute": "crawl4ai-direct",
+      "crawlerVersion": "0.9.4",
+      "fitQuery": "What official documentation or authoritative reference defines correct behavior for \"HTTP 308 Permanent Redirect semantics\"?",
+      "acquisitionWarnings": []
+    },
+    {
+      "sourceId": "src-048e66b5112e",
+      "requestedUrl": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/308",
+      "canonicalUrl": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/308",
+      "finalUrl": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/308",
+      "title": "308 Permanent Redirect - HTTP | MDN",
+      "publisher": null,
+      "author": null,
+      "publishedAt": null,
+      "retrievedAt": "2026-10-02T04:40:01.099305Z",
+      "sourceType": "UNKNOWN",
+      "classificationReason": "insufficient evidence for confident classification",
+      "independenceStatus": "INDEPENDENT",
+      "originGroup": null,
+      "searchQuery": "HTTP 308",
+      "searchProvider": "agent-exchange",
+      "searchRank": null,
+      "contentHash": "359cf28aed3b7f066a21af0f18c65a431689c912f4784d8f5e73889a636a6099",
+      "currentVersionHash": "359cf28aed3b7f066a21af0f18c65a431689c912f4784d8f5e73889a636a6099",
+      "versions": [
+        {
+          "contentHash": "359cf28aed3b7f066a21af0f18c65a431689c912f4784d8f5e73889a636a6099",
+          "retrievedAt": "2026-10-02T04:40:01.099305Z",
+          "rawContentRef": "research/sources/src-048e66b5112e/content-359cf28aed3b.md",
+          "fitContentRef": null,
+          "supersedes": null
+        }
+      ],
+      "acquisitionRoute": "crawl4ai-direct",
+      "crawlerVersion": "0.9.4",
+      "fitQuery": null,
+      "acquisitionWarnings": [
+        "fitMarkdown empty; analysis must fall back to rawMarkdown"
+      ]
+    }
+  ]
+}

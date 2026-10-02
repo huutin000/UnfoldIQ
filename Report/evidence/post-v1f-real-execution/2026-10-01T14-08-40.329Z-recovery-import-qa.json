@@ -1,0 +1,100 @@
+{
+  "capturedAt": "2026-10-01T14:08:40.329Z",
+  "phase": "zero-credit correlation recovery — import completed",
+  "creditsConsumed": 0,
+  "realGenerationsUsed": "1/1",
+  "secondGenerationSubmitted": false,
+  "newGenerateClicks": 0,
+  "outcome": "RECOVERED — the correct asset from the SAME already-generated attempt is imported, QA-verified and READY",
+  "importedArtifact": {
+    "path": "projects/postv1b-flow-companion-live/assets/image/GEN01/GEN01_attempt-02.webp",
+    "bytes": 4522,
+    "mime": "image/webp",
+    "sha256": "803b8db7080be4d23dca62c82136f3da5c0b46adfb1a4d0765ac4112e8c4ec37",
+    "webpVariant": "VP8X",
+    "width": 512,
+    "height": 512,
+    "independentVerification": "sha256 + dimensions re-measured from the file on disk, not from the page"
+  },
+  "sourceAsset": {
+    "url": "https://flow.google.com/asb/ANqvLOabAWhGZcDqU4X6bXs_Wp5k6CQmSYyEmdTDutThjVv6y-8jGpdjf8fQc5Dyrn0NY5UtK2PNHMn9PnDCpDs8i10vcqLARihb3mkIhf8nerCp2GduSRL8f3Oa5_cWQia59lBPKUFsc4uxDu6aOeKVqc7cVEe1cQasaGWd4bHS9g=s512-rw",
+    "assetId": "ANqvLOabAWhGZcDqU4X6bXs_Wp5k6CQmSYyEmdTDutThjVv6y-8jGpdjf8fQc5Dyrn0NY5UtK2PNHMn9PnDCpDs8i10vcqLARihb3mkIhf8nerCp2GduSRL8f3Oa5_cWQia59lBPKUFsc4uxDu6aOeKVqc7cVEe1cQasaGWd4bHS9g",
+    "fetchedInAuthenticatedPage": true,
+    "httpStatus": 200,
+    "contentType": "image/webp",
+    "bytesBeforeTransferVerified": true,
+    "bytesVerificationMethod": "sha256 + byte count compared against the value measured in the authenticated page before posting to the bridge, so the bytes<->URL link is checked rather than assumed"
+  },
+  "reconciliationJob": {
+    "jobId": "FLOW-COMPANION-LIVE-GEN-01-RECONCILE",
+    "projectId": "postv1b-flow-companion-live",
+    "reconcilesJobId": "FLOW-COMPANION-LIVE-GEN-01",
+    "recoveredGenerationAcceptedAt": "2026-10-01T09:12:40.099Z",
+    "detectedAt": "2026-10-01T09:12:45.119Z",
+    "attempt": 1,
+    "generationCount": 0,
+    "creditsConsumed": 0,
+    "route": "PENDING -> VALIDATED -> PREPARED -> MANUAL_ASSIST_REQUIRED -> IMPORTED -> READY",
+    "routeRationale": "the state machine's existing credit-free reconciliation path; no approval, no /generate, no new state invented, no new hierarchy",
+    "finalStatus": "READY",
+    "candidatesPersisted": 1
+  },
+  "structuralQA": {
+    "status": "PASS",
+    "reason": null,
+    "width": 512,
+    "height": 512,
+    "candidateId": "c1",
+    "resultBelongsToCurrentAttempt": true,
+    "correlationSignals": {
+      "persistedAtDetection": true,
+      "newVsBaseline": true,
+      "stableAssetId": true,
+      "sameAgentTurn": true,
+      "hasUrl": true,
+      "mediaTypeImage": true
+    }
+  },
+  "bugsFoundDuringRecovery": [
+    {
+      "id": "IMPORTER_WEBP_UNDIMENSIONED",
+      "severity": "blocking",
+      "found": "the recovery import failed with IMAGE_DIMENSIONS_UNREADABLE on the real 512x512 image/webp result",
+      "rootCause": "flow-companion/bridge/importer.js imageDimensions() parsed PNG only, while IMAGE_EXTS already accepted .jpg/.jpeg/.webp — so any JPEG or WebP result from Flow could never pass structural QA",
+      "fix": "added JPEG SOF marker scanning and WebP VP8X / VP8L / VP8 (lossy) canvas parsing alongside PNG",
+      "tests": "E13 extended with lossy WebP, lossless WebP and JPEG dimension assertions"
+    },
+    {
+      "id": "RECOVERY_SCRIPT_NON_IDEMPOTENT",
+      "severity": "script-only (scratch, not shipped)",
+      "found": "re-running the recovery driver tried MANUAL_ASSIST_REQUIRED -> VALIDATED",
+      "rootCause": "the step loop re-asserted every state instead of only stepping forward while short of the target",
+      "fix": "step forward only while PATH.indexOf(status) < i"
+    }
+  ],
+  "gatesProvenLiveBeforeRecovery": {
+    "note": "run against the live bridge with zero credit; the job never reached READY during these attempts",
+    "cases": [
+      { "case": "the exact 32x32 avatar bytes that previously reached READY", "status": 400, "error": "ARTIFACT_BELOW_MIN_RESOLUTION: 32x32 short edge < 256px, treated as UI thumbnail rather than a generated asset" },
+      { "case": "unknown candidateId", "status": 400, "error": "RESULT_CORRELATION_REQUIRED: no persisted candidate at RESULT_DETECTED" }
+    ],
+    "jobStatusAfter": "MANUAL_ASSIST_REQUIRED",
+    "generationCountAfter": 0
+  },
+  "priorInvalidArtifact": {
+    "path": "assets/image/GEN01/GEN01_attempt-01.png",
+    "sha256": "1186233d1af671fcb50ff5084ded613777105ba87cf0d951481ab236ba5b322e",
+    "bytes": 2080,
+    "identity": "signed-in account avatar (lh3.googleusercontent.com/ogw/AF2bZyga0_...=s32-c-mo)",
+    "retained": true,
+    "retentionReason": "kept as evidence of the correlation failure; the job is flagged artifactUntrusted=true, correlatedOutput=false, reconciledBy=FLOW-COMPANION-LIVE-GEN-01-RECONCILE"
+  },
+  "cleanup": {
+    "removed": [
+      "assets/image/GEN01/GEN01_attempt-02.png (1793 B, 32x32) — byproduct of the live gate proof, not a real result",
+      "downloads/FLOW-COMPANION-LIVE-GEN-01-RECONCILE-avatar.png (1793 B) — staged counterpart of the same test byproduct"
+    ],
+    "deletedCloudMedia": false,
+    "deletedEvidence": false
+  }
+}

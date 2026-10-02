@@ -1,0 +1,49 @@
+{
+  "plan": {
+    "version": "1.0.0",
+    "projectId": "live-smoke-1",
+    "topic": "Crawl4AI markdown generation result API",
+    "researchGoal": "Establish the documented timeline, primary evidence, major interpretations, and unresolved disputes about \"Crawl4AI markdown generation result API\" needed to support a general youtube video (technical-explainer), without stating unverified claims as fact.",
+    "contentClass": "FACTUAL",
+    "criticalQuestions": [
+      "What are the exact prerequisites, steps, and expected outcomes for \"Crawl4AI markdown generation result API\"?",
+      "What official documentation or authoritative reference defines correct behavior for \"Crawl4AI markdown generation result API\"?",
+      "What common errors, edge cases, or version differences affect \"Crawl4AI markdown generation result API\"?",
+      "What must be verified (commands, APIs, observable behavior) before demonstrating \"Crawl4AI markdown generation result API\"?"
+    ],
+    "platform": "youtube",
+    "contentMode": "technical-explainer",
+    "audience": "general",
+    "freshnessRequirement": "EVERGREEN_OK; CURRENT_STATE claims require dated sources with access dates.",
+    "sourcePriority": [
+      "PRIMARY",
+      "OFFICIAL",
+      "peer-reviewed / institutional",
+      "reputable secondary",
+      "community / social only when the question requires testimony or sentiment"
+    ],
+    "supportingQuestions": [
+      "What audience skill level does \"Crawl4AI markdown generation result API\" assume, and what background must be established?",
+      "What minimal demonstration scope proves \"Crawl4AI markdown generation result API\" without unnecessary breadth?"
+    ],
+    "optionalQuestions": [
+      "What advanced tips or alternatives around \"Crawl4AI markdown generation result API\" help if budget allows?"
+    ],
+    "stopCriteria": "Stop when: all critical questions have at least one viable evidence path; high-impact claims have source requirements defined; freshness requirement can be satisfied; remaining optional questions are non-blocking; research budget is reached. (Actual SUFFICIENT / NEEDS_MORE_RESEARCH / BLOCKED evaluation belongs to a later stage.)",
+    "researchBudget": "maxQueries:12; maxSources:20; maxDeepResearchEscalations:1; maxTimeMin:120",
+    "deepResearchAllowed": false,
+    "researchRequired": "REQUIRED",
+    "researchMode": "STANDARD"
+  },
+  "request": {
+    "requestId": "srq-muqdolgy-9bb39507",
+    "query": "What official documentation or authoritative reference defines correct behavior for \"Crawl4AI markdown generation result API\"?",
+    "executor": "agent-exchange",
+    "maxResults": 5,
+    "planRef": {
+      "projectId": "live-smoke-1",
+      "topic": "Crawl4AI markdown generation result API"
+    },
+    "createdAt": "2026-10-02T03:03:03.346Z"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "$id": "https://unfoldiq.io/schemas/mcp-resolve-request.schema.json",
+  "title": "UNFOLDIQ MCP resolve_media_request input (dry-run only)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["request"],
+  "properties": {
+    "request": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["requestId", "projectId", "sceneId", "capability", "input", "outputRequirements"],
+      "properties": {
+        "requestId": { "type": "string", "minLength": 1 },
+        "projectId": { "type": "string", "minLength": 1 },
+        "sceneId": { "type": "string", "minLength": 1 },
+        "capability": { "type": "string", "enum": ["image", "video", "tts", "stt", "music", "sfx"] }
+      }
+    }
+  }
+}

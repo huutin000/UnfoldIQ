@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://unfoldiq.local/schemas/agent-native/result-submission.schema.json",
+  "title": "Agent-native result submission",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "requestId", "projectId", "sceneId", "capability", "agentName", "toolName", "artifactSourcePath", "safetyAttestation"],
+  "properties": {
+    "version": { "type": "string", "const": "1.0.0" },
+    "requestId": { "type": "string", "minLength": 1 },
+    "jobId": { "type": "string", "minLength": 1 },
+    "projectId": { "type": "string", "minLength": 1 },
+    "sceneId": { "type": "string", "minLength": 1 },
+    "capability": { "type": "string", "enum": ["image", "video", "tts", "stt"] },
+    "agentName": { "type": "string", "minLength": 1 },
+    "toolName": { "type": "string", "minLength": 1 },
+    "artifactSourcePath": { "type": "string", "minLength": 1 },
+    "continuityMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "registryVersion": { "type": ["string", "null"] },
+        "entitiesUsed": { "type": "array", "items": { "type": "string" } },
+        "referenceAssetIds": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "safetyAttestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["step09Decision", "notSafetyRefused"],
+      "properties": {
+        "step09Decision": { "type": "string" },
+        "notSafetyRefused": { "type": "boolean" },
+        "refusalReason": { "type": "string" }
+      }
+    }
+  }
+}

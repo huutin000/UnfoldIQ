@@ -1,0 +1,46 @@
+{
+  "level": "SEGMENT_TIMING",
+  "source": "windows-sapi measured clip durations via WAV header plus ffprobe",
+  "segments": [
+    {
+      "startMs": 0,
+      "endMs": 9394,
+      "text": "Look up on a clear day, and the sky is blue. But sunlight itself is white. So where does the blue come from?"
+    },
+    {
+      "startMs": 9394,
+      "endMs": 18127,
+      "text": "The answer is written in the air itself. Tiny molecules of nitrogen and oxygen, far smaller than a wave of light."
+    },
+    {
+      "startMs": 18127,
+      "endMs": 26490,
+      "text": "When sunlight hits them, they scatter short blue wavelengths in every direction, several times more strongly than red."
+    },
+    {
+      "startMs": 26490,
+      "endMs": 33979,
+      "text": "That scattered blue light reaches your eyes from everywhere overhead. That is why the whole sky glows blue."
+    },
+    {
+      "startMs": 33979,
+      "endMs": 41402,
+      "text": "Violet is scattered even more, but there is less of it in sunlight, and your eyes are less sensitive to it."
+    },
+    {
+      "startMs": 41402,
+      "endMs": 50110,
+      "text": "At sunset, sunlight crosses much more air. The blue is scattered away, and the reds and oranges remain."
+    },
+    {
+      "startMs": 50110,
+      "endMs": 56744,
+      "text": "Dust and pollution scatter all colors equally, which is why a hazy sky looks pale and white."
+    },
+    {
+      "startMs": 56744,
+      "endMs": 65332,
+      "text": "So the blue sky is not a thing. It is sunlight, rearranged by the air. Thanks for watching."
+    }
+  ]
+}

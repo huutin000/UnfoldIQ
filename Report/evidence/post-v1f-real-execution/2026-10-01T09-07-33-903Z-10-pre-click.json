@@ -1,0 +1,345 @@
+{
+  "at": "2026-10-01T09:07:34.020Z",
+  "panel": {
+    "status": "Chờ duyệt",
+    "primary": "Duyệt & Tạo"
+  },
+  "job": {
+    "version": "1.0.0",
+    "status": "AWAITING_USER_APPROVAL",
+    "attempt": 1,
+    "generationCount": 0,
+    "history": [
+      {
+        "from": null,
+        "to": "PENDING",
+        "at": "2026-09-29T09:03:16.483Z",
+        "actor": "system"
+      },
+      {
+        "from": "PENDING",
+        "to": "VALIDATED",
+        "at": "2026-09-29T09:03:16.484Z",
+        "actor": "system"
+      },
+      {
+        "from": "VALIDATED",
+        "to": "PREPARED",
+        "at": "2026-09-29T09:03:16.485Z",
+        "actor": "system"
+      },
+      {
+        "from": "PREPARED",
+        "to": "AWAITING_USER_APPROVAL",
+        "at": "2026-10-01T05:37:23.415Z",
+        "actor": "extension"
+      },
+      {
+        "from": "PREPARED",
+        "to": "AWAITING_USER_APPROVAL",
+        "at": "2026-10-01T05:42:45.773Z",
+        "actor": "extension"
+      },
+      {
+        "from": "PREPARED",
+        "to": "AWAITING_USER_APPROVAL",
+        "at": "2026-10-01T06:38:20.592Z",
+        "actor": "extension"
+      },
+      {
+        "from": "AWAITING_USER_APPROVAL",
+        "to": "AWAITING_USER_APPROVAL",
+        "at": "2026-10-01T06:40:04.143Z",
+        "actor": "user",
+        "note": "approval-recorded"
+      },
+      {
+        "from": "AWAITING_USER_APPROVAL",
+        "to": "GENERATING",
+        "at": "2026-10-01T06:40:04.145Z",
+        "actor": "user"
+      },
+      {
+        "from": "PREPARED",
+        "to": "AWAITING_USER_APPROVAL",
+        "at": "2026-10-01T06:53:41.416Z",
+        "actor": "extension"
+      },
+      {
+        "from": "PREPARED",
+        "to": "AWAITING_USER_APPROVAL",
+        "at": "2026-10-01T06:56:45.597Z",
+        "actor": "extension"
+      },
+      {
+        "from": "AWAITING_USER_APPROVAL",
+        "to": "AWAITING_USER_APPROVAL",
+        "at": "2026-10-01T06:57:35.089Z",
+        "actor": "user",
+        "note": "approval-recorded"
+      },
+      {
+        "from": "AWAITING_USER_APPROVAL",
+        "to": "GENERATING",
+        "at": "2026-10-01T06:57:35.091Z",
+        "actor": "user"
+      },
+      {
+        "from": "PREPARED",
+        "to": "AWAITING_USER_APPROVAL",
+        "at": "2026-10-01T07:03:47.588Z",
+        "actor": "extension"
+      },
+      {
+        "from": "AWAITING_USER_APPROVAL",
+        "to": "AWAITING_USER_APPROVAL",
+        "at": "2026-10-01T07:04:18.568Z",
+        "actor": "user",
+        "note": "approval-recorded"
+      },
+      {
+        "from": "AWAITING_USER_APPROVAL",
+        "to": "GENERATING",
+        "at": "2026-10-01T07:04:18.569Z",
+        "actor": "user"
+      },
+      {
+        "from": "PREPARED",
+        "to": "AWAITING_USER_APPROVAL",
+        "at": "2026-10-01T07:08:20.589Z",
+        "actor": "extension"
+      },
+      {
+        "from": "AWAITING_USER_APPROVAL",
+        "to": "AWAITING_USER_APPROVAL",
+        "at": "2026-10-01T07:08:28.008Z",
+        "actor": "user",
+        "note": "approval-recorded"
+      },
+      {
+        "from": "AWAITING_USER_APPROVAL",
+        "to": "GENERATING",
+        "at": "2026-10-01T07:08:28.010Z",
+        "actor": "user"
+      },
+      {
+        "from": "PREPARED",
+        "to": "AWAITING_USER_APPROVAL",
+        "at": "2026-10-01T07:11:19.596Z",
+        "actor": "extension"
+      },
+      {
+        "from": "AWAITING_USER_APPROVAL",
+        "to": "AWAITING_USER_APPROVAL",
+        "at": "2026-10-01T07:11:22.971Z",
+        "actor": "user",
+        "note": "approval-recorded"
+      },
+      {
+        "from": "AWAITING_USER_APPROVAL",
+        "to": "GENERATING",
+        "at": "2026-10-01T07:11:22.972Z",
+        "actor": "user"
+      },
+      {
+        "from": "PREPARED",
+        "to": "AWAITING_USER_APPROVAL",
+        "at": "2026-10-01T07:16:10.592Z",
+        "actor": "extension"
+      },
+      {
+        "from": "AWAITING_USER_APPROVAL",
+        "to": "AWAITING_USER_APPROVAL",
+        "at": "2026-10-01T07:16:29.998Z",
+        "actor": "user",
+        "note": "approval-recorded"
+      },
+      {
+        "from": "AWAITING_USER_APPROVAL",
+        "to": "GENERATING",
+        "at": "2026-10-01T07:16:29.999Z",
+        "actor": "user"
+      },
+      {
+        "from": "PREPARED",
+        "to": "AWAITING_USER_APPROVAL",
+        "at": "2026-10-01T07:20:10.505Z",
+        "actor": "extension"
+      },
+      {
+        "from": "AWAITING_USER_APPROVAL",
+        "to": "AWAITING_USER_APPROVAL",
+        "at": "2026-10-01T07:20:29.569Z",
+        "actor": "user",
+        "note": "approval-recorded"
+      },
+      {
+        "from": "AWAITING_USER_APPROVAL",
+        "to": "GENERATING",
+        "at": "2026-10-01T07:20:29.570Z",
+        "actor": "user"
+      },
+      {
+        "from": "PREPARED",
+        "to": "AWAITING_USER_APPROVAL",
+        "at": "2026-10-01T07:33:27.585Z",
+        "actor": "extension"
+      },
+      {
+        "from": "AWAITING_USER_APPROVAL",
+        "to": "AWAITING_USER_APPROVAL",
+        "at": "2026-10-01T07:37:47.980Z",
+        "actor": "user",
+        "note": "approval-recorded"
+      },
+      {
+        "from": "AWAITING_USER_APPROVAL",
+        "to": "GENERATING",
+        "at": "2026-10-01T07:37:47.981Z",
+        "actor": "user"
+      },
+      {
+        "from": "PREPARED",
+        "to": "AWAITING_USER_APPROVAL",
+        "at": "2026-10-01T07:41:07.954Z",
+        "actor": "extension"
+      },
+      {
+        "from": "AWAITING_USER_APPROVAL",
+        "to": "CANCELLED",
+        "at": "2026-10-01T07:42:02.746Z",
+        "actor": "user"
+      },
+      {
+        "from": "PREPARED",
+        "to": "AWAITING_USER_APPROVAL",
+        "at": "2026-10-01T08:20:43.979Z",
+        "actor": "extension"
+      },
+      {
+        "from": "PREPARED",
+        "to": "AWAITING_USER_APPROVAL",
+        "at": "2026-10-01T08:24:01.454Z",
+        "actor": "extension"
+      },
+      {
+        "from": "PREPARED",
+        "to": "AWAITING_USER_APPROVAL",
+        "at": "2026-10-01T08:24:59.689Z",
+        "actor": "extension"
+      },
+      {
+        "from": "AWAITING_USER_APPROVAL",
+        "to": "AWAITING_USER_APPROVAL",
+        "at": "2026-10-01T08:25:56.736Z",
+        "actor": "user",
+        "note": "approval-recorded"
+      },
+      {
+        "from": "PREPARED",
+        "to": "AWAITING_USER_APPROVAL",
+        "at": "2026-10-01T08:31:33.278Z",
+        "actor": "extension"
+      },
+      {
+        "from": "AWAITING_USER_APPROVAL",
+        "to": "AWAITING_USER_APPROVAL",
+        "at": "2026-10-01T08:37:09.231Z",
+        "actor": "user",
+        "note": "approval-recorded"
+      },
+      {
+        "from": "PREPARED",
+        "to": "AWAITING_USER_APPROVAL",
+        "at": "2026-10-01T08:46:30.986Z",
+        "actor": "extension"
+      },
+      {
+        "from": "AWAITING_USER_APPROVAL",
+        "to": "AWAITING_USER_APPROVAL",
+        "at": "2026-10-01T08:47:01.586Z",
+        "actor": "user",
+        "note": "approval-recorded"
+      },
+      {
+        "from": "PREPARED",
+        "to": "AWAITING_USER_APPROVAL",
+        "at": "2026-10-01T08:57:15.810Z",
+        "actor": "extension"
+      },
+      {
+        "from": "AWAITING_USER_APPROVAL",
+        "to": "AWAITING_USER_APPROVAL",
+        "at": "2026-10-01T08:57:46.820Z",
+        "actor": "user",
+        "note": "approval-recorded"
+      },
+      {
+        "from": "PREPARED",
+        "to": "AWAITING_USER_APPROVAL",
+        "at": "2026-10-01T09:07:01.302Z",
+        "actor": "extension"
+      }
+    ],
+    "projectId": "postv1b-flow-companion-live",
+    "jobId": "FLOW-COMPANION-LIVE-GEN-01",
+    "requestId": "REQ-POSTV1B-GEN-01",
+    "sceneId": "GEN01",
+    "capability": "image",
+    "mode": "ASSISTED_APPROVAL",
+    "prompt": "Create a simple minimal blue circle centered on a clean light background.\nNo text.",
+    "platform": "youtube",
+    "flowProject": {
+      "mode": "REUSE"
+    },
+    "outputRequirements": {
+      "aspectRatio": "1:1",
+      "outputCount": 1
+    },
+    "creativeContext": {},
+    "expectedOutputPath": "assets/FLOW-COMPANION-LIVE-GEN-01.png",
+    "note": "POST-v1E: recreated with production prompt; dry-run history preserved in superseded record/flow-jobs archive note"
+  },
+  "flow": {
+    "at": "2026-10-01T09:07:34.025Z",
+    "startLabel": "Start generation",
+    "startDisabled": false,
+    "promptLogical": [
+      "Create a simple minimal blue circle centered on a clean light background.\nNo text."
+    ],
+    "media": [
+      {
+        "tag": "IMG",
+        "src": "https://lh3.googleusercontent.com/ogw/AF2bZyga0_kwainzDxR7rvbvrJyaZoOqT3XV97bdjg5rvqJ_Gg=s64-c-mo",
+        "w": 32
+      }
+    ],
+    "newButtons": [
+      "Home",
+      "More options for the project",
+      "Search",
+      "Filtering and sorting options",
+      "Add media menu",
+      "Product help",
+      "Tile grid settings",
+      "More options",
+      "Account details",
+      "Favorite",
+      "Reuse prompt",
+      "Open session history",
+      "Start new session",
+      "Close",
+      "Show thinking arrow_forward_ios",
+      "Good response",
+      "Bad response",
+      "Copy",
+      "Flag output",
+      "Clear prompt",
+      "Add ingredients to the prompt box",
+      "Agent instructions",
+      "Settings",
+      "Start generation"
+    ],
+    "pageTail": ". To get started, could you tell me a bit more about the story or concept you have in mind?\n\nSpecifically, it would help to know:\n\nWhat is the main plot or message?\nWho are the key characters?\nWhat visual style are you imagining (e.g., cinematic, hand-drawn illustration, 3D render)?\nthumb_up\nthumb_down\ncontent_copy\nflag\n\nCreate a simple minimal blue circle centered on a clean light background.\nNo text.\n\nclose\nadd\narticle_spark\ntune\narrow_forward\n\nGoogle Flow can make mistakes, so double check it"
+  }
+}

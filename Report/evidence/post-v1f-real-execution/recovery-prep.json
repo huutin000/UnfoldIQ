@@ -1,0 +1,77 @@
+{
+  "jobId": "FLOW-COMPANION-LIVE-GEN-01-RECONCILE",
+  "projectId": "postv1b-flow-companion-live",
+  "creditsConsumed": 0,
+  "generationTriggered": false,
+  "steps": [
+    {
+      "name": "create-job",
+      "status": "EXISTS"
+    },
+    {
+      "name": "to-manual-assist",
+      "status": "MANUAL_ASSIST_REQUIRED",
+      "generationCount": 0
+    },
+    {
+      "name": "persist-candidates",
+      "status": 200,
+      "body": {
+        "jobId": "FLOW-COMPANION-LIVE-GEN-01-RECONCILE",
+        "status": "MANUAL_ASSIST_REQUIRED",
+        "detectedAt": "2026-10-01T09:12:45.119Z",
+        "persisted": 1
+      }
+    },
+    {
+      "name": "bytes-verified",
+      "sha256": "803b8db7080be4d23dca62c82136f3da5c0b46adfb1a4d0765ac4112e8c4ec37",
+      "bytes": 4522,
+      "contentType": "image/webp",
+      "dims": {
+        "w": 512,
+        "h": 512
+      }
+    },
+    {
+      "name": "import",
+      "status": 200,
+      "body": {
+        "jobId": "FLOW-COMPANION-LIVE-GEN-01-RECONCILE",
+        "status": "READY",
+        "artifactPath": "assets/image/GEN01/GEN01_attempt-02.webp",
+        "sha256": "803b8db7080be4d23dca62c82136f3da5c0b46adfb1a4d0765ac4112e8c4ec37",
+        "bytes": 4522,
+        "mime": "image/webp"
+      }
+    }
+  ],
+  "finalStatus": "READY",
+  "qa": {
+    "status": "PASS",
+    "reason": null,
+    "jobId": "FLOW-COMPANION-LIVE-GEN-01-RECONCILE",
+    "attempt": 1,
+    "artifactPath": "assets/image/GEN01/GEN01_attempt-02.webp",
+    "sha256": "803b8db7080be4d23dca62c82136f3da5c0b46adfb1a4d0765ac4112e8c4ec37",
+    "bytes": 4522,
+    "mime": "image/webp",
+    "width": 512,
+    "height": 512,
+    "candidateId": "c1",
+    "resultBelongsToCurrentAttempt": true,
+    "correlationSignals": {
+      "persistedAtDetection": true,
+      "newVsBaseline": true,
+      "stableAssetId": true,
+      "sameAgentTurn": true,
+      "hasUrl": true,
+      "mediaTypeImage": true
+    },
+    "downloadId": null,
+    "promptFingerprint": null,
+    "checkedAt": "2026-10-01T14:08:40.329Z"
+  },
+  "result": "RECOVERED",
+  "generationCount": 0
+}

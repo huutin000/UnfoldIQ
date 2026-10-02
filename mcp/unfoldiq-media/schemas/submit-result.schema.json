@@ -1,0 +1,33 @@
+{
+  "$id": "https://unfoldiq.io/schemas/mcp-submit-result.schema.json",
+  "title": "UNFOLDIQ MCP submit_media_result input (agent-native result submission)",
+  "description": "Mirrors the agent-native result-submission shape: identity, confined artifact path, provenance, rights. Step09 BLOCKED is terminal.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["submission"],
+  "properties": {
+    "submission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "requestId", "projectId", "sceneId", "capability", "providerId", "artifactPath", "provenanceNote", "rightsStatus"],
+      "properties": {
+        "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+        "requestId": { "type": "string", "minLength": 1 },
+        "projectId": { "type": "string", "minLength": 1 },
+        "sceneId": { "type": "string", "minLength": 1 },
+        "capability": { "type": "string", "enum": ["image", "video", "tts", "stt", "music", "sfx"] },
+        "providerId": { "type": "string", "minLength": 1 },
+        "artifactPath": { "type": "string", "minLength": 1, "description": "Project-relative path; must exist and stay inside the project" },
+        "timingArtifactPath": { "type": "string" },
+        "mimeType": { "type": "string" },
+        "modelOrVersion": { "type": "string" },
+        "provenanceNote": { "type": "string", "minLength": 1 },
+        "rightsStatus": { "type": "string", "enum": ["VERIFIED", "UNVERIFIED", "UNKNOWN", "NOT_APPLICABLE"] },
+        "costClass": { "type": "string", "enum": ["ZERO_LOCAL", "INCLUDED_SUBSCRIPTION", "FREE_TIER", "PAID", "UNKNOWN"] },
+        "fingerprint": { "type": "string" },
+        "step09Decision": { "type": "string", "description": "BLOCKED is terminal: submission rejected with BLOCKED" },
+        "rightsContext": { "type": "object" }
+      }
+    }
+  }
+}

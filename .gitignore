@@ -1,61 +1,33 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
+# UNFOLDIQ ignore policy — research acquisition (Prompt 02) + standards.
+# Never commit: venvs, Python bytecode, crawler caches, auth state, secrets.
 
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
-
-# Virtual Environments
+# Dedicated research venv (reproducible via research/requirements.txt)
+research/.venv/
+# Dedicated DEEP provider venv (reproducible via research/deep-requirements.txt)
+research/.venv-deep/
 .venv/
-venv/
-ENV/
-env/
 
-# Editor / IDE clutter
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-Thumbs.db
-.DS_Store
+# Python bytecode / caches
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
 
-# UnfoldIQ local runtime, logs and outputs
-runtime/*
-!runtime/.gitignore
-outputs/*
-!outputs/.gitkeep
-projects/*
-!projects/.gitkeep
-temp/
-scratch/
+# Crawl4AI local data (DB, caches, downloaded models live outside repo)
+/.crawl4ai/
 
-# Upstream dependencies & external repos
-upstream/
+# Browser auth state = credential material (lives under %LOCALAPPDATA%/UNFOLDIQ or ~/.unfoldiq)
+**/auth-state/
+*.auth.json
+*storage-state*.json
 
-# Model weights (whisper, kokoro, etc.)
-models/*
-!models/.gitignore
+# Dependencies / build output
+node_modules/
+out/
 
-# Local backups & archives
-backups/
-*.zip
-*.tar.gz
+# Playwright test output
+playwright-report/
+test-results/
+
+# Local env secrets
+.env

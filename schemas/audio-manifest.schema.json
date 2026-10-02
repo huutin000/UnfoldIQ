@@ -1,0 +1,121 @@
+{
+"$id": "https://unfoldiq.io/schemas/audio-manifest.schema.json",
+  "title": "UNFOLDIQ Audio Manifest Contract",
+  "description": "Audio tracks (voice, music, SFX) with timing and mix parameters",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "projectId", "tracks"],
+  "properties":
+{
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semantic version of this contract"
+    },
+    "projectId": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique project identifier"
+    },
+    "tracks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["audioId", "type", "assetId", "status"],
+        "properties": {
+          "audioId": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9_-]+$",
+            "description": "Unique audio track identifier"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["voice", "music", "sfx"],
+            "description": "Audio track type"
+          },
+          "assetId": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Reference to asset manifest assetId"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["MISSING", "PLANNED", "GENERATING", "READY", "REJECTED", "FAILED"],
+            "description": "Track readiness status"
+          },
+          "sceneId": {
+            "type": "string",
+            "description": "Scene this track belongs to"
+          },
+          "startMs": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Start time in milliseconds"
+          },
+          "endMs": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "End time in milliseconds"
+          },
+          "durationMs": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Duration in milliseconds"
+          },
+          "volume": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 2,
+            "default": 1.0,
+            "description": "Volume multiplier (1.0 = normal)"
+          },
+          "fadeInMs": {
+            "type": "integer",
+            "minimum": 0,
+            "default": 0,
+            "description": "Fade in duration in milliseconds"
+          },
+          "fadeOutMs": {
+            "type": "integer",
+            "minimum": 0,
+            "default": 0,
+            "description": "Fade out duration in milliseconds"
+          },
+          "ducking": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "enabled": {
+                "type": "boolean",
+                "default": false
+              },
+              "targetAudioId": {
+                "type": "string",
+                "description": "Audio ID to duck against"
+              },
+              "reductionDb": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 60,
+                "default": 12,
+                "description": "Volume reduction in dB when ducking"
+              }
+            }
+          },
+          "deliveryDirection": {
+            "type": "string",
+            "description": "Voice delivery guidance from Creative Direction (e.g., 'intimate, slow, emphatic')"
+          },
+          "timingEvidence": {
+            "type": "string",
+            "description": "Source of timing evidence (e.g., 'TTS output duration', 'STT timestamps', 'manual alignment')"
+          }
+        }
+      }
+    }
+  }
+}
+
+

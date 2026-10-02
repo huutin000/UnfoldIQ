@@ -1,0 +1,72 @@
+{
+  "version": "1.0.0",
+  "projectId": "live-ev-1",
+  "sources": [
+    {
+      "sourceId": "src-1114d819459b",
+      "requestedUrl": "https://www.rfc-editor.org/rfc/rfc7538.html",
+      "canonicalUrl": "https://www.rfc-editor.org/rfc/rfc7538.html",
+      "finalUrl": "https://www.rfc-editor.org/rfc/rfc7538.html",
+      "title": null,
+      "publisher": null,
+      "author": null,
+      "publishedAt": null,
+      "retrievedAt": "2026-10-02T03:59:35.824488Z",
+      "sourceType": "OFFICIAL",
+      "classificationReason": "host matches configured official domain rfc-editor.org",
+      "independenceStatus": "INDEPENDENT",
+      "originGroup": null,
+      "searchQuery": "HTTP 308 Permanent Redirect official documentation method preservation RFC",
+      "searchProvider": "agent-exchange",
+      "searchRank": 1,
+      "contentHash": "1ffad4aa74b20f416ecd5eed5b8b46efc4131097fffd769e86320334e54c6901",
+      "currentVersionHash": "1ffad4aa74b20f416ecd5eed5b8b46efc4131097fffd769e86320334e54c6901",
+      "versions": [
+        {
+          "contentHash": "1ffad4aa74b20f416ecd5eed5b8b46efc4131097fffd769e86320334e54c6901",
+          "retrievedAt": "2026-10-02T03:59:35.824488Z",
+          "rawContentRef": "research/sources/src-1114d819459b/content-1ffad4aa74b2.md",
+          "fitContentRef": "research/sources/src-1114d819459b/fit-1ffad4aa74b2.md",
+          "supersedes": null
+        }
+      ],
+      "acquisitionRoute": "crawl4ai-direct",
+      "crawlerVersion": "0.9.4",
+      "fitQuery": "HTTP 308 Permanent Redirect official documentation method preservation RFC",
+      "acquisitionWarnings": []
+    },
+    {
+      "sourceId": "src-048e66b5112e",
+      "requestedUrl": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/308",
+      "canonicalUrl": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/308",
+      "finalUrl": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/308",
+      "title": "308 Permanent Redirect - HTTP | MDN",
+      "publisher": null,
+      "author": null,
+      "publishedAt": null,
+      "retrievedAt": "2026-10-02T03:59:40.749499Z",
+      "sourceType": "UNKNOWN",
+      "classificationReason": "insufficient evidence for confident classification",
+      "independenceStatus": "INDEPENDENT",
+      "originGroup": null,
+      "searchQuery": "HTTP 308 Permanent Redirect official documentation method preservation RFC",
+      "searchProvider": "agent-exchange",
+      "searchRank": 2,
+      "contentHash": "359cf28aed3b7f066a21af0f18c65a431689c912f4784d8f5e73889a636a6099",
+      "currentVersionHash": "359cf28aed3b7f066a21af0f18c65a431689c912f4784d8f5e73889a636a6099",
+      "versions": [
+        {
+          "contentHash": "359cf28aed3b7f066a21af0f18c65a431689c912f4784d8f5e73889a636a6099",
+          "retrievedAt": "2026-10-02T03:59:40.749499Z",
+          "rawContentRef": "research/sources/src-048e66b5112e/content-359cf28aed3b.md",
+          "fitContentRef": "research/sources/src-048e66b5112e/fit-359cf28aed3b.md",
+          "supersedes": null
+        }
+      ],
+      "acquisitionRoute": "crawl4ai-direct",
+      "crawlerVersion": "0.9.4",
+      "fitQuery": "HTTP 308 Permanent Redirect official documentation method preservation RFC",
+      "acquisitionWarnings": []
+    }
+  ]
+}

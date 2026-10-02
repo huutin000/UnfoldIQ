@@ -1,0 +1,53 @@
+{
+  "$id": "https://unfoldiq.io/schemas/render-qa.schema.json",
+  "title": "UNFOLDIQ Render QA Contract (STEP-13)",
+  "description": "Machine technical QA verdict for a render attempt (duration, checks, summary).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "projectId", "attemptId", "generatedAt", "checks", "summary", "duration", "status", "reviewState"],
+  "properties": {
+    "version": { "type": "string", "const": "1.0.0" },
+    "projectId": { "type": "string", "minLength": 1 },
+    "attemptId": { "type": "string", "minLength": 1 },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["check", "result", "detail"],
+        "properties": {
+          "check": { "type": "string", "minLength": 1 },
+          "result": { "type": "string", "enum": ["PASS", "FAIL", "REVIEW", "UNKNOWN"] },
+          "detail": { "type": "string" },
+          "evidence": { "type": "string" }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pass", "fail", "review", "unknown"],
+      "properties": {
+        "pass": { "type": "integer", "minimum": 0 },
+        "fail": { "type": "integer", "minimum": 0 },
+        "review": { "type": "integer", "minimum": 0 },
+        "unknown": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "duration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["expectedMs", "actualMs", "deltaMs", "toleranceMs", "result"],
+      "properties": {
+        "expectedMs": { "type": "number" },
+        "actualMs": { "type": "number" },
+        "deltaMs": { "type": "number" },
+        "toleranceMs": { "type": "number", "minimum": 0 },
+        "result": { "type": "string", "enum": ["PASS", "FAIL", "REVIEW", "UNKNOWN"] }
+      }
+    },
+    "status": { "type": "string", "enum": ["PASS", "FAIL", "REVIEW_REQUIRED"] },
+    "reviewState": { "type": "string", "enum": ["MACHINE_CHECKED", "AGENT_REVIEWED", "HUMAN_REVIEWED", "NOT_REVIEWED"] }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "$id": "https://unfoldiq.io/schemas/render-attempt.schema.json",
+  "title": "UNFOLDIQ Render Attempt Contract (STEP-13)",
+  "description": "Single render attempt record at projects/<id>/render/attempts/attempt-NNN/render-attempt.json.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["attemptId", "projectId", "number", "inputFingerprint", "renderPlanHash", "startedAt", "status", "outputPath", "renderConfig", "progress", "artifacts"],
+  "properties": {
+    "attemptId": { "type": "string", "pattern": "^attempt-[0-9]{3}$" },
+    "projectId": { "type": "string", "minLength": 1 },
+    "number": { "type": "integer", "minimum": 1 },
+    "inputFingerprint": { "type": "object" },
+    "renderPlanHash": { "type": "string", "minLength": 1 },
+    "startedAt": { "type": "string", "format": "date-time" },
+    "endedAt": { "type": "string", "format": "date-time" },
+    "status": {
+      "type": "string",
+      "enum": ["PENDING", "RUNNING", "CANCEL_REQUESTED", "CANCELLED", "INTERRUPTED", "FAILED", "RENDERED", "QA_FAILED", "QA_REVIEW_REQUIRED", "PASSED"]
+    },
+    "outputPath": { "type": "string", "minLength": 1 },
+    "renderConfig": { "type": "object" },
+    "progress": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fraction", "renderedFrames", "encodedFrames", "stitchStage", "updatedAt"],
+      "properties": {
+        "fraction": { "type": "number", "minimum": 0, "maximum": 1 },
+        "renderedFrames": { "type": "integer", "minimum": 0 },
+        "encodedFrames": { "type": "integer", "minimum": 0 },
+        "stitchStage": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "error": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "message"],
+      "properties": {
+        "code": { "type": "string", "minLength": 1 },
+        "message": { "type": "string" }
+      }
+    },
+    "technicalQa": { "type": "object" },
+    "visualQa": { "type": "object" },
+    "fixPlan": { "type": "object" },
+    "artifacts": { "type": "array", "items": { "type": "string" } }
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "version": "1.0.0",
+  "projectId": "pilot-sky-blue",
+  "generatedClipAudioPolicy": "MUTE_GENERATED_CLIP_AUDIO",
+  "tracks": {
+    "voice": [
+      {
+        "clipId": "VO_B1",
+        "path": "assets/voice/B1.wav",
+        "fromMs": 0,
+        "gainDb": 0,
+        "loop": false,
+        "language": "en",
+        "voiceId": "Microsoft Zira Desktop",
+        "providerId": "windows-sapi",
+        "timingStatus": "MEASURED",
+        "timingSource": "WAV header duration plus ffprobe; per-sentence synthesis",
+        "durationMs": 9393
+      },
+      {
+        "clipId": "VO_B2",
+        "path": "assets/voice/B2.wav",
+        "fromMs": 9394,
+        "gainDb": 0,
+        "loop": false,
+        "language": "en",
+        "voiceId": "Microsoft Zira Desktop",
+        "providerId": "windows-sapi",
+        "timingStatus": "MEASURED",
+        "timingSource": "WAV header duration plus ffprobe; per-sentence synthesis",
+        "durationMs": 8733
+      },
+      {
+        "clipId": "VO_B3",
+        "path": "assets/voice/B3.wav",
+        "fromMs": 18127,
+        "gainDb": 0,
+        "loop": false,
+        "language": "en",
+        "voiceId": "Microsoft Zira Desktop",
+        "providerId": "windows-sapi",
+        "timingStatus": "MEASURED",
+        "timingSource": "WAV header duration plus ffprobe; per-sentence synthesis",
+        "durationMs": 8363
+      },
+      {
+        "clipId": "VO_B4",
+        "path": "assets/voice/B4.wav",
+        "fromMs": 26490,
+        "gainDb": 0,
+        "loop": false,
+        "language": "en",
+        "voiceId": "Microsoft Zira Desktop",
+        "providerId": "windows-sapi",
+        "timingStatus": "MEASURED",
+        "timingSource": "WAV header duration plus ffprobe; per-sentence synthesis",
+        "durationMs": 7489
+      },
+      {
+        "clipId": "VO_B5",
+        "path": "assets/voice/B5.wav",
+        "fromMs": 33979,
+        "gainDb": 0,
+        "loop": false,
+        "language": "en",
+        "voiceId": "Microsoft Zira Desktop",
+        "providerId": "windows-sapi",
+        "timingStatus": "MEASURED",
+        "timingSource": "WAV header duration plus ffprobe; per-sentence synthesis",
+        "durationMs": 7423
+      },
+      {
+        "clipId": "VO_B6",
+        "path": "assets/voice/B6.wav",
+        "fromMs": 41402,
+        "gainDb": 0,
+        "loop": false,
+        "language": "en",
+        "voiceId": "Microsoft Zira Desktop",
+        "providerId": "windows-sapi",
+        "timingStatus": "MEASURED",
+        "timingSource": "WAV header duration plus ffprobe; per-sentence synthesis",
+        "durationMs": 8708
+      },
+      {
+        "clipId": "VO_B7",
+        "path": "assets/voice/B7.wav",
+        "fromMs": 50110,
+        "gainDb": 0,
+        "loop": false,
+        "language": "en",
+        "voiceId": "Microsoft Zira Desktop",
+        "providerId": "windows-sapi",
+        "timingStatus": "MEASURED",
+        "timingSource": "WAV header duration plus ffprobe; per-sentence synthesis",
+        "durationMs": 6633
+      },
+      {
+        "clipId": "VO_B8",
+        "path": "assets/voice/B8.wav",
+        "fromMs": 56744,
+        "gainDb": 0,
+        "loop": false,
+        "language": "en",
+        "voiceId": "Microsoft Zira Desktop",
+        "providerId": "windows-sapi",
+        "timingStatus": "MEASURED",
+        "timingSource": "WAV header duration plus ffprobe; per-sentence synthesis",
+        "durationMs": 8588
+      }
+    ],
+    "music": [],
+    "sfx": []
+  },
+  "status": "READY"
+}
