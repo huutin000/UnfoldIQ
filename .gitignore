@@ -31,3 +31,6 @@ test-results/
 
 # Local env secrets
 .env
+.env.*
+!.env.example
+
