@@ -1,6 +1,6 @@
 {
   "artifact": "perf-baseline-compliance",
-  "capturedAt": "2026-10-07T03:32:30.837Z",
+  "capturedAt": "2026-10-07T04:24:43.496Z",
   "method": "process.hrtime.bigint micro-benchmarks inside tests/compliance/test-compliance.js",
   "sampleCounts": {
     "snapshotLoad": 20,
@@ -11,23 +11,23 @@
   "metrics": {
     "snapshotLoad": {
       "samples": 20,
-      "minMs": 0.258,
-      "p50Ms": 0.321,
-      "maxMs": 8.684
+      "minMs": 0.226,
+      "p50Ms": 0.266,
+      "maxMs": 6.553
     },
     "evaluate": {
       "samples": 10,
-      "minMs": 1.547,
-      "p50Ms": 8.711,
-      "maxMs": 10.123
+      "minMs": 1.458,
+      "p50Ms": 7.718,
+      "maxMs": 8.16
     },
     "freshness": {
       "samples": 50,
-      "minMs": 0.391,
-      "p50Ms": 0.502,
-      "maxMs": 6.405
+      "minMs": 0.373,
+      "p50Ms": 0.426,
+      "maxMs": 6.283
     },
-    "sizeBytes": 8154
+    "sizeBytes": 8155
   },
   "budgets": {
     "snapshotLoadP50Ms": 5,

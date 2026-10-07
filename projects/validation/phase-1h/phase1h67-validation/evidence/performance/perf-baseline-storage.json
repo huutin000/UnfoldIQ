@@ -1,6 +1,6 @@
 {
   "artifact": "perf-baseline-storage",
-  "capturedAt": "2026-10-07T03:43:33.698Z",
+  "capturedAt": "2026-10-07T04:33:40.064Z",
   "method": "process.hrtime.bigint micro-benchmarks inside tests/storage/test-storage.js (80 files)",
   "sampleCounts": {
     "inventory": 5,
@@ -12,27 +12,27 @@
   "metrics": {
     "inventory": {
       "samples": 5,
-      "minMs": 18.962,
-      "p50Ms": 20.888,
-      "maxMs": 21.731
+      "minMs": 17.137,
+      "p50Ms": 19.2,
+      "maxMs": 21.442
     },
     "plan": {
       "samples": 10,
-      "minMs": 13.918,
-      "p50Ms": 23.884,
-      "maxMs": 31.712
+      "minMs": 13.201,
+      "p50Ms": 22.736,
+      "maxMs": 28
     },
     "orphanScan": {
       "samples": 10,
-      "minMs": 0.827,
-      "p50Ms": 0.866,
-      "maxMs": 1.482
+      "minMs": 0.767,
+      "p50Ms": 0.838,
+      "maxMs": 1.034
     },
     "missingScan": {
       "samples": 20,
-      "minMs": 0.058,
-      "p50Ms": 0.067,
-      "maxMs": 0.161
+      "minMs": 0.052,
+      "p50Ms": 0.06,
+      "maxMs": 0.202
     },
     "projectBytes": 34189,
     "entries": 81

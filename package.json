@@ -36,7 +36,9 @@
     "render:doctor": "node scripts/diagnostics/render-doctor.js",
     "check:workspace": "node scripts/checks/workspace-check.js",
     "test:music": "node scripts/run-tests.js music",
-    "test:mix": "node scripts/run-tests.js mix"
+    "test:mix": "node scripts/run-tests.js mix",
+    "test:alignment": "node scripts/run-tests.js alignment",
+    "test:captions": "node scripts/run-tests.js captions"
   },
   "keywords": [],
   "author": "",

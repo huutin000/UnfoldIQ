@@ -80,6 +80,31 @@ function makeTempRepo() {
   return fs.mkdtempSync(path.join(os.tmpdir(), "unfoldiq-audio-test-"));
 }
 
+/** Word-burst speech: one tone burst per word, separated by real silence —
+ *  lets the energy aligner map speech runs 1:1 to words deterministically. */
+function makeWordSpeechWav({ wordDurationMs = 400, wordCount = 6, pauseMs = 300, amplitude = 0.5, leadMs = 150, tailMs = 200 } = {}) {
+  const totalMs = leadMs + wordCount * wordDurationMs + (wordCount - 1) * pauseMs + tailMs;
+  const n = Math.round((totalMs / 1000) * FS);
+  const s = new Int16Array(n);
+  let cursor = Math.round((leadMs / 1000) * FS);
+  for (let w = 0; w < wordCount; w += 1) {
+    const len = Math.round((wordDurationMs / 1000) * FS);
+    for (let i = 0; i < len; i += 1) {
+      const t = i / FS;
+      s[cursor + i] = Math.max(-32768, Math.min(32767,
+        Math.round(amplitude * Math.sin(2 * Math.PI * (140 + w * 20) * t) * 32767)));
+    }
+    cursor += len + Math.round((pauseMs / 1000) * FS);
+  }
+  return wav.encodeWav(s, FS, 1);
+}
+
+/** Digital-silence WAV of given duration (unalignable-word injection). */
+function encodeSilentWav(durationMs) {
+  const n = Math.round((durationMs / 1000) * FS);
+  return wav.encodeWav(new Int16Array(n), FS, 1);
+}
+
 const APPROVED_RIGHTS = {
   provider: "USER_IMPORTED_LICENSED_ASSET",
   licenseType: "ROYALTY_FREE",
@@ -91,4 +116,4 @@ const APPROVED_RIGHTS = {
   status: "APPROVED",
 };
 
-module.exports = { FS, makeMusicWav, makeSpeechWav, makeAmbienceWav, makeSfxWav, makeTempRepo, APPROVED_RIGHTS };
+module.exports = { FS, makeMusicWav, makeSpeechWav, makeWordSpeechWav, makeAmbienceWav, makeSfxWav, encodeSilentWav, makeTempRepo, APPROVED_RIGHTS };

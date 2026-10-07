@@ -1,0 +1,35 @@
+{
+  "$id": "https://unfoldiq.io/schemas/caption-profile.schema.json",
+  "title": "UNFOLDIQ Caption Profile Contract (Phase 2.10)",
+  "description": "Versioned per-language/platform caption layout policy: line budgets, reading speed, cue durations, presentation and accessibility mode, safe zone",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["profileId", "version", "language", "platform", "contentType", "maxLines", "maxCharsPerLine", "maxCharactersPerSecond", "minCueDurationMs", "maxCueDurationMs", "minGapMs", "presentationMode", "accessibilityMode", "positioningPolicy", "safeZone"],
+  "properties": {
+    "profileId": { "type": "string", "minLength": 1 },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "language": { "type": "string", "minLength": 1 },
+    "platform": { "type": "string" },
+    "contentType": { "type": "string" },
+    "maxLines": { "type": "integer", "minimum": 1, "maximum": 3 },
+    "maxCharsPerLine": { "type": "integer", "minimum": 10 },
+    "maxCharactersPerSecond": { "type": "number", "minimum": 3 },
+    "minCueDurationMs": { "type": "integer", "minimum": 200 },
+    "maxCueDurationMs": { "type": "integer", "minimum": 500 },
+    "minGapMs": { "type": "integer", "minimum": 0 },
+    "presentationMode": { "enum": ["BLOCK", "WORD_HIGHLIGHT", "SINGLE_WORD"] },
+    "accessibilityMode": { "enum": ["DIALOGUE_ONLY", "ACCESSIBLE_CAPTIONS"] },
+    "positioningPolicy": { "type": "string" },
+    "safeZone": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["top", "right", "bottom", "left"],
+      "properties": {
+        "top": { "type": "number", "minimum": 0, "maximum": 0.5 },
+        "right": { "type": "number", "minimum": 0, "maximum": 0.5 },
+        "bottom": { "type": "number", "minimum": 0, "maximum": 0.5 },
+        "left": { "type": "number", "minimum": 0, "maximum": 0.5 }
+      }
+    }
+  }
+}

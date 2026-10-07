@@ -1,0 +1,103 @@
+{
+  "$id": "https://unfoldiq.io/schemas/alignment.schema.json",
+  "title": "UNFOLDIQ Forced Alignment Contract (Phase 2.9)",
+  "description": "Known-text word/phrase alignment over clean narration/dialogue stems with coverage, confidence and QA findings",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "projectId", "transcriptHash", "narrationTimingHash", "provider", "words", "phrases", "metrics", "qaStatus", "createdAt"],
+  "properties": {
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "projectId": { "type": "string", "minLength": 1 },
+    "transcriptHash": { "type": "string", "minLength": 8 },
+    "narrationTimingHash": { "type": "string", "minLength": 8 },
+    "finalMixHash": { "type": "string" },
+    "provider": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "version": { "type": "string" },
+        "model": { "type": "string" }
+      }
+    },
+    "words": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["wordId", "segmentId", "text", "startMs", "endMs", "status"],
+        "properties": {
+          "wordId": { "type": "string", "minLength": 1 },
+          "segmentId": { "type": "string", "minLength": 1 },
+          "speakerId": { "type": "string" },
+          "text": { "type": "string", "minLength": 1 },
+          "startMs": { "type": "integer", "minimum": 0 },
+          "endMs": { "type": "integer", "minimum": 0 },
+          "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+          "status": { "enum": ["ALIGNED", "INTERPOLATED", "UNALIGNED"] }
+        }
+      }
+    },
+    "phrases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["phraseId", "segmentId", "wordIds", "startMs", "endMs"],
+        "properties": {
+          "phraseId": { "type": "string", "minLength": 1 },
+          "segmentId": { "type": "string", "minLength": 1 },
+          "speakerId": { "type": "string" },
+          "wordIds": { "type": "array", "items": { "type": "string" } },
+          "startMs": { "type": "integer", "minimum": 0 },
+          "endMs": { "type": "integer", "minimum": 0 }
+        }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["wordCount", "alignedWordCount", "interpolatedWordCount", "unalignedWordCount", "coverageRatio", "durationMs", "alignLatencyMs"],
+      "properties": {
+        "wordCount": { "type": "integer", "minimum": 0 },
+        "alignedWordCount": { "type": "integer", "minimum": 0 },
+        "interpolatedWordCount": { "type": "integer", "minimum": 0 },
+        "unalignedWordCount": { "type": "integer", "minimum": 0 },
+        "coverageRatio": { "type": "number", "minimum": 0, "maximum": 1 },
+        "durationMs": { "type": "integer", "minimum": 0 },
+        "alignLatencyMs": { "type": "integer", "minimum": 0 },
+        "localRealignCount": { "type": "integer", "minimum": 0 },
+        "providerFallbackCount": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "qa": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "findings"],
+      "properties": {
+        "status": { "enum": ["PASS", "REVIEW_REQUIRED", "FAIL"] },
+        "findings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["code", "reason"],
+            "properties": {
+              "code": { "type": "string" },
+              "segmentId": { "type": "string" },
+              "wordId": { "type": "string" },
+              "startMs": { "type": "integer" },
+              "endMs": { "type": "integer" },
+              "reason": { "type": "string" },
+              "correctiveAction": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "metrics": { "type": "object" }
+      }
+    },
+    "qaStatus": { "enum": ["PASS", "REVIEW_REQUIRED", "FAIL"] },
+    "createdAt": { "type": "string" }
+  }
+}
