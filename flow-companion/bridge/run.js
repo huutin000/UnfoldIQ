@@ -122,11 +122,34 @@ function main() {
   }
   const port = parsePort(args);
   const { createBridgeServer } = require("./server");
-  const bridge = createBridgeServer({ projectRoot: PROJECT_ROOT, token: resolved.token, host: "127.0.0.1" });
+  const { createPairingManager } = require("../../lib/device-pairing/index.js");
+  const { createSecretStore } = require("../../lib/device-pairing/secret-store.js");
+
+  const base = process.env.LOCALAPPDATA || path.join(os.homedir(), ".unfoldiq");
+  const runtimeRoot = path.join(base, "UNFOLDIQ");
+  const secretBackend = process.platform === "win32" ? "dpapi" : "dev-plaintext";
+  const secretStore = createSecretStore({
+    backend: secretBackend,
+    dir: path.join(runtimeRoot, "secrets"),
+    allowPlaintextDev: secretBackend === "dev-plaintext",
+  });
+  // Exact-origin allowlist for trusted-device pairing (spec §7.1). Override
+  // with FLOW_PAIRING_ORIGINS="https://app.example.com,http://localhost:5173".
+  const pairingOrigins = String(process.env.FLOW_PAIRING_ORIGINS ||
+    "http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000,http://127.0.0.1:3000,http://localhost:8080,http://127.0.0.1:8080")
+    .split(",").map((s) => s.trim()).filter(Boolean);
+  const pairing = createPairingManager({
+    stateDir: path.join(runtimeRoot, "pairing"),
+    secretStore,
+    allowedOrigins: pairingOrigins,
+  });
+  const bridge = createBridgeServer({ projectRoot: PROJECT_ROOT, token: resolved.token, host: "127.0.0.1", pairing });
   bridge.listen(port).then(
     (addr) => {
       console.log(`FLOW_BRIDGE_LISTENING host=127.0.0.1 port=${addr.port}`);
       console.log(`FLOW_BRIDGE_URL=http://127.0.0.1:${addr.port}`);
+      console.log(`FLOW_PAIRING_ENABLED=true secretBackend=${secretBackend} origins=${pairingOrigins.join(",")}`);
+      console.log("Trusted-device pairing is active: the normal flow no longer needs the token (kept for developer/recovery mode).");
       console.log("Keep this terminal open for the whole live run. Ctrl+C stops the bridge.");
     },
     (e) => {

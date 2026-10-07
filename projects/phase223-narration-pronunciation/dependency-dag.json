@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0.0",
   "projectId": "phase223-narration-pronunciation",
-  "revision": 62,
+  "revision": 78,
   "createdAt": "2026-10-06T02:13:50.020Z",
-  "updatedAt": "2026-10-07T04:28:01.242Z",
+  "updatedAt": "2026-10-07T06:40:52.224Z",
   "nodes": {
     "FINAL_SPOKEN_SCRIPT": {
       "artifactKey": "FINAL_SPOKEN_SCRIPT",
@@ -105,5 +105,5 @@
       "provenance": "LIVE"
     }
   },
-  "fingerprint": "8858883f2ef6dd85"
+  "fingerprint": "173d7273b57c6fa3"
 }

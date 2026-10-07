@@ -1,6 +1,6 @@
 {
   "artifact": "perf-baseline-telemetry",
-  "capturedAt": "2026-10-07T04:33:44.731Z",
+  "capturedAt": "2026-10-07T06:46:52.324Z",
   "method": "process.hrtime.bigint micro-benchmarks inside tests/telemetry/test-telemetry.js",
   "sampleCounts": {
     "append": 20,
@@ -12,27 +12,27 @@
   "metrics": {
     "append": {
       "samples": 20,
-      "minMs": 8.194,
-      "p50Ms": 9.555,
-      "maxMs": 11.435
+      "minMs": 8.052,
+      "p50Ms": 11.71,
+      "maxMs": 13.107
     },
     "query": {
       "samples": 20,
-      "minMs": 1.112,
-      "p50Ms": 1.327,
-      "maxMs": 6.597
+      "minMs": 1.293,
+      "p50Ms": 1.599,
+      "maxMs": 9.537
     },
     "trace": {
       "samples": 20,
-      "minMs": 1.259,
-      "p50Ms": 1.298,
-      "maxMs": 1.697
+      "minMs": 1.282,
+      "p50Ms": 1.629,
+      "maxMs": 2.305
     },
     "costQuery": {
       "samples": 20,
-      "minMs": 1.207,
-      "p50Ms": 1.316,
-      "maxMs": 1.675
+      "minMs": 1.239,
+      "p50Ms": 1.371,
+      "maxMs": 1.762
     },
     "sizeBytes": 42572,
     "writeAmplification": "1 atomic replace per effective append; 0 on dedupe"

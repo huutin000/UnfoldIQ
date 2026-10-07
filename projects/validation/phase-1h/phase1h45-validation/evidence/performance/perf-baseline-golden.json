@@ -1,6 +1,6 @@
 {
   "artifact": "perf-baseline-golden",
-  "capturedAt": "2026-10-07T04:26:54.774Z",
+  "capturedAt": "2026-10-07T06:39:44.876Z",
   "method": "process.hrtime.bigint micro-benchmarks inside tests/golden/test-golden.js",
   "sampleCounts": {
     "goldenLoad": 20,
@@ -11,21 +11,21 @@
   "metrics": {
     "goldenLoad": {
       "samples": 20,
-      "minMs": 0.249,
-      "p50Ms": 0.403,
-      "maxMs": 0.949
+      "minMs": 0.294,
+      "p50Ms": 0.353,
+      "maxMs": 0.656
     },
     "baselineLoad": {
       "samples": 20,
-      "minMs": 0.758,
-      "p50Ms": 0.98,
-      "maxMs": 1.36
+      "minMs": 0.791,
+      "p50Ms": 0.996,
+      "maxMs": 2.047
     },
     "compare": {
       "samples": 10,
-      "minMs": 0.387,
-      "p50Ms": 0.754,
-      "maxMs": 10.417
+      "minMs": 0.328,
+      "p50Ms": 0.441,
+      "maxMs": 8.97
     },
     "metadataBytes": 35325,
     "providerTimeMs": 0

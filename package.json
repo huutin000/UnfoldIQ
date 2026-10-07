@@ -38,7 +38,10 @@
     "test:music": "node scripts/run-tests.js music",
     "test:mix": "node scripts/run-tests.js mix",
     "test:alignment": "node scripts/run-tests.js alignment",
-    "test:captions": "node scripts/run-tests.js captions"
+    "test:captions": "node scripts/run-tests.js captions",
+    "test:pairing": "node scripts/run-tests.js pairing",
+    "test:storage": "node scripts/run-tests.js storage",
+    "test:timeline": "node scripts/run-tests.js timeline"
   },
   "keywords": [],
   "author": "",

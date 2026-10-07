@@ -25,7 +25,7 @@ const store = require("./job-store");
 const jobContract = require("../extension/src/contracts/job-contract.js");
 const { checkGeneratedImage, checkCorrelation } = require("./media-quality");
 
-const ALLOWED_ROUTES = ["GET /health", "GET /capabilities", "POST /jobs", "GET /jobs/:jobId", "POST /jobs/:jobId/await-approval", "POST /jobs/:jobId/approve", "POST /jobs/:jobId/submit-issued", "POST /jobs/:jobId/generate", "POST /jobs/:jobId/cancel", "POST /jobs/:jobId/result", "POST /jobs/:jobId/result-candidates", "POST /jobs/:jobId/artifact", "POST /instruction/apply", "POST /instruction/evidence"];
+const ALLOWED_ROUTES = ["GET /health", "GET /capabilities", "POST /jobs", "GET /jobs/:jobId", "POST /jobs/:jobId/await-approval", "POST /jobs/:jobId/approve", "POST /jobs/:jobId/submit-issued", "POST /jobs/:jobId/generate", "POST /jobs/:jobId/cancel", "POST /jobs/:jobId/result", "POST /jobs/:jobId/result-candidates", "POST /jobs/:jobId/artifact", "POST /instruction/apply", "POST /instruction/evidence", "GET /pairing/status", "POST /pairing/approve", "POST /pairing/challenge", "POST /pairing/verify", "POST /pairing/disconnect", "POST /pairing/revoke", "POST /pairing/rotate"];
 
 // POST-v1B live-run completion: narrow artifact-receive endpoint.
 // The extension content script fetches the generated media in-page context
@@ -103,9 +103,21 @@ function requireFields(obj, fields) {
   }
 }
 
-function createBridgeServer({ projectRoot, token, host = "127.0.0.1", allowedOrigins } = {}) {
+function createBridgeServer({ projectRoot, token, host = "127.0.0.1", allowedOrigins, pairing } = {}) {
   const bindHost = assertLoopbackBind(host);
-  if (!token) throw new Error("BRIDGE_TOKEN_REQUIRED");
+  if (!token && !pairing) throw new Error("BRIDGE_TOKEN_REQUIRED");
+  // Pairing auth (POST-PHASE-2): device-session and dev/recovery token both
+  // grant access; normal-user flow never needs the legacy token (§10).
+  const devTokenActive = !!token;
+
+  function authorized(req) {
+    if (devTokenActive && tokenMatches(String(req.headers["x-bridge-token"] || ""), token)) return { ok: true, mode: "token-dev-recovery" };
+    if (pairing) {
+      const s = pairing.validateSession({ sessionToken: String(req.headers["x-bridge-session"] || "") });
+      if (s.ok) return { ok: true, mode: "device-session", session: s.session };
+    }
+    return { ok: false };
+  }
 
   const server = http.createServer(async (req, res) => {
     try {
@@ -113,17 +125,54 @@ function createBridgeServer({ projectRoot, token, host = "127.0.0.1", allowedOri
       if (origin && !validateOrigin(origin, allowedOrigins)) {
         return send(res, 403, { error: "ORIGIN_REJECTED" });
       }
-      if (!tokenMatches(String(req.headers["x-bridge-token"] || ""), token)) {
-        return send(res, 401, { error: "TOKEN_REJECTED" });
-      }
       const url = new URL(req.url, "http://127.0.0.1");
       const parts = url.pathname.split("/").filter(Boolean);
 
+      // ---- Pairing routes (bootstrap; no token gate) ----
+      if (parts[0] === "pairing") {
+        if (!pairing) return send(res, 404, { error: "PAIRING_DISABLED" });
+        if (req.method === "GET" && parts.length === 2 && parts[1] === "status") {
+          const st = pairing.status();
+          return send(res, 200, { ...st, exactOriginRequired: true });
+        }
+        const body = req.method === "POST" ? await readBody(req) : {};
+        if (req.method === "POST" && parts.length === 2 && parts[1] === "approve") {
+          const r = pairing.approve({ origin: body.origin, sessionOnly: body.sessionOnly === true });
+          return r.ok ? send(res, 200, r) : send(res, r.code === "ORIGIN_REJECTED" ? 403 : 409, { error: r.code });
+        }
+        if (req.method === "POST" && parts.length === 2 && parts[1] === "challenge") {
+          const r = pairing.challenge({ deviceId: body.deviceId, origin: body.origin });
+          return r.ok ? send(res, 200, r) : send(res, r.code === "ORIGIN_REJECTED" ? 403 : 409, { error: r.code });
+        }
+        if (req.method === "POST" && parts.length === 2 && parts[1] === "verify") {
+          const r = pairing.verify({ deviceId: body.deviceId, nonce: body.nonce, signature: body.signature, origin: body.origin });
+          return r.ok ? send(res, 200, r) : send(res, 401, { error: r.code });
+        }
+        if (req.method === "POST" && parts.length === 2 && parts[1] === "disconnect") {
+          const r = pairing.disconnect({ sessionToken: body.sessionToken });
+          return send(res, 200, r);
+        }
+        // Revoke/rotate require an active session or the dev token.
+        if ((parts[1] === "revoke" || parts[1] === "rotate") && req.method === "POST") {
+          const auth = authorized(req);
+          if (!auth.ok) return send(res, 401, { error: "AUTH_REQUIRED: session or dev token required to revoke/rotate" });
+          const r = parts[1] === "revoke" ? pairing.revoke({ sessionToken: body.sessionToken }) : pairing.rotate();
+          return r.ok ? send(res, 200, r) : send(res, 409, { error: r.code });
+        }
+        return send(res, 404, { error: "ROUTE_NOT_FOUND" });
+      }
+
+      // ---- Auth gate: dev/recovery token OR trusted-device session ----
+      const auth = authorized(req);
+      if (!auth.ok) {
+        return send(res, 401, { error: devTokenActive ? "TOKEN_REJECTED" : "SESSION_REQUIRED" });
+      }
+
       if (req.method === "GET" && parts.length === 1 && parts[0] === "health") {
-        return send(res, 200, { ok: true, routes: ALLOWED_ROUTES });
+        return send(res, 200, { ok: true, routes: ALLOWED_ROUTES, authMode: auth.mode });
       }
       if (req.method === "GET" && parts.length === 1 && parts[0] === "capabilities") {
-        return send(res, 200, { capabilities: ["image", "video"], modes: ["ASSISTED_APPROVAL", "MANUAL_ASSIST"], liveGeneration: false });
+        return send(res, 200, { capabilities: ["image", "video"], modes: ["ASSISTED_APPROVAL", "MANUAL_ASSIST"], liveGeneration: false, authModes: pairing ? ["device-session", "token-dev-recovery"] : ["token-dev-recovery"] });
       }
       if (req.method === "POST" && parts.length === 1 && parts[0] === "jobs") {
         const raw = await readBody(req);

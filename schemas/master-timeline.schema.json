@@ -1,0 +1,132 @@
+{
+  "$id": "https://unfoldiq.io/schemas/master-timeline.schema.json",
+  "title": "UNFOLDIQ Master Timeline Manifest Contract (Phase 3A)",
+  "description": "Canonical machine-readable editorial timeline: timebase policies, tracks, items with canonical asset references, frame ranges, conform/color refs, dependency hashes, QA findings",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "projectId", "timelineId", "revision", "timebasePolicyRef", "mediaConformPolicyRef", "colorManagementPolicyRef", "canonicalDuration", "sourceTiming", "tracks", "dependencyHashes", "qaStatus", "createdAt"],
+  "properties": {
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "projectId": { "type": "string", "minLength": 1 },
+    "timelineId": { "type": "string", "minLength": 1 },
+    "revision": { "type": "integer", "minimum": 1 },
+    "timebasePolicyRef": { "type": "string", "minLength": 1 },
+    "mediaConformPolicyRef": { "type": "string", "minLength": 1 },
+    "colorManagementPolicyRef": { "type": "string", "minLength": 1 },
+    "canonicalDuration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["time", "frameCount"],
+      "properties": {
+        "time": { "type": "integer", "minimum": 1 },
+        "frameCount": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "sourceTiming": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["finalAudioArtifactId", "narrationTimingHash"],
+      "properties": {
+        "finalAudioArtifactId": { "type": "string" },
+        "finalMixHash": { "type": "string" },
+        "narrationTimingHash": { "type": "string" },
+        "alignmentArtifactId": { "type": "string" },
+        "alignmentTranscriptHash": { "type": "string" },
+        "captionArtifactId": { "type": "string" }
+      }
+    },
+    "tracks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["trackId", "trackType"],
+        "properties": {
+          "trackId": { "type": "string", "minLength": 1 },
+          "trackType": {
+            "enum": ["NARRATION", "MUSIC", "SFX", "AMBIENCE", "VIDEO", "IMAGE", "CHART", "MAP", "DIAGRAM", "OVERLAY", "CAPTION", "TITLE"]
+          },
+          "itemIds": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["timelineItemId", "trackId", "trackType", "assetId", "timelineRange", "dependencyHashes"],
+        "properties": {
+          "timelineItemId": { "type": "string", "minLength": 1 },
+          "trackId": { "type": "string", "minLength": 1 },
+          "trackType": {
+            "enum": ["NARRATION", "MUSIC", "SFX", "AMBIENCE", "VIDEO", "IMAGE", "CHART", "MAP", "DIAGRAM", "OVERLAY", "CAPTION", "TITLE"]
+          },
+          "assetId": { "type": "string", "minLength": 1 },
+          "sourceRange": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["startTime", "endTime"],
+            "properties": {
+              "startTime": { "type": "integer", "minimum": 0 },
+              "endTime": { "type": "integer", "minimum": 0 }
+            }
+          },
+          "timelineRange": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["startTime", "endTime", "startFrame", "endFrameExclusive"],
+            "properties": {
+              "startTime": { "type": "integer", "minimum": 0 },
+              "endTime": { "type": "integer", "minimum": 0 },
+              "startFrame": { "type": "integer", "minimum": 0 },
+              "endFrameExclusive": { "type": "integer", "minimum": 0 }
+            }
+          },
+          "sourceTimingRef": { "type": "string" },
+          "sceneId": { "type": "string" },
+          "shotId": { "type": "string" },
+          "beatId": { "type": "string" },
+          "segmentId": { "type": "string" },
+          "zIndex": { "type": "integer" },
+          "conformRef": { "type": "string" },
+          "conformDecision": { "enum": ["DIRECT_USE", "CONFORM_REQUIRED", "REVIEW_REQUIRED", "REJECT"] },
+          "colorRef": { "type": "string" },
+          "speechBound": { "type": "boolean" },
+          "locked": { "type": "boolean" },
+          "dependencyHashes": { "type": "object", "additionalProperties": { "type": "string" } }
+        }
+      }
+    },
+    "appliedPatchIds": { "type": "array", "items": { "type": "string" } },
+    "dependencyHashes": { "type": "object", "additionalProperties": { "type": "string" } },
+    "qa": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "findings"],
+      "properties": {
+        "status": { "enum": ["PASS", "FAIL", "REVIEW_REQUIRED"] },
+        "findings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["code", "reason"],
+            "properties": {
+              "code": { "type": "string" },
+              "timelineItemId": { "type": "string" },
+              "trackId": { "type": "string" },
+              "assetId": { "type": "string" },
+              "reason": { "type": "string" },
+              "correctiveAction": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "metrics": { "type": "object" }
+      }
+    },
+    "qaStatus": { "enum": ["PASS", "FAIL", "REVIEW_REQUIRED"] },
+    "createdAt": { "type": "string" },
+    "updatedAt": { "type": "string" }
+  }
+}

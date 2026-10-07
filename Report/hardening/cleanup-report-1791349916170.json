@@ -1,0 +1,116 @@
+{
+  "ok": true,
+  "dryRun": false,
+  "mode": "CLEAN",
+  "policyVersion": "1.0.0",
+  "root": "C:\\Users\\huuti\\AppData\\Local\\UNFOLDIQ",
+  "skippedActiveSession": false,
+  "candidates": [
+    {
+      "path": "pw-flow-profile/OptGuideOnDeviceModel",
+      "lifecycle": "CACHE",
+      "sizeBytes": 4269934835
+    },
+    {
+      "path": "pw-flow-profile/optimization_guide_model_store",
+      "lifecycle": "CACHE",
+      "sizeBytes": 54595457
+    },
+    {
+      "path": "pw-flow-profile/component_crx_cache",
+      "lifecycle": "CACHE",
+      "sizeBytes": 39073108
+    },
+    {
+      "path": "pw-flow-profile/Safe Browsing",
+      "lifecycle": "CACHE",
+      "sizeBytes": 36777013
+    },
+    {
+      "path": "pw-flow-profile/WasmTtsEngine",
+      "lifecycle": "CACHE",
+      "sizeBytes": 23345149
+    },
+    {
+      "path": "pw-flow-profile/OnDeviceHeadSuggestModel",
+      "lifecycle": "CACHE",
+      "sizeBytes": 7930045
+    },
+    {
+      "path": "pw-flow-profile/GPUPersistentCache",
+      "lifecycle": "CACHE",
+      "sizeBytes": 6041224
+    },
+    {
+      "path": "pw-flow-profile/GrShaderCache",
+      "lifecycle": "CACHE",
+      "sizeBytes": 4985436
+    },
+    {
+      "path": "pw-flow-profile/ShaderCache",
+      "lifecycle": "CACHE",
+      "sizeBytes": 557424
+    },
+    {
+      "path": "pw-flow-profile/Crashpad",
+      "lifecycle": "EPHEMERAL",
+      "sizeBytes": 40
+    }
+  ],
+  "reclaimableBytes": 4443239731,
+  "removed": [
+    {
+      "path": "pw-flow-profile/OptGuideOnDeviceModel",
+      "lifecycle": "CACHE",
+      "reclaimedBytes": 4269934835
+    },
+    {
+      "path": "pw-flow-profile/optimization_guide_model_store",
+      "lifecycle": "CACHE",
+      "reclaimedBytes": 54595457
+    },
+    {
+      "path": "pw-flow-profile/component_crx_cache",
+      "lifecycle": "CACHE",
+      "reclaimedBytes": 39073108
+    },
+    {
+      "path": "pw-flow-profile/Safe Browsing",
+      "lifecycle": "CACHE",
+      "reclaimedBytes": 36777013
+    },
+    {
+      "path": "pw-flow-profile/WasmTtsEngine",
+      "lifecycle": "CACHE",
+      "reclaimedBytes": 23345149
+    },
+    {
+      "path": "pw-flow-profile/OnDeviceHeadSuggestModel",
+      "lifecycle": "CACHE",
+      "reclaimedBytes": 7930045
+    },
+    {
+      "path": "pw-flow-profile/GPUPersistentCache",
+      "lifecycle": "CACHE",
+      "reclaimedBytes": 6041224
+    },
+    {
+      "path": "pw-flow-profile/GrShaderCache",
+      "lifecycle": "CACHE",
+      "reclaimedBytes": 4985436
+    },
+    {
+      "path": "pw-flow-profile/ShaderCache",
+      "lifecycle": "CACHE",
+      "reclaimedBytes": 557424
+    },
+    {
+      "path": "pw-flow-profile/Crashpad",
+      "lifecycle": "EPHEMERAL",
+      "reclaimedBytes": 40
+    }
+  ],
+  "skipped": [],
+  "reclaimedBytes": 4443239731,
+  "cleanedAt": "2026-10-07T05:11:56.041Z"
+}
