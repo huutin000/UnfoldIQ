@@ -1,0 +1,465 @@
+{
+  "version": "1.0.0",
+  "qaResultId": "qa-b718611eb7bb",
+  "projectId": "phase1g12-case-a",
+  "assetId": "as-a7801df9bf0f",
+  "assetHash": "a7801df9bf0f05ee20fb94a6e913824c2de151ad063994dd5d1c052d57428e7e",
+  "shotId": null,
+  "sceneId": null,
+  "qaPolicyVersion": "1g11-1.0.0",
+  "expectedContextFingerprint": "fp-2e82834fe301f8b2",
+  "expectationSnapshot": {
+    "assetId": "as-a7801df9bf0f",
+    "assetHash": "a7801df9bf0f05ee20fb94a6e913824c2de151ad063994dd5d1c052d57428e7e",
+    "shotExpectationVersion": "case-d-character-ref-v1",
+    "sceneExpectationVersion": "case-d-v1",
+    "scriptVersion": "case-d-noskript",
+    "characterBibleVersion": "n/a-fiction",
+    "worldBibleVersion": "n/a-fiction",
+    "visualBibleVersion": "n/a-fiction",
+    "platformAdaptationVersion": "pa-youtube-16x9",
+    "qaPolicyVersion": "1g11-1.0.0"
+  },
+  "structural": {
+    "status": "PASS",
+    "severity": "INFO",
+    "blocking": false,
+    "checks": [
+      {
+        "check": "file-type",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "decode",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "media-type",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "dimensions",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "aspect",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "no upstream aspect expectation",
+        "blocking": false
+      },
+      {
+        "check": "duration",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "duration applies to video expectations only",
+        "blocking": false
+      },
+      {
+        "check": "temporal-stream",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "temporal stream applies to video only",
+        "blocking": false
+      },
+      {
+        "check": "freeze",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "freeze applies to video only",
+        "blocking": false
+      }
+    ],
+    "evidence": [
+      {
+        "evidenceId": "ev-bf78760a9619",
+        "layer": "structural",
+        "check": "file-type",
+        "source": "MAGIC_BYTES",
+        "expected": "jpeg",
+        "observed": "jpeg",
+        "comparison": "match",
+        "confidence": "high",
+        "artifactRefs": []
+      },
+      {
+        "evidenceId": "ev-7b6038e03922",
+        "layer": "structural",
+        "check": "decode",
+        "source": "FFPROBE",
+        "expected": "decodable media",
+        "observed": "mjpeg",
+        "comparison": "match",
+        "confidence": "high",
+        "artifactRefs": []
+      },
+      {
+        "evidenceId": "ev-191d450122c6",
+        "layer": "structural",
+        "check": "media-type",
+        "source": "MAGIC_BYTES",
+        "expected": "image",
+        "observed": "image",
+        "comparison": "match",
+        "confidence": "medium",
+        "artifactRefs": []
+      },
+      {
+        "evidenceId": "ev-242ceff17e2f",
+        "layer": "structural",
+        "check": "dimensions",
+        "source": "FFPROBE",
+        "expected": "1024x1024",
+        "observed": "1024x1024",
+        "comparison": "measured",
+        "confidence": "high",
+        "artifactRefs": []
+      }
+    ],
+    "reasons": []
+  },
+  "semantic": {
+    "status": "PASS",
+    "severity": "INFO",
+    "blocking": false,
+    "checks": [
+      {
+        "check": "scene",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "no upstream scene expectation",
+        "blocking": false
+      },
+      {
+        "check": "subject",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "action",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "no upstream action expectation",
+        "blocking": false
+      },
+      {
+        "check": "text",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "composition",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "media-type",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      }
+    ],
+    "evidence": [
+      {
+        "evidenceId": "ev-049a85b6d271",
+        "layer": "semantic",
+        "check": "subject",
+        "source": "MANUAL_REVIEW",
+        "expected": [
+          "mascot-guide"
+        ],
+        "observed": [
+          "mascot-guide"
+        ],
+        "comparison": "match",
+        "confidence": "high",
+        "artifactRefs": []
+      },
+      {
+        "evidenceId": "ev-f12f95d3a4dd",
+        "layer": "semantic",
+        "check": "text",
+        "source": "MANUAL_REVIEW",
+        "expected": "no text",
+        "observed": "no text",
+        "comparison": "match",
+        "confidence": "high",
+        "artifactRefs": []
+      }
+    ],
+    "reasons": []
+  },
+  "factuality": {
+    "status": "NOT_APPLICABLE",
+    "severity": "INFO",
+    "blocking": false,
+    "checks": [
+      {
+        "check": "period",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "location",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "speciesPersonObject",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "clothing",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "architecture",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "toolsEquipment",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "mapGeography",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "chartDirection",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "numbersLabels",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "timelineOrder",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "onScreenFactualText",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      }
+    ],
+    "evidence": [],
+    "reasons": []
+  },
+  "continuity": {
+    "status": "UNKNOWN",
+    "severity": "WARNING",
+    "blocking": false,
+    "checks": [
+      {
+        "check": "faceIdentity",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "no continuity expectation for this domain",
+        "blocking": false
+      },
+      {
+        "check": "location",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "no continuity expectation for this domain",
+        "blocking": false
+      },
+      {
+        "check": "startState",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "no continuity expectation for this domain",
+        "blocking": false
+      },
+      {
+        "check": "endState",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "no continuity expectation for this domain",
+        "blocking": false
+      },
+      {
+        "check": "hair",
+        "status": "UNKNOWN",
+        "severity": "WARNING",
+        "reason": "continuity observation unavailable",
+        "blocking": false
+      },
+      {
+        "check": "clothing",
+        "status": "UNKNOWN",
+        "severity": "WARNING",
+        "reason": "continuity observation unavailable",
+        "blocking": false
+      },
+      {
+        "check": "props",
+        "status": "UNKNOWN",
+        "severity": "WARNING",
+        "reason": "continuity observation unavailable",
+        "blocking": false
+      },
+      {
+        "check": "timeOfDay",
+        "status": "UNKNOWN",
+        "severity": "WARNING",
+        "reason": "continuity observation unavailable",
+        "blocking": false
+      },
+      {
+        "check": "paletteStyle",
+        "status": "UNKNOWN",
+        "severity": "WARNING",
+        "reason": "continuity observation unavailable",
+        "blocking": false
+      },
+      {
+        "check": "motionContinuity",
+        "status": "UNKNOWN",
+        "severity": "WARNING",
+        "reason": "continuity observation unavailable",
+        "blocking": false
+      }
+    ],
+    "evidence": [],
+    "reasons": []
+  },
+  "aggregate": {
+    "status": "READY_FOR_TIMELINE",
+    "severity": "WARNING",
+    "timelineEligible": true,
+    "failedLayers": [],
+    "warningLayers": [
+      "continuity"
+    ],
+    "unknownLayers": [
+      "continuity"
+    ],
+    "reasons": [],
+    "recommendation": "NONE"
+  },
+  "sourceRefs": [],
+  "evidenceRefs": [],
+  "evidence": [
+    {
+      "evidenceId": "ev-bf78760a9619",
+      "layer": "structural",
+      "check": "file-type",
+      "source": "MAGIC_BYTES",
+      "expected": "jpeg",
+      "observed": "jpeg",
+      "comparison": "match",
+      "confidence": "high",
+      "artifactRefs": []
+    },
+    {
+      "evidenceId": "ev-7b6038e03922",
+      "layer": "structural",
+      "check": "decode",
+      "source": "FFPROBE",
+      "expected": "decodable media",
+      "observed": "mjpeg",
+      "comparison": "match",
+      "confidence": "high",
+      "artifactRefs": []
+    },
+    {
+      "evidenceId": "ev-191d450122c6",
+      "layer": "structural",
+      "check": "media-type",
+      "source": "MAGIC_BYTES",
+      "expected": "image",
+      "observed": "image",
+      "comparison": "match",
+      "confidence": "medium",
+      "artifactRefs": []
+    },
+    {
+      "evidenceId": "ev-242ceff17e2f",
+      "layer": "structural",
+      "check": "dimensions",
+      "source": "FFPROBE",
+      "expected": "1024x1024",
+      "observed": "1024x1024",
+      "comparison": "measured",
+      "confidence": "high",
+      "artifactRefs": []
+    },
+    {
+      "evidenceId": "ev-049a85b6d271",
+      "layer": "semantic",
+      "check": "subject",
+      "source": "MANUAL_REVIEW",
+      "expected": [
+        "mascot-guide"
+      ],
+      "observed": [
+        "mascot-guide"
+      ],
+      "comparison": "match",
+      "confidence": "high",
+      "artifactRefs": []
+    },
+    {
+      "evidenceId": "ev-f12f95d3a4dd",
+      "layer": "semantic",
+      "check": "text",
+      "source": "MANUAL_REVIEW",
+      "expected": "no text",
+      "observed": "no text",
+      "comparison": "match",
+      "confidence": "high",
+      "artifactRefs": []
+    }
+  ],
+  "evaluatedAt": "2026-10-05T03:36:25.419Z"
+}

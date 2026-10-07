@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "shot-plan.schema.json",
+  "title": "UNFOLDIQ Shot Plan (1G.3)",
+  "type": "object",
+  "required": ["version", "shotPlanId", "projectId", "contentClass", "sourceSceneGraphRef", "shots", "fingerprint", "status"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "const": "1.0.0" },
+    "shotPlanId": { "type": "string", "pattern": "^sp-[0-9a-f]{12}$" },
+    "projectId": { "type": "string" },
+    "platform": { "enum": ["youtube", "tiktok", null] },
+    "contentClass": { "enum": ["FACTUAL", "FICTION", "HYBRID"] },
+    "sourceSceneGraphRef": {
+      "type": "object", "additionalProperties": false,
+      "properties": { "sceneGraphId": { "type": "string" }, "fingerprint": { "type": ["string", "null"] } }
+    },
+    "shots": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["shotId", "parentSceneId", "orderWithinScene", "beatIds", "shotPurpose", "visualObjective"],
+        "additionalProperties": false,
+        "properties": {
+          "shotId": { "type": "string", "pattern": "^sh-[0-9a-f]{12}$" },
+          "parentSceneId": { "type": "string", "pattern": "^sc-[0-9a-f]{12}$" },
+          "orderWithinScene": { "type": "integer", "minimum": 0 },
+          "beatIds": { "type": "array", "items": { "type": "string" } },
+          "claimRefs": { "type": "array", "items": { "type": "string" } },
+          "shotPurpose": { "enum": ["ESTABLISH", "ORIENT", "DEMONSTRATE", "REVEAL", "DETAIL", "REACTION", "CONTRAST", "EVIDENCE_VISUAL", "PROCESS_STEP", "TRANSITION", "SCALE", "EMPHASIS", "RESOLUTION"] },
+          "visualObjective": { "enum": ["ORIENT", "EXPLAIN", "SHIFT", "RESOLVE"] },
+          "subjectRefs": { "type": "array", "items": { "type": "string" } },
+          "actionIntent": { "type": ["string", "null"] },
+          "framingIntent": { "type": ["string", "null"] },
+          "cameraIntent": { "type": ["string", "null"] },
+          "continuityRefs": { "type": "array", "items": { "type": "string" } },
+          "startState": { "type": ["string", "null"] },
+          "endState": { "type": ["string", "null"] },
+          "relativeWeight": { "type": "number", "minimum": 0 }
+        }
+      }
+    },
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" },
+    "status": { "enum": ["GENERATED", "REVIEWED", "APPROVED", "STALE"] },
+    "createdAt": { "type": "string" },
+    "updatedAt": { "type": "string" }
+  }
+}

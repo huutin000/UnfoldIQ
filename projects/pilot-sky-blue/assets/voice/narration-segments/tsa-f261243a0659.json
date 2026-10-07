@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "1.0.0",
+  "ttsSegmentAudioId": "tsa-f261243a0659",
+  "version": 1,
+  "projectId": "pilot-sky-blue",
+  "scriptRef": {
+    "scriptArtifactId": "fss-pilot-sky-blue",
+    "scriptVersion": 2
+  },
+  "segmentId": "S1",
+  "segmentOrdinal": 0,
+  "sourceTextHash": "21bba832a39f9337",
+  "compiledInputHash": "21bba832a39f9337",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "narrationDirectionRef": "nd-ba9e14b889f3",
+  "pronunciationPassRef": "prp-ef2591fc81ec",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "runtimeIdentity": {
+    "runtimeMode": "LOCAL_SYNTHESIS",
+    "modelRepo": "hexgrad/Kokoro-82M",
+    "modelHash": "UNKNOWN_NOT_AVAILABLE",
+    "languageCode": "a"
+  },
+  "voiceId": "am_michael",
+  "effectiveSpeed": 1,
+  "pacePolicyVersion": "pace-speed-1.0.0",
+  "audioRef": "assets/voice/narration-segments/tsa-f261243a0659.wav",
+  "audioContentHash": "9638fec5ca8ff080db361ccc4e157a3e11c83b7e5082a22886deaf57ff5f9da6",
+  "durationMs": 8025,
+  "sampleRate": 24000,
+  "channels": 1,
+  "technicalQa": {
+    "decodePass": true,
+    "nonSilent": true,
+    "finiteSamples": true,
+    "peak": 19680,
+    "rms": 1386.96,
+    "clippingSamples": 0,
+    "transcript": "Look up on a clear day. The sky is blue but sunlight itself. White. So where does the blue actually come from?",
+    "wer": 0,
+    "missingWords": 0,
+    "substitutedWords": 0,
+    "repeatedWords": 0,
+    "hallucinatedWords": 0,
+    "criticalMismatch": false
+  },
+  "attempt": {
+    "number": 1,
+    "parentAttemptId": null,
+    "reason": "initial synthesis",
+    "selected": null
+  },
+  "issues": [],
+  "status": "READY",
+  "provenance": {
+    "createdAt": "2026-10-06T06:50:53.668Z",
+    "evidenceRefs": [
+      "scripts/cli/pilot-narration.js"
+    ]
+  },
+  "fingerprint": "11acb3e006f7f300"
+}

@@ -1,0 +1,99 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "performance-qa.schema.json",
+  "title": "UNFOLDIQ Performance QA (Phase 2.5, schema 1.0.0)",
+  "description": "Performance quality decision, separate from technical audio validity. Measurable proxies (rate/energy/pause variation, ASR integrity, join discontinuity, repeated cadence) with HONEST evidence limits; ambiguity yields REVIEW_REQUIRED, never a fabricated PASS. No single magic score.",
+  "type": "object",
+  "required": ["schemaVersion", "performanceQaId", "version", "projectId", "scriptRef", "segments", "decision", "provenance", "fingerprint"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "performanceQaId": { "type": "string", "pattern": "^pfq-[0-9a-f]{12}$" },
+    "version": { "type": "integer", "minimum": 1 },
+    "projectId": { "type": "string", "minLength": 1 },
+    "scriptRef": {
+      "type": "object",
+      "required": ["scriptArtifactId", "scriptVersion"],
+      "additionalProperties": false,
+      "properties": {
+        "scriptArtifactId": { "type": "string", "pattern": "^fss-[0-9a-z][0-9a-z-]{2,62}$" },
+        "scriptVersion": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "speechRateQaRef": { "type": ["string", "null"], "pattern": "^srq-[0-9a-f]{12}$" },
+    "segments": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/perfSegment" }
+    },
+    "fatigue": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "shortFormPerformance": { "enum": ["MEASURED", "NOT_MEASURED"] },
+        "longFormFatigue": { "enum": ["BOUNDED_PROXY_NOT_FULLY_MEASURED", "MEASURED", "NOT_MEASURED"] },
+        "note": { "type": ["string", "null"], "maxLength": 300 }
+      }
+    },
+    "decision": { "enum": ["PASS", "REVIEW_REQUIRED", "FAIL"] },
+    "provenance": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "createdAt": { "type": ["string", "null"] },
+        "evidenceRefs": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" }
+  },
+  "definitions": {
+    "perfSegment": {
+      "type": "object",
+      "required": ["segmentId", "signals", "checks", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "segmentId": { "type": "string", "minLength": 1 },
+        "signals": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "properties": {
+            "rateWpm": { "type": ["number", "null"] },
+            "energyStd": { "type": ["number", "null"], "description": "Std-dev of per-sentence-window RMS (0..32767 scale), measured from decoded audio." },
+            "pauseCount": { "type": ["integer", "null"] },
+            "pauseVariation": { "type": ["number", "null"] },
+            "asrWer": { "type": ["number", "null"] },
+            "repeatedCadence": { "type": ["boolean", "null"] }
+          }
+        },
+        "checks": {
+          "type": "object",
+          "required": ["monotony", "mechanicalCadence", "pauseNaturalness", "intonation", "emphasis", "overacting", "underacting", "joins"],
+          "additionalProperties": false,
+          "properties": {
+            "monotony": { "enum": ["PASS", "REVIEW_REQUIRED", "FAIL", "NOT_MEASURABLE"] },
+            "mechanicalCadence": { "enum": ["PASS", "REVIEW_REQUIRED", "FAIL", "NOT_MEASURABLE"] },
+            "pauseNaturalness": { "enum": ["PASS", "REVIEW_REQUIRED", "FAIL", "NOT_MEASURABLE"] },
+            "intonation": { "enum": ["PASS", "REVIEW_REQUIRED", "FAIL", "NOT_MEASURABLE"], "description": "F0 spread not implemented for this phase: honest evidence limits apply." },
+            "emphasis": { "enum": ["PASS", "REVIEW_REQUIRED", "FAIL", "NOT_MEASURABLE"], "description": "Word-level prominence needs canonical forced alignment (Phase 2.9); directed emphasis is REVIEW_REQUIRED with evidence limits, never fabricated." },
+            "overacting": { "enum": ["PASS", "REVIEW_REQUIRED", "FAIL", "NOT_MEASURABLE"] },
+            "underacting": { "enum": ["PASS", "REVIEW_REQUIRED", "FAIL", "NOT_MEASURABLE"] },
+            "joins": { "enum": ["PASS", "REVIEW_REQUIRED", "FAIL", "NOT_MEASURABLE"] }
+          }
+        },
+        "issues": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["code"],
+            "additionalProperties": false,
+            "properties": {
+              "code": { "enum": ["PERFORMANCE_MONOTONY", "PERFORMANCE_MECHANICAL_CADENCE", "PERFORMANCE_PAUSE_UNNATURAL", "PERFORMANCE_EMPHASIS_MISSED", "PERFORMANCE_OVERACTED", "PERFORMANCE_UNDERACTED", "PERFORMANCE_JOIN_UNNATURAL", "PERFORMANCE_REVIEW_REQUIRED"] },
+              "detail": { "type": ["string", "null"], "maxLength": 300 },
+              "blocking": { "type": "boolean" }
+            }
+          }
+        },
+        "status": { "enum": ["PASS", "REVIEW_REQUIRED", "FAIL"] }
+      }
+    }
+  }
+}

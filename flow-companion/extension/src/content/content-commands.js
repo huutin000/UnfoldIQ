@@ -12,6 +12,14 @@
  *   GET_STATE             → live diagnostics bundle
  *   GET_GENERATION_STATE  → POST-v1C read-only generation readiness (never clicks)
  *   INSERT_PROMPT_DRYRUN  → zero-credit prompt insert, never clicks Generate
+ *   APPLY_AGENT_INSTRUCTIONS → FIX 02 §10: gated instruction apply
+ *                           (project VERIFIED → selectors VERIFIED →
+ *                           Agent ON → open → add → guidelines → Done).
+ *                           Fully gated: any failed precondition returns a
+ *                           precise code and mutates nothing. Never VERIFIED
+ *                           here — persistence is proven by a later READ.
+ *   READ_AGENT_INSTRUCTIONS  → FIX 02 §16: read-only provider instruction
+ *                           readback (never the attempted payload).
  *   PREPARE_GENERATION    → POST-v1E stall fix: full zero-credit preparation
  *                           pipeline (prompt → STANDARD → IMAGE → 1:1 →
  *                           output=1 → model/cost → Generate verified)
@@ -24,7 +32,7 @@
 
 // Build identity of THIS file. Reported by PING and by stale-approval errors so
 // a live run can never be attributed to the wrong extension build.
-const CONTENT_COMMANDS_VERSION = "0.4.11-postv1f-cmds2";
+const CONTENT_COMMANDS_VERSION = "0.4.13-fix03-cmds4";
 
 /**
  * POST-v1F: base64 without Node `Buffer` (a content script has none) and
@@ -56,6 +64,8 @@ const COMMAND_TYPES = new Set([
   "READ_RESULT",
   "PROBE_DOM",
   "COMPOSER_PROBE",
+  "APPLY_AGENT_INSTRUCTIONS",
+  "READ_AGENT_INSTRUCTIONS",
 ]);
 
 // POST-v1F: baselines for the read-only acceptance poll, keyed by job+attempt.
@@ -576,6 +586,354 @@ async function dispatchContentCommand(adapter, root, msg, ctx = {}) {
         creditsConsumed: false,
       };
     }
+    case "APPLY_AGENT_INSTRUCTIONS": {
+      // FIX 02 §§10–13: minimum instruction-apply path. Fully gated — every
+      // failed precondition returns a precise code and mutates nothing.
+      // Result is APPLIED at most; VERIFIED needs a later READ + compare.
+      // Never clicks Generate, never touches models/outputs/settings.
+      if (!root) throw new Error("SCHEMA_INVALID: content root required");
+      const forbidden = typeof adapter.rejectForbiddenInstructionPayload === "function"
+        ? adapter.rejectForbiddenInstructionPayload(msg)
+        : [];
+      if (forbidden.length > 0) {
+        return { ok: false, code: "FORBIDDEN_INSTRUCTION_PAYLOAD", detail: forbidden.join(","), mutated: false };
+      }
+      for (const f of ["providerProjectRef", "instructionSetId", "instructionVersion", "compiledText", "desiredFingerprint"]) {
+        if (typeof msg[f] !== "string" || !msg[f]) throw new Error(`SCHEMA_INVALID: ${f} required`);
+      }
+      const bindings = Array.isArray(msg.referenceBindings) ? msg.referenceBindings : [];
+      // VERIFY_PROJECT — live observed identity must equal the expected ref.
+      const identity = adapter.extractFlowProjectIdentity(root);
+      const gate = adapter.verifyProjectIdentity(msg.providerProjectRef, identity.available ? identity.providerProjectRef : "UNKNOWN");
+      if (!gate.verified) {
+        return { ok: false, code: gate.code, projectIdentity: identity, mutated: false };
+      }
+      // VERIFY_SELECTOR_HEALTH — lifecycle-aware. Only the trigger can exist
+      // before opening: add/editor/done mount inside the panel (checked after
+      // each open step). Live proof (FIX 02 round 2): panel-open hides the
+      // Agent pill while panel-closed hides the panel controls — demanding
+      // all four up front deadlocks either way. Each check re-reads live DOM
+      // and enforces adopted selector + exactly-one match.
+      const keyFor = { agentInstructionsTrigger: "AGENT_INSTRUCTIONS_BUTTON", addInstructionControl: "INSTRUCTION_ADD", instructionEditor: "INSTRUCTION_EDITOR", doneSaveControl: "INSTRUCTION_DONE" };
+      const requireControl = (diagKey) => {
+        const fresh = adapter.buildInstructionDiagnostics(root);
+        const s = fresh[diagKey];
+        if (!s || s.status !== "VERIFIED") {
+          return { fail: { ok: false, code: "INSTRUCTION_SELECTORS_NOT_VERIFIED", detail: diagKey, surface: fresh, mutated: false } };
+        }
+        const c = adapter.countInstructionMatches(root, keyFor[diagKey]);
+        if (c.count !== 1) {
+          return { fail: { ok: false, code: "INSTRUCTION_CONTROL_AMBIGUOUS", detail: `${keyFor[diagKey]} matches=${c.count} via ${c.channel}`, surface: fresh, mutated: false } };
+        }
+        return { fail: null };
+      };
+      // Bounded waits for async-mounted dialog surfaces (poll, never fixed
+      // sleep; timeout fails precisely instead of clicking blind).
+      const waitForAny = async (keys, timeoutMs) => {
+        const start = Date.now();
+        for (;;) {
+          for (const key of keys) {
+            try {
+              if (adapter.queryWithFallback(root, key).el) return key;
+            } catch { /* keep waiting */ }
+          }
+          if (Date.now() - start >= timeoutMs) return null;
+          await new Promise((r) => setTimeout(r, 150));
+        }
+      };
+      // Pre-open: trigger only.
+      {
+        const chk = requireControl("agentInstructionsTrigger");
+        if (chk.fail) return chk.fail;
+      }
+      // ENSURE_AGENT_ON — state is re-read inside before anything else runs.
+      const agent = adapter.ensureAgentOn(root);
+      if (!agent.agent) {
+        // FIX 03 diagnostics: bounded, non-secret surface snapshot on refusal
+        // (agentMode + instruction control states) so UI drift is observable
+        // from the panel log without another blind round.
+        return { ok: false, code: agent.code || "BLOCKED_AGENT_STATE_UNKNOWN", agentMode: agent.agentMode, agentMessage: agent.message || null, surface: adapter.buildInstructionDiagnostics(root), mutated: false };
+      }
+      // Reference bindings: honest refusal — without verified attach plumbing
+      // and file bytes there is no safe attach; never fake it.
+      if (bindings.length > 0) {
+        return { ok: false, code: "REFERENCE_ATTACH_NOT_SUPPORTED", detail: `${bindings.length} binding(s) require verified attach plumbing`, mutated: false };
+      }
+      // OPEN → SELECT SLOT → (ADD only when zero editors) → SET → DONE/SAVE.
+      // Slot selection never duplicates rows: exact text reuses, a single
+      // empty slot is filled, ambiguity/occupation refuse without mutation.
+      try {
+        adapter.clickInstructionControl(root, "AGENT_INSTRUCTIONS_BUTTON");
+      } catch (e) {
+        return { ok: false, code: String((e && e.message) || e).split(":")[0] || "INSTRUCTIONS_OPEN_FAILED", detail: String((e && e.message) || e), mutated: false };
+      }
+      if (!(await waitForAny(["INSTRUCTION_ADD", "INSTRUCTION_EDITOR"], 3000))) {
+        return { ok: false, code: "INSTRUCTIONS_OPEN_FAILED", detail: "add/editor did not mount after open", mutated: false };
+      }
+      // Hydration-stability wait (FIX 03, live rounds 9–13): the freshly
+      // mounted dialog hydrates its guideline value from the backend seconds
+      // after mount. An early read reported an empty slot and triggered a
+      // duplicate write. Read-only: wait until the editor value is stable
+      // (3 identical consecutive reads ~300ms apart) before slot selection.
+      {
+        const stabStart = Date.now();
+        const stabTimeoutMs = typeof ctx.hydrationTimeoutMs === "number" && ctx.hydrationTimeoutMs > 0 ? ctx.hydrationTimeoutMs : 8000;
+        let lastVal = null;
+        let stable = 0;
+        while (Date.now() - stabStart < stabTimeoutMs && stable < 3) {
+          await new Promise((r) => setTimeout(r, 300));
+          let v = "";
+          try {
+            const el = adapter.queryWithFallback(root, "INSTRUCTION_EDITOR").el;
+            v = el ? String(adapter.readInstructionEditorText(el) || "") : "";
+          } catch {
+            v = "";
+          }
+          if (v === lastVal) stable += 1;
+          else {
+            stable = 0;
+            lastVal = v;
+          }
+        }
+      }
+      let target = adapter.findGuidelineTarget(root, msg.compiledText);
+      if (target.error === "INSTRUCTION_EDITOR_ABSENT") {
+        const chkAdd = requireControl("addInstructionControl");
+        if (chkAdd.fail) return chkAdd.fail;
+        try {
+          adapter.clickInstructionControl(root, "INSTRUCTION_ADD");
+        } catch (e) {
+          return { ok: false, code: String((e && e.message) || e).split(":")[0] || "INSTRUCTION_ADD_FAILED", detail: String((e && e.message) || e), mutated: false };
+        }
+        if (!(await waitForAny(["INSTRUCTION_EDITOR"], 3000))) {
+          return { ok: false, code: "INSTRUCTION_EDITOR_MISSING", detail: "editor did not mount after add", mutated: false };
+        }
+        target = adapter.findGuidelineTarget(root, msg.compiledText);
+        if (target.error) {
+          return { ok: false, code: target.error === "INSTRUCTION_EDITOR_ABSENT" ? "INSTRUCTION_EDITOR_MISSING" : target.error, mutated: false };
+        }
+      } else if (target.error) {
+        return { ok: false, code: target.error, mutated: false };
+      }
+      {
+        const chk = requireControl("instructionEditor");
+        if (chk.fail) return chk.fail;
+      }
+      // VERIFY_SELECTORS before any mutation (task §21): the Done/save control
+      // is health-checked up front — a MISSING/AMBIGUOUS Done refuses the
+      // whole apply before any text is written, not after.
+      {
+        const chk = requireControl("doneSaveControl");
+        if (chk.fail) return chk.fail;
+      }
+      let setResult;
+      if (target.exact) {
+        setResult = { ok: true, verified: true, attempts: 0, unchanged: true, writePath: "none", writeTransport: "NONE", appStateAck: true, ackBasis: "ALREADY_SYNCED" };
+      } else {
+        // FIX 03 §8: least-privileged write, main-world first, framework-acked.
+        // §10: the trusted browser-level input fallback runs BEFORE the
+        // isolated legacy path — live rounds 5–6 proved that path's ack does
+        // not survive Flow's save.
+        const set = await adapter.applyInstructionGuidelines(root, msg.compiledText, {
+          mainWorldWrite: typeof ctx.instructionMainWorldWrite === "function" ? ctx.instructionMainWorldWrite : null,
+          trustedInputWrite: typeof ctx.instructionTrustedInput === "function" ? ctx.instructionTrustedInput : null,
+          projectRef: identity.providerProjectRef,
+        });
+        if (!set.ok) {
+          // Nothing saved yet (no Done clicked): provider state untouched.
+          return { ok: false, code: set.code || "GUIDELINES_VERIFY_FAILED", guidelines: set, mutated: false };
+        }
+        setResult = set;
+      }
+      // FIX 03 §8 final gate — LIVE-EVIDENCE REVISION (rounds 9–14): Flow's
+      // Done COMMITS the guideline textarea's current DOM value (round 9: an
+      // automated Done persisted DOM text; the earlier "never survives"
+      // observations were readback-vs-server-hydration races plus cross-
+      // strategy text concatenation, both fixed). The acceptance gate is
+      // therefore NOT a pre-Done framework ack — it is the independent
+      // persistence boundary below: save confirmed (editor unmounts) →
+      // close/reopen → provider readback → semantic compare. DOM presence
+      // alone can never read VERIFIED (WP1/WP3 enforced at that layer).
+      // appStateAck/ackBasis stay in the response as transport metadata.
+      // Pre-save witness: value still present immediately before the Done
+      // click (distinguishes "never registered" from "lost between verify
+      // and save" in the live evidence).
+      let preSaveLength = -1;
+      try {
+        const preSaveEl = adapter.queryWithFallback(root, "INSTRUCTION_EDITOR").el;
+        const preSave = preSaveEl ? adapter.readInstructionEditorText(preSaveEl) : "";
+        preSaveLength = String(preSave || "").length;
+      } catch {
+        preSaveLength = -1;
+      }
+      const noOp = target.exact === true;
+      // FIX 03 §13 (live round 13 evidence): a NO_OP is NOT allowed to read
+      // back from the still-mounted editor — that text may never have been
+      // saved. Idempotent or not, every VERIFIED-worthy run goes through the
+      // full save + close/reopen boundary below. The write step stays skipped
+      // for an exact slot (idempotency, §17); the save boundary does not.
+      // FIX 03 root cause (live rounds 5–9 + FIX 02 path A contrast): a REAL
+      // mouse click on Done blurs the editor first (mousedown moves focus),
+      // and Flow's editor commits its draft on blur. el.click() never blurs —
+      // every automated write so far was discarded for exactly this reason.
+      // Blur the editor explicitly + brief settle so the framework commits
+      // before Done reads its state.
+      try {
+        const preDoneEl = adapter.queryWithFallback(root, "INSTRUCTION_EDITOR").el;
+        if (preDoneEl && typeof preDoneEl.blur === "function") preDoneEl.blur();
+      } catch { /* blur best-effort */ }
+      await new Promise((r) => setTimeout(r, 200));
+      {
+        try {
+          adapter.clickInstructionControl(root, "INSTRUCTION_DONE");
+        } catch (e) {
+          return { ok: false, code: String((e && e.message) || e).split(":")[0] || "INSTRUCTION_SAVE_FAILED", detail: String((e && e.message) || e), mutated: true };
+        }
+        // FIX 03 §12/§13 + WP6: the save is confirmed only when the editor
+        // actually unmounts (dialog closed). A Done click with the editor
+        // still mounted is NOT an acknowledgement (WP1: DOM presence is not
+        // persistence).
+        let saveConfirmed = false;
+        const saveTimeoutMs = typeof ctx.saveConfirmTimeoutMs === "number" && ctx.saveConfirmTimeoutMs > 0 ? ctx.saveConfirmTimeoutMs : 5000;
+        const saveStart = Date.now();
+        while (Date.now() - saveStart < saveTimeoutMs) {
+          await new Promise((r) => setTimeout(r, 150));
+          let stillMounted = false;
+          try {
+            stillMounted = Boolean(adapter.queryWithFallback(root, "INSTRUCTION_EDITOR").el);
+          } catch {
+            stillMounted = false;
+          }
+          if (!stillMounted) {
+            saveConfirmed = true;
+            break;
+          }
+        }
+        if (!saveConfirmed) {
+          return { ok: false, code: "INSTRUCTION_SAVE_NOT_CONFIRMED", detail: "editor still mounted after Done click", mutated: true };
+        }
+      }
+      // FIX 03 §13 persistence boundary: provider state is read back only
+      // after close/reopen — never from the same mounted editor that was
+      // written. Readback is provider-derived only; the attempted payload is
+      // never a fallback (§14). Unavailable readback is reported honestly and
+      // keeps the sync at READBACK_PENDING (never VERIFIED).
+      let readback = { available: false, reason: "READBACK_NOT_ATTEMPTED" };
+      // Provider surfaces hydrate asynchronously after a dialog mount — a
+      // single immediate read reports READBACK_EMPTY against a value that is
+      // about to appear (live round 5 evidence). Poll bounded, never sleep
+      // past the deadline, last honest observation wins.
+      // FIX 03 (live round 9–11 evidence): Flow persists the instruction to
+      // its backend on Done and the reopened dialog hydrates from the server
+      // — a 5s poll raced that fetch and misreported a SUCCESSFUL save as
+      // READBACK_EMPTY. 15s bounds the server round trip honestly.
+      const readbackTimeoutMs = typeof ctx.readbackTimeoutMs === "number" && ctx.readbackTimeoutMs > 0 ? ctx.readbackTimeoutMs : 15000;
+      const pollReadback = async () => {
+        const start = Date.now();
+        for (;;) {
+          let rb;
+          try {
+            rb = adapter.extractInstructionReadback(root);
+          } catch {
+            rb = { available: false, reason: "READBACK_SURFACE_MISSING" };
+          }
+          if (rb.available || Date.now() - start >= readbackTimeoutMs) return rb;
+          await new Promise((r) => setTimeout(r, 150));
+        }
+      };
+      {
+        const chkTrigger = requireControl("agentInstructionsTrigger");
+        if (chkTrigger.fail) {
+          readback = { available: false, reason: "TRIGGER_MISSING_AFTER_SAVE" };
+        } else {
+          try {
+            adapter.clickInstructionControl(root, "AGENT_INSTRUCTIONS_BUTTON");
+          } catch (e) {
+            readback = { available: false, reason: "REOPEN_FAILED" };
+          }
+          if (readback.reason !== "REOPEN_FAILED" && (await waitForAny(["INSTRUCTION_EDITOR", "INSTRUCTION_READBACK"], 3000))) {
+            const rb = await pollReadback();
+            readback = rb.available
+              ? { available: true, text: rb.text, referenceIds: rb.referenceIds || [], evidence: rb.rawEvidence || "dom-readback", readbackAt: new Date().toISOString() }
+              : { available: false, reason: rb.reason || "READBACK_SURFACE_MISSING" };
+          } else if (readback.reason !== "REOPEN_FAILED") {
+            readback = { available: false, reason: "READBACK_SURFACE_MISSING" };
+          }
+        }
+      }
+      // Restore the panel-closed state (FIX 02 round 2 deadlock, re-hit live
+      // round 16: an open dialog hides the Agent pill and blocks the NEXT
+      // run's agent gate). The dialog content at this point equals the
+      // provider state just read back, so this Done is a no-op save.
+      // Best-effort + bounded; failure never changes the verdict above.
+      try {
+        if (adapter.queryWithFallback(root, "INSTRUCTION_EDITOR").el) {
+          adapter.clickInstructionControl(root, "INSTRUCTION_DONE");
+          const closeStart = Date.now();
+          while (Date.now() - closeStart < 3000) {
+            await new Promise((r) => setTimeout(r, 150));
+            if (!adapter.queryWithFallback(root, "INSTRUCTION_EDITOR").el) break;
+          }
+        }
+      } catch { /* best-effort cleanup */ }
+      let appliedAt = "unknown";
+      try {
+        appliedAt = new Date().toISOString();
+      } catch {
+        appliedAt = "unknown";
+      }
+      return {
+        ok: true,
+        status: noOp ? "NO_OP_ALREADY_SYNCED" : "APPLIED",
+        syncStatus: "APPLIED",
+        applyAttemptId: typeof msg.applyAttemptId === "string" && msg.applyAttemptId ? msg.applyAttemptId : `ap-${Date.now()}`,
+        providerProjectRef: identity.providerProjectRef,
+        instructionSetId: msg.instructionSetId,
+        instructionVersion: msg.instructionVersion,
+        desiredFingerprint: msg.desiredFingerprint,
+        appliedAt,
+        agentSwitchedOn: agent.switchedOn === true,
+        guidelinesWritePath: (setResult && setResult.writePath) || "unknown",
+        writeTransport: (setResult && setResult.writeTransport) || (setResult && setResult.writePath) || "unknown",
+        appStateAck: setResult.appStateAck === true,
+        ackBasis: (setResult && setResult.ackBasis) || null,
+        mainWorld: (setResult && setResult.mainWorld) || null,
+        trustedInputCode: (setResult && setResult.trustedInputCode) || null,
+        guidelinesPreSaveLength: preSaveLength,
+        saveConfirmed: true,
+        persistenceBoundary: "CLOSE_REOPEN",
+        readback,
+        referenceEvidence: [],
+        mutated: true,
+        clickedGenerate: false,
+        creditsConsumed: false,
+      };
+    }
+    case "READ_AGENT_INSTRUCTIONS": {
+      // FIX 02 §16: read-only provider instruction readback. Returns actual
+      // page state only — the attempted payload is never a fallback.
+      if (!root) throw new Error("SCHEMA_INVALID: content root required");
+      const identity = adapter.extractFlowProjectIdentity(root);
+      const rb = adapter.extractInstructionReadback(root);
+      if (!rb.available) {
+        return { ok: false, code: rb.reason || "READBACK_SURFACE_MISSING", reason: rb.reason || "unknown", projectIdentity: identity };
+      }
+      let readbackAt = "unknown";
+      try {
+        readbackAt = new Date().toISOString();
+      } catch {
+        readbackAt = "unknown";
+      }
+      return {
+        ok: true,
+        providerProjectRef: identity.available ? identity.providerProjectRef : "UNKNOWN",
+        projectIdentity: identity,
+        visibleGuidelines: rb.text,
+        providerReferences: rb.referenceIds || [],
+        readbackAt,
+        readbackEvidence: rb.rawEvidence || "dom-readback",
+      };
+    }
     case "SUBMIT_GENERATE": {
       checkApproval(msg.approval, msg.jobId, msg.attempt);
       // POST-v1E §24: revalidate immediately before Generate when the
@@ -686,6 +1044,18 @@ if (!reval.ok) {
       // a 32x32 account avatar got imported as the generated result.
       const target = String(msg.url || "");
       if (!target) return { ok: false, code: "RESULT_CORRELATION_REQUIRED: no correlated candidate url provided" };
+      // Hardening sweep (B-13): a credentialed fetch of a message-supplied URL
+      // is exfiltration-shaped. Constrain it to the media hosts Flow actually
+      // serves results from (the captured candidates are googleusercontent
+      // URLs); anything else is refused before any Google cookie leaves.
+      let parsedTarget = null;
+      try { parsedTarget = new URL(target); } catch { parsedTarget = null; }
+      const hostOk = parsedTarget
+        && (parsedTarget.protocol === "https:" || parsedTarget.hostname === "127.0.0.1")
+        && (/(^|\.)googleusercontent\.com$/.test(parsedTarget.hostname)
+          || /(^|\.)google\.com$/.test(parsedTarget.hostname)
+          || /(^|\.)flow\.google$/.test(parsedTarget.hostname));
+      if (!hostOk) return { ok: false, code: `FETCH_URL_REJECTED: untrusted media host (${parsedTarget ? parsedTarget.hostname : "unparseable"})` };
       const fetchImpl = ctx.fetchImpl || (typeof fetch !== "undefined" ? fetch : null);
       if (!fetchImpl) throw new Error("FETCH_UNAVAILABLE: no fetch implementation in this context");
       const maxBytes = ctx.maxBytes || 60 * 1024 * 1024;

@@ -1,0 +1,77 @@
+{
+  "_comment": "PHASE 2.1 voice bible input (validation fixture). HONEST STATE: no provable operator-approved voice selection exists in this repo, so provenance.source = PROVIDER_DEFAULT (the voice named here is the provider's own per-language default, NOT an operator decision) and rights are UNRESOLVED. The resulting Voice Bible is therefore NOT production-ready — that is the correct, honest outcome per roadmap 2.1 sections 25/26/37, not a defect. personaId is the validation fixture's narrator persona (an editorial reference, not an approved channel decision).",
+  "channelId": null,
+  "language": "en-us",
+  "locale": null,
+  "pronunciationProfileRef": "pron-en-us-reference",
+  "characterVoices": [],
+  "narrator": {
+    "personaId": "per-explanatory-narrator-en",
+    "displayName": "Explanatory Narrator (validation reference)",
+    "provider": "local-kokoro",
+    "model": "kokoro-v1",
+    "voiceId": "af_heart",
+    "speakingStyle": "measured explanatory narration; evidence-forward; never announcer-like",
+    "prosodyDefaults": {
+      "paceIntent": "MODERATE",
+      "energy": "BALANCED",
+      "pauseStyle": "NATURAL",
+      "sentenceFlow": "MEASURED",
+      "emphasisStyle": "SELECTIVE",
+      "emotionalBaseline": "WARM"
+    },
+    "speedDefault": 1,
+    "pitchDefault": null,
+    "energyDefault": "BALANCED",
+    "emotionalRange": ["NEUTRAL", "FRIENDLY", "CURIOSITY", "CONFIDENT", "INSTRUCTIVE"],
+    "prohibitedTraits": [
+      "UNNATURALLY_SLOW_CINEMATIC",
+      "CONSTANT_DRAGMATIC_EMPHASIS",
+      "MONOTONE_CADENCE",
+      "OVERACTING",
+      "ROBOTIC_CLAUSE_RHYTHM",
+      "EXCESSIVE_PAUSES",
+      "ANNOUNCER_BOMBAST"
+    ],
+    "persona": {
+      "personaId": "per-explanatory-narrator-en",
+      "role": "GUIDE",
+      "audience": "general viewers who did not know they cared about this topic",
+      "tone": "EXPLAINING",
+      "energy": "BALANCED",
+      "paceIntent": "MODERATE",
+      "warmth": "WARM",
+      "directness": "BALANCED",
+      "formality": "CONVERSATIONAL",
+      "storytellingStyle": "EVIDENCE_WALKTHROUGH",
+      "emotionalRange": ["NEUTRAL", "FRIENDLY", "CURIOSITY", "CONFIDENT", "INSTRUCTIVE"],
+      "prohibitedDeliveryPatterns": [
+        "UNNATURALLY_SLOW_CINEMATIC",
+        "CONSTANT_DRAGMATIC_EMPHASIS",
+        "MONOTONE_CADENCE",
+        "OVERACTING",
+        "ROBOTIC_CLAUSE_RHYTHM",
+        "EXCESSIVE_PAUSES",
+        "ANNOUNCER_BOMBAST"
+      ],
+      "language": "en-us",
+      "notes": "Validation reference persona for Phase 2.1. Segment-level emphasis/pause/energy belongs to Phase 2.2 and must never mutate this identity."
+    }
+  },
+  "providerOptions": null,
+  "provenance": {
+    "source": "PROVIDER_DEFAULT",
+    "rights": {
+      "status": "UNRESOLVED",
+      "licenseType": "UNRESOLVED",
+      "detail": "Kokoro voice license/redistribution terms are not proven by any artifact in this repository; no rights are asserted."
+    },
+    "evidenceRefs": [
+      "providers/runtime/adapters/local-kokoro.js",
+      "providers/local/SETUP_KOKORO.md",
+      "providers/CONFIG.yaml",
+      "Report/PHASE_2_1_01_VOICE_BIBLE_AND_NARRATOR_PERSONA_REPORT.md"
+    ],
+    "approvalRef": null
+  }
+}

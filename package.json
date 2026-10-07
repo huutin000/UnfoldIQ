@@ -32,7 +32,11 @@
     "research:deep:live-smoke": "node scripts/diagnostics/deep-live-smoke.js",
     "flow:bridge": "node flow-companion/bridge/run.js --port 4317",
     "flow:bridge:reset-token": "node flow-companion/bridge/run.js --port 4317 --reset-token",
-    "research:deep:live-probes": "node scripts/diagnostics/deep-live-probes.js"
+    "research:deep:live-probes": "node scripts/diagnostics/deep-live-probes.js",
+    "render:doctor": "node scripts/diagnostics/render-doctor.js",
+    "check:workspace": "node scripts/checks/workspace-check.js",
+    "test:music": "node scripts/run-tests.js music",
+    "test:mix": "node scripts/run-tests.js mix"
   },
   "keywords": [],
   "author": "",

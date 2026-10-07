@@ -1,0 +1,33 @@
+{
+  "qaResultId": "qa-a778b5a05d9f",
+  "aggregate": {
+    "status": "READY_FOR_TIMELINE",
+    "severity": "INFO",
+    "timelineEligible": true,
+    "failedLayers": [],
+    "warningLayers": [],
+    "unknownLayers": [],
+    "reasons": [],
+    "recommendation": "NONE"
+  },
+  "gate": {
+    "eligible": true,
+    "status": "READY_FOR_TIMELINE",
+    "reasons": [],
+    "qaResultId": "qa-a778b5a05d9f",
+    "aggregate": {
+      "status": "READY_FOR_TIMELINE",
+      "severity": "INFO",
+      "timelineEligible": true,
+      "failedLayers": [],
+      "warningLayers": [],
+      "unknownLayers": [],
+      "reasons": [],
+      "recommendation": "NONE"
+    }
+  },
+  "structural": "PASS",
+  "semantic": "PASS",
+  "factuality": "NOT_APPLICABLE",
+  "continuity": "PASS"
+}

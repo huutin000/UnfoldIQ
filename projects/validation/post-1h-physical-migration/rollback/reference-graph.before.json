@@ -1,0 +1,3814 @@
+{
+  "capturedAt": "2026-10-05T09:03:06.615Z",
+  "nodes": [
+    {
+      "path": "schemas",
+      "referenceCount": 257,
+      "sources": [
+        "context/DOC_CATALOG.yaml",
+        "context/DOC_CATALOG.yaml",
+        "context/DOC_CATALOG.yaml",
+        "context/DOC_CATALOG.yaml",
+        "context/DOC_CATALOG.yaml"
+      ]
+    },
+    {
+      "path": "Report",
+      "referenceCount": 106,
+      "sources": [
+        "flow-companion/README.md",
+        "pipeline/invalidation.js",
+        "projects/channel-mascot/instruction-sync/sy-4f2e4f010241.json",
+        "projects/phase1g12-case-a/case/case-b-source-frame-correlation.json",
+        "projects/phase1g12-case-a/case/source-frame-identity-finding.json"
+      ]
+    },
+    {
+      "path": "tests",
+      "referenceCount": 93,
+      "sources": [
+        ".agents/skills/playwright-cli/references/test-generation.md",
+        ".agents/skills/playwright-cli/references/test-generation.md",
+        ".opencode/ponytail/benchmarks/behavior.js",
+        ".opencode/ponytail/benchmarks/behavior.yaml",
+        ".opencode/ponytail/docs/cursor-hooks.md"
+      ]
+    },
+    {
+      "path": "projects",
+      "referenceCount": 59,
+      "sources": [
+        "context/DOC_CATALOG.yaml",
+        "context/ROUTES.yaml",
+        "core/WORKFLOW.md",
+        "lib/creative-memory.js",
+        "projects/phase1g12-hardening/evidence/security/security-privacy-checks.json"
+      ]
+    },
+    {
+      "path": "out",
+      "referenceCount": 49,
+      "sources": [
+        ".opencode/ponytail/benchmarks/correctness.js",
+        ".opencode/ponytail/benchmarks/results/2026-06-12-v4-hardening-vs-caveman.md",
+        ".opencode/ponytail/tests/correctness.test.js",
+        "lib/research-acquisition/acquisition.js",
+        "out/_cdp2g.js"
+      ]
+    },
+    {
+      "path": "tests/pipeline",
+      "referenceCount": 43,
+      "sources": [
+        "core/RESEARCH_QUALITY.md",
+        "lib/v5-contract-check.js",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-004/qa/frames",
+      "referenceCount": 39,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-005/qa/frames",
+      "referenceCount": 39,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "tests/research",
+      "referenceCount": 38,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "tests/flow",
+      "referenceCount": 34,
+      "sources": [
+        "projects/phase1g12-hardening/audit/track-c-integration-audit.json",
+        "projects/phase1g12-hardening/audit/track-c-integration-audit.json",
+        "projects/phase1g12-hardening/baseline/extension-baseline.json",
+        "projects/phase1g12-hardening/baseline/integration-baseline.json",
+        "projects/phase1g12-hardening/findings/findings.json"
+      ]
+    },
+    {
+      "path": "tests/story",
+      "referenceCount": 32,
+      "sources": [
+        "projects/phase1g12-hardening/audit/track-a-core-audit.json",
+        "projects/phase1g12-hardening/findings/findings.json",
+        "projects/phase1g12-hardening/findings/findings.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "tests/fixtures",
+      "referenceCount": 21,
+      "sources": [
+        "AGENTS.md",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "out/pilot-sky-blue",
+      "referenceCount": 18,
+      "sources": [
+        "out/pilot-sky-blue/final-artifact.json",
+        "out/pilot-sky-blue/UPLOAD_CHECKLIST.md",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue",
+      "referenceCount": 15,
+      "sources": [
+        "golden/baselines.json",
+        "golden/baselines.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-case-a/case",
+      "referenceCount": 15,
+      "sources": [
+        "golden/baselines.json",
+        "golden/baselines.json",
+        "golden/baselines.json",
+        "projects/phase1g12-case-a/governance/compliance.json",
+        "projects/phase1g12-case-a/governance/compliance.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-case-a",
+      "referenceCount": 15,
+      "sources": [
+        "golden/baselines.json",
+        "projects/phase1g12-case-a/governance/compliance.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "golden",
+      "referenceCount": 15,
+      "sources": [
+        "lib/golden/index.js",
+        "lib/storage/index.js",
+        "lib/storage/index.js",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "tests/qa",
+      "referenceCount": 15,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "tests/research-deep",
+      "referenceCount": 13,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "schemas/research-brief.schema.json",
+      "referenceCount": 12,
+      "sources": [
+        "context/DOC_CATALOG.yaml",
+        "context/ROUTES.yaml",
+        "core/RESEARCH_QUALITY.md",
+        "core/WORKFLOW.md",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "tests/e2e",
+      "referenceCount": 11,
+      "sources": [
+        "AGENTS.md",
+        "projects/phase1g12-hardening/baseline/extension-baseline.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "schemas/flow-job.schema.json",
+      "referenceCount": 11,
+      "sources": [
+        "context/DOC_CATALOG.yaml",
+        "context/ROUTES.yaml",
+        "flow-companion/extension/.output/chrome-mv3/src/contracts/job-contract.js",
+        "flow-companion/extension/src/contracts/job-contract.js",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "schemas/research-plan.schema.json",
+      "referenceCount": 11,
+      "sources": [
+        "context/DOC_CATALOG.yaml",
+        "context/ROUTES.yaml",
+        "core/RESEARCH_QUALITY.md",
+        "core/WORKFLOW.md",
+        "docs/architecture/ROADMAP_V5_PROMPT_RULE_CONTRACT_MIGRATION_MAP.md"
+      ]
+    },
+    {
+      "path": "projects/postv1-flow-live-validation/assets/image/CHAR_UNFOLDIQ_GUIDE_01",
+      "referenceCount": 10,
+      "sources": [
+        "brand/channel-mascot.json",
+        "brand/continuity-registry.json",
+        "brand/continuity-registry.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-case-a/qa",
+      "referenceCount": 10,
+      "sources": [
+        "golden/baselines.json",
+        "golden/baselines.json",
+        "golden/baselines.json",
+        "projects/phase1g12-case-a/governance/compliance.json",
+        "projects/phase1g12-case-a/governance/compliance.json"
+      ]
+    },
+    {
+      "path": "projects/channel-mascot/agent-instructions",
+      "referenceCount": 10,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "schemas/continuity-registry.schema.json",
+      "referenceCount": 9,
+      "sources": [
+        "context/DOC_CATALOG.yaml",
+        "context/ROUTES.yaml",
+        "core/PRODUCTION_CONTRACTS.md",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G3_01_BEAT_SCENE_SHOT_PLANNING_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/real-e2e",
+      "referenceCount": 9,
+      "sources": [
+        "projects/phase1g12-hardening/audit/track-a-core-audit.json",
+        "projects/phase1g12-hardening/findings/findings.json",
+        "projects/phase1g12-hardening/findings/findings.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/TOPIC_REGISTRY.json",
+      "referenceCount": 8,
+      "sources": [
+        "context/DOC_CATALOG.yaml",
+        "context/ROUTES.yaml",
+        "core/WORKFLOW.md",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G2_01_CREATIVE_MEMORY_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/audio-mix-plan.schema.json",
+      "referenceCount": 8,
+      "sources": [
+        "context/DOC_CATALOG.yaml",
+        "context/ROUTES.yaml",
+        "core/PRODUCTION_CONTRACTS.md",
+        "core/WORKFLOW.md",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "schemas/content-mode.schema.json",
+      "referenceCount": 8,
+      "sources": [
+        "core/CONTENT_MODE.md",
+        "core/WORKFLOW.md",
+        "docs/architecture/ROADMAP_V5_PROMPT_RULE_CONTRACT_MIGRATION_MAP.md",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_01_CONTENT_ROUTING_AND_RESEARCH_PLANNING_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/cost",
+      "referenceCount": 8,
+      "sources": [
+        "projects/phase1g12-hardening/audit/track-a-core-audit.json",
+        "projects/phase1g12-hardening/findings/findings.json",
+        "projects/phase1g12-hardening/findings/findings.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render",
+      "referenceCount": 8,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/pipeline/state.json"
+      ]
+    },
+    {
+      "path": "Report/evidence/post-v1e2g-live",
+      "referenceCount": 8,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/POST-V1E_2G_AGENT_SURFACE_AND_PROMPT_LOGICAL_TEXT_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/media-preflight.schema.json",
+      "referenceCount": 7,
+      "sources": [
+        "context/DOC_CATALOG.yaml",
+        "context/ROUTES.yaml",
+        "core/PRODUCTION_CONTRACTS.md",
+        "core/WORKFLOW.md",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "schemas/scene-script.schema.json",
+      "referenceCount": 7,
+      "sources": [
+        "core/PRODUCTION_CONTRACTS.md",
+        "core/WORKFLOW.md",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G3_01_BEAT_SCENE_SHOT_PLANNING_REPORT.md",
+        "Report/STEP-07_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/video-spec.schema.json",
+      "referenceCount": 7,
+      "sources": [
+        "core/PRODUCTION_CONTRACTS.md",
+        "core/WORKFLOW.md",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/STEP-07_REPORT.md",
+        "Report/STEP-10A_FIX_DURATION_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/pipeline/test-editorial-quality.js",
+      "referenceCount": 7,
+      "sources": [
+        "core/RESEARCH_QUALITY.md",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_01_CONTENT_ROUTING_AND_RESEARCH_PLANNING_REPORT.md",
+        "Report/PHASE_1G1_02_RESEARCH_ACQUISITION_LAYER_REPORT.md",
+        "Report/PHASE_1G1_03_EVIDENCE_RESEARCH_SUFFICIENCY_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-case-a/budget",
+      "referenceCount": 7,
+      "sources": [
+        "golden/baselines.json",
+        "projects/phase1g12-case-a/telemetry/evidence.json",
+        "projects/phase1g12-hardening/audit/track-a-core-audit.json",
+        "projects/phase1g12-hardening/findings/findings.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/postv1b-flow-companion-live/assets",
+      "referenceCount": 7,
+      "sources": [
+        "projects/phase1g12-case-a/case/source-frame-identity-finding.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md",
+        "Report/POST-V1B_FLOW_COMPANION_LIVE_AUTOMATION_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/pipeline/test-context-routing.js",
+      "referenceCount": 7,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_01_CONTENT_ROUTING_AND_RESEARCH_PLANNING_REPORT.md",
+        "Report/PHASE_1G1_02_RESEARCH_ACQUISITION_LAYER_REPORT.md",
+        "Report/PHASE_1G1_03_EVIDENCE_RESEARCH_SUFFICIENCY_REPORT.md",
+        "Report/PHASE_1G1_04_RESEARCH_TO_STORY_HANDOFF_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/postv1b-flow-companion-live",
+      "referenceCount": 7,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/channel-mascot",
+      "referenceCount": 7,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G12_01_VEO_REAL_E2E_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/evidence",
+      "referenceCount": 7,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/postv1-flow-live-validation",
+      "referenceCount": 7,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "Report/evidence/playwright",
+      "referenceCount": 6,
+      "sources": [
+        "AGENTS.md",
+        "playwright.config.js",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PLAYWRIGHT_AGENT_TESTING_SETUP_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/postv1-flow-live-validation/assets/image/CHAR_UNFOLDIQ_GUIDE_01/REF_GUIDE_MASTER_3Q_01_attempt-02.png",
+      "referenceCount": 6,
+      "sources": [
+        "brand/channel-mascot.json",
+        "brand/continuity-registry.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/postv1-flow-live-validation/flow-jobs/FLOW-GUIDE-MOTION-A01.json",
+        "projects/postv1-flow-live-validation/handoff/FLOW-GUIDE-MOTION-A01-manual-assist.json"
+      ]
+    },
+    {
+      "path": "schemas/render-qa.schema.json",
+      "referenceCount": 6,
+      "sources": [
+        "context/DOC_CATALOG.yaml",
+        "context/ROUTES.yaml",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "qa/technical-qa.js",
+        "Report/STEP-13_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/audio-manifest.schema.json",
+      "referenceCount": 6,
+      "sources": [
+        "core/PRODUCTION_CONTRACTS.md",
+        "core/WORKFLOW.md",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/STEP-11_REPORT.md",
+        "Report/STEP-12_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/captions.schema.json",
+      "referenceCount": 6,
+      "sources": [
+        "core/PRODUCTION_CONTRACTS.md",
+        "core/WORKFLOW.md",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/STEP-11_REPORT.md",
+        "Report/STEP-12_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/postv1b-flow-companion-live/assets/image/GEN01",
+      "referenceCount": 6,
+      "sources": [
+        "projects/phase1g12-case-a/case/source-frame-identity-finding.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/evidence/post-v1f-real-execution/2026-10-01T09-38-51.519Z-correlation-forensics.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-hardening",
+      "referenceCount": 6,
+      "sources": [
+        "projects/phase1g12-hardening/evidence/security/security-privacy-checks.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G12_01_VEO_REAL_E2E_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/project-manifest",
+      "referenceCount": 6,
+      "sources": [
+        "projects/phase1h1-validation/baseline/perf-baseline.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1H1_01_VERSIONED_PROJECT_MANIFEST_REPORT.md",
+        "Report/PHASE_1H1_01_VERSIONED_PROJECT_MANIFEST_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/golden",
+      "referenceCount": 6,
+      "sources": [
+        "projects/phase1h45-validation/evidence/performance/perf-baseline-golden.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1H6_1H7_01_ARTIFACT_GOVERNANCE_AND_STORAGE_LIFECYCLE_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/pipeline/test-v5-preflight.js",
+      "referenceCount": 6,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_01_CONTENT_ROUTING_AND_RESEARCH_PLANNING_REPORT.md",
+        "Report/PHASE_1G1_02_RESEARCH_ACQUISITION_LAYER_REPORT.md",
+        "Report/PHASE_1G1_03_EVIDENCE_RESEARCH_SUFFICIENCY_REPORT.md",
+        "Report/PHASE_1G1_04_RESEARCH_TO_STORY_HANDOFF_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/evidence/post-v1f-real-execution",
+      "referenceCount": 6,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/postv1b-flow-companion-live/flow-jobs/FLOW-COMPANION-LIVE-GEN-01.json",
+        "Report/POST-V1F_REAL_GENERATION_DOWNLOAD_IMPORT_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/remotion",
+      "referenceCount": 6,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/REMOTION_WINDOWS_RENDER_ENVIRONMENT_FIX_REPORT.md",
+        "Report/REMOTION_WINDOWS_RENDER_ENVIRONMENT_FIX_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/render-input.schema.json",
+      "referenceCount": 5,
+      "sources": [
+        "context/DOC_CATALOG.yaml",
+        "context/ROUTES.yaml",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/STEP-12_REPORT.md",
+        "schemas/render-input.schema.json"
+      ]
+    },
+    {
+      "path": "schemas/context-manifest.schema.json",
+      "referenceCount": 5,
+      "sources": [
+        "core/CONTEXT_ROUTER.md",
+        "core/WORKFLOW.md",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/STEP-09_REPORT.md",
+        "schemas/context-manifest.schema.json"
+      ]
+    },
+    {
+      "path": "schemas/duration-contract.schema.json",
+      "referenceCount": 5,
+      "sources": [
+        "core/DURATION_PLANNING.md",
+        "core/WORKFLOW.md",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/STEP-10A_FIX_DURATION_REPORT.md",
+        "schemas/duration-contract.schema.json"
+      ]
+    },
+    {
+      "path": "schemas/visual-review.schema.json",
+      "referenceCount": 5,
+      "sources": [
+        "core/PIPELINE_13.md",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "qa/visual-qa.js",
+        "Report/STEP-13_REPORT.md",
+        "schemas/visual-review.schema.json"
+      ]
+    },
+    {
+      "path": "schemas/asset-manifest.schema.json",
+      "referenceCount": 5,
+      "sources": [
+        "core/PRODUCTION_CONTRACTS.md",
+        "core/WORKFLOW.md",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/STEP-07_REPORT.md",
+        "schemas/asset-manifest.schema.json"
+      ]
+    },
+    {
+      "path": "schemas/thumbnail-package.schema.json",
+      "referenceCount": 5,
+      "sources": [
+        "flow-companion/docs/POST-V1C_ROADMAP.md",
+        "flow-companion/README.md",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/POST-V1C_GENERATION_READY_EXTENSION_POLISH_ROADMAP_REPORT.md",
+        "schemas/thumbnail-package.schema.json"
+      ]
+    },
+    {
+      "path": "schemas/music-source.schema.json",
+      "referenceCount": 5,
+      "sources": [
+        "flow-companion/docs/POST-V1C_ROADMAP.md",
+        "flow-companion/README.md",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/POST-V1C_GENERATION_READY_EXTENSION_POLISH_ROADMAP_REPORT.md",
+        "schemas/music-source.schema.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-case-a/budget/ledger.json",
+      "referenceCount": 5,
+      "sources": [
+        "golden/baselines.json",
+        "projects/phase1g12-case-a/telemetry/evidence.json",
+        "projects/phase1g12-hardening/audit/track-a-core-audit.json",
+        "projects/phase1g12-hardening/findings/findings.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-case-a/render",
+      "referenceCount": 5,
+      "sources": [
+        "golden/baselines.json",
+        "projects/phase1g12-case-a/governance/compliance.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "tests/golden/test-governance-regression.js"
+      ]
+    },
+    {
+      "path": "out/pilot-sky-blue/final.mp4",
+      "referenceCount": 5,
+      "sources": [
+        "out/pilot-sky-blue/final-artifact.json",
+        "out/pilot-sky-blue/UPLOAD_CHECKLIST.md",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/final-artifact.json",
+        "Report/STEP-14_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/POST-V1F_REAL_GENERATION_DOWNLOAD_IMPORT_REPORT.md",
+      "referenceCount": 5,
+      "sources": [
+        "projects/phase1g12-case-a/case/case-b-source-frame-correlation.json",
+        "projects/phase1g12-case-a/case/source-frame-identity-finding.json",
+        "projects/phase1g12-hardening/evidence/before-after/AFTER-run-case-b.js",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "scripts/cli/run-case-b.js"
+      ]
+    },
+    {
+      "path": "tests/story/test-visual-motion-decision.js",
+      "referenceCount": 5,
+      "sources": [
+        "projects/phase1g12-hardening/audit/track-a-core-audit.json",
+        "projects/phase1g12-hardening/findings/findings.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G12_01_VEO_REAL_E2E_REPORT.md",
+        "Report/PHASE_1G5_01_VISUAL_MOTION_DECISION_ENGINE_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/history",
+      "referenceCount": 5,
+      "sources": [
+        "projects/phase1h2-validation/evidence/performance/perf-baseline.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1H2_01_GENERATION_HISTORY_AND_LOCKING_REPORT.md",
+        "tests/history/test-history.js"
+      ]
+    },
+    {
+      "path": "tests/compliance",
+      "referenceCount": 5,
+      "sources": [
+        "projects/phase1h67-validation/evidence/performance/perf-baseline-compliance.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1H6_1H7_01_ARTIFACT_GOVERNANCE_AND_STORAGE_LIFECYCLE_REPORT.md",
+        "tests/compliance/test-compliance.js"
+      ]
+    },
+    {
+      "path": "tests/provenance",
+      "referenceCount": 5,
+      "sources": [
+        "projects/phase1h67-validation/evidence/performance/perf-baseline-governance.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1H6_1H7_01_ARTIFACT_GOVERNANCE_AND_STORAGE_LIFECYCLE_REPORT.md",
+        "tests/provenance/test-provenance.js"
+      ]
+    },
+    {
+      "path": "tests/storage",
+      "referenceCount": 5,
+      "sources": [
+        "projects/phase1h67-validation/evidence/performance/perf-baseline-storage.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1H6_1H7_01_ARTIFACT_GOVERNANCE_AND_STORAGE_LIFECYCLE_REPORT.md",
+        "tests/storage/test-storage.js"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-004/qa",
+      "referenceCount": 5,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-004/qa/samples.json"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-005/qa",
+      "referenceCount": 5,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-005/qa/samples.json"
+      ]
+    },
+    {
+      "path": "projects/postv1-flow-live-validation/flow-jobs",
+      "referenceCount": 5,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/POST-V1_FLOW_LIVE_VALIDATION_REPORT.md",
+        "Report/POST-V1_FLOW_LIVE_VALIDATION_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/postv1-flow-live-validation/handoff",
+      "referenceCount": 5,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/POST-V1_FLOW_LIVE_VALIDATION_REPORT.md",
+        "Report/POST-V1_FLOW_LIVE_VALIDATION_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/pipeline/test-content-class-router.js",
+      "referenceCount": 5,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_01_CONTENT_ROUTING_AND_RESEARCH_PLANNING_REPORT.md",
+        "Report/PHASE_1G1_02_RESEARCH_ACQUISITION_LAYER_REPORT.md",
+        "Report/PHASE_1G1_03_EVIDENCE_RESEARCH_SUFFICIENCY_REPORT.md",
+        "Report/PHASE_1G1_04_RESEARCH_TO_STORY_HANDOFF_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/pipeline/test-research-planning.js",
+      "referenceCount": 5,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_01_CONTENT_ROUTING_AND_RESEARCH_PLANNING_REPORT.md",
+        "Report/PHASE_1G1_02_RESEARCH_ACQUISITION_LAYER_REPORT.md",
+        "Report/PHASE_1G1_03_EVIDENCE_RESEARCH_SUFFICIENCY_REPORT.md",
+        "Report/PHASE_1G1_04_RESEARCH_TO_STORY_HANDOFF_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/postv1-flow-live-validation/_incoming",
+      "referenceCount": 5,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/postv1-flow-live-validation/flow-jobs/FLOW-GUIDE-MOTION-A01.json",
+        "projects/postv1-flow-live-validation/handoff/FLOW-GUIDE-MOTION-A01-manual-assist.json",
+        "Report/POST-V1_FLOW_LIVE_VALIDATION_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/postv1-flow-live-validation/assets/video/CHAR_UNFOLDIQ_GUIDE_01",
+      "referenceCount": 5,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/postv1-flow-live-validation/flow-jobs/FLOW-GUIDE-MOTION-A01.json",
+        "projects/postv1-flow-live-validation/handoff/FLOW-GUIDE-MOTION-A01-manual-assist.json",
+        "Report/POST-V1_FLOW_LIVE_VALIDATION_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/postv1b-flow-companion-live/flow-jobs",
+      "referenceCount": 5,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/POST-V1B_FLOW_COMPANION_LIVE_AUTOMATION_REPORT.md",
+        "Report/POST-V1E_2G_AGENT_SURFACE_AND_PROMPT_LOGICAL_TEXT_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/providers",
+      "referenceCount": 5,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G6_01_PROVIDER_MODEL_CAPABILITY_REGISTRY_REPORT.md",
+        "Report/PHASE_1G6_01_PROVIDER_MODEL_CAPABILITY_REGISTRY_REPORT.md",
+        "Report/REPOSITORY_ROOT_CLEANUP_AND_STRUCTURE_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-005",
+      "referenceCount": 5,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/pipeline/state.json",
+        "projects/pilot-sky-blue/pipeline/state.prev.json"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/agent-instructions",
+      "referenceCount": 5,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md",
+        "Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/provider-request.schema.json",
+      "referenceCount": 4,
+      "sources": [
+        "core/PRODUCTION_CONTRACTS.md",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/STEP-10A_REPORT.md",
+        "schemas/provider-request.schema.json"
+      ]
+    },
+    {
+      "path": "tests/topic",
+      "referenceCount": 4,
+      "sources": [
+        "core/TOPIC_REGISTRY.md",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/REPOSITORY_ROOT_CLEANUP_AND_STRUCTURE_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/topic-discovery.schema.json",
+      "referenceCount": 4,
+      "sources": [
+        "core/WORKFLOW.md",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/STEP-08_REPORT.md",
+        "schemas/topic-discovery.schema.json"
+      ]
+    },
+    {
+      "path": "schemas/policy-review.schema.json",
+      "referenceCount": 4,
+      "sources": [
+        "core/WORKFLOW.md",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/STEP-09_REPORT.md",
+        "schemas/policy-review.schema.json"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/research",
+      "referenceCount": 4,
+      "sources": [
+        "golden/baselines.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/telemetry/evidence.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-case-a/qa/case-b-attempt-02-qa-summary.json",
+      "referenceCount": 4,
+      "sources": [
+        "golden/baselines.json",
+        "projects/phase1g12-case-a/governance/compliance.json",
+        "projects/phase1g12-case-a/telemetry/evidence.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-case-a/qa/case-c-attempt-01-qa-summary.json",
+      "referenceCount": 4,
+      "sources": [
+        "golden/baselines.json",
+        "projects/phase1g12-case-a/governance/compliance.json",
+        "projects/phase1g12-case-a/telemetry/evidence.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/captions",
+      "referenceCount": 4,
+      "sources": [
+        "golden/baselines.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/telemetry/evidence.json"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/audio",
+      "referenceCount": 4,
+      "sources": [
+        "golden/baselines.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/telemetry/evidence.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-case-a/render/render-input-case-a.json",
+      "referenceCount": 4,
+      "sources": [
+        "golden/baselines.json",
+        "projects/phase1g12-case-a/governance/compliance.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "tests/golden/test-governance-regression.js"
+      ]
+    },
+    {
+      "path": "schemas/policy-snapshot.schema.json",
+      "referenceCount": 4,
+      "sources": [
+        "policy/snapshots/README.md",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/STEP-09_REPORT.md",
+        "schemas/policy-snapshot.schema.json"
+      ]
+    },
+    {
+      "path": "Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md",
+      "referenceCount": 4,
+      "sources": [
+        "projects/channel-mascot/instruction-sync/sy-4f2e4f010241.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G11_01_STRUCTURAL_SEMANTIC_FACTUALITY_CONTINUITY_QA_REPORT.md",
+        "Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/generation-cost-ledger.schema.json",
+      "referenceCount": 4,
+      "sources": [
+        "projects/phase1g12-hardening/audit/track-a-core-audit.json",
+        "projects/phase1g12-hardening/findings/findings.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G8_01_OUTPUT_COST_CREDIT_PLANNER_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/e2e/flow-companion.spec.js",
+      "referenceCount": 4,
+      "sources": [
+        "projects/phase1g12-hardening/baseline/extension-baseline.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G12_02_RETROACTIVE_HARDENING_SWEEP_REPORT.md",
+        "Report/PLAYWRIGHT_AGENT_TESTING_SETUP_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/project-manifest/test-manifest.js",
+      "referenceCount": 4,
+      "sources": [
+        "projects/phase1h1-validation/baseline/perf-baseline.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1H1_01_VERSIONED_PROJECT_MANIFEST_REPORT.md",
+        "tests/project-manifest/test-manifest.js"
+      ]
+    },
+    {
+      "path": "tests/dag",
+      "referenceCount": 4,
+      "sources": [
+        "projects/phase1h3-validation/evidence/performance/perf-baseline-dag.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "tests/dag/test-dag.js"
+      ]
+    },
+    {
+      "path": "tests/recovery",
+      "referenceCount": 4,
+      "sources": [
+        "projects/phase1h3-validation/evidence/performance/perf-baseline-recovery.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "tests/recovery/test-recovery.js"
+      ]
+    },
+    {
+      "path": "tests/telemetry",
+      "referenceCount": 4,
+      "sources": [
+        "projects/phase1h45-validation/evidence/performance/perf-baseline-telemetry.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "tests/telemetry/test-telemetry.js"
+      ]
+    },
+    {
+      "path": "tests/compliance/test-compliance.js",
+      "referenceCount": 4,
+      "sources": [
+        "projects/phase1h67-validation/evidence/performance/perf-baseline-compliance.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1H6_1H7_01_ARTIFACT_GOVERNANCE_AND_STORAGE_LIFECYCLE_REPORT.md",
+        "tests/compliance/test-compliance.js"
+      ]
+    },
+    {
+      "path": "tests/provenance/test-provenance.js",
+      "referenceCount": 4,
+      "sources": [
+        "projects/phase1h67-validation/evidence/performance/perf-baseline-governance.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1H6_1H7_01_ARTIFACT_GOVERNANCE_AND_STORAGE_LIFECYCLE_REPORT.md",
+        "tests/provenance/test-provenance.js"
+      ]
+    },
+    {
+      "path": "tests/storage/test-storage.js",
+      "referenceCount": 4,
+      "sources": [
+        "projects/phase1h67-validation/evidence/performance/perf-baseline-storage.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1H6_1H7_01_ARTIFACT_GOVERNANCE_AND_STORAGE_LIFECYCLE_REPORT.md",
+        "tests/storage/test-storage.js"
+      ]
+    },
+    {
+      "path": "projects/channel-mascot/instruction-sync",
+      "referenceCount": 4,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md",
+        "Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/postv1-flow-live-validation/assets/video/CHAR_UNFOLDIQ_GUIDE_01/CHAR_UNFOLDIQ_GUIDE_01_motion_attempt-01.mp4",
+      "referenceCount": 4,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/postv1-flow-live-validation/flow-jobs/FLOW-GUIDE-MOTION-A01.json",
+        "projects/postv1-flow-live-validation/handoff/FLOW-GUIDE-MOTION-A01-manual-assist.json",
+        "Report/POST-V1_FLOW_LIVE_VALIDATION_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/asset-qa-result.schema.json",
+      "referenceCount": 4,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G11_01_STRUCTURAL_SEMANTIC_FACTUALITY_CONTINUITY_QA_REPORT.md",
+        "Report/PHASE_1G12_01_VEO_REAL_E2E_REPORT.md",
+        "schemas/asset-qa-result.schema.json"
+      ]
+    },
+    {
+      "path": "tests/pipeline/test-creative-memory.js",
+      "referenceCount": 4,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G2_01_CREATIVE_MEMORY_REPORT.md",
+        "Report/PHASE_1G3_01_BEAT_SCENE_SHOT_PLANNING_REPORT.md",
+        "Report/PHASE_1G4_01_PROMPT_COMPILER_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/render-attempt.schema.json",
+      "referenceCount": 4,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G8_01_OUTPUT_COST_CREDIT_PLANNER_REPORT.md",
+        "Report/STEP-13_REPORT.md",
+        "schemas/render-attempt.schema.json"
+      ]
+    },
+    {
+      "path": "schemas/final-artifact.schema.json",
+      "referenceCount": 4,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/STEP-13_REPORT.md",
+        "schemas/final-artifact.schema.json",
+        "tests/pipeline/test-finalize-output.js"
+      ]
+    },
+    {
+      "path": "Report/evidence/phase1g1-full-e2e",
+      "referenceCount": 4,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_06_FULL_E2E_VALIDATION_REPORT.md",
+        "Report/PHASE_1G1_06_FULL_E2E_VALIDATION_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/postv1-flow-live-validation/assets/image/CHAR_UNFOLDIQ_GUIDE_01/REF_GUIDE_MASTER_3Q_01_attempt-01.png",
+      "referenceCount": 3,
+      "sources": [
+        "brand/continuity-registry.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/POST-V1_FLOW_LIVE_VALIDATION_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/research/research-brief.json",
+      "referenceCount": 3,
+      "sources": [
+        "golden/baselines.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/telemetry/evidence.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-case-a/case/case-d-cross-shot-continuity.json",
+      "referenceCount": 3,
+      "sources": [
+        "golden/baselines.json",
+        "projects/phase1g12-case-a/governance/compliance.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-case-a/case/live-ceremony-log.jsonl",
+      "referenceCount": 3,
+      "sources": [
+        "golden/baselines.json",
+        "projects/phase1g12-hardening/evidence/telemetry/telemetry-summary.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/captions/captions.json",
+      "referenceCount": 3,
+      "sources": [
+        "golden/baselines.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/telemetry/evidence.json"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/audio/timing.json",
+      "referenceCount": 3,
+      "sources": [
+        "golden/baselines.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/telemetry/evidence.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-case-a/asset-manifest.json",
+      "referenceCount": 3,
+      "sources": [
+        "golden/baselines.json",
+        "projects/phase1g12-case-a/governance/compliance.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-case-a/budget-plans",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1g12-case-a/budget/case-bcd-proposal.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/postv1b-flow-companion-live/assets/image/GEN01/GEN01_attempt-01.png",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1g12-case-a/case/source-frame-identity-finding.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/evidence/post-v1f-real-execution/2026-10-01T09-38-51.519Z-correlation-forensics.json"
+      ]
+    },
+    {
+      "path": "projects/postv1b-flow-companion-live/assets/library-index.json",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1g12-case-a/case/source-frame-identity-finding.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/cost/test-output-cost-credit.js",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1g12-hardening/audit/track-a-core-audit.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G8_01_OUTPUT_COST_CREDIT_PLANNER_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/flow/test-flow-hardening.js",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1g12-hardening/audit/track-c-integration-audit.json",
+        "projects/phase1g12-hardening/findings/findings.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "tests/cost/test-hardening-budget-gates.js",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1g12-hardening/findings/findings.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G12_02_RETROACTIVE_HARDENING_SWEEP_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/real-e2e/test-correlation-gate.js",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1g12-hardening/findings/findings.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G12_02_RETROACTIVE_HARDENING_SWEEP_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/flow/test-canonical-source-gate.js",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1g12-hardening/findings/findings.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G12_02_RETROACTIVE_HARDENING_SWEEP_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/PHASE_1G12_01_VEO_REAL_E2E_REPORT.md",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1g12-hardening/v61-status-correction.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G12_02_RETROACTIVE_HARDENING_SWEEP_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/history/test-history.js",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1h2-validation/evidence/performance/perf-baseline.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "tests/history/test-history.js"
+      ]
+    },
+    {
+      "path": "tests/dag/test-dag.js",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1h3-validation/evidence/performance/perf-baseline-dag.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "tests/dag/test-dag.js"
+      ]
+    },
+    {
+      "path": "tests/recovery/test-recovery.js",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1h3-validation/evidence/performance/perf-baseline-recovery.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "tests/recovery/test-recovery.js"
+      ]
+    },
+    {
+      "path": "tests/golden/test-golden.js",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1h45-validation/evidence/performance/perf-baseline-golden.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "tests/golden/test-golden.js"
+      ]
+    },
+    {
+      "path": "tests/telemetry/test-telemetry.js",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1h45-validation/evidence/performance/perf-baseline-telemetry.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "tests/telemetry/test-telemetry.js"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-hardening/findings",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G12_02_RETROACTIVE_HARDENING_SWEEP_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/PHASE_1G8_01_OUTPUT_COST_CREDIT_PLANNER_REPORT.md",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G12_01_VEO_REAL_E2E_REPORT.md",
+        "Report/PHASE_1G8_01_OUTPUT_COST_CREDIT_PLANNER_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/PHASE_1G3_01_BEAT_SCENE_SHOT_PLANNING_REPORT.md",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G3_01_BEAT_SCENE_SHOT_PLANNING_REPORT.md",
+        "Report/PHASE_1G4_01_PROMPT_COMPILER_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/PHASE_1G2_01_CREATIVE_MEMORY_REPORT.md",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G2_01_CREATIVE_MEMORY_REPORT.md",
+        "Report/PHASE_1G3_01_BEAT_SCENE_SHOT_PLANNING_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/PHASE_1G_PREFLIGHT_ROADMAP_V5_PROMPT_RULE_CONTRACT_MIGRATION_REPORT.md",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_01_CONTENT_ROUTING_AND_RESEARCH_PLANNING_REPORT.md",
+        "Report/PHASE_1G_PREFLIGHT_ROADMAP_V5_PROMPT_RULE_CONTRACT_MIGRATION_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/PHASE_1G1_05_DEEP_LIVE_PROVIDER_VALIDATION_FIX_REPORT.md",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_05_DEEP_LIVE_PROVIDER_VALIDATION_FIX_REPORT.md",
+        "Report/PHASE_1G1_06_FULL_E2E_VALIDATION_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/PHASE_1G1_06_FULL_E2E_VALIDATION_REPORT.md",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_06_FULL_E2E_VALIDATION_REPORT.md",
+        "Report/PHASE_1G2_01_CREATIVE_MEMORY_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-hardening/evidence/before-after",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G12_02_RETROACTIVE_HARDENING_SWEEP_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/phase1h67-validation/evidence/performance",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "Report/PHASE_1G4_01_PROMPT_COMPILER_REPORT.md",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G4_01_PROMPT_COMPILER_REPORT.md",
+        "Report/PHASE_1G5_01_VISUAL_MOTION_DECISION_ENGINE_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-hardening/v61-status-correction.json",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G12_01_VEO_REAL_E2E_REPORT.md",
+        "Report/PHASE_1G12_02_RETROACTIVE_HARDENING_SWEEP_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/staging-manifest.json",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/pipeline/state.json",
+        "projects/pilot-sky-blue/pipeline/state.prev.json"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/render-plan.json",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/pipeline/state.json",
+        "projects/pilot-sky-blue/pipeline/state.prev.json"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-005/output.mp4",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/pipeline/state.json",
+        "projects/pilot-sky-blue/pipeline/state.prev.json"
+      ]
+    },
+    {
+      "path": "projects/postv1-flow-live-validation/_incoming/CHAR_UNFOLDIQ_GUIDE_01CHAR_UNFOLDIQ_GUIDE_01_motion_attempt-01.mp4",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/postv1-flow-live-validation/flow-jobs/FLOW-GUIDE-MOTION-A01.json",
+        "Report/POST-V1_FLOW_LIVE_VALIDATION_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/flow/test-flow-bridge-token.js",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/FLOW_BRIDGE_SECURITY_AND_RESET_UX_CORRECTION_REPORT.md",
+        "Report/REPOSITORY_ROOT_CLEANUP_AND_STRUCTURE_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/flow/test-asset-library.js",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G11_01_STRUCTURAL_SEMANTIC_FACTUALITY_CONTINUITY_QA_REPORT.md",
+        "Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/fixtures/make-png.js",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G11_01_STRUCTURAL_SEMANTIC_FACTUALITY_CONTINUITY_QA_REPORT.md",
+        "tests/qa/test-asset-qa-structural.js"
+      ]
+    },
+    {
+      "path": "projects/channel-mascot/flow-project-binding.json",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G12_01_VEO_REAL_E2E_REPORT.md",
+        "Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/evidence/research-acquisition",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_02_RESEARCH_ACQUISITION_LAYER_REPORT.md",
+        "Report/PHASE_1G1_02_RESEARCH_ACQUISITION_LAYER_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/fixtures/research-servers.js",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_02_RESEARCH_ACQUISITION_LAYER_REPORT.md",
+        "Report/PHASE_1G1_03_EVIDENCE_RESEARCH_SUFFICIENCY_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/creative-brief.schema.json",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_03_EVIDENCE_RESEARCH_SUFFICIENCY_REPORT.md",
+        "schemas/creative-brief.schema.json"
+      ]
+    },
+    {
+      "path": "tests/fixtures/evidence-fixtures.js",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_03_EVIDENCE_RESEARCH_SUFFICIENCY_REPORT.md",
+        "Report/PHASE_1G1_05_STANDARD_DEEP_RESEARCH_ESCALATION_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/evidence/research-evidence-live",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_03_EVIDENCE_RESEARCH_SUFFICIENCY_REPORT.md",
+        "Report/PHASE_1G1_04_RESEARCH_TO_STORY_HANDOFF_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/source-index.schema.json",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_03_EVIDENCE_RESEARCH_SUFFICIENCY_REPORT.md",
+        "schemas/source-index.schema.json"
+      ]
+    },
+    {
+      "path": "schemas/evidence-state.schema.json",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_03_EVIDENCE_RESEARCH_SUFFICIENCY_REPORT.md",
+        "schemas/evidence-state.schema.json"
+      ]
+    },
+    {
+      "path": "tests/research/test-independence.js",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_03_EVIDENCE_RESEARCH_SUFFICIENCY_REPORT.md",
+        "Report/PHASE_1G1_04_RESEARCH_TO_STORY_HANDOFF_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/story-handoff.schema.json",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_04_RESEARCH_TO_STORY_HANDOFF_REPORT.md",
+        "schemas/story-handoff.schema.json"
+      ]
+    },
+    {
+      "path": "schemas/asset-record.schema.json",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md",
+        "schemas/asset-record.schema.json"
+      ]
+    },
+    {
+      "path": "tests/flow/test-flow-bridge.js",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/POST-V1F_REAL_GENERATION_DOWNLOAD_IMPORT_REPORT.md",
+        "tests/flow/test-flow-bridge-token.js"
+      ]
+    },
+    {
+      "path": "Report/PRE_POSTV1_MASCOT_FOUNDATION_REPORT.md",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/POST-V1_FLOW_LIVE_VALIDATION_REPORT.md",
+        "Report/PRE_POSTV1_MASCOT_FOUNDATION_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/topic-registry.schema.json",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/STEP-08_REPORT.md",
+        "schemas/topic-registry.schema.json"
+      ]
+    },
+    {
+      "path": "Report/STEP-08_FIX_2_REPORT.md",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/STEP-09_REPORT.md",
+        "tests/pipeline/test-context-routing.js"
+      ]
+    },
+    {
+      "path": "schemas/provider-result.schema.json",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/STEP-10A_REPORT.md",
+        "schemas/provider-result.schema.json"
+      ]
+    },
+    {
+      "path": "schemas/approved-local.schema.json",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/STEP-10A_REPORT.md",
+        "schemas/approved-local.schema.json"
+      ]
+    },
+    {
+      "path": "schemas/safety-prompt-adaptation.schema.json",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/STEP-10B_FIX_SAFETY_RETRY_REPORT.md",
+        "schemas/safety-prompt-adaptation.schema.json"
+      ]
+    },
+    {
+      "path": "schemas/render-plan.schema.json",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/STEP-12_REPORT.md",
+        "schemas/render-plan.schema.json"
+      ]
+    },
+    {
+      "path": "schemas/staging-manifest.schema.json",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/STEP-12_REPORT.md",
+        "schemas/staging-manifest.schema.json"
+      ]
+    },
+    {
+      "path": "schemas/pipeline-state.schema.json",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/STEP-13_REPORT.md",
+        "schemas/pipeline-state.schema.json"
+      ]
+    },
+    {
+      "path": "schemas/fix-plan.schema.json",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/STEP-13_REPORT.md",
+        "schemas/fix-plan.schema.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-case-a/assets",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G12_01_VEO_REAL_E2E_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/live-1g1-http308",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_06_FULL_E2E_VALIDATION_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/platform",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G7_01_PLATFORM_POLICY_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/assets",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/postv1-flow-live-validation/assets",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-case-a/manifest",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1H1_01_VERSIONED_PROJECT_MANIFEST_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-case-a/history",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1H2_01_GENERATION_HISTORY_AND_LOCKING_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/postv1b-flow-companion-live/diagnostics",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/POST-V1B_FLOW_COMPANION_LIVE_AUTOMATION_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/postv1b-flow-companion-live/qa",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/POST-V1B_FLOW_COMPANION_LIVE_AUTOMATION_REPORT.md"
+      ]
+    },
+    {
+      "path": "out/postv1-flow-live-validation",
+      "referenceCount": 3,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/POST-V1_FLOW_LIVE_VALIDATION_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/topic/test-topic-registry.js",
+      "referenceCount": 2,
+      "sources": [
+        "core/TOPIC_REGISTRY.md",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "Report/STEP-10B_REPORT.md",
+      "referenceCount": 2,
+      "sources": [
+        "flow-companion/README.md",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/script.json",
+      "referenceCount": 2,
+      "sources": [
+        "golden/baselines.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/video-spec.json",
+      "referenceCount": 2,
+      "sources": [
+        "golden/baselines.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-case-a/case/case-b-attempt-01-result.json",
+      "referenceCount": 2,
+      "sources": [
+        "golden/baselines.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "out/_cdp2g.js",
+      "referenceCount": 2,
+      "sources": [
+        "out/_cdp2g.js",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-case-a/budget-plans/1g12-bcd.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1g12-case-a/budget/case-bcd-proposal.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-case-a/case/case-d-character.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1g12-case-a/governance/compliance.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-case-a/case/case-d-D1-attempt-01-correlation.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1g12-case-a/telemetry/evidence.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/channel-mascot/instruction-sync/sy-4f2e4f010241.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/PHASE_1G1_01_CONTENT_ROUTING_AND_RESEARCH_PLANNING_REPORT.md",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_01_CONTENT_ROUTING_AND_RESEARCH_PLANNING_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/PHASE_1G1_02_RESEARCH_ACQUISITION_LAYER_REPORT.md",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_02_RESEARCH_ACQUISITION_LAYER_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-hardening/audit",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-hardening/baseline",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-hardening/findings/findings.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G12_02_RETROACTIVE_HARDENING_SWEEP_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/PHASE_1G1_04_RESEARCH_TO_STORY_HANDOFF_REPORT.md",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_04_RESEARCH_TO_STORY_HANDOFF_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-004/qa/contact-sheet.html",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-004/qa/samples.json"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-005/qa/contact-sheet.html",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-005/qa/samples.json"
+      ]
+    },
+    {
+      "path": "Report/PHASE_1G11_01_STRUCTURAL_SEMANTIC_FACTUALITY_CONTINUITY_QA_REPORT.md",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G11_01_STRUCTURAL_SEMANTIC_FACTUALITY_CONTINUITY_QA_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/PHASE_1G1_03_EVIDENCE_RESEARCH_SUFFICIENCY_REPORT.md",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_03_EVIDENCE_RESEARCH_SUFFICIENCY_REPORT.md"
+      ]
+    },
+    {
+      "path": "out/pilot-sky-blue/final-artifact.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/STEP-14_REPORT.md"
+      ]
+    },
+    {
+      "path": "out/pilot-sky-blue/UPLOAD_CHECKLIST.md",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/STEP-14_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/STEP-14_REPORT.md",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/STEP-14_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/PHASE_1G12_02_RETROACTIVE_HARDENING_SWEEP_REPORT.md",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1H1_01_VERSIONED_PROJECT_MANIFEST_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/PHASE_1H1_01_VERSIONED_PROJECT_MANIFEST_REPORT.md",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1H2_01_GENERATION_HISTORY_AND_LOCKING_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/POST-V1_FLOW_LIVE_VALIDATION_REPORT.md",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/POST-V1_FLOW_LIVE_VALIDATION_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/postv1-flow-live-validation/flow-jobs/FLOW-GUIDE-MOTION-A01.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/POST-V1_FLOW_LIVE_VALIDATION_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/postv1-flow-live-validation/handoff/FLOW-GUIDE-MOTION-A01-manual-assist.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/POST-V1_FLOW_LIVE_VALIDATION_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/STEP-11_REPORT.md",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/STEP-11_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/STEP-12_REPORT.md",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/STEP-12_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/STEP-13_REPORT.md",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/STEP-13_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/POST-V1C_GENERATION_READY_EXTENSION_POLISH_ROADMAP_REPORT.md",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/POST-V1C_GENERATION_READY_EXTENSION_POLISH_ROADMAP_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/PHASE_1G5_01_VISUAL_MOTION_DECISION_ENGINE_REPORT.md",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G5_01_VISUAL_MOTION_DECISION_ENGINE_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/pipeline",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "tests/golden/test-governance-regression.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1H6_1H7_01_ARTIFACT_GOVERNANCE_AND_STORAGE_LIFECYCLE_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/phase1h45-validation/evidence/performance",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/postv1b-flow-companion-live/flow-jobs/FLOW-COMPANION-LIVE-GEN-01.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/POST-V1E_2G_AGENT_SURFACE_AND_PROMPT_LOGICAL_TEXT_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/PHASE_1G6_01_PROVIDER_MODEL_CAPABILITY_REGISTRY_REPORT.md",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G6_01_PROVIDER_MODEL_CAPABILITY_REGISTRY_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/REMOTION_WINDOWS_RENDER_ENVIRONMENT_FIX_REPORT.md",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PLAYWRIGHT_AGENT_TESTING_SETUP_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/phase1h3-validation/evidence/performance",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "tests/qa/test-asset-qa-structural.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G11_01_STRUCTURAL_SEMANTIC_FACTUALITY_CONTINUITY_QA_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/PHASE_1G1_05_STANDARD_DEEP_RESEARCH_ESCALATION_REPORT.md",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_05_DEEP_LIVE_PROVIDER_VALIDATION_FIX_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-004/qa/frames/frame-0ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-004/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-004/qa/frames/frame-3249ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-004/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-004/qa/frames/frame-4697ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-004/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-004/qa/frames/frame-7946ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-004/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-004/qa/frames/frame-9394ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-004/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-004/qa/frames/frame-12474ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-004/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-004/qa/frames/frame-13761ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-004/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-004/qa/frames/frame-16841ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-004/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-004/qa/frames/frame-18127ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-004/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-004/qa/frames/frame-20986ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-004/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-004/qa/frames/frame-25168ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-004/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-004/qa/frames/frame-26053ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-004/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-004/qa/frames/frame-33979ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-004/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-004/qa/frames/frame-37691ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-004/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-004/qa/frames/frame-41402ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-004/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-004/qa/frames/frame-45756ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-004/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-004/qa/frames/frame-50110ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-004/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-004/qa/frames/frame-57721ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-004/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-004/qa/frames/frame-65287ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-004/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-005/qa/frames/frame-0ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-005/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-005/qa/frames/frame-3249ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-005/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-005/qa/frames/frame-4697ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-005/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-005/qa/frames/frame-7946ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-005/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-005/qa/frames/frame-9394ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-005/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-005/qa/frames/frame-12474ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-005/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-005/qa/frames/frame-13761ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-005/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-005/qa/frames/frame-16841ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-005/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-005/qa/frames/frame-18127ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-005/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-005/qa/frames/frame-20986ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-005/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-005/qa/frames/frame-25168ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-005/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-005/qa/frames/frame-26053ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-005/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-005/qa/frames/frame-33979ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-005/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-005/qa/frames/frame-37691ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-005/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-005/qa/frames/frame-41402ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-005/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-005/qa/frames/frame-45756ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-005/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-005/qa/frames/frame-50110ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-005/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-005/qa/frames/frame-57721ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-005/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-005/qa/frames/frame-65287ms.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "projects/pilot-sky-blue/render/attempts/attempt-005/qa/contact-sheet.html"
+      ]
+    },
+    {
+      "path": "projects/postv1b-flow-companion-live/assets/image/GEN01/GEN01_attempt-02.webp",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/evidence/post-v1f-real-execution/2026-10-01T14-08-40.329Z-recovery-import-qa.json"
+      ]
+    },
+    {
+      "path": "tests/flow/test-flow-bridge-remember.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/FLOW_BRIDGE_SECURITY_AND_RESET_UX_CORRECTION_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/qa/test-asset-qa-aggregate.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G11_01_STRUCTURAL_SEMANTIC_FACTUALITY_CONTINUITY_QA_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/qa/test-asset-qa-real.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G11_01_STRUCTURAL_SEMANTIC_FACTUALITY_CONTINUITY_QA_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/qa/test-asset-qa-semantic.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G11_01_STRUCTURAL_SEMANTIC_FACTUALITY_CONTINUITY_QA_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/qa/test-asset-qa-factuality.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G11_01_STRUCTURAL_SEMANTIC_FACTUALITY_CONTINUITY_QA_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/qa/test-asset-qa-continuity.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G11_01_STRUCTURAL_SEMANTIC_FACTUALITY_CONTINUITY_QA_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/real-e2e/test-repair-scope.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G12_01_VEO_REAL_E2E_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-case-a/assets/library-index.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G12_01_VEO_REAL_E2E_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/e2e/flow-companion-a11y.spec.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G12_02_RETROACTIVE_HARDENING_SWEEP_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/content-mode.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_01_CONTENT_ROUTING_AND_RESEARCH_PLANNING_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/research/test-search-provider.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_02_RESEARCH_ACQUISITION_LAYER_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/research/test-research-modes.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_02_RESEARCH_ACQUISITION_LAYER_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/research/test-url-safety.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_02_RESEARCH_ACQUISITION_LAYER_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/research/test-crawl4ai-bridge.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_02_RESEARCH_ACQUISITION_LAYER_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/research/test-robots-ratelimit.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_02_RESEARCH_ACQUISITION_LAYER_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/research/test-browser-extract.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_02_RESEARCH_ACQUISITION_LAYER_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/research/test-auth-extract.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_02_RESEARCH_ACQUISITION_LAYER_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/research/test-creative-brief.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_03_EVIDENCE_RESEARCH_SUFFICIENCY_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/research/test-source-registry.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_03_EVIDENCE_RESEARCH_SUFFICIENCY_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/research/test-claim-ledger.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_03_EVIDENCE_RESEARCH_SUFFICIENCY_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/research/test-contradictions.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_03_EVIDENCE_RESEARCH_SUFFICIENCY_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/research/test-sufficiency.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_03_EVIDENCE_RESEARCH_SUFFICIENCY_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/research/test-evidence-e2e.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_03_EVIDENCE_RESEARCH_SUFFICIENCY_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/evidence/research-story-live",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_04_RESEARCH_TO_STORY_HANDOFF_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/fixtures/story-fixtures.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_04_RESEARCH_TO_STORY_HANDOFF_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/story/test-research-pack.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_04_RESEARCH_TO_STORY_HANDOFF_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/story/test-evidence-gate.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_04_RESEARCH_TO_STORY_HANDOFF_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/story/test-narrative-brief.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_04_RESEARCH_TO_STORY_HANDOFF_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/story/test-story-draft.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_04_RESEARCH_TO_STORY_HANDOFF_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/story/test-story-hybrid.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_04_RESEARCH_TO_STORY_HANDOFF_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/story/test-story-fiction.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_04_RESEARCH_TO_STORY_HANDOFF_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/story/test-story-audit.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_04_RESEARCH_TO_STORY_HANDOFF_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/story/test-story-e2e.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_04_RESEARCH_TO_STORY_HANDOFF_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/research-deep/test-doctor-detection.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_05_DEEP_LIVE_PROVIDER_VALIDATION_FIX_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/research-deep/test-embedding-config.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_05_DEEP_LIVE_PROVIDER_VALIDATION_FIX_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/research-deep/test-env-bootstrap.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_05_DEEP_LIVE_PROVIDER_VALIDATION_FIX_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/research-deep/test-quota-fastfail.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_05_DEEP_LIVE_PROVIDER_VALIDATION_FIX_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/research-deep/test-acceptance-profile.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_05_DEEP_LIVE_PROVIDER_VALIDATION_FIX_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/pipeline/test-phase1g1-e2e.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_06_FULL_E2E_VALIDATION_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/live-1g1-http308/research",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_06_FULL_E2E_VALIDATION_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/evidence/phase1g1-full-e2e/live-standard-http308.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G1_06_FULL_E2E_VALIDATION_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/creative-memory.schema.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G2_01_CREATIVE_MEMORY_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/beat-map.schema.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G3_01_BEAT_SCENE_SHOT_PLANNING_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/story/test-story-structure.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G3_01_BEAT_SCENE_SHOT_PLANNING_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/scene-graph.schema.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G3_01_BEAT_SCENE_SHOT_PLANNING_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/shot-plan.schema.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G3_01_BEAT_SCENE_SHOT_PLANNING_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/story/test-prompt-compiler.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G4_01_PROMPT_COMPILER_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/prompt-package.schema.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G4_01_PROMPT_COMPILER_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/production-decision.schema.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G5_01_VISUAL_MOTION_DECISION_ENGINE_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/story/test-visual-story-grammar.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G5_01_VISUAL_MOTION_DECISION_ENGINE_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/model-registry-snapshot.schema.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G6_01_PROVIDER_MODEL_CAPABILITY_REGISTRY_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/model-resolution.schema.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G6_01_PROVIDER_MODEL_CAPABILITY_REGISTRY_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/providers/test-model-capability-registry.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G6_01_PROVIDER_MODEL_CAPABILITY_REGISTRY_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/platform-adaptation.schema.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G7_01_PLATFORM_POLICY_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/PHASE_1G7_01_PLATFORM_POLICY_REPORT.md",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G7_01_PLATFORM_POLICY_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/platform/test-platform-policy.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G7_01_PLATFORM_POLICY_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/production-budget-plan.schema.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G8_01_OUTPUT_COST_CREDIT_PLANNER_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/agent-instruction-set.schema.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/instruction-sync.schema.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/flow/test-agent-instructions.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/flow/test-live-instruction-plumbing.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/flow/test-instruction-bridge.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/flow/test-instruction-write-persistence.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/agent-instructions/iv-94f3ffebb441.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/agent-instructions/index.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/channel-mascot/agent-instructions/iv-7e784d73e229.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/assets/library-index.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/postv1-flow-live-validation/assets/library-index.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/channel-mascot/agent-instructions/iv-cf9583674d69.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/channel-mascot/agent-instructions/iv-8860138959df.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/channel-mascot/agent-instructions/index.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/phase1h1-validation",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1H1_01_VERSIONED_PROJECT_MANIFEST_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/project-manifest.schema.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1H1_01_VERSIONED_PROJECT_MANIFEST_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-case-a/manifest/project-manifest.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1H1_01_VERSIONED_PROJECT_MANIFEST_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/generation-history.schema.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1H2_01_GENERATION_HISTORY_AND_LOCKING_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/project-manifest-1.1.0.schema.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1H2_01_GENERATION_HISTORY_AND_LOCKING_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-case-a/history/history.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1H2_01_GENERATION_HISTORY_AND_LOCKING_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/phase1h2-validation",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1H2_01_GENERATION_HISTORY_AND_LOCKING_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/recovery-state.schema.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1H3_01_IDEMPOTENCY_RESUME_RECOVERY_AND_DEPENDENCY_DAG_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/project-manifest-1.2.0.schema.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1H3_01_IDEMPOTENCY_RESUME_RECOVERY_AND_DEPENDENCY_DAG_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/phase1h3-validation",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1H3_01_IDEMPOTENCY_RESUME_RECOVERY_AND_DEPENDENCY_DAG_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/telemetry.schema.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1H4_1H5_01_OBSERVABILITY_AND_GOLDEN_QUALITY_REGRESSION_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/golden.schema.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1H4_1H5_01_OBSERVABILITY_AND_GOLDEN_QUALITY_REGRESSION_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/phase1h45-validation",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1H4_1H5_01_OBSERVABILITY_AND_GOLDEN_QUALITY_REGRESSION_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/governance.schema.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1H6_1H7_01_ARTIFACT_GOVERNANCE_AND_STORAGE_LIFECYCLE_REPORT.md"
+      ]
+    },
+    {
+      "path": "schemas/project-manifest-1.3.0.schema.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1H6_1H7_01_ARTIFACT_GOVERNANCE_AND_STORAGE_LIFECYCLE_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/phase1h67-validation",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PHASE_1H6_1H7_01_ARTIFACT_GOVERNANCE_AND_STORAGE_LIFECYCLE_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/evidence/playwright/artifacts",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/PLAYWRIGHT_AGENT_TESTING_SETUP_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/postv1b-flow-companion-live/diagnostics/selector-health.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/POST-V1B_FLOW_COMPANION_LIVE_AUTOMATION_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/postv1b-flow-companion-live/flow-jobs/FLOW-COMPANION-LIVE-DRYRUN-01.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/POST-V1B_FLOW_COMPANION_LIVE_AUTOMATION_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/postv1b-flow-companion-live/qa/structural-qa.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/POST-V1B_FLOW_COMPANION_LIVE_AUTOMATION_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/evidence/post-v1e2g-live/01-agent-settings-surface-open.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/POST-V1E_2G_AGENT_SURFACE_AND_PROMPT_LOGICAL_TEXT_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/evidence/post-v1e2g-live/panel-awaiting-approval.txt",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/POST-V1E_2G_AGENT_SURFACE_AND_PROMPT_LOGICAL_TEXT_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/evidence/post-v1e2g-live/03-panel-awaiting-approval.png",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/POST-V1E_2G_AGENT_SURFACE_AND_PROMPT_LOGICAL_TEXT_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/flow/test-flow-postv1e.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/POST-V1F_REAL_GENERATION_DOWNLOAD_IMPORT_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/postv1-flow-live-validation/flow-jobs/FLOW-MASCOT-MASTER-A01.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/POST-V1_FLOW_LIVE_VALIDATION_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/postv1-flow-live-validation/cost-summary.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/POST-V1_FLOW_LIVE_VALIDATION_REPORT.md"
+      ]
+    },
+    {
+      "path": "out/postv1-flow-live-validation/validation.mp4",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/POST-V1_FLOW_LIVE_VALIDATION_REPORT.md"
+      ]
+    },
+    {
+      "path": "projects/postv1-flow-live-validation/handoff/FLOW-MASCOT-MASTER-A01-manual-assist.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/POST-V1_FLOW_LIVE_VALIDATION_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/pipeline/test-step13-pipeline-e2e.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/REMOTION_WINDOWS_RENDER_ENVIRONMENT_FIX_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/remotion/test-remotion-render-smoke.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/REMOTION_WINDOWS_RENDER_ENVIRONMENT_FIX_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/remotion/test-render-control.js",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/REMOTION_WINDOWS_RENDER_ENVIRONMENT_FIX_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/media",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/REPOSITORY_ROOT_CLEANUP_AND_STRUCTURE_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/policy",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/REPOSITORY_ROOT_CLEANUP_AND_STRUCTURE_REPORT.md"
+      ]
+    },
+    {
+      "path": "Report/STEP-10C_REPORT.md",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/STEP-10C_REPORT.md"
+      ]
+    },
+    {
+      "path": "out/pilot-sky-blue/QA.md",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/STEP-14_REPORT.md"
+      ]
+    },
+    {
+      "path": "out/pilot-sky-blue/provenance-summary.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/STEP-14_REPORT.md"
+      ]
+    },
+    {
+      "path": "out/pilot-sky-blue/captions.srt",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/STEP-14_REPORT.md"
+      ]
+    },
+    {
+      "path": "out/pilot-sky-blue/render-plan.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "Report/STEP-14_REPORT.md"
+      ]
+    },
+    {
+      "path": "tests/fixtures/render-input-step12.json",
+      "referenceCount": 2,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json",
+        "scripts/checks/validate-schemas.js"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-case-a/case/case-b-source-frame-correlation.json",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-case-a/case/source-frame-identity-finding.json",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-hardening/evidence/security/security-privacy-checks.json",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-hardening/evidence/security",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-hardening/audit/track-c-integration-audit.json",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-hardening/baseline/extension-baseline.json",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-hardening/baseline/integration-baseline.json",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-hardening/audit/track-a-core-audit.json",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "Report/PHASE_1H4_1H5_01_OBSERVABILITY_AND_GOLDEN_QUALITY_REGRESSION_REPORT.md",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/final-artifact.json",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/postv1-flow-live-validation/assets/image",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "Report/STEP-08_REPORT.md",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "golden/baselines.json",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-case-a/governance/compliance.json",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-case-a/governance",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "Report/STEP-07_REPORT.md",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "Report/STEP-10A_FIX_DURATION_REPORT.md",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "Report/POST-V1B_FLOW_COMPANION_LIVE_AUTOMATION_REPORT.md",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "Report/POST-V1E_FLOW_COMPANION_FUNCTIONAL_AUTOMATION_REPORT.md",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "tests/flow/test-flow-postv1c.js",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "Report/PLAYWRIGHT_AGENT_TESTING_SETUP_REPORT.md",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "Report/STEP-09_REPORT.md",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-case-a/telemetry/evidence.json",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-case-a/telemetry",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-hardening/evidence/before-after/AFTER-run-case-b.js",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1h1-validation/baseline/perf-baseline.json",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1h1-validation/baseline",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/pipeline/state.json",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/pipeline/state.prev.json",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "Report/POST-V1E_2G_AGENT_SURFACE_AND_PROMPT_LOGICAL_TEXT_REPORT.md",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "Report/STEP-10A_REPORT.md",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/postv1b-flow-companion-live/assets/image",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "Report/evidence/post-v1f-real-execution/2026-10-01T09-38-51.519Z-correlation-forensics.json",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "Report/evidence/post-v1f-real-execution/2026-10-01T14-08-40.329Z-recovery-import-qa.json",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1h2-validation/evidence/performance/perf-baseline.json",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1h2-validation/evidence/performance",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "Report/PHASE_1H2_01_GENERATION_HISTORY_AND_LOCKING_REPORT.md",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1h45-validation/evidence/performance/perf-baseline-golden.json",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "Report/PHASE_1H6_1H7_01_ARTIFACT_GOVERNANCE_AND_STORAGE_LIFECYCLE_REPORT.md",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1h67-validation/evidence/performance/perf-baseline-compliance.json",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1h67-validation/evidence/performance/perf-baseline-governance.json",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1h67-validation/evidence/performance/perf-baseline-storage.json",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/postv1-flow-live-validation/assets/video",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "Report/REPOSITORY_ROOT_CLEANUP_AND_STRUCTURE_REPORT.md",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "tests/pipeline/test-finalize-output.js",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/telemetry/evidence.json",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/telemetry",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-hardening/evidence/telemetry/telemetry-summary.json",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-hardening/evidence/telemetry",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1h3-validation/evidence/performance/perf-baseline-dag.json",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1h3-validation/evidence/performance/perf-baseline-recovery.json",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1h45-validation/evidence/performance/perf-baseline-telemetry.json",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "Report/FLOW_BRIDGE_SECURITY_AND_RESET_UX_CORRECTION_REPORT.md",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "Report/STEP-10B_FIX_SAFETY_RETRY_REPORT.md",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-case-a/budget/case-bcd-proposal.json",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-004/qa/samples.json",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-004",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/pilot-sky-blue/render/attempts/attempt-005/qa/samples.json",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "projects/phase1g12-hardening/evidence",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    },
+    {
+      "path": "Report/PHASE_1H3_01_IDEMPOTENCY_RESUME_RECOVERY_AND_DEPENDENCY_DAG_REPORT.md",
+      "referenceCount": 1,
+      "sources": [
+        "projects/phase1hyg-validation/inventory/reference-graph.json"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "migrationId": "post1h-physical-migration",
+  "capturedAt": "2026-10-05T15:41:06.511Z",
+  "note": "Live-tooling refs are rewritten; frozen prose/snapshots stay as before-evidence (FIX section 13 allowed-remaining).",
+  "incomingRefs": {
+    "projects/DBG_1G12": [
+      "projects/registry.json",
+      "projects/phase1hyg-validation/inventory/repo-inventory.json (before-evidence snapshot, frozen)"
+    ],
+    "projects/DBG_H4": [
+      "projects/registry.json",
+      "projects/phase1hyg-validation/inventory/repo-inventory.json (snapshot, frozen)"
+    ],
+    "projects/E2E_bench_panel": [
+      "projects/registry.json",
+      "projects/phase1hyg-validation/inventory/repo-inventory.json (snapshot, frozen)"
+    ],
+    "projects/live-1g1-http308": [
+      "projects/registry.json",
+      "Report/PHASE_1G1_06_FULL_E2E_VALIDATION_REPORT.md (frozen prose)",
+      "Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md (frozen prose)",
+      "projects/phase1hyg-validation/inventory/repo-inventory.json + reference-graph.json (regen after move)"
+    ],
+    "projects/phase1g12-hardening": [
+      "projects/registry.json",
+      "Report/INDEX.md",
+      "Report/PHASE_1G12_01/02 (frozen prose)",
+      "inventory snapshots (regen graph; freeze repo-inventory)"
+    ],
+    "projects/phase1h1-validation": [
+      "projects/registry.json",
+      "tests/project-manifest/test-manifest.js:314 (outDir constant, updated)",
+      "Report/PHASE_1H1_01 (frozen prose)",
+      "inventory snapshots"
+    ],
+    "projects/phase1h2-validation": [
+      "projects/registry.json",
+      "tests/history/test-history.js:521 (outDir constant, updated)",
+      "Report/PHASE_1H2_01 (frozen prose)",
+      "inventory snapshots"
+    ],
+    "projects/phase1h3-validation": [
+      "projects/registry.json",
+      "tests/recovery/test-recovery.js:447 + tests/dag/test-dag.js:366 (outDir constants, updated)",
+      "Report/PHASE_1H3_01 (frozen prose)",
+      "inventory snapshots"
+    ],
+    "projects/phase1h45-validation": [
+      "projects/registry.json",
+      "tests/golden/test-golden.js:426 + tests/telemetry/test-telemetry.js:242 (outDir constants, updated)",
+      "Report/PHASE_1H4_1H5_01 (frozen prose)",
+      "inventory snapshots"
+    ],
+    "projects/phase1h67-validation": [
+      "projects/registry.json",
+      "tests/compliance/test-compliance.js:299 + tests/provenance/test-provenance.js:233 + tests/storage/test-storage.js:313 (outDir constants, updated)",
+      "Report/PHASE_1H6_1H7_01 (frozen prose)",
+      "inventory snapshots"
+    ],
+    "Report/ flat files (72)": [
+      "Report/INDEX.md (rewritten)",
+      "projects/phase1hyg-validation/inventory/reference-graph.json (regenerated)",
+      "tests/workspace/test-workspace.js W12 (updated to new path)",
+      "inter-report prose cross-refs (frozen history, allowed-remaining)"
+    ],
+    "out/pilot-sky-blue + out/postv1-flow-live-validation": [
+      "Report prose (STEP-14, REPOSITORY_ROOT_CLEANUP — frozen history)",
+      "no code refs (verified full-repo scan)"
+    ],
+    "out/ loose scratch (7)": [
+      "no refs anywhere (verified full-repo scan)"
+    ]
+  }
+}

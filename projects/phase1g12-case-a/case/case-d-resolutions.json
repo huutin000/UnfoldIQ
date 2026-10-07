@@ -1,0 +1,38 @@
+{
+  "D1": {
+    "resolutionId": "mr-526fb7a60ea0",
+    "renderMode": "VEO_REFERENCE",
+    "model": "google--gemini-omni-flash--1-1",
+    "cost": {
+      "state": "KNOWN",
+      "reason": "total = 7 × 1 generations",
+      "unit": "credits_per_generation",
+      "valuePerGeneration": 7,
+      "estimatedTotal": 7
+    }
+  },
+  "D2": {
+    "resolutionId": "mr-530bec09f9f1",
+    "renderMode": "VEO_REFERENCE",
+    "model": "google--gemini-omni-flash--1-1",
+    "cost": {
+      "state": "KNOWN",
+      "reason": "total = 7 × 1 generations",
+      "unit": "credits_per_generation",
+      "valuePerGeneration": 7,
+      "estimatedTotal": 7
+    }
+  },
+  "D3": {
+    "resolutionId": "mr-0538f0b00d8e",
+    "renderMode": "VEO_REFERENCE",
+    "model": "google--gemini-omni-flash--1-1",
+    "cost": {
+      "state": "KNOWN",
+      "reason": "total = 7 × 1 generations",
+      "unit": "credits_per_generation",
+      "valuePerGeneration": 7,
+      "estimatedTotal": 7
+    }
+  }
+}

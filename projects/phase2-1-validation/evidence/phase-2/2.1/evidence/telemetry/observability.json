@@ -1,0 +1,82 @@
+{
+  "task": "PHASE_2_1_01",
+  "eventNames": [
+    "VOICE_BIBLE_CREATED",
+    "VOICE_BIBLE_VALIDATED",
+    "VOICE_BIBLE_REVISED",
+    "VOICE_SELECTION_RESOLVED",
+    "VOICE_SELECTION_REVIEW_REQUIRED"
+  ],
+  "eventClassesExtended": true,
+  "schemaChangeRequired": false,
+  "schemaNote": "schemas/telemetry.schema.json declares eventName as minLength:1; the closed vocabulary lives in lib/telemetry EVENT_CLASSES, so only the code list changed",
+  "durableClasses": [
+    "VOICE_BIBLE_CREATED",
+    "VOICE_BIBLE_REVISED",
+    "VOICE_SELECTION_RESOLVED",
+    "VOICE_SELECTION_REVIEW_REQUIRED"
+  ],
+  "correlationKey": "correlationId = voiceBibleId; operationId = voiceBibleId",
+  "persistedIdentifiersOnly": true,
+  "storedEvents": [
+    {
+      "eventId": "eve-bb7b85b70cd5",
+      "eventName": "VOICE_BIBLE_CREATED",
+      "correlationId": "vb-42744f223671",
+      "operationId": "vb-42744f223671",
+      "stage": "phase-2.1",
+      "component": "voice-bible",
+      "provider": "local-kokoro",
+      "model": "kokoro-v1",
+      "severity": "INFO",
+      "errorCode": null,
+      "stateTo": "CREATED",
+      "retention": "CANONICAL_DURABLE",
+      "attributes": {
+        "bibleVersion": 1,
+        "language": "en-us",
+        "personaId": "per-explanatory-narrator-en",
+        "provenanceSource": "PROVIDER_DEFAULT",
+        "rightsStatus": "UNRESOLVED"
+      }
+    },
+    {
+      "eventId": "eve-de16f8ffb46c",
+      "eventName": "VOICE_SELECTION_REVIEW_REQUIRED",
+      "correlationId": "vb-42744f223671",
+      "operationId": "vb-42744f223671",
+      "stage": "phase-2.1",
+      "component": "voice-bible",
+      "provider": null,
+      "model": null,
+      "severity": "WARN",
+      "errorCode": "VOICE_RIGHTS_REVIEW_REQUIRED",
+      "stateTo": null,
+      "retention": "CANONICAL_DURABLE",
+      "attributes": {
+        "blockers": "VOICE_SELECTION_PROVIDER_DEFAULT: voice came from the provider per-language default, not an operator decision | VOICE_RIGHTS_REVIEW_REQUIRED: rights status is UNRESOLVED"
+      }
+    },
+    {
+      "eventId": "eve-2e43a50f2afb",
+      "eventName": "VOICE_SELECTION_RESOLVED",
+      "correlationId": "vb-42744f223671",
+      "operationId": "vb-42744f223671",
+      "stage": "phase-2.1",
+      "component": "voice-bible",
+      "provider": "local-kokoro",
+      "model": "kokoro-v1",
+      "severity": "INFO",
+      "errorCode": "VOICE_RIGHTS_REVIEW_REQUIRED",
+      "stateTo": "UNRESOLVED",
+      "retention": "CANONICAL_DURABLE",
+      "attributes": {
+        "productionReady": false,
+        "rightsStatus": "UNRESOLVED",
+        "provenanceSource": "PROVIDER_DEFAULT",
+        "bibleVersion": 1
+      }
+    }
+  ],
+  "traceCount": 3
+}

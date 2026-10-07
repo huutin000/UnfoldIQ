@@ -1,0 +1,73 @@
+{
+  "ok": true,
+  "store": {
+    "schemaVersion": "1.0.0",
+    "projectId": "phase1g12-case-a",
+    "revision": 23,
+    "generations": 6,
+    "variants": 6,
+    "decisions": 7,
+    "locks": 8,
+    "fingerprint": "8914767c29407633",
+    "attempts": [
+      "b1-attempt-01=FAILED",
+      "b1-attempt-02=SUCCEEDED",
+      "c1-attempt-01=SUCCEEDED",
+      "d1-attempt-01=SUCCEEDED",
+      "d2-attempt-01=SUCCEEDED",
+      "d3-attempt-01=SUCCEEDED"
+    ],
+    "lockKeys": [
+      "ASSET::as-5e0bb7f87d4d",
+      "ASSET::as-a7801df9bf0f",
+      "ASSET::as-fe697fd1fef8",
+      "SHOT::B-SH01",
+      "SHOT::C-SH01",
+      "SHOT::D-SH01",
+      "SHOT::D-SH02",
+      "SHOT::D-SH03"
+    ]
+  },
+  "decisions": [
+    {
+      "attempt": "b1-attempt-01",
+      "status": "MIGRATED",
+      "why": "generation FAILED from case result FAIL + QA REJECTED; model proven only for D shots (see selections)"
+    },
+    {
+      "attempt": "b1-attempt-02",
+      "status": "MIGRATED",
+      "why": "generation SUCCEEDED from case result PASS + QA READY_FOR_TIMELINE; model proven only for D shots (see selections)"
+    },
+    {
+      "attempt": "c1-attempt-01",
+      "status": "MIGRATED",
+      "why": "generation SUCCEEDED from case result PASS + QA READY_FOR_TIMELINE; model proven only for D shots (see selections)"
+    },
+    {
+      "attempt": "d1-attempt-01",
+      "status": "MIGRATED",
+      "why": "generation SUCCEEDED from case result PASS + QA READY_FOR_TIMELINE; model proven only for D shots (see selections)"
+    },
+    {
+      "attempt": "d2-attempt-01",
+      "status": "MIGRATED",
+      "why": "generation SUCCEEDED from case result PASS + QA READY_FOR_TIMELINE; model proven only for D shots (see selections)"
+    },
+    {
+      "attempt": "d3-attempt-01",
+      "status": "MIGRATED",
+      "why": "generation SUCCEEDED from case result PASS + QA READY_FOR_TIMELINE; model proven only for D shots (see selections)"
+    },
+    {
+      "attempt": "avatar-source-frame",
+      "status": "MIGRATED",
+      "why": "no generation existed; REJECTED decision only"
+    },
+    {
+      "attempt": "asset-locks",
+      "status": "MIGRATED",
+      "why": "3 APPROVED+locked registry assets mirrored (avatar excluded: REJECTED)"
+    }
+  ]
+}

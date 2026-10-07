@@ -1,0 +1,46 @@
+{
+  "paidGenerations": 0,
+  "comparisons": [
+    {
+      "golden": "gold-factual-explainer",
+      "verdict": "PASS"
+    },
+    {
+      "golden": "gold-fiction-continuity",
+      "verdict": "PASS"
+    },
+    {
+      "golden": "gold-originality-study",
+      "verdict": "PASS"
+    },
+    {
+      "golden": "gold-voice-caption",
+      "verdict": "PASS"
+    },
+    {
+      "golden": "gold-image-only",
+      "verdict": "PASS"
+    },
+    {
+      "golden": "gold-fiction-continuity",
+      "verdict": "FAIL",
+      "mock": true
+    }
+  ],
+  "canary": {
+    "canaryId": "can-99361d473ce4",
+    "subset": [
+      "gold-factual-explainer",
+      "gold-fiction-continuity",
+      "gold-image-only",
+      "gold-originality-study"
+    ],
+    "status": "PROMOTE_ALLOWED"
+  },
+  "telemetry": {
+    "emitted": 5,
+    "runIds": [
+      "gr-live-proof"
+    ]
+  }
+}

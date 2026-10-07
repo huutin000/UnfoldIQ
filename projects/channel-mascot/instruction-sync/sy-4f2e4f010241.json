@@ -1,0 +1,31 @@
+{
+  "version": "1.0.0",
+  "syncId": "sy-4f2e4f010241",
+  "projectId": "channel-mascot",
+  "instructionSetId": "is-7e784d73e229",
+  "instructionVersion": "iv-7e784d73e229",
+  "desiredFingerprint": "778e8299f5dd0265",
+  "provider": "GOOGLE_FLOW",
+  "providerProjectRef": "8221824c-a1a6-4aa9-8d6b-fac24860d49e",
+  "automationMode": "OPERATOR_ASSISTED",
+  "writeTransport": null,
+  "operatorTextEntry": true,
+  "previousSyncRef": null,
+  "applyAttemptId": "sy-4f2e4f010241",
+  "applyStatus": "APPLIED",
+  "appliedAt": "2026-10-03T15:04:53Z",
+  "readbackStatus": "RECEIVED",
+  "readbackFingerprint": "778e8299f5dd0265",
+  "readbackAt": null,
+  "semanticCompareStatus": "MATCH",
+  "differences": [],
+  "referenceBindings": [],
+  "verifiedAt": "2026-10-04T01:56:00.268Z",
+  "syncStatus": "VERIFIED",
+  "evidenceRefs": [
+    "REPORT:Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md#59 (LIVE5 appliedAt 2026-10-03T15:04:53Z automated path; final text operator-assisted path A; LIVE7 readback VERIFIED; LIVE8 MATCH byte-equal FP 778e8299f5dd0265 both sides; LIVE9 verifiedAt 2026-10-04T01:56:00.268Z)",
+    "RECONSTRUCTED_2026-10-04_FIX03-R1: original file overwritten on disk by live attempt 2 via syncId-collision bug (deterministic id12 seed); every surviving field transcribed verbatim from report §59; createdAt approximated from appliedAt; readbackAt not recoverable (null); operatorTextEntry=true per §59 residual"
+  ],
+  "createdAt": "2026-10-03T15:04:53Z",
+  "updatedAt": "2026-10-04T03:40:00.000Z"
+}

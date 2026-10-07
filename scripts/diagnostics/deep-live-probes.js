@@ -13,11 +13,13 @@
 
 const bridge = require("../../lib/research-deep/gpt-researcher-bridge.js");
 const { isLiveApproved, validateProbeResult } = require("../../lib/research-deep/provider-interface.js");
+const { loadRootEnv } = require("../../lib/env-bootstrap.js");
 
 const PROBES = ["embedding", "llm", "retriever"];
 
 async function main() {
   console.log("=== UNFOLDIQ DEEP LIVE PROBES (tiny, explicit opt-in only) ===");
+  loadRootEnv();
   if (!isLiveApproved()) {
     console.log("REFUSED: DEEP_LIVE_NOT_APPROVED — set UNFOLDIQ_DEEP_LIVE_TEST_ALLOWED=1 explicitly to authorize spend. Nothing executed.");
     process.exit(2);

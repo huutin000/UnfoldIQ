@@ -1,0 +1,19 @@
+{
+  "promptPackageId": "pp-0ce16935b74a",
+  "promptSpecId": "ps-fe3808dabfcf",
+  "labelMap": {
+    "C-SH01": "sh-cc6f74a027f8",
+    "C-SC01": "sc-bb08d812241d"
+  },
+  "compiledPrompt": "MUST PRESERVE: referenceFrameAppearance\nSUBJECT: A minimal matte blue circle centered on a clean light background grows slightly larger, as the camera pushes in slowly; the circle keeps its shape, color and centered composition from start to end.\nACTION: slow push-in; the circle scales from the start size to the end size\nTEMPORAL PROGRESSION: blue circle small (start frame) -> blue circle larger (end frame)",
+  "requiredCapabilities": [
+    "VIDEO_GENERATION",
+    "IMAGE_TO_VIDEO"
+  ],
+  "hasReferenceFrame": true,
+  "referenceIds": [
+    "as-fe697fd1fef8",
+    "as-5e0bb7f87d4d"
+  ],
+  "fingerprint": "f8d26a6d6e4c9306"
+}

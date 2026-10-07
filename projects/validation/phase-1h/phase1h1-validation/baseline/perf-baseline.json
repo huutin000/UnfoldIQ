@@ -1,0 +1,52 @@
+{
+  "artifact": "perf-baseline",
+  "capturedAt": "2026-10-07T03:37:15.695Z",
+  "method": "process.hrtime.bigint micro-benchmarks inside tests/project-manifest/test-manifest.js",
+  "sampleCounts": {
+    "validate": 50,
+    "load": 20,
+    "write": 10,
+    "conflictCheck": 20
+  },
+  "environment": "local Windows, node",
+  "metrics": {
+    "load": {
+      "samples": 20,
+      "minMs": 0.34,
+      "p50Ms": 0.401,
+      "maxMs": 7.206
+    },
+    "validate": {
+      "samples": 50,
+      "minMs": 0.108,
+      "p50Ms": 0.119,
+      "maxMs": 1.094
+    },
+    "write": {
+      "samples": 10,
+      "minMs": 2.447,
+      "p50Ms": 9.712,
+      "maxMs": 12.527
+    },
+    "conflictCheck": {
+      "samples": 20,
+      "minMs": 0.3,
+      "p50Ms": 0.341,
+      "maxMs": 0.534
+    },
+    "sizeBytes": 4013,
+    "migrationMs": 28.27,
+    "readCount": "1 file per load (single JSON)",
+    "writeCount": "1 atomic replace per effective mutation; 0 on no-op",
+    "unnecessaryRewriteCount": 0
+  },
+  "budgets": {
+    "validateP50Ms": 5,
+    "loadP50Ms": 5,
+    "writeP50Ms": 25,
+    "sizeBytes": 8192,
+    "migrationMs": 500
+  },
+  "reason": "manifest sits on every Core read path eventually; writes are rare but must stay atomic and cheap",
+  "result": "PASS"
+}

@@ -1,0 +1,22 @@
+out/
+debug/
+final/
+  pilot-sky-blue/
+    QA.md
+    UPLOAD_CHECKLIST.md
+    captions.srt
+    captions.vtt
+    final-artifact.json
+    final.mp4
+    final.prev.mp4
+    provenance-summary.json
+    provenance.json
+    qa-report.json
+    render-plan.json
+    staging-manifest.json
+  postv1-flow-live-validation/
+    validation.mp4
+preview/
+temp/
+test/
+.gitkeep

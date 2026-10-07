@@ -14,7 +14,11 @@ const TRANSITIONS = {
   PENDING: ["VALIDATED", "CANCELLED"],
   VALIDATED: ["PREPARED", "CANCELLED", "FAILED"],
   PREPARED: ["AWAITING_USER_APPROVAL", "MANUAL_ASSIST_REQUIRED", "CANCELLED"],
-  AWAITING_USER_APPROVAL: ["GENERATING", "REJECTED_BY_USER", "CANCELLED", "PAUSED"],
+  AWAITING_USER_APPROVAL: ["AWAITING_PROVIDER_ACCEPTANCE", "GENERATING", "REJECTED_BY_USER", "CANCELLED", "PAUSED"],
+  // Submit issued to the provider page, acceptance not yet proven. The only
+  // exits are acceptance evidence (GENERATING), explicit reconciliation, or
+  // cancellation — never a fresh submit with a different approval.
+  AWAITING_PROVIDER_ACCEPTANCE: ["GENERATING", "RECONCILIATION_REQUIRED", "CANCELLED"],
   GENERATING: ["RESULT_DETECTED", "RETRYABLE_ERROR", "FAILED", "PAUSED", "CANCELLED", "RECONCILIATION_REQUIRED", "PROVIDER_SAFETY_REFUSED"],
   RESULT_DETECTED: ["DOWNLOADING", "RETRYABLE_ERROR", "FAILED"],
   DOWNLOADING: ["IMPORTED", "RETRYABLE_ERROR", "FAILED"],
@@ -87,6 +91,12 @@ function transition(job, to, opts = {}) {
     next.adaptedCount = (job.adaptedCount || 0) + 1;
     next.approval = null; // adapted retry needs a NEW approval at AWAITING_USER_APPROVAL
     if (opts.adaptation) next.adaptation = opts.adaptation;
+  }
+  if (to === "AWAITING_PROVIDER_ACCEPTANCE") {
+    if (opts.submitNonce) {
+      next.submitIssuedAt = new Date().toISOString();
+      next.submitNonce = opts.submitNonce;
+    }
   }
   if (to === "PAUSED") {
     next.pausedFrom = from;

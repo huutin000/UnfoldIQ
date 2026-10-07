@@ -1,0 +1,40 @@
+{
+  "artifact": "perf-baseline-governance",
+  "capturedAt": "2026-10-07T03:38:25.871Z",
+  "method": "process.hrtime.bigint micro-benchmarks inside tests/provenance/test-provenance.js",
+  "sampleCounts": {
+    "record": 10,
+    "load": 20,
+    "trace": 20
+  },
+  "environment": "local Windows, node",
+  "metrics": {
+    "record": {
+      "samples": 10,
+      "minMs": 5.529,
+      "p50Ms": 7.222,
+      "maxMs": 7.801
+    },
+    "load": {
+      "samples": 20,
+      "minMs": 0.534,
+      "p50Ms": 0.647,
+      "maxMs": 6.125
+    },
+    "trace": {
+      "samples": 20,
+      "minMs": 0.456,
+      "p50Ms": 0.626,
+      "maxMs": 1.248
+    },
+    "sizeBytes": 13744
+  },
+  "budgets": {
+    "recordP50Ms": 25,
+    "loadP50Ms": 5,
+    "traceP50Ms": 5,
+    "sizeBytes": 1048576
+  },
+  "reason": "provenance sits on publish/selection paths; trace backs end-to-end queries",
+  "result": "PASS"
+}

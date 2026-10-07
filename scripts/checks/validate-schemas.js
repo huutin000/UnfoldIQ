@@ -16,7 +16,42 @@ const schemaFiles = [
   "research-brief.schema.json",
   "research-plan.schema.json",
   "creative-brief.schema.json",
-  "source-index.schema.json",
+  "creative-memory.schema.json",
+  "beat-map.schema.json",
+  "scene-graph.schema.json",
+  "shot-plan.schema.json",
+  "prompt-package.schema.json",
+  "production-decision.schema.json",
+  "project-manifest.schema.json",
+  "project-manifest-1.1.0.schema.json",
+  "project-manifest-1.2.0.schema.json",
+  "generation-history.schema.json",
+  "recovery-state.schema.json",
+  "telemetry.schema.json",
+  "golden.schema.json",
+  "governance.schema.json",
+"project-manifest-1.3.0.schema.json",
+  "project-manifest-1.4.0.schema.json",
+  "project-manifest-1.5.0.schema.json",
+  "final-spoken-script.schema.json",
+  "final-spoken-script-1.1.0.schema.json",
+  "spoken-humanization.schema.json",
+  "evidence-fidelity-decision.schema.json",
+  "naturalness-qa.schema.json",
+  "narration-direction.schema.json",
+  "pronunciation-profile.schema.json",
+  "pronunciation-runtime-pass.schema.json",
+  "tts-ready-plan.schema.json",
+"voice-bible.schema.json",
+  "voice-license-evidence.schema.json",
+  "model-registry-snapshot.schema.json",
+  "model-resolution.schema.json",
+  "platform-adaptation.schema.json",
+  "production-budget-plan.schema.json",
+  "generation-cost-ledger.schema.json",
+  "agent-instruction-set.schema.json",
+  "instruction-sync.schema.json",
+  "asset-record.schema.json",  "source-index.schema.json",
   "evidence-state.schema.json",
   "story-handoff.schema.json",
   "content-mode.schema.json",
@@ -1140,7 +1175,655 @@ allPassed &= testInvalid("story-handoff (draft empty sections)", "story-handoff.
   narrativeBriefRef: { briefId: "nb-001" }, sections: [],
 });
 
-console.log("\n=== Semantic Validation Layer (lib/research-quality-check.js) ===");console.log("Layer 1 = JSON Schema (shape/type). Layer 2 = Semantic (epistemic consistency).\n");
+// Test production-decision (1G.5)
+allPassed &= testValid("production-decision (valid editor motion)", "production-decision.schema.json", {
+  version: "1.0.0", decisionId: "pd-0123456789ab", projectId: "test-project",
+  sceneId: "sc-0123456789ab", shotId: "sh-0123456789ab",
+  visualType: "MAP", recommendedOutputType: "EDITOR_MOTION", selectedOutputType: null,
+  effectiveOutputType: "EDITOR_MOTION",
+  visualModality: "MAP", modalityReasons: ["visualModality = MAP (location / movement through space)"],
+  modalityConfidence: "HIGH", alternativeModalities: ["ATMOSPHERE"],
+  beatLineage: { beatIds: ["bt-001"], narrativeRoles: ["EXPLANATION"], narrativePurpose: "explain the route", visualObjective: "EXPLAIN", shotPurpose: "DEMONSTRATE" },
+  beatFingerprints: { "bt-001": "0123456789abcdef" }, referenceAssetIds: [], referenceVersions: {},
+  renderMode: "REMOTION_MOTION", renderModeReasons: ["renderMode = REMOTION_MOTION: deterministic editor motion expresses the modality"], motionNeed: "MEDIUM", motionScore: 2,
+  editorMotionViability: { viable: true, techniques: ["MAP_ROUTE", "PAN"], editorAlternativeQuality: "ADEQUATE" },
+  generatedMotionValue: "NONE", referenceStrategy: "NONE",
+  requiredCapabilities: ["IMAGE_GENERATION", "LANDSCAPE_OUTPUT"],
+  requiredAssetRoles: ["PRIMARY_IMAGE", "MAP_BASE"],
+  editorMotionPlan: { motionPlanId: "mp-0123456789ab", shotId: "sh-0123456789ab", techniques: ["MAP_ROUTE"] },
+  decisionReasons: ["baseline EDITOR_MOTION for visualType MAP"],
+  warnings: [], blockers: [], framing: "ILLUSTRATIVE", generationRisk: "NONE",
+  costClass: "LOW", externalCostEstimate: "UNKNOWN",
+  claimRefs: [], classificationRefs: [],
+  sourceRefs: { shotId: "sh-0123456789ab", sceneId: "sc-0123456789ab", beatIds: ["bt-001"] },
+  sourceFingerprints: { shot: "0123456789abcdef", scene: "abcdef0123456789", policyVersion: "visual-motion-policy-1.0.0" },
+  platform: "youtube", contentClass: "FACTUAL", policyRef: "visual-motion-policy-1.0.0",
+  selectedReason: null, overrideState: "NONE",
+  fingerprint: "0123456789abcdef", status: "DECISION_READY",
+});
+allPassed &= testInvalid("production-decision (bad recommendation)", "production-decision.schema.json", {
+  version: "1.0.0", decisionId: "pd-0123456789ab", projectId: "test-project",
+  sceneId: "sc-0123456789ab", shotId: "sh-0123456789ab",
+  visualType: "MAP", recommendedOutputType: "VEO_VIDEO",
+  motionNeed: "LOW", referenceStrategy: "NONE",
+  requiredCapabilities: ["IMAGE_GENERATION"], requiredAssetRoles: ["PRIMARY_IMAGE"],
+  decisionReasons: ["x"],
+  sourceRefs: { shotId: "sh-0123456789ab", sceneId: "sc-0123456789ab", beatIds: ["bt-001"] },
+  sourceFingerprints: {}, fingerprint: "0123456789abcdef", status: "DECISION_READY",
+});
+
+// Test model-registry-snapshot (1G.6)
+allPassed &= testValid("model-registry-snapshot (valid minimal)", "model-registry-snapshot.schema.json", {
+  version: "1.0.0", snapshotId: "rs-test", createdAt: new Date().toISOString(),
+  surfaces: [{ surfaceId: "S1", providerId: "p1", status: "UNKNOWN" }],
+  models: [{
+    modelId: "p1--m--1", providerId: "p1", surfaceId: "S1",
+    capabilityRules: [{ capability: "VIDEO_GENERATION", support: "SUPPORTED", sourceRefs: ["src-1"] }],
+    availability: "UNKNOWN",
+  }],
+  sources: [{ sourceId: "src-1", sourceType: "OFFICIAL_PROVIDER_DOC", retrievedAt: new Date().toISOString() }],
+  fingerprint: "0123456789abcdef",
+});
+allPassed &= testInvalid("model-registry-snapshot (rule without provenance)", "model-registry-snapshot.schema.json", {
+  version: "1.0.0", snapshotId: "rs-bad", createdAt: new Date().toISOString(),
+  surfaces: [{ surfaceId: "S1", providerId: "p1" }],
+  models: [{
+    modelId: "p1--m--1", providerId: "p1", surfaceId: "S1",
+    capabilityRules: [{ capability: "VIDEO_GENERATION", support: "SUPPORTED", sourceRefs: [] }],
+    availability: "UNKNOWN",
+  }],
+  sources: [{ sourceId: "src-1", sourceType: "OFFICIAL_PROVIDER_DOC", retrievedAt: new Date().toISOString() }],
+  fingerprint: "0123456789abcdef",
+});
+
+// Test model-resolution (1G.6)
+allPassed &= testValid("model-resolution (valid provisional)", "model-resolution.schema.json", {
+  version: "1.0.0", resolutionId: "mr-0123456789ab", projectId: "test", shotId: "sh-000000000001",
+  renderMode: "VEO_FIRST_FRAME", requiredCapabilities: ["VIDEO_GENERATION"],
+  registrySnapshotRef: { snapshotId: "rs-test", fingerprint: "0123456789abcdef" },
+  candidateModels: [], rejectedModels: [],
+  selectionReasons: ["hard_requirement_fit: satisfies VIDEO_GENERATION"],
+  warnings: ["RUNTIME_AVAILABILITY_NOT_VERIFIED"], blockers: [],
+  capabilityFreshness: "FRESH", availabilityFreshness: "UNKNOWN", costFreshness: "UNKNOWN",
+  costEstimate: { state: "UNKNOWN" }, resolutionKind: "VIDEO_MODEL",
+  fingerprint: "0123456789abcdef", status: "PROVISIONAL",
+});
+allPassed &= testInvalid("model-resolution (bad render mode)", "model-resolution.schema.json", {
+  version: "1.0.0", resolutionId: "mr-0123456789ab", projectId: "test", shotId: "sh-000000000001",
+  renderMode: "VEO_TURBO", requiredCapabilities: [],
+  registrySnapshotRef: { snapshotId: "rs-test", fingerprint: "0123456789abcdef" },
+  selectionReasons: [], fingerprint: "0123456789abcdef", status: "BLOCKED",
+});
+
+// Test platform-adaptation (1G.7)
+allPassed &= testValid("platform-adaptation (valid reframe)", "platform-adaptation.schema.json", {
+  version: "1.0.0", adaptationId: "pa-0123456789ab", projectId: "test", shotId: "sh-000000000001",
+  platformId: "TIKTOK", platformProfileVersion: "1.0.0",
+  sourceCompositionId: "mc-0123456789ab", sourceFingerprint: "0123456789abcdef",
+  targetAspectRatio: "9:16", action: "REFRAME",
+  textPlan: {}, captionPlan: {}, graphicPlan: {},
+  preservedIntent: ["visual modality MAP unchanged"], risks: [], warnings: [], blockers: [],
+  regenerationDecision: "NOT_REQUIRED", regenerationReasons: [],
+  fingerprint: "0123456789abcdef", status: "ADAPTED",
+});
+allPassed &= testInvalid("platform-adaptation (bad action)", "platform-adaptation.schema.json", {
+  version: "1.0.0", adaptationId: "pa-0123456789ab", shotId: "sh-000000000001",
+  platformId: "TIKTOK", sourceCompositionId: "mc-0123456789ab", sourceFingerprint: "x",
+  targetAspectRatio: "9:16", action: "ROTATE",
+  regenerationDecision: "NOT_REQUIRED",
+  fingerprint: "0123456789abcdef", status: "ADAPTED",
+});
+
+// Test production-budget-plan (1G.8)
+allPassed &= testValid("production-budget-plan (valid draft)", "production-budget-plan.schema.json", {
+  version: "1.0.0", budgetPlanId: "bp-0123456789ab", projectId: "test", scopeId: "scope-1",
+  hardBudget: { unit: "CREDITS", limit: 30 }, plannedItems: [],
+  summary: { estimatedImages: 0, estimatedVeoShots: 0, estimatedVariants: 0, knownCredits: 0, exactTotalCredits: 0 },
+  estimateState: "EXACT", fingerprint: "0123456789abcdef", status: "DRAFT",
+});
+allPassed &= testInvalid("production-budget-plan (missing hard budget)", "production-budget-plan.schema.json", {
+  version: "1.0.0", budgetPlanId: "bp-0123456789ab", projectId: "test", scopeId: "scope-1",
+  plannedItems: [], summary: {}, estimateState: "EXACT",
+  fingerprint: "0123456789abcdef", status: "DRAFT",
+});
+
+// Test generation-cost-ledger (1G.8)
+allPassed &= testValid("generation-cost-ledger (valid empty)", "generation-cost-ledger.schema.json", {
+  version: "1.0.0", ledgerId: "cl-0123456789ab", projectId: "test", budgetPlanId: "bp-0123456789ab",
+  entries: [], totals: { planned: 0, creditsObserved: 0 },
+  reconciliationState: "RECONCILED", fingerprint: "0123456789abcdef",
+});
+allPassed &= testInvalid("generation-cost-ledger (negative credits)", "generation-cost-ledger.schema.json", {
+  version: "1.0.0", ledgerId: "cl-0123456789ab", projectId: "test", budgetPlanId: "bp-0123456789ab",
+  entries: [{ entryId: "le-1", attemptId: "a1", observationId: "o1", status: "SUCCEEDED", creditsObserved: -5, observedAt: new Date().toISOString(), fingerprint: "x" }],
+  totals: { planned: 0, creditsObserved: -5 },
+  reconciliationState: "RECONCILED", fingerprint: "0123456789abcdef",
+});
+
+// Test agent-instruction-set (1G.9)
+allPassed &= testValid("agent-instruction-set (valid minimal)", "agent-instruction-set.schema.json", {
+  version: "1.0.0", instructionSetId: "is-0123456789ab", projectId: "test",
+  instructionVersion: "iv-0123456789ab",
+  constraints: { characterIdentity: ["Lan keeps her ward uniform"] },
+  referenceIds: ["ref-1"],
+  referenceBindings: [{ referenceId: "ref-1", role: "CHARACTER_IDENTITY" }],
+  compiledText: "PROJECT INVARIANTS:\n- Lan keeps her ward uniform",
+  compiledFingerprint: "0123456789abcdef",
+});
+allPassed &= testInvalid("agent-instruction-set (bad reference role)", "agent-instruction-set.schema.json", {
+  version: "1.0.0", instructionSetId: "is-0123456789ab", projectId: "test",
+  instructionVersion: "iv-0123456789ab", constraints: {},
+  referenceIds: ["ref-1"], referenceBindings: [{ referenceId: "ref-1", role: "MOOD" }],
+  compiledText: "x", compiledFingerprint: "0123456789abcdef",
+});
+
+// Test instruction-sync (1G.9)
+allPassed &= testValid("instruction-sync (valid draft)", "instruction-sync.schema.json", {
+  version: "1.0.0", syncId: "sy-0123456789ab", projectId: "test",
+  instructionSetId: "is-0123456789ab", instructionVersion: "iv-0123456789ab",
+  desiredFingerprint: "0123456789abcdef", syncStatus: "DRAFT",
+});
+allPassed &= testInvalid("instruction-sync (missing desired fingerprint)", "instruction-sync.schema.json", {
+  version: "1.0.0", syncId: "sy-0123456789ab", projectId: "test",
+  instructionSetId: "is-0123456789ab", instructionVersion: "iv-0123456789ab",
+  syncStatus: "DRAFT",
+});
+
+
+allPassed &= testValid("instruction-sync (hands-free verified metadata)", "instruction-sync.schema.json", {
+  version: "1.0.0", syncId: "sy-0123456789ab", projectId: "test",
+  instructionSetId: "is-0123456789ab", instructionVersion: "iv-0123456789ab",
+  desiredFingerprint: "0123456789abcdef", syncStatus: "VERIFIED",
+  automationMode: "HANDS_FREE", writeTransport: "MAIN_WORLD_INPUT_SEQUENCE",
+  operatorTextEntry: false, previousSyncRef: "sy-4f2e4f010241",
+});
+allPassed &= testInvalid("instruction-sync (bad previousSyncRef shape)", "instruction-sync.schema.json", {
+  version: "1.0.0", syncId: "sy-0123456789ab", projectId: "test",
+  instructionSetId: "is-0123456789ab", instructionVersion: "iv-0123456789ab",
+  desiredFingerprint: "0123456789abcdef", syncStatus: "DRAFT",
+  previousSyncRef: "not-a-sync-id",
+});
+
+// Test asset-record (1G.10)
+allPassed &= testValid("asset-record (valid minimal)", "asset-record.schema.json", {
+  version: "1.0.0", assetId: "as-0123456789ab", projectId: "test",
+  type: "image", role: "BROLL", source: "migration",
+  hash: { algo: "sha256", value: "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef" },
+  bytes: 1024, createdAt: "2026-10-04T00:00:00.000Z",
+});
+allPassed &= testInvalid("asset-record (bad role + bad hash)", "asset-record.schema.json", {
+  version: "1.0.0", assetId: "as-0123456789ab", projectId: "test",
+  type: "image", role: "MOOD", source: "migration",
+  hash: { algo: "sha256", value: "zzz" },
+  bytes: 1024, createdAt: "2026-10-04T00:00:00.000Z",
+});
+
+// Test project-manifest (1H.1)
+allPassed &= testValid("project-manifest (valid minimal)", "project-manifest.schema.json", {
+  schemaVersion: "1.0.0", manifestId: "pm-0123456789ab", projectId: "test",
+  projectVersion: 1, revision: 1, createdAt: "2026-10-05T00:00:00.000Z", updatedAt: "2026-10-05T00:00:00.000Z",
+  artifacts: {}, providers: { selections: [] }, state: { status: "DRAFT" },
+  lineage: {}, fingerprint: "0123456789abcdef",
+});
+allPassed &= testInvalid("project-manifest (bad status + bad fingerprint)", "project-manifest.schema.json", {
+  schemaVersion: "1.0.0", manifestId: "pm-0123456789ab", projectId: "test",
+  projectVersion: 1, revision: 1, createdAt: "2026-10-05T00:00:00.000Z", updatedAt: "2026-10-05T00:00:00.000Z",
+  artifacts: {}, providers: { selections: [] }, state: { status: "SHIPPED" },
+  lineage: {}, fingerprint: "zzz",
+});
+
+// Test project-manifest 1.1.0 (1H.2 history slot)
+allPassed &= testValid("project-manifest-1.1.0 (history ref)", "project-manifest-1.1.0.schema.json", {
+  schemaVersion: "1.1.0", manifestId: "pm-0123456789ab", projectId: "test",
+  projectVersion: 3, revision: 3, createdAt: "2026-10-05T00:00:00.000Z", updatedAt: "2026-10-05T00:00:01.000Z",
+  artifacts: {}, providers: { selections: [] }, state: { status: "ACTIVE" },
+  history: { historySchemaVersion: "1.0.0", ref: "history/history.json" },
+  lineage: {}, fingerprint: "0123456789abcdef",
+});
+allPassed &= testInvalid("project-manifest-1.1.0 (undeclared field)", "project-manifest-1.1.0.schema.json", {
+  schemaVersion: "1.1.0", manifestId: "pm-0123456789ab", projectId: "test",
+  projectVersion: 3, revision: 3, createdAt: "2026-10-05T00:00:00.000Z", updatedAt: "2026-10-05T00:00:01.000Z",
+  artifacts: {}, providers: { selections: [] }, state: { status: "ACTIVE" },
+  history: { historySchemaVersion: "1.0.0", ref: "history/history.json" },
+  eventLog: [],
+  lineage: {}, fingerprint: "0123456789abcdef",
+});
+
+// Test project-manifest 1.2.0 (1H.3 recovery slot)
+allPassed &= testValid("project-manifest-1.2.0 (recovery ref)", "project-manifest-1.2.0.schema.json", {
+  schemaVersion: "1.2.0", manifestId: "pm-0123456789ab", projectId: "test",
+  projectVersion: 5, revision: 5, createdAt: "2026-10-05T00:00:00.000Z", updatedAt: "2026-10-05T00:00:02.000Z",
+  artifacts: {}, providers: { selections: [] }, state: { status: "ACTIVE" },
+  history: { historySchemaVersion: "1.0.0", ref: "history/history.json" },
+  recovery: { recoverySchemaVersion: "1.0.0", dagSchemaVersion: "1.0.0", ref: "recovery/" },
+  lineage: {}, fingerprint: "0123456789abcdef",
+});
+allPassed &= testInvalid("project-manifest-1.2.0 (bad recovery shape)", "project-manifest-1.2.0.schema.json", {
+  schemaVersion: "1.2.0", manifestId: "pm-0123456789ab", projectId: "test",
+  projectVersion: 5, revision: 5, createdAt: "2026-10-05T00:00:00.000Z", updatedAt: "2026-10-05T00:00:02.000Z",
+  artifacts: {}, providers: { selections: [] }, state: { status: "ACTIVE" },
+  history: { historySchemaVersion: "1.0.0", ref: "history/history.json" },
+  recovery: { recoverySchemaVersion: "9.9.9", dagSchemaVersion: "1.0.0", ref: "recovery/" },
+  lineage: {}, fingerprint: "0123456789abcdef",
+});
+
+// Test generation-history (1H.2)
+allPassed &= testValid("generation-history (valid minimal)", "generation-history.schema.json", {
+  schemaVersion: "1.0.0", projectId: "test", revision: 1,
+  createdAt: "2026-10-05T00:00:00.000Z", updatedAt: "2026-10-05T00:00:00.000Z",
+  generations: {}, variants: {}, decisions: {}, locks: {}, fingerprint: "0123456789abcdef",
+});
+allPassed &= testInvalid("generation-history (bad decision value)", "generation-history.schema.json", {
+  schemaVersion: "1.0.0", projectId: "test", revision: 1,
+  createdAt: "2026-10-05T00:00:00.000Z", updatedAt: "2026-10-05T00:00:00.000Z",
+  generations: {}, variants: {},
+  decisions: { "dec-0123456789ab": { decisionId: "dec-0123456789ab", targetType: "SHOT", targetId: "SH01", decision: "MAYBE", reason: "r", evidenceRefs: ["e"], decidedAt: "2026-10-05T00:00:00.000Z" } },
+  locks: {}, fingerprint: "0123456789abcdef",
+});
+
+// Test telemetry + golden (1H.4/1H.5): these schema files organize multiple
+// documents under definitions, so validate the referenced sub-schemas.
+function testSubSchema(name, file, def, instance, expectValid) {
+  const ajv = createAjv();
+  try {
+    const root = loadSchema(file);
+    const validate = ajv.compile({ ...root, $ref: `#/definitions/${def}` });
+    const valid = validate(instance);
+    const pass = valid === expectValid;
+    console.log(pass ? `✓ ${name}: as expected (valid=${valid})` : `✗ ${name}: expected valid=${expectValid}, got ${valid} ${JSON.stringify(validate.errors)}`);
+    return pass;
+  } catch (e) {
+    console.log(`✗ ${name} validation error: ${e.message}`);
+    return false;
+  }
+}
+allPassed &= testSubSchema("telemetry eventsDoc (valid minimal)", "telemetry.schema.json", "eventsDoc", {
+  schemaVersion: "1.0.0", projectId: "test", revision: 1,
+  createdAt: "2026-10-05T00:00:00.000Z", updatedAt: "2026-10-05T00:00:00.000Z",
+  events: {}, fingerprint: "0123456789abcdef",
+}, true);
+allPassed &= testSubSchema("telemetry eventsDoc (bad severity)", "telemetry.schema.json", "eventsDoc", {
+  schemaVersion: "1.0.0", projectId: "test", revision: 1,
+  createdAt: "2026-10-05T00:00:00.000Z", updatedAt: "2026-10-05T00:00:00.000Z",
+  events: { "eve-0123456789ab": { eventId: "eve-0123456789ab", eventName: "QA", timestamp: "2026-10-05T00:00:00.000Z", severity: "LOUD", projectId: "test", retention: "DERIVED_REGENERABLE" } },
+  fingerprint: "0123456789abcdef",
+}, false);
+allPassed &= testSubSchema("golden baseline (valid minimal)", "golden.schema.json", "baseline", {
+  baselineId: "base-0123456789ab", goldenProjectId: "gold-t", goldenVersion: 1, version: 1,
+  metrics: {}, createdAt: "2026-10-05T00:00:00.000Z", reason: "test",
+}, true);
+allPassed &= testSubSchema("golden baseline (missing reason)", "golden.schema.json", "baseline", {
+  baselineId: "base-0123456789ab", goldenProjectId: "gold-t", goldenVersion: 1, version: 1,
+  metrics: {}, createdAt: "2026-10-05T00:00:00.000Z",
+}, false);
+
+// Test project-manifest 1.3.0 (1H.6/1H.7 governance slot)
+allPassed &= testValid("project-manifest-1.3.0 (governance ref)", "project-manifest-1.3.0.schema.json", {
+  schemaVersion: "1.3.0", manifestId: "pm-0123456789ab", projectId: "test",
+  projectVersion: 7, revision: 7, createdAt: "2026-10-05T00:00:00.000Z", updatedAt: "2026-10-05T00:00:03.000Z",
+  artifacts: {}, providers: { selections: [] }, state: { status: "ACTIVE" },
+  history: { historySchemaVersion: "1.0.0", ref: "history/history.json" },
+  recovery: { recoverySchemaVersion: "1.0.0", dagSchemaVersion: "1.0.0", ref: "recovery/" },
+  governance: { provenanceSchemaVersion: "1.0.0", complianceSchemaVersion: "1.0.0", storageSchemaVersion: "1.0.0", ref: "governance/" },
+  lineage: {}, fingerprint: "0123456789abcdef",
+});
+allPassed &= testInvalid("project-manifest-1.3.0 (undeclared governance field)", "project-manifest-1.3.0.schema.json", {
+  schemaVersion: "1.3.0", manifestId: "pm-0123456789ab", projectId: "test",
+  projectVersion: 7, revision: 7, createdAt: "2026-10-05T00:00:00.000Z", updatedAt: "2026-10-05T00:00:03.000Z",
+  artifacts: {}, providers: { selections: [] }, state: { status: "ACTIVE" },
+  history: null, recovery: null,
+  governance: { provenanceSchemaVersion: "1.0.0", complianceSchemaVersion: "1.0.0", storageSchemaVersion: "1.0.0", ref: "governance/", retentionYears: 7 },
+  lineage: {}, fingerprint: "0123456789abcdef",
+});
+
+// Test project-manifest 1.4.0 (Phase 2.1 voiceBibleVersion slot)
+allPassed &= testValid("project-manifest-1.4.0 (voiceBibleVersion slot)", "project-manifest-1.4.0.schema.json", {
+  schemaVersion: "1.4.0", manifestId: "pm-0123456789ab", projectId: "test",
+  projectVersion: 8, revision: 8, createdAt: "2026-10-05T00:00:00.000Z", updatedAt: "2026-10-05T00:00:03.000Z",
+  artifacts: { voiceBibleVersion: { version: "vb-0123456789ab", status: "VERIFIED", ref: "voice/voice-bible/vb-0123456789ab.json", detail: "v1" } },
+  providers: { selections: [] }, state: { status: "ACTIVE" },
+  history: null, recovery: null, governance: null,
+  lineage: {}, fingerprint: "0123456789abcdef",
+});
+allPassed &= testInvalid("project-manifest-1.4.0 (voiceBible slot rejected at 1.3.0)", "project-manifest-1.3.0.schema.json", {
+  schemaVersion: "1.3.0", manifestId: "pm-0123456789ab", projectId: "test",
+  projectVersion: 8, revision: 8, createdAt: "2026-10-05T00:00:00.000Z", updatedAt: "2026-10-05T00:00:03.000Z",
+  artifacts: { voiceBibleVersion: { version: "vb-0123456789ab", status: "VERIFIED" } },
+  providers: { selections: [] }, state: { status: "ACTIVE" },
+  history: null, recovery: null, governance: null,
+  lineage: {}, fingerprint: "0123456789abcdef",
+});
+
+// Test project-manifest 1.5.0 (Phase 2.2+2.3 pre-TTS slots)
+allPassed &= testValid("project-manifest-1.5.0 (pre-TTS slots)", "project-manifest-1.5.0.schema.json", {
+  schemaVersion: "1.5.0", manifestId: "pm-0123456789ab", projectId: "test",
+  projectVersion: 9, revision: 9, createdAt: "2026-10-06T00:00:00.000Z", updatedAt: "2026-10-06T00:00:03.000Z",
+  artifacts: {
+    narrationDirectionVersion: { version: "nd-0123456789ab", status: "VERIFIED", ref: "voice/narration-direction/nd-0123456789ab.json", detail: "v1" },
+    pronunciationProfileVersion: { version: "pron-0123456789ab", status: "VERIFIED", ref: "voice/pronunciation-profile/pron-0123456789ab.json", detail: "v1" },
+    pronunciationRuntimePassVersion: { version: "prp-0123456789ab", status: "VERIFIED", ref: "voice/pronunciation-pass/prp-0123456789ab.json", detail: "v1" },
+    ttsReadyPlanVersion: { version: "ttp-0123456789ab", status: "VERIFIED", ref: "voice/tts-ready-plan/ttp-0123456789ab.json", detail: "v1" },
+  },
+  providers: { selections: [] }, state: { status: "ACTIVE" },
+  history: null, recovery: null, governance: null,
+  lineage: {}, fingerprint: "0123456789abcdef",
+});
+allPassed &= testInvalid("project-manifest-1.5.0 (pre-TTS slot rejected at 1.4.0)", "project-manifest-1.4.0.schema.json", {
+  schemaVersion: "1.4.0", manifestId: "pm-0123456789ab", projectId: "test",
+  projectVersion: 9, revision: 9, createdAt: "2026-10-06T00:00:00.000Z", updatedAt: "2026-10-06T00:00:03.000Z",
+  artifacts: { narrationDirectionVersion: { version: "nd-0123456789ab", status: "VERIFIED" } },
+  providers: { selections: [] }, state: { status: "ACTIVE" },
+  history: null, recovery: null, governance: null,
+  lineage: {}, fingerprint: "0123456789abcdef",
+});
+
+// Test final-spoken-script (Phase 2 identity contract)
+allPassed &= testValid("final-spoken-script (segments + identity)", "final-spoken-script.schema.json", {
+  schemaVersion: "1.0.0", scriptArtifactId: "fss-phase223-validation", scriptVersion: 1, projectId: "test",
+  language: "en-us", contentMode: null, contentClass: "FACTUAL",
+  segments: [
+    { segmentId: "S1", ordinal: 0, text: "First spoken segment." },
+    { segmentId: "S2", ordinal: 1, text: "Second spoken segment.", beatRefs: ["B1"] },
+  ],
+  provenance: { source: "phase-2-validation-fixture", createdAt: "2026-10-06T00:00:00.000Z", productionScriptStatus: "NOT_APPLICABLE" },
+  fingerprint: "0123456789abcdef",
+});
+allPassed &= testInvalid("final-spoken-script (empty text rejected)", "final-spoken-script.schema.json", {
+  schemaVersion: "1.0.0", scriptArtifactId: "fss-phase223-validation", scriptVersion: 1, projectId: "test",
+  language: "en-us", segments: [{ segmentId: "S1", ordinal: 0, text: "" }],
+  fingerprint: "0123456789abcdef",
+});
+
+// Test narration-direction (Phase 2.2)
+const ND_BASE = {
+  schemaVersion: "1.0.0", narrationDirectionId: "nd-0123456789ab", version: 1, projectId: "test",
+  scriptRef: { scriptArtifactId: "fss-phase223-validation", scriptVersion: 1 },
+  voiceBibleRef: "vb-0123456789ab", language: "en-us",
+  segments: [{
+    segmentId: "S2", segmentOrdinal: 1, sourceTextHash: "0123456789abcdef",
+    speakerId: null,
+    emphasis: [{ text: "exactly", occurrence: 1, strength: "MODERATE" }],
+    pauseIntent: [{ kind: "BEAT", afterText: "first clause.", occurrence: 1 }],
+    energy: "ELEVATED", emotion: "CONFIDENT", paceIntent: "SLOWER", directionReason: "payoff beat",
+  }],
+  stats: { totalSegments: 4, directedSegments: 1, directionCoveragePercent: 25, emphasisCount: 1, explicitPauseCount: 1 },
+  provenance: { source: "phase-2.2", createdAt: "2026-10-06T00:00:00.000Z", evidenceRefs: [] },
+  fingerprint: "0123456789abcdef",
+};
+allPassed &= testValid("narration-direction (sparse direction)", "narration-direction.schema.json", ND_BASE);
+allPassed &= testInvalid("narration-direction (bad emotion enum shape is free string but bad pause kind rejected)", "narration-direction.schema.json", {
+  ...ND_BASE,
+  segments: [{ ...ND_BASE.segments[0], pauseIntent: [{ kind: "SUPER_LONG", afterText: "x", occurrence: 1 }] }],
+});
+allPassed &= testInvalid("narration-direction (bad fingerprint rejected)", "narration-direction.schema.json", { ...ND_BASE, fingerprint: "nothex" });
+
+// Test pronunciation-profile (Phase 2.3)
+const PP_BASE = {
+  schemaVersion: "1.0.0", pronunciationProfileId: "pron-0123456789ab", version: 1, projectId: null,
+  language: "en-us",
+  entries: [
+    {
+      entryId: "pe-0123456789ab", normalizedTerm: "kokoro", displayTerm: "Kokoro", language: "en-us", locale: null,
+      category: "FOREIGN_TERM", reading: { notation: "READ_AS", value: "koh-koh-roh" }, acronymMode: null,
+      scope: { level: "GLOBAL_LANGUAGE", projectId: null, scriptArtifactId: null, segmentId: null },
+      source: "OPERATOR_OVERRIDE", quality: "VERIFIED", notes: null,
+      provenance: { createdAt: "2026-10-06T00:00:00.000Z", origin: "operator approval", evidenceRefs: [] },
+    },
+    {
+      entryId: "pe-0123456789ac", normalizedTerm: "nasa", displayTerm: "NASA", language: "en-us", locale: null,
+      category: "ACRONYM", reading: { notation: "READ_AS", value: "N A S A" }, acronymMode: "LETTER_BY_LETTER",
+      scope: { level: "GLOBAL_LANGUAGE", projectId: null, scriptArtifactId: null, segmentId: null },
+      source: "CANONICAL_LEXICON", quality: "AUTO", notes: null,
+      provenance: { createdAt: "2026-10-06T00:00:00.000Z", origin: null, evidenceRefs: [] },
+    },
+  ],
+  provenance: { source: "phase-2.3", createdAt: "2026-10-06T00:00:00.000Z", evidenceRefs: [] },
+  fingerprint: "0123456789abcdef",
+};
+allPassed &= testValid("pronunciation-profile (six-category capable entries)", "pronunciation-profile.schema.json", PP_BASE);
+allPassed &= testInvalid("pronunciation-profile (ACRONYM without acronymMode rejected)", "pronunciation-profile.schema.json", {
+  ...PP_BASE,
+  entries: [{ ...PP_BASE.entries[1], acronymMode: null }],
+});
+allPassed &= testInvalid("pronunciation-profile (unknown category rejected)", "pronunciation-profile.schema.json", {
+  ...PP_BASE,
+  entries: [{ ...PP_BASE.entries[0], entryId: "pe-0123456789ad", category: "SOMEhow" }],
+});
+
+// Test pronunciation-runtime-pass (Phase 2.3)
+const PRP_BASE = {
+  schemaVersion: "1.0.0", pronunciationPassId: "prp-0123456789ab", version: 1, projectId: "test",
+  scriptRef: { scriptArtifactId: "fss-phase223-validation", scriptVersion: 1 },
+  voiceBibleRef: "vb-0123456789ab", profileRef: "pron-0123456789ab",
+  provider: "local-kokoro", providerModel: "kokoro-v1", providerLanguageCode: "a",
+  runtimeMode: "QUIET_PHONEMIZATION", language: "en-us",
+  segments: [
+    { segmentId: "S1", sourceTextHash: "0123456789abcdef", matchedEntries: [], compiledInputHash: "0123456789abcdef", runtimeGraphemeHash: "0123456789abcdef", runtimePhonemeHash: "0123456789abcdef", issues: [], status: "CLEAN" },
+    { segmentId: "S3", sourceTextHash: "0123456789abcdee", matchedEntries: [{ entryId: "pe-0123456789ab", term: "Kokoro", applied: true, notAppliedReason: null }], compiledInputHash: "0123456789abcdea", runtimeGraphemeHash: "0123456789abcdea", runtimePhonemeHash: "0123456789abcdea", issues: [], status: "OVERRIDE_APPLIED" },
+  ],
+  provenance: { source: "phase-2.3-runtime-pass", createdAt: "2026-10-06T00:00:00.000Z", runtimeEvidenceRef: null, evidenceRefs: [] },
+  fingerprint: "0123456789abcdef",
+};
+allPassed &= testValid("pronunciation-runtime-pass (clean + override segments)", "pronunciation-runtime-pass.schema.json", PRP_BASE);
+allPassed &= testInvalid("pronunciation-runtime-pass (bad status rejected)", "pronunciation-runtime-pass.schema.json", {
+  ...PRP_BASE,
+  segments: [{ ...PRP_BASE.segments[0], status: "GUESSED" }],
+});
+allPassed &= testInvalid("pronunciation-runtime-pass (wrong runtimeMode rejected)", "pronunciation-runtime-pass.schema.json", { ...PRP_BASE, runtimeMode: "FULL_TTS" });
+
+// Test tts-ready-plan (Phase 2.2+2.3 output)
+const TTP_BASE = {
+  schemaVersion: "1.0.0", ttsReadyPlanId: "ttp-0123456789ab", version: 1, projectId: "test",
+  scriptRef: { scriptArtifactId: "fss-phase223-validation", scriptVersion: 1 },
+  voiceBibleRef: "vb-0123456789ab", narrationDirectionRef: "nd-0123456789ab", pronunciationPassRef: "prp-0123456789ab",
+  provider: "local-kokoro", providerModel: "kokoro-v1", language: "en-us", overall: "READY_FOR_TTS",
+  productionTtsBlocked: false,
+  segments: [
+    { segmentId: "S1", sourceTextHash: "0123456789abcdef", speakerId: "narrator", directionRef: null, compiledTextHash: "0123456789abcdef", pronunciationStatus: "CLEAN", readyForTts: true, blockers: [] },
+    { segmentId: "S3", sourceTextHash: "0123456789abcdee", speakerId: "narrator", directionRef: "nd-0123456789ab#v1", compiledTextHash: "0123456789abcdea", pronunciationStatus: "OVERRIDE_APPLIED", readyForTts: true, blockers: [] },
+  ],
+  provenance: { source: "phase-2.2-2.3", createdAt: "2026-10-06T00:00:00.000Z", productionScriptStatus: "CANONICAL", evidenceRefs: [] },
+  fingerprint: "0123456789abcdef",
+};
+allPassed &= testValid("tts-ready-plan (ready)", "tts-ready-plan.schema.json", TTP_BASE);
+allPassed &= testInvalid("tts-ready-plan (bad overall rejected)", "tts-ready-plan.schema.json", { ...TTP_BASE, overall: "MAYBE" });
+allPassed &= testInvalid("tts-ready-plan (missing productionTtsBlocked rejected)", "tts-ready-plan.schema.json", (() => { const c = { ...TTP_BASE }; delete c.productionTtsBlocked; return c; })());
+allPassed &= testInvalid("tts-ready-plan (audio path forbidden by shape)", "tts-ready-plan.schema.json", {
+  ...TTP_BASE,
+  segments: [{ ...TTP_BASE.segments[0], audioPath: "assets/audio/s1.wav" }],
+});
+
+// Test spoken-humanization (FIX PRE-2.4)
+const SH_BASE = {
+  schemaVersion: "1.0.0", humanizationId: "hum-0123456789ab", version: 1, projectId: "test",
+  contentMode: "everyday-physics-explainer", contentClass: "FACTUAL",
+  sourceScriptRef: { artifact: "script.json", version: "1.0.0" },
+  sourceTextHash: "0123456789abcdef", instructionVersion: "spoken-humanizer-1.0.0",
+  segments: [{
+    segmentId: "S1", sourceSegmentIds: ["B1"], sourceTextHash: "0123456789abcdef",
+    sourceText: "Source text.", candidateSpokenText: "Candidate spoken text.",
+    candidateTextHash: "0123456789abcdea", changeTypes: ["RHYTHM"], changeNotes: null,
+  }],
+  changeSummary: "bounded rewrite",
+  provenance: { actorType: "AGENT", provider: "zcode", model: "GLM-5.3-Flash", attempt: 1, createdAt: "2026-10-06T00:00:00.000Z", evidenceRefs: [] },
+  fingerprint: "0123456789abcdef",
+};
+allPassed &= testValid("spoken-humanization (candidate contract)", "spoken-humanization.schema.json", SH_BASE);
+allPassed &= testInvalid("spoken-humanization (unknown changeType rejected)", "spoken-humanization.schema.json", {
+  ...SH_BASE,
+  segments: [{ ...SH_BASE.segments[0], changeTypes: ["MAGIC_REWRITE"] }],
+});
+allPassed &= testInvalid("spoken-humanization (unbounded actorType rejected)", "spoken-humanization.schema.json", {
+  ...SH_BASE,
+  provenance: { ...SH_BASE.provenance, actorType: "WIZARD" },
+});
+
+// Test evidence-fidelity-decision (FIX PRE-2.4)
+const FID_BASE = {
+  schemaVersion: "1.0.0", decisionId: "fid-0123456789ab", version: 1, projectId: "test",
+  contentMode: "everyday-physics-explainer", contentClass: "FACTUAL",
+  sourceScriptRef: { artifact: "script.json", version: "1.0.0" },
+  humanizationRef: "hum-0123456789ab",
+  checks: [{ checkId: "S1:NUMBER", segmentId: "S1", protectedItemType: "NUMBER", sourceValue: "300,000", candidateValue: "300,000", status: "PRESERVED", reason: null, evidenceRef: null }],
+  issues: [],
+  decision: "PASS",
+  provenance: { createdAt: "2026-10-06T00:00:00.000Z", evidenceRefs: [] },
+  fingerprint: "0123456789abcdef",
+};
+allPassed &= testValid("evidence-fidelity-decision (PASS)", "evidence-fidelity-decision.schema.json", FID_BASE);
+allPassed &= testInvalid("evidence-fidelity-decision (bad decision rejected)", "evidence-fidelity-decision.schema.json", { ...FID_BASE, decision: "KINDA_OK" });
+allPassed &= testInvalid("evidence-fidelity-decision (bad protectedItemType rejected)", "evidence-fidelity-decision.schema.json", {
+  ...FID_BASE,
+  checks: [{ ...FID_BASE.checks[0], protectedItemType: "VIBES" }],
+});
+
+// Test naturalness-qa (FIX PRE-2.4)
+const NQA_BASE = {
+  schemaVersion: "1.0.0", qaId: "nqa-0123456789ab", version: 1, projectId: "test",
+  humanizationRef: "hum-0123456789ab",
+  metrics: { sentenceCount: 3, sentenceLengthMean: 8.5, sentenceLengthVariance: 4.2, sentenceLengthDistribution: [7, 9, 10], repeatedTransitionPhrases: [], repeatedOpenings: [], repeatedRhetoricalPatterns: [], abstractLanguageFlags: [], summaryPhraseFlags: [], paragraphRhythmUniformity: null, cadenceUniformity: 0.2, redundancyFlags: [], awkwardSpokenPhrases: [] },
+  issues: [{ code: "REPETITIVE_TRANSITION", segmentId: null, span: "so", detail: "3 sentences", blocking: true }],
+  decision: "FAIL",
+  provenance: { createdAt: "2026-10-06T00:00:00.000Z", evidenceRefs: [] },
+  fingerprint: "0123456789abcdef",
+};
+allPassed &= testValid("naturalness-qa (explainable issues)", "naturalness-qa.schema.json", NQA_BASE);
+allPassed &= testInvalid("naturalness-qa (unknown issue code rejected)", "naturalness-qa.schema.json", {
+  ...NQA_BASE,
+  issues: [{ code: "SOUNDS_ROBOTIC", segmentId: null, span: null, detail: null, blocking: true }],
+});
+allPassed &= testInvalid("naturalness-qa (missing blocking flag rejected)", "naturalness-qa.schema.json", {
+  ...NQA_BASE,
+  issues: [{ code: "SUMMARY_HEAVY", segmentId: null, span: null, detail: null }],
+});
+
+// Test final-spoken-script 1.1.0 (canonical lineage)
+allPassed &= testValid("final-spoken-script-1.1.0 (canonical lineage)", "final-spoken-script-1.1.0.schema.json", {
+  schemaVersion: "1.1.0", scriptArtifactId: "fss-canonical-test", scriptVersion: 1, projectId: "test",
+  language: "en-us", contentMode: "everyday-physics-explainer", contentClass: "FACTUAL",
+  segments: [{ segmentId: "S1", ordinal: 0, text: "Clean spoken text only." }],
+  provenance: {
+    source: "FIX PRE-2.4 chain", createdAt: "2026-10-06T00:00:00.000Z", productionScriptStatus: "CANONICAL",
+    sourceScriptRef: { artifact: "script.json", version: "1.0.0" },
+    humanizationRef: "hum-0123456789ab", evidenceFidelityRef: "fid-0123456789ab", naturalnessQaRef: "nqa-0123456789ab",
+  },
+  fingerprint: "0123456789abcdef",
+});
+allPassed &= testInvalid("final-spoken-script-1.1.0 (fixture status NOT_APPLICABLE rejected at 1.1.0 const)", "final-spoken-script.schema.json", {
+  schemaVersion: "1.1.0", scriptArtifactId: "fss-canonical-test", scriptVersion: 1, projectId: "test",
+  language: "en-us", segments: [{ segmentId: "S1", ordinal: 0, text: "x" }],
+  fingerprint: "0123456789abcdef",
+});
+
+// Test voice-bible (Phase 2.1)
+const VOICE_BIBLE_VALID = {
+  schemaVersion: "1.0.0", voiceBibleId: "vb-0123456789ab", version: 1,
+  projectId: "test", channelId: null,
+  language: "en-us", locale: "en-US",
+  narrator: {
+    personaId: "per-explainer-guide", displayName: "Guide",
+    provider: "local-kokoro", model: "kokoro-v1", voiceId: "af_heart",
+    speakingStyle: "measured explanatory narration",
+    prosodyDefaults: {
+      paceIntent: "MODERATE", energy: "BALANCED", pauseStyle: "NATURAL",
+      sentenceFlow: "MEASURED", emphasisStyle: "SELECTIVE", emotionalBaseline: "WARM",
+    },
+    speedDefault: 1, pitchDefault: null, energyDefault: "BALANCED",
+    emotionalRange: ["NEUTRAL", "CURIOSITY", "CONFIDENT"],
+    prohibitedTraits: ["UNNATURALLY_SLOW_CINEMATIC", "OVERACTING"],
+    persona: {
+      personaId: "per-explainer-guide", role: "GUIDE",
+      audience: "curious general viewers new to the topic", tone: "EXPLAINING",
+      energy: "BALANCED", paceIntent: "MODERATE", warmth: "WARM",
+      directness: "BALANCED", formality: "CONVERSATIONAL",
+      storytellingStyle: "EXPLAINER",
+      emotionalRange: ["NEUTRAL", "CURIOSITY", "CONFIDENT"],
+      prohibitedDeliveryPatterns: ["UNNATURALLY_SLOW_CINEMATIC", "OVERACTING"],
+      language: "en-us", notes: null,
+    },
+  },
+  characterVoices: [], pronunciationProfileRef: "pron-ancient-humans",
+  providerOptions: null,
+  provenance: {
+    source: "OPERATOR_APPROVED", createdAt: "2026-10-05T00:00:00.000Z",
+    rights: { status: "PLATFORM_GENERATED", licenseType: "NOT_APPLICABLE", detail: null, cloning: false },
+    evidenceRefs: ["providers/local/SETUP_KOKORO.md"], approvalRef: null,
+  },
+  fingerprint: "0123456789abcdef",
+};
+allPassed &= testValid("voice-bible (valid minimal identity + persona)", "voice-bible.schema.json", VOICE_BIBLE_VALID);
+// §9: speedDefault is a provider rate factor; a measured wpm value must not fit.
+allPassed &= testInvalid("voice-bible (speedDefault rejected as measured wpm)", "voice-bible.schema.json", {
+  ...VOICE_BIBLE_VALID, narrator: { ...VOICE_BIBLE_VALID.narrator, speedDefault: 145 },
+});
+allPassed &= testInvalid("voice-bible (unknown schema key)", "voice-bible.schema.json", {
+  ...VOICE_BIBLE_VALID, measuredSpeechRateWpm: 145,
+});
+allPassed &= testInvalid("voice-bible (uncontrolled emotional range value)", "voice-bible.schema.json", {
+  ...VOICE_BIBLE_VALID,
+  narrator: { ...VOICE_BIBLE_VALID.narrator, emotionalRange: ["VERY_SAD"] },
+});
+allPassed &= testInvalid("voice-bible (voice cloning structurally forbidden)", "voice-bible.schema.json", {
+  ...VOICE_BIBLE_VALID,
+  provenance: { ...VOICE_BIBLE_VALID.provenance, rights: { ...VOICE_BIBLE_VALID.provenance.rights, cloning: true } },
+});
+allPassed &= testInvalid("voice-bible (narrator required)", "voice-bible.schema.json", {
+  schemaVersion: "1.0.0", voiceBibleId: "vb-0123456789ab", version: 1, language: "en-us",
+  characterVoices: [], provenance: VOICE_BIBLE_VALID.provenance, fingerprint: "0123456789abcdef",
+});
+
+// Test voice-license-evidence (Phase 2.1 FIX 01): separate rights claims,
+// VERIFIED only with an official quoted source, no collapsed licensed=true.
+const LICENSE_EVIDENCE_VALID = {
+  schemaVersion: "1.0.0", evidenceId: "lice-0123456789ab",
+  provider: "local-kokoro", model: "kokoro-v1", retrievedAt: "2026-10-05T00:00:00.000Z",
+  officialSource: {
+    publisher: "hexgrad", url: "https://huggingface.co/hexgrad/Kokoro-82M",
+    modelCardUrl: "https://huggingface.co/hexgrad/Kokoro-82M",
+    licenseFileUrl: "https://github.com/hexgrad/kokoro/blob/main/LICENSE",
+    quotedStatement: "With Apache-licensed weights, Kokoro can be deployed anywhere from production environments to personal projects.",
+  },
+  upstreamArtifact: { name: "Kokoro-82M", release: "v1.0", releaseDate: "2025-01-27", sha256: "496dba118d1a58f5f3db2efc88dbdc216e0483fc89fe6e47ee1f2c53f18ad1e4", languageCount: 8, voiceCount: 54 },
+  runtimeBinding: { runtimeLabel: "kokoro-v1", upstreamReleasePinned: false, installed: false, installRequirement: "pip install kokoro>=0.9.2", note: "internal label is not an upstream pin" },
+  claims: {
+    modelLicense: { status: "VERIFIED", licenseIdentifier: "Apache-2.0", scope: "model weights", basis: "official card declares apache-2.0", retrievedAt: "2026-10-05T00:00:00.000Z", evidenceRefs: ["https://huggingface.co/hexgrad/Kokoro-82M"] },
+    voiceAssetRights: { status: "REVIEW_REQUIRED", licenseIdentifier: "Apache-2.0", scope: "voice .pt files", basis: "runtime not installed; exact bytes unverified", retrievedAt: "2026-10-05T00:00:00.000Z", evidenceRefs: ["https://huggingface.co/hexgrad/Kokoro-82M/tree/main/voices"] },
+    outputUsageStatus: { status: "REVIEW_REQUIRED", licenseIdentifier: null, scope: "synthesized output", basis: "no separate output grant published", retrievedAt: "2026-10-05T00:00:00.000Z", evidenceRefs: ["https://huggingface.co/hexgrad/Kokoro-82M"] },
+  },
+  trainingDataDisclosure: [{ name: "Koniwa", license: "CC BY 3.0", url: "https://github.com/koniwa/koniwa" }],
+  notAsserted: ["no separate voice-asset redistribution grant is stated"],
+  evidenceRefs: ["https://huggingface.co/hexgrad/Kokoro-82M"],
+  fingerprint: "0123456789abcdef",
+};
+allPassed &= testValid("voice-license-evidence (separate honest claims)", "voice-license-evidence.schema.json", LICENSE_EVIDENCE_VALID);
+allPassed &= testInvalid("voice-license-evidence (claims collapsed to one status enum)", "voice-license-evidence.schema.json", {
+  ...LICENSE_EVIDENCE_VALID, claims: { modelLicense: "VERIFIED", voiceAssetRights: "VERIFIED", outputUsageStatus: "VERIFIED" },
+});
+allPassed &= testInvalid("voice-license-evidence (invented license status)", "voice-license-evidence.schema.json", {
+  ...LICENSE_EVIDENCE_VALID, claims: { ...LICENSE_EVIDENCE_VALID.claims, modelLicense: { ...LICENSE_EVIDENCE_VALID.claims.modelLicense, status: "APPROVED" } },
+});
+allPassed &= testInvalid("voice-license-evidence (non-official source url)", "voice-license-evidence.schema.json", {
+  ...LICENSE_EVIDENCE_VALID, officialSource: { ...LICENSE_EVIDENCE_VALID.officialSource, url: "http://random-blog.example/kokoro" },
+});
+allPassed &= testInvalid("voice-license-evidence (bad sha256)", "voice-license-evidence.schema.json", {
+  ...LICENSE_EVIDENCE_VALID, upstreamArtifact: { ...LICENSE_EVIDENCE_VALID.upstreamArtifact, sha256: "not-a-hash" },
+});
+
+// Test governance docs (1H.6/1H.7)
+allPassed &= testSubSchema("governance provenanceVersion (valid minimal)", "governance.schema.json", "provenanceVersion", {
+  provenanceId: "prov-0123456789ab", assetId: "as-1", provenanceVersion: 1, assetHash: null,
+  originType: "GENERATED", rights: { ownershipStatus: "UNRESOLVED", referenceRightsStatus: "UNRESOLVED" },
+  evidenceRefs: [], provenanceStatus: "MIGRATED", createdAt: "2026-10-05T00:00:00.000Z",
+}, true);
+allPassed &= testSubSchema("governance complianceDecision (valid minimal)", "governance.schema.json", "complianceDecision", {
+  decisionId: "ccd-0123456789ab", projectId: "test", platform: "YOUTUBE", policyType: "AI_DISCLOSURE",
+  policySnapshotId: "pol-0123456789ab", contentCharacteristics: { clearlyUnrealisticAnimation: true },
+  decision: "AI_DISCLOSURE_NOT_REQUIRED", reason: "animation exception", evidenceRefs: [],
+  decidedAt: "2026-10-05T00:00:00.000Z", freshness: "FRESH",
+}, true);
+
+console.log("\n=== Semantic Validation Layer (lib/research-quality-check.js) ===");
+console.log("Layer 1 = JSON Schema (shape/type). Layer 2 = Semantic (epistemic consistency).\n");
 
 function testSemantic(name, briefOrClaim, expectValid, isBrief = true) {
   const result = isBrief

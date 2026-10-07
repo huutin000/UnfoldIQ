@@ -1,0 +1,120 @@
+{
+  "version": "1.0.0",
+  "projectId": "live-1g1-http308",
+  "claims": [
+    {
+      "claimId": "clm-ede7c751ff68",
+      "researchQuestionIds": [
+        "q0",
+        "q1",
+        "q2",
+        "q3"
+      ],
+      "claim": "HTTP 308 Permanent Redirect indicates the resource has permanently moved to the Location URI, and the request method and body must not be altered when following the redirect.",
+      "claimClass": "SUPPORTED_FACT",
+      "evidenceStatus": "SUPPORTED",
+      "corroborationStatus": "MULTI_SOURCE_CONFIRMED",
+      "supportingEvidence": [
+        {
+          "sourceId": "src-048e66b5112e",
+          "contentHash": "359cf28aed3b7f066a21af0f18c65a431689c912f4784d8f5e73889a636a6099",
+          "locator": null,
+          "excerpt": "  * [Skip to main content](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/308#content)\n  * [Skip to search](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/308#mdn-search)\n\n\n[ MDN ](https://developer.mozilla.org/en-US/)\nHTML\n[HTML: Markup la"
+        },
+        {
+          "sourceId": "src-9c7cc5db9f6d",
+          "contentHash": "b5642f6a1984da5d2f5c4910fe6915908e9632cae0ec0fcaea4b31c517f81bff",
+          "locator": null,
+          "excerpt": "[ Skip to content ](https://www.rfc-editor.org/info/rfc7538/#main)\n[![RFC Editor - Official home of RFCs](https://www.rfc-editor.org/_nuxt/1.127.0/logo-mobile.CoO2D8c2.svg)![RFC Editor - Official home of RFCs](https://www.rfc-editor.org/_nuxt/1.127.0/logo-desktop.DmfyR5wx.svg)](h"
+        },
+        {
+          "sourceId": "src-204d096ca9ed",
+          "contentHash": "52962aaa56c2a88904f627ccbbb618c7a90df1e4b4747c963660f7090c8260c1",
+          "locator": null,
+          "excerpt": "  * Light \n  * Dark \n  * Auto \n\n\n[ RFC 9110   \nInternet Standard  ](https://datatracker.ietf.org/doc/rfc9110/)  \n|   | Title  |   | HTTP Semantics  |  \n| --- | --- | --- | --- |  \n| Document  | Document type  |   |  RFC - Internet Standard    \nJune 2022   \n[ View errata ](https:/"
+        }
+      ],
+      "contradictingEvidence": [],
+      "confidenceReason": "",
+      "materiality": "critical",
+      "needsReevaluation": false,
+      "createdAt": "2026-10-03T02:24:56.072Z"
+    },
+    {
+      "claimId": "clm-d03297df9a11",
+      "researchQuestionIds": [
+        "q0",
+        "q1",
+        "q2",
+        "q3"
+      ],
+      "claim": "HTTP 308 was originally defined by RFC 7538 and was later absorbed into RFC 9110 HTTP Semantics.",
+      "claimClass": "SUPPORTED_FACT",
+      "evidenceStatus": "SUPPORTED",
+      "corroborationStatus": "MULTI_SOURCE_CONFIRMED",
+      "supportingEvidence": [
+        {
+          "sourceId": "src-048e66b5112e",
+          "contentHash": "359cf28aed3b7f066a21af0f18c65a431689c912f4784d8f5e73889a636a6099",
+          "locator": null,
+          "excerpt": "  * [Skip to main content](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/308#content)\n  * [Skip to search](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/308#mdn-search)\n\n\n[ MDN ](https://developer.mozilla.org/en-US/)\nHTML\n[HTML: Markup la"
+        },
+        {
+          "sourceId": "src-9c7cc5db9f6d",
+          "contentHash": "b5642f6a1984da5d2f5c4910fe6915908e9632cae0ec0fcaea4b31c517f81bff",
+          "locator": null,
+          "excerpt": "[ Skip to content ](https://www.rfc-editor.org/info/rfc7538/#main)\n[![RFC Editor - Official home of RFCs](https://www.rfc-editor.org/_nuxt/1.127.0/logo-mobile.CoO2D8c2.svg)![RFC Editor - Official home of RFCs](https://www.rfc-editor.org/_nuxt/1.127.0/logo-desktop.DmfyR5wx.svg)](h"
+        },
+        {
+          "sourceId": "src-204d096ca9ed",
+          "contentHash": "52962aaa56c2a88904f627ccbbb618c7a90df1e4b4747c963660f7090c8260c1",
+          "locator": null,
+          "excerpt": "  * Light \n  * Dark \n  * Auto \n\n\n[ RFC 9110   \nInternet Standard  ](https://datatracker.ietf.org/doc/rfc9110/)  \n|   | Title  |   | HTTP Semantics  |  \n| --- | --- | --- | --- |  \n| Document  | Document type  |   |  RFC - Internet Standard    \nJune 2022   \n[ View errata ](https:/"
+        }
+      ],
+      "contradictingEvidence": [],
+      "confidenceReason": "",
+      "materiality": "medium",
+      "needsReevaluation": false,
+      "createdAt": "2026-10-03T02:24:56.072Z"
+    },
+    {
+      "claimId": "clm-c59412e9d345",
+      "researchQuestionIds": [
+        "q0",
+        "q1",
+        "q2",
+        "q3"
+      ],
+      "claim": "Unlike 301, which may incorrectly change a POST request into a GET request, 308 never changes the request method.",
+      "claimClass": "SUPPORTED_FACT",
+      "evidenceStatus": "SUPPORTED",
+      "corroborationStatus": "MULTI_SOURCE_CONFIRMED",
+      "supportingEvidence": [
+        {
+          "sourceId": "src-048e66b5112e",
+          "contentHash": "359cf28aed3b7f066a21af0f18c65a431689c912f4784d8f5e73889a636a6099",
+          "locator": null,
+          "excerpt": "  * [Skip to main content](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/308#content)\n  * [Skip to search](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/308#mdn-search)\n\n\n[ MDN ](https://developer.mozilla.org/en-US/)\nHTML\n[HTML: Markup la"
+        },
+        {
+          "sourceId": "src-9c7cc5db9f6d",
+          "contentHash": "b5642f6a1984da5d2f5c4910fe6915908e9632cae0ec0fcaea4b31c517f81bff",
+          "locator": null,
+          "excerpt": "[ Skip to content ](https://www.rfc-editor.org/info/rfc7538/#main)\n[![RFC Editor - Official home of RFCs](https://www.rfc-editor.org/_nuxt/1.127.0/logo-mobile.CoO2D8c2.svg)![RFC Editor - Official home of RFCs](https://www.rfc-editor.org/_nuxt/1.127.0/logo-desktop.DmfyR5wx.svg)](h"
+        },
+        {
+          "sourceId": "src-204d096ca9ed",
+          "contentHash": "52962aaa56c2a88904f627ccbbb618c7a90df1e4b4747c963660f7090c8260c1",
+          "locator": null,
+          "excerpt": "  * Light \n  * Dark \n  * Auto \n\n\n[ RFC 9110   \nInternet Standard  ](https://datatracker.ietf.org/doc/rfc9110/)  \n|   | Title  |   | HTTP Semantics  |  \n| --- | --- | --- | --- |  \n| Document  | Document type  |   |  RFC - Internet Standard    \nJune 2022   \n[ View errata ](https:/"
+        }
+      ],
+      "contradictingEvidence": [],
+      "confidenceReason": "",
+      "materiality": "high",
+      "needsReevaluation": false,
+      "createdAt": "2026-10-03T02:24:56.072Z"
+    }
+  ]
+}

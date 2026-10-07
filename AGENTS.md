@@ -34,6 +34,13 @@
 - Secrets: never in prompts/tests/logs/reports/DOM/tracked files (passwords, API keys, bridge tokens, cookies). Auth state local-only.
 - Google Flow credits: verify prepare/settings/readiness only; STOP before any credit-consuming action unless the task explicitly authorizes it; no blind paid retries; no destructive cloud actions.
 
+## Native rendering on Windows (Smart App Control)
+
+- Windows SAC blocks the unsigned upstream Remotion compositor binaries. The approved operator workflow is a MANUAL SAC toggle (Windows Security -> App & browser control -> Smart App Control = OFF before rendering, = ON after). The agent MUST NOT toggle SAC, edit registry/Defender/CodeIntegrity, or automate the UI.
+- Before any real native render, run `npm run render:doctor` (read-only). READY -> render. NOT_READY with app-control evidence -> stop and ask the operator to toggle SAC manually. Never auto-install WSL or auto-disable security.
+- Keep the SAC-off window tight: run only the approved render commands while SAC is OFF; no unrelated executables.
+- WSL2/Linux render worker remains a documented fallback/future option (not installed, not the current runtime).
+
 ## Standing Rules
 
 - Evidence-based execution: every completion claim needs verifiable proof (command output, file paths, artifacts, test results).

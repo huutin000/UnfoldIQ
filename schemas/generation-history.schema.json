@@ -1,0 +1,139 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "generation-history.schema.json",
+  "title": "UNFOLDIQ Generation History + Locks (1H.2)",
+  "description": "Append-only generation/variant/decision events plus current lock state. Owned by UNFOLDIQ CORE. Generations and decisions are immutable once recorded; variant selection status and lock status are versioned lifecycle transitions with full event trails. References (never copies) GenerationJob, Asset Registry, QA, Budget, and Project Manifest records.",
+  "type": "object",
+  "required": ["schemaVersion", "projectId", "revision", "createdAt", "updatedAt", "generations", "variants", "decisions", "locks", "fingerprint"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "projectId": { "type": "string", "minLength": 1 },
+    "revision": { "type": "integer", "minimum": 1 },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "updatedAt": { "type": "string", "format": "date-time" },
+    "generations": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/definitions/generation" }
+    },
+    "variants": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/definitions/variant" }
+    },
+    "decisions": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/definitions/decision" }
+    },
+    "locks": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/definitions/lock" }
+    },
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" }
+  },
+  "definitions": {
+    "targetType": { "enum": ["SCENE", "SEGMENT", "ASSET", "VOICE_PARAGRAPH", "SHOT", "VOICE_BIBLE"] },
+    "generation": {
+      "type": "object",
+      "required": ["generationId", "projectId", "jobId", "attemptId", "createdAt", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "generationId": { "type": "string", "pattern": "^gen-[0-9a-f]{12}$" },
+        "projectId": { "type": "string", "minLength": 1 },
+        "runId": { "type": ["string", "null"] },
+        "jobId": { "type": "string", "minLength": 1 },
+        "attemptId": { "type": "string", "minLength": 1 },
+        "shotId": { "type": ["string", "null"] },
+        "sceneId": { "type": ["string", "null"] },
+        "segmentId": { "type": ["string", "null"] },
+        "paragraphId": { "type": ["string", "null"] },
+        "generationUnitId": { "type": ["string", "null"] },
+        "provider": { "type": ["string", "null"] },
+        "model": { "type": ["string", "null"] },
+        "modelResolutionRef": { "type": ["string", "null"] },
+        "promptVersion": { "type": ["string", "null"] },
+        "agentInstructionsVersion": { "type": ["string", "null"] },
+        "referenceIds": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "completedAt": { "type": ["string", "null"], "format": "date-time" },
+        "status": { "enum": ["SUBMITTED", "SUCCEEDED", "FAILED", "CANCELLED"] },
+        "resultAssetIds": { "type": "array", "items": { "type": "string" } },
+        "costEvidence": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "properties": {
+            "observedCredits": { "type": ["number", "null"], "minimum": 0 },
+            "evidenceStrength": { "type": ["string", "null"] }
+          }
+        },
+        "parentGenerationId": { "type": ["string", "null"] },
+        "retryOf": { "type": ["string", "null"] },
+        "provenance": { "type": ["string", "null"], "enum": ["LIVE", "MIGRATED", null] }
+      }
+    },
+    "variant": {
+      "type": "object",
+      "required": ["variantId", "targetType", "targetId", "generationId", "createdAt", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "variantId": { "type": "string", "pattern": "^var-[0-9a-f]{12}$" },
+        "targetType": { "$ref": "#/definitions/targetType" },
+        "targetId": { "type": "string", "minLength": 1 },
+        "generationId": { "type": "string", "minLength": 1 },
+        "assetId": { "type": ["string", "null"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "status": { "enum": ["PROPOSED", "SELECTED", "SUPERSEDED", "REJECTED"] },
+        "decisionId": { "type": ["string", "null"] },
+        "decidedAt": { "type": ["string", "null"], "format": "date-time" }
+      }
+    },
+    "decision": {
+      "type": "object",
+      "required": ["decisionId", "targetType", "targetId", "decision", "reason", "evidenceRefs", "decidedAt"],
+      "additionalProperties": false,
+      "properties": {
+        "decisionId": { "type": "string", "pattern": "^dec-[0-9a-f]{12}$" },
+        "targetType": { "$ref": "#/definitions/targetType" },
+        "targetId": { "type": "string", "minLength": 1 },
+        "variantId": { "type": ["string", "null"] },
+        "decision": { "enum": ["APPROVED", "REJECTED"] },
+        "reason": { "type": "string", "minLength": 1 },
+        "evidenceRefs": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "decidedAt": { "type": "string", "format": "date-time" },
+        "actorType": { "type": ["string", "null"], "enum": ["operator", "agent", "system", "migration", null] },
+        "provenance": { "type": ["string", "null"], "enum": ["LIVE", "MIGRATED", null] }
+      }
+    },
+    "lock": {
+      "type": "object",
+      "required": ["targetType", "targetId", "status", "reason", "createdAt", "updatedAt", "lockVersion", "events"],
+      "additionalProperties": false,
+      "properties": {
+        "targetType": { "$ref": "#/definitions/targetType" },
+        "targetId": { "type": "string", "minLength": 1 },
+        "status": { "enum": ["LOCKED", "UNLOCKED"] },
+        "reason": { "type": "string", "minLength": 1 },
+        "sourceDecisionId": { "type": ["string", "null"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": ["string", "null"], "format": "date-time" },
+        "lockVersion": { "type": "integer", "minimum": 1 },
+        "expectedProjectVersion": { "type": ["integer", "null"], "minimum": 1 },
+        "events": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["status", "reason", "at", "lockVersion"],
+            "additionalProperties": false,
+            "properties": {
+              "status": { "enum": ["LOCKED", "UNLOCKED"] },
+              "reason": { "type": "string", "minLength": 1 },
+              "sourceDecisionId": { "type": ["string", "null"] },
+              "actor": { "type": ["string", "null"] },
+              "at": { "type": "string", "format": "date-time" },
+              "lockVersion": { "type": "integer", "minimum": 1 }
+            }
+          }
+        }
+      }
+    }
+  }
+}

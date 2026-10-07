@@ -1,0 +1,405 @@
+{
+  "version": "1.0.0",
+  "assets": {
+    "as-801383448e81": {
+      "version": "1.0.0",
+      "assetId": "as-801383448e81",
+      "projectId": "pilot-sky-blue",
+      "type": "audio",
+      "role": "OTHER",
+      "source": "migration",
+      "provider": null,
+      "jobId": null,
+      "shotId": null,
+      "characterIds": [],
+      "locationIds": [],
+      "promptVersion": null,
+      "modelVersion": null,
+      "referenceIds": [],
+      "instructionVersion": null,
+      "derivedFrom": [],
+      "hash": {
+        "algo": "sha256",
+        "value": "801383448e8113117a9eea7fc7672a2dc175f9483dfffee8301e11c91967430e"
+      },
+      "bytes": 414298,
+      "relativePath": "assets/voice/B1.wav",
+      "dimensions": null,
+      "durationMs": null,
+      "rights": {
+        "status": "UNKNOWN",
+        "note": "pre-existing file indexed by migration; origin and license unverified"
+      },
+      "provenance": {
+        "source": "migration",
+        "detail": "pre-existing file at assets/voice/B1.wav"
+      },
+      "qualityStatus": "UNREVIEWED",
+      "selection": {
+        "status": "UNSET",
+        "decidedAt": null,
+        "reason": null
+      },
+      "lock": {
+        "locked": false,
+        "reason": null,
+        "lockedAt": null,
+        "actor": null,
+        "unlockedAt": null,
+        "unlockReason": null
+      },
+      "createdAt": "2026-10-04T02:06:16.139Z",
+      "updatedAt": "2026-10-04T02:06:16.139Z"
+    },
+    "as-6820720f45bd": {
+      "version": "1.0.0",
+      "assetId": "as-6820720f45bd",
+      "projectId": "pilot-sky-blue",
+      "type": "audio",
+      "role": "OTHER",
+      "source": "migration",
+      "provider": null,
+      "jobId": null,
+      "shotId": null,
+      "characterIds": [],
+      "locationIds": [],
+      "promptVersion": null,
+      "modelVersion": null,
+      "referenceIds": [],
+      "instructionVersion": null,
+      "derivedFrom": [],
+      "hash": {
+        "algo": "sha256",
+        "value": "6820720f45bdab9f411613fbdb67d9b7857e6d355b7bf9ef2086af77259c2bb2"
+      },
+      "bytes": 385188,
+      "relativePath": "assets/voice/B2.wav",
+      "dimensions": null,
+      "durationMs": null,
+      "rights": {
+        "status": "UNKNOWN",
+        "note": "pre-existing file indexed by migration; origin and license unverified"
+      },
+      "provenance": {
+        "source": "migration",
+        "detail": "pre-existing file at assets/voice/B2.wav"
+      },
+      "qualityStatus": "UNREVIEWED",
+      "selection": {
+        "status": "UNSET",
+        "decidedAt": null,
+        "reason": null
+      },
+      "lock": {
+        "locked": false,
+        "reason": null,
+        "lockedAt": null,
+        "actor": null,
+        "unlockedAt": null,
+        "unlockReason": null
+      },
+      "createdAt": "2026-10-04T02:06:16.149Z",
+      "updatedAt": "2026-10-04T02:06:16.149Z"
+    },
+    "as-4efe68334eca": {
+      "version": "1.0.0",
+      "assetId": "as-4efe68334eca",
+      "projectId": "pilot-sky-blue",
+      "type": "audio",
+      "role": "OTHER",
+      "source": "migration",
+      "provider": null,
+      "jobId": null,
+      "shotId": null,
+      "characterIds": [],
+      "locationIds": [],
+      "promptVersion": null,
+      "modelVersion": null,
+      "referenceIds": [],
+      "instructionVersion": null,
+      "derivedFrom": [],
+      "hash": {
+        "algo": "sha256",
+        "value": "4efe68334eca1b42749c21bbea3160f0561b3761b3c49486450dfa29603d925e"
+      },
+      "bytes": 368864,
+      "relativePath": "assets/voice/B3.wav",
+      "dimensions": null,
+      "durationMs": null,
+      "rights": {
+        "status": "UNKNOWN",
+        "note": "pre-existing file indexed by migration; origin and license unverified"
+      },
+      "provenance": {
+        "source": "migration",
+        "detail": "pre-existing file at assets/voice/B3.wav"
+      },
+      "qualityStatus": "UNREVIEWED",
+      "selection": {
+        "status": "UNSET",
+        "decidedAt": null,
+        "reason": null
+      },
+      "lock": {
+        "locked": false,
+        "reason": null,
+        "lockedAt": null,
+        "actor": null,
+        "unlockedAt": null,
+        "unlockReason": null
+      },
+      "createdAt": "2026-10-04T02:06:16.157Z",
+      "updatedAt": "2026-10-04T02:06:16.157Z"
+    },
+    "as-24aff3533c32": {
+      "version": "1.0.0",
+      "assetId": "as-24aff3533c32",
+      "projectId": "pilot-sky-blue",
+      "type": "audio",
+      "role": "OTHER",
+      "source": "migration",
+      "provider": null,
+      "jobId": null,
+      "shotId": null,
+      "characterIds": [],
+      "locationIds": [],
+      "promptVersion": null,
+      "modelVersion": null,
+      "referenceIds": [],
+      "instructionVersion": null,
+      "derivedFrom": [],
+      "hash": {
+        "algo": "sha256",
+        "value": "24aff3533c32d80a6fc838daeedead0e0e82317692ad1ae041f690cf2a689ab2"
+      },
+      "bytes": 330290,
+      "relativePath": "assets/voice/B4.wav",
+      "dimensions": null,
+      "durationMs": null,
+      "rights": {
+        "status": "UNKNOWN",
+        "note": "pre-existing file indexed by migration; origin and license unverified"
+      },
+      "provenance": {
+        "source": "migration",
+        "detail": "pre-existing file at assets/voice/B4.wav"
+      },
+      "qualityStatus": "UNREVIEWED",
+      "selection": {
+        "status": "UNSET",
+        "decidedAt": null,
+        "reason": null
+      },
+      "lock": {
+        "locked": false,
+        "reason": null,
+        "lockedAt": null,
+        "actor": null,
+        "unlockedAt": null,
+        "unlockReason": null
+      },
+      "createdAt": "2026-10-04T02:06:16.164Z",
+      "updatedAt": "2026-10-04T02:06:16.164Z"
+    },
+    "as-2f265d52eff9": {
+      "version": "1.0.0",
+      "assetId": "as-2f265d52eff9",
+      "projectId": "pilot-sky-blue",
+      "type": "audio",
+      "role": "OTHER",
+      "source": "migration",
+      "provider": null,
+      "jobId": null,
+      "shotId": null,
+      "characterIds": [],
+      "locationIds": [],
+      "promptVersion": null,
+      "modelVersion": null,
+      "referenceIds": [],
+      "instructionVersion": null,
+      "derivedFrom": [],
+      "hash": {
+        "algo": "sha256",
+        "value": "2f265d52eff9648e2d94354eb18d2f49e3ea8da049a5c97c0ed7c77101b12629"
+      },
+      "bytes": 327414,
+      "relativePath": "assets/voice/B5.wav",
+      "dimensions": null,
+      "durationMs": null,
+      "rights": {
+        "status": "UNKNOWN",
+        "note": "pre-existing file indexed by migration; origin and license unverified"
+      },
+      "provenance": {
+        "source": "migration",
+        "detail": "pre-existing file at assets/voice/B5.wav"
+      },
+      "qualityStatus": "UNREVIEWED",
+      "selection": {
+        "status": "UNSET",
+        "decidedAt": null,
+        "reason": null
+      },
+      "lock": {
+        "locked": false,
+        "reason": null,
+        "lockedAt": null,
+        "actor": null,
+        "unlockedAt": null,
+        "unlockReason": null
+      },
+      "createdAt": "2026-10-04T02:06:16.172Z",
+      "updatedAt": "2026-10-04T02:06:16.172Z"
+    },
+    "as-5c9db148d646": {
+      "version": "1.0.0",
+      "assetId": "as-5c9db148d646",
+      "projectId": "pilot-sky-blue",
+      "type": "audio",
+      "role": "OTHER",
+      "source": "migration",
+      "provider": null,
+      "jobId": null,
+      "shotId": null,
+      "characterIds": [],
+      "locationIds": [],
+      "promptVersion": null,
+      "modelVersion": null,
+      "referenceIds": [],
+      "instructionVersion": null,
+      "derivedFrom": [],
+      "hash": {
+        "algo": "sha256",
+        "value": "5c9db148d646183c98cd9104ba73db8136f5a59bdab5725c17a6cc61c537a51c"
+      },
+      "bytes": 384084,
+      "relativePath": "assets/voice/B6.wav",
+      "dimensions": null,
+      "durationMs": null,
+      "rights": {
+        "status": "UNKNOWN",
+        "note": "pre-existing file indexed by migration; origin and license unverified"
+      },
+      "provenance": {
+        "source": "migration",
+        "detail": "pre-existing file at assets/voice/B6.wav"
+      },
+      "qualityStatus": "UNREVIEWED",
+      "selection": {
+        "status": "UNSET",
+        "decidedAt": null,
+        "reason": null
+      },
+      "lock": {
+        "locked": false,
+        "reason": null,
+        "lockedAt": null,
+        "actor": null,
+        "unlockedAt": null,
+        "unlockReason": null
+      },
+      "createdAt": "2026-10-04T02:06:16.179Z",
+      "updatedAt": "2026-10-04T02:06:16.179Z"
+    },
+    "as-d390c129c50e": {
+      "version": "1.0.0",
+      "assetId": "as-d390c129c50e",
+      "projectId": "pilot-sky-blue",
+      "type": "audio",
+      "role": "OTHER",
+      "source": "migration",
+      "provider": null,
+      "jobId": null,
+      "shotId": null,
+      "characterIds": [],
+      "locationIds": [],
+      "promptVersion": null,
+      "modelVersion": null,
+      "referenceIds": [],
+      "instructionVersion": null,
+      "derivedFrom": [],
+      "hash": {
+        "algo": "sha256",
+        "value": "d390c129c50e8446e087f0633094eb2a936aa20dd7d11a89e8a27ea2308ee734"
+      },
+      "bytes": 292582,
+      "relativePath": "assets/voice/B7.wav",
+      "dimensions": null,
+      "durationMs": null,
+      "rights": {
+        "status": "UNKNOWN",
+        "note": "pre-existing file indexed by migration; origin and license unverified"
+      },
+      "provenance": {
+        "source": "migration",
+        "detail": "pre-existing file at assets/voice/B7.wav"
+      },
+      "qualityStatus": "UNREVIEWED",
+      "selection": {
+        "status": "UNSET",
+        "decidedAt": null,
+        "reason": null
+      },
+      "lock": {
+        "locked": false,
+        "reason": null,
+        "lockedAt": null,
+        "actor": null,
+        "unlockedAt": null,
+        "unlockReason": null
+      },
+      "createdAt": "2026-10-04T02:06:16.186Z",
+      "updatedAt": "2026-10-04T02:06:16.186Z"
+    },
+    "as-683c831c4e39": {
+      "version": "1.0.0",
+      "assetId": "as-683c831c4e39",
+      "projectId": "pilot-sky-blue",
+      "type": "audio",
+      "role": "OTHER",
+      "source": "migration",
+      "provider": null,
+      "jobId": null,
+      "shotId": null,
+      "characterIds": [],
+      "locationIds": [],
+      "promptVersion": null,
+      "modelVersion": null,
+      "referenceIds": [],
+      "instructionVersion": null,
+      "derivedFrom": [],
+      "hash": {
+        "algo": "sha256",
+        "value": "683c831c4e39c43ad27dae8053420729e92d6dcd008d7fd7a501dbf1ada542fe"
+      },
+      "bytes": 378792,
+      "relativePath": "assets/voice/B8.wav",
+      "dimensions": null,
+      "durationMs": null,
+      "rights": {
+        "status": "UNKNOWN",
+        "note": "pre-existing file indexed by migration; origin and license unverified"
+      },
+      "provenance": {
+        "source": "migration",
+        "detail": "pre-existing file at assets/voice/B8.wav"
+      },
+      "qualityStatus": "UNREVIEWED",
+      "selection": {
+        "status": "UNSET",
+        "decidedAt": null,
+        "reason": null
+      },
+      "lock": {
+        "locked": false,
+        "reason": null,
+        "lockedAt": null,
+        "actor": null,
+        "unlockedAt": null,
+        "unlockReason": null
+      },
+      "createdAt": "2026-10-04T02:06:16.193Z",
+      "updatedAt": "2026-10-04T02:06:16.193Z"
+    }
+  }
+}

@@ -270,6 +270,148 @@ def clamp_int(value, default, low, high):
     return max(low, min(v, high))
 
 
+def _coerce_llm_text(value):
+    """Gemini 3 models return AIMessage.content as a LIST of content parts
+    (text parts with thought signatures) via langchain-google-genai 4.4.0,
+    while gpt-researcher 0.15.1 expects str and calls .split('\\n') on it.
+    Coerce list/dict content to the concatenated text parts; pass str through."""
+    if isinstance(value, str):
+        return value
+    if isinstance(value, dict):
+        return str(value.get("text") or value.get("content") or value)
+    if isinstance(value, list):
+        parts = []
+        for p in value:
+            if isinstance(p, dict) and isinstance(p.get("text"), str):
+                parts.append(p["text"])
+            elif isinstance(p, str):
+                parts.append(p)
+            elif isinstance(p, dict):
+                parts.append(str(p.get("text") or p.get("content") or ""))
+            else:
+                parts.append(str(p))
+        return "".join(parts)
+    return str(value)
+
+
+def _install_llm_text_coercion():
+    """UNFOLDIQ adapter-layer fix (isolated, additive): wrap the installed
+    provider's get_chat_response so every gpt-researcher consumer receives
+    plain text regardless of the adapter's content shape, and so a provider
+    daily-quota exhaustion (429 RESOURCE_EXHAUSTED) latches a fail-fast flag:
+    gpt-researcher's built-in 10-attempt retry loop cannot see quota state and
+    would otherwise burn the whole wall clock on guaranteed rejections.
+    Never changes provider selection; str content passes through untouched."""
+    try:
+        from gpt_researcher.llm_provider.generic.base import GenericLLMProvider
+    except Exception:
+        return False
+    if getattr(GenericLLMProvider, "_unfoldiq_text_coercion", False):
+        return True
+    original = GenericLLMProvider.get_chat_response
+
+    async def get_chat_response(self, messages, stream, websocket=None, **kwargs):
+        try:
+            res = await original(self, messages, stream, websocket=websocket, **kwargs)
+        except Exception as exc:
+            if _is_quota_exhausted(exc):
+                _QUOTA_STATE["exhausted"] = True
+            raise
+        return _coerce_llm_text(res)
+
+    get_chat_response._unfoldiq_wraps = original  # keep the original reachable
+    GenericLLMProvider.get_chat_response = get_chat_response
+    GenericLLMProvider._unfoldiq_text_coercion = True
+    return True
+
+
+# Set the moment the provider reports a daily-quota exhaustion.
+_QUOTA_STATE = {"exhausted": False}
+
+# Live LLM call accounting (Fix 6 §10): counted per provider model inside the
+# installed wrapper; enforces UNFOLDIQ_DEEP_MAX_LLM_CALLS when set (>0).
+_CALL_STATE = {"llm": {}, "total": 0}
+
+
+class BudgetExceeded(BaseException):
+    """Escapes the library retry loop like QuotaExhausted; run_deep/run_probe
+    translate it into a structured DEEP_BUDGET_EXHAUSTED response."""
+
+
+def _max_llm_calls():
+    try:
+        return max(0, int(os.environ.get("UNFOLDIQ_DEEP_MAX_LLM_CALLS", "0") or 0))
+    except Exception:
+        return 0
+
+
+class QuotaExhausted(BaseException):
+    """Escapes gpt-researcher's retry loop (which only catches Exception) so a
+    quota-dead run fails in seconds with a clean DEEP_BUDGET_EXHAUSTED response
+    instead of burning the full wall clock on guaranteed 429 rejections. Caught
+    explicitly by run_deep/run_probe; BaseException so library `except
+    Exception` handlers cannot turn it into 10 pointless retries."""
+
+
+def _is_quota_exhausted(exc):
+    """Match provider quota-exhaustion errors WITHOUT matching transient
+    rate limiting (per-request RPM). Evidence markers: RESOURCE_EXHAUSTED,
+    PerDay/PerProject quota ids."""
+    seen, stack = set(), [exc]
+    while stack:
+        cur = stack.pop(0)
+        if cur is None or id(cur) in seen:
+            continue
+        seen.add(id(cur))
+        text = str(cur)
+        if "RESOURCE_EXHAUSTED" in text or "PerDay" in text or "quotaId" in text:
+            return True
+        stack.append(getattr(cur, "__cause__", None))
+        stack.append(getattr(cur, "__context__", None))
+    return False
+
+
+def _install_llm_text_coercion():
+    """UNFOLDIQ adapter-layer fix (isolated, additive): wrap the installed
+    provider's get_chat_response so every gpt-researcher consumer receives
+    plain text regardless of the adapter's content shape, and so a provider
+    daily-quota exhaustion (429 RESOURCE_EXHAUSTED, PerDay quota ids) latches
+    fail-fast: the library's built-in 10-attempt retry loop cannot see quota
+    state and would otherwise burn the whole wall clock on guaranteed
+    rejections. Never changes provider selection; str passes through."""
+    try:
+        from gpt_researcher.llm_provider.generic.base import GenericLLMProvider
+    except Exception:
+        return False
+    if getattr(GenericLLMProvider, "_unfoldiq_text_coercion", False):
+        return True
+    original = GenericLLMProvider.get_chat_response
+
+    async def get_chat_response(self, messages, stream, websocket=None, **kwargs):
+        if _QUOTA_STATE["exhausted"]:
+            raise QuotaExhausted("DEEP_BUDGET_EXHAUSTED: provider daily quota exhausted; further LLM calls skipped (fail-fast)")
+        ceiling = _max_llm_calls()
+        if ceiling and _CALL_STATE["total"] >= ceiling:
+            raise BudgetExceeded(
+                "LLM call budget exceeded: %d/%d calls made (UNFOLDIQ_DEEP_MAX_LLM_CALLS); refusing further calls"
+                % (_CALL_STATE["total"], ceiling))
+        _CALL_STATE["total"] += 1
+        model = getattr(getattr(self, "llm", None), "model", "unknown")
+        _CALL_STATE["llm"][model] = _CALL_STATE["llm"].get(model, 0) + 1
+        try:
+            res = await original(self, messages, stream, websocket=websocket, **kwargs)
+        except Exception as exc:
+            if _is_quota_exhausted(exc):
+                _QUOTA_STATE["exhausted"] = True
+            raise
+        return _coerce_llm_text(res)
+
+    get_chat_response._unfoldiq_wraps = original  # keep the original reachable
+    GenericLLMProvider.get_chat_response = get_chat_response
+    GenericLLMProvider._unfoldiq_text_coercion = True
+    return True
+
+
 async def run_deep(request):
     """Execute one bounded deep run. Refuses (no spend) without opt-in/creds."""
     state = config_state()
@@ -300,8 +442,10 @@ async def run_deep(request):
         return {"ok": False, "errorCode": "DEEP_PROVIDER_NOT_INSTALLED",
                 "errorMessage": "selected provider not supported by installed gpt-researcher: %s" % ", ".join(missing)}
     # Pin the resolved embedding (explicit or derived) so the installed library
-    # never instantiates its OpenAI default on a Gemini-only run.
+    # never instantiates its OpenAI default on a Gemini-only run, and make the
+    # Gemini-3 list-shaped content safe for the installed consumers.
     emb = apply_embedding_env()
+    _install_llm_text_coercion()
     try:
         from gpt_researcher import GPTResearcher
     except Exception as exc:
@@ -326,10 +470,13 @@ async def run_deep(request):
     try:
         researcher = GPTResearcher(query=query, report_type="deep")
         await researcher.conduct_research()
-        try:
-            await researcher.write_report()
-        except Exception:
-            pass  # diagnostic prose is optional; sources are the product
+        if request.get("skipReport"):
+            print("skipReport: acceptance mode — write_report skipped (saves report LLM calls)", flush=True)
+        else:
+            try:
+                await researcher.write_report()
+            except Exception:
+                pass  # diagnostic prose is optional; sources are the product
         try:
             source_urls = researcher.get_source_urls() or []
         except Exception:
@@ -375,12 +522,18 @@ async def run_deep(request):
             "followUpQuestions": [],
             "learnings": learnings[:30],
             "providerCitations": [str(u)[:1000] for u in (source_urls or [])[:50]],
-            "progressSummary": {"breadth": breadth, "depth": depth, "concurrency": concurrency},
+            "progressSummary": {"breadth": breadth, "depth": depth, "concurrency": concurrency,
+                                "llmCalls": dict(_CALL_STATE["llm"]), "llmCallsTotal": _CALL_STATE["total"]},
             "warnings": [],
             "errors": [],
             "cost": {"known": (costs if isinstance(costs, (int, float)) else None), "limit": request.get("maxCostClass")},
             "providerReportRef": None,
         }}
+    except QuotaExhausted as exc:
+        return {"ok": False, "errorCode": "DEEP_BUDGET_EXHAUSTED", "errorMessage": str(exc)[:500]}
+    except BudgetExceeded as exc:
+        return {"ok": False, "errorCode": "DEEP_BUDGET_EXHAUSTED", "errorMessage": str(exc)[:500],
+                "llmCalls": {"byModel": dict(_CALL_STATE["llm"]), "total": _CALL_STATE["total"]}}
     except Exception as exc:
         msg = str(exc)[:500]
         low = msg.lower()
@@ -409,6 +562,7 @@ async def run_probe(request):
             return {"ok": False, "errorCode": "DEEP_PROVIDER_MISSING_CREDENTIALS",
                     "errorMessage": "embedding not ready: %s" % (emb.get("error") or json.dumps(emb, default=str)[:300])}
         apply_embedding_env()
+        _install_llm_text_coercion()
         from gpt_researcher.memory.embeddings import Memory
         memory = Memory(emb["provider"], emb["model"])
         vector = memory.get_embeddings().embed_documents([EMBEDDING_PROBE_INPUT])[0]
@@ -422,13 +576,14 @@ async def run_probe(request):
         if not state["llmConfigured"] or not llm["supported"] or not llm["selected"]:
             return {"ok": False, "errorCode": "DEEP_PROVIDER_MISSING_CREDENTIALS",
                     "errorMessage": "llm not ready for probe"}
+        _install_llm_text_coercion()
         from gpt_researcher.utils.llm import create_chat_completion
         model = str(os.environ.get("FAST_LLM", "")).split(":", 1)[1] if ":" in os.environ.get("FAST_LLM", "") else None
         text = await create_chat_completion(
             messages=[{"role": "user", "content": LLM_PROBE_INPUT}],
             model=model, llm_provider=llm["selected"], max_tokens=20, stream=False)
         return {"ok": True, "probe": {"kind": "llm", "provider": llm["selected"], "model": model,
-                                      "responseHead": str(text)[:120]}}
+                                      "responseHead": _coerce_llm_text(text)[:120]}}
     if kind == "retriever":
         retriever = state["search"]["retriever"]
         if retriever != "duckduckgo":
@@ -437,7 +592,9 @@ async def run_probe(request):
         if not state["search"]["supported"]:
             return {"ok": False, "errorCode": "DEEP_PROVIDER_NOT_INSTALLED",
                     "errorMessage": "retriever dependency missing for %s" % retriever}
-        from gpt_researcher.retrievers.duckduckgo import Duckduckgo
+        # Package __init__ does not re-export the class in pinned 0.15.1;
+        # the module-internal path is the only stable import.
+        from gpt_researcher.retrievers.duckduckgo.duckduckgo import Duckduckgo
         results = Duckduckgo(RETRIEVER_PROBE_QUERY).search(max_results=3)
         rows = [r for r in (results or []) if isinstance(r, dict) and r.get("url") or isinstance(r, dict) and r.get("href")]
         urls = [str(r.get("url") or r.get("href"))[:500] for r in rows]
@@ -479,16 +636,35 @@ def main():
                                      "ok": True, **config_state()}))
         return 0
     if op == "probe":
-        response = asyncio.run(run_probe(request.get("request") or {}))
+        # The library prints progress/log lines to stdout; the bridge protocol
+        # requires stdout to stay a single JSON document, so library stdout is
+        # redirected to stderr for the duration of the live call.
+        real_stdout = sys.stdout
+        sys.stdout = sys.stderr
+        try:
+            response = asyncio.run(run_probe(request.get("request") or {}))
+        except QuotaExhausted as exc:
+            response = {"ok": False, "errorCode": "DEEP_BUDGET_EXHAUSTED", "errorMessage": str(exc)[:500]}
+        except Exception as exc:
+            response = {"ok": False, "errorCode": "DEEP_PROVIDER_ERROR", "errorMessage": str(exc)[:500]}
+        finally:
+            sys.stdout = real_stdout
         response.setdefault("protocolVersion", PROTOCOL_VERSION)
         response.setdefault("operation", "probe")
-        sys.stdout.write(json.dumps(response))
+        real_stdout.write(json.dumps(response))
+        real_stdout.flush()
         return 0 if response.get("ok") else 1
     if op == "run":
-        response = asyncio.run(run_deep(request.get("request") or {}))
+        real_stdout = sys.stdout
+        sys.stdout = sys.stderr
+        try:
+            response = asyncio.run(run_deep(request.get("request") or {}))
+        finally:
+            sys.stdout = real_stdout
         response.setdefault("protocolVersion", PROTOCOL_VERSION)
         response.setdefault("operation", "run")
-        sys.stdout.write(json.dumps(response))
+        real_stdout.write(json.dumps(response))
+        real_stdout.flush()
         return 0 if response.get("ok") else 1
     sys.stdout.write(json.dumps({"protocolVersion": PROTOCOL_VERSION, "operation": op,
                                  "ok": False, "errorCode": "BRIDGE_PROTOCOL_ERROR",

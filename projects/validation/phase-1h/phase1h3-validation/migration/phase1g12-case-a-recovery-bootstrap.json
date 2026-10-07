@@ -1,0 +1,35 @@
+{
+  "ok": true,
+  "decisions": [
+    {
+      "attempt": "b1-attempt-01",
+      "status": "MIGRATED",
+      "why": "FAILED_RETRYABLE; retried as b1-attempt-02 (child op carries parentOperationId lineage)"
+    },
+    {
+      "attempt": "b1-attempt-02",
+      "status": "MIGRATED",
+      "why": "SUCCEEDED with 9 evidence checkpoints, result as-fafd1ac4c96b"
+    },
+    {
+      "attempt": "c1-attempt-01",
+      "status": "MIGRATED",
+      "why": "SUCCEEDED with 9 evidence checkpoints, result as-6182cea3f996"
+    },
+    {
+      "attempt": "d1-attempt-01",
+      "status": "MIGRATED",
+      "why": "SUCCEEDED with 9 evidence checkpoints, result as-0fde400d6392"
+    },
+    {
+      "attempt": "d2-attempt-01",
+      "status": "MIGRATED",
+      "why": "SUCCEEDED with 9 evidence checkpoints, result as-c9f0fdc1d1e4"
+    },
+    {
+      "attempt": "d3-attempt-01",
+      "status": "MIGRATED",
+      "why": "SUCCEEDED with 9 evidence checkpoints, result as-0625f69f9867"
+    }
+  ]
+}

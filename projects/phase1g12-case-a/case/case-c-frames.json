@@ -1,0 +1,10 @@
+{
+  "startAssetId": "as-fe697fd1fef8",
+  "endAssetId": "as-5e0bb7f87d4d",
+  "endFrameDerivation": {
+    "parentVideoAssetId": "as-fafd1ac4c96b",
+    "extractedAtSeconds": 3.9,
+    "tool": "ffmpeg frame extract"
+  },
+  "qaResultId": "qa-6938de6b9bff"
+}

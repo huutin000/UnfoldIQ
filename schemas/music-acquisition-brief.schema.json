@@ -1,0 +1,43 @@
+{
+  "$id": "https://unfoldiq.io/schemas/music-acquisition-brief.schema.json",
+  "title": "UNFOLDIQ Music Acquisition Brief (Phase 2.7)",
+  "description": "Bootstrap acquisition brief for the human operator: narrative role, mood, energy, BPM range, vocal policy, durations, provider candidates",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "projectId", "briefId", "needs", "createdAt"],
+  "properties": {
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "projectId": { "type": "string", "minLength": 1 },
+    "briefId": { "type": "string", "minLength": 1 },
+    "needs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["needId", "narrativeRole", "vocalPolicy", "targetCueDurationMs"],
+        "properties": {
+          "needId": { "type": "string" },
+          "narrativeRole": { "type": "string" },
+          "mood": { "type": "array", "items": { "type": "string" } },
+          "energy": { "type": "number", "minimum": 0, "maximum": 1 },
+          "tension": { "type": "number", "minimum": 0, "maximum": 1 },
+          "bpmRange": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": { "min": { "type": "number" }, "max": { "type": "number" } }
+          },
+          "vocalPolicy": { "enum": ["INSTRUMENTAL_ONLY", "VOCAL_ALLOWED", "VOCAL_FEATURED"] },
+          "targetCueDurationMs": { "type": "integer", "minimum": 1 },
+          "instrumentationPreference": { "type": "array", "items": { "type": "string" } },
+          "providerCandidates": { "type": "array", "items": { "type": "string" } },
+          "candidateTracks": { "type": "array", "items": { "type": "string" } },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "operatorInstructions": { "type": "string" },
+    "disallowedSources": { "type": "array", "items": { "type": "string" } },
+    "createdAt": { "type": "string" }
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "prompt-package.schema.json",
+  "title": "UNFOLDIQ Prompt Package (1G.4)",
+  "description": "Versioned, validated, provider-neutral compilation of canonical visual intent. Contains no model names, no credentials, no generation decisions.",
+  "type": "object",
+  "required": ["version", "promptPackageId", "projectId", "sceneId", "shotId", "targetKind", "promptSpec", "compiledPrompt", "requiredCapabilities", "fingerprint", "status"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "const": "1.0.0" },
+    "promptPackageId": { "type": "string", "pattern": "^pp-[0-9a-f]{12}$" },
+    "projectId": { "type": "string" },
+    "sceneId": { "type": "string", "pattern": "^sc-[0-9a-f]{12}$" },
+    "shotId": { "type": "string", "pattern": "^sh-[0-9a-f]{12}$" },
+    "targetKind": { "enum": ["IMAGE", "VIDEO"] },
+    "sourceRefs": { "type": "object" },
+    "referenceRefs": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["assetId", "kind"], "additionalProperties": false,
+        "properties": {
+          "assetId": { "type": "string" },
+          "kind": { "enum": ["CHARACTER", "ENVIRONMENT", "STYLE", "OBJECT", "FRAME"] },
+          "version": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "continuityLockRef": { "type": "array", "items": { "type": "string" } },
+    "promptSpec": {
+      "type": "object",
+      "required": ["promptSpecId", "sourceRefs", "subject", "narrativeIntent", "fingerprint"],
+      "properties": {
+        "promptSpecId": { "type": "string", "pattern": "^ps-[0-9a-f]{12}$" },
+        "sourceRefs": { "type": "object" },
+        "subject": { "type": "object" },
+        "action": { "type": ["string", "null"] },
+        "environment": { "type": "object" },
+        "composition": { "type": ["string", "null"] },
+        "camera": { "type": ["object", "null"] },
+        "focusLens": { "type": ["string", "null"] },
+        "lightingAmbiance": { "type": ["string", "null"] },
+        "style": { "type": ["string", "null"] },
+        "historicalConstraints": { "type": ["string", "null"] },
+        "scientificConstraints": { "type": ["string", "null"] },
+        "narrativeIntent": { "type": "string" },
+        "mustPreserve": { "type": "array", "items": { "type": "string" } },
+        "mustAvoid": { "type": "array", "items": { "type": "string" } },
+        "claimRefs": { "type": "array", "items": { "type": "string" } },
+        "classificationRefs": { "type": "array" },
+        "referenceRefs": { "type": "array" },
+        "contentClass": { "type": "string" },
+        "fingerprint": { "type": "string" },
+        "status": { "type": "string" }
+      }
+    },
+    "compiledPrompt": { "type": "string" },
+    "generationMetadata": { "type": "object" },
+    "requiredCapabilities": {
+      "type": "array",
+      "items": { "enum": ["IMAGE_GENERATION", "IMAGE_REFERENCE", "VIDEO_GENERATION", "IMAGE_TO_VIDEO", "PORTRAIT_OUTPUT", "LANDSCAPE_OUTPUT"] }
+    },
+    "adapterId": { "type": ["string", "null"] },
+    "adapterVersion": { "type": ["string", "null"] },
+    "sections": { "type": "array", "items": { "type": "string" } },
+    "droppedForBudget": { "type": "array", "items": { "type": "string" } },
+    "validation": {
+      "type": ["object", "null"],
+      "properties": {
+        "valid": { "type": "boolean" },
+        "errors": { "type": "array" },
+        "warnings": { "type": "array" }
+      }
+    },
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" },
+    "status": { "enum": ["DRAFT", "VALID", "APPROVED", "STALE", "BLOCKED"] },
+    "createdAt": { "type": "string" },
+    "updatedAt": { "type": "string" }
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectId": "phase223-narration-pronunciation",
+  "revision": 58,
+  "createdAt": "2026-10-06T02:13:50.020Z",
+  "updatedAt": "2026-10-07T03:36:19.170Z",
+  "nodes": {
+    "FINAL_SPOKEN_SCRIPT": {
+      "artifactKey": "FINAL_SPOKEN_SCRIPT",
+      "artifactType": "FINAL_SPOKEN_SCRIPT",
+      "versionRef": "fss-phase223-validation@1",
+      "state": "CLEAN",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": "phase-2.2-2.3:validation-fixture",
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": "LIVE"
+    },
+    "VOICE_BIBLE": {
+      "artifactKey": "VOICE_BIBLE",
+      "artifactType": "VOICE_BIBLE",
+      "versionRef": "vb-19f4fd6a4596",
+      "state": "CLEAN",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": "phase-2.1:voice-bible (cross-project locked reference)",
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": "LIVE"
+    },
+    "NARRATION_DIRECTION": {
+      "artifactKey": "NARRATION_DIRECTION",
+      "artifactType": "NARRATION_DIRECTION",
+      "versionRef": "nd-18a1afd2f330",
+      "state": "CLEAN",
+      "inputRefs": [
+        {
+          "key": "FINAL_SPOKEN_SCRIPT",
+          "type": "SPOKEN_TEXT"
+        },
+        {
+          "key": "VOICE_BIBLE",
+          "type": "VOICE_IDENTITY"
+        }
+      ],
+      "dependencyFingerprint": "9f4a48ad7a7d7420",
+      "producedBy": "phase-2.2:narration-direction",
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": "LIVE"
+    },
+    "PRONUNCIATION_PROFILE": {
+      "artifactKey": "PRONUNCIATION_PROFILE",
+      "artifactType": "PRONUNCIATION_PROFILE",
+      "versionRef": "pron-6e7fd87f4366",
+      "state": "CLEAN",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": "phase-2.3:pronunciation",
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": "LIVE"
+    },
+    "PRONUNCIATION_RUNTIME_PASS": {
+      "artifactKey": "PRONUNCIATION_RUNTIME_PASS",
+      "artifactType": "PRONUNCIATION_RUNTIME_PASS",
+      "versionRef": "prp-8b1d3436ff29",
+      "state": "CLEAN",
+      "inputRefs": [
+        {
+          "key": "FINAL_SPOKEN_SCRIPT",
+          "type": "SPOKEN_TEXT"
+        },
+        {
+          "key": "PRONUNCIATION_PROFILE",
+          "type": "PRONUNCIATION_READINGS"
+        }
+      ],
+      "dependencyFingerprint": "7d1fc0c6ab585edc",
+      "producedBy": "phase-2.3:pronunciation",
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": "LIVE"
+    },
+    "TTS_READY_PLAN": {
+      "artifactKey": "TTS_READY_PLAN",
+      "artifactType": "TTS_READY_PLAN",
+      "versionRef": "ttp-4ccc5151fc9f",
+      "state": "CLEAN",
+      "inputRefs": [
+        {
+          "key": "NARRATION_DIRECTION",
+          "type": "DIRECTION"
+        },
+        {
+          "key": "PRONUNCIATION_RUNTIME_PASS",
+          "type": "PRONUNCIATION_EVIDENCE"
+        }
+      ],
+      "dependencyFingerprint": "55c1cf16d508691f",
+      "producedBy": "phase-2.2-2.3:tts-ready-plan",
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": "LIVE"
+    }
+  },
+  "fingerprint": "51037ec3765fba4c"
+}

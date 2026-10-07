@@ -163,7 +163,12 @@ runTest("FP15 Selectors centralized", () => {
         continue;
       }
       if (!e.name.endsWith(".js")) continue;
-      if (p.endsWith("flow-page-adapter.js")) continue;
+      // main-world-write.js is the designated MAIN-world exception (FIX 03):
+      // it is never an isolated content script (not in manifest content_scripts);
+      // it is serialized into the page world where it MUST query the DOM to
+      // locate the verified instruction editor. Isolated-world page access
+      // remains exclusively adapter-mediated.
+      if (p.endsWith("flow-page-adapter.js") || p.endsWith("main-world-write.js")) continue;
       const src = fs.readFileSync(p, "utf8");
       if (/querySelector|getElementById|getElementsBy/.test(src)) offenders.push(path.relative(REPO_ROOT, p));
     }

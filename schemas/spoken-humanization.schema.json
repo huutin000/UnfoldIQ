@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "spoken-humanization.schema.json",
+  "title": "UNFOLDIQ Spoken Script Humanization (FIX PRE-2.4, schema 1.0.0)",
+  "description": "Versioned humanization candidate contract. A candidate is NEVER canonical by itself: canonicalization happens only after the Evidence Fidelity gate and Naturalness QA both PASS. Source script artifacts are never mutated; lineage (sourceSegmentIds) survives split/merge.",
+  "type": "object",
+  "required": ["schemaVersion", "humanizationId", "version", "projectId", "contentMode", "contentClass", "sourceScriptRef", "sourceTextHash", "instructionVersion", "segments", "changeSummary", "provenance", "fingerprint"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "humanizationId": { "type": "string", "pattern": "^hum-[0-9a-f]{12}$" },
+    "version": { "type": "integer", "minimum": 1 },
+    "projectId": { "type": "string", "minLength": 1 },
+    "contentMode": { "type": "string", "minLength": 1 },
+    "contentClass": { "enum": ["FACTUAL", "FICTION", "HYBRID"] },
+    "sourceScriptRef": {
+      "type": "object",
+      "required": ["artifact", "version"],
+      "additionalProperties": false,
+      "properties": {
+        "artifact": { "type": "string", "minLength": 1, "description": "Project-relative source script path; never overwritten." },
+        "version": { "type": "string", "minLength": 1 }
+      }
+    },
+    "sourceTextHash": { "type": "string", "pattern": "^[0-9a-f]{16}$" },
+    "instructionVersion": { "type": "string", "minLength": 1 },
+    "segments": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/humanizedSegment" }
+    },
+    "changeSummary": { "type": "string", "maxLength": 2000 },
+    "provenance": { "$ref": "#/definitions/humanizationProvenance" },
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" }
+  },
+  "definitions": {
+    "humanizedSegment": {
+      "type": "object",
+      "required": ["segmentId", "sourceSegmentIds", "sourceTextHash", "sourceText", "candidateSpokenText", "candidateTextHash", "changeTypes"],
+      "additionalProperties": false,
+      "properties": {
+        "segmentId": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$" },
+        "sourceSegmentIds": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 },
+          "description": "Split/merge lineage: which source segment ids produced this spoken segment."
+        },
+        "sourceTextHash": { "type": "string", "pattern": "^[0-9a-f]{16}$" },
+        "sourceText": { "type": "string", "minLength": 1 },
+        "candidateSpokenText": { "type": "string", "minLength": 1 },
+        "candidateTextHash": { "type": "string", "pattern": "^[0-9a-f]{16}$" },
+        "changeTypes": {
+          "type": "array",
+          "items": { "enum": ["SENTENCE_SPLIT", "SENTENCE_MERGE", "RHYTHM", "TRANSITION", "CADENCE", "CONVERSATIONAL_WORDING", "REDUNDANCY_REDUCTION"] }
+        },
+        "changeNotes": { "type": ["string", "null"], "maxLength": 500 }
+      }
+    },
+    "humanizationProvenance": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "actorType": { "enum": ["AGENT", "OPERATOR", "PROVIDER", "UNKNOWN_NOT_AVAILABLE"] },
+        "provider": { "type": ["string", "null"] },
+        "model": { "type": ["string", "null"] },
+        "attempt": { "type": ["integer", "null"], "minimum": 1, "description": "Bounded repair attempt number (1 = first candidate)." },
+        "createdAt": { "type": ["string", "null"] },
+        "evidenceRefs": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

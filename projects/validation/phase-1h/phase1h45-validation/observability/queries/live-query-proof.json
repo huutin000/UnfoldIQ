@@ -1,0 +1,22 @@
+{
+  "listTotal": 5,
+  "traceEvents": 6,
+  "traceSpans": 0,
+  "errorGroups": 0,
+  "costStrengths": [],
+  "coverage": {
+    "FACTUAL": "COVERED",
+    "FICTION": "COVERED",
+    "HYBRID": "DEFERRED_WITH_REASON",
+    "CHARACTER_CONTINUITY": "COVERED",
+    "ASPECT_16_9": "COVERED",
+    "ASPECT_9_16": "DEFERRED_WITH_REASON",
+    "IMAGE_ONLY": "COVERED",
+    "SELECTIVE_VEO": "COVERED",
+    "RESEARCH_HEAVY": "COVERED",
+    "SPOKEN_HUMANIZATION": "COVERED",
+    "VOICE_CAPTION": "COVERED",
+    "VISUAL_FACTUALITY": "COVERED",
+    "ORIGINALITY": "COVERED"
+  }
+}

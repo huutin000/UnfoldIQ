@@ -1,0 +1,112 @@
+{
+  "version": "1.0.0",
+  "projectId": "live-1g1-http308",
+  "sources": [
+    {
+      "sourceId": "src-048e66b5112e",
+      "requestedUrl": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/308",
+      "canonicalUrl": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/308",
+      "finalUrl": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/308",
+      "title": "308 Permanent Redirect - HTTP | MDN",
+      "publisher": null,
+      "author": null,
+      "publishedAt": null,
+      "retrievedAt": "2026-10-03T02:24:01.385315Z",
+      "sourceType": "UNKNOWN",
+      "classificationReason": "insufficient evidence for confident classification",
+      "independenceStatus": "INDEPENDENT",
+      "originGroup": null,
+      "searchQuery": "What is the documented timeline of \"HTTP 308 Permanent Redirect semantics\" (key dates, sequence, participants)?",
+      "searchProvider": "web-search-agent-exchange",
+      "searchRank": null,
+      "contentHash": "359cf28aed3b7f066a21af0f18c65a431689c912f4784d8f5e73889a636a6099",
+      "currentVersionHash": "359cf28aed3b7f066a21af0f18c65a431689c912f4784d8f5e73889a636a6099",
+      "versions": [
+        {
+          "contentHash": "359cf28aed3b7f066a21af0f18c65a431689c912f4784d8f5e73889a636a6099",
+          "retrievedAt": "2026-10-03T02:24:01.385315Z",
+          "rawContentRef": "research/sources/src-048e66b5112e/content-359cf28aed3b.md",
+          "fitContentRef": null,
+          "supersedes": null
+        }
+      ],
+      "acquisitionRoute": "crawl4ai-direct",
+      "crawlerVersion": "0.9.4",
+      "fitQuery": null,
+      "acquisitionWarnings": [
+        "fitMarkdown empty; analysis must fall back to rawMarkdown"
+      ]
+    },
+    {
+      "sourceId": "src-9c7cc5db9f6d",
+      "requestedUrl": "https://www.rfc-editor.org/rfc/rfc7538",
+      "canonicalUrl": "https://www.rfc-editor.org/info/rfc7538",
+      "finalUrl": "https://www.rfc-editor.org/info/rfc7538/",
+      "title": "RFC 7538: The Hypertext Transfer Protocol Status Code 308 (Permanent Redirect) | RFC Editor",
+      "publisher": null,
+      "author": null,
+      "publishedAt": null,
+      "retrievedAt": "2026-10-03T02:24:01.620104Z",
+      "sourceType": "UNKNOWN",
+      "classificationReason": "insufficient evidence for confident classification",
+      "independenceStatus": "INDEPENDENT",
+      "originGroup": null,
+      "searchQuery": "What is the documented timeline of \"HTTP 308 Permanent Redirect semantics\" (key dates, sequence, participants)?",
+      "searchProvider": "web-search-agent-exchange",
+      "searchRank": null,
+      "contentHash": "b5642f6a1984da5d2f5c4910fe6915908e9632cae0ec0fcaea4b31c517f81bff",
+      "currentVersionHash": "b5642f6a1984da5d2f5c4910fe6915908e9632cae0ec0fcaea4b31c517f81bff",
+      "versions": [
+        {
+          "contentHash": "b5642f6a1984da5d2f5c4910fe6915908e9632cae0ec0fcaea4b31c517f81bff",
+          "retrievedAt": "2026-10-03T02:24:01.620104Z",
+          "rawContentRef": "research/sources/src-9c7cc5db9f6d/content-b5642f6a1984.md",
+          "fitContentRef": null,
+          "supersedes": null
+        }
+      ],
+      "acquisitionRoute": "crawl4ai-direct",
+      "crawlerVersion": "0.9.4",
+      "fitQuery": null,
+      "acquisitionWarnings": [
+        "fitMarkdown empty; analysis must fall back to rawMarkdown"
+      ]
+    },
+    {
+      "sourceId": "src-204d096ca9ed",
+      "requestedUrl": "https://datatracker.ietf.org/doc/html/rfc9110",
+      "canonicalUrl": "https://datatracker.ietf.org/doc/html/rfc9110",
+      "finalUrl": "https://datatracker.ietf.org/doc/html/rfc9110",
+      "title": "RFC 9110 - HTTP Semantics",
+      "publisher": null,
+      "author": null,
+      "publishedAt": null,
+      "retrievedAt": "2026-10-03T02:24:07.347060Z",
+      "sourceType": "UNKNOWN",
+      "classificationReason": "insufficient evidence for confident classification",
+      "independenceStatus": "INDEPENDENT",
+      "originGroup": null,
+      "searchQuery": "What is the documented timeline of \"HTTP 308 Permanent Redirect semantics\" (key dates, sequence, participants)?",
+      "searchProvider": "web-search-agent-exchange",
+      "searchRank": null,
+      "contentHash": "52962aaa56c2a88904f627ccbbb618c7a90df1e4b4747c963660f7090c8260c1",
+      "currentVersionHash": "52962aaa56c2a88904f627ccbbb618c7a90df1e4b4747c963660f7090c8260c1",
+      "versions": [
+        {
+          "contentHash": "52962aaa56c2a88904f627ccbbb618c7a90df1e4b4747c963660f7090c8260c1",
+          "retrievedAt": "2026-10-03T02:24:07.347060Z",
+          "rawContentRef": "research/sources/src-204d096ca9ed/content-52962aaa56c2.md",
+          "fitContentRef": null,
+          "supersedes": null
+        }
+      ],
+      "acquisitionRoute": "crawl4ai-direct",
+      "crawlerVersion": "0.9.4",
+      "fitQuery": null,
+      "acquisitionWarnings": [
+        "rawMarkdown truncated at acquisition limit; evidence may be incomplete",
+        "fitMarkdown empty; analysis must fall back to rawMarkdown"
+      ]
+    }
+  ]
+}

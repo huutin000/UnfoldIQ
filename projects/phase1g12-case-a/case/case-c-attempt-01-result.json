@@ -1,0 +1,70 @@
+{
+  "caseResult": {
+    "version": "1.0.0",
+    "caseId": "C",
+    "status": "PASS",
+    "projectId": "phase1g12-case-a",
+    "providerProjectRef": "8221824c-a1a6-4aa9-8d6b-fac24860d49e",
+    "shotIds": [
+      "C-SH01"
+    ],
+    "generationUnitIds": [
+      "gu-3ff6b479331a"
+    ],
+    "attemptIds": [
+      "c1-attempt-01"
+    ],
+    "productionDecisionRefs": [
+      "scene/validation-scene-c.json"
+    ],
+    "modelResolutionRefs": [
+      "mr-e9f72db7d52a"
+    ],
+    "budgetPlanRef": "budget-plans/1g12-bcd.json (bp-9b02221225dd)",
+    "providerResultRefs": [
+      "case/case-c-attempt-01-correlation.json"
+    ],
+    "assetIds": [
+      "as-fe697fd1fef8",
+      "as-5e0bb7f87d4d",
+      "as-6182cea3f996"
+    ],
+    "qaResultIds": [
+      "qa-fa372cd95c4f"
+    ],
+    "timelineEligibility": [
+      "as-6182cea3f996=READY_FOR_TIMELINE"
+    ],
+    "repairHistory": [],
+    "credits": {
+      "estimated": 7,
+      "reserved": 0,
+      "reconciled": 29,
+      "state": "RECONCILED"
+    },
+    "evidenceRefs": [
+      "qa/case-c-attempt-01-qa-summary.json",
+      "downloads/Blue_circle_grows_on_background_20261005103017.mp4",
+      "case/case-c-frames.json"
+    ],
+    "caseResultId": "case-c-f8dd7fb21368",
+    "completedAt": "2026-10-05T03:31:26.271Z"
+  },
+  "matrix": [
+    "C1=PASS",
+    "C2=PASS",
+    "C3=PASS",
+    "C4=PASS",
+    "C5=PASS",
+    "C6=PASS",
+    "C7=PASS",
+    "C8=PASS",
+    "C9=PASS",
+    "C10=PASS",
+    "C11=PASS",
+    "C12=PASS",
+    "C13=PASS",
+    "C14=PASS"
+  ],
+  "matrixStatus": "PASS"
+}

@@ -1,0 +1,41 @@
+{
+  "artifact": "perf-baseline-recovery",
+  "capturedAt": "2026-10-07T03:40:10.755Z",
+  "method": "process.hrtime.bigint micro-benchmarks inside tests/recovery/test-recovery.js",
+  "sampleCounts": {
+    "lookup": 50,
+    "checkpointWrite": 10,
+    "resumePlan": 50
+  },
+  "environment": "local Windows, node",
+  "metrics": {
+    "lookup": {
+      "samples": 50,
+      "minMs": 0.219,
+      "p50Ms": 0.343,
+      "maxMs": 5.849
+    },
+    "checkpointWrite": {
+      "samples": 10,
+      "minMs": 8.856,
+      "p50Ms": 10.42,
+      "maxMs": 11.652
+    },
+    "resumePlan": {
+      "samples": 50,
+      "minMs": 0.613,
+      "p50Ms": 0.703,
+      "maxMs": 6.44
+    },
+    "sizeBytes": 9718,
+    "writeAmplification": "1 atomic replace per effective mutation; 0 on replay dedupe"
+  },
+  "budgets": {
+    "lookupP50Ms": 5,
+    "checkpointWriteP50Ms": 25,
+    "resumePlanP50Ms": 5,
+    "sizeBytes": 65536
+  },
+  "reason": "idempotency lookup sits on every mutating path; checkpoints/resume must stay cheap",
+  "result": "PASS"
+}

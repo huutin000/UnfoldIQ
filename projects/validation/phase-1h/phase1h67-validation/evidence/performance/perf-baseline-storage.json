@@ -1,0 +1,48 @@
+{
+  "artifact": "perf-baseline-storage",
+  "capturedAt": "2026-10-07T03:43:33.698Z",
+  "method": "process.hrtime.bigint micro-benchmarks inside tests/storage/test-storage.js (80 files)",
+  "sampleCounts": {
+    "inventory": 5,
+    "plan": 10,
+    "orphanScan": 10,
+    "missingScan": 20
+  },
+  "environment": "local Windows, node",
+  "metrics": {
+    "inventory": {
+      "samples": 5,
+      "minMs": 18.962,
+      "p50Ms": 20.888,
+      "maxMs": 21.731
+    },
+    "plan": {
+      "samples": 10,
+      "minMs": 13.918,
+      "p50Ms": 23.884,
+      "maxMs": 31.712
+    },
+    "orphanScan": {
+      "samples": 10,
+      "minMs": 0.827,
+      "p50Ms": 0.866,
+      "maxMs": 1.482
+    },
+    "missingScan": {
+      "samples": 20,
+      "minMs": 0.058,
+      "p50Ms": 0.067,
+      "maxMs": 0.161
+    },
+    "projectBytes": 34189,
+    "entries": 81
+  },
+  "budgets": {
+    "inventoryP50Ms": 500,
+    "planP50Ms": 100,
+    "orphanScanP50Ms": 100,
+    "missingScanP50Ms": 50
+  },
+  "reason": "inventory/plan back publish + cleanup flows; scans must stay interactive on project scale",
+  "result": "PASS"
+}

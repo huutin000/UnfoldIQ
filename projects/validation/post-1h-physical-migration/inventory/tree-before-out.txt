@@ -1,0 +1,24 @@
+out/
+pilot-sky-blue/
+  QA.md
+  UPLOAD_CHECKLIST.md
+  captions.srt
+  captions.vtt
+  final-artifact.json
+  final.mp4
+  final.prev.mp4
+  provenance-summary.json
+  provenance.json
+  qa-report.json
+  render-plan.json
+  staging-manifest.json
+postv1-flow-live-validation/
+  validation.mp4
+.gitkeep
+_cdp2g.js
+_e_logincheck.txt
+_launch2g.js
+_pw.err
+_pw.log
+_pw.ps1
+bridge-2g-live.log

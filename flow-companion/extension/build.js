@@ -19,6 +19,7 @@ const REQUIRED_FILES = [
   "icons/icon48.png",
   "icons/icon128.png",
   "src/content/flow-page-adapter.js",
+  "src/content/main-world-write.js",
   "src/content/content-commands.js",
   "src/content/content-runtime.js",
   "src/core/capability-detector.js",

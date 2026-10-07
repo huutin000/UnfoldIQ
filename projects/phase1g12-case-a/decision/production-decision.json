@@ -1,0 +1,18 @@
+{
+  "shotId": "A-SH01",
+  "visualModality": "ANNOTATION",
+  "motionNeed": "LOW",
+  "recommendedOutputType": "EDITOR_MOTION",
+  "effectiveOutputType": "EDITOR_MOTION",
+  "reasonVeoNotNeeded": "visualType = OBJECT (explicit caller signal); motion need = LOW (score 1: camera movement necessary for information (+1)); editor motion viable (GOOD): OBJECT_FOCUS, ZOOM, PARALLAX_2_5D, CROP_REFRAME synthesize the required movement from still assets; grammar: visualModality = ANNOTATION (compat default for visualType OBJECT; refine with intent flags when known); baseline STATIC_IMAGE for visualType OBJECT (explainable matrix, not a fixed ratio); upgraded to EDITOR_MOTION: LOW motion is synthesizable from stills (pan/zoom/reveal); FICTION content staged as illustration, never evidence; renderMode = REMOTION_MOTION: deterministic editor motion expresses the modality",
+  "sourceImageAssetId": "as-1186233d1af6",
+  "remotionMotionPrimitive": "SLOW_ZOOM_IN",
+  "editorMotionTechniques": [
+    "OBJECT_FOCUS",
+    "ZOOM",
+    "PARALLAX_2_5D",
+    "CROP_REFRAME"
+  ],
+  "platformTarget": "youtube",
+  "decisionStatus": "DECISION_READY"
+}

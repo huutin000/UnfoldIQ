@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "agent-instruction-set.schema.json",
+  "title": "UNFOLDIQ Agent Instruction Set (1G.9)",
+  "description": "Project-level invariants for Flow Agent Instructions. Never scene prompts, never secrets.",
+  "type": "object",
+  "required": ["version", "instructionSetId", "projectId", "instructionVersion", "constraints", "compiledText", "compiledFingerprint"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "const": "1.0.0" },
+    "schemaVersion": { "type": "string" },
+    "instructionSetId": { "type": "string", "pattern": "^is-[0-9a-f]{12}$" },
+    "projectId": { "type": "string", "minLength": 1 },
+    "instructionVersion": { "type": "string", "pattern": "^iv-[0-9a-f]{12}$" },
+    "sourceVersions": { "type": "object" },
+    "constraints": {
+      "type": "object",
+      "properties": {
+        "characterIdentity": { "type": "array", "items": { "type": "string" } },
+        "visualStyle": { "type": "array", "items": { "type": "string" } },
+        "worldContinuity": { "type": "array", "items": { "type": "string" } },
+        "palette": { "type": "array", "items": { "type": "string" } },
+        "recurringReferenceRules": { "type": "array", "items": { "type": "string" } },
+        "forbiddenMutations": { "type": "array", "items": { "type": "string" } },
+        "unwantedContent": { "type": "array", "items": { "type": "string" } },
+        "platformCompositionRules": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "referenceIds": { "type": "array", "items": { "type": "string" } },
+    "referenceBindings": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["referenceId", "role"], "additionalProperties": false,
+        "properties": {
+          "referenceId": { "type": "string" },
+          "role": { "enum": ["CHARACTER_IDENTITY", "WORLD_LOCATION", "STYLE", "PALETTE", "PROJECT_GUIDE"] },
+          "reason": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "compiledText": { "type": "string", "minLength": 1 },
+    "compiledFingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" },
+    "providerTargets": { "type": "array", "items": { "type": "string" } },
+    "createdAt": { "type": "string" },
+    "updatedAt": { "type": "string" }
+  }
+}

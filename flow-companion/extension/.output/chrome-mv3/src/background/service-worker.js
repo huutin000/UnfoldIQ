@@ -25,7 +25,17 @@ const FLOW_ORIGIN_PREFIXES = ["https://labs.google/fx/", "https://flow.google/",
 
 function validateSender(sender) {
   const url = (sender && (sender.url || sender.origin)) || "";
-  const allowed = url.startsWith("chrome-extension://") || FLOW_ORIGIN_PREFIXES.some((p) => url.startsWith(p));
+  // Extension-page senders must be THIS extension (hardening sweep C-6) —
+  // a bare chrome-extension:// prefix trusted any co-installed extension.
+  if (url.startsWith("chrome-extension://")) {
+    const ownId = (typeof chrome !== "undefined" && chrome.runtime && chrome.runtime.id) || null;
+    const senderId = (sender && sender.id) || "";
+    if (!ownId || senderId !== ownId) {
+      throw new Error(`SENDER_REJECTED: foreign extension origin ${url}`);
+    }
+    return true;
+  }
+  const allowed = FLOW_ORIGIN_PREFIXES.some((p) => url.startsWith(p));
   if (!allowed) {
     throw new Error(`SENDER_REJECTED: ${url}`);
   }
@@ -138,7 +148,7 @@ function classifyError(code, detail = null) {
 }
 
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { validateSender, validateMessage, pollJobState, handleMessage, JOB_MESSAGE_TYPES, correlateDownload, classifyError, ERROR_CODES, FLOW_ORIGIN_PREFIXES, createRelayHub, recordLocalApproval, consumeLocalApproval };
+  module.exports = { validateSender, validateMessage, pollJobState, handleMessage, JOB_MESSAGE_TYPES, correlateDownload, classifyError, ERROR_CODES, FLOW_ORIGIN_PREFIXES, createRelayHub, recordLocalApproval, consumeLocalApproval, validateTrustedInputSpec };
 }
 
 /**
@@ -220,6 +230,23 @@ function consumeLocalApproval(map, jobId, attempt, expected = {}) {
   return ap;
 }
 
+/**
+ * PHASE 1G.9 FIX 03 §10/§22 — pure gate for the trusted-input fallback.
+ * Node-testable (TI group): op allowlist, text bound, projectRef shape,
+ * sender-tab requirement, Flow-origin-only senders.
+ */
+function validateTrustedInputSpec(spec, sender) {
+  if (!spec || typeof spec !== "object") return { ok: false, code: "SCHEMA_INVALID: spec object required" };
+  if (spec.op !== "insertText" && spec.op !== "keyText") return { ok: false, code: "SCHEMA_INVALID: op must be insertText|keyText" };
+  if (typeof spec.text !== "string" || !spec.text || spec.text.length > 20000) return { ok: false, code: "SCHEMA_INVALID: spec.text invalid" };
+  const ref = typeof spec.projectRef === "string" ? spec.projectRef : "";
+  if (!/^[0-9a-f][0-9a-f-]{15,63}$/i.test(ref)) return { ok: false, code: "SCHEMA_INVALID: projectRef invalid" };
+  if (!sender || !sender.tab || typeof sender.tab.id !== "number") return { ok: false, code: "SCHEMA_INVALID: sender tab required" };
+  const senderUrl = String(sender.url || sender.origin || "");
+  if (!FLOW_ORIGIN_PREFIXES.some((p) => senderUrl.startsWith(p))) return { ok: false, code: "FLOW_ORIGIN_NOT_ALLOWED" };
+  return { ok: true };
+}
+
 (function initBrowserRuntime() {
   const hasChrome = typeof chrome !== "undefined" && chrome && chrome.runtime;
   if (!hasChrome || typeof module !== "undefined") return;
@@ -237,12 +264,51 @@ function consumeLocalApproval(map, jobId, attempt, expected = {}) {
     } catch (e) {
       void e;
     }
+    try {
+      // PHASE 1G.9 FIX 03: page-world instruction write transport (see
+      // mainWorldInstructionWrite below). Browser global: InstructionMainWorldWrite.
+      importScripts("../content/main-world-write.js");
+    } catch (e) {
+      void e;
+    }
   }
   const Resolver = (typeof TabResolver !== "undefined" && TabResolver) || null;
   // Port registry is informational ONLY (hello presence). Routing always
   // goes through the canonical resolver — never trust this map at action time.
   const helloPorts = [];
   const approvals = new Map();
+  // MV3 hardening (sweep B-1): the approval gate survives worker termination.
+  // The in-memory map stays the fast path; every mutation is mirrored to
+  // chrome.storage.session (non-secret: jobId/attempt/nonce/fingerprint only)
+  // and rehydrated lazily on first use after a wake. Fail-safe direction is
+  // unchanged: a missing approval BLOCKS submit, it can never duplicate one.
+  let approvalsHydrated = false;
+  async function persistApproval(jobId, entry) {
+    try {
+      if (!chrome.storage || !chrome.storage.session) return;
+      const all = await chrome.storage.session.get("flowCompanionApprovals");
+      const store = (all && all.flowCompanionApprovals) || {};
+      if (entry === null) delete store[jobId];
+      else store[jobId] = entry;
+      await chrome.storage.session.set({ flowCompanionApprovals: store });
+    } catch (e) {
+      void e; // persistence is best-effort; the in-memory gate remains authoritative
+    }
+  }
+  async function hydrateApprovals() {
+    if (approvalsHydrated) return;
+    approvalsHydrated = true;
+    try {
+      if (!chrome.storage || !chrome.storage.session) return;
+      const all = await chrome.storage.session.get("flowCompanionApprovals");
+      const store = (all && all.flowCompanionApprovals) || {};
+      for (const [jobId, entry] of Object.entries(store)) {
+        if (!approvals.has(jobId)) approvals.set(jobId, entry);
+      }
+    } catch (e) {
+      void e; // rehydration is best-effort; absent approvals block submit (fail-safe)
+    }
+  }
 
   function resolverDeps() {
     return {
@@ -312,6 +378,94 @@ function consumeLocalApproval(map, jobId, attempt, expected = {}) {
     return { result, resolution: found.resolution };
   }
 
+  /**
+   * PHASE 1G.9 FIX 03 §10 — trusted browser-input fallback (LAST RESORT).
+   * Live evidence (rounds 5–6, 2026-10-04): even main-world browser-emitted
+   * input events (execCommand insertText) update the DOM but never reach
+   * Flow's editor state — the provider discards the text on save. Flow's
+   * editor therefore requires browser-level input via the Chrome debugging
+   * transport. Scope (§10/§22, all mandatory):
+   *   - attach ONLY to the sender content script's own verified Flow tab;
+   *   - re-check project identity from the tab URL immediately before write;
+   *   - allowlist exactly two Input commands (insertText, per-char keyDown/
+   *     keyUp) — no Network/Storage/Cookie/DOM/Runtime/Page domains, no
+   *     arbitrary methods from any caller;
+   *   - detach on success, failure and timeout (finally);
+   *   - the bridge can never reach this route (content-script kind only).
+   */
+  async function trustedInputWrite(sender, spec) {
+    const check = validateTrustedInputSpec(spec, sender);
+    if (!check.ok) throw new Error(check.code);
+    const tabId = sender.tab.id;
+    const tab = await chrome.tabs.get(tabId);
+    const tabUrl = (tab && tab.url) || "";
+    if (!FLOW_ORIGIN_PREFIXES.some((p) => tabUrl.startsWith(p))) {
+      throw new Error("FLOW_ORIGIN_NOT_ALLOWED: trusted input only on Flow tabs");
+    }
+    if (!tabUrl.includes(`/project/${spec.projectRef}`)) {
+      throw new Error("BLOCKED_PROJECT_MISMATCH: tab URL does not match the verified project ref");
+    }
+    if (!chrome.debugger || !chrome.debugger.attach) {
+      throw new Error("TRUSTED_INPUT_PERMISSION_BLOCKED: debugger API unavailable");
+    }
+    await chrome.debugger.attach({ tabId }, "1.3");
+    try {
+      if (spec.op === "insertText") {
+        await chrome.debugger.sendCommand({ tabId }, "Input.insertText", { text: spec.text });
+      } else {
+        // op === "keyText": per-character trusted key events (round-trip
+        // bounded by spec text length validated above).
+        for (const ch of String(spec.text)) {
+          await chrome.debugger.sendCommand({ tabId }, "Input.dispatchKeyEvent", { type: "keyDown", text: ch });
+          await chrome.debugger.sendCommand({ tabId }, "Input.dispatchKeyEvent", { type: "keyUp", text: ch });
+        }
+      }
+      return { ok: true, op: spec.op };
+    } finally {
+      try {
+        await chrome.debugger.detach({ tabId });
+      } catch (e) {
+        void e; // already detached / tab gone — nothing to clean up
+      }
+    }
+  }
+
+  /**
+   * PHASE 1G.9 FIX 03 — main-world instruction write transport.
+   * Narrowly scoped (task §9): the page-world function is the fixed,
+   * hard-coded InstructionMainWorldWrite.write (no arbitrary code, no
+   * Runtime.evaluate surface for bridge callers); the request carries data
+   * only (selector/index/text). Allowed ONLY for the content script on the
+   * same verified Flow tab (sender.tab + Flow origin). No network, storage,
+   * cookie, or credential access exists in the injected function.
+   */
+  async function mainWorldInstructionWrite(sender, spec) {
+    if (!spec || typeof spec !== "object") throw new Error("SCHEMA_INVALID: spec object required");
+    if (typeof spec.selector !== "string" || !spec.selector || spec.selector.length > 200) throw new Error("SCHEMA_INVALID: spec.selector invalid");
+    if (!Number.isInteger(spec.index) || spec.index < 0 || spec.index > 63) throw new Error("SCHEMA_INVALID: spec.index invalid");
+    if (typeof spec.text !== "string" || !spec.text || spec.text.length > 20000) throw new Error("SCHEMA_INVALID: spec.text invalid");
+    if (!sender || !sender.tab || typeof sender.tab.id !== "number") throw new Error("SCHEMA_INVALID: sender tab required");
+    const senderUrl = (sender.url || sender.origin || "");
+    if (!FLOW_ORIGIN_PREFIXES.some((p) => senderUrl.startsWith(p))) {
+      throw new Error("FLOW_ORIGIN_NOT_ALLOWED: main-world write only on verified Flow tabs");
+    }
+    if (typeof InstructionMainWorldWrite === "undefined" || !InstructionMainWorldWrite || typeof InstructionMainWorldWrite.write !== "function") {
+      throw new Error("MAIN_WORLD_WRITE_UNAVAILABLE: main-world-write module not loaded");
+    }
+    if (!chrome.scripting || !chrome.scripting.executeScript) throw new Error("MAIN_WORLD_WRITE_UNAVAILABLE: scripting API missing");
+    try {
+      const [injection] = await chrome.scripting.executeScript({
+        target: { tabId: sender.tab.id },
+        world: "MAIN",
+        func: InstructionMainWorldWrite.write,
+        args: [spec],
+      });
+      return (injection && injection.result) || { ok: false, code: "MAIN_WORLD_INJECTION_EMPTY" };
+    } catch (e) {
+      return { ok: false, code: "MAIN_WORLD_INJECTION_FAILED", detail: String((e && e.message) || e) };
+    }
+  }
+
   if (chrome.runtime.onConnect) {
     chrome.runtime.onConnect.addListener((port) => {
       if (!port || port.name !== "flow-tab") return;
@@ -331,12 +485,20 @@ function consumeLocalApproval(map, jobId, attempt, expected = {}) {
           return { ok: false, error: String((e && e.message) || e) };
         }
         try {
+          if (msg.kind === "MAIN_WORLD_INSTRUCTION_WRITE") {
+            return { ok: true, result: await mainWorldInstructionWrite(sender, msg.spec) };
+          }
+          if (msg.kind === "INSTRUCTION_TRUSTED_INPUT") {
+            return { ok: true, result: await trustedInputWrite(sender, msg.spec) };
+          }
           if (!msg || msg.kind === "TAB_RELAY") {
             if (msg && msg.cmd && msg.cmd.type === "SUBMIT_GENERATE") {
               // POST-v1E §23: single-use approval bound to jobId+attempt and,
               // when presented, to the approval nonce + snapshot fingerprint.
+              await hydrateApprovals();
               const ap = (msg.cmd && msg.cmd.approval) || {};
-              consumeLocalApproval(approvals, msg.cmd.jobId, msg.cmd.attempt, { nonce: ap.nonce ?? null, fingerprint: (ap.snapshot && ap.snapshot.fingerprint) || ap.fingerprint || null });
+              const consumed = consumeLocalApproval(approvals, msg.cmd.jobId, msg.cmd.attempt, { nonce: ap.nonce ?? null, fingerprint: (ap.snapshot && ap.snapshot.fingerprint) || ap.fingerprint || null });
+              await persistApproval(msg.cmd.jobId, { ...consumed, used: true });
               const relayed = await relayToLiveTab(msg.cmd, msg.timeoutMs || 60000);
               return { ok: true, result: relayed.result, resolution: relayed.resolution };
             }
@@ -344,7 +506,9 @@ function consumeLocalApproval(map, jobId, attempt, expected = {}) {
             return { ok: true, result: relayed.result, resolution: relayed.resolution };
           }
           if (msg.kind === "APPROVE_RECORD") {
-            return { ok: true, result: recordLocalApproval(approvals, msg.approval || {}) };
+            const recorded = recordLocalApproval(approvals, msg.approval || {});
+            await persistApproval(recorded.jobId, approvals.get(recorded.jobId) || null);
+            return { ok: true, result: recorded };
           }
           if (msg.kind === "FLOW_TABS") {
             if (!Resolver) throw new Error("RESOLVER_UNAVAILABLE");

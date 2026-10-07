@@ -1,0 +1,209 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "governance.schema.json",
+  "title": "UNFOLDIQ Artifact Governance + Storage Lifecycle (1H.6/1H.7)",
+  "description": "Provenance/rights records, platform policy snapshots + compliance decisions, storage inventory/policy/cleanup/tombstones. References (never copies) Asset Registry, History, DAG, Telemetry, Golden, Manifest records.",
+  "definitions": {
+    "provenanceDoc": {
+      "type": "object",
+      "required": ["schemaVersion", "projectId", "revision", "createdAt", "updatedAt", "provenance", "fingerprint"],
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": { "const": "1.0.0" },
+        "projectId": { "type": "string", "minLength": 1 },
+        "revision": { "type": "integer", "minimum": 1 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "provenance": { "type": "object", "additionalProperties": { "$ref": "#/definitions/assetProvenance" } },
+        "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" }
+      }
+    },
+    "assetProvenance": {
+      "type": "object",
+      "required": ["assetId", "current", "versions"],
+      "additionalProperties": false,
+      "properties": {
+        "assetId": { "type": "string", "minLength": 1 },
+        "current": { "type": "integer", "minimum": 1 },
+        "versions": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/definitions/provenanceVersion" }
+        }
+      }
+    },
+    "provenanceVersion": {
+      "type": "object",
+      "required": ["provenanceId", "assetId", "provenanceVersion", "assetHash", "originType", "rights", "provenanceStatus", "createdAt"],
+      "additionalProperties": false,
+      "properties": {
+        "provenanceId": { "type": "string", "pattern": "^prov-[0-9a-f]{12}$" },
+        "assetId": { "type": "string", "minLength": 1 },
+        "provenanceVersion": { "type": "integer", "minimum": 1 },
+        "assetHash": { "type": ["string", "null"] },
+        "originType": { "enum": ["GENERATED", "UPLOADED", "STOCK", "LICENSED", "DERIVED", "CAPTURED", "UNKNOWN"] },
+        "provider": { "type": ["string", "null"] },
+        "model": { "type": ["string", "null"] },
+        "sourceRef": { "type": ["string", "null"] },
+        "parentAssetIds": { "type": "array", "items": { "type": "string" } },
+        "referenceAssetIds": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": ["string", "null"], "format": "date-time" },
+        "importedAt": { "type": ["string", "null"], "format": "date-time" },
+        "factualSourceRefs": { "type": "array", "items": { "type": "string" } },
+        "rights": { "$ref": "#/definitions/rights" },
+        "evidenceRefs": { "type": "array", "items": { "type": "string" } },
+        "provenanceStatus": { "enum": ["VERIFIED", "MIGRATED", "ASSERTED", "UNRESOLVED", "REVIEW_REQUIRED"] },
+        "supersedes": { "type": ["integer", "null"], "minimum": 1 },
+        "detail": { "type": ["string", "null"] }
+      }
+    },
+    "rights": {
+      "type": "object",
+      "required": ["ownershipStatus", "referenceRightsStatus"],
+      "additionalProperties": false,
+      "properties": {
+        "ownershipStatus": { "enum": ["OWNED", "LICENSED", "PERMISSION_GRANTED", "PLATFORM_GENERATED", "PUBLIC_DOMAIN_ASSERTED", "UNRESOLVED", "REVIEW_REQUIRED", "NOT_APPLICABLE"] },
+        "referenceRightsStatus": { "enum": ["OWNED", "LICENSED", "PERMISSION_GRANTED", "PLATFORM_GENERATED", "PUBLIC_DOMAIN_ASSERTED", "UNRESOLVED", "REVIEW_REQUIRED", "NOT_APPLICABLE"] },
+        "licenseType": { "type": ["string", "null"], "enum": ["ORIGINAL", "LICENSED", "ROYALTY_FREE_WITH_LICENSE", "PLATFORM_LIBRARY", "PUBLIC_DOMAIN_ASSERTED", "UNRESOLVED", "NOT_APPLICABLE", null] },
+        "licenseRef": { "type": ["string", "null"] },
+        "licenseEvidenceRefs": { "type": "array", "items": { "type": "string" } },
+        "musicRightsStatus": { "type": ["string", "null"] },
+        "voiceRightsStatus": { "type": ["string", "null"] },
+        "likenessRightsStatus": { "type": ["string", "null"] },
+        "voiceDetail": { "type": ["object", "null"] },
+        "musicDetail": { "type": ["object", "null"] }
+      }
+    },
+    "complianceDoc": {
+      "type": "object",
+      "required": ["schemaVersion", "projectId", "revision", "createdAt", "updatedAt", "snapshots", "decisions", "fingerprint"],
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": { "const": "1.0.0" },
+        "projectId": { "type": "string", "minLength": 1 },
+        "revision": { "type": "integer", "minimum": 1 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "snapshots": { "type": "object", "additionalProperties": { "$ref": "#/definitions/policySnapshot" } },
+        "decisions": { "type": "object", "additionalProperties": { "$ref": "#/definitions/complianceDecision" } },
+        "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" }
+      }
+    },
+    "policySnapshot": {
+      "type": "object",
+      "required": ["snapshotId", "platform", "policyType", "sourceUrl", "sourceTitle", "checkedAt", "rules", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "snapshotId": { "type": "string", "pattern": "^pol-[0-9a-f]{12}$" },
+        "platform": { "type": "string", "minLength": 1 },
+        "policyType": { "type": "string", "minLength": 1 },
+        "sourceUrl": { "type": "string", "minLength": 1 },
+        "sourceTitle": { "type": ["string", "null"] },
+        "checkedAt": { "type": "string", "format": "date-time" },
+        "effectiveDate": { "type": ["string", "null"] },
+        "contentHash": { "type": ["string", "null"] },
+        "reviewAfterDays": { "type": ["integer", "null"], "minimum": 1 },
+        "rules": { "type": "array" },
+        "status": { "enum": ["CURRENT", "SUPERSEDED"] },
+        "supersededBy": { "type": ["string", "null"] }
+      }
+    },
+    "complianceDecision": {
+      "type": "object",
+      "required": ["decisionId", "projectId", "platform", "policyType", "policySnapshotId", "contentCharacteristics", "decision", "reason", "evidenceRefs", "decidedAt", "freshness"],
+      "additionalProperties": false,
+      "properties": {
+        "decisionId": { "type": "string", "pattern": "^ccd-[0-9a-f]{12}$" },
+        "projectId": { "type": "string", "minLength": 1 },
+        "assetId": { "type": ["string", "null"] },
+        "publishUnitId": { "type": ["string", "null"] },
+        "platform": { "type": "string", "minLength": 1 },
+        "policyType": { "type": "string", "minLength": 1 },
+        "policySnapshotId": { "type": "string", "minLength": 1 },
+        "contentCharacteristics": { "type": "object" },
+        "decision": { "enum": ["AI_DISCLOSURE_REQUIRED", "AI_DISCLOSURE_NOT_REQUIRED", "REVIEW_REQUIRED", "BLOCKED", "NOT_APPLICABLE"] },
+        "reason": { "type": "string", "minLength": 1 },
+        "manualOverride": { "type": ["object", "null"] },
+        "evidenceRefs": { "type": "array", "items": { "type": "string" } },
+        "decidedAt": { "type": "string", "format": "date-time" },
+        "freshness": { "enum": ["FRESH", "STALE_POLICY", "POLICY_SOURCE_UNAVAILABLE", "REVIEW_REQUIRED"] },
+        "supersedes": { "type": ["string", "null"] }
+      }
+    },
+    "storageDoc": {
+      "type": "object",
+      "required": ["schemaVersion", "projectId", "revision", "createdAt", "updatedAt", "policy", "inventory", "plans", "tombstones", "fingerprint"],
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": { "const": "1.0.0" },
+        "projectId": { "type": "string", "minLength": 1 },
+        "revision": { "type": "integer", "minimum": 1 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "policy": { "$ref": "#/definitions/storagePolicy" },
+        "inventory": { "type": "object", "additionalProperties": { "$ref": "#/definitions/inventoryEntry" } },
+        "plans": { "type": "object", "additionalProperties": { "$ref": "#/definitions/cleanupPlan" } },
+        "tombstones": { "type": "object", "additionalProperties": { "$ref": "#/definitions/tombstone" } },
+        "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" }
+      }
+    },
+    "storagePolicy": {
+      "type": "object",
+      "required": ["policyVersion", "createdAt", "rules"],
+      "additionalProperties": false,
+      "properties": {
+        "policyVersion": { "type": "string", "minLength": 1 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "rules": { "type": "array" },
+        "defaultRejectedRetention": { "type": ["string", "null"] }
+      }
+    },
+    "inventoryEntry": {
+      "type": "object",
+      "required": ["artifactRef", "storageClass", "durability", "retentionReasons"],
+      "additionalProperties": false,
+      "properties": {
+        "artifactRef": { "type": "string", "minLength": 1 },
+        "path": { "type": ["string", "null"] },
+        "size": { "type": ["integer", "null"], "minimum": 0 },
+        "hash": { "type": ["string", "null"] },
+        "storageClass": { "enum": ["SOURCE_ASSET", "RESEARCH_RAW", "RESEARCH_FIT", "GENERATED_VARIANT", "SELECTED_ASSET", "RENDERED_PROXY", "CACHE", "FINAL_DELIVERABLE", "EVIDENCE", "TEMPORARY"] },
+        "durability": { "enum": ["DURABLE", "RETENTION_MANAGED", "REGENERABLE", "EPHEMERAL"] },
+        "retentionReasons": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": ["string", "null"], "format": "date-time" },
+        "dependencyRefs": { "type": "array", "items": { "type": "string" } },
+        "provenanceRef": { "type": ["string", "null"] }
+      }
+    },
+    "cleanupPlan": {
+      "type": "object",
+      "required": ["planId", "projectId", "policyVersion", "candidates", "planFingerprint", "storageRevision", "mode", "createdAt", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "planId": { "type": "string", "pattern": "^cln-[0-9a-f]{12}$" },
+        "projectId": { "type": "string", "minLength": 1 },
+        "policyVersion": { "type": "string", "minLength": 1 },
+        "candidates": { "type": "array" },
+        "planFingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" },
+        "storageRevision": { "type": "integer", "minimum": 1 },
+        "mode": { "enum": ["DRY_RUN", "EXECUTE"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "executedAt": { "type": ["string", "null"], "format": "date-time" },
+        "status": { "enum": ["PROPOSED", "EXECUTED", "STALE"] }
+      }
+    },
+    "tombstone": {
+      "type": "object",
+      "required": ["artifactRef", "hash", "formerPath", "reason", "cleanupPlanId", "deletedAt"],
+      "additionalProperties": false,
+      "properties": {
+        "artifactRef": { "type": "string", "minLength": 1 },
+        "hash": { "type": ["string", "null"] },
+        "formerPath": { "type": ["string", "null"] },
+        "reason": { "type": "string", "minLength": 1 },
+        "cleanupPlanId": { "type": "string", "minLength": 1 },
+        "deletedAt": { "type": "string", "format": "date-time" },
+        "generationId": { "type": ["string", "null"] }
+      }
+    }
+  }
+}

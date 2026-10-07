@@ -1,0 +1,465 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "recovery-state.schema.json",
+  "title": "UNFOLDIQ Recovery + Idempotency + Dependency DAG (1H.3)",
+  "description": "Three canonical Core documents (operations, checkpoints, dependency-dag) persisted under projects/<pid>/recovery/ + dependency-dag.json. Atomic JSON, no database.",
+  "definitions": {
+    "operationsDoc": {
+      "type": "object",
+      "required": [
+        "schemaVersion",
+        "projectId",
+        "revision",
+        "createdAt",
+        "updatedAt",
+        "operations",
+        "fingerprint"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "1.0.0"
+        },
+        "projectId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "operations": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/operation"
+          }
+        },
+        "fingerprint": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$"
+        }
+      }
+    },
+    "operation": {
+      "type": "object",
+      "required": [
+        "operationId",
+        "projectId",
+        "idempotencyKey",
+        "operationType",
+        "inputFingerprint",
+        "status",
+        "createdAt",
+        "updatedAt",
+        "attemptCount"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "operationId": {
+          "type": "string",
+          "pattern": "^op-[0-9a-f]{12}$"
+        },
+        "projectId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "runId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "jobId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "attemptId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "artifactId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "operationType": {
+          "type": "string",
+          "minLength": 1
+        },
+        "idempotencyKey": {
+          "type": "string",
+          "minLength": 1
+        },
+        "inputFingerprint": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$"
+        },
+        "status": {
+          "enum": [
+            "PENDING",
+            "IN_PROGRESS",
+            "WAITING_EXTERNAL",
+            "SUCCEEDED",
+            "FAILED_RETRYABLE",
+            "FAILED_TERMINAL",
+            "UNKNOWN_OUTCOME",
+            "CANCEL_REQUESTED",
+            "CANCELLED",
+            "BLOCKED"
+          ]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "completedAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "resultRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "errorCode": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "failureClass": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "attemptCount": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "parentOperationId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "retryDecisionRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "generationId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "reconciledAbsence": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "cancelReason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "checkpointsDoc": {
+      "type": "object",
+      "required": [
+        "schemaVersion",
+        "projectId",
+        "revision",
+        "createdAt",
+        "updatedAt",
+        "checkpoints",
+        "fingerprint"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "1.0.0"
+        },
+        "projectId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "checkpoints": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/checkpoint"
+            }
+          }
+        },
+        "fingerprint": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$"
+        }
+      }
+    },
+    "checkpoint": {
+      "type": "object",
+      "required": [
+        "stage",
+        "at"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "stage": {
+          "type": "string",
+          "minLength": 1
+        },
+        "at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "stateRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "dagDoc": {
+      "type": "object",
+      "required": [
+        "schemaVersion",
+        "projectId",
+        "revision",
+        "createdAt",
+        "updatedAt",
+        "nodes",
+        "fingerprint"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "1.0.0"
+        },
+        "projectId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "nodes": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/artifactNode"
+          }
+        },
+        "fingerprint": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$"
+        }
+      }
+    },
+    "artifactNode": {
+      "type": "object",
+      "required": [
+        "artifactKey",
+        "artifactType",
+        "state",
+        "inputRefs",
+        "dependencyFingerprint"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "artifactKey": {
+          "type": "string",
+          "minLength": 1
+        },
+        "artifactType": {
+          "enum": [
+            "CREATIVE_BRIEF",
+            "RESEARCH_PACK",
+            "FINAL_SPOKEN_SCRIPT",
+            "VOICE_BIBLE",
+            "NATURALNESS_QA",
+            "EVIDENCE_FIDELITY_DECISION",
+            "SPOKEN_HUMANIZATION",
+            "VOICE",
+            "TTS_READY_PLAN",
+            "PRONUNCIATION_RUNTIME_PASS",
+            "PRONUNCIATION_PROFILE",
+            "NARRATION_DIRECTION",
+            "FINAL_AUDIO",
+            "DIALOGUE_ROUTING_DECISION",
+            "FINAL_NARRATION_TRACK",
+            "PERFORMANCE_QA",
+            "SPEECH_RATE_QA",
+            "TTS_SEGMENT_AUDIO",
+            "FORCED_ALIGNMENT",
+            "CAPTIONS",
+            "SHOT_PLAN",
+            "PROMPT_PACKAGE",
+            "GENERATED_ASSET",
+            "QA_RESULT",
+            "MASTER_TIMELINE",
+            "SCENE_TIMING",
+            "VISUAL_TIMING",
+            "ANIMATION_TIMING",
+            "RENDER",
+            "THUMBNAIL",
+            "PUBLISH_PACKAGE",
+            "POLICY_SNAPSHOT",
+            "COMPLIANCE_DECISION",
+            "PROVENANCE_REF"
+          ]
+        },
+        "versionRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "state": {
+          "enum": [
+            "NOT_CREATED_YET",
+            "CLEAN",
+            "DIRTY",
+            "BUILDING",
+            "FAILED",
+            "BLOCKED"
+          ]
+        },
+        "inputRefs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "key"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "type": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
+        "dependencyFingerprint": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^([0-9a-f]{16})?$|^$"
+        },
+        "producedBy": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "lockTarget": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "required": [
+            "targetType",
+            "targetId"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "targetType": {
+              "enum": [
+                "SCENE",
+                "SEGMENT",
+                "ASSET",
+                "VOICE_PARAGRAPH",
+                "SHOT",
+                "VOICE_BIBLE"
+              ]
+            },
+            "targetId": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "blockedReason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "provenance": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "LIVE",
+            "MIGRATED",
+            null
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "scene": {
+    "sceneId": "D-SC01",
+    "order": 3,
+    "beatIds": ["d-b1-D1", "d-b1-D2", "d-b1-D3"],
+    "storySectionRefs": [],
+    "narrativePurpose": "1G.12 Case D validation: recurring-character continuity across independent shots",
+    "visualObjective": "EXPLAIN",
+    "subjectRefs": [],
+    "environmentRefs": [],
+    "continuityGroup": "cg-case-d",
+    "stateBefore": null,
+    "stateAfter": null
+  },
+  "shot": {
+    "shotId": "D-SH01",
+    "parentSceneId": "D-SC01",
+    "orderWithinScene": 0,
+    "beatIds": ["d-b1-D1"],
+    "claimRefs": [],
+    "shotPurpose": "PRESENTER",
+    "visualObjective": "EXPLAIN",
+    "subjectRefs": [],
+    "actionIntent": "small friendly wave, centered stance",
+    "framingIntent": "medium full shot, centered",
+    "cameraIntent": null,
+    "continuityRefs": ["cg-case-d"],
+    "startState": null,
+    "endState": null,
+    "relativeWeight": 1
+  },
+  "contentClass": "FICTION",
+  "platform": "youtube"
+}

@@ -45,6 +45,12 @@ capabilities:
 
   tts:
     enabled: true
+    # Phase 2.1 V1 default synthesis provider. The Voice Bible names
+    # provider+model+voiceId explicitly; this is the declared V1 default only.
+    # VoiceStudio is POST-V1 / FUTURE EVALUATION and is deliberately NOT
+    # integrated — requests for it fail closed (VOICE_PROVIDER_UNSUPPORTED).
+    v1Provider: local-kokoro
+    v1Model: kokoro-v1
     preferredOrder:
       - existing
       - local-kokoro

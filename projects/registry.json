@@ -1,0 +1,145 @@
+{
+  "projects": [
+    {
+      "kind": "DEMO",
+      "manifestRef": null,
+      "path": "projects/channel-mascot",
+      "projectId": "channel-mascot",
+      "status": "ACTIVE"
+    },
+    {
+      "kind": "DEBUG",
+      "manifestRef": null,
+      "path": "projects/debug/DBG_1G12",
+      "projectId": "DBG_1G12",
+      "status": "FROZEN"
+    },
+    {
+      "kind": "DEBUG",
+      "manifestRef": null,
+      "path": "projects/debug/DBG_H4",
+      "projectId": "DBG_H4",
+      "status": "FROZEN"
+    },
+    {
+      "kind": "DEBUG",
+      "manifestRef": null,
+      "path": "projects/debug/E2E_bench_panel",
+      "projectId": "E2E_bench_panel",
+      "status": "FROZEN"
+    },
+    {
+      "kind": "VALIDATION",
+      "manifestRef": null,
+      "path": "projects/HARDENING_1G12",
+      "projectId": "HARDENING_1G12",
+      "status": "FROZEN"
+    },
+    {
+      "kind": "DEBUG",
+      "manifestRef": null,
+      "path": "projects/debug/live-1g1-http308",
+      "projectId": "live-1g1-http308",
+      "status": "FROZEN"
+    },
+    {
+      "kind": "ACTIVE",
+      "manifestRef": "projects/phase1g12-case-a/manifest/project-manifest.json",
+      "path": "projects/phase1g12-case-a",
+      "projectId": "phase1g12-case-a",
+      "status": "ACTIVE"
+    },
+    {
+      "kind": "VALIDATION",
+      "manifestRef": null,
+      "path": "projects/validation/phase-1g/phase1g12-hardening",
+      "projectId": "phase1g12-hardening",
+      "status": "FROZEN"
+    },
+    {
+      "kind": "VALIDATION",
+      "manifestRef": null,
+      "path": "projects/validation/phase-1h/phase1h1-validation",
+      "projectId": "phase1h1-validation",
+      "status": "FROZEN"
+    },
+    {
+      "kind": "VALIDATION",
+      "manifestRef": null,
+      "path": "projects/validation/phase-1h/phase1h2-validation",
+      "projectId": "phase1h2-validation",
+      "status": "FROZEN"
+    },
+    {
+      "kind": "VALIDATION",
+      "manifestRef": null,
+      "path": "projects/validation/phase-1h/phase1h3-validation",
+      "projectId": "phase1h3-validation",
+      "status": "FROZEN"
+    },
+    {
+      "kind": "VALIDATION",
+      "manifestRef": null,
+      "path": "projects/validation/phase-1h/phase1h45-validation",
+      "projectId": "phase1h45-validation",
+      "status": "FROZEN"
+    },
+    {
+      "kind": "VALIDATION",
+      "manifestRef": null,
+      "path": "projects/validation/phase-1h/phase1h67-validation",
+      "projectId": "phase1h67-validation",
+      "status": "FROZEN"
+    },
+    {
+      "kind": "VALIDATION",
+      "manifestRef": null,
+      "path": "projects/phase1hyg-validation",
+      "projectId": "phase1hyg-validation",
+      "status": "ACTIVE"
+    },
+    {
+      "kind": "VALIDATION",
+      "manifestRef": "projects/phase2-1-validation/manifest/project-manifest.json",
+      "path": "projects/phase2-1-validation",
+      "projectId": "phase2-1-validation",
+      "status": "ACTIVE"
+    },
+    {
+      "kind": "VALIDATION",
+      "manifestRef": null,
+      "path": "projects/phase223-narration-pronunciation",
+      "projectId": "phase223-narration-pronunciation",
+      "status": "ACTIVE"
+    },
+    {
+      "kind": "DEMO",
+      "manifestRef": null,
+      "path": "projects/pilot-sky-blue",
+      "projectId": "pilot-sky-blue",
+      "status": "ACTIVE"
+    },
+    {
+      "projectId": "post-1h-physical-migration",
+      "kind": "VALIDATION",
+      "status": "ACTIVE",
+      "path": "projects/validation/post-1h-physical-migration",
+      "manifestRef": null
+    },
+    {
+      "kind": "DEBUG",
+      "manifestRef": null,
+      "path": "projects/postv1-flow-live-validation",
+      "projectId": "postv1-flow-live-validation",
+      "status": "FROZEN"
+    },
+    {
+      "kind": "DEBUG",
+      "manifestRef": null,
+      "path": "projects/postv1b-flow-companion-live",
+      "projectId": "postv1b-flow-companion-live",
+      "status": "FROZEN"
+    }
+  ],
+  "schemaVersion": "1.0.0"
+}

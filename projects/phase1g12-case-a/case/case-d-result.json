@@ -1,0 +1,91 @@
+{
+  "caseResult": {
+    "version": "1.0.0",
+    "caseId": "D",
+    "status": "PASS",
+    "projectId": "phase1g12-case-a",
+    "providerProjectRef": "8221824c-a1a6-4aa9-8d6b-fac24860d49e",
+    "shotIds": [
+      "D-SH01",
+      "D-SH02",
+      "D-SH03"
+    ],
+    "generationUnitIds": [
+      "gu-bde822cbe1dd",
+      "gu-1b8dbfa2ee4a",
+      "gu-223a6fbe0e28"
+    ],
+    "attemptIds": [
+      "d1-attempt-01",
+      "d2-attempt-01",
+      "d3-attempt-01"
+    ],
+    "productionDecisionRefs": [
+      "scene/validation-scene-d.json",
+      "case/case-d-shot-plan.json"
+    ],
+    "modelResolutionRefs": [
+      "mr-526fb7a60ea0",
+      "mr-530bec09f9f1",
+      "mr-0538f0b00d8e"
+    ],
+    "budgetPlanRef": "budget-plans/1g12-d-amendment.json (bp-1e463dea1689)",
+    "providerResultRefs": [
+      "case/case-d-D1-attempt-01-correlation.json",
+      "case/case-d-D2-attempt-01-correlation.json",
+      "case/case-d-D3-attempt-01-correlation.json"
+    ],
+    "assetIds": [
+      "as-a7801df9bf0f",
+      "as-0fde400d6392",
+      "as-c9f0fdc1d1e4",
+      "as-0625f69f9867"
+    ],
+    "qaResultIds": [
+      "qa-a778b5a05d9f",
+      "qa-5e0a58b7ef46",
+      "qa-d5deba72dc40"
+    ],
+    "timelineEligibility": [
+      "as-0fde400d6392=READY_FOR_TIMELINE",
+      "as-c9f0fdc1d1e4=READY_FOR_TIMELINE",
+      "as-0625f69f9867=READY_FOR_TIMELINE"
+    ],
+    "repairHistory": [],
+    "credits": {
+      "estimated": 21,
+      "reserved": 0,
+      "reconciled": 50,
+      "state": "RECONCILED"
+    },
+    "evidenceRefs": [
+      "case/case-d-cross-shot-continuity.json",
+      "case/case-d-character.json",
+      "case/determination-d-shot-reuse-01.json"
+    ],
+    "caseResultId": "case-d-80b7ab156b99",
+    "completedAt": "2026-10-05T04:22:56.127Z"
+  },
+  "matrix": [
+    "D1=PASS",
+    "D2=PASS",
+    "D3=PASS",
+    "D4=PASS",
+    "D5=PASS",
+    "D6=PASS",
+    "D7=PASS",
+    "D8=PASS",
+    "D9=PASS",
+    "D10=PASS",
+    "D11=PASS",
+    "D12=PASS",
+    "D13=PASS",
+    "D14=PASS",
+    "D15=PASS",
+    "D16=PASS",
+    "D17=PASS",
+    "D18=PASS"
+  ],
+  "matrixStatus": "PASS",
+  "crossShotRecordId": "cross-shot-continuity-d1d2d3"
+}

@@ -242,6 +242,18 @@ function createAutoPreparer(deps) {
   return { ensureCurrentJobPrepared, reset, materialKey };
 }
 
-const api = { createAutoPreparer, DEFAULT_WATCHDOG_MS };
+/* Terminal toast decision for the runPipeline prep attempt. A job that
+ * needed no preparation (already terminal/resumed/mapped) must NEVER
+ * paint a preparation failure — there was no failure. Only an actually
+ * attempted preparation that reported prepared=false (or a missing
+ * orchestrator outcome) is a failure. Pure: unit-tested in node. */
+function prepToastAction(outcome, uiState) {
+  if (uiState === "AWAITING_USER_APPROVAL") return "success";
+  if (outcome && outcome.prepared === false) return "failure";
+  if (outcome) return "clear";
+  return "failure";
+}
+
+const api = { createAutoPreparer, prepToastAction, DEFAULT_WATCHDOG_MS };
 if (typeof window !== "undefined") window.FlowAutoPrepare = api;
 if (typeof module !== "undefined" && module.exports) module.exports = api;

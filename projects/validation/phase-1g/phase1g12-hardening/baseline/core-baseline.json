@@ -1,0 +1,76 @@
+{
+  "version": "1.0.0",
+  "capturedAt": "2026-10-05T04:45:13.998Z",
+  "track": "A-core",
+  "metrics": [
+    {
+      "metric": "fullRepoRegression",
+      "method": "npm test aggregator (scripts/run-tests.js)",
+      "sampleCount": 1,
+      "environment": "local Windows",
+      "baseline": "14 domains, 0 failed suites",
+      "targetOrBudget": "0 failed",
+      "reasonForTarget": "release gate",
+      "result": "PASS (300.5s)"
+    },
+    {
+      "metric": "extensionSuite",
+      "method": "flow-companion/extension npm test",
+      "sampleCount": 1,
+      "environment": "local Windows",
+      "baseline": "525 assertions, 0 failed",
+      "targetOrBudget": "0 failed",
+      "reasonForTarget": "release gate",
+      "result": "PASS"
+    },
+    {
+      "metric": "assetLookupLatency",
+      "method": "in-process micro-benchmark getAsset (library-index.json)",
+      "sampleCount": 200,
+      "environment": "local Windows, warm cache",
+      "baseline": {
+        "meanMs": 0.251,
+        "totalMs": 50.1
+      },
+      "targetOrBudget": "<10ms mean",
+      "reasonForTarget": "registry lookup on critical path of import/QA handoff",
+      "result": "PASS"
+    },
+    {
+      "metric": "visualMotionDecisionLatency",
+      "method": "in-process micro-benchmark decideShotProduction",
+      "sampleCount": 100,
+      "environment": "local Windows, warm cache",
+      "baseline": {
+        "meanMs": 0.563,
+        "totalMs": 56.3
+      },
+      "targetOrBudget": "<50ms mean",
+      "reasonForTarget": "1G.5 decision per shot at plan time",
+      "result": "PASS"
+    },
+    {
+      "metric": "assetQaEvaluateLatency",
+      "method": "in-process micro-benchmark evaluateAssetQa (structural+semantic+continuity, 4.6MB real video bytes)",
+      "sampleCount": 20,
+      "environment": "local Windows, warm cache",
+      "baseline": {
+        "meanMs": 0.481,
+        "totalMs": 9.6
+      },
+      "targetOrBudget": "<100ms mean (excl. ffprobe)",
+      "reasonForTarget": "QA on real bytes per imported asset",
+      "result": "PASS"
+    }
+  ],
+  "notMeasured": [
+    {
+      "metric": "stageLatency/fullPipeline",
+      "reason": "requires a live end-to-end run; full-pipeline latency dominated by provider generation time (minutes) which is operator/credit-bound — not measurable without paid generation (default 0 for Task 02)"
+    },
+    {
+      "metric": "resumeLatency",
+      "reason": "measured qualitatively via idempotency review + tests (see audit track A); a dedicated recovery benchmark requires a live ceremony run"
+    }
+  ]
+}

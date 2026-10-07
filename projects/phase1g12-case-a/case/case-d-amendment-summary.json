@@ -1,0 +1,116 @@
+{
+  "amendmentPlanId": "bp-1e463dea1689",
+  "supersedes": {
+    "budgetPlanId": "bp-9b02221225dd",
+    "scope": "D units only (durationSeconds 8 → 4)"
+  },
+  "resolutions": {
+    "D1": {
+      "resolutionId": "mr-526fb7a60ea0",
+      "renderMode": "VEO_REFERENCE",
+      "model": "google--gemini-omni-flash--1-1",
+      "cost": {
+        "state": "KNOWN",
+        "reason": "total = 7 × 1 generations",
+        "unit": "credits_per_generation",
+        "valuePerGeneration": 7,
+        "estimatedTotal": 7
+      }
+    },
+    "D2": {
+      "resolutionId": "mr-530bec09f9f1",
+      "renderMode": "VEO_REFERENCE",
+      "model": "google--gemini-omni-flash--1-1",
+      "cost": {
+        "state": "KNOWN",
+        "reason": "total = 7 × 1 generations",
+        "unit": "credits_per_generation",
+        "valuePerGeneration": 7,
+        "estimatedTotal": 7
+      }
+    },
+    "D3": {
+      "resolutionId": "mr-0538f0b00d8e",
+      "renderMode": "VEO_REFERENCE",
+      "model": "google--gemini-omni-flash--1-1",
+      "cost": {
+        "state": "KNOWN",
+        "reason": "total = 7 × 1 generations",
+        "unit": "credits_per_generation",
+        "valuePerGeneration": 7,
+        "estimatedTotal": 7
+      }
+    }
+  },
+  "units": [
+    {
+      "unitId": "gu-bde822cbe1dd",
+      "shotId": "D-SH01",
+      "workflow": "Ingredients / References to Video",
+      "modelId": "google--gemini-omni-flash--1-1",
+      "cost": 7
+    },
+    {
+      "unitId": "gu-1b8dbfa2ee4a",
+      "shotId": "D-SH02",
+      "workflow": "Ingredients / References to Video",
+      "modelId": "google--gemini-omni-flash--1-1",
+      "cost": 7
+    },
+    {
+      "unitId": "gu-223a6fbe0e28",
+      "shotId": "D-SH03",
+      "workflow": "Ingredients / References to Video",
+      "modelId": "google--gemini-omni-flash--1-1",
+      "cost": 7
+    }
+  ],
+  "retryPolicies": {
+    "gu-bde822cbe1dd": {
+      "maxAdditionalAttempts": 1,
+      "reservedCredits": 7,
+      "allowedFailureClasses": [
+        "QA_MOTION_DIRECTION",
+        "QA_MOTION_ABSENT",
+        "QA_CONTINUITY_OUTFIT",
+        "QA_CONTINUITY_IDENTITY",
+        "QA_LOCATION",
+        "QA_START_END_STATE",
+        "QA_FACTUAL_VISUAL",
+        "QA_STRUCTURAL",
+        "QA_SEMANTIC"
+      ]
+    },
+    "gu-1b8dbfa2ee4a": {
+      "maxAdditionalAttempts": 1,
+      "reservedCredits": 7,
+      "allowedFailureClasses": [
+        "QA_MOTION_DIRECTION",
+        "QA_MOTION_ABSENT",
+        "QA_CONTINUITY_OUTFIT",
+        "QA_CONTINUITY_IDENTITY",
+        "QA_LOCATION",
+        "QA_START_END_STATE",
+        "QA_FACTUAL_VISUAL",
+        "QA_STRUCTURAL",
+        "QA_SEMANTIC"
+      ]
+    },
+    "gu-223a6fbe0e28": {
+      "maxAdditionalAttempts": 1,
+      "reservedCredits": 7,
+      "allowedFailureClasses": [
+        "QA_MOTION_DIRECTION",
+        "QA_MOTION_ABSENT",
+        "QA_CONTINUITY_OUTFIT",
+        "QA_CONTINUITY_IDENTITY",
+        "QA_LOCATION",
+        "QA_START_END_STATE",
+        "QA_FACTUAL_VISUAL",
+        "QA_STRUCTURAL",
+        "QA_SEMANTIC"
+      ]
+    }
+  },
+  "authorizationRequired": "OPERATOR approval of the 4s D amendment before the first D generation"
+}

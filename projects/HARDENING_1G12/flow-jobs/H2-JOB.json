@@ -1,0 +1,72 @@
+{
+  "version": "1.0.0",
+  "status": "AWAITING_PROVIDER_ACCEPTANCE",
+  "attempt": 1,
+  "generationCount": 0,
+  "history": [
+    {
+      "from": null,
+      "to": "PENDING",
+      "at": "2026-10-07T03:32:44.998Z",
+      "actor": "system"
+    },
+    {
+      "from": "PENDING",
+      "to": "VALIDATED",
+      "at": "2026-10-07T03:32:45.004Z",
+      "actor": "test"
+    },
+    {
+      "from": "VALIDATED",
+      "to": "PREPARED",
+      "at": "2026-10-07T03:32:45.009Z",
+      "actor": "test"
+    },
+    {
+      "from": "PREPARED",
+      "to": "AWAITING_USER_APPROVAL",
+      "at": "2026-10-07T03:32:45.015Z",
+      "actor": "test"
+    },
+    {
+      "from": "AWAITING_USER_APPROVAL",
+      "to": "AWAITING_USER_APPROVAL",
+      "at": "2026-10-07T03:32:45.021Z",
+      "actor": "user",
+      "note": "approval-recorded"
+    },
+    {
+      "from": "AWAITING_USER_APPROVAL",
+      "to": "AWAITING_PROVIDER_ACCEPTANCE",
+      "at": "2026-10-07T03:32:45.028Z",
+      "actor": "extension"
+    }
+  ],
+  "projectId": "HARDENING_1G12",
+  "jobId": "H2-JOB",
+  "requestId": "REQ-H2-JOB",
+  "sceneId": "S01",
+  "capability": "video",
+  "mode": "ASSISTED_APPROVAL",
+  "prompt": "hardening sweep test prompt",
+  "platform": "youtube",
+  "flowProject": {
+    "mode": "REUSE"
+  },
+  "outputRequirements": {
+    "aspectRatio": "16:9"
+  },
+  "creativeContext": {},
+  "expectedOutputPath": "assets/video/S01/H2-JOB.mp4",
+  "approval": {
+    "jobId": "H2-JOB",
+    "attempt": 1,
+    "approvedBy": "user",
+    "nonce": "nonce-H2-a",
+    "fingerprint": "fp-nonce-H2-a",
+    "approvedAt": "2026-10-07T03:32:45.021Z",
+    "used": false
+  },
+  "submitIssuedAt": "2026-10-07T03:32:45.028Z",
+  "submitNonce": "nonce-H2-a"
+}

@@ -1,0 +1,57 @@
+{
+  "task": "PHASE_2_1_FIX_01",
+  "measuredAt": "2026-10-05T00:00:00.000Z",
+  "supersedes": "the PHASE_2_1_01 baseline measured against Voice Bible v1 (vb-42744f223671)",
+  "measuredAgainst": {
+    "voiceBibleId": "vb-2997edea5ffa",
+    "version": 2,
+    "narratorVoiceId": "am_michael",
+    "provenanceSource": "OPERATOR_APPROVED",
+    "runtime": "kokoro 0.9.4 / torch 2.14.1+cpu (installed under explicit operator authorization)"
+  },
+  "iterations": 200,
+  "unit": "milliseconds",
+  "scope": "phase-2.1 configuration operations only; no TTS synthesis benchmark (2.4)",
+  "provider": "local-kokoro",
+  "manifestMutation": "none — every measured write is byte-identical to current state (idempotent no-op)",
+  "note": "Configuration-operation latency only. No TTS synthesis benchmark: measured words-per-minute and speech-rate QA belong to Phase 2.4. Real synthesis latency was exercised separately by scripts/diagnostics/narrator-qa-compare.js (6 clips, ~150 words each, CPU-only torch).",
+  "operations": {
+    "voiceBibleLoadLatencyMs": 0.738959,
+    "voiceBibleValidateLatencyMs": 0.476125,
+    "voiceBibleWriteLatencyMs": 0.3484875,
+    "voiceSelectionResolveLatencyMs": 0.4181545,
+    "manifestReferenceUpdateLatencyMs": 0.4737765
+  },
+  "deltaVsV1Baseline": {
+    "voiceBibleLoadLatencyMs": { "before": 0.310791, "after": 0.738959 },
+    "voiceBibleValidateLatencyMs": { "before": 0.092555, "after": 0.476125 },
+    "voiceBibleWriteLatencyMs": { "before": 0.262836, "after": 0.3484875 },
+    "voiceSelectionResolveLatencyMs": { "before": 0.009667, "after": 0.4181545 },
+    "manifestReferenceUpdateLatencyMs": { "before": 0.3371465, "after": 0.4737765 }
+  },
+  "knownRegression": {
+    "operation": "voiceSelectionResolveLatencyMs",
+    "magnitude": "0.0097ms -> 0.4182ms (about 43x), still sub-millisecond",
+    "cause": "FIX 01 made providerCatalog() read providers/license-evidence/local-kokoro.json so the 54-voice runtime inventory is honoured. That read + JSON parse happens on every resolveVoiceSelection() call, which previously touched no file.",
+    "accepted": true,
+    "whyAccepted": "resolveVoiceSelection is called about twice per Voice Bible validation (narrator + each character voice), so the added cost is under 1ms per validation. A memoisation cache would remove it but introduces a stale-read failure mode if the evidence file changes within a process, which is a worse trade than 0.4ms.",
+    "revisitIf": "voice selection ever moves into a per-frame or per-segment hot loop, where hundreds of resolves per second would make the repeated read measurable."
+  },
+  "interpretation": "All five 2.1 configuration operations remain sub-millisecond to low-millisecond on local disk. manifestReferenceUpdateLatencyMs validates the manifest, recomputes its fingerprint and performs an atomic idempotent write on every call by contract. The only material change versus the v1 baseline is the deliberate evidence read in the voice catalog, documented above rather than hidden.",
+  "fix02Addendum": {
+    "task": "FIX_PHASE_2_1_02",
+    "measuredAt": "2026-10-05",
+    "measuredAgainst": { "voiceBibleId": "vb-19f4fd6a4596", "version": 3, "rightsStatus": "RISK_ACCEPTED" },
+    "iterations": 200,
+    "operations": {
+      "voiceBibleLoadLatencyMs": 0.69958,
+      "voiceBibleValidateLatencyMs": 0.462059,
+      "voiceBibleWriteLatencyMs": 0.2382215,
+      "voiceSelectionResolveLatencyMs": 0.397646,
+      "manifestReferenceUpdateLatencyMs": 0.440952
+    },
+    "deltaVsFix01": "no material change (resolve 0.4182 -> 0.3976ms, load 0.7390 -> 0.6996ms; run-to-run noise on local disk)",
+    "budget": "no explicit performance budget exists for 2.1 configuration operations; sub-millisecond resolve remains accepted",
+    "decision": "no cache added; the FIX 01 revisit trigger stands unchanged"
+  }
+}

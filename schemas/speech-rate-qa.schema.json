@@ -1,0 +1,102 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "speech-rate-qa.schema.json",
+  "title": "UNFOLDIQ Speech Rate QA (Phase 2.4, schema 1.0.0)",
+  "description": "Speech-rate and pause measurements derived from the REAL generated audio (never from the provider speed parameter), evaluated against a versioned evidence-based policy. Per-segment + whole-narration metrics with a fail-closed decision.",
+  "type": "object",
+  "required": ["schemaVersion", "speechRateQaId", "version", "projectId", "scriptRef", "policyRef", "provider", "voiceId", "segments", "overall", "decision", "issues", "provenance", "fingerprint"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "speechRateQaId": { "type": "string", "pattern": "^srq-[0-9a-f]{12}$" },
+    "version": { "type": "integer", "minimum": 1 },
+    "projectId": { "type": "string", "minLength": 1 },
+    "scriptRef": {
+      "type": "object",
+      "required": ["scriptArtifactId", "scriptVersion"],
+      "additionalProperties": false,
+      "properties": {
+        "scriptArtifactId": { "type": "string", "pattern": "^fss-[0-9a-z][0-9a-z-]{2,62}$" },
+        "scriptVersion": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "policyRef": { "type": "string", "pattern": "^srp-[0-9a-f]{12}$" },
+    "provider": { "const": "local-kokoro" },
+    "voiceId": { "type": "string", "minLength": 1 },
+    "segments": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/rateSegment" }
+    },
+    "overall": {
+      "type": "object",
+      "required": ["overallWpm", "rateMean", "rateMedian", "rateVariance", "pauseDensity", "unexpectedLongSilenceCount"],
+      "additionalProperties": false,
+      "properties": {
+        "overallWpm": { "type": "number", "minimum": 0 },
+        "slowestSegment": { "type": ["object", "null"], "additionalProperties": false, "properties": { "segmentId": { "type": "string" }, "wpm": { "type": "number" } } },
+        "fastestSegment": { "type": ["object", "null"], "additionalProperties": false, "properties": { "segmentId": { "type": "string" }, "wpm": { "type": "number" } } },
+        "rateMean": { "type": "number", "minimum": 0 },
+        "rateMedian": { "type": "number", "minimum": 0 },
+        "rateVariance": { "type": "number", "minimum": 0 },
+        "pauseDensity": { "type": "number", "minimum": 0, "maximum": 1 },
+        "unexpectedLongSilenceCount": { "type": "integer", "minimum": 0 },
+        "totalDurationMs": { "type": ["integer", "null"] }
+      }
+    },
+    "decision": { "enum": ["PASS", "REVIEW_REQUIRED", "FAIL"] },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["code"],
+        "additionalProperties": false,
+        "properties": {
+          "code": { "enum": ["SPEECH_RATE_TOO_SLOW", "SPEECH_RATE_TOO_FAST", "SPEECH_RATE_VARIANCE_HIGH", "SPEECH_RATE_SEGMENT_OUTLIER", "UNEXPECTED_LONG_SILENCE", "PAUSE_UNNATURAL"] },
+          "segmentId": { "type": ["string", "null"] },
+          "detail": { "type": ["string", "null"], "maxLength": 300 },
+          "blocking": { "type": "boolean" }
+        }
+      }
+    },
+    "provenance": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "createdAt": { "type": ["string", "null"] },
+        "evidenceRefs": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" }
+  },
+  "definitions": {
+    "rateSegment": {
+      "type": "object",
+      "required": ["segmentId", "wordCount", "durationMs", "totalWpm", "pauseDurationMs", "pauseDensity", "maxSilenceMs", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "segmentId": { "type": "string", "minLength": 1 },
+        "wordCount": { "type": "integer", "minimum": 0 },
+        "durationMs": { "type": "integer", "minimum": 1 },
+        "totalWpm": { "type": "number", "minimum": 0 },
+        "activeSpeechDurationMs": { "type": ["integer", "null"] },
+        "activeSpeechWpm": { "type": ["number", "null"] },
+        "pauseDurationMs": { "type": "integer", "minimum": 0 },
+        "pauseDensity": { "type": "number", "minimum": 0, "maximum": 1 },
+        "maxSilenceMs": { "type": "integer", "minimum": 0 },
+        "status": { "enum": ["PASS", "REVIEW_REQUIRED", "FAIL"] },
+        "issues": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["code"],
+            "additionalProperties": false,
+            "properties": {
+              "code": { "enum": ["SPEECH_RATE_TOO_SLOW", "SPEECH_RATE_TOO_FAST", "SPEECH_RATE_SEGMENT_OUTLIER", "UNEXPECTED_LONG_SILENCE", "PAUSE_UNNATURAL"] },
+              "detail": { "type": ["string", "null"], "maxLength": 300 }
+            }
+          }
+        }
+      }
+    }
+  }
+}

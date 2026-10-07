@@ -1,0 +1,62 @@
+{
+  "version": "1.0.0",
+  "status": "AWAITING_USER_APPROVAL",
+  "attempt": 1,
+  "generationCount": 0,
+  "history": [
+    {
+      "from": null,
+      "to": "PENDING",
+      "at": "2026-10-05T04:56:55.249Z",
+      "actor": "system"
+    },
+    {
+      "from": "PENDING",
+      "to": "VALIDATED",
+      "at": "2026-10-05T04:56:55.256Z",
+      "actor": "t"
+    },
+    {
+      "from": "VALIDATED",
+      "to": "PREPARED",
+      "at": "2026-10-05T04:56:55.261Z",
+      "actor": "t"
+    },
+    {
+      "from": "PREPARED",
+      "to": "AWAITING_USER_APPROVAL",
+      "at": "2026-10-05T04:56:55.267Z",
+      "actor": "t"
+    },
+    {
+      "from": "AWAITING_USER_APPROVAL",
+      "to": "AWAITING_USER_APPROVAL",
+      "at": "2026-10-05T04:56:55.274Z",
+      "actor": "user",
+      "note": "approval-recorded"
+    }
+  ],
+  "projectId": "DBG_H4",
+  "jobId": "H4-JOB",
+  "requestId": "R",
+  "sceneId": "S",
+  "capability": "video",
+  "mode": "ASSISTED_APPROVAL",
+  "prompt": "x",
+  "platform": "youtube",
+  "flowProject": {
+    "mode": "REUSE"
+  },
+  "outputRequirements": {},
+  "creativeContext": {},
+  "expectedOutputPath": "x",
+  "approval": {
+    "jobId": "H4-JOB",
+    "attempt": 1,
+    "approvedBy": "user",
+    "nonce": "nonce-H4-a",
+    "fingerprint": "fp-a",
+    "approvedAt": "2026-10-05T04:56:55.273Z",
+    "used": false
+  }
+}

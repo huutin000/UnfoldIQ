@@ -1,0 +1,78 @@
+{
+  "version": "1.0.0",
+  "status": "GENERATING",
+  "attempt": 1,
+  "generationCount": 1,
+  "history": [
+    {
+      "from": null,
+      "to": "PENDING",
+      "at": "2026-10-07T03:32:45.034Z",
+      "actor": "system"
+    },
+    {
+      "from": "PENDING",
+      "to": "VALIDATED",
+      "at": "2026-10-07T03:32:45.039Z",
+      "actor": "test"
+    },
+    {
+      "from": "VALIDATED",
+      "to": "PREPARED",
+      "at": "2026-10-07T03:32:45.045Z",
+      "actor": "test"
+    },
+    {
+      "from": "PREPARED",
+      "to": "AWAITING_USER_APPROVAL",
+      "at": "2026-10-07T03:32:45.050Z",
+      "actor": "test"
+    },
+    {
+      "from": "AWAITING_USER_APPROVAL",
+      "to": "AWAITING_USER_APPROVAL",
+      "at": "2026-10-07T03:32:45.056Z",
+      "actor": "user",
+      "note": "approval-recorded"
+    },
+    {
+      "from": "AWAITING_USER_APPROVAL",
+      "to": "AWAITING_PROVIDER_ACCEPTANCE",
+      "at": "2026-10-07T03:32:45.062Z",
+      "actor": "extension"
+    },
+    {
+      "from": "AWAITING_PROVIDER_ACCEPTANCE",
+      "to": "GENERATING",
+      "at": "2026-10-07T03:32:45.068Z",
+      "actor": "extension"
+    }
+  ],
+  "projectId": "HARDENING_1G12",
+  "jobId": "H3-JOB",
+  "requestId": "REQ-H3-JOB",
+  "sceneId": "S01",
+  "capability": "video",
+  "mode": "ASSISTED_APPROVAL",
+  "prompt": "hardening sweep test prompt",
+  "platform": "youtube",
+  "flowProject": {
+    "mode": "REUSE"
+  },
+  "outputRequirements": {
+    "aspectRatio": "16:9"
+  },
+  "creativeContext": {},
+  "expectedOutputPath": "assets/video/S01/H3-JOB.mp4",
+  "approval": {
+    "jobId": "H3-JOB",
+    "attempt": 1,
+    "approvedBy": "user",
+    "nonce": "nonce-H3-a",
+    "fingerprint": "fp-nonce-H3-a",
+    "approvedAt": "2026-10-07T03:32:45.056Z",
+    "used": true
+  },
+  "submitIssuedAt": "2026-10-07T03:32:45.062Z",
+  "submitNonce": "nonce-H3-a"
+}

@@ -1,0 +1,106 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "model-registry-snapshot.schema.json",
+  "title": "UNFOLDIQ Provider/Model Registry Snapshot (1G.6)",
+  "description": "Normalized, provenance-bound provider facts. Dated observations, never permanent product truth.",
+  "type": "object",
+  "required": ["version", "snapshotId", "createdAt", "surfaces", "models", "sources", "fingerprint"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "const": "1.0.0" },
+    "snapshotId": { "type": "string", "minLength": 1 },
+    "createdAt": { "type": "string" },
+    "surfaces": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["surfaceId", "providerId"],
+        "properties": {
+          "surfaceId": { "type": "string" },
+          "providerId": { "type": "string" },
+          "displayName": { "type": "string" },
+          "status": { "enum": ["AVAILABLE", "UNAVAILABLE", "UNKNOWN"] },
+          "sourceRefs": { "type": "array", "items": { "type": "string" } },
+          "observedAt": { "type": ["string", "null"] },
+          "freshness": { "enum": ["FRESH", "STALE", "UNKNOWN"] },
+          "metadata": { "type": "object" }
+        }
+      }
+    },
+    "models": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["modelId", "providerId", "surfaceId", "capabilityRules", "availability"],
+        "properties": {
+          "modelId": { "type": "string", "minLength": 1 },
+          "providerId": { "type": "string" },
+          "surfaceId": { "type": "string" },
+          "providerLabel": { "type": ["string", "null"] },
+          "modelFamily": { "type": ["string", "null"] },
+          "modelVersionOrTier": { "type": ["string", "number", "null"] },
+          "mediaKinds": { "type": "array", "items": { "type": "string" } },
+          "capabilityRules": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["capability", "support", "sourceRefs"],
+              "properties": {
+                "capability": { "enum": ["IMAGE_GENERATION", "IMAGE_REFERENCE", "IMAGE_EDITING", "VIDEO_GENERATION", "IMAGE_TO_VIDEO", "FIRST_LAST_FRAME_VIDEO", "REFERENCE_GUIDED_VIDEO", "PORTRAIT_OUTPUT", "LANDSCAPE_OUTPUT"] },
+                "support": { "enum": ["SUPPORTED", "UNSUPPORTED", "UNKNOWN", "CONFLICT"] },
+                "constraints": { "type": "object" },
+                "sourceRefs": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+                "observedAt": { "type": ["string", "null"] },
+                "freshness": { "enum": ["FRESH", "STALE", "UNKNOWN"] },
+                "conflict": { "type": "array" }
+              }
+            }
+          },
+          "availability": { "enum": ["AVAILABLE", "UNAVAILABLE", "UNKNOWN"] },
+          "availabilitySourceRefs": { "type": "array", "items": { "type": "string" } },
+          "availabilityObservedAt": { "type": ["string", "null"] },
+          "providerTier": { "type": ["string", "null"] },
+          "notes": { "type": ["string", "null"] },
+          "costObservations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["unit", "sourceRefs"],
+              "properties": {
+                "unit": { "enum": ["credits_per_generation", "currency_per_generation", "credits_per_upscale"] },
+                "value": { "type": ["number", "null"] },
+                "context": { "type": "object" },
+                "sourceRefs": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+                "observedAt": { "type": ["string", "null"] },
+                "freshness": { "enum": ["FRESH", "STALE", "UNKNOWN"] }
+              }
+            }
+          },
+          "sourceRefs": { "type": "array", "items": { "type": "string" } },
+          "observedAt": { "type": ["string", "null"] },
+          "status": { "enum": ["ACTIVE", "RETIRED", "UNKNOWN"] }
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["sourceId", "sourceType", "retrievedAt"],
+        "properties": {
+          "sourceId": { "type": "string" },
+          "sourceType": { "enum": ["OFFICIAL_PROVIDER_DOC", "OFFICIAL_PROVIDER_UI_OBSERVATION", "OFFICIAL_PROVIDER_API_METADATA", "REPOSITORY_CONFIG", "OPERATOR_INPUT"] },
+          "url": { "type": ["string", "null"] },
+          "publisher": { "type": ["string", "null"] },
+          "scope": { "type": ["string", "null"] },
+          "retrievedAt": { "type": "string" },
+          "locale": { "type": ["string", "null"] },
+          "fieldAuthority": { "type": "array", "items": { "type": "string" } },
+          "contentFingerprint": { "type": ["string", "null"] },
+          "notes": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" }
+  }
+}

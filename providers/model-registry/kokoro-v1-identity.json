@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "1.0.0",
+  "provider": "local-kokoro",
+  "modelRepo": "hexgrad/Kokoro-82M",
+  "modelFile": "C:\\Users\\huuti\\.cache\\huggingface\\hub\\models--hexgrad--Kokoro-82M\\snapshots\\f3ff3571791e39611d31c381e3a41a3af07b4987\\kokoro-v1_0.pth",
+  "snapshot": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+  "sizeBytes": 327212226,
+  "localSha256": "496dba118d1a58f5f3db2efc88dbdc216e0483fc89fe6e47ee1f2c53f18ad1e4",
+  "officialExpectedSha256": "496dba118d1a58f5f3db2efc88dbdc216e0483fc89fe6e47ee1f2c53f18ad1e4",
+  "officialSizeBytes": 327212226,
+  "match": true,
+  "verifiedAt": "2026-10-07T03:39:02.497Z",
+  "sourceRef": "https://huggingface.co/api/models/hexgrad/Kokoro-82M/paths-info/main (lfs.oid, retrieved 2026-10-06)",
+  "note": "Production segment artifacts keep their recorded runtime identity; this file is the separate immutable provenance artifact (FIX 01 Gap C). Wiring per-synthesis modelHash is deferred — see report."
+}

@@ -1,0 +1,340 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectId": "phase1g12-case-a",
+  "revision": 54,
+  "createdAt": "2026-10-05T07:12:15.034Z",
+  "updatedAt": "2026-10-05T07:12:15.453Z",
+  "fingerprint": "0e9b9d313d39d066",
+  "checkpoints": {
+    "op-20cd6ddab871": [
+      {
+        "stage": "PLANNED",
+        "at": "2026-10-05T07:12:15.043Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "AUTHORIZED",
+        "at": "2026-10-05T07:12:15.050Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "SUBMIT_ISSUED",
+        "at": "2026-10-05T07:12:15.056Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "PROVIDER_ACCEPTED",
+        "at": "2026-10-05T07:12:15.063Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "RESULT_DETECTED",
+        "at": "2026-10-05T07:12:15.068Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "DOWNLOADED",
+        "at": "2026-10-05T07:12:15.074Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "IMPORTED",
+        "at": "2026-10-05T07:12:15.081Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "QA_COMPLETE",
+        "at": "2026-10-05T07:12:15.086Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      }
+    ],
+    "op-5a39ab5c60e8": [
+      {
+        "stage": "PLANNED",
+        "at": "2026-10-05T07:12:15.100Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "AUTHORIZED",
+        "at": "2026-10-05T07:12:15.106Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "SUBMIT_ISSUED",
+        "at": "2026-10-05T07:12:15.113Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "PROVIDER_ACCEPTED",
+        "at": "2026-10-05T07:12:15.118Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "RESULT_DETECTED",
+        "at": "2026-10-05T07:12:15.125Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "DOWNLOADED",
+        "at": "2026-10-05T07:12:15.130Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "IMPORTED",
+        "at": "2026-10-05T07:12:15.136Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "QA_COMPLETE",
+        "at": "2026-10-05T07:12:15.143Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "READY",
+        "at": "2026-10-05T07:12:15.150Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      }
+    ],
+    "op-29d276bda8ae": [
+      {
+        "stage": "PLANNED",
+        "at": "2026-10-05T07:12:15.163Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "AUTHORIZED",
+        "at": "2026-10-05T07:12:15.170Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "SUBMIT_ISSUED",
+        "at": "2026-10-05T07:12:15.177Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "PROVIDER_ACCEPTED",
+        "at": "2026-10-05T07:12:15.184Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "RESULT_DETECTED",
+        "at": "2026-10-05T07:12:15.191Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "DOWNLOADED",
+        "at": "2026-10-05T07:12:15.199Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "IMPORTED",
+        "at": "2026-10-05T07:12:15.207Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "QA_COMPLETE",
+        "at": "2026-10-05T07:12:15.213Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "READY",
+        "at": "2026-10-05T07:12:15.220Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      }
+    ],
+    "op-9f6db6917eca": [
+      {
+        "stage": "PLANNED",
+        "at": "2026-10-05T07:12:15.237Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "AUTHORIZED",
+        "at": "2026-10-05T07:12:15.246Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "SUBMIT_ISSUED",
+        "at": "2026-10-05T07:12:15.254Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "PROVIDER_ACCEPTED",
+        "at": "2026-10-05T07:12:15.261Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "RESULT_DETECTED",
+        "at": "2026-10-05T07:12:15.269Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "DOWNLOADED",
+        "at": "2026-10-05T07:12:15.278Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "IMPORTED",
+        "at": "2026-10-05T07:12:15.285Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "QA_COMPLETE",
+        "at": "2026-10-05T07:12:15.293Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "READY",
+        "at": "2026-10-05T07:12:15.300Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      }
+    ],
+    "op-78dfa2bf225e": [
+      {
+        "stage": "PLANNED",
+        "at": "2026-10-05T07:12:15.317Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "AUTHORIZED",
+        "at": "2026-10-05T07:12:15.325Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "SUBMIT_ISSUED",
+        "at": "2026-10-05T07:12:15.332Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "PROVIDER_ACCEPTED",
+        "at": "2026-10-05T07:12:15.339Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "RESULT_DETECTED",
+        "at": "2026-10-05T07:12:15.347Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "DOWNLOADED",
+        "at": "2026-10-05T07:12:15.354Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "IMPORTED",
+        "at": "2026-10-05T07:12:15.361Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "QA_COMPLETE",
+        "at": "2026-10-05T07:12:15.371Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "READY",
+        "at": "2026-10-05T07:12:15.378Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      }
+    ],
+    "op-3df9dbbffe5e": [
+      {
+        "stage": "PLANNED",
+        "at": "2026-10-05T07:12:15.394Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "AUTHORIZED",
+        "at": "2026-10-05T07:12:15.402Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "SUBMIT_ISSUED",
+        "at": "2026-10-05T07:12:15.409Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "PROVIDER_ACCEPTED",
+        "at": "2026-10-05T07:12:15.416Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "RESULT_DETECTED",
+        "at": "2026-10-05T07:12:15.423Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "DOWNLOADED",
+        "at": "2026-10-05T07:12:15.431Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "IMPORTED",
+        "at": "2026-10-05T07:12:15.439Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "QA_COMPLETE",
+        "at": "2026-10-05T07:12:15.446Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      },
+      {
+        "stage": "READY",
+        "at": "2026-10-05T07:12:15.453Z",
+        "note": "migrated from 1G.12 evidence",
+        "stateRef": null
+      }
+    ]
+  }
+}

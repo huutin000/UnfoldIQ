@@ -10,7 +10,16 @@ const FLOW_ORIGIN_PREFIXES = ["https://labs.google/fx/", "https://flow.google/",
 
 function checkSender(sender) {
   const url = (sender && (sender.url || sender.origin)) || "";
-  const allowed = url.startsWith("chrome-extension://") || FLOW_ORIGIN_PREFIXES.some((p) => url.startsWith(p));
+  // Extension-page senders must be THIS extension, not any co-installed one
+  // (hardening sweep C-6: a bare chrome-extension:// prefix let any extension
+  // drive the command surface). sender.id is the sender's own extension id.
+  if (url.startsWith("chrome-extension://")) {
+    const ownId = (typeof chrome !== "undefined" && chrome.runtime && chrome.runtime.id) || null;
+    const senderId = (sender && sender.id) || "";
+    if (!ownId || senderId !== ownId) throw new Error(`SENDER_REJECTED: foreign extension origin ${url}`);
+    return true;
+  }
+  const allowed = FLOW_ORIGIN_PREFIXES.some((p) => url.startsWith(p));
   if (!allowed) throw new Error(`SENDER_REJECTED: ${url}`);
   return true;
 }

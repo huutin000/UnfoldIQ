@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "speech-rate-policy.schema.json",
+  "title": "UNFOLDIQ Speech Rate Policy (Phase 2.4, schema 1.0.0)",
+  "description": "Versioned evidence-based speech-rate policy for one narrator/content-class pair. No hidden universal WPM threshold: the band and guardrails are recorded WITH their reasons and the measured baseline they were derived from. Fixed numeric values must carry justification.",
+  "type": "object",
+  "required": ["schemaVersion", "policyId", "version", "projectId", "narrator", "voiceBibleRef", "contentClass", "targetBand", "guardrails", "reasons", "reviewPolicy", "provenance", "fingerprint"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "policyId": { "type": "string", "pattern": "^srp-[0-9a-f]{12}$" },
+    "version": { "type": "integer", "minimum": 1 },
+    "projectId": { "type": "string", "minLength": 1 },
+    "narrator": { "type": "string", "minLength": 1 },
+    "voiceBibleRef": { "type": "string", "pattern": "^vb-[0-9a-f]{12}$" },
+    "contentClass": { "enum": ["FACTUAL", "FICTION", "HYBRID"] },
+    "targetBand": {
+      "type": "object",
+      "required": ["minWpm", "maxWpm"],
+      "additionalProperties": false,
+      "properties": {
+        "minWpm": { "type": "number", "exclusiveMinimum": 0 },
+        "maxWpm": { "type": "number", "exclusiveMinimum": 0 }
+      }
+    },
+    "guardrails": {
+      "type": "object",
+      "required": ["outlierFactor", "rateVarianceMax", "maxSilenceMs"],
+      "additionalProperties": false,
+      "properties": {
+        "outlierFactor": { "type": "number", "exclusiveMinimum": 0, "description": "A segment is an outlier when its wpm deviates from the narration median by more than this factor." },
+        "rateVarianceMax": { "type": "number", "exclusiveMinimum": 0 },
+        "maxSilenceMs": { "type": "integer", "exclusiveMinimum": 0, "description": "Internal silence above this (without a SECTION/BEAT intent) is an unexpected long silence." }
+      }
+    },
+    "reasons": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+    "baseline": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "measuredFrom": { "type": ["string", "null"], "description": "What the band was derived from (e.g. first-pass final audio measurement)." },
+        "overallWpm": { "type": ["number", "null"] }
+      }
+    },
+    "reviewPolicy": { "type": "string", "minLength": 1 },
+    "provenance": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "createdAt": { "type": ["string", "null"] },
+        "evidenceRefs": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" }
+  }
+}

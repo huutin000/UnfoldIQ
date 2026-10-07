@@ -1,0 +1,22 @@
+{
+  "$id": "https://unfoldiq.io/schemas/final-audio.schema.json",
+  "title": "UNFOLDIQ Final Audio Artifact Contract (Phase 2.8)",
+  "description": "Locked, QA-PASS final audio master with measured loudness metrics and invalidation hashes",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["assetId", "mixPlanVersion", "durationMs", "qaStatus", "narrationTimingHash", "finalMixHash", "sourceDependencies", "hash", "createdAt"],
+  "properties": {
+    "assetId": { "type": "string", "minLength": 1 },
+    "mixPlanVersion": { "type": "string", "minLength": 1 },
+    "durationMs": { "type": "integer", "minimum": 1 },
+    "integratedLoudness": { "type": "number" },
+    "loudnessRange": { "type": "number" },
+    "truePeak": { "type": "number" },
+    "qaStatus": { "enum": ["PASS"] },
+    "narrationTimingHash": { "type": "string", "minLength": 8 },
+    "finalMixHash": { "type": "string", "minLength": 8 },
+    "sourceDependencies": { "type": "array", "items": { "type": "string" } },
+    "hash": { "type": "string", "minLength": 8 },
+    "createdAt": { "type": "string" }
+  }
+}

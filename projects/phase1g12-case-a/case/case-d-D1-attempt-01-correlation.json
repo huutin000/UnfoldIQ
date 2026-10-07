@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "attemptId": "d1-attempt-01",
+  "unitId": "gu-bde822cbe1dd",
+  "shotId": "D-SH01",
+  "providerProjectRef": "8221824c-a1a6-4aa9-8d6b-fac24860d49e",
+  "jobId": "d11",
+  "correlationMethod": "SINGLE_GENERATION_ATTRIBUTION",
+  "evidence": [
+    "operator affirmed exactly ONE generation submitted for D1 (ceremony log D_D1_SUBMIT_EVIDENCE)",
+    "character reference as-a7801df9bf0f (mascot-guide) used as first frame, per case/case-d-character.json",
+    "download bytes sha256=0fde400d63929dcea574645d2fa8eea6f4990d8ac199db9446f1c26b7cbc3250, 480069 bytes, 1280x720@4.0s"
+  ],
+  "file": "downloads/Character_waving_friendly_stance_20261005105730.mp4",
+  "sha256": "0fde400d63929dcea574645d2fa8eea6f4990d8ac199db9446f1c26b7cbc3250",
+  "downloadedAt": "2026-10-05T04:06:01.278Z"
+}

@@ -1,0 +1,16 @@
+{
+  "selection": {
+    "status": "REJECTED",
+    "decidedAt": "2026-10-05T05:36:43.042Z",
+    "reason": "Task-02 A-21: REJECTED per finding-source-frame-identity-01 (account avatar)"
+  },
+  "qualityStatus": "REJECTED",
+  "lock": {
+    "locked": true,
+    "reason": "Task-02 A-21: lock the corrected REJECTED verdict",
+    "lockedAt": "2026-10-05T05:36:43.058Z",
+    "actor": null,
+    "unlockedAt": "2026-10-05T05:36:43.040Z",
+    "unlockReason": "Task-02 hardening A-21/S5.1: explicit correction migration"
+  }
+}

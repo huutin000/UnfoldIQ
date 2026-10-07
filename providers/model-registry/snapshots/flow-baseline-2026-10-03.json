@@ -1,0 +1,1160 @@
+{
+  "snapshotId": "rs-flow-baseline-2026-10-03",
+  "createdAt": "2026-10-03T00:00:00.000Z",
+  "sources": [
+    {
+      "sourceId": "flow-models-16352836",
+      "sourceType": "OFFICIAL_PROVIDER_DOC",
+      "url": "https://support.google.com/flow/answer/16352836?hl=en",
+      "publisher": "Google Flow Help",
+      "scope": "Flow models & supported features table (Veo 3.1 tiers, Omni Flash; workflows, durations, aspects)",
+      "retrievedAt": "2026-10-03T00:00:00.000Z",
+      "locale": "en",
+      "fieldAuthority": [
+        "capability",
+        "duration",
+        "orientation"
+      ],
+      "notes": "Table shows model-dependent workflow support. NOT a price list and NOT proof of current account access."
+    },
+    {
+      "sourceId": "flow-models-16893917",
+      "sourceType": "OFFICIAL_PROVIDER_DOC",
+      "url": "https://support.google.com/flow/answer/16893917?hl=en",
+      "publisher": "Google Flow Help",
+      "scope": "Flow models & supported features (Omni Flash exclusives incl. start/end frames on web)",
+      "retrievedAt": "2026-10-03T00:00:00.000Z",
+      "locale": "en",
+      "fieldAuthority": [
+        "capability",
+        "duration"
+      ],
+      "notes": "States Omni start/end frames available on Flow web; 16352836 table marks Omni first+last as coming soon. Preserved as conflict, not merged."
+    },
+    {
+      "sourceId": "flow-create-16353334",
+      "sourceType": "OFFICIAL_PROVIDER_DOC",
+      "url": "https://support.google.com/flow/answer/16353334?hl=en",
+      "publisher": "Google Flow Help",
+      "scope": "Creating videos in Flow: frames (start/end) and ingredients/references workflows",
+      "retrievedAt": "2026-10-03T00:00:00.000Z",
+      "locale": "en",
+      "fieldAuthority": [
+        "capability",
+        "workflow"
+      ],
+      "notes": "Workflow existence only; no per-model matrix and no prices here."
+    },
+    {
+      "sourceId": "gemini-image-generation",
+      "sourceType": "OFFICIAL_PROVIDER_DOC",
+      "url": "https://ai.google.dev/gemini-api/docs/image-generation",
+      "publisher": "Google AI for Developers",
+      "scope": "Gemini image generation incl. reference-image support (exact per-model counts vary)",
+      "retrievedAt": "2026-10-03T00:00:00.000Z",
+      "locale": "en",
+      "fieldAuthority": [
+        "capability"
+      ],
+      "notes": "Verified during 1G.4 (see 1G.4 report §5); reference counts vary by model so counts stay UNKNOWN."
+    },
+    {
+      "sourceId": "flow-credits-16526234",
+      "sourceType": "OFFICIAL_PROVIDER_DOC",
+      "url": "https://support.google.com/flow/answer/16526234?hl=en",
+      "publisher": "Google Flow Help",
+      "scope": "Manage your Google Flow credits: per-generation credit costs by model, duration, resolution, subscription",
+      "retrievedAt": "2026-10-03T00:00:00.000Z",
+      "locale": "en",
+      "fieldAuthority": [
+        "cost"
+      ],
+      "notes": "Costs are per generation, not per request (official emphasis). Values may change; Flow settings hold the latest. Capability authority stays with the model/features page, not this table."
+    },
+    {
+      "sourceId": "deepmind-veo",
+      "sourceType": "OFFICIAL_PROVIDER_DOC",
+      "url": "https://deepmind.google/models/veo/",
+      "publisher": "Google DeepMind",
+      "scope": "Veo product page: high-level capability existence (text/image/reference/first-last-frame)",
+      "retrievedAt": "2026-10-03T00:00:00.000Z",
+      "locale": "en",
+      "fieldAuthority": [
+        "capability-existence"
+      ],
+      "notes": "Existence only; NOT Flow account availability and NOT Flow credit cost."
+    }
+  ],
+  "surfaces": [
+    {
+      "surfaceId": "GOOGLE_FLOW_WEB",
+      "providerId": "google",
+      "displayName": "Google Flow (web)",
+      "status": "UNKNOWN",
+      "sourceRefs": [
+        "flow-models-16352836"
+      ],
+      "observedAt": "2026-10-03T00:00:00.000Z",
+      "freshness": "UNKNOWN",
+      "metadata": {
+        "note": "Documented product surface; current account access NOT observed in this phase."
+      }
+    },
+    {
+      "surfaceId": "GOOGLE_VERTEX_VEO",
+      "providerId": "google",
+      "displayName": "Google Vertex AI Veo (direct API)",
+      "status": "UNKNOWN",
+      "sourceRefs": [
+        "deepmind-veo"
+      ],
+      "observedAt": "2026-10-03T00:00:00.000Z",
+      "freshness": "UNKNOWN",
+      "metadata": {
+        "note": "Direct-API surface unobserved in this phase; no models registered against it."
+      }
+    }
+  ],
+  "models": [
+    {
+      "providerId": "google",
+      "surfaceId": "GOOGLE_FLOW_WEB",
+      "providerLabel": "Veo 3.1 - Lite",
+      "modelFamily": "Veo",
+      "modelVersionOrTier": "3.1-Lite",
+      "mediaKinds": [
+        "video"
+      ],
+      "availability": "UNKNOWN",
+      "providerTier": "3.1 - Lite",
+      "sourceRefs": [
+        "flow-models-16352836"
+      ],
+      "observedAt": "2026-10-03T00:00:00.000Z",
+      "status": "ACTIVE",
+      "capabilityRules": [
+        {
+          "capability": "VIDEO_GENERATION",
+          "support": "SUPPORTED",
+          "constraints": {
+            "mediaKind": "video",
+            "workflow": "Text to Video",
+            "orientations": [
+              "16:9",
+              "9:16"
+            ],
+            "durations": [
+              4,
+              6,
+              8
+            ]
+          },
+          "sourceRefs": [
+            "flow-models-16352836"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "capability": "IMAGE_TO_VIDEO",
+          "support": "SUPPORTED",
+          "constraints": {
+            "mediaKind": "video",
+            "workflow": "Frames to Video: First",
+            "orientations": [
+              "16:9",
+              "9:16"
+            ],
+            "durations": [
+              4,
+              6,
+              8
+            ],
+            "inputRoles": [
+              "START_FRAME"
+            ]
+          },
+          "sourceRefs": [
+            "flow-models-16352836"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "capability": "FIRST_LAST_FRAME_VIDEO",
+          "support": "SUPPORTED",
+          "constraints": {
+            "mediaKind": "video",
+            "workflow": "Frames to Video: First and Last",
+            "orientations": [
+              "16:9",
+              "9:16"
+            ],
+            "durations": [
+              4,
+              6,
+              8
+            ],
+            "inputRoles": [
+              "START_FRAME",
+              "END_FRAME"
+            ]
+          },
+          "sourceRefs": [
+            "flow-models-16352836"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "capability": "REFERENCE_GUIDED_VIDEO",
+          "support": "SUPPORTED",
+          "constraints": {
+            "mediaKind": "video",
+            "workflow": "Ingredients / References to Video",
+            "orientations": [
+              "16:9",
+              "9:16"
+            ],
+            "durations": [
+              8
+            ],
+            "notes": "8s videos only (official table)"
+          },
+          "sourceRefs": [
+            "flow-models-16352836"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "capability": "PORTRAIT_OUTPUT",
+          "support": "SUPPORTED",
+          "constraints": {
+            "notes": "Both aspect ratios documented for video workflows"
+          },
+          "sourceRefs": [
+            "flow-models-16352836"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "capability": "LANDSCAPE_OUTPUT",
+          "support": "SUPPORTED",
+          "constraints": {
+            "notes": "Both aspect ratios documented for video workflows"
+          },
+          "sourceRefs": [
+            "flow-models-16352836"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        }
+      ],
+      "costObservations": [
+        {
+          "unit": "credits_per_generation",
+          "value": 10,
+          "context": {
+            "workflow": null,
+            "durationSeconds": null,
+            "subscriptionTier": "non-Ultra",
+            "resolution": null
+          },
+          "sourceRefs": [
+            "flow-credits-16526234"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "unit": "credits_per_generation",
+          "value": 5,
+          "context": {
+            "workflow": null,
+            "durationSeconds": null,
+            "subscriptionTier": "Ultra",
+            "resolution": null
+          },
+          "sourceRefs": [
+            "flow-credits-16526234"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        }
+      ]
+    },
+    {
+      "providerId": "google",
+      "surfaceId": "GOOGLE_FLOW_WEB",
+      "providerLabel": "Veo 3.1 - Fast",
+      "modelFamily": "Veo",
+      "modelVersionOrTier": "3.1-Fast",
+      "mediaKinds": [
+        "video"
+      ],
+      "availability": "UNKNOWN",
+      "providerTier": "3.1 - Fast",
+      "sourceRefs": [
+        "flow-models-16352836"
+      ],
+      "observedAt": "2026-10-03T00:00:00.000Z",
+      "status": "ACTIVE",
+      "capabilityRules": [
+        {
+          "capability": "VIDEO_GENERATION",
+          "support": "SUPPORTED",
+          "constraints": {
+            "mediaKind": "video",
+            "workflow": "Text to Video",
+            "orientations": [
+              "16:9",
+              "9:16"
+            ],
+            "durations": [
+              4,
+              6,
+              8
+            ]
+          },
+          "sourceRefs": [
+            "flow-models-16352836"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "capability": "IMAGE_TO_VIDEO",
+          "support": "SUPPORTED",
+          "constraints": {
+            "mediaKind": "video",
+            "workflow": "Frames to Video: First",
+            "orientations": [
+              "16:9",
+              "9:16"
+            ],
+            "durations": [
+              4,
+              6,
+              8
+            ],
+            "inputRoles": [
+              "START_FRAME"
+            ]
+          },
+          "sourceRefs": [
+            "flow-models-16352836"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "capability": "FIRST_LAST_FRAME_VIDEO",
+          "support": "SUPPORTED",
+          "constraints": {
+            "mediaKind": "video",
+            "workflow": "Frames to Video: First and Last",
+            "orientations": [
+              "16:9",
+              "9:16"
+            ],
+            "durations": [
+              4,
+              6,
+              8
+            ],
+            "inputRoles": [
+              "START_FRAME",
+              "END_FRAME"
+            ]
+          },
+          "sourceRefs": [
+            "flow-models-16352836"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "capability": "REFERENCE_GUIDED_VIDEO",
+          "support": "SUPPORTED",
+          "constraints": {
+            "mediaKind": "video",
+            "workflow": "Ingredients / References to Video",
+            "orientations": [
+              "16:9",
+              "9:16"
+            ],
+            "durations": [
+              8
+            ],
+            "notes": "8s videos only (official table)"
+          },
+          "sourceRefs": [
+            "flow-models-16352836"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "capability": "PORTRAIT_OUTPUT",
+          "support": "SUPPORTED",
+          "constraints": {
+            "notes": "Both aspect ratios documented for video workflows"
+          },
+          "sourceRefs": [
+            "flow-models-16352836"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "capability": "LANDSCAPE_OUTPUT",
+          "support": "SUPPORTED",
+          "constraints": {
+            "notes": "Both aspect ratios documented for video workflows"
+          },
+          "sourceRefs": [
+            "flow-models-16352836"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        }
+      ],
+      "costObservations": [
+        {
+          "unit": "credits_per_generation",
+          "value": 20,
+          "context": {
+            "workflow": null,
+            "durationSeconds": null,
+            "subscriptionTier": "non-Ultra",
+            "resolution": null
+          },
+          "sourceRefs": [
+            "flow-credits-16526234"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "unit": "credits_per_generation",
+          "value": 10,
+          "context": {
+            "workflow": null,
+            "durationSeconds": null,
+            "subscriptionTier": "Ultra",
+            "resolution": null
+          },
+          "sourceRefs": [
+            "flow-credits-16526234"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        }
+      ]
+    },
+    {
+      "providerId": "google",
+      "surfaceId": "GOOGLE_FLOW_WEB",
+      "providerLabel": "Veo 3.1 - Quality",
+      "modelFamily": "Veo",
+      "modelVersionOrTier": "3.1-Quality",
+      "mediaKinds": [
+        "video"
+      ],
+      "availability": "UNKNOWN",
+      "providerTier": "3.1 - Quality",
+      "sourceRefs": [
+        "flow-models-16352836"
+      ],
+      "observedAt": "2026-10-03T00:00:00.000Z",
+      "status": "ACTIVE",
+      "capabilityRules": [
+        {
+          "capability": "VIDEO_GENERATION",
+          "support": "SUPPORTED",
+          "constraints": {
+            "mediaKind": "video",
+            "workflow": "Text to Video",
+            "orientations": [
+              "16:9",
+              "9:16"
+            ],
+            "durations": [
+              4,
+              6,
+              8
+            ]
+          },
+          "sourceRefs": [
+            "flow-models-16352836"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "capability": "IMAGE_TO_VIDEO",
+          "support": "SUPPORTED",
+          "constraints": {
+            "mediaKind": "video",
+            "workflow": "Frames to Video: First",
+            "orientations": [
+              "16:9",
+              "9:16"
+            ],
+            "durations": [
+              4,
+              6,
+              8
+            ],
+            "inputRoles": [
+              "START_FRAME"
+            ]
+          },
+          "sourceRefs": [
+            "flow-models-16352836"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "capability": "FIRST_LAST_FRAME_VIDEO",
+          "support": "SUPPORTED",
+          "constraints": {
+            "mediaKind": "video",
+            "workflow": "Frames to Video: First and Last",
+            "orientations": [
+              "16:9",
+              "9:16"
+            ],
+            "durations": [
+              4,
+              6,
+              8
+            ],
+            "inputRoles": [
+              "START_FRAME",
+              "END_FRAME"
+            ]
+          },
+          "sourceRefs": [
+            "flow-models-16352836"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "capability": "REFERENCE_GUIDED_VIDEO",
+          "support": "UNSUPPORTED",
+          "constraints": {
+            "mediaKind": "video",
+            "workflow": "Ingredients / References to Video",
+            "notes": "Official table: No"
+          },
+          "sourceRefs": [
+            "flow-models-16352836"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "capability": "PORTRAIT_OUTPUT",
+          "support": "SUPPORTED",
+          "constraints": {
+            "notes": "Both aspect ratios documented for video workflows"
+          },
+          "sourceRefs": [
+            "flow-models-16352836"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "capability": "LANDSCAPE_OUTPUT",
+          "support": "SUPPORTED",
+          "constraints": {
+            "notes": "Both aspect ratios documented for video workflows"
+          },
+          "sourceRefs": [
+            "flow-models-16352836"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        }
+      ],
+      "costObservations": [
+        {
+          "unit": "credits_per_generation",
+          "value": 100,
+          "context": {
+            "workflow": null,
+            "durationSeconds": 8,
+            "subscriptionTier": null,
+            "resolution": null
+          },
+          "sourceRefs": [
+            "flow-credits-16526234"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        }
+      ]
+    },
+    {
+      "providerId": "google",
+      "surfaceId": "GOOGLE_FLOW_WEB",
+      "providerLabel": "Gemini Omni Flash 1.1",
+      "modelFamily": "Gemini Omni Flash",
+      "modelVersionOrTier": "1.1",
+      "mediaKinds": [
+        "video"
+      ],
+      "availability": "UNKNOWN",
+      "providerTier": "Omni Flash 1.1",
+      "sourceRefs": [
+        "flow-models-16352836",
+        "flow-models-16893917"
+      ],
+      "observedAt": "2026-10-03T00:00:00.000Z",
+      "status": "ACTIVE",
+      "capabilityRules": [
+        {
+          "capability": "VIDEO_GENERATION",
+          "support": "SUPPORTED",
+          "constraints": {
+            "mediaKind": "video",
+            "workflow": "Text to Video",
+            "orientations": [
+              "16:9",
+              "9:16"
+            ],
+            "durations": [
+              4,
+              6,
+              8,
+              10
+            ]
+          },
+          "sourceRefs": [
+            "flow-models-16352836"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "capability": "IMAGE_TO_VIDEO",
+          "support": "SUPPORTED",
+          "constraints": {
+            "mediaKind": "video",
+            "workflow": "Frames to Video: First",
+            "orientations": [
+              "16:9",
+              "9:16"
+            ],
+            "durations": [
+              4,
+              6,
+              8,
+              10
+            ]
+          },
+          "sourceRefs": [
+            "flow-models-16352836"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "capability": "FIRST_LAST_FRAME_VIDEO",
+          "support": "SUPPORTED",
+          "constraints": {
+            "mediaKind": "video",
+            "workflow": "Frames to Video: First and Last",
+            "orientations": [
+              "16:9",
+              "9:16"
+            ],
+            "durations": [
+              4,
+              6,
+              8,
+              10
+            ],
+            "inputRoles": [
+              "START_FRAME",
+              "END_FRAME"
+            ],
+            "notes": "Current canonical page lists First+Last 4s/6s/8s/10s; coming-soon section lists Extend only (verified live 2026-10-03)"
+          },
+          "sourceRefs": [
+            "flow-models-16352836"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "capability": "REFERENCE_GUIDED_VIDEO",
+          "support": "SUPPORTED",
+          "constraints": {
+            "mediaKind": "video",
+            "workflow": "Ingredients / References to Video",
+            "orientations": [
+              "16:9",
+              "9:16"
+            ],
+            "durations": [
+              4,
+              6,
+              8,
+              10
+            ],
+            "notes": "Advanced character/avatar and audio references documented"
+          },
+          "sourceRefs": [
+            "flow-models-16352836",
+            "flow-models-16893917"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "capability": "PORTRAIT_OUTPUT",
+          "support": "SUPPORTED",
+          "constraints": {
+            "notes": "Both aspect ratios documented"
+          },
+          "sourceRefs": [
+            "flow-models-16352836"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "capability": "LANDSCAPE_OUTPUT",
+          "support": "SUPPORTED",
+          "constraints": {
+            "notes": "Both aspect ratios documented"
+          },
+          "sourceRefs": [
+            "flow-models-16352836"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        }
+      ],
+      "costObservations": [
+        {
+          "unit": "credits_per_generation",
+          "value": 7,
+          "context": {
+            "workflow": null,
+            "durationSeconds": 4,
+            "subscriptionTier": null,
+            "resolution": null
+          },
+          "sourceRefs": [
+            "flow-credits-16526234"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "unit": "credits_per_generation",
+          "value": 10,
+          "context": {
+            "workflow": null,
+            "durationSeconds": 6,
+            "subscriptionTier": null,
+            "resolution": null
+          },
+          "sourceRefs": [
+            "flow-credits-16526234"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "unit": "credits_per_generation",
+          "value": 12,
+          "context": {
+            "workflow": null,
+            "durationSeconds": 8,
+            "subscriptionTier": null,
+            "resolution": null
+          },
+          "sourceRefs": [
+            "flow-credits-16526234"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "unit": "credits_per_generation",
+          "value": 15,
+          "context": {
+            "workflow": null,
+            "durationSeconds": 10,
+            "subscriptionTier": null,
+            "resolution": null
+          },
+          "sourceRefs": [
+            "flow-credits-16526234"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "unit": "credits_per_generation",
+          "value": 4,
+          "context": {
+            "workflow": null,
+            "durationSeconds": 4,
+            "subscriptionTier": null,
+            "resolution": "360p"
+          },
+          "sourceRefs": [
+            "flow-credits-16526234"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "unit": "credits_per_generation",
+          "value": 5,
+          "context": {
+            "workflow": null,
+            "durationSeconds": 6,
+            "subscriptionTier": null,
+            "resolution": "360p"
+          },
+          "sourceRefs": [
+            "flow-credits-16526234"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "unit": "credits_per_generation",
+          "value": 6,
+          "context": {
+            "workflow": null,
+            "durationSeconds": 8,
+            "subscriptionTier": null,
+            "resolution": "360p"
+          },
+          "sourceRefs": [
+            "flow-credits-16526234"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "unit": "credits_per_generation",
+          "value": 7,
+          "context": {
+            "workflow": null,
+            "durationSeconds": 10,
+            "subscriptionTier": null,
+            "resolution": "360p"
+          },
+          "sourceRefs": [
+            "flow-credits-16526234"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "unit": "credits_per_generation",
+          "value": 40,
+          "context": {
+            "workflow": "Edit uploaded and generated videos",
+            "durationSeconds": null,
+            "subscriptionTier": null,
+            "resolution": null
+          },
+          "sourceRefs": [
+            "flow-credits-16526234"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "unit": "credits_per_upscale",
+          "value": 50,
+          "context": {
+            "workflow": null,
+            "durationSeconds": null,
+            "subscriptionTier": "Ultra",
+            "resolution": "4K"
+          },
+          "sourceRefs": [
+            "flow-credits-16526234"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "unit": "credits_per_upscale",
+          "value": 0,
+          "context": {
+            "workflow": null,
+            "durationSeconds": null,
+            "subscriptionTier": "Plus/Pro/Ultra",
+            "resolution": "1080p"
+          },
+          "sourceRefs": [
+            "flow-credits-16526234"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        }
+      ]
+    },
+    {
+      "providerId": "google",
+      "surfaceId": "GOOGLE_FLOW_WEB",
+      "providerLabel": "Nano Banana Pro",
+      "modelFamily": "Nano Banana",
+      "modelVersionOrTier": "Pro",
+      "mediaKinds": [
+        "image"
+      ],
+      "availability": "UNKNOWN",
+      "providerTier": "Pro",
+      "sourceRefs": [
+        "flow-models-16352836",
+        "gemini-image-generation"
+      ],
+      "observedAt": "2026-10-03T00:00:00.000Z",
+      "status": "ACTIVE",
+      "capabilityRules": [
+        {
+          "capability": "IMAGE_GENERATION",
+          "support": "SUPPORTED",
+          "constraints": {
+            "mediaKind": "image",
+            "notes": "Advanced image model for frames and ingredients (Flow docs)"
+          },
+          "sourceRefs": [
+            "flow-models-16352836"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "capability": "IMAGE_REFERENCE",
+          "support": "SUPPORTED",
+          "constraints": {
+            "mediaKind": "image",
+            "notes": "Reference images supported; exact per-model counts vary so counts stay UNKNOWN"
+          },
+          "sourceRefs": [
+            "gemini-image-generation"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "capability": "IMAGE_EDITING",
+          "support": "SUPPORTED",
+          "constraints": {
+            "mediaKind": "image",
+            "notes": "Image generation and editing model"
+          },
+          "sourceRefs": [
+            "gemini-image-generation"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        }
+      ],
+      "costObservations": []
+    },
+    {
+      "providerId": "google",
+      "surfaceId": "GOOGLE_FLOW_WEB",
+      "providerLabel": "Nano Banana 2",
+      "modelFamily": "Nano Banana",
+      "modelVersionOrTier": "2",
+      "mediaKinds": [
+        "image"
+      ],
+      "availability": "UNKNOWN",
+      "providerTier": "2",
+      "sourceRefs": [
+        "flow-models-16352836",
+        "gemini-image-generation"
+      ],
+      "observedAt": "2026-10-03T00:00:00.000Z",
+      "status": "ACTIVE",
+      "capabilityRules": [
+        {
+          "capability": "IMAGE_GENERATION",
+          "support": "SUPPORTED",
+          "constraints": {
+            "mediaKind": "image",
+            "notes": "Standard image model for frames and ingredients (Flow docs)"
+          },
+          "sourceRefs": [
+            "flow-models-16352836"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "capability": "IMAGE_REFERENCE",
+          "support": "SUPPORTED",
+          "constraints": {
+            "mediaKind": "image",
+            "notes": "Reference images supported; exact per-model counts vary so counts stay UNKNOWN"
+          },
+          "sourceRefs": [
+            "gemini-image-generation"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "capability": "IMAGE_EDITING",
+          "support": "SUPPORTED",
+          "constraints": {
+            "mediaKind": "image",
+            "notes": "Image generation and editing model"
+          },
+          "sourceRefs": [
+            "gemini-image-generation"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        }
+      ],
+      "costObservations": []
+    },
+    {
+      "providerId": "google",
+      "surfaceId": "GOOGLE_FLOW_WEB",
+      "providerLabel": "Nano Banana 2 Lite",
+      "modelFamily": "Nano Banana",
+      "modelVersionOrTier": "2-Lite",
+      "mediaKinds": [
+        "image"
+      ],
+      "availability": "UNKNOWN",
+      "providerTier": "2 Lite",
+      "sourceRefs": [
+        "flow-models-16352836",
+        "gemini-image-generation"
+      ],
+      "observedAt": "2026-10-03T00:00:00.000Z",
+      "status": "ACTIVE",
+      "capabilityRules": [
+        {
+          "capability": "IMAGE_GENERATION",
+          "support": "SUPPORTED",
+          "constraints": {
+            "mediaKind": "image",
+            "notes": "Efficient image model for frames and ingredients (Flow docs)"
+          },
+          "sourceRefs": [
+            "flow-models-16352836"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "capability": "IMAGE_REFERENCE",
+          "support": "SUPPORTED",
+          "constraints": {
+            "mediaKind": "image",
+            "notes": "Reference images supported; exact per-model counts vary so counts stay UNKNOWN"
+          },
+          "sourceRefs": [
+            "gemini-image-generation"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "capability": "IMAGE_EDITING",
+          "support": "SUPPORTED",
+          "constraints": {
+            "mediaKind": "image",
+            "notes": "Image generation and editing model"
+          },
+          "sourceRefs": [
+            "gemini-image-generation"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        }
+      ],
+      "costObservations": []
+    },
+    {
+      "providerId": "google",
+      "surfaceId": "GOOGLE_FLOW_WEB",
+      "providerLabel": "Veo 3.1 - Lite (Lower Priority)",
+      "modelFamily": "Veo",
+      "modelVersionOrTier": "3.1-Lite-Lower-Priority",
+      "mediaKinds": [
+        "video"
+      ],
+      "availability": "UNKNOWN",
+      "providerTier": "3.1 - Lite (Lower Priority)",
+      "sourceRefs": [
+        "flow-credits-16526234"
+      ],
+      "observedAt": "2026-10-03T00:00:00.000Z",
+      "status": "ACTIVE",
+      "notes": "Lower Priority variant row (EN credit table; absent from VI table on this read): Ultra subscribers and family plan managers 0 credits; Ultra plan family members and non-Ultra subscribers Not available. Generation types listed (4s/6s/8s); capability support level is NOT claimed from the cost table.",
+      "capabilityRules": [
+        {
+          "capability": "VIDEO_GENERATION",
+          "support": "UNKNOWN",
+          "constraints": {
+            "mediaKind": "video",
+            "notes": "4s/6s/8s generation types listed on credit row; support level unclaimed (cost page is not capability authority)"
+          },
+          "sourceRefs": [
+            "flow-credits-16526234"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "UNKNOWN"
+        }
+      ],
+      "costObservations": [
+        {
+          "unit": "credits_per_generation",
+          "value": 0,
+          "context": {
+            "workflow": null,
+            "durationSeconds": null,
+            "subscriptionTier": "Ultra-family-manager",
+            "resolution": null
+          },
+          "sourceRefs": [
+            "flow-credits-16526234"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        },
+        {
+          "unit": "credits_per_generation",
+          "value": 0,
+          "context": {
+            "workflow": null,
+            "durationSeconds": null,
+            "subscriptionTier": "Ultra",
+            "resolution": null
+          },
+          "sourceRefs": [
+            "flow-credits-16526234"
+          ],
+          "observedAt": "2026-10-03T00:00:00.000Z",
+          "freshness": "FRESH"
+        }
+      ]
+    }
+  ]
+}

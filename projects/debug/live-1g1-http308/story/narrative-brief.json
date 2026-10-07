@@ -1,0 +1,84 @@
+{
+  "briefId": "nb-630065c52636",
+  "briefVersion": "1.0.0",
+  "projectId": "live-1g1-http308",
+  "contentClass": "FACTUAL",
+  "contentMode": null,
+  "audience": null,
+  "platform": "youtube",
+  "targetDuration": null,
+  "viewerPromise": null,
+  "primaryLearningGoal": null,
+  "desiredFeeling": null,
+  "contentDensity": null,
+  "coreViewerQuestion": "Why does HTTP 308 preserve the request method when 301 does not?",
+  "editorialAngle": "Method preservation is the entire reason 308 exists.",
+  "mainInsight": "308 closes the POST-to-GET rewrite ambiguity left by 301/302.",
+  "hookBasis": {
+    "type": "surprising documented fact"
+  },
+  "narrativeProgression": [
+    {
+      "stepId": "hook",
+      "purpose": "hook: surprising documented fact",
+      "claimIds": []
+    },
+    {
+      "stepId": "q0",
+      "purpose": "answer viewer question: What is the documented timeline of \"HTTP 308 Permanent Redirect semantics\" (key dates, sequence, participants)?",
+      "claimIds": [
+        "clm-ede7c751ff68"
+      ]
+    },
+    {
+      "stepId": "q1",
+      "purpose": "answer viewer question: What primary evidence (records, artifacts, measurements, official sources) supports the core claims about \"HTTP 308 Perm",
+      "claimIds": [
+        "clm-d03297df9a11"
+      ]
+    },
+    {
+      "stepId": "q2",
+      "purpose": "answer viewer question: Which identities, dates, locations, and numbers in \"HTTP 308 Permanent Redirect semantics\" must be verified before scrip",
+      "claimIds": [
+        "clm-c59412e9d345"
+      ]
+    },
+    {
+      "stepId": "q3",
+      "purpose": "answer viewer question: What are the major factual disputes or competing interpretations about \"HTTP 308 Permanent Redirect semantics\"?",
+      "claimIds": []
+    },
+    {
+      "stepId": "payoff",
+      "purpose": "Use 308 whenever API methods and bodies must survive a permanent move.",
+      "claimIds": []
+    }
+  ],
+  "payoff": "Use 308 whenever API methods and bodies must survive a permanent move.",
+  "endingIntent": null,
+  "ctaIntent": null,
+  "selectedClaimIds": [
+    "clm-ede7c751ff68",
+    "clm-d03297df9a11",
+    "clm-c59412e9d345"
+  ],
+  "claimsToOmit": [],
+  "disputesToPreserve": [],
+  "unknownsToPreserve": [],
+  "requiredAttributions": [],
+  "fictionalizationBoundary": null,
+  "storytellingConstraints": [
+    "every material factual assertion carries claimRefs",
+    "no internal IDs in viewer text",
+    "no spoken-cadence humanization in this draft (1G.3 scope)"
+  ],
+  "packRef": {
+    "packId": "pack-badb977fc948",
+    "packHash": "badb977fc9489b80"
+  },
+  "scopeEstimate": {
+    "sections": 7,
+    "note": "approximate section-count estimate for planning only; not a word count"
+  }
+}

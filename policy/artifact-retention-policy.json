@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "1.0.0",
+  "policyId": "artifact-retention-policy",
+  "scope": "UNFOLDIQ managed artifacts (repository + validation projects). Folder hierarchy is navigation only and never decides retention.",
+  "classes": {
+    "DURABLE": {
+      "autoPurge": false,
+      "rule": "Retain. Reclassification requires a reviewed migration with journal proof."
+    },
+    "RETENTION_MANAGED": {
+      "autoPurge": false,
+      "rule": "Archive or purge only after policy evaluation (future-dependency gate + quarantine where required)."
+    },
+    "REGENERABLE": {
+      "autoPurge": false,
+      "rule": "Purge allowed only with a proven rebuild contract (command + lock/source + determinism class) and futureDependencyStatus NONE or REGENERABLE_SAFE."
+    },
+    "EPHEMERAL": {
+      "autoPurge": true,
+      "rule": "Purge allowed when no active process and no current evidence requires the bytes."
+    },
+    "GOLDEN": {
+      "autoPurge": false,
+      "rule": "Immutable at application-policy level. Never purged, never replaced in place; supersede only through the Golden process."
+    }
+  },
+  "quarantine": {
+    "chain": ["ACTIVE", "DELETE_CANDIDATE", "QUARANTINED", "PURGED"],
+    "immediateDeleteAllowedOnlyWhen": [
+      "retentionClass is EPHEMERAL or proven R0/R1 REGENERABLE",
+      "no canonical evidence value",
+      "no future exact dependency (futureDependencyStatus NONE or REGENERABLE_SAFE)",
+      "rebuild contract proven",
+      "no active process dependency"
+    ],
+    "quarantineRecord": ["artifactId", "contentHash", "originalPhysicalPath", "quarantineLocation", "purgeEligibility", "rollbackRef"]
+  },
+  "regenerationClasses": {
+    "R0": "trivial/local: seconds/minutes, deterministic, no provider, no operator — DELETE allowed when unused",
+    "R1": "local but non-trivial deterministic build/render — DELETE allowed when rebuild contract is proven",
+    "R2": "expensive local (long render/heavy compute/large download) — prefer KEEP/ARCHIVE",
+    "R3": "external free/non-credit with drift risk — prefer ARCHIVE when future use is plausible",
+    "R4": "paid/external generation (credits or changed output) — KEEP/ARCHIVE, never delete to save space",
+    "R5": "manual/operator-dependent (approval, ceremony, QA, selection) — KEEP/ARCHIVE, never delete to save space"
+  },
+  "futureDependencyStatus": ["NONE", "REGENERABLE_SAFE", "KEEP_EXACT", "ARCHIVE_RECOMMENDED", "REVIEW_REQUIRED"],
+  "deleteRule": "Exact future dependency, canonical/QA/provenance/history/Golden evidence, paid recreation, operator recreation, or non-deterministic recreation → KEEP_EXACT or ARCHIVE_RECOMMENDED. Unknown state never defaults to deletion."
+}

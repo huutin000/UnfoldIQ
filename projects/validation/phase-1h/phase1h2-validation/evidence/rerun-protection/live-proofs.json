@@ -1,0 +1,302 @@
+{
+  "projection": {
+    "SHOT::B-SH01": {
+      "targetType": "SHOT",
+      "targetId": "B-SH01",
+      "selectedVariantId": "var-bf22d2c23576",
+      "effectiveDecision": {
+        "decision": "APPROVED",
+        "decisionId": "dec-a75769237e3a",
+        "decidedAt": "2026-10-05T03:19:50.018Z"
+      },
+      "lock": {
+        "targetType": "SHOT",
+        "targetId": "B-SH01",
+        "status": "LOCKED",
+        "lockVersion": 1,
+        "reason": "approved content protection (dec-a75769237e3a)",
+        "sourceDecisionId": "dec-a75769237e3a"
+      }
+    },
+    "SHOT::C-SH01": {
+      "targetType": "SHOT",
+      "targetId": "C-SH01",
+      "selectedVariantId": "var-7a5082e39d71",
+      "effectiveDecision": {
+        "decision": "APPROVED",
+        "decisionId": "dec-b783416d2ecf",
+        "decidedAt": "2026-10-05T03:31:26.032Z"
+      },
+      "lock": {
+        "targetType": "SHOT",
+        "targetId": "C-SH01",
+        "status": "LOCKED",
+        "lockVersion": 1,
+        "reason": "approved content protection (dec-b783416d2ecf)",
+        "sourceDecisionId": "dec-b783416d2ecf"
+      }
+    },
+    "SHOT::D-SH01": {
+      "targetType": "SHOT",
+      "targetId": "D-SH01",
+      "selectedVariantId": "var-feb3e8697fd7",
+      "effectiveDecision": {
+        "decision": "APPROVED",
+        "decisionId": "dec-cf3fa6dc225b",
+        "decidedAt": "2026-10-05T04:06:01.278Z"
+      },
+      "lock": {
+        "targetType": "SHOT",
+        "targetId": "D-SH01",
+        "status": "LOCKED",
+        "lockVersion": 1,
+        "reason": "approved content protection (dec-cf3fa6dc225b)",
+        "sourceDecisionId": "dec-cf3fa6dc225b"
+      }
+    },
+    "SHOT::D-SH02": {
+      "targetType": "SHOT",
+      "targetId": "D-SH02",
+      "selectedVariantId": "var-bab561ea6be4",
+      "effectiveDecision": {
+        "decision": "APPROVED",
+        "decisionId": "dec-acf985690e92",
+        "decidedAt": "2026-10-05T04:15:50.162Z"
+      },
+      "lock": {
+        "targetType": "SHOT",
+        "targetId": "D-SH02",
+        "status": "LOCKED",
+        "lockVersion": 1,
+        "reason": "approved content protection (dec-acf985690e92)",
+        "sourceDecisionId": "dec-acf985690e92"
+      }
+    },
+    "SHOT::D-SH03": {
+      "targetType": "SHOT",
+      "targetId": "D-SH03",
+      "selectedVariantId": "var-ee2578462640",
+      "effectiveDecision": {
+        "decision": "APPROVED",
+        "decisionId": "dec-2b1e9a479b71",
+        "decidedAt": "2026-10-05T04:22:12.253Z"
+      },
+      "lock": {
+        "targetType": "SHOT",
+        "targetId": "D-SH03",
+        "status": "LOCKED",
+        "lockVersion": 1,
+        "reason": "approved content protection (dec-2b1e9a479b71)",
+        "sourceDecisionId": "dec-2b1e9a479b71"
+      }
+    },
+    "ASSET::as-1186233d1af6": {
+      "targetType": "ASSET",
+      "targetId": "as-1186233d1af6",
+      "selectedVariantId": null,
+      "effectiveDecision": {
+        "decision": "REJECTED",
+        "decisionId": "dec-06b36882fef6",
+        "decidedAt": "2026-10-05T02:54:41.089Z"
+      },
+      "lock": null
+    },
+    "ASSET::as-fe697fd1fef8": {
+      "targetType": "ASSET",
+      "targetId": "as-fe697fd1fef8",
+      "selectedVariantId": null,
+      "effectiveDecision": null,
+      "lock": {
+        "targetType": "ASSET",
+        "targetId": "as-fe697fd1fef8",
+        "status": "LOCKED",
+        "lockVersion": 1,
+        "reason": "mirror canonical registry lock (1G.12 Case B approved first-frame source)",
+        "sourceDecisionId": null
+      }
+    },
+    "ASSET::as-5e0bb7f87d4d": {
+      "targetType": "ASSET",
+      "targetId": "as-5e0bb7f87d4d",
+      "selectedVariantId": null,
+      "effectiveDecision": null,
+      "lock": {
+        "targetType": "ASSET",
+        "targetId": "as-5e0bb7f87d4d",
+        "status": "LOCKED",
+        "lockVersion": 1,
+        "reason": "mirror canonical registry lock (1G.12 Case C approved end frame)",
+        "sourceDecisionId": null
+      }
+    },
+    "ASSET::as-a7801df9bf0f": {
+      "targetType": "ASSET",
+      "targetId": "as-a7801df9bf0f",
+      "selectedVariantId": null,
+      "effectiveDecision": null,
+      "lock": {
+        "targetType": "ASSET",
+        "targetId": "as-a7801df9bf0f",
+        "status": "LOCKED",
+        "lockVersion": 1,
+        "reason": "mirror canonical registry lock (1G.12 Case D locked character reference (mascot-guide))",
+        "sourceDecisionId": null
+      }
+    }
+  },
+  "lockedShotRerun": {
+    "ok": false,
+    "code": "TARGET_LOCKED",
+    "message": "locked target refuses regenerate/replace/delete/retry/select: shot-rerun refused for SHOT::B-SH01",
+    "lock": {
+      "targetType": "SHOT",
+      "targetId": "B-SH01",
+      "status": "LOCKED",
+      "lockVersion": 1,
+      "reason": "approved content protection (dec-a75769237e3a)",
+      "sourceDecisionId": "dec-a75769237e3a"
+    }
+  },
+  "unrelatedShotRerun": {
+    "ok": true
+  },
+  "authorizeLocked": {
+    "state": "BLOCKED_TARGET_LOCKED",
+    "reasons": [
+      "TARGET_LOCKED: locked target refuses regenerate/replace/delete/retry/select: generation-authorize refused for SHOT::B-SH01"
+    ]
+  },
+  "avatarSelect": {
+    "ok": false,
+    "code": "REJECTED_ASSET_NOT_SELECTABLE",
+    "message": "rejected asset can never become selected or a reference: as-1186233d1af6"
+  },
+  "avatarDecision": {
+    "dec-7743769df690": {
+      "decisionId": "dec-7743769df690",
+      "targetType": "SHOT",
+      "targetId": "B-SH01",
+      "variantId": "var-148a9a34c976",
+      "decision": "REJECTED",
+      "reason": "case verdict FAIL / QA REJECTED (attempt preserved, never overwritten)",
+      "evidenceRefs": [
+        "case/case-b-attempt-01-correlation.json",
+        "case/case-b-attempt-01-result.json",
+        "qa/case-b-attempt-01-qa-summary.json"
+      ],
+      "decidedAt": "2026-10-05T02:32:09.209Z",
+      "actorType": "migration",
+      "provenance": "MIGRATED"
+    },
+    "dec-a75769237e3a": {
+      "decisionId": "dec-a75769237e3a",
+      "targetType": "SHOT",
+      "targetId": "B-SH01",
+      "variantId": "var-bf22d2c23576",
+      "decision": "APPROVED",
+      "reason": "QA READY_FOR_TIMELINE (qa/case-b-attempt-02-qa-summary.json) + case verdict PASS",
+      "evidenceRefs": [
+        "case/case-b-attempt-02-correlation.json",
+        "case/case-b-attempt-02-result.json",
+        "qa/case-b-attempt-02-qa-summary.json"
+      ],
+      "decidedAt": "2026-10-05T03:19:50.018Z",
+      "actorType": "migration",
+      "provenance": "MIGRATED"
+    },
+    "dec-b783416d2ecf": {
+      "decisionId": "dec-b783416d2ecf",
+      "targetType": "SHOT",
+      "targetId": "C-SH01",
+      "variantId": "var-7a5082e39d71",
+      "decision": "APPROVED",
+      "reason": "QA READY_FOR_TIMELINE (qa/case-c-attempt-01-qa-summary.json) + case verdict PASS",
+      "evidenceRefs": [
+        "case/case-c-attempt-01-correlation.json",
+        "case/case-c-attempt-01-result.json",
+        "qa/case-c-attempt-01-qa-summary.json"
+      ],
+      "decidedAt": "2026-10-05T03:31:26.032Z",
+      "actorType": "migration",
+      "provenance": "MIGRATED"
+    },
+    "dec-cf3fa6dc225b": {
+      "decisionId": "dec-cf3fa6dc225b",
+      "targetType": "SHOT",
+      "targetId": "D-SH01",
+      "variantId": "var-feb3e8697fd7",
+      "decision": "APPROVED",
+      "reason": "QA READY_FOR_TIMELINE (qa/case-d-D1-attempt-01-qa-summary.json) + case verdict PASS",
+      "evidenceRefs": [
+        "case/case-d-D1-attempt-01-correlation.json",
+        "case/case-d-D1-attempt-01-result.json",
+        "qa/case-d-D1-attempt-01-qa-summary.json"
+      ],
+      "decidedAt": "2026-10-05T04:06:01.278Z",
+      "actorType": "migration",
+      "provenance": "MIGRATED"
+    },
+    "dec-acf985690e92": {
+      "decisionId": "dec-acf985690e92",
+      "targetType": "SHOT",
+      "targetId": "D-SH02",
+      "variantId": "var-bab561ea6be4",
+      "decision": "APPROVED",
+      "reason": "QA READY_FOR_TIMELINE (qa/case-d-D2-attempt-01-qa-summary.json) + case verdict PASS",
+      "evidenceRefs": [
+        "case/case-d-D2-attempt-01-correlation.json",
+        "case/case-d-D2-attempt-01-result.json",
+        "qa/case-d-D2-attempt-01-qa-summary.json"
+      ],
+      "decidedAt": "2026-10-05T04:15:50.162Z",
+      "actorType": "migration",
+      "provenance": "MIGRATED"
+    },
+    "dec-2b1e9a479b71": {
+      "decisionId": "dec-2b1e9a479b71",
+      "targetType": "SHOT",
+      "targetId": "D-SH03",
+      "variantId": "var-ee2578462640",
+      "decision": "APPROVED",
+      "reason": "QA READY_FOR_TIMELINE (qa/case-d-D3-attempt-01-qa-summary.json) + case verdict PASS",
+      "evidenceRefs": [
+        "case/case-d-D3-attempt-01-correlation.json",
+        "case/case-d-D3-attempt-01-result.json",
+        "qa/case-d-D3-attempt-01-qa-summary.json"
+      ],
+      "decidedAt": "2026-10-05T04:22:12.253Z",
+      "actorType": "migration",
+      "provenance": "MIGRATED"
+    },
+    "dec-06b36882fef6": {
+      "decisionId": "dec-06b36882fef6",
+      "targetType": "ASSET",
+      "targetId": "as-1186233d1af6",
+      "variantId": null,
+      "decision": "REJECTED",
+      "reason": "account avatar, never a generation result (finding-source-frame-identity-01); registry selection corrected to REJECTED+locked",
+      "evidenceRefs": [
+        "case/source-frame-identity-finding.json"
+      ],
+      "decidedAt": "2026-10-05T02:54:41.089Z",
+      "actorType": "migration",
+      "provenance": "MIGRATED"
+    }
+  },
+  "voice": {
+    "ok": true,
+    "state": "NOT_CREATED_YET",
+    "paragraphId": "p-001"
+  },
+  "divergence": {
+    "ok": false,
+    "divergent": true,
+    "details": [
+      {
+        "targetId": "as-1186233d1af6",
+        "code": "STATE_DIVERGENCE",
+        "message": "registry LOCKED but no history lock (migrate or unlock explicitly)"
+      }
+    ]
+  }
+}

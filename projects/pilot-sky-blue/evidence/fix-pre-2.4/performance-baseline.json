@@ -1,0 +1,24 @@
+{
+  "fix": "FIX_PRE_2_4_FINAL_SPOKEN_SCRIPT_PIPELINE",
+  "measuredAt": "2026-10-07T03:43:18.380Z",
+  "unit": "ms unless noted",
+  "humanizationLatencyMs": 42,
+  "fidelityGateLatencyMs": 6,
+  "naturalnessQaLatencyMs": 2,
+  "canonicalizationLatencyMs": 1,
+  "phase22RefreshLatencyMs": 24,
+  "phase23RefreshLatencyMs": 11909,
+  "sourceWordCount": 154,
+  "finalWordCount": 172,
+  "protectedItemCount": 68,
+  "fidelityMismatches": 0,
+  "naturalnessIssues": 0,
+  "repairAttempts": 1,
+  "provider": {
+    "actorType": "AGENT",
+    "provider": "zcode",
+    "model": "GLM-5.3-Flash",
+    "tokens": "UNKNOWN_NOT_AVAILABLE",
+    "cost": "UNKNOWN_NOT_AVAILABLE"
+  }
+}

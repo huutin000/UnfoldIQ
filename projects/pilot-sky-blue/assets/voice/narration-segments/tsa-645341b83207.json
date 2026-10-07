@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "1.0.0",
+  "ttsSegmentAudioId": "tsa-645341b83207",
+  "version": 1,
+  "projectId": "pilot-sky-blue",
+  "scriptRef": {
+    "scriptArtifactId": "fss-pilot-sky-blue",
+    "scriptVersion": 2
+  },
+  "segmentId": "S6",
+  "segmentOrdinal": 5,
+  "sourceTextHash": "86080df78f870926",
+  "compiledInputHash": "86080df78f870926",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "narrationDirectionRef": "nd-ba9e14b889f3",
+  "pronunciationPassRef": "prp-ef2591fc81ec",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "runtimeIdentity": {
+    "runtimeMode": "LOCAL_SYNTHESIS",
+    "modelRepo": "hexgrad/Kokoro-82M",
+    "modelHash": "UNKNOWN_NOT_AVAILABLE",
+    "languageCode": "a"
+  },
+  "voiceId": "am_michael",
+  "effectiveSpeed": 0.95,
+  "pacePolicyVersion": "pace-speed-1.0.0",
+  "audioRef": "assets/voice/narration-segments/tsa-645341b83207.wav",
+  "audioContentHash": "a33e9200bd68f332ce63a10f787c17ad3ac729cef5a82b901fcd7863614a7ef1",
+  "durationMs": 9450,
+  "sampleRate": 24000,
+  "channels": 1,
+  "technicalQa": {
+    "decodePass": true,
+    "nonSilent": true,
+    "finiteSamples": true,
+    "peak": 13664,
+    "rms": 1276.35,
+    "clippingSamples": 0,
+    "transcript": "At sunset, that sunlight crosses much more air. The blue gets scattered away along the way, and the reds and oranges remain.",
+    "wer": 0,
+    "missingWords": 0,
+    "substitutedWords": 0,
+    "repeatedWords": 0,
+    "hallucinatedWords": 0,
+    "criticalMismatch": false
+  },
+  "attempt": {
+    "number": 1,
+    "parentAttemptId": null,
+    "reason": "initial synthesis",
+    "selected": null
+  },
+  "issues": [],
+  "status": "READY",
+  "provenance": {
+    "createdAt": "2026-10-06T06:52:18.719Z",
+    "evidenceRefs": [
+      "scripts/cli/pilot-narration.js"
+    ]
+  },
+  "fingerprint": "de943a3631854e21"
+}

@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "creative-memory.schema.json",
+  "title": "UNFOLDIQ Creative Memory Record (1G.2)",
+  "description": "Versioned, bounded, advisory creative-history record. Never evidence; never a topic database row; never a Creative Brief replacement.",
+  "type": "object",
+  "required": ["version", "memoryId", "scope", "contentClass", "status", "fingerprint", "fingerprintHash", "createdAt"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "const": "1.0.0" },
+    "memoryId": { "type": "string", "pattern": "^cm-[0-9a-f]{12}$" },
+    "scope": { "enum": ["CHANNEL", "NICHE", "PLATFORM", "PROJECT"] },
+    "channelId": { "type": ["string", "null"] },
+    "nicheId": { "type": ["string", "null"] },
+    "platform": { "enum": ["youtube", "tiktok", null] },
+    "projectId": { "type": ["string", "null"] },
+    "topicRef": { "type": ["string", "null"], "description": "reference only; Topic Registry remains the canonical topic owner" },
+    "contentClass": { "enum": ["FACTUAL", "FICTION", "HYBRID"] },
+    "status": { "enum": ["DRAFT", "REVIEWED", "APPROVED", "REJECTED", "SUPERSEDED"] },
+    "fingerprint": {
+      "type": "object",
+      "required": ["openingPattern", "narrativeShape", "viewerPromisePattern"],
+      "additionalProperties": false,
+      "properties": {
+        "openingPattern": { "type": "string", "maxLength": 240 },
+        "narrativeShape": { "type": "string", "maxLength": 240 },
+        "viewerPromisePattern": { "type": ["string", "null"], "maxLength": 240 },
+        "transitionPatterns": { "type": "array", "items": { "type": "string", "maxLength": 200 }, "maxItems": 8 },
+        "rhetoricalPatterns": { "type": "array", "items": { "type": "string", "maxLength": 200 }, "maxItems": 8 },
+        "phrasePatterns": { "type": "array", "items": { "type": "string", "maxLength": 200 }, "maxItems": 12 }
+      }
+    },
+    "fingerprintHash": { "type": "string", "pattern": "^[0-9a-f]{16}$" },
+    "approvedSignals": { "type": "array", "items": { "type": "string", "maxLength": 200 }, "maxItems": 20 },
+    "avoidSignals": { "type": "array", "items": { "type": "string", "maxLength": 200 }, "maxItems": 20 },
+    "sourceArtifactRefs": {
+      "type": "object",
+      "description": "IDs/hashes only; never full artifact bodies.",
+      "additionalProperties": false,
+      "properties": {
+        "projectId": { "type": ["string", "null"] },
+        "creativeBriefRef": { "type": ["object", "null"] },
+        "narrativeBriefRef": { "type": ["object", "null"] },
+        "storyDraftRef": { "type": ["object", "null"] }
+      }
+    },
+    "promotedFrom": { "type": ["string", "null"], "description": "memoryId this record was promoted from" },
+    "supersedeReason": { "type": ["string", "null"] },
+    "useCount": { "type": "integer", "minimum": 0 },
+    "createdAt": { "type": "string" },
+    "updatedAt": { "type": "string" },
+    "lastUsedAt": { "type": ["string", "null"] }
+  }
+}

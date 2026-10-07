@@ -1,0 +1,26 @@
+{
+  "version": "1.0.0",
+  "projectId": "live-1g1-http308",
+  "evaluation": {
+    "decision": "SUFFICIENT",
+    "rationale": "critical questions answered: true (4/4); important claims supported: true (2/2); blocking contradictions: 0; material open unknowns: 0; freshness adequate: true; budget remaining: true",
+    "factors": {
+      "criticalQuestionsAnswered": true,
+      "importantClaimsSupported": true,
+      "criticalContradictionsResolvedOrFramed": true,
+      "remainingUnknownsMaterial": false,
+      "freshnessAdequate": true,
+      "budgetRemaining": true,
+      "stopCriteriaReached": true
+    },
+    "gaps": {},
+    "blocker": null,
+    "warnings": [],
+    "policyVersion": "evidence-policy-1.0.0",
+    "planRef": {
+      "topic": "HTTP 308 Permanent Redirect semantics",
+      "projectId": "live-1g1-http308"
+    },
+    "evaluatedAt": "2026-10-03T02:24:56.073Z"
+  }
+}

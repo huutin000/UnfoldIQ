@@ -33,12 +33,23 @@ function projectRootPath(root) {
   return path.resolve(root);
 }
 
+/** Project base directory: registry-aware (nested new-hierarchy paths), with
+ * legacy projects/<projectId> fallback when the registry is absent. */
+function projectBase(root, projectId) {
+  try {
+    const ws = require("../../lib/workspace/index.js");
+    const r = ws.resolveProjectRoot(root, projectId);
+    if (r.ok) return path.resolve(r.path);
+  } catch { /* fall through to legacy layout */ }
+  return path.resolve(root, "projects", projectId);
+}
+
 /** Resolve a project-relative path safely. Throws on traversal/escape. */
 function resolveProjectPath(root, projectId, relativePath) {
   if (typeof relativePath !== "string" || relativePath.length === 0) {
     throw new Error("EMPTY_PATH");
   }
-  const base = path.resolve(root, "projects", projectId);
+  const base = projectBase(root, projectId);
   const abs = path.resolve(base, relativePath);
   const rel = path.relative(base, abs);
   if (rel === "" || rel.startsWith("..") || path.isAbsolute(rel)) {
@@ -56,7 +67,7 @@ function sanitizeFilename(name) {
 
 function assetDir(root, projectId, capability, sceneId) {
   const sub = CAPABILITY_DIRS[capability] || ["assets", capability];
-  return path.join(projectRootPath(root), "projects", projectId, ...sub, sanitizeFilename(sceneId));
+  return path.join(projectBase(root, projectId), ...sub, sanitizeFilename(sceneId));
 }
 
 function ensureDir(absDir) {
@@ -90,7 +101,7 @@ function readArtifact(root, projectId, relativePath) {
 
 /** Fingerprint sidecar index: projects/<projectId>/assets/_fingerprints.json */
 function fingerprintIndexPath(root, projectId) {
-  return path.join(projectRootPath(root), "projects", projectId, "assets", "_fingerprints.json");
+  return path.join(projectBase(root, projectId), "assets", "_fingerprints.json");
 }
 
 function readFingerprintIndex(root, projectId) {

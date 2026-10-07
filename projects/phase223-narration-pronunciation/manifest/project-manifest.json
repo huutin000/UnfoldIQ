@@ -1,0 +1,156 @@
+{
+  "schemaVersion": "1.5.0",
+  "manifestId": "pm-bb0b520b86e8",
+  "projectId": "phase223-narration-pronunciation",
+  "projectVersion": 9,
+  "revision": 9,
+  "pipelineVersion": null,
+  "contentMode": null,
+  "contentClass": "FACTUAL",
+  "createdAt": "2026-10-06T02:13:49.968Z",
+  "updatedAt": "2026-10-06T04:00:44.987Z",
+  "artifacts": {
+    "creativeBriefVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "channelBibleVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "storyBibleVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "characterBibleVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "worldBibleVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "visualBibleVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "researchPackVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "finalSpokenScriptVersion": {
+      "version": "fss-phase223-validation@v1",
+      "status": "VERIFIED",
+      "ref": "input/final-spoken-script.json",
+      "detail": "bounded validation fixture; productionScriptStatus=NOT_APPLICABLE"
+    },
+    "voiceBibleVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "shotPlanVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "promptCompilerVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "agentInstructionsVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "assetRegistryVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "finalAudioVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "alignmentVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "timelineVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "renderVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "narrationDirectionVersion": {
+      "version": "nd-18a1afd2f330",
+      "status": "VERIFIED",
+      "ref": "voice/narration-direction/nd-18a1afd2f330.json",
+      "detail": "v1 coverage=33.33%"
+    },
+    "pronunciationProfileVersion": {
+      "version": "pron-6e7fd87f4366",
+      "status": "VERIFIED",
+      "ref": "voice/pronunciation-profile/pron-6e7fd87f4366.json",
+      "detail": "v2 7 entries"
+    },
+    "pronunciationRuntimePassVersion": {
+      "version": "prp-8b1d3436ff29",
+      "status": "VERIFIED",
+      "ref": "voice/pronunciation-pass/prp-8b1d3436ff29.json",
+      "detail": "v1 local-kokoro/kokoro-v1 statuses=CLEAN,OVERRIDE_APPLIED,OVERRIDE_APPLIED,OVERRIDE_APPLIED,OVERRIDE_APPLIED,CLEAN"
+    },
+    "ttsReadyPlanVersion": {
+      "version": "ttp-4ccc5151fc9f",
+      "status": "UNRESOLVED",
+      "ref": "voice/tts-ready-plan/ttp-4ccc5151fc9f.json",
+      "detail": "overall=READY_FOR_TTS segments=6 PRODUCTION_TTS_BLOCKED(non-canonical script)"
+    }
+  },
+  "providers": {
+    "registryVersion": null,
+    "selections": []
+  },
+  "state": {
+    "stage": "phase-2.2-2.3",
+    "status": "ACTIVE"
+  },
+  "history": null,
+  "recovery": null,
+  "governance": null,
+  "lineage": {
+    "previousManifestId": null,
+    "previousProjectVersion": null
+  },
+  "fingerprint": "8217dee87395d13b"
+}

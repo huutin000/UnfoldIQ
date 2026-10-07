@@ -1,0 +1,232 @@
+{
+  "task": "PHASE_2_1_FIX_01",
+  "purpose": "Runtime voice discovery, operator-constrained narrator shortlist, and the equal-condition preview pack presented for explicit operator approval.",
+  "runtimeDiscovery": {
+    "runtime": "kokoro (python)",
+    "version": "0.9.4",
+    "torch": "2.14.1+cpu",
+    "espeak": "espeak-ng.dll via espeakng_loader (no manual PATH entry required on Windows)",
+    "installAuthority": "explicit operator authorization; providers/local/SETUP_KOKORO.md forbids UNFOLDIQ auto-install",
+    "mechanism": "KPipeline.load_single_voice() resolves any voice id at synthesis time via huggingface_hub.hf_hub_download(repo_id, 'voices/<id>.pt'). Kokoro ships NO static voice inventory, so the package directory is not a source of truth.",
+    "repoId": "hexgrad/Kokoro-82M",
+    "repoIdSource": "read from the runtime itself (KPipeline.repo_id), not hardcoded here",
+    "inventoryCount": 54,
+    "verifiedByRuntime": ["am_fenrir", "am_michael", "am_puck", "af_heart", "af_bella", "af_nicole", "af_kore"],
+    "verificationRule": "a voice is reported usable only after the runtime actually loaded it via load_voice(); enumeration alone would only prove the file is published",
+    "notAsserted": "the 54 ids are the upstream repo listing this runtime can resolve; per-voice audio quality is not asserted by discovery"
+  },
+  "languageCompatibility": {
+    "bibleLanguage": "en-us",
+    "runtimeLangCode": "a",
+    "adapterCodeNote": "python -m kokoro accepts only single-letter lang codes (a,b,h,e,f,i,p,j,z); providers/runtime/adapters/local-kokoro.js now maps en-us -> a. Passing 'en-us' made argparse exit 2, which the adapter previously misread as 'CLI unavailable'.",
+    "candidatePool": "the 20 American English voices (11 af_*, 9 am_*) of the 54-voice inventory"
+  },
+  "operatorConstraints": [
+    {
+      "constraint": "NARRATOR_MUST_BE_MALE",
+      "origin": "explicit operator instruction, 2026-10-05",
+      "rationale": "the UNFOLDIQ mascot is male, so narrator identity should remain male to keep brand identity coherent",
+      "escapeHatch": "narrator and mascot may be explicitly decoupled in a later decision; this constraint is a selection input, not a permanent law",
+      "recordedIn": "this evidence document (decision rationale), not a new schema field",
+      "schemaNote": "schemas/voice-bible.schema.json sets additionalProperties:false and has no gender/mascot property. No field was added: the Kokoro voiceId prefix (am_ = American Male, af_ = American Female) already encodes gender deterministically and is validated by the adapter catalog, so a parallel gender field would be redundant state that can disagree with the voiceId.",
+      "effect": "the female candidates af_heart / af_bella / af_nicole / af_kore are WITHDRAWN from the active shortlist despite af_heart having the best official data grade of any en-us voice. Data quality did not override the operator's brand constraint."
+    }
+  ],
+  "shortlist": {
+    "count": 3,
+    "bounded": true,
+    "status": "AWAITING_OPERATOR_DECISION",
+    "selectionBasis": "Active shortlist is restricted to American English MALE voices (am_*) by the operator's mascot constraint, then narrowed by the official VOICES.md per-voice grades (target quality / training duration / overall grade) as a proxy for consistency and clarity on sustained narration, filtered against the narrator persona's prohibitedTraits (no announcer bombast, no overacting, no robotic clause rhythm).",
+    "officialDataSource": {
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M/resolve/main/VOICES.md",
+      "retrievedAt": "2026-10-05",
+      "fileSha256": "8F30CAE046A4538A222FD93308BDA2B0B79CF2DE32A67E0AB64211166793B094",
+      "sourceNote": "The RAW resolve/main markdown was used. An earlier pass read the HTML-rendered model page, whose table columns silently misaligned for several rows and produced wrong grades for am_michael, am_puck, am_onyx and af_sky. The operator caught this; the raw file is authoritative."
+    },
+    "gradeCorrection": {
+      "status": "CORRECTED",
+      "wrongEarlierValues": {
+        "am_michael": "was recorded as Target Quality C / MM minutes / Grade C; official is B / H hours / C+",
+        "am_puck": "was recorded as Target Quality C / MM minutes / Grade D; official is B / H hours / C+",
+        "am_onyx": "was recorded as Target Quality B / MM minutes / Grade C; official is C / MM minutes / D",
+        "af_sky": "was recorded as Target Quality C / M minutes / Grade C-; official is B / M minutes / C-"
+      },
+      "consequence": "All three shortlisted male voices are EQUAL on official evidence (B / H hours / C+). The earlier rationale that ranked am_fenrir above am_michael and am_puck 'on data' was unfounded and has been withdrawn. Selection is now a pure timbre/brand judgement, not a data judgement.",
+      "operatorInstruction": "shortlist held at exactly am_fenrir, am_michael, am_puck; am_onyx confirmed lower (C / MM minutes / D), consistent with the operator's own reading."
+    },
+    "voices": [
+      {
+        "voiceId": "am_fenrir",
+        "language": "en-us",
+        "provider": "local-kokoro",
+        "model": "kokoro-v1",
+        "officialTargetQuality": "B",
+        "officialTrainingDuration": "H hours",
+        "officialOverallGrade": "C+",
+        "officialVoiceFileSha256Prefix": "98e507ec",
+        "notes": "On official evidence am_fenrir is NOT better supported than the other two - all three are B / H hours / C+. Its distinguishing measured properties are the highest median pitch (133.3 Hz) and the widest pitch spread (40.1%)."
+      },
+      {
+        "voiceId": "am_michael",
+        "language": "en-us",
+        "provider": "local-kokoro",
+        "model": "kokoro-v1",
+        "officialTargetQuality": "B",
+        "officialTrainingDuration": "H hours",
+        "officialOverallGrade": "C+",
+        "officialVoiceFileSha256Prefix": "9a443b79",
+        "notes": "Operator-requested addition. Official grade EQUALS the other two. Measured: quietest of the set (RMS -27.36 dBFS, ~5 dB below am_fenrir) and lowest pitch spread (28.6%)."
+      },
+      {
+        "voiceId": "am_puck",
+        "language": "en-us",
+        "provider": "local-kokoro",
+        "model": "kokoro-v1",
+        "officialTargetQuality": "B",
+        "officialTrainingDuration": "H hours",
+        "officialOverallGrade": "C+",
+        "officialVoiceFileSha256Prefix": "dd1d8973",
+        "notes": "Operator-requested addition. Official grade EQUALS the other two. Measured: hottest/loudest (peak -1.45 dBFS, only 1.45 dB of headroom) and lowest pitch (110.1 Hz). Hottest peak is worth noting for 2.4 loudness QA."
+      }
+    ],
+    "maleAlternatesNotShortlisted": {
+      "am_onyx": "C / MM minutes / D - confirmed lower than all three shortlisted voices; the operator's reading was correct.",
+      "am_adam": "D / H hours / F+ - excluded on merit.",
+      "am_echo": "C / MM minutes / D - excluded on merit.",
+      "am_eric": "C / MM minutes / D - excluded on merit.",
+      "am_liam": "C / MM minutes / D - excluded on merit.",
+      "am_santa": "C / M minutes / D- - excluded on merit."
+    },
+    "withdrawnByOperatorConstraint": ["af_heart", "af_bella", "af_nicole", "af_kore"]
+  },
+  "objectiveQaMetrics": {
+    "tool": "scripts/diagnostics/preview-audio-metrics.js",
+    "command": "node scripts/diagnostics/preview-audio-metrics.js projects/phase2-1-validation/assets/voice/voice-preview/preview-am_fenrir.wav projects/phase2-1-validation/assets/voice/voice-preview/preview-am_michael.wav projects/phase2-1-validation/assets/voice/voice-preview/preview-am_puck.wav",
+    "basis": "every value measured from the rendered WAV (headers + samples); nothing estimated or copied from documentation",
+    "whyTheseMetrics": "the narrator persona's prohibitedTraits are partly measurable, so ear-only description is not evidence: EXCESSIVE_PAUSES -> longestInternalPauseSec/speechRatio, UNNATURALLY_SLOW_CINEMATIC -> speakingRateWpm, MONOTONE_CADENCE -> energyCv, ANNOUNCER_BOMBAST -> peakDbfs/rmsDbfs. Pitch metrics give objective timbre identity and consistency.",
+    "NOTAJudgement": "these metrics do not rank voices and imply no quality verdict; approval remains an explicit human decision",
+    "measurements": [
+      {
+        "voiceId": "am_fenrir",
+        "durationSec": 5.375,
+        "speakingRateWpm": 202,
+        "speechRatio": 0.7724,
+        "leadingSilenceSec": 0.22,
+        "trailingSilenceSec": 0.52,
+        "longestInternalPauseSec": 0.0,
+        "energyCv": 0.695,
+        "f0MedianHz": 133.3,
+        "f0SpreadPct": 40.1,
+        "peakDbfs": -3.59,
+        "rmsDbfs": -22.59,
+        "clippedSamples": 0
+      },
+      {
+        "voiceId": "am_michael",
+        "durationSec": 6.125,
+        "speakingRateWpm": 197,
+        "speechRatio": 0.6961,
+        "leadingSilenceSec": 0.38,
+        "trailingSilenceSec": 0.56,
+        "longestInternalPauseSec": 0.0,
+        "energyCv": 0.7331,
+        "f0MedianHz": 117.4,
+        "f0SpreadPct": 28.6,
+        "peakDbfs": -6.08,
+        "rmsDbfs": -27.36,
+        "clippedSamples": 0
+      },
+      {
+        "voiceId": "am_puck",
+        "durationSec": 5.45,
+        "speakingRateWpm": 203,
+        "speechRatio": 0.761,
+        "leadingSilenceSec": 0.24,
+        "trailingSilenceSec": 0.74,
+        "longestInternalPauseSec": 0.0,
+        "energyCv": 0.7444,
+        "f0MedianHz": 110.1,
+        "f0SpreadPct": 36.9,
+        "peakDbfs": -1.45,
+        "rmsDbfs": -21.86,
+        "clippedSamples": 0
+      }
+    ],
+    "observations": [
+      "Speaking rate is effectively identical across the three (197-203 wpm against active speech), so no speedDefault compensation is needed and the earlier am_michael '~14% slower' concern is resolved - the raw duration gap (6.125s vs 5.375s) is mostly leading/trailing silence, not slower speech.",
+      "No voice shows an internal pause at all (longestInternalPauseSec = 0.0), so EXCESSIVE_PAUSES is not a differentiator.",
+      "All three are in the expected male band (110-133 Hz median F0), consistent with the mascot-male constraint.",
+      "am_puck peaks at -1.45 dBFS, i.e. only 1.45 dB of headroom. Harmless for a preview but it is the one voice that could clip if 2.4 pushes loudness normalisation.",
+      "am_michael is ~5 dB quieter than the others at RMS, so a perceived-level difference is expected when switching between them."
+    ]
+  },
+  "previewPack": {
+    "lifecycleClass": "RETENTION_MANAGED",
+    "classificationNote": "Selection scratch, not durable evidence and not production narration.",
+    "equalConditionGuarantee": "All three active candidates were rendered in a SINGLE batch through one buildPreviewPack() call, so script, speed, language, format and code path are provably identical. Durations are therefore comparable without caveat.",
+    "sharedInvariants": {
+      "sampleText": "Kokoro is an open weight text to speech model with eighty two million parameters.",
+      "speedDefault": 1,
+      "format": "wav",
+      "language": "en-us",
+      "sampleRate": 24000,
+      "bitsPerSample": 16,
+      "noMusic": true,
+      "noSfx": true,
+      "noProductionNarration": true,
+      "externalPaidCredits": 0,
+      "costClass": "ZERO_LOCAL"
+    },
+    "artifacts": [
+      {
+        "voiceId": "am_fenrir",
+        "path": "projects/phase2-1-validation/assets/voice/voice-preview/preview-am_fenrir.wav",
+        "durationSec": 5.38,
+        "rms": 2427.0,
+        "peak": 22045,
+        "realAudio": true
+      },
+      {
+        "voiceId": "am_michael",
+        "path": "projects/phase2-1-validation/assets/voice/voice-preview/preview-am_michael.wav",
+        "durationSec": 6.12,
+        "rms": 1400.0,
+        "peak": 16239,
+        "realAudio": true
+      },
+      {
+        "voiceId": "am_puck",
+        "path": "projects/phase2-1-validation/assets/voice/voice-preview/preview-am_puck.wav",
+        "durationSec": 5.45,
+        "rms": 2645.3,
+        "peak": 28043,
+        "realAudio": true
+      }
+    ],
+    "measurementNote": "Durations and RMS were measured from the rendered WAV headers and samples, not estimated. Every file is a real RIFF/24kHz/16-bit stream with non-silent RMS, so none fell through the adapter's silent-audio fallback path.",
+    "withdrawnCandidatesRetained": {
+      "note": "The female previews remain on disk as RETENTION_MANAGED scratch in case the narrator/mascot coupling is explicitly decoupled later; they are not part of the active shortlist.",
+      "files": [
+        "preview-af_heart.wav (5.38s)",
+        "preview-af_bella.wav (5.75s)",
+        "preview-af_nicole.wav (8.45s)",
+        "preview-af_kore.wav (5.58s)"
+      ]
+    }
+  },
+  "approvalState": {
+    "status": "AWAITING_OPERATOR_DECISION",
+    "autoSelection": "none - there is no default, no scoring shortcut and no auto-select path in lib/voice-bible/license.js, and none in the QA tool",
+    "approvalStatementRequired": "APPROVED_NARRATOR_VOICE = <voiceId>",
+    "shortlistPresented": ["am_fenrir", "am_michael", "am_puck"],
+    "priorDecision": "The operator reviewed a 5-voice mixed shortlist and declined to approve, citing the male-mascot constraint. No voice has been approved at any point in this FIX.",
+    "technicalRecommendationIssued": {
+      "artifact": "projects/phase2-1-validation/evidence/phase-2/2.1/evidence/provider/narrator-qa-comparison.json",
+      "tool": "scripts/diagnostics/narrator-qa-compare.js",
+      "rankings": ["1. am_michael 88.3/100", "2. am_puck 87.7/100", "3. am_fenrir 81.5/100"],
+      "recommendedForLongFormEnglishExplainer": "am_michael",
+      "strongestAlternativeIfTimbreDiffers": "am_puck",
+      "explicitlyNotAnApproval": "A technical recommendation was produced and presented. The operator decision remains OUTSTANDING; nothing was persisted as a selection, no Voice Bible version was created, and the manifest is unchanged."
+    }
+  }
+}

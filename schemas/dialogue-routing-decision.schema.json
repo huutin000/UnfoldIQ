@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "dialogue-routing-decision.schema.json",
+  "title": "UNFOLDIQ Dialogue / Multi-voice Routing Decision (Phase 2.6, schema 1.0.0)",
+  "description": "speakerId → voiceId → style routing contract. Fail-closed: unknown speaker, missing character voice, language mismatch or unallowed style never silently falls back to the narrator. For narrator-only FACTUAL projects the real-generation decision is NOT_APPLICABLE while the contract itself is still validated.",
+  "type": "object",
+  "required": ["schemaVersion", "dialogueRoutingDecisionId", "version", "projectId", "contentClass", "speakerMode", "narratorVoiceId", "multiVoiceRequired", "decision", "routingChecks", "provenance", "fingerprint"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "dialogueRoutingDecisionId": { "type": "string", "pattern": "^dlr-[0-9a-f]{12}$" },
+    "version": { "type": "integer", "minimum": 1 },
+    "projectId": { "type": "string", "minLength": 1 },
+    "contentClass": { "enum": ["FACTUAL", "FICTION", "HYBRID"] },
+    "speakerMode": { "enum": ["SINGLE_NARRATOR", "MULTI_VOICE"] },
+    "narratorVoiceId": { "type": "string", "minLength": 1 },
+    "voiceBibleRef": { "type": "string", "pattern": "^vb-[0-9a-f]{12}$" },
+    "multiVoiceRequired": { "type": "boolean" },
+    "decision": { "enum": ["NOT_APPLICABLE", "READY", "BLOCKED"] },
+    "routingChecks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["checkId", "fixture", "expected", "status"],
+        "additionalProperties": false,
+        "properties": {
+          "checkId": { "type": "string", "minLength": 1 },
+          "fixture": { "type": "string", "minLength": 1, "description": "Bounded synthetic/Golden fixture description; no production media generated." },
+          "expected": { "type": "string", "minLength": 3, "description": "Expected structured error code or resolution." },
+          "status": { "enum": ["VERIFIED", "FAILED"] },
+          "detail": { "type": ["string", "null"], "maxLength": 300 }
+        }
+      }
+    },
+    "provenance": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "createdAt": { "type": ["string", "null"] },
+        "evidenceRefs": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" }
+  }
+}

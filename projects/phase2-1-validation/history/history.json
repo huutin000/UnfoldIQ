@@ -1,0 +1,97 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectId": "phase2-1-validation",
+  "revision": 4,
+  "createdAt": "2026-10-05T14:24:37.054Z",
+  "updatedAt": "2026-10-05T15:07:58.657Z",
+  "generations": {},
+  "variants": {},
+  "decisions": {
+    "dec-c1c82ea385e1": {
+      "decisionId": "dec-c1c82ea385e1",
+      "targetType": "VOICE_BIBLE",
+      "targetId": "vb-2997edea5ffa",
+      "variantId": null,
+      "decision": "APPROVED",
+      "reason": "Operator explicitly approved the narrator voice after reviewing a bounded 3-voice male shortlist with equal-condition previews and an objective 10-dimension QA comparison (narrator-qa-comparison.json, am_michael ranked 1 of 3 at 88.3/100). Literal operator statement: APPROVED_NARRATOR_VOICE = am_michael. Constrained to a male voice because the UNFOLDIQ mascot is male. Production readiness remains BLOCKED: voice-asset and output-usage rights are REVIEW_REQUIRED by operator policy, so this approval covers SELECTION only, not rights clearance.",
+      "evidenceRefs": [
+        "projects/phase2-1-validation/evidence/phase-2/2.1/evidence/provider/operator-approval.json",
+        "projects/phase2-1-validation/evidence/phase-2/2.1/evidence/provider/voice-selection-and-preview-pack.json",
+        "projects/phase2-1-validation/evidence/phase-2/2.1/evidence/provider/narrator-qa-comparison.json",
+        "providers/license-evidence/local-kokoro.json"
+      ],
+      "decidedAt": "2026-10-05T14:24:37.054Z",
+      "actorType": null,
+      "provenance": null
+    },
+    "dec-4a6c0a6533c2": {
+      "decisionId": "dec-4a6c0a6533c2",
+      "targetType": "VOICE_BIBLE",
+      "targetId": "vb-19f4fd6a4596",
+      "variantId": null,
+      "decision": "APPROVED",
+      "reason": "FIX_PHASE_2_1_02: operator ACCEPT_RESIDUAL_RIGHTS_RISK (2026-10-05). Rights-only revision of vb-2997edea5ffa; narrator unchanged (am_michael, local-kokoro/kokoro-v1). Voice+output rights RISK_ACCEPTED under bounded scope; MODEL_LICENSE stays VERIFIED (Apache-2.0). No cloning, no impersonation.",
+      "evidenceRefs": [
+        "providers/license-evidence/local-kokoro.json",
+        "projects/phase2-1-validation/evidence/phase-2/2.1/evidence/provider/operator-approval.json",
+        "projects/phase2-1-validation/evidence/phase-2/2.1/evidence/provider/narrator-qa-comparison.json"
+      ],
+      "decidedAt": "2026-10-05T15:07:58.657Z",
+      "actorType": null,
+      "provenance": null
+    }
+  },
+  "locks": {
+    "VOICE_BIBLE::vb-2997edea5ffa": {
+      "targetType": "VOICE_BIBLE",
+      "targetId": "vb-2997edea5ffa",
+      "status": "UNLOCKED",
+      "reason": "FIX_PHASE_2_1_02 rights decision: operator ACCEPT_RESIDUAL_RIGHTS_RISK; rights-only revision, narrator unchanged",
+      "sourceDecisionId": "dec-c1c82ea385e1",
+      "createdAt": "2026-10-05T14:24:37.054Z",
+      "updatedAt": "2026-10-05T15:07:48.794Z",
+      "lockVersion": 2,
+      "expectedProjectVersion": null,
+      "events": [
+        {
+          "status": "LOCKED",
+          "reason": "approved content protection (dec-c1c82ea385e1)",
+          "sourceDecisionId": "dec-c1c82ea385e1",
+          "actor": null,
+          "at": "2026-10-05T14:24:37.054Z",
+          "lockVersion": 1
+        },
+        {
+          "status": "UNLOCKED",
+          "reason": "FIX_PHASE_2_1_02 rights decision: operator ACCEPT_RESIDUAL_RIGHTS_RISK; rights-only revision, narrator unchanged",
+          "sourceDecisionId": null,
+          "actor": null,
+          "at": "2026-10-05T15:07:48.794Z",
+          "lockVersion": 2
+        }
+      ]
+    },
+    "VOICE_BIBLE::vb-19f4fd6a4596": {
+      "targetType": "VOICE_BIBLE",
+      "targetId": "vb-19f4fd6a4596",
+      "status": "LOCKED",
+      "reason": "approved content protection (dec-4a6c0a6533c2)",
+      "sourceDecisionId": "dec-4a6c0a6533c2",
+      "createdAt": "2026-10-05T15:07:58.657Z",
+      "updatedAt": "2026-10-05T15:07:58.657Z",
+      "lockVersion": 1,
+      "expectedProjectVersion": null,
+      "events": [
+        {
+          "status": "LOCKED",
+          "reason": "approved content protection (dec-4a6c0a6533c2)",
+          "sourceDecisionId": "dec-4a6c0a6533c2",
+          "actor": null,
+          "at": "2026-10-05T15:07:58.657Z",
+          "lockVersion": 1
+        }
+      ]
+    }
+  },
+  "fingerprint": "74b3ebdfeecf208c"
+}

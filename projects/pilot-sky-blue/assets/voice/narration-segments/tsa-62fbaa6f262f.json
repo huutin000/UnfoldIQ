@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "1.0.0",
+  "ttsSegmentAudioId": "tsa-62fbaa6f262f",
+  "version": 1,
+  "projectId": "pilot-sky-blue",
+  "scriptRef": {
+    "scriptArtifactId": "fss-pilot-sky-blue",
+    "scriptVersion": 2
+  },
+  "segmentId": "S4",
+  "segmentOrdinal": 3,
+  "sourceTextHash": "2d9816e454e015e5",
+  "compiledInputHash": "2d9816e454e015e5",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "narrationDirectionRef": "nd-ba9e14b889f3",
+  "pronunciationPassRef": "prp-ef2591fc81ec",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "runtimeIdentity": {
+    "runtimeMode": "LOCAL_SYNTHESIS",
+    "modelRepo": "hexgrad/Kokoro-82M",
+    "modelHash": "UNKNOWN_NOT_AVAILABLE",
+    "languageCode": "a"
+  },
+  "voiceId": "am_michael",
+  "effectiveSpeed": 1,
+  "pacePolicyVersion": "pace-speed-1.0.0",
+  "audioRef": "assets/voice/narration-segments/tsa-62fbaa6f262f.wav",
+  "audioContentHash": "20c53f23978ab85595ef3fc19e44a83da9537bcd705a5fee85904c797d6a659b",
+  "durationMs": 7825,
+  "sampleRate": 24000,
+  "channels": 1,
+  "technicalQa": {
+    "decodePass": true,
+    "nonSilent": true,
+    "finiteSamples": true,
+    "peak": 12557,
+    "rms": 1224.97,
+    "clippingSamples": 0,
+    "transcript": "That scattered blue light reaches your eyes from everywhere overhead and that is why the whole sky glows blue",
+    "wer": 0,
+    "missingWords": 0,
+    "substitutedWords": 0,
+    "repeatedWords": 0,
+    "hallucinatedWords": 0,
+    "criticalMismatch": false
+  },
+  "attempt": {
+    "number": 1,
+    "parentAttemptId": null,
+    "reason": "initial synthesis",
+    "selected": null
+  },
+  "issues": [],
+  "status": "READY",
+  "provenance": {
+    "createdAt": "2026-10-06T06:51:46.188Z",
+    "evidenceRefs": [
+      "scripts/cli/pilot-narration.js"
+    ]
+  },
+  "fingerprint": "73134a390e5c7a5a"
+}

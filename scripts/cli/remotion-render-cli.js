@@ -157,7 +157,11 @@ async function doRenderTest(projectId, outRel) {
       composition: composition,
       serveUrl: serveUrl,
       inputProps: input,
-      outputLocation: outAbs
+      outputLocation: outAbs,
+      // See pipeline/remotion-render-runner.js — SAC workaround, inert when unset.
+      ...(process.env.UNFOLDIQ_REMOTION_BINARIES_DIR
+        ? { binariesDirectory: process.env.UNFOLDIQ_REMOTION_BINARIES_DIR }
+        : {})
     });
   } catch (e) {
     var err = RenderErrors.make("RENDER_FAILED", "render-test failed: " + (e && e.message), { projectId: projectId, reason: e && e.message });

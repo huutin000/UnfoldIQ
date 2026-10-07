@@ -1,0 +1,367 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectId": "phase1g12-case-a",
+  "revision": 27,
+  "createdAt": "2026-10-05T07:12:31.713Z",
+  "updatedAt": "2026-10-05T08:09:54.750Z",
+  "nodes": {
+    "SHOT_PLAN": {
+      "artifactKey": "SHOT_PLAN",
+      "artifactType": "SHOT_PLAN",
+      "versionRef": "1b32df71a718b193",
+      "state": "CLEAN",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": "MIGRATED"
+    },
+    "RENDER_INPUT_CASE_A": {
+      "artifactKey": "RENDER_INPUT_CASE_A",
+      "artifactType": "RENDER",
+      "versionRef": "b81ce8c86542dc4c",
+      "state": "CLEAN",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": "MIGRATED"
+    },
+    "FINAL_SPOKEN_SCRIPT": {
+      "artifactKey": "FINAL_SPOKEN_SCRIPT",
+      "artifactType": "FINAL_SPOKEN_SCRIPT",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "VOICE": {
+      "artifactKey": "VOICE",
+      "artifactType": "VOICE",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "FINAL_AUDIO": {
+      "artifactKey": "FINAL_AUDIO",
+      "artifactType": "FINAL_AUDIO",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "FORCED_ALIGNMENT": {
+      "artifactKey": "FORCED_ALIGNMENT",
+      "artifactType": "FORCED_ALIGNMENT",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "CAPTIONS": {
+      "artifactKey": "CAPTIONS",
+      "artifactType": "CAPTIONS",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "MASTER_TIMELINE": {
+      "artifactKey": "MASTER_TIMELINE",
+      "artifactType": "MASTER_TIMELINE",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "SCENE_TIMING": {
+      "artifactKey": "SCENE_TIMING",
+      "artifactType": "SCENE_TIMING",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "VISUAL_TIMING": {
+      "artifactKey": "VISUAL_TIMING",
+      "artifactType": "VISUAL_TIMING",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "ANIMATION_TIMING": {
+      "artifactKey": "ANIMATION_TIMING",
+      "artifactType": "ANIMATION_TIMING",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "THUMBNAIL": {
+      "artifactKey": "THUMBNAIL",
+      "artifactType": "THUMBNAIL",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "PUBLISH_PACKAGE": {
+      "artifactKey": "PUBLISH_PACKAGE",
+      "artifactType": "PUBLISH_PACKAGE",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "CREATIVE_BRIEF": {
+      "artifactKey": "CREATIVE_BRIEF",
+      "artifactType": "CREATIVE_BRIEF",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "RESEARCH_PACK": {
+      "artifactKey": "RESEARCH_PACK",
+      "artifactType": "RESEARCH_PACK",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "POLICY:pol-f97cd0115d4b": {
+      "artifactKey": "POLICY:pol-f97cd0115d4b",
+      "artifactType": "POLICY_SNAPSHOT",
+      "versionRef": "c328300b54425650f0f7f699b3b42a01fd9e15c78e8c984dc42ea96d9cb06931",
+      "state": "CLEAN",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "PROVENANCE:as-0fde400d6392": {
+      "artifactKey": "PROVENANCE:as-0fde400d6392",
+      "artifactType": "PROVENANCE_REF",
+      "versionRef": "as-0fde400d6392",
+      "state": "CLEAN",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "COMPLIANCE:ccd-bd2113be8e5a": {
+      "artifactKey": "COMPLIANCE:ccd-bd2113be8e5a",
+      "artifactType": "COMPLIANCE_DECISION",
+      "versionRef": "ccd-bd2113be8e5a",
+      "state": "CLEAN",
+      "inputRefs": [
+        {
+          "key": "POLICY:pol-f97cd0115d4b",
+          "type": "governs"
+        },
+        {
+          "key": "PROVENANCE:as-0fde400d6392",
+          "type": "characterizes"
+        }
+      ],
+      "dependencyFingerprint": "25797a40e939f8f7",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "PROVENANCE:as-fafd1ac4c96b": {
+      "artifactKey": "PROVENANCE:as-fafd1ac4c96b",
+      "artifactType": "PROVENANCE_REF",
+      "versionRef": "as-fafd1ac4c96b",
+      "state": "CLEAN",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "COMPLIANCE:ccd-7b7f99d28f37": {
+      "artifactKey": "COMPLIANCE:ccd-7b7f99d28f37",
+      "artifactType": "COMPLIANCE_DECISION",
+      "versionRef": "ccd-7b7f99d28f37",
+      "state": "CLEAN",
+      "inputRefs": [
+        {
+          "key": "POLICY:pol-f97cd0115d4b",
+          "type": "governs"
+        },
+        {
+          "key": "PROVENANCE:as-fafd1ac4c96b",
+          "type": "characterizes"
+        }
+      ],
+      "dependencyFingerprint": "5b204bd07d5514b7",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "PROVENANCE:as-6182cea3f996": {
+      "artifactKey": "PROVENANCE:as-6182cea3f996",
+      "artifactType": "PROVENANCE_REF",
+      "versionRef": "as-6182cea3f996",
+      "state": "CLEAN",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "COMPLIANCE:ccd-c8a389724189": {
+      "artifactKey": "COMPLIANCE:ccd-c8a389724189",
+      "artifactType": "COMPLIANCE_DECISION",
+      "versionRef": "ccd-c8a389724189",
+      "state": "CLEAN",
+      "inputRefs": [
+        {
+          "key": "POLICY:pol-f97cd0115d4b",
+          "type": "governs"
+        },
+        {
+          "key": "PROVENANCE:as-6182cea3f996",
+          "type": "characterizes"
+        }
+      ],
+      "dependencyFingerprint": "564a6eb506e81ab0",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "PROVENANCE:as-a7801df9bf0f": {
+      "artifactKey": "PROVENANCE:as-a7801df9bf0f",
+      "artifactType": "PROVENANCE_REF",
+      "versionRef": "as-a7801df9bf0f",
+      "state": "CLEAN",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "COMPLIANCE:ccd-e0e37f8deef1": {
+      "artifactKey": "COMPLIANCE:ccd-e0e37f8deef1",
+      "artifactType": "COMPLIANCE_DECISION",
+      "versionRef": "ccd-e0e37f8deef1",
+      "state": "CLEAN",
+      "inputRefs": [
+        {
+          "key": "POLICY:pol-f97cd0115d4b",
+          "type": "governs"
+        },
+        {
+          "key": "PROVENANCE:as-a7801df9bf0f",
+          "type": "characterizes"
+        }
+      ],
+      "dependencyFingerprint": "2ed46acfa8b4e527",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "PROVENANCE:IMG_A": {
+      "artifactKey": "PROVENANCE:IMG_A",
+      "artifactType": "PROVENANCE_REF",
+      "versionRef": "IMG_A",
+      "state": "CLEAN",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "COMPLIANCE:ccd-b24568fe9b8c": {
+      "artifactKey": "COMPLIANCE:ccd-b24568fe9b8c",
+      "artifactType": "COMPLIANCE_DECISION",
+      "versionRef": "ccd-b24568fe9b8c",
+      "state": "CLEAN",
+      "inputRefs": [
+        {
+          "key": "POLICY:pol-f97cd0115d4b",
+          "type": "governs"
+        },
+        {
+          "key": "PROVENANCE:IMG_A",
+          "type": "characterizes"
+        }
+      ],
+      "dependencyFingerprint": "6628d6cb27455eff",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    }
+  },
+  "fingerprint": "e62ee31e8029f645"
+}

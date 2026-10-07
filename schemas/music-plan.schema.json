@@ -1,0 +1,145 @@
+{
+  "$id": "https://unfoldiq.io/schemas/music-plan.schema.json",
+  "title": "UNFOLDIQ Music Plan Contract (Phase 2.7)",
+  "description": "Versioned music/ambience/SFX plan: intents, cues with source regions and loop plans, ambience, SFX, intentional silence, lock state",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "projectId", "status", "cues", "ambience", "sfx", "intentionalSilence"],
+  "properties": {
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "projectId": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["PLANNED", "QA_PASS", "QA_FAIL", "REVIEW_REQUIRED", "LOCKED"] },
+    "intents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["segmentId", "presence", "vocalPolicy", "reason", "confidence"],
+        "properties": {
+          "segmentId": { "type": "string" },
+          "presence": { "enum": ["NONE", "BED", "FEATURED"] },
+          "purpose": { "enum": ["EMOTION", "TENSION", "PACING", "TRANSITION", "IDENTITY", "ENERGY", "CONTRAST", null] },
+          "vocalPolicy": { "enum": ["INSTRUMENTAL_ONLY", "VOCAL_ALLOWED", "VOCAL_FEATURED"] },
+          "mood": { "type": "array", "items": { "type": "string" } },
+          "energy": { "type": "number" },
+          "tension": { "type": "number" },
+          "bpmPreference": { "type": "object" },
+          "instrumentationPreference": { "type": "array", "items": { "type": "string" } },
+          "intentionalSilence": { "type": "boolean" },
+          "reason": { "type": "string" },
+          "confidence": { "type": "number" }
+        }
+      }
+    },
+    "cues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["cueId", "segmentIds", "role", "timelineStartMs", "timelineEndMs", "locked", "reason"],
+        "properties": {
+          "cueId": { "type": "string", "minLength": 1 },
+          "segmentIds": { "type": "array", "items": { "type": "string" } },
+          "role": { "enum": ["NONE", "BED", "FEATURED"] },
+          "purpose": { "type": "string" },
+          "assetId": { "type": "string" },
+          "sourceStartMs": { "type": "integer", "minimum": 0 },
+          "sourceEndMs": { "type": "integer", "minimum": 0 },
+          "timelineStartMs": { "type": "integer", "minimum": 0 },
+          "timelineEndMs": { "type": "integer", "minimum": 0 },
+          "loopAllowed": { "type": "boolean" },
+          "loopPlan": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["strategy"],
+            "properties": {
+              "strategy": { "enum": ["SINGLE_PASS", "LOOP", "MULTI_CUE", "SILENCE_FALLBACK", "NEEDS_NEW_SEGMENT"] },
+              "loopStartMs": { "type": "integer", "minimum": 0 },
+              "loopEndMs": { "type": "integer", "minimum": 0 },
+              "crossfadeMs": { "type": "integer", "minimum": 0 },
+              "repetitions": { "type": "integer", "minimum": 0 },
+              "confidence": { "type": "number" }
+            }
+          },
+          "vocalPolicy": { "enum": ["INSTRUMENTAL_ONLY", "VOCAL_ALLOWED", "VOCAL_FEATURED"] },
+          "mood": { "type": "array", "items": { "type": "string" } },
+          "energy": { "type": "number" },
+          "tension": { "type": "number" },
+          "usageDecisionRef": { "type": "string" },
+          "locked": { "type": "boolean" },
+          "lockGate": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "semanticQA": { "type": "string" },
+              "rights": { "type": "string" },
+              "lockedAt": { "type": "string" }
+            }
+          },
+          "confidence": { "type": "number" },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "ambience": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["cueId", "assetId", "startMs", "endMs", "locked", "reason"],
+        "properties": {
+          "cueId": { "type": "string", "minLength": 1 },
+          "assetId": { "type": "string", "minLength": 1 },
+          "startMs": { "type": "integer", "minimum": 0 },
+          "endMs": { "type": "integer", "minimum": 0 },
+          "association": { "type": "string" },
+          "continuity": { "enum": ["CONTINUOUS", "EVENT_BOUND"] },
+          "layer": { "enum": ["FOREGROUND", "BACKGROUND"] },
+          "fadeInMs": { "type": "integer", "minimum": 0 },
+          "fadeOutMs": { "type": "integer", "minimum": 0 },
+          "crossfadeTo": { "type": "string" },
+          "usageDecisionRef": { "type": "string" },
+          "locked": { "type": "boolean" },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "sfx": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["cueId", "kind", "priority", "assetId", "timelineStartMs", "durationMs", "locked", "reason"],
+        "properties": {
+          "cueId": { "type": "string", "minLength": 1 },
+          "kind": { "enum": ["FOLEY", "ONE_SHOT_SFX", "STINGER"] },
+          "priority": { "enum": ["BACKGROUND", "SUPPORTING", "FEATURED"] },
+          "assetId": { "type": "string", "minLength": 1 },
+          "timelineStartMs": { "type": "integer", "minimum": 0 },
+          "durationMs": { "type": "integer", "minimum": 1 },
+          "duckMusic": { "type": "boolean" },
+          "purpose": { "type": "string" },
+          "usageDecisionRef": { "type": "string" },
+          "locked": { "type": "boolean" },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "intentionalSilence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["startMs", "endMs", "reason"],
+        "properties": {
+          "startMs": { "type": "integer", "minimum": 0 },
+          "endMs": { "type": "integer", "minimum": 0 },
+          "reason": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "inputHashes": { "type": "object", "additionalProperties": { "type": "string" } },
+    "qa": { "type": "object" },
+    "createdAt": { "type": "string" }
+  }
+}

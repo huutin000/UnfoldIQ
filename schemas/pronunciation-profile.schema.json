@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "pronunciation-profile.schema.json",
+  "title": "UNFOLDIQ Pronunciation Profile (Phase 2.3, schema 1.0.0)",
+  "description": "Provider-agnostic canonical pronunciation contract. Canonical state is term + reading notation + reading value + scope + provenance; provider markup (Kokoro or otherwise) is always DERIVED by the provider compiler and never persisted as the only canonical record. Quality is honest: runtime G2P output is AUTO (never human-verified), ambiguous readings fail to REVIEW_REQUIRED, fabricated verified IPA is forbidden.",
+  "type": "object",
+  "required": ["schemaVersion", "pronunciationProfileId", "version", "language", "entries", "provenance", "fingerprint"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "pronunciationProfileId": { "type": "string", "pattern": "^pron-[0-9a-f]{12}$" },
+    "version": { "type": "integer", "minimum": 1 },
+    "projectId": { "type": ["string", "null"] },
+    "language": { "type": "string", "minLength": 2, "maxLength": 16 },
+    "entries": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/profileEntry" }
+    },
+    "provenance": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "source": { "type": "string", "minLength": 1 },
+        "createdAt": { "type": ["string", "null"] },
+        "revisedFrom": { "type": ["string", "null"], "pattern": "^pron-[0-9a-f]{12}$", "description": "Previous profile version id when this version is a revision." },
+        "evidenceRefs": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" }
+  },
+  "definitions": {
+    "reading": {
+      "type": "object",
+      "required": ["notation", "value"],
+      "additionalProperties": false,
+      "properties": {
+        "notation": { "enum": ["IPA", "PROVIDER_NATIVE", "READ_AS"] },
+        "value": { "type": "string", "minLength": 1, "maxLength": 256 }
+      }
+    },
+    "scope": {
+      "type": "object",
+      "required": ["level"],
+      "additionalProperties": false,
+      "properties": {
+        "level": { "enum": ["GLOBAL_LANGUAGE", "PROJECT", "SCRIPT", "SEGMENT"] },
+        "projectId": { "type": ["string", "null"] },
+        "scriptArtifactId": { "type": ["string", "null"] },
+        "segmentId": { "type": ["string", "null"] }
+      },
+      "description": "Specificity precedence SEGMENT > SCRIPT > PROJECT > GLOBAL_LANGUAGE; enforced in lib/pronunciation."
+    },
+    "profileEntry": {
+      "type": "object",
+      "required": ["entryId", "normalizedTerm", "displayTerm", "language", "category", "reading", "scope", "source", "quality"],
+      "additionalProperties": false,
+      "if": {
+        "properties": { "category": { "const": "ACRONYM" } },
+        "required": ["category"]
+      },
+      "then": {
+        "properties": { "acronymMode": { "enum": ["LETTER_BY_LETTER", "WORD", "CUSTOM"] } }
+      },
+      "properties": {
+        "entryId": { "type": "string", "pattern": "^pe-[0-9a-f]{12}$" },
+        "normalizedTerm": { "type": "string", "minLength": 1, "maxLength": 128, "description": "lowercased trimmed term used for matching." },
+        "displayTerm": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "language": { "type": "string", "minLength": 2, "maxLength": 16 },
+        "locale": { "type": ["string", "null"] },
+        "category": { "enum": ["NAME", "FOREIGN_TERM", "ACRONYM", "PLACE_NAME", "DOMAIN_TERM", "CUSTOM"] },
+        "reading": { "$ref": "#/definitions/reading" },
+        "acronymMode": { "enum": ["LETTER_BY_LETTER", "WORD", "CUSTOM", null], "description": "Required for ACRONYM category; never inferred globally." },
+        "scope": { "$ref": "#/definitions/scope" },
+        "source": { "enum": ["RUNTIME_G2P", "CANONICAL_LEXICON", "OPERATOR_OVERRIDE", "PROJECT_OVERRIDE", "VERIFIED_SOURCE"] },
+        "quality": { "enum": ["AUTO", "VERIFIED", "REVIEW_REQUIRED", "REJECTED"], "description": "REJECTED entries are inactive and never applied." },
+        "notes": { "type": ["string", "null"], "maxLength": 280 },
+        "provenance": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "properties": {
+            "createdAt": { "type": ["string", "null"] },
+            "origin": { "type": ["string", "null"], "maxLength": 280 },
+            "revisedFrom": { "type": ["string", "null"], "pattern": "^pron-[0-9a-f]{12}$", "description": "Previous profile version id when this entry set was revised." },
+            "evidenceRefs": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    }
+  }
+}

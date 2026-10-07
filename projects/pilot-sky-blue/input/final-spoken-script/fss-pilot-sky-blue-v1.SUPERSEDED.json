@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "1.0.0",
+  "decisionId": "sup-3335e037adbb",
+  "scriptArtifactId": "fss-pilot-sky-blue",
+  "version": 1,
+  "supersededVersionRef": "fss-pilot-sky-blue@v1",
+  "supersededBy": "fss-pilot-sky-blue@v2",
+  "status": "SUPERSEDED_INVALID",
+  "productionEligible": false,
+  "reason": "evidence-mapping defect: v1 fidelity claims map keyed by beat-id instead of spoken-segment-id, so evidence tracing recorded NOT_APPLICABLE; superseded by the corrected canonical revision v2",
+  "createdAt": "2026-10-06T05:40:36.613Z",
+  "fingerprint": "783c7a1020e60090"
+}

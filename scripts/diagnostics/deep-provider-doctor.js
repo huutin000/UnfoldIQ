@@ -13,12 +13,15 @@ const path = require("path");
 const PROJECT_ROOT = path.join(__dirname, "..", "..");
 const bridge = require("../../lib/research-deep/gpt-researcher-bridge.js");
 const { credentialState } = require("../../lib/research-deep/provider-interface.js");
+const { loadRootEnv } = require("../../lib/env-bootstrap.js");
 
 function section(t) { console.log(`\n## ${t}`); }
 function line(s) { console.log(s); }
 
 async function main() {
   console.log("=== UNFOLDIQ DEEP-PROVIDER DOCTOR (no-cost, no secrets printed) ===");
+  const envFile = loadRootEnv();
+  line(`env bootstrap: ${envFile.loaded ? `loaded names: ${envFile.names.join(", ") || "(none new; shell values kept)"}` : `root .env not loaded${envFile.error ? ` (${envFile.error})` : " (not present)"}`}`);
   section("Runtime");
   line(`node: ${process.version} (need >=18)`);
   line(`platform: ${process.platform}`);

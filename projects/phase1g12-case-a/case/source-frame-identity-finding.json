@@ -1,0 +1,31 @@
+{
+  "version": "1.0.0",
+  "findingId": "finding-source-frame-identity-01",
+  "foundAt": "2026-10-05T01:40:00.000Z",
+  "trigger": "Operator review before Case B attempt-2: retry instructions called GEN01 'Blue circle on light background' while qa/b1-frame evidence described a 32x32 coconut-drink image — identities were conflated without visual verification.",
+  "verifiedIdentity": {
+    "assetId": "as-1186233d1af6",
+    "file": "projects/postv1b-flow-companion-live/assets/image/GEN01/GEN01_attempt-01.png",
+    "sha256": "1186233d1af671fcb50ff5084ded613777105ba87cf0d951481ab236ba5b322e",
+    "bytes": 2080,
+    "dimensions": { "width": 32, "height": 32 },
+    "visualDescription": "operator's Google account avatar (a coconut drink with a purple straw on a beach), sourced from lh3.googleusercontent.com/ogw/...=s32-c-mo during the V1F resume import",
+    "isGenerationResult": false
+  },
+  "evidence": [
+    "Report/POST-V1F_REAL_GENERATION_DOWNLOAD_IMPORT_REPORT.md 'Download / import / structural QA' correction: the imported 32x32 PNG 'was never a generated result: it is the signed-in account avatar (lh3.googleusercontent.com/ogw/AF2bZyga0_…=s32-c-mo)'; artifact flagged untrusted and its structural QA superseded",
+    "Same report, correlation section: prompt/capability context FAILS — image is a 32x32 beach/coconut-drink scene, not the 82-char blue-circle prompt; plausible-output-resolution FAILS — 32x32 is thumbnail-sized",
+    "sha256(projects/postv1b-flow-companion-live/assets/image/GEN01/GEN01_attempt-01.png) == 1186233d1af671fc… == hash of library record as-1186233d1af6 (both postv1b and phase1g12-case-a copies)",
+    "Flow project 'UNFOLDIQ — Mascot Live Validation' media grid shows a card captioned 'Blue circle on light background' — the persisted real result of V1F job FLOW-COMPANION-LIVE-GEN-01 (prompt 'Create a simple minimal blue circle centered on a clean light background. No text.', Nano Banana 2, 1:1, x1)"
+  ],
+  "impact": {
+    "caseB": "Case B source-frame contract as planned (as-1186233d1af6 as first frame) is INVALID: the record's provenance ('approved live result GEN01') is false. Attempt-2 must NOT be submitted against it. Replacement source: the real blue-circle result card in the Flow project (already-paid V1F generation — reused per task §13, zero new credits), downloaded → 1G.10 import with full lineage → 1G.11 QA → select/lock → prompt v3 recompiled through 1G.4.",
+    "caseA": "Case A (PASS 2026-10-04) used as-1186233d1af6 as the Remotion zoom source. Its gates (Veo-avoidance, canonical-registry usage, render, QA, timeline eligibility) were executed honestly against the registry state at execution time; the identity defect is upstream registry data quality, recorded here as a caveat. Case A history is preserved, not rewritten (task §67).",
+    "postv1bRegistry": "projects/postv1b-flow-companion-live/assets/library-index.json as-1186233d1af6 (locked by fix02-migration as 'approved live result GEN01') carries the same false provenance. It belongs to an earlier phase — flagged for the 1G.12 report, not mutated here."
+  },
+  "actionsTaken": [
+    "phase1g12-case-a library record as-1186233d1af6: qualityStatus → REJECTED with the finding as reason (unlocked → set → re-locked by the 1G.12 run)",
+    "Case B attempt-2 ceremony blocked until the replacement source frame is imported and locked",
+    "prompt v2 package pp-79198ee2998b (coconut subject) superseded — v3 must be compiled against the blue-circle source"
+  ]
+}

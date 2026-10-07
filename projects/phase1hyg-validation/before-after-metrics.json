@@ -1,0 +1,33 @@
+{
+  "artifact": "before-after-metrics",
+  "capturedAt": "2026-10-05T09:06:52.394Z",
+  "before": {
+    "note": "inventory capture (includes early task files); authoritative baseline is git HEAD 4543124c60c1a20a66a3d8b96719e9aca161f35e"
+  },
+  "after": {
+    "repoTotalBytes": 1791918284,
+    "nodeModulesBytes": 322576068,
+    "workspaceBytesExclNodeModules": 1791918284,
+    "projectsBytes": 29260142,
+    "reportBytes": 4468510,
+    "outBytes": 8734249,
+    "files": 60756,
+    "dirs": 9701,
+    "orphanCount": "see storage/orphan scans per project (repo-level orphans: none proven deletable)",
+    "duplicateBytes": "see per-project dedup (no repo-level physical dedup executed)",
+    "cleanupEligibleBytes": 0,
+    "bytesReclaimed": 0,
+    "filesDeleted": 0,
+    "filesArchived": 0,
+    "filesMoved": 0,
+    "referencesUpdated": 0,
+    "workspaceViolations": 0,
+    "brokenRefs": 0
+  },
+  "deltas": {
+    "addedGovernanceFiles": 5,
+    "deleted": 0,
+    "moved": 0,
+    "reclaimedBytes": 0
+  }
+}

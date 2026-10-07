@@ -1,0 +1,10 @@
+{
+  "artifact": "classification",
+  "capturedAt": "2026-10-05T09:03:06.898Z",
+  "summary": {
+    "KEEP": 33273,
+    "REVIEW_REQUIRED": 15,
+    "LOCAL_REGENERABLE": 37169
+  },
+  "rules": "KEEP-first; DELETE only with explicit proof (none proposed by default)"
+}

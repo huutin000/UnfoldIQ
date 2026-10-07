@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "attemptId": "c1-attempt-01",
+  "unitId": "gu-3ff6b479331a",
+  "shotId": "C-SH01",
+  "providerProjectRef": "8221824c-a1a6-4aa9-8d6b-fac24860d49e",
+  "jobId": "c1",
+  "correlationMethod": "SINGLE_GENERATION_ATTRIBUTION",
+  "evidence": [
+    "operator affirmed exactly ONE generation submitted for this unit (ceremony log C_ATTEMPT1_SUBMIT_EVIDENCE)",
+    "start frame as-fe697fd1fef8 (blue circle) + end frame as-5e0bb7f87d4d (extracted larger circle) per case/case-c-frames.json",
+    "download bytes sha256=6182cea3f996e973ee8c99cf43cd7f5527c18975f8a6e8d0487587913ff04c3f, 513968 bytes, 1280x720@4.0s"
+  ],
+  "file": "downloads/Blue_circle_grows_on_background_20261005103017.mp4",
+  "sha256": "6182cea3f996e973ee8c99cf43cd7f5527c18975f8a6e8d0487587913ff04c3f",
+  "downloadedAt": "2026-10-05T03:31:26.032Z"
+}

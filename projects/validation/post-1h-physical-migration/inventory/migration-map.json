@@ -1,0 +1,787 @@
+{
+  "migrationId": "post1h-physical-migration",
+  "createdAt": "2026-10-05T15:40:18.668Z",
+  "moves": [
+    {
+      "itemId": "mkdir:Report/phases/phase-1",
+      "action": "mkdir",
+      "to": "Report/phases/phase-1",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "mkdir:Report/phases/phase-1g",
+      "action": "mkdir",
+      "to": "Report/phases/phase-1g",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "mkdir:Report/phases/phase-1h",
+      "action": "mkdir",
+      "to": "Report/phases/phase-1h",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "mkdir:Report/phases/phase-2",
+      "action": "mkdir",
+      "to": "Report/phases/phase-2",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "mkdir:Report/phases/post-v1",
+      "action": "mkdir",
+      "to": "Report/phases/post-v1",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "mkdir:Report/fixes/post-v1",
+      "action": "mkdir",
+      "to": "Report/fixes/post-v1",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "mkdir:Report/fixes/phase-1",
+      "action": "mkdir",
+      "to": "Report/fixes/phase-1",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "mkdir:Report/archive/phase-1",
+      "action": "mkdir",
+      "to": "Report/archive/phase-1",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "mkdir:Report/archive/post-v1",
+      "action": "mkdir",
+      "to": "Report/archive/post-v1",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "mkdir:Report/archive/post-1h",
+      "action": "mkdir",
+      "to": "Report/archive/post-1h",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "mkdir:Report/archive/phase-2",
+      "action": "mkdir",
+      "to": "Report/archive/phase-2",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "mkdir:Report/current/current-roadmap",
+      "action": "mkdir",
+      "to": "Report/current/current-roadmap",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "mkdir:Report/current/current-gates",
+      "action": "mkdir",
+      "to": "Report/current/current-gates",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "mkdir:projects/debug",
+      "action": "mkdir",
+      "to": "projects/debug",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "mkdir:projects/validation/phase-1g",
+      "action": "mkdir",
+      "to": "projects/validation/phase-1g",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "mkdir:projects/validation/phase-1h",
+      "action": "mkdir",
+      "to": "projects/validation/phase-1h",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "mkdir:projects/demos",
+      "action": "mkdir",
+      "to": "projects/demos",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "mkdir:projects/archive",
+      "action": "mkdir",
+      "to": "projects/archive",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "mkdir:projects/active",
+      "action": "mkdir",
+      "to": "projects/active",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "mkdir:out/final",
+      "action": "mkdir",
+      "to": "out/final",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "mkdir:out/preview",
+      "action": "mkdir",
+      "to": "out/preview",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "mkdir:out/test",
+      "action": "mkdir",
+      "to": "out/test",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "mkdir:out/debug",
+      "action": "mkdir",
+      "to": "out/debug",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "mkdir:out/temp",
+      "action": "mkdir",
+      "to": "out/temp",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "move:Report/FLOW_BRIDGE_ONE_COMMAND_AND_REMEMBER_TOKEN_REPORT.md",
+      "action": "move",
+      "from": "Report/FLOW_BRIDGE_ONE_COMMAND_AND_REMEMBER_TOKEN_REPORT.md",
+      "to": "Report/fixes/post-v1/FLOW_BRIDGE_ONE_COMMAND_AND_REMEMBER_TOKEN_REPORT.md",
+      "reason": "B2 bridge fix report"
+    },
+    {
+      "itemId": "move:Report/FLOW_BRIDGE_SECURITY_AND_RESET_UX_CORRECTION_REPORT.md",
+      "action": "move",
+      "from": "Report/FLOW_BRIDGE_SECURITY_AND_RESET_UX_CORRECTION_REPORT.md",
+      "to": "Report/fixes/post-v1/FLOW_BRIDGE_SECURITY_AND_RESET_UX_CORRECTION_REPORT.md",
+      "reason": "B2 bridge fix report"
+    },
+    {
+      "itemId": "move:Report/FLOW_BRIDGE_TRUSTED_CONTEXTS_LIVE_VALIDATION_REPORT.md",
+      "action": "move",
+      "from": "Report/FLOW_BRIDGE_TRUSTED_CONTEXTS_LIVE_VALIDATION_REPORT.md",
+      "to": "Report/fixes/post-v1/FLOW_BRIDGE_TRUSTED_CONTEXTS_LIVE_VALIDATION_REPORT.md",
+      "reason": "B2 bridge fix report"
+    },
+    {
+      "itemId": "move:Report/PHASE_1G11_01_STRUCTURAL_SEMANTIC_FACTUALITY_CONTINUITY_QA_REPORT.md",
+      "action": "move",
+      "from": "Report/PHASE_1G11_01_STRUCTURAL_SEMANTIC_FACTUALITY_CONTINUITY_QA_REPORT.md",
+      "to": "Report/phases/phase-1g/PHASE_1G11_01_STRUCTURAL_SEMANTIC_FACTUALITY_CONTINUITY_QA_REPORT.md",
+      "reason": "B1 final phase-1g report"
+    },
+    {
+      "itemId": "move:Report/PHASE_1G12_01_VEO_REAL_E2E_REPORT.md",
+      "action": "move",
+      "from": "Report/PHASE_1G12_01_VEO_REAL_E2E_REPORT.md",
+      "to": "Report/phases/phase-1g/PHASE_1G12_01_VEO_REAL_E2E_REPORT.md",
+      "reason": "B1 final phase-1g report"
+    },
+    {
+      "itemId": "move:Report/PHASE_1G12_02_RETROACTIVE_HARDENING_SWEEP_REPORT.md",
+      "action": "move",
+      "from": "Report/PHASE_1G12_02_RETROACTIVE_HARDENING_SWEEP_REPORT.md",
+      "to": "Report/phases/phase-1g/PHASE_1G12_02_RETROACTIVE_HARDENING_SWEEP_REPORT.md",
+      "reason": "B1 final phase-1g report"
+    },
+    {
+      "itemId": "move:Report/PHASE_1G1_01_CONTENT_ROUTING_AND_RESEARCH_PLANNING_REPORT.md",
+      "action": "move",
+      "from": "Report/PHASE_1G1_01_CONTENT_ROUTING_AND_RESEARCH_PLANNING_REPORT.md",
+      "to": "Report/phases/phase-1g/PHASE_1G1_01_CONTENT_ROUTING_AND_RESEARCH_PLANNING_REPORT.md",
+      "reason": "B1 final phase-1g report"
+    },
+    {
+      "itemId": "move:Report/PHASE_1G1_02_RESEARCH_ACQUISITION_LAYER_REPORT.md",
+      "action": "move",
+      "from": "Report/PHASE_1G1_02_RESEARCH_ACQUISITION_LAYER_REPORT.md",
+      "to": "Report/phases/phase-1g/PHASE_1G1_02_RESEARCH_ACQUISITION_LAYER_REPORT.md",
+      "reason": "B1 final phase-1g report"
+    },
+    {
+      "itemId": "move:Report/PHASE_1G1_03_EVIDENCE_RESEARCH_SUFFICIENCY_REPORT.md",
+      "action": "move",
+      "from": "Report/PHASE_1G1_03_EVIDENCE_RESEARCH_SUFFICIENCY_REPORT.md",
+      "to": "Report/phases/phase-1g/PHASE_1G1_03_EVIDENCE_RESEARCH_SUFFICIENCY_REPORT.md",
+      "reason": "B1 final phase-1g report"
+    },
+    {
+      "itemId": "move:Report/PHASE_1G1_04_RESEARCH_TO_STORY_HANDOFF_REPORT.md",
+      "action": "move",
+      "from": "Report/PHASE_1G1_04_RESEARCH_TO_STORY_HANDOFF_REPORT.md",
+      "to": "Report/phases/phase-1g/PHASE_1G1_04_RESEARCH_TO_STORY_HANDOFF_REPORT.md",
+      "reason": "B1 final phase-1g report"
+    },
+    {
+      "itemId": "move:Report/PHASE_1G1_05_DEEP_LIVE_PROVIDER_VALIDATION_FIX_REPORT.md",
+      "action": "move",
+      "from": "Report/PHASE_1G1_05_DEEP_LIVE_PROVIDER_VALIDATION_FIX_REPORT.md",
+      "to": "Report/phases/phase-1g/PHASE_1G1_05_DEEP_LIVE_PROVIDER_VALIDATION_FIX_REPORT.md",
+      "reason": "B1 final phase-1g report"
+    },
+    {
+      "itemId": "move:Report/PHASE_1G1_05_STANDARD_DEEP_RESEARCH_ESCALATION_REPORT.md",
+      "action": "move",
+      "from": "Report/PHASE_1G1_05_STANDARD_DEEP_RESEARCH_ESCALATION_REPORT.md",
+      "to": "Report/phases/phase-1g/PHASE_1G1_05_STANDARD_DEEP_RESEARCH_ESCALATION_REPORT.md",
+      "reason": "B1 final phase-1g report"
+    },
+    {
+      "itemId": "move:Report/PHASE_1G1_06_FULL_E2E_VALIDATION_REPORT.md",
+      "action": "move",
+      "from": "Report/PHASE_1G1_06_FULL_E2E_VALIDATION_REPORT.md",
+      "to": "Report/phases/phase-1g/PHASE_1G1_06_FULL_E2E_VALIDATION_REPORT.md",
+      "reason": "B1 final phase-1g report"
+    },
+    {
+      "itemId": "move:Report/PHASE_1G2_01_CREATIVE_MEMORY_REPORT.md",
+      "action": "move",
+      "from": "Report/PHASE_1G2_01_CREATIVE_MEMORY_REPORT.md",
+      "to": "Report/phases/phase-1g/PHASE_1G2_01_CREATIVE_MEMORY_REPORT.md",
+      "reason": "B1 final phase-1g report"
+    },
+    {
+      "itemId": "move:Report/PHASE_1G3_01_BEAT_SCENE_SHOT_PLANNING_REPORT.md",
+      "action": "move",
+      "from": "Report/PHASE_1G3_01_BEAT_SCENE_SHOT_PLANNING_REPORT.md",
+      "to": "Report/phases/phase-1g/PHASE_1G3_01_BEAT_SCENE_SHOT_PLANNING_REPORT.md",
+      "reason": "B1 final phase-1g report"
+    },
+    {
+      "itemId": "move:Report/PHASE_1G4_01_PROMPT_COMPILER_REPORT.md",
+      "action": "move",
+      "from": "Report/PHASE_1G4_01_PROMPT_COMPILER_REPORT.md",
+      "to": "Report/phases/phase-1g/PHASE_1G4_01_PROMPT_COMPILER_REPORT.md",
+      "reason": "B1 final phase-1g report"
+    },
+    {
+      "itemId": "move:Report/PHASE_1G5_01_VISUAL_MOTION_DECISION_ENGINE_REPORT.md",
+      "action": "move",
+      "from": "Report/PHASE_1G5_01_VISUAL_MOTION_DECISION_ENGINE_REPORT.md",
+      "to": "Report/phases/phase-1g/PHASE_1G5_01_VISUAL_MOTION_DECISION_ENGINE_REPORT.md",
+      "reason": "B1 final phase-1g report"
+    },
+    {
+      "itemId": "move:Report/PHASE_1G6_01_PROVIDER_MODEL_CAPABILITY_REGISTRY_REPORT.md",
+      "action": "move",
+      "from": "Report/PHASE_1G6_01_PROVIDER_MODEL_CAPABILITY_REGISTRY_REPORT.md",
+      "to": "Report/phases/phase-1g/PHASE_1G6_01_PROVIDER_MODEL_CAPABILITY_REGISTRY_REPORT.md",
+      "reason": "B1 final phase-1g report"
+    },
+    {
+      "itemId": "move:Report/PHASE_1G7_01_PLATFORM_POLICY_REPORT.md",
+      "action": "move",
+      "from": "Report/PHASE_1G7_01_PLATFORM_POLICY_REPORT.md",
+      "to": "Report/phases/phase-1g/PHASE_1G7_01_PLATFORM_POLICY_REPORT.md",
+      "reason": "B1 final phase-1g report"
+    },
+    {
+      "itemId": "move:Report/PHASE_1G8_01_OUTPUT_COST_CREDIT_PLANNER_REPORT.md",
+      "action": "move",
+      "from": "Report/PHASE_1G8_01_OUTPUT_COST_CREDIT_PLANNER_REPORT.md",
+      "to": "Report/phases/phase-1g/PHASE_1G8_01_OUTPUT_COST_CREDIT_PLANNER_REPORT.md",
+      "reason": "B1 final phase-1g report"
+    },
+    {
+      "itemId": "move:Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md",
+      "action": "move",
+      "from": "Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md",
+      "to": "Report/phases/phase-1g/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md",
+      "reason": "B1 final phase-1g report"
+    },
+    {
+      "itemId": "move:Report/PHASE_1G_PREFLIGHT_ROADMAP_V5_PROMPT_RULE_CONTRACT_MIGRATION_REPORT.md",
+      "action": "move",
+      "from": "Report/PHASE_1G_PREFLIGHT_ROADMAP_V5_PROMPT_RULE_CONTRACT_MIGRATION_REPORT.md",
+      "to": "Report/phases/phase-1g/PHASE_1G_PREFLIGHT_ROADMAP_V5_PROMPT_RULE_CONTRACT_MIGRATION_REPORT.md",
+      "reason": "B1 final phase-1g report"
+    },
+    {
+      "itemId": "move:Report/PHASE_1H1_01_VERSIONED_PROJECT_MANIFEST_REPORT.md",
+      "action": "move",
+      "from": "Report/PHASE_1H1_01_VERSIONED_PROJECT_MANIFEST_REPORT.md",
+      "to": "Report/phases/phase-1h/PHASE_1H1_01_VERSIONED_PROJECT_MANIFEST_REPORT.md",
+      "reason": "B1 final phase-1h report"
+    },
+    {
+      "itemId": "move:Report/PHASE_1H2_01_GENERATION_HISTORY_AND_LOCKING_REPORT.md",
+      "action": "move",
+      "from": "Report/PHASE_1H2_01_GENERATION_HISTORY_AND_LOCKING_REPORT.md",
+      "to": "Report/phases/phase-1h/PHASE_1H2_01_GENERATION_HISTORY_AND_LOCKING_REPORT.md",
+      "reason": "B1 final phase-1h report"
+    },
+    {
+      "itemId": "move:Report/PHASE_1H3_01_IDEMPOTENCY_RESUME_RECOVERY_AND_DEPENDENCY_DAG_REPORT.md",
+      "action": "move",
+      "from": "Report/PHASE_1H3_01_IDEMPOTENCY_RESUME_RECOVERY_AND_DEPENDENCY_DAG_REPORT.md",
+      "to": "Report/phases/phase-1h/PHASE_1H3_01_IDEMPOTENCY_RESUME_RECOVERY_AND_DEPENDENCY_DAG_REPORT.md",
+      "reason": "B1 final phase-1h report"
+    },
+    {
+      "itemId": "move:Report/PHASE_1H4_1H5_01_OBSERVABILITY_AND_GOLDEN_QUALITY_REGRESSION_REPORT.md",
+      "action": "move",
+      "from": "Report/PHASE_1H4_1H5_01_OBSERVABILITY_AND_GOLDEN_QUALITY_REGRESSION_REPORT.md",
+      "to": "Report/phases/phase-1h/PHASE_1H4_1H5_01_OBSERVABILITY_AND_GOLDEN_QUALITY_REGRESSION_REPORT.md",
+      "reason": "B1 final phase-1h report"
+    },
+    {
+      "itemId": "move:Report/PHASE_1H6_1H7_01_ARTIFACT_GOVERNANCE_AND_STORAGE_LIFECYCLE_REPORT.md",
+      "action": "move",
+      "from": "Report/PHASE_1H6_1H7_01_ARTIFACT_GOVERNANCE_AND_STORAGE_LIFECYCLE_REPORT.md",
+      "to": "Report/phases/phase-1h/PHASE_1H6_1H7_01_ARTIFACT_GOVERNANCE_AND_STORAGE_LIFECYCLE_REPORT.md",
+      "reason": "B1 final phase-1h report"
+    },
+    {
+      "itemId": "move:Report/PHASE_2_1_01_VOICE_BIBLE_AND_NARRATOR_PERSONA_REPORT.md",
+      "action": "move",
+      "from": "Report/PHASE_2_1_01_VOICE_BIBLE_AND_NARRATOR_PERSONA_REPORT.md",
+      "to": "Report/archive/phase-2/PHASE_2_1_01_VOICE_BIBLE_AND_NARRATOR_PERSONA_REPORT.md",
+      "reason": "B2 superseded report (FIX 02 bannered SUPERSEDED)"
+    },
+    {
+      "itemId": "move:Report/PLAYWRIGHT_AGENT_TESTING_SETUP_REPORT.md",
+      "action": "move",
+      "from": "Report/PLAYWRIGHT_AGENT_TESTING_SETUP_REPORT.md",
+      "to": "Report/archive/phase-1/PLAYWRIGHT_AGENT_TESTING_SETUP_REPORT.md",
+      "reason": "B1 superseded intermediate step/setup report"
+    },
+    {
+      "itemId": "move:Report/POST-V1B_FIX_FLOW_PAGE_NOT_READY_REPORT.md",
+      "action": "move",
+      "from": "Report/POST-V1B_FIX_FLOW_PAGE_NOT_READY_REPORT.md",
+      "to": "Report/fixes/post-v1/POST-V1B_FIX_FLOW_PAGE_NOT_READY_REPORT.md",
+      "reason": "B2 fix report"
+    },
+    {
+      "itemId": "move:Report/POST-V1B_FLOW_COMPANION_LIVE_AUTOMATION_REPORT.md",
+      "action": "move",
+      "from": "Report/POST-V1B_FLOW_COMPANION_LIVE_AUTOMATION_REPORT.md",
+      "to": "Report/archive/post-v1/POST-V1B_FLOW_COMPANION_LIVE_AUTOMATION_REPORT.md",
+      "reason": "B2 superseded intermediate"
+    },
+    {
+      "itemId": "move:Report/POST-V1C_GENERATION_READY_EXTENSION_POLISH_ROADMAP_REPORT.md",
+      "action": "move",
+      "from": "Report/POST-V1C_GENERATION_READY_EXTENSION_POLISH_ROADMAP_REPORT.md",
+      "to": "Report/archive/post-v1/POST-V1C_GENERATION_READY_EXTENSION_POLISH_ROADMAP_REPORT.md",
+      "reason": "B2 superseded intermediate"
+    },
+    {
+      "itemId": "move:Report/POST-V1D_FLOW_COMPANION_UX_SIMPLIFICATION_REPORT.md",
+      "action": "move",
+      "from": "Report/POST-V1D_FLOW_COMPANION_UX_SIMPLIFICATION_REPORT.md",
+      "to": "Report/archive/post-v1/POST-V1D_FLOW_COMPANION_UX_SIMPLIFICATION_REPORT.md",
+      "reason": "B2 superseded intermediate"
+    },
+    {
+      "itemId": "move:Report/POST-V1E_1_FLOW_LIVE_PREPARATION_FIX_REPORT.md",
+      "action": "move",
+      "from": "Report/POST-V1E_1_FLOW_LIVE_PREPARATION_FIX_REPORT.md",
+      "to": "Report/fixes/post-v1/POST-V1E_1_FLOW_LIVE_PREPARATION_FIX_REPORT.md",
+      "reason": "B2 fix report"
+    },
+    {
+      "itemId": "move:Report/POST-V1E_2B_FLOW_GENERATION_TRIGGER_LIVE_FIX_REPORT.md",
+      "action": "move",
+      "from": "Report/POST-V1E_2B_FLOW_GENERATION_TRIGGER_LIVE_FIX_REPORT.md",
+      "to": "Report/fixes/post-v1/POST-V1E_2B_FLOW_GENERATION_TRIGGER_LIVE_FIX_REPORT.md",
+      "reason": "B2 fix report"
+    },
+    {
+      "itemId": "move:Report/POST-V1E_2C_FLOW_PORTAL_SURFACE_RESOLUTION_REPORT.md",
+      "action": "move",
+      "from": "Report/POST-V1E_2C_FLOW_PORTAL_SURFACE_RESOLUTION_REPORT.md",
+      "to": "Report/archive/post-v1/POST-V1E_2C_FLOW_PORTAL_SURFACE_RESOLUTION_REPORT.md",
+      "reason": "B2 superseded intermediate"
+    },
+    {
+      "itemId": "move:Report/POST-V1E_2D_COMPOSER_TOOLBAR_DISCOVERY_REPORT.md",
+      "action": "move",
+      "from": "Report/POST-V1E_2D_COMPOSER_TOOLBAR_DISCOVERY_REPORT.md",
+      "to": "Report/archive/post-v1/POST-V1E_2D_COMPOSER_TOOLBAR_DISCOVERY_REPORT.md",
+      "reason": "B2 superseded intermediate"
+    },
+    {
+      "itemId": "move:Report/POST-V1E_2E_CANDIDATE_IDENTITY_AND_SIDE_EFFECT_SAFETY_REPORT.md",
+      "action": "move",
+      "from": "Report/POST-V1E_2E_CANDIDATE_IDENTITY_AND_SIDE_EFFECT_SAFETY_REPORT.md",
+      "to": "Report/archive/post-v1/POST-V1E_2E_CANDIDATE_IDENTITY_AND_SIDE_EFFECT_SAFETY_REPORT.md",
+      "reason": "B2 superseded intermediate"
+    },
+    {
+      "itemId": "move:Report/POST-V1E_2F_AGENT_MODE_ROUTING_AND_DEFAULTS_REPORT.md",
+      "action": "move",
+      "from": "Report/POST-V1E_2F_AGENT_MODE_ROUTING_AND_DEFAULTS_REPORT.md",
+      "to": "Report/archive/post-v1/POST-V1E_2F_AGENT_MODE_ROUTING_AND_DEFAULTS_REPORT.md",
+      "reason": "B2 superseded intermediate"
+    },
+    {
+      "itemId": "move:Report/POST-V1E_2G_AGENT_SURFACE_AND_PROMPT_LOGICAL_TEXT_REPORT.md",
+      "action": "move",
+      "from": "Report/POST-V1E_2G_AGENT_SURFACE_AND_PROMPT_LOGICAL_TEXT_REPORT.md",
+      "to": "Report/archive/post-v1/POST-V1E_2G_AGENT_SURFACE_AND_PROMPT_LOGICAL_TEXT_REPORT.md",
+      "reason": "B2 superseded intermediate"
+    },
+    {
+      "itemId": "move:Report/POST-V1E_2_FLOW_GENERATION_TYPE_LIVE_RESOLVER_REPORT.md",
+      "action": "move",
+      "from": "Report/POST-V1E_2_FLOW_GENERATION_TYPE_LIVE_RESOLVER_REPORT.md",
+      "to": "Report/archive/post-v1/POST-V1E_2_FLOW_GENERATION_TYPE_LIVE_RESOLVER_REPORT.md",
+      "reason": "B2 superseded intermediate"
+    },
+    {
+      "itemId": "move:Report/POST-V1E_FIX_02_FLOW_COMPOSER_READINESS_REPORT.md",
+      "action": "move",
+      "from": "Report/POST-V1E_FIX_02_FLOW_COMPOSER_READINESS_REPORT.md",
+      "to": "Report/fixes/post-v1/POST-V1E_FIX_02_FLOW_COMPOSER_READINESS_REPORT.md",
+      "reason": "B2 fix report"
+    },
+    {
+      "itemId": "move:Report/POST-V1E_FIX_03_PROMPT_INSERT_VERIFY_REPORT.md",
+      "action": "move",
+      "from": "Report/POST-V1E_FIX_03_PROMPT_INSERT_VERIFY_REPORT.md",
+      "to": "Report/fixes/post-v1/POST-V1E_FIX_03_PROMPT_INSERT_VERIFY_REPORT.md",
+      "reason": "B2 fix report"
+    },
+    {
+      "itemId": "move:Report/POST-V1E_FIX_AUTO_PREPARATION_STALL_REPORT.md",
+      "action": "move",
+      "from": "Report/POST-V1E_FIX_AUTO_PREPARATION_STALL_REPORT.md",
+      "to": "Report/fixes/post-v1/POST-V1E_FIX_AUTO_PREPARATION_STALL_REPORT.md",
+      "reason": "B2 fix report"
+    },
+    {
+      "itemId": "move:Report/POST-V1E_FLOW_COMPANION_FUNCTIONAL_AUTOMATION_REPORT.md",
+      "action": "move",
+      "from": "Report/POST-V1E_FLOW_COMPANION_FUNCTIONAL_AUTOMATION_REPORT.md",
+      "to": "Report/archive/post-v1/POST-V1E_FLOW_COMPANION_FUNCTIONAL_AUTOMATION_REPORT.md",
+      "reason": "B2 superseded intermediate"
+    },
+    {
+      "itemId": "move:Report/POST-V1F_REAL_GENERATION_DOWNLOAD_IMPORT_REPORT.md",
+      "action": "move",
+      "from": "Report/POST-V1F_REAL_GENERATION_DOWNLOAD_IMPORT_REPORT.md",
+      "to": "Report/archive/post-v1/POST-V1F_REAL_GENERATION_DOWNLOAD_IMPORT_REPORT.md",
+      "reason": "B2 superseded intermediate"
+    },
+    {
+      "itemId": "move:Report/POST-V1_FLOW_LIVE_VALIDATION_REPORT.md",
+      "action": "move",
+      "from": "Report/POST-V1_FLOW_LIVE_VALIDATION_REPORT.md",
+      "to": "Report/phases/post-v1/POST-V1_FLOW_LIVE_VALIDATION_REPORT.md",
+      "reason": "B1 validation gate"
+    },
+    {
+      "itemId": "move:Report/POST_1H_REPOSITORY_HYGIENE_AND_WORKSPACE_MIGRATION_REPORT.md",
+      "action": "move",
+      "from": "Report/POST_1H_REPOSITORY_HYGIENE_AND_WORKSPACE_MIGRATION_REPORT.md",
+      "to": "Report/archive/post-1h/POST_1H_REPOSITORY_HYGIENE_AND_WORKSPACE_MIGRATION_REPORT.md",
+      "reason": "B2 previous gate superseded by this FIX"
+    },
+    {
+      "itemId": "move:Report/PRE_POSTV1_MASCOT_FOUNDATION_REPORT.md",
+      "action": "move",
+      "from": "Report/PRE_POSTV1_MASCOT_FOUNDATION_REPORT.md",
+      "to": "Report/archive/post-v1/PRE_POSTV1_MASCOT_FOUNDATION_REPORT.md",
+      "reason": "B2 historical foundation doc"
+    },
+    {
+      "itemId": "move:Report/REMOTION_WINDOWS_RENDER_ENVIRONMENT_FIX_REPORT.md",
+      "action": "move",
+      "from": "Report/REMOTION_WINDOWS_RENDER_ENVIRONMENT_FIX_REPORT.md",
+      "to": "Report/fixes/phase-1/REMOTION_WINDOWS_RENDER_ENVIRONMENT_FIX_REPORT.md",
+      "reason": "B2 environment fix"
+    },
+    {
+      "itemId": "move:Report/REPOSITORY_ROOT_CLEANUP_AND_STRUCTURE_REPORT.md",
+      "action": "move",
+      "from": "Report/REPOSITORY_ROOT_CLEANUP_AND_STRUCTURE_REPORT.md",
+      "to": "Report/archive/phase-1/REPOSITORY_ROOT_CLEANUP_AND_STRUCTURE_REPORT.md",
+      "reason": "B1 superseded intermediate step/setup report"
+    },
+    {
+      "itemId": "move:Report/STEP-01_REPORT.md",
+      "action": "move",
+      "from": "Report/STEP-01_REPORT.md",
+      "to": "Report/archive/phase-1/STEP-01_REPORT.md",
+      "reason": "B1 superseded intermediate step/setup report"
+    },
+    {
+      "itemId": "move:Report/STEP-02_REPORT.md",
+      "action": "move",
+      "from": "Report/STEP-02_REPORT.md",
+      "to": "Report/archive/phase-1/STEP-02_REPORT.md",
+      "reason": "B1 superseded intermediate step/setup report"
+    },
+    {
+      "itemId": "move:Report/STEP-03_REPORT.md",
+      "action": "move",
+      "from": "Report/STEP-03_REPORT.md",
+      "to": "Report/archive/phase-1/STEP-03_REPORT.md",
+      "reason": "B1 superseded intermediate step/setup report"
+    },
+    {
+      "itemId": "move:Report/STEP-04_FIX_REPORT.md",
+      "action": "move",
+      "from": "Report/STEP-04_FIX_REPORT.md",
+      "to": "Report/archive/phase-1/STEP-04_FIX_REPORT.md",
+      "reason": "B1 superseded intermediate step/setup report"
+    },
+    {
+      "itemId": "move:Report/STEP-04_REPORT.md",
+      "action": "move",
+      "from": "Report/STEP-04_REPORT.md",
+      "to": "Report/archive/phase-1/STEP-04_REPORT.md",
+      "reason": "B1 superseded intermediate step/setup report"
+    },
+    {
+      "itemId": "move:Report/STEP-05_REPORT.md",
+      "action": "move",
+      "from": "Report/STEP-05_REPORT.md",
+      "to": "Report/archive/phase-1/STEP-05_REPORT.md",
+      "reason": "B1 superseded intermediate step/setup report"
+    },
+    {
+      "itemId": "move:Report/STEP-06_REPORT.md",
+      "action": "move",
+      "from": "Report/STEP-06_REPORT.md",
+      "to": "Report/archive/phase-1/STEP-06_REPORT.md",
+      "reason": "B1 superseded intermediate step/setup report"
+    },
+    {
+      "itemId": "move:Report/STEP-07_REPORT.md",
+      "action": "move",
+      "from": "Report/STEP-07_REPORT.md",
+      "to": "Report/archive/phase-1/STEP-07_REPORT.md",
+      "reason": "B1 superseded intermediate step/setup report"
+    },
+    {
+      "itemId": "move:Report/STEP-08_FIX_2_REPORT.md",
+      "action": "move",
+      "from": "Report/STEP-08_FIX_2_REPORT.md",
+      "to": "Report/archive/phase-1/STEP-08_FIX_2_REPORT.md",
+      "reason": "B1 superseded intermediate step/setup report"
+    },
+    {
+      "itemId": "move:Report/STEP-08_FIX_REPORT.md",
+      "action": "move",
+      "from": "Report/STEP-08_FIX_REPORT.md",
+      "to": "Report/archive/phase-1/STEP-08_FIX_REPORT.md",
+      "reason": "B1 superseded intermediate step/setup report"
+    },
+    {
+      "itemId": "move:Report/STEP-08_REPORT.md",
+      "action": "move",
+      "from": "Report/STEP-08_REPORT.md",
+      "to": "Report/archive/phase-1/STEP-08_REPORT.md",
+      "reason": "B1 superseded intermediate step/setup report"
+    },
+    {
+      "itemId": "move:Report/STEP-09_REPORT.md",
+      "action": "move",
+      "from": "Report/STEP-09_REPORT.md",
+      "to": "Report/archive/phase-1/STEP-09_REPORT.md",
+      "reason": "B1 superseded intermediate step/setup report"
+    },
+    {
+      "itemId": "move:Report/STEP-10A_FIX_DURATION_REPORT.md",
+      "action": "move",
+      "from": "Report/STEP-10A_FIX_DURATION_REPORT.md",
+      "to": "Report/archive/phase-1/STEP-10A_FIX_DURATION_REPORT.md",
+      "reason": "B1 superseded intermediate step/setup report"
+    },
+    {
+      "itemId": "move:Report/STEP-10A_REPORT.md",
+      "action": "move",
+      "from": "Report/STEP-10A_REPORT.md",
+      "to": "Report/archive/phase-1/STEP-10A_REPORT.md",
+      "reason": "B1 superseded intermediate step/setup report"
+    },
+    {
+      "itemId": "move:Report/STEP-10B_FIX_SAFETY_RETRY_REPORT.md",
+      "action": "move",
+      "from": "Report/STEP-10B_FIX_SAFETY_RETRY_REPORT.md",
+      "to": "Report/archive/phase-1/STEP-10B_FIX_SAFETY_RETRY_REPORT.md",
+      "reason": "B1 superseded intermediate step/setup report"
+    },
+    {
+      "itemId": "move:Report/STEP-10B_REPORT.md",
+      "action": "move",
+      "from": "Report/STEP-10B_REPORT.md",
+      "to": "Report/archive/phase-1/STEP-10B_REPORT.md",
+      "reason": "B1 superseded intermediate step/setup report"
+    },
+    {
+      "itemId": "move:Report/STEP-10C_REPORT.md",
+      "action": "move",
+      "from": "Report/STEP-10C_REPORT.md",
+      "to": "Report/archive/phase-1/STEP-10C_REPORT.md",
+      "reason": "B1 superseded intermediate step/setup report"
+    },
+    {
+      "itemId": "move:Report/STEP-11_REPORT.md",
+      "action": "move",
+      "from": "Report/STEP-11_REPORT.md",
+      "to": "Report/archive/phase-1/STEP-11_REPORT.md",
+      "reason": "B1 superseded intermediate step/setup report"
+    },
+    {
+      "itemId": "move:Report/STEP-12_REPORT.md",
+      "action": "move",
+      "from": "Report/STEP-12_REPORT.md",
+      "to": "Report/archive/phase-1/STEP-12_REPORT.md",
+      "reason": "B1 superseded intermediate step/setup report"
+    },
+    {
+      "itemId": "move:Report/STEP-13_REPORT.md",
+      "action": "move",
+      "from": "Report/STEP-13_REPORT.md",
+      "to": "Report/archive/phase-1/STEP-13_REPORT.md",
+      "reason": "B1 superseded intermediate step/setup report"
+    },
+    {
+      "itemId": "move:Report/STEP-14_REPORT.md",
+      "action": "move",
+      "from": "Report/STEP-14_REPORT.md",
+      "to": "Report/archive/phase-1/STEP-14_REPORT.md",
+      "reason": "B1 superseded intermediate step/setup report"
+    },
+    {
+      "itemId": "move:projects/DBG_1G12",
+      "action": "move",
+      "from": "projects/DBG_1G12",
+      "to": "projects/debug/DBG_1G12",
+      "reason": "B4 frozen debug project with registry-only refs"
+    },
+    {
+      "itemId": "move:projects/DBG_H4",
+      "action": "move",
+      "from": "projects/DBG_H4",
+      "to": "projects/debug/DBG_H4",
+      "reason": "B4 frozen debug project with registry-only refs"
+    },
+    {
+      "itemId": "move:projects/E2E_bench_panel",
+      "action": "move",
+      "from": "projects/E2E_bench_panel",
+      "to": "projects/debug/E2E_bench_panel",
+      "reason": "B4 frozen debug project with registry-only refs"
+    },
+    {
+      "itemId": "move:projects/live-1g1-http308",
+      "action": "move",
+      "from": "projects/live-1g1-http308",
+      "to": "projects/debug/live-1g1-http308",
+      "reason": "B4 frozen debug project with registry-only refs"
+    },
+    {
+      "itemId": "move:projects/phase1g12-hardening",
+      "action": "move",
+      "from": "projects/phase1g12-hardening",
+      "to": "projects/validation/phase-1g/phase1g12-hardening",
+      "reason": "B3 frozen validation project, registry+history refs only"
+    },
+    {
+      "itemId": "move:projects/phase1h1-validation",
+      "action": "move",
+      "from": "projects/phase1h1-validation",
+      "to": "projects/validation/phase-1h/phase1h1-validation",
+      "reason": "B3 frozen validation project, test outDir constants updated alongside"
+    },
+    {
+      "itemId": "move:projects/phase1h2-validation",
+      "action": "move",
+      "from": "projects/phase1h2-validation",
+      "to": "projects/validation/phase-1h/phase1h2-validation",
+      "reason": "B3 frozen validation project, test outDir constants updated alongside"
+    },
+    {
+      "itemId": "move:projects/phase1h3-validation",
+      "action": "move",
+      "from": "projects/phase1h3-validation",
+      "to": "projects/validation/phase-1h/phase1h3-validation",
+      "reason": "B3 frozen validation project, test outDir constants updated alongside"
+    },
+    {
+      "itemId": "move:projects/phase1h45-validation",
+      "action": "move",
+      "from": "projects/phase1h45-validation",
+      "to": "projects/validation/phase-1h/phase1h45-validation",
+      "reason": "B3 frozen validation project, test outDir constants updated alongside"
+    },
+    {
+      "itemId": "move:projects/phase1h67-validation",
+      "action": "move",
+      "from": "projects/phase1h67-validation",
+      "to": "projects/validation/phase-1h/phase1h67-validation",
+      "reason": "B3 frozen validation project, test outDir constants updated alongside"
+    },
+    {
+      "itemId": "move:out/bridge-2g-live.log",
+      "action": "move",
+      "from": "out/bridge-2g-live.log",
+      "to": "out/temp/bridge-2g-live.log",
+      "reason": "B6 playwright/bridge scratch, no refs (EPHEMERAL)"
+    },
+    {
+      "itemId": "move:out/_cdp2g.js",
+      "action": "move",
+      "from": "out/_cdp2g.js",
+      "to": "out/temp/_cdp2g.js",
+      "reason": "B6 playwright/bridge scratch, no refs (EPHEMERAL)"
+    },
+    {
+      "itemId": "move:out/_e_logincheck.txt",
+      "action": "move",
+      "from": "out/_e_logincheck.txt",
+      "to": "out/temp/_e_logincheck.txt",
+      "reason": "B6 playwright/bridge scratch, no refs (EPHEMERAL)"
+    },
+    {
+      "itemId": "move:out/_launch2g.js",
+      "action": "move",
+      "from": "out/_launch2g.js",
+      "to": "out/temp/_launch2g.js",
+      "reason": "B6 playwright/bridge scratch, no refs (EPHEMERAL)"
+    },
+    {
+      "itemId": "move:out/_pw.err",
+      "action": "move",
+      "from": "out/_pw.err",
+      "to": "out/temp/_pw.err",
+      "reason": "B6 playwright/bridge scratch, no refs (EPHEMERAL)"
+    },
+    {
+      "itemId": "move:out/_pw.log",
+      "action": "move",
+      "from": "out/_pw.log",
+      "to": "out/temp/_pw.log",
+      "reason": "B6 playwright/bridge scratch, no refs (EPHEMERAL)"
+    },
+    {
+      "itemId": "move:out/_pw.ps1",
+      "action": "move",
+      "from": "out/_pw.ps1",
+      "to": "out/temp/_pw.ps1",
+      "reason": "B6 playwright/bridge scratch, no refs (EPHEMERAL)"
+    },
+    {
+      "itemId": "move:out/pilot-sky-blue",
+      "action": "move",
+      "from": "out/pilot-sky-blue",
+      "to": "out/final/pilot-sky-blue",
+      "reason": "B6 final deliverable set (DURABLE)"
+    },
+    {
+      "itemId": "move:out/postv1-flow-live-validation",
+      "action": "move",
+      "from": "out/postv1-flow-live-validation",
+      "to": "out/final/postv1-flow-live-validation",
+      "reason": "B6 validation deliverable (DURABLE)"
+    }
+  ]
+}

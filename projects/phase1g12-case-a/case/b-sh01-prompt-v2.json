@@ -1,0 +1,18 @@
+{
+  "promptPackageId": "pp-b42c2e0af4b2",
+  "promptSpecId": "ps-aade8d1b8766",
+  "labelMap": {
+    "B-SH01": "sh-6feb6bbd91cc",
+    "B-SC01": "sc-f49ec2973868"
+  },
+  "compiledPrompt": "MUST PRESERVE: referenceFrameAppearance\nSUBJECT: A minimal matte blue circle rests centered on a clean light background; the camera pushes in slowly on the circle as it gently scales up, holding its shape and color without distortion.\nACTION: slow push-in on the blue circle",
+  "requiredCapabilities": [
+    "VIDEO_GENERATION",
+    "IMAGE_TO_VIDEO"
+  ],
+  "hasReferenceFrame": true,
+  "referenceIds": [
+    "as-fe697fd1fef8"
+  ],
+  "fingerprint": "c999cc096b9fdbf2"
+}

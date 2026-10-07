@@ -1,0 +1,78 @@
+{
+  "version": "1.0.0",
+  "capturedAt": "2026-10-05T05:17:28.206Z",
+  "track": "B-extension",
+  "environment": "Playwright Chromium headless (new), MV3 extension loaded unpacked; own bridge on ephemeral loopback port; offline Flow stub tab",
+  "metrics": [
+    {
+      "metric": "sidepanelOpenToUsable",
+      "method": "navigation to chrome-extension://<id>/src/ui/sidepanel.html until #status-text populated (5 fresh panel loads, one context)",
+      "sampleCount": 5,
+      "baseline": {
+        "minMs": 52,
+        "medianMs": 57,
+        "maxMs": 116
+      },
+      "targetOrBudget": "<1000ms",
+      "reasonForTarget": "panel must feel instant on open",
+      "result": "PASS"
+    },
+    {
+      "metric": "jobCardRenderLatency",
+      "method": "token entry (remember) → job fetched → job card content attached (1 sample; includes token-recovery pipeline, job fetch, live-tab revalidation)",
+      "sampleCount": 1,
+      "baseline": {
+        "ms": 856
+      },
+      "targetOrBudget": "<5000ms",
+      "reasonForTarget": "primary task first render",
+      "result": "PASS"
+    },
+    {
+      "metric": "bundleSize",
+      "method": "du -sh of .output/chrome-mv3",
+      "sampleCount": 1,
+      "baseline": {
+        "totalKb": 483,
+        "files": 30,
+        "serviceWorkerBytes": 21535,
+        "sidepanelJsBytes": 54014
+      },
+      "targetOrBudget": "<2MB unpacked",
+      "reasonForTarget": "MV3 install/parse cost",
+      "result": "PASS"
+    },
+    {
+      "metric": "extensionSuite",
+      "method": "flow-companion/extension npm test",
+      "sampleCount": 1,
+      "baseline": "533 assertions (8 new credit-gate TI tests), 0 failed",
+      "targetOrBudget": "0 failed",
+      "reasonForTarget": "release gate",
+      "result": "PASS"
+    },
+    {
+      "metric": "e2ePanelLifecycle",
+      "method": "npx playwright test tests/e2e/flow-companion.spec.js",
+      "sampleCount": 1,
+      "baseline": "1 passed (4.7s)",
+      "targetOrBudget": "pass",
+      "reasonForTarget": "real-browser bridge/panel contract",
+      "result": "PASS"
+    }
+  ],
+  "notMeasured": [
+    {
+      "metric": "actionFeedbackLatency",
+      "reason": "side-panel CSS treats several controls as hidden in plain headless tabs (container-query layout); Playwright visibility-gated clicks time out. Functional interaction coverage is provided by the e2e suite; interactive latency needs the operator Chrome environment"
+    },
+    {
+      "metric": "idleCPU/activeCPU/memoryGrowth/observerCallbackRate/pollFrequency (runtime)",
+      "reason": "require the operator real-Chrome session with the Flow page (no remote debugging available); static audit (Track B) recorded the polling rates and bounded every observer window"
+    },
+    {
+      "metric": "reconnectLatency",
+      "reason": "bridge restart/resync is covered deterministically by tests/flow (L-series, state-machine reload tests); a live reconnect benchmark requires the operator session"
+    }
+  ]
+}

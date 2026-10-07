@@ -64,6 +64,11 @@
         if (failed) return "NEED_ATTENTION";
         if (opts.generationReady === false && opts.preparationActive === true) return "PREPARING";
         return "AWAITING_USER_APPROVAL";
+      case "AWAITING_PROVIDER_ACCEPTANCE":
+        // Submit issued, acceptance pending (hardening sweep): the user may
+        // need to click Start — same human action as awaiting approval, but
+        // the approval must NOT be re-recordable (bridge enforces it).
+        return "AWAITING_USER_APPROVAL";
       case "PREPARED":
       case "VALIDATED":
         if (opts.preparationActive === true) return "PREPARING";

@@ -1,0 +1,84 @@
+{
+  "draftId": "drf-f3c620ade6c8",
+  "draftVersion": "1.0.0",
+  "templateVersion": "story-template-1.0.0",
+  "contentClass": "FACTUAL",
+  "narrativeBriefRef": {
+    "briefId": "nb-630065c52636"
+  },
+  "researchPackRef": {
+    "packId": "pack-badb977fc948",
+    "packHash": "badb977fc9489b80"
+  },
+  "platform": "youtube",
+  "providerId": "deterministic-composer",
+  "generatedAt": "2026-10-03T02:24:56.080Z",
+  "sections": [
+    {
+      "sectionId": "hook",
+      "purpose": "hook: surprising documented fact",
+      "draftText": "A question worth asking: why does HTTP 308 preserve the request method when 301 does not. This story follows the evidence to an answer.",
+      "claimRefs": [],
+      "classificationRefs": [],
+      "requiredAttributionsSatisfied": [],
+      "storyFunction": "hook"
+    },
+    {
+      "sectionId": "q0",
+      "purpose": "answer viewer question: What is the documented timeline of \"HTTP 308 Permanent Redirect semantics\" (key dates, sequence, participants)?",
+      "draftText": "HTTP 308 Permanent Redirect indicates the resource has permanently moved to the Location URI, and the request method and body must not be altered when following the redirect.",
+      "claimRefs": [
+        "clm-ede7c751ff68"
+      ],
+      "classificationRefs": [],
+      "requiredAttributionsSatisfied": [
+        {
+          "claimId": "clm-ede7c751ff68",
+          "satisfied": true
+        }
+      ],
+      "storyFunction": "development"
+    },
+    {
+      "sectionId": "q1",
+      "purpose": "answer viewer question: What primary evidence (records, artifacts, measurements, official sources) supports the core claims about \"HTTP 308 Perm",
+      "draftText": "HTTP 308 was originally defined by RFC 7538 and was later absorbed into RFC 9110 HTTP Semantics.",
+      "claimRefs": [
+        "clm-d03297df9a11"
+      ],
+      "classificationRefs": [],
+      "requiredAttributionsSatisfied": [
+        {
+          "claimId": "clm-d03297df9a11",
+          "satisfied": true
+        }
+      ],
+      "storyFunction": "development"
+    },
+    {
+      "sectionId": "q2",
+      "purpose": "answer viewer question: Which identities, dates, locations, and numbers in \"HTTP 308 Permanent Redirect semantics\" must be verified before scrip",
+      "draftText": "Unlike 301, which may incorrectly change a POST request into a GET request, 308 never changes the request method.",
+      "claimRefs": [
+        "clm-c59412e9d345"
+      ],
+      "classificationRefs": [],
+      "requiredAttributionsSatisfied": [
+        {
+          "claimId": "clm-c59412e9d345",
+          "satisfied": true
+        }
+      ],
+      "storyFunction": "development"
+    },
+    {
+      "sectionId": "payoff",
+      "purpose": "Use 308 whenever API methods and bodies must survive a permanent move.",
+      "draftText": "Use 308 whenever API methods and bodies must survive a permanent move.",
+      "claimRefs": [],
+      "classificationRefs": [],
+      "requiredAttributionsSatisfied": [],
+      "storyFunction": "payoff"
+    }
+  ]
+}

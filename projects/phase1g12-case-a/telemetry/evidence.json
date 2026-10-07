@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectId": "phase1g12-case-a",
+  "revision": 5,
+  "createdAt": "2026-10-05T07:40:52.214Z",
+  "updatedAt": "2026-10-05T07:40:52.247Z",
+  "fingerprint": "59a3ac047b54e9f9",
+  "items": {
+    "evi-10853388da19": {
+      "evidenceId": "evi-10853388da19",
+      "kind": "QA_RESULT",
+      "source": "1G.11 QA",
+      "createdAt": "2026-10-05T03:19:50.264Z",
+      "projectId": "phase1g12-case-a",
+      "jobId": null,
+      "attemptId": null,
+      "artifactRef": null,
+      "hash": null,
+      "path": "projects/phase1g12-case-a/qa/case-b-attempt-02-qa-summary.json",
+      "immutable": true,
+      "provenance": "MIGRATED"
+    },
+    "evi-56e73f42d2ed": {
+      "evidenceId": "evi-56e73f42d2ed",
+      "kind": "QA_RESULT",
+      "source": "1G.11 QA",
+      "createdAt": "2026-10-05T03:31:26.268Z",
+      "projectId": "phase1g12-case-a",
+      "jobId": null,
+      "attemptId": null,
+      "artifactRef": null,
+      "hash": null,
+      "path": "projects/phase1g12-case-a/qa/case-c-attempt-01-qa-summary.json",
+      "immutable": true,
+      "provenance": "MIGRATED"
+    },
+    "evi-f74d04a41d0a": {
+      "evidenceId": "evi-f74d04a41d0a",
+      "kind": "COST_READBACK",
+      "source": "case-ledger reconcile",
+      "createdAt": "2026-10-05T05:35:40.315Z",
+      "projectId": "phase1g12-case-a",
+      "jobId": null,
+      "attemptId": null,
+      "artifactRef": null,
+      "hash": null,
+      "path": "projects/phase1g12-case-a/budget/ledger.json",
+      "immutable": true,
+      "provenance": "MIGRATED"
+    },
+    "evi-a0beb8b8f4f9": {
+      "evidenceId": "evi-a0beb8b8f4f9",
+      "kind": "CORRELATION",
+      "source": "ceremony correlation",
+      "createdAt": "2026-10-05T04:06:01.279Z",
+      "projectId": "phase1g12-case-a",
+      "jobId": null,
+      "attemptId": null,
+      "artifactRef": null,
+      "hash": null,
+      "path": "projects/phase1g12-case-a/case/case-d-D1-attempt-01-correlation.json",
+      "immutable": true,
+      "provenance": "MIGRATED"
+    }
+  }
+}

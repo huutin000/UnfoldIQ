@@ -1,0 +1,95 @@
+{
+ "status": "HANDOFF_READY",
+ "contentClass": "FACTUAL",
+ "researchRequired": "REQUIRED",
+ "researchMode": "STANDARD",
+ "sufficiency": "SUFFICIENT",
+ "deepEscalated": false,
+ "deepRunStatus": "NOT_RUN",
+ "packStatus": "SCRIPT_READY",
+ "storyStatus": "PASS",
+ "handoffStatus": "READY",
+ "sources": {
+  "registered": 3,
+  "independentGroups": 3,
+  "searchResults": 3,
+  "acquisitionFailed": 0
+ },
+ "sourcesRegistered": [
+  "src-048e66b5112e",
+  "src-9c7cc5db9f6d",
+  "src-204d096ca9ed"
+ ],
+ "packs": {
+  "path": "research/research-pack.json",
+  "packId": "pack-badb977fc948",
+  "packHash": "badb977fc9489b80"
+ },
+ "brief": {
+  "path": "story/narrative-brief.json",
+  "briefId": "nb-630065c52636"
+ },
+ "draft": {
+  "path": "story/story-draft.json",
+  "draftId": "drf-f3c620ade6c8"
+ },
+ "audit": {
+  "path": "story/story-evidence-audit.json",
+  "auditId": "aud-f3c620ade6c8",
+  "state": "PASS"
+ },
+ "lineage": [
+  {
+   "layer": "topic",
+   "ref": "HTTP 308 Permanent Redirect semantics",
+   "inputRef": null
+  },
+  {
+   "layer": "contentClass",
+   "ref": "FACTUAL",
+   "inputRef": "HTTP 308 Permanent Redirect semantics"
+  },
+  {
+   "layer": "researchPlan",
+   "ref": "76bab066c08143fb",
+   "inputRef": "HTTP 308 Permanent Redirect semantics/FACTUAL"
+  },
+  {
+   "layer": "acquiredDocuments",
+   "ref": "src-048e66b5112e@359cf28aed3b,src-9c7cc5db9f6d@b5642f6a1984,src-204d096ca9ed@52962aaa56c2",
+   "inputRef": "searchExchange->canonical acquisition"
+  },
+  {
+   "layer": "sourceRegistry",
+   "ref": "src:3",
+   "inputRef": "acquiredDocuments"
+  },
+  {
+   "layer": "evidenceState",
+   "ref": "claims:3",
+   "inputRef": "sourceRegistry+independence"
+  },
+  {
+   "layer": "researchPack",
+   "ref": "pack-badb977fc948",
+   "inputRef": "evidenceState"
+  },
+  {
+   "layer": "narrativeBrief",
+   "ref": "nb-630065c52636",
+   "inputRef": "pack-badb977fc948/editorial"
+  },
+  {
+   "layer": "storyDraft",
+   "ref": "drf-f3c620ade6c8",
+   "inputRef": "nb-630065c52636"
+  },
+  {
+   "layer": "storyAudit",
+   "ref": "aud-f3c620ade6c8",
+   "inputRef": "drf-f3c620ade6c8"
+  }
+ ],
+ "warnings": [],
+ "blockers": []
+}

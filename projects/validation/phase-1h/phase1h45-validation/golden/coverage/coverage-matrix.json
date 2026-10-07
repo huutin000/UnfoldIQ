@@ -1,0 +1,92 @@
+{
+  "artifact": "coverage-matrix",
+  "decidedAt": "2026-10-05T07:41:05.889Z",
+  "matrix": {
+    "FACTUAL": {
+      "status": "COVERED",
+      "goldens": [
+        "gold-factual-explainer"
+      ]
+    },
+    "FICTION": {
+      "status": "COVERED",
+      "goldens": [
+        "gold-fiction-continuity",
+        "gold-originality-study",
+        "gold-image-only"
+      ]
+    },
+    "HYBRID": {
+      "status": "DEFERRED_WITH_REASON",
+      "goldens": [],
+      "reason": "no hybrid production evidence in 1G/1H stores"
+    },
+    "CHARACTER_CONTINUITY": {
+      "status": "COVERED",
+      "goldens": [
+        "gold-fiction-continuity"
+      ]
+    },
+    "ASPECT_16_9": {
+      "status": "COVERED",
+      "goldens": [
+        "gold-factual-explainer",
+        "gold-fiction-continuity",
+        "gold-originality-study",
+        "gold-voice-caption",
+        "gold-image-only"
+      ]
+    },
+    "ASPECT_9_16": {
+      "status": "DEFERRED_WITH_REASON",
+      "goldens": [],
+      "reason": "no 9:16 renders in evidence; definition exists, execution deferred"
+    },
+    "IMAGE_ONLY": {
+      "status": "COVERED",
+      "goldens": [
+        "gold-image-only"
+      ]
+    },
+    "SELECTIVE_VEO": {
+      "status": "COVERED",
+      "goldens": [
+        "gold-fiction-continuity"
+      ]
+    },
+    "RESEARCH_HEAVY": {
+      "status": "COVERED",
+      "goldens": [
+        "gold-factual-explainer"
+      ]
+    },
+    "SPOKEN_HUMANIZATION": {
+      "status": "PARTIALLY_COVERED",
+      "goldens": [
+        "gold-factual-explainer",
+        "gold-voice-caption"
+      ],
+      "reason": "script+claim alignment measured; naturalness needs reviewer"
+    },
+    "VOICE_CAPTION": {
+      "status": "PARTIALLY_COVERED",
+      "goldens": [
+        "gold-voice-caption"
+      ],
+      "reason": "sync deterministic; flicker/pronunciation need renders/reviewers"
+    },
+    "VISUAL_FACTUALITY": {
+      "status": "PARTIALLY_COVERED",
+      "goldens": [
+        "gold-factual-explainer"
+      ],
+      "reason": "claim→source trace measured; visual nuance needs reviewer"
+    },
+    "ORIGINALITY": {
+      "status": "COVERED",
+      "goldens": [
+        "gold-originality-study"
+      ]
+    }
+  }
+}

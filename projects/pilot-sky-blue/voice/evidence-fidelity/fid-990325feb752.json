@@ -1,0 +1,682 @@
+{
+  "schemaVersion": "1.0.0",
+  "decisionId": "fid-990325feb752",
+  "version": 1,
+  "projectId": "pilot-sky-blue",
+  "contentMode": "everyday-physics-explainer",
+  "contentClass": "FACTUAL",
+  "sourceScriptRef": {
+    "artifact": "script.json",
+    "version": "1.0.0"
+  },
+  "humanizationRef": "hum-0bace554a609",
+  "checks": [
+    {
+      "checkId": "S1:NUMBER",
+      "segmentId": "S1",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S1:DATE",
+      "segmentId": "S1",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S1:QUOTE",
+      "segmentId": "S1",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S1:NAME",
+      "segmentId": "S1",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S1:CAVEAT",
+      "segmentId": "S1",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S1:UNCERTAINTY",
+      "segmentId": "S1",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S1:CLASSIFICATION",
+      "segmentId": "S1",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S1:EVIDENCE",
+      "segmentId": "S1",
+      "protectedItemType": "FACT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": "no claims declared for this segment",
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S2:NUMBER",
+      "segmentId": "S2",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S2:DATE",
+      "segmentId": "S2",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S2:QUOTE",
+      "segmentId": "S2",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S2:NAME",
+      "segmentId": "S2",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S2:CAVEAT",
+      "segmentId": "S2",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S2:UNCERTAINTY",
+      "segmentId": "S2",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S2:COMPARISON:far smaller than",
+      "segmentId": "S2",
+      "protectedItemType": "COMPARISON",
+      "sourceValue": "far smaller than",
+      "candidateValue": "far smaller than",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S2:CLASSIFICATION",
+      "segmentId": "S2",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S2:EVIDENCE",
+      "segmentId": "S2",
+      "protectedItemType": "FACT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": "no claims declared for this segment",
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S3:NUMBER",
+      "segmentId": "S3",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S3:DATE",
+      "segmentId": "S3",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S3:QUOTE",
+      "segmentId": "S3",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S3:NAME",
+      "segmentId": "S3",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S3:CAVEAT",
+      "segmentId": "S3",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": "severalx1",
+      "candidateValue": "severalx1",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S3:UNCERTAINTY",
+      "segmentId": "S3",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S3:COMPARISON:more strongly than",
+      "segmentId": "S3",
+      "protectedItemType": "COMPARISON",
+      "sourceValue": "more strongly than",
+      "candidateValue": "more strongly than",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S3:CLASSIFICATION",
+      "segmentId": "S3",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S3:EVIDENCE",
+      "segmentId": "S3",
+      "protectedItemType": "FACT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": "no claims declared for this segment",
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S4:NUMBER",
+      "segmentId": "S4",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S4:DATE",
+      "segmentId": "S4",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S4:QUOTE",
+      "segmentId": "S4",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S4:NAME",
+      "segmentId": "S4",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S4:CAVEAT",
+      "segmentId": "S4",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S4:UNCERTAINTY",
+      "segmentId": "S4",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S4:CLASSIFICATION",
+      "segmentId": "S4",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S4:EVIDENCE",
+      "segmentId": "S4",
+      "protectedItemType": "FACT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": "no claims declared for this segment",
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S5:NUMBER",
+      "segmentId": "S5",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S5:DATE",
+      "segmentId": "S5",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S5:QUOTE",
+      "segmentId": "S5",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S5:NAME",
+      "segmentId": "S5",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S5:CAVEAT",
+      "segmentId": "S5",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S5:UNCERTAINTY",
+      "segmentId": "S5",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S5:CLASSIFICATION",
+      "segmentId": "S5",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S5:EVIDENCE",
+      "segmentId": "S5",
+      "protectedItemType": "FACT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": "no claims declared for this segment",
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S6:NUMBER",
+      "segmentId": "S6",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S6:DATE",
+      "segmentId": "S6",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S6:QUOTE",
+      "segmentId": "S6",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S6:NAME",
+      "segmentId": "S6",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S6:CAVEAT",
+      "segmentId": "S6",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S6:UNCERTAINTY",
+      "segmentId": "S6",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S6:CLASSIFICATION",
+      "segmentId": "S6",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S6:EVIDENCE",
+      "segmentId": "S6",
+      "protectedItemType": "FACT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": "no claims declared for this segment",
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S7:NUMBER",
+      "segmentId": "S7",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S7:DATE",
+      "segmentId": "S7",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S7:QUOTE",
+      "segmentId": "S7",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S7:NAME",
+      "segmentId": "S7",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S7:CAVEAT",
+      "segmentId": "S7",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S7:UNCERTAINTY",
+      "segmentId": "S7",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S7:CLASSIFICATION",
+      "segmentId": "S7",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S7:EVIDENCE",
+      "segmentId": "S7",
+      "protectedItemType": "FACT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": "no claims declared for this segment",
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S8:NUMBER",
+      "segmentId": "S8",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S8:DATE",
+      "segmentId": "S8",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S8:QUOTE",
+      "segmentId": "S8",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S8:NAME",
+      "segmentId": "S8",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S8:CAVEAT",
+      "segmentId": "S8",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S8:UNCERTAINTY",
+      "segmentId": "S8",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S8:CLASSIFICATION",
+      "segmentId": "S8",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "S8:EVIDENCE",
+      "segmentId": "S8",
+      "protectedItemType": "FACT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": "no claims declared for this segment",
+      "evidenceRef": null
+    }
+  ],
+  "issues": [],
+  "decision": "PASS",
+  "provenance": {
+    "createdAt": "2026-10-06T04:49:11.732Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "d068fadaaaf46129"
+}

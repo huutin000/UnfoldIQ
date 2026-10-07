@@ -1,0 +1,16 @@
+{
+  "selection": {
+    "status": "SELECTED",
+    "decidedAt": "2026-10-04T15:17:55.536Z",
+    "reason": "1G.12 Case A source frame"
+  },
+  "qualityStatus": "REJECTED",
+  "lock": {
+    "locked": true,
+    "reason": "REJECTED per finding-source-frame-identity-01: account avatar, never a generation result (1G.12)",
+    "lockedAt": "2026-10-05T02:54:41.088Z",
+    "actor": null,
+    "unlockedAt": "2026-10-05T02:54:13.728Z",
+    "unlockReason": "1G.12 source-frame identity finding: record provenance proven false (V1F report correction) — see case/source-frame-identity-finding.json"
+  }
+}

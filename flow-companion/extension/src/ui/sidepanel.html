@@ -18,7 +18,7 @@
       <img src="../../icons/icon48.png" alt="" />
       <h1>UNFOLDIQ</h1>
       <button type="button" id="status-chip" class="status-chip" data-tone="busy" aria-label="Trạng thái kết nối, nhấn để xem chi tiết">
-        <span class="dot" aria-hidden="true"></span><span id="status-text">Đang kết nối</span>
+        <span class="dot" aria-hidden="true"></span><span id="status-text" aria-live="polite">Đang kết nối</span>
       </button>
       <button type="button" id="open-settings" class="icon-btn" aria-label="Cài đặt"><span id="settings-icon" aria-hidden="true"></span></button>
     </header>
@@ -133,6 +133,14 @@
         <div>
           <button type="button" id="probe-dom">Chạy kiểm tra giao diện</button>
           <p class="hint">Chỉ thu thập metadata điều khiển, không lấy nội dung người dùng.</p>
+        </div>
+      </details>
+      <details class="dev-block">
+        <summary>Đọc Agent Instructions (1G.9)</summary>
+        <div>
+          <button type="button" id="apply-instructions">Apply instructions (1G.9)</button>
+          <button type="button" id="read-instructions">Đọc instructions từ Flow</button>
+          <p class="hint">Apply chạy qua cổng đã gate (verify project → selectors → Agent → Done). Chỉ đọc trạng thái hiển thị, không tạo media.</p>
         </div>
       </details>
       <details class="dev-block">

@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "final-narration-track.schema.json",
+  "title": "UNFOLDIQ Final Narration Track (Phase 2.4, schema 1.0.0)",
+  "description": "Deterministic ordered assembly of selected PASS narration segments. NOT the canonical FINAL_AUDIO master (Phase 2.8 mix/master has not run). Joins are recorded, never hidden; every segment ref carries its content hash; track bytes carry their own hash.",
+  "type": "object",
+  "required": ["schemaVersion", "finalNarrationTrackId", "version", "projectId", "scriptRef", "voiceBibleRef", "joinPolicy", "segments", "audioRef", "audioContentHash", "durationMs", "sampleRate", "channels", "status", "provenance", "fingerprint"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "finalNarrationTrackId": { "type": "string", "pattern": "^fnt-[0-9a-f]{12}$" },
+    "version": { "type": "integer", "minimum": 1 },
+    "projectId": { "type": "string", "minLength": 1 },
+    "scriptRef": {
+      "type": "object",
+      "required": ["scriptArtifactId", "scriptVersion"],
+      "additionalProperties": false,
+      "properties": {
+        "scriptArtifactId": { "type": "string", "pattern": "^fss-[0-9a-z][0-9a-z-]{2,62}$" },
+        "scriptVersion": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "voiceBibleRef": { "type": "string", "pattern": "^vb-[0-9a-f]{12}$" },
+    "speechRateQaRef": { "type": ["string", "null"], "pattern": "^srq-[0-9a-f]{12}$" },
+    "performanceQaRef": { "type": ["string", "null"], "pattern": "^pfq-[0-9a-f]{12}$" },
+    "joinPolicy": {
+      "type": "object",
+      "required": ["version", "interSegmentSilenceMs"],
+      "additionalProperties": false,
+      "properties": {
+        "version": { "type": "string", "minLength": 1 },
+        "interSegmentSilenceMs": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "segments": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["segmentId", "ttsSegmentAudioId", "audioRef", "audioContentHash", "durationMs", "joinStartMs"],
+        "additionalProperties": false,
+        "properties": {
+          "segmentId": { "type": "string", "minLength": 1 },
+          "segmentOrdinal": { "type": "integer", "minimum": 0 },
+          "ttsSegmentAudioId": { "type": "string", "pattern": "^tsa-[0-9a-f]{12}$" },
+          "audioRef": { "type": "string", "minLength": 1 },
+          "audioContentHash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "durationMs": { "type": "integer", "minimum": 1 },
+          "joinStartMs": { "type": "integer", "minimum": 0, "description": "Track-timeline offset where this segment's audio begins (after the preceding join gap)." }
+        }
+      }
+    },
+    "audioRef": { "type": "string", "minLength": 1 },
+    "audioContentHash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "durationMs": { "type": "integer", "minimum": 1 },
+    "sampleRate": { "type": "integer", "minimum": 8000 },
+    "channels": { "type": "integer", "minimum": 1 },
+    "joinQa": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "joinCount": { "type": ["integer", "null"] },
+        "maxDiscontinuity": { "type": ["number", "null"], "description": "Max abs sample delta across join boundaries." },
+        "status": { "enum": ["PASS", "REVIEW_REQUIRED", "FAIL", "NOT_MEASURABLE", null] }
+      }
+    },
+    "status": { "enum": ["ASSEMBLED", "FAILED"] },
+    "provenance": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "createdAt": { "type": ["string", "null"] },
+        "evidenceRefs": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" }
+  }
+}

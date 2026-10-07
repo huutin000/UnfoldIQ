@@ -1,0 +1,14 @@
+{
+  "platform": "youtube",
+  "scenes": [
+    {
+      "sceneId": "A-SC01",
+      "order": 1,
+      "timing": {
+        "startMs": 0,
+        "endMs": 2000
+      },
+      "purpose": "validation"
+    }
+  ]
+}

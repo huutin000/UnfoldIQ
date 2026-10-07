@@ -1,0 +1,127 @@
+{
+  "schemaVersion": "1.0.0",
+  "speechRateQaId": "srq-dc6c4308edad",
+  "version": 1,
+  "projectId": "pilot-sky-blue",
+  "scriptRef": {
+    "scriptArtifactId": "fss-pilot-sky-blue",
+    "scriptVersion": 2
+  },
+  "policyRef": "srp-966c48f5fc2b",
+  "provider": "local-kokoro",
+  "voiceId": "am_michael",
+  "segments": [
+    {
+      "segmentId": "S1",
+      "wordCount": 22,
+      "durationMs": 8025,
+      "totalWpm": 164.49,
+      "pauseDurationMs": 2105,
+      "pauseDensity": 0.2623,
+      "maxSilenceMs": 585,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "segmentId": "S2",
+      "wordCount": 23,
+      "durationMs": 9425,
+      "totalWpm": 146.42,
+      "pauseDurationMs": 2065,
+      "pauseDensity": 0.2191,
+      "maxSilenceMs": 705,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "segmentId": "S3",
+      "wordCount": 21,
+      "durationMs": 9950,
+      "totalWpm": 126.63,
+      "pauseDurationMs": 1910,
+      "pauseDensity": 0.192,
+      "maxSilenceMs": 590,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "segmentId": "S4",
+      "wordCount": 19,
+      "durationMs": 7825,
+      "totalWpm": 145.69,
+      "pauseDurationMs": 1725,
+      "pauseDensity": 0.2204,
+      "maxSilenceMs": 605,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "segmentId": "S5",
+      "wordCount": 24,
+      "durationMs": 8300,
+      "totalWpm": 173.49,
+      "pauseDurationMs": 1900,
+      "pauseDensity": 0.2289,
+      "maxSilenceMs": 640,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "segmentId": "S6",
+      "wordCount": 22,
+      "durationMs": 9450,
+      "totalWpm": 139.68,
+      "pauseDurationMs": 2230,
+      "pauseDensity": 0.236,
+      "maxSilenceMs": 650,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "segmentId": "S7",
+      "wordCount": 21,
+      "durationMs": 8150,
+      "totalWpm": 154.6,
+      "pauseDurationMs": 1890,
+      "pauseDensity": 0.2319,
+      "maxSilenceMs": 650,
+      "status": "PASS",
+      "issues": []
+    },
+    {
+      "segmentId": "S8",
+      "wordCount": 18,
+      "durationMs": 6550,
+      "totalWpm": 164.89,
+      "pauseDurationMs": 1810,
+      "pauseDensity": 0.2763,
+      "maxSilenceMs": 630,
+      "status": "PASS",
+      "issues": []
+    }
+  ],
+  "overall": {
+    "overallWpm": 150.72,
+    "slowestSegment": {
+      "segmentId": "S3",
+      "wpm": 126.63
+    },
+    "fastestSegment": {
+      "segmentId": "S5",
+      "wpm": 173.49
+    },
+    "rateMean": 151.99,
+    "rateMedian": 150.51,
+    "rateVariance": 207.14,
+    "pauseDensity": 0.231,
+    "unexpectedLongSilenceCount": 0,
+    "totalDurationMs": 67675
+  },
+  "decision": "PASS",
+  "issues": [],
+  "provenance": {
+    "createdAt": "2026-10-06T06:52:49.081Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "3b71a959807a34f3"
+}

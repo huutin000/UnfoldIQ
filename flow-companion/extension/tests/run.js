@@ -13,6 +13,7 @@ const UIState = require("../src/ui/state/ui-state");
 const AutoPrepare = require("../src/ui/state/auto-prepare");
 const DevTools = require("../src/ui/components/developer-tools");
 const { fullPage, S } = require("../../harness/mock-flow-page");
+const creditGate = require("../src/background/service-worker");
 const { FakeElement, FakeDocument } = require("./mock-dom");
 
 let passed = 0;
@@ -1378,6 +1379,20 @@ console.log("=== FLOW COMPANION EXTENSION TESTS ===");
     assert(st.failure(old) === false, "stale failure ignored");
     assert(st.clear(old) === false, "stale clear ignored");
     assert(keyed(children).length === 1 && keyed(children)[0].toastText === "Đang chuẩn bị…", "current attempt notification intact");
+  });
+
+  // FIX: a job that needed no preparation must never paint a preparation
+  // failure — opening the panel on an already-READY job repainted the red
+  // banner every time (runPipeline fell through to prepStatus.failure).
+  await t("prepToastAction: already-READY job clears the attempt (no phantom failure)", () => {
+    assert(AutoPrepare.prepToastAction({ done: true }, "READY") === "clear", "READY + done → clear");
+  });
+  await t("prepToastAction: resumed/mapped outcomes clear, real failures fail", () => {
+    assert(AutoPrepare.prepToastAction({ resumed: true, state: "PROCESSING" }, "PROCESSING") === "clear", "resumed → clear");
+    assert(AutoPrepare.prepToastAction({ mapped: true }, "SYNC") === "clear", "mapped → clear");
+    assert(AutoPrepare.prepToastAction({ prepared: false, code: "GENERATION_NOT_READY" }, "NEED_ATTENTION") === "failure", "attempted + not prepared → failure");
+    assert(AutoPrepare.prepToastAction(null, "NEED_ATTENTION") === "failure", "missing outcome → failure (legacy)");
+    assert(AutoPrepare.prepToastAction({ prepared: true }, "AWAITING_USER_APPROVAL") === "success", "awaiting approval → success");
   });
 
   /* ---------- POST-v1E.2C: portal surfaces + guaranteed rollback ---------- */
@@ -3231,6 +3246,60 @@ console.log("=== FLOW COMPANION EXTENSION TESTS ===");
     assert(cands[0].url === asb("SAME") && cands[0].naturalWidth === 512, "the full-resolution variant is selected");
     assert(cands[0].isNew === true, "new-vs-baseline decision recorded");
     assert(typeof cands[0].candidateId === "string" && cands[0].candidateId.length > 0, "stable candidate id assigned");
+  });
+
+  // ---- Hardening sweep (B-12): credit-gate helper semantics (the single most
+  // credit-sensitive logic in the extension was exported but untested).
+  await t("TI recordLocalApproval stores jobId+attempt+nonce+fingerprint single-use", () => {
+    const map = new Map();
+    creditGate.recordLocalApproval(map, { jobId: "J", attempt: 1, approvedBy: "user", nonce: "n1", fingerprint: "f1" });
+    const ap = map.get("J");
+    assert(ap && ap.used === false && ap.nonce === "n1" && ap.fingerprint === "f1", "approval recorded unused with binding");
+  });
+  await t("TI consumeLocalApproval is single-use (replay rejected)", () => {
+    const map = new Map();
+    creditGate.recordLocalApproval(map, { jobId: "J", attempt: 1, approvedBy: "user", nonce: "n1" });
+    creditGate.consumeLocalApproval(map, "J", 1, { nonce: "n1" });
+    let threw = null;
+    try { creditGate.consumeLocalApproval(map, "J", 1, { nonce: "n1" }); } catch (e) { threw = e.message; }
+    assert(threw && /APPROVAL_REQUIRED/.test(threw), `replay must throw APPROVAL_REQUIRED (${threw})`);
+  });
+  await t("TI consumeLocalApproval rejects attempt mismatch", () => {
+    const map = new Map();
+    creditGate.recordLocalApproval(map, { jobId: "J", attempt: 1, approvedBy: "user" });
+    let threw = null;
+    try { creditGate.consumeLocalApproval(map, "J", 2, {}); } catch (e) { threw = e.message; }
+    assert(threw && /APPROVAL_MISMATCH/.test(threw), `attempt mismatch must throw (${threw})`);
+  });
+  await t("TI consumeLocalApproval rejects a different nonce when one is recorded", () => {
+    const map = new Map();
+    creditGate.recordLocalApproval(map, { jobId: "J", attempt: 1, approvedBy: "user", nonce: "n1" });
+    let threw = null;
+    try { creditGate.consumeLocalApproval(map, "J", 1, { nonce: "n2" }); } catch (e) { threw = e.message; }
+    assert(threw && /APPROVAL_MISMATCH/.test(threw), `nonce mismatch must throw (${threw})`);
+  });
+  await t("TI consumeLocalApproval rejects a different fingerprint (APPROVAL_STALE_CHANGED)", () => {
+    const map = new Map();
+    creditGate.recordLocalApproval(map, { jobId: "J", attempt: 1, approvedBy: "user", fingerprint: "f1" });
+    let threw = null;
+    try { creditGate.consumeLocalApproval(map, "J", 1, { fingerprint: "f2" }); } catch (e) { threw = e.message; }
+    assert(threw && /APPROVAL_STALE_CHANGED/.test(threw), `fingerprint mismatch must throw (${threw})`);
+  });
+  await t("TI consumeLocalApproval stays backward compatible when neither side carries nonce/fingerprint", () => {
+    const map = new Map();
+    creditGate.recordLocalApproval(map, { jobId: "J", attempt: 1, approvedBy: "user" });
+    const ap = creditGate.consumeLocalApproval(map, "J", 1, {});
+    assert(ap && ap.used === true, "both-absent legacy consume still works");
+  });
+  await t("TI validateSender rejects foreign chrome-extension senders (C-6)", () => {
+    // validateSender lives on the SW module surface; simulate a foreign id.
+    const foreign = { id: "someotherextension", origin: "chrome-extension://someotherextension/index.html", url: "chrome-extension://someotherextension/index.html" };
+    // chrome.runtime.id is absent in node — the guard must reject foreign ids.
+    let threw = null;
+    try { creditGate.validateSender(foreign); } catch (e) { threw = e.message; }
+    assert(threw && /SENDER_REJECTED/.test(threw), `foreign extension sender must be rejected (${threw})`);
+    const flowSender = { id: "x", url: "https://flow.google.com/about" };
+    assert(creditGate.validateSender(flowSender) === true, "Flow content-script sender still accepted");
   });
 
   console.log(`passed=${passed} failed=${failed}`);

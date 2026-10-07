@@ -1,0 +1,139 @@
+{
+  "version": "1.0.0",
+  "promptPackageId": "pp-9e1a1e5fb589",
+  "projectId": "phase1g12-case-a",
+  "sceneId": "sc-45a913fac912",
+  "shotId": "sh-45705d133244",
+  "targetKind": "VIDEO",
+  "sourceRefs": {
+    "shotId": "sh-45705d133244",
+    "sceneId": "sc-45a913fac912",
+    "beatIds": [
+      "d-b1-D3"
+    ],
+    "storySectionRefs": [
+      null
+    ],
+    "storyDraftRef": {
+      "draftId": null
+    },
+    "beatMapFingerprint": "520ddbf61b4465ee",
+    "sourceShotFingerprint": "2d8fde884394af13",
+    "sourceSceneFingerprint": "a8062b170c5a86c4"
+  },
+  "referenceRefs": [
+    {
+      "assetId": "as-a7801df9bf0f",
+      "kind": "CHARACTER",
+      "version": "a7801df9bf0f05ee20fb94a6e913824c2de151ad063994dd5d1c052d57428e7e"
+    }
+  ],
+  "continuityLockRef": [
+    "characterIdentity"
+  ],
+  "promptSpec": {
+    "version": "1.0.0",
+    "promptSpecId": "ps-b3aff1c3debb",
+    "projectId": "phase1g12-case-a",
+    "sceneId": "sc-45a913fac912",
+    "shotId": "sh-45705d133244",
+    "targetKind": null,
+    "platform": "youtube",
+    "contentClass": "FICTION",
+    "sourceRefs": {
+      "shotId": "sh-45705d133244",
+      "sceneId": "sc-45a913fac912",
+      "beatIds": [
+        "d-b1-D3"
+      ],
+      "storySectionRefs": [
+        null
+      ],
+      "storyDraftRef": {
+        "draftId": null
+      },
+      "beatMapFingerprint": "520ddbf61b4465ee",
+      "sourceShotFingerprint": "2d8fde884394af13",
+      "sourceSceneFingerprint": "a8062b170c5a86c4"
+    },
+    "referenceRefs": [
+      {
+        "assetId": "as-a7801df9bf0f",
+        "kind": "CHARACTER",
+        "version": "a7801df9bf0f05ee20fb94a6e913824c2de151ad063994dd5d1c052d57428e7e"
+      }
+    ],
+    "unknownReferences": [],
+    "continuityRefs": [
+      "cg-case-d"
+    ],
+    "subject": {
+      "refs": [
+        "as-a7801df9bf0f"
+      ],
+      "descriptor": "established character [as-a7801df9bf0f]",
+      "referenceFirst": true
+    },
+    "action": "three-quarter turn into hands-on-hips stance",
+    "environment": {
+      "refs": [],
+      "descriptor": null
+    },
+    "composition": null,
+    "camera": null,
+    "focusLens": null,
+    "lightingAmbiance": null,
+    "style": null,
+    "environmentMotion": null,
+    "historicalConstraints": null,
+    "scientificConstraints": null,
+    "narrativeIntent": "EXPLAIN/PRESENTER",
+    "shot": {
+      "startState": null,
+      "endState": null
+    },
+    "mustPreserve": [
+      "characterIdentity"
+    ],
+    "mustAvoid": [],
+    "claimRefs": [],
+    "classificationRefs": [],
+    "unknownReferencesCount": 0,
+    "fingerprint": "a02fbdc12a96355e",
+    "status": "DRAFT"
+  },
+  "compiledPrompt": "MUST PRESERVE: characterIdentity\nSUBJECT: established character [as-a7801df9bf0f] — animate the established visual; appearance already locked by the reference\nACTION: three-quarter turn into hands-on-hips stance",
+  "generationMetadata": {
+    "platformComposition": {
+      "platform": "youtube",
+      "aspectRatio": "16:9",
+      "orientation": "landscape",
+      "source": "platforms/youtube/PROFILE.yaml"
+    },
+    "targetKind": "VIDEO",
+    "referenceFrameUsed": false,
+    "budgetChars": 2000
+  },
+  "requiredCapabilities": [
+    "VIDEO_GENERATION",
+    "IMAGE_REFERENCE"
+  ],
+  "adapterId": "VIDEO_GENERIC",
+  "adapterVersion": "1.0.0",
+  "sections": [
+    "CRITICAL",
+    "SUBJECT",
+    "ACTION"
+  ],
+  "droppedForBudget": [],
+  "validation": {
+    "valid": true,
+    "errors": [],
+    "warnings": []
+  },
+  "fingerprint": "d7f5d65316331153",
+  "status": "VALID",
+  "createdAt": "2026-10-05T03:36:25.598Z",
+  "updatedAt": "2026-10-05T03:36:25.598Z",
+  "_force": false
+}

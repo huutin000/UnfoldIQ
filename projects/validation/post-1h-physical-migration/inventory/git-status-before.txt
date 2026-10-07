@@ -1,0 +1,215 @@
+﻿ M .env.example
+ M .gitignore
+ M AGENTS.md
+ M Report/PHASE_1G1_05_DEEP_LIVE_PROVIDER_VALIDATION_FIX_REPORT.md
+ M flow-companion/bridge/job-store.js
+ M flow-companion/bridge/server.js
+ M flow-companion/bridge/state-machine.js
+ M flow-companion/extension/.output/chrome-mv3/manifest.json
+ M flow-companion/extension/.output/chrome-mv3/src/background/service-worker.js
+ M flow-companion/extension/.output/chrome-mv3/src/content/content-commands.js
+ M flow-companion/extension/.output/chrome-mv3/src/content/content-runtime.js
+ M flow-companion/extension/.output/chrome-mv3/src/content/flow-page-adapter.js
+ M flow-companion/extension/.output/chrome-mv3/src/contracts/job-contract.js
+ M flow-companion/extension/.output/chrome-mv3/src/security/sender-check.js
+ M flow-companion/extension/.output/chrome-mv3/src/ui/components/developer-tools.js
+ M flow-companion/extension/.output/chrome-mv3/src/ui/sidepanel.html
+ M flow-companion/extension/.output/chrome-mv3/src/ui/sidepanel.js
+ M flow-companion/extension/.output/chrome-mv3/src/ui/state/auto-prepare.js
+ M flow-companion/extension/.output/chrome-mv3/src/ui/state/ui-state.js
+ M flow-companion/extension/build.js
+ M flow-companion/extension/manifest.json
+ M flow-companion/extension/src/background/service-worker.js
+ M flow-companion/extension/src/content/content-commands.js
+ M flow-companion/extension/src/content/content-runtime.js
+ M flow-companion/extension/src/content/flow-page-adapter.js
+ M flow-companion/extension/src/contracts/job-contract.js
+ M flow-companion/extension/src/security/sender-check.js
+ M flow-companion/extension/src/ui/components/developer-tools.js
+ M flow-companion/extension/src/ui/sidepanel.html
+ M flow-companion/extension/src/ui/sidepanel.js
+ M flow-companion/extension/src/ui/state/auto-prepare.js
+ M flow-companion/extension/src/ui/state/ui-state.js
+ M flow-companion/extension/tests/run.js
+ M lib/research-deep/escalation-policy.js
+ M lib/research-deep/gpt-researcher-bridge.js
+ M lib/research-deep/provider-interface.js
+ M package.json
+ M pipeline/remotion-render-runner.js
+ M projects/TOPIC_REGISTRY.json
+ M providers/CONFIG.yaml
+ M providers/runtime/adapters/local-kokoro.js
+ M research/deep-requirements.txt
+ M research/deep-worker.py
+ M scripts/checks/validate-schemas.js
+ M scripts/cli/remotion-render-cli.js
+ M scripts/diagnostics/deep-live-probes.js
+ M scripts/diagnostics/deep-live-smoke.js
+ M scripts/diagnostics/deep-provider-doctor.js
+ M scripts/diagnostics/flow-companion-doctor.js
+ M scripts/diagnostics/provider-doctor.js
+ M tests/flow/test-flow-page-adapter.js
+?? Report/INDEX.md
+?? Report/PHASE_1G11_01_STRUCTURAL_SEMANTIC_FACTUALITY_CONTINUITY_QA_REPORT.md
+?? Report/PHASE_1G12_01_VEO_REAL_E2E_REPORT.md
+?? Report/PHASE_1G12_02_RETROACTIVE_HARDENING_SWEEP_REPORT.md
+?? Report/PHASE_1G1_06_FULL_E2E_VALIDATION_REPORT.md
+?? Report/PHASE_1G2_01_CREATIVE_MEMORY_REPORT.md
+?? Report/PHASE_1G3_01_BEAT_SCENE_SHOT_PLANNING_REPORT.md
+?? Report/PHASE_1G4_01_PROMPT_COMPILER_REPORT.md
+?? Report/PHASE_1G5_01_VISUAL_MOTION_DECISION_ENGINE_REPORT.md
+?? Report/PHASE_1G6_01_PROVIDER_MODEL_CAPABILITY_REGISTRY_REPORT.md
+?? Report/PHASE_1G7_01_PLATFORM_POLICY_REPORT.md
+?? Report/PHASE_1G8_01_OUTPUT_COST_CREDIT_PLANNER_REPORT.md
+?? Report/PHASE_1G9_1G10_AGENT_INSTRUCTIONS_ASSET_LIBRARY_REPORT.md
+?? Report/PHASE_1H1_01_VERSIONED_PROJECT_MANIFEST_REPORT.md
+?? Report/PHASE_1H2_01_GENERATION_HISTORY_AND_LOCKING_REPORT.md
+?? Report/PHASE_1H3_01_IDEMPOTENCY_RESUME_RECOVERY_AND_DEPENDENCY_DAG_REPORT.md
+?? Report/PHASE_1H4_1H5_01_OBSERVABILITY_AND_GOLDEN_QUALITY_REGRESSION_REPORT.md
+?? Report/PHASE_1H6_1H7_01_ARTIFACT_GOVERNANCE_AND_STORAGE_LIFECYCLE_REPORT.md
+?? Report/PHASE_2_1_01_VOICE_BIBLE_AND_NARRATOR_PERSONA_REPORT.md
+?? Report/POST_1H_REPOSITORY_HYGIENE_AND_WORKSPACE_MIGRATION_REPORT.md
+?? Report/evidence/phase1g1-full-e2e/
+?? Report/fixes/
+?? flow-companion/bridge/instruction-sync.js
+?? flow-companion/extension/.output/chrome-mv3/src/content/main-world-write.js
+?? flow-companion/extension/src/content/main-world-write.js
+?? golden/
+?? lib/agent-instructions/
+?? lib/asset-library/
+?? lib/asset-qa/
+?? lib/compliance/
+?? lib/creative-memory.js
+?? lib/dependency-dag/
+?? lib/env-bootstrap.js
+?? lib/generation-history/
+?? lib/golden/
+?? lib/output-cost/
+?? lib/platform-policy/
+?? lib/project-manifest/
+?? lib/prompt-compiler/
+?? lib/provenance/
+?? lib/real-e2e/
+?? lib/recovery/
+?? lib/research-to-story.js
+?? lib/storage/
+?? lib/story-structure/
+?? lib/telemetry/
+?? lib/visual-motion/
+?? lib/voice-bible/
+?? lib/workspace/
+?? platforms/TARGETS.yaml
+?? projects/DBG_1G12/
+?? projects/DBG_H4/
+?? projects/E2E_bench_panel/
+?? projects/HARDENING_1G12/
+?? projects/channel-mascot/
+?? projects/live-1g1-http308/
+?? projects/phase1g12-case-a/
+?? projects/phase1g12-hardening/
+?? projects/phase1h1-validation/
+?? projects/phase1h2-validation/
+?? projects/phase1h3-validation/
+?? projects/phase1h45-validation/
+?? projects/phase1h67-validation/
+?? projects/phase1hyg-validation/
+?? projects/phase2-1-validation/
+?? projects/pilot-sky-blue/agent-instructions/
+?? projects/pilot-sky-blue/assets/library-index.json
+?? projects/pilot-sky-blue/instruction-sync/
+?? projects/pilot-sky-blue/telemetry/
+?? projects/postv1-flow-live-validation/assets/library-index.json
+?? projects/postv1b-flow-companion-live/assets/library-index.json
+?? projects/registry.json
+?? projects/validation/
+?? providers/license-evidence/
+?? providers/model-registry/
+?? remotion/public/unfoldiq/phase1g12-case-a/
+?? schemas/agent-instruction-set.schema.json
+?? schemas/asset-qa-result.schema.json
+?? schemas/asset-record.schema.json
+?? schemas/beat-map.schema.json
+?? schemas/creative-memory.schema.json
+?? schemas/generation-cost-ledger.schema.json
+?? schemas/generation-history.schema.json
+?? schemas/golden.schema.json
+?? schemas/governance.schema.json
+?? schemas/instruction-sync.schema.json
+?? schemas/model-registry-snapshot.schema.json
+?? schemas/model-resolution.schema.json
+?? schemas/platform-adaptation.schema.json
+?? schemas/production-budget-plan.schema.json
+?? schemas/production-decision.schema.json
+?? schemas/project-manifest-1.1.0.schema.json
+?? schemas/project-manifest-1.2.0.schema.json
+?? schemas/project-manifest-1.3.0.schema.json
+?? schemas/project-manifest-1.4.0.schema.json
+?? schemas/project-manifest.schema.json
+?? schemas/prompt-package.schema.json
+?? schemas/recovery-state.schema.json
+?? schemas/scene-graph.schema.json
+?? schemas/shot-plan.schema.json
+?? schemas/telemetry.schema.json
+?? schemas/voice-bible.schema.json
+?? schemas/voice-license-evidence.schema.json
+?? scripts/checks/workspace-check.js
+?? scripts/cli/case-ledger.js
+?? scripts/cli/compliance.js
+?? scripts/cli/dag.js
+?? scripts/cli/golden.js
+?? scripts/cli/history.js
+?? scripts/cli/hygiene-classify.js
+?? scripts/cli/index-assets.js
+?? scripts/cli/manifest.js
+?? scripts/cli/propose-case-bcd-budget.js
+?? scripts/cli/provenance.js
+?? scripts/cli/recovery.js
+?? scripts/cli/repo-inventory.js
+?? scripts/cli/run-case-a.js
+?? scripts/cli/run-case-b.js
+?? scripts/cli/run-case-c.js
+?? scripts/cli/run-case-d.js
+?? scripts/cli/storage.js
+?? scripts/cli/telemetry.js
+?? scripts/cli/voice-bible.js
+?? scripts/diagnostics/narrator-qa-compare.js
+?? scripts/diagnostics/render-doctor.js
+?? scripts/maintenance/setup-render-binaries.js
+?? tests/compliance/
+?? tests/cost/
+?? tests/dag/
+?? tests/e2e/flow-companion-a11y.spec.js
+?? tests/flow/test-agent-instructions.js
+?? tests/flow/test-asset-library.js
+?? tests/flow/test-canonical-source-gate.js
+?? tests/flow/test-flow-hardening.js
+?? tests/flow/test-instruction-bridge.js
+?? tests/flow/test-instruction-write-persistence.js
+?? tests/flow/test-live-instruction-plumbing.js
+?? tests/golden/
+?? tests/history/
+?? tests/pipeline/test-creative-memory.js
+?? tests/pipeline/test-phase1g1-e2e.js
+?? tests/platform/
+?? tests/project-manifest/
+?? tests/provenance/
+?? tests/providers/test-model-capability-registry.js
+?? tests/qa/test-asset-qa-aggregate.js
+?? tests/qa/test-asset-qa-continuity.js
+?? tests/qa/test-asset-qa-factuality.js
+?? tests/qa/test-asset-qa-real.js
+?? tests/qa/test-asset-qa-semantic.js
+?? tests/qa/test-asset-qa-structural.js
+?? tests/real-e2e/
+?? tests/recovery/
+?? tests/research-deep/test-acceptance-profile.js
+?? tests/research-deep/test-env-bootstrap.js
+?? tests/research-deep/test-quota-fastfail.js
+?? tests/storage/
+?? tests/story/test-prompt-compiler.js
+?? tests/story/test-story-structure.js
+?? tests/story/test-visual-motion-decision.js
+?? tests/story/test-visual-story-grammar.js
+?? tests/telemetry/
+?? tests/voice-bible/
+?? tests/workspace/

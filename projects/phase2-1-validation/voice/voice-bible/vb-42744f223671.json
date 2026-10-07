@@ -1,0 +1,93 @@
+{
+  "schemaVersion": "1.0.0",
+  "version": 1,
+  "language": "en-us",
+  "locale": null,
+  "narrator": {
+    "personaId": "per-explanatory-narrator-en",
+    "displayName": "Explanatory Narrator (validation reference)",
+    "provider": "local-kokoro",
+    "model": "kokoro-v1",
+    "voiceId": "af_heart",
+    "speakingStyle": "measured explanatory narration; evidence-forward; never announcer-like",
+    "prosodyDefaults": {
+      "paceIntent": "MODERATE",
+      "energy": "BALANCED",
+      "pauseStyle": "NATURAL",
+      "sentenceFlow": "MEASURED",
+      "emphasisStyle": "SELECTIVE",
+      "emotionalBaseline": "WARM"
+    },
+    "speedDefault": 1,
+    "pitchDefault": null,
+    "energyDefault": "BALANCED",
+    "emotionalRange": [
+      "NEUTRAL",
+      "FRIENDLY",
+      "CURIOSITY",
+      "CONFIDENT",
+      "INSTRUCTIVE"
+    ],
+    "prohibitedTraits": [
+      "UNNATURALLY_SLOW_CINEMATIC",
+      "CONSTANT_DRAGMATIC_EMPHASIS",
+      "MONOTONE_CADENCE",
+      "OVERACTING",
+      "ROBOTIC_CLAUSE_RHYTHM",
+      "EXCESSIVE_PAUSES",
+      "ANNOUNCER_BOMBAST"
+    ],
+    "persona": {
+      "personaId": "per-explanatory-narrator-en",
+      "role": "GUIDE",
+      "audience": "general viewers who did not know they cared about this topic",
+      "tone": "EXPLAINING",
+      "energy": "BALANCED",
+      "paceIntent": "MODERATE",
+      "warmth": "WARM",
+      "directness": "BALANCED",
+      "formality": "CONVERSATIONAL",
+      "storytellingStyle": "EVIDENCE_WALKTHROUGH",
+      "emotionalRange": [
+        "NEUTRAL",
+        "FRIENDLY",
+        "CURIOSITY",
+        "CONFIDENT",
+        "INSTRUCTIVE"
+      ],
+      "prohibitedDeliveryPatterns": [
+        "UNNATURALLY_SLOW_CINEMATIC",
+        "CONSTANT_DRAGMATIC_EMPHASIS",
+        "MONOTONE_CADENCE",
+        "OVERACTING",
+        "ROBOTIC_CLAUSE_RHYTHM",
+        "EXCESSIVE_PAUSES",
+        "ANNOUNCER_BOMBAST"
+      ],
+      "language": "en-us",
+      "notes": "Validation reference persona for Phase 2.1. Segment-level emphasis/pause/energy belongs to Phase 2.2 and must never mutate this identity."
+    }
+  },
+  "characterVoices": [],
+  "pronunciationProfileRef": "pron-en-us-reference",
+  "providerOptions": null,
+  "provenance": {
+    "source": "PROVIDER_DEFAULT",
+    "createdAt": "2026-10-05T09:53:15.045Z",
+    "rights": {
+      "status": "UNRESOLVED",
+      "licenseType": "UNRESOLVED",
+      "detail": "Kokoro voice license/redistribution terms are not proven by any artifact in this repository; no rights are asserted.",
+      "cloning": false
+    },
+    "evidenceRefs": [
+      "providers/runtime/adapters/local-kokoro.js",
+      "providers/local/SETUP_KOKORO.md",
+      "providers/CONFIG.yaml",
+      "Report/PHASE_2_1_01_VOICE_BIBLE_AND_NARRATOR_PERSONA_REPORT.md"
+    ],
+    "approvalRef": null
+  },
+  "voiceBibleId": "vb-42744f223671",
+  "fingerprint": "9765cfe62a8eadb4"
+}

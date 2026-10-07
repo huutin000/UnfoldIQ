@@ -1,0 +1,36 @@
+{
+  "scene": {
+    "sceneId": "A-SC01",
+    "order": 0,
+    "beatIds": [],
+    "storySectionRefs": [],
+    "narrativePurpose": "1G.12 validation: detail view of the validation slate",
+    "visualObjective": "EXPLAIN",
+    "subjectRefs": [],
+    "environmentRefs": [],
+    "continuityGroup": "cg-case-a",
+    "stateBefore": null,
+    "stateAfter": null
+  },
+  "shot": {
+    "shotId": "A-SH01",
+    "parentSceneId": "A-SC01",
+    "orderWithinScene": 0,
+    "beatIds": [],
+    "claimRefs": [],
+    "shotPurpose": "DETAIL",
+    "visualObjective": "EXPLAIN",
+    "subjectRefs": [],
+    "actionIntent": null,
+    "framingIntent": null,
+    "cameraIntent": null,
+    "continuityRefs": [
+      "cg-case-a"
+    ],
+    "startState": null,
+    "endState": null,
+    "relativeWeight": 1
+  },
+  "contentClass": "FICTION",
+  "platform": "youtube"
+}

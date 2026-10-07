@@ -1,0 +1,18 @@
+{
+  "status": "READY",
+  "version": "1.0.0",
+  "blockingIssues": [],
+  "warnings": [],
+  "timelineSummary": {
+    "missingRequired": 0
+  },
+  "assets": [
+    {
+      "assetId": "IMG_A",
+      "type": "image",
+      "sceneId": "A-SC01",
+      "rightsStatus": "CLEAR",
+      "required": true
+    }
+  ]
+}

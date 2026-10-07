@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "1.0.0",
+  "qaId": "nqa-5c77553ddd03",
+  "version": 1,
+  "projectId": "pilot-sky-blue",
+  "humanizationRef": "hum-f3ab56c75605",
+  "metrics": {
+    "sentenceCount": 18,
+    "sentenceLengthMean": 9.556,
+    "sentenceLengthVariance": 39.58,
+    "sentenceLengthDistribution": [
+      6,
+      4,
+      3,
+      1,
+      8,
+      24,
+      22,
+      10,
+      9,
+      5,
+      19,
+      8,
+      14,
+      11,
+      10,
+      8,
+      7,
+      3
+    ],
+    "repeatedTransitionPhrases": [],
+    "repeatedOpenings": [],
+    "repeatedRhetoricalPatterns": [],
+    "abstractLanguageFlags": [],
+    "summaryPhraseFlags": [],
+    "paragraphRhythmUniformity": null,
+    "cadenceUniformity": 0,
+    "redundancyFlags": [],
+    "awkwardSpokenPhrases": []
+  },
+  "issues": [],
+  "decision": "PASS",
+  "provenance": {
+    "createdAt": "2026-10-06T05:09:53.987Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "32d7d9bd694749dd"
+}

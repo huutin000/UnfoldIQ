@@ -1,0 +1,191 @@
+{
+  "task": "PHASE_2_1_FIX_01",
+  "evaluatedAt": "2026-10-05T14:24:37.054Z",
+  "qualityGate": {
+    "Q1": {
+      "requirement": "narrator voice explicitly operator-approved",
+      "status": "PASS",
+      "evidence": "operator-approval.json records the literal statement APPROVED_NARRATOR_VOICE = am_michael, captured through approveNarratorVoice(), which refuses without an explicit voiceId, a presented shortlist, a preview reference and the literal statement. Voice Bible v2 provenance.source = OPERATOR_APPROVED; history decision dec-c1c82ea385e1 = APPROVED."
+    },
+    "Q2": {
+      "requirement": "approved voice exists in configured Kokoro runtime",
+      "status": "PASS",
+      "evidence": "discoverRuntimeVoices({verify:['am_michael']}) loaded am_michael through the runtime itself via KPipeline.load_voice and returned it in verified[]. am_michael is present in the persisted 54-voice inventory. providerCatalog() resolves it via PROVIDER_DEFAULT+RUNTIME_INVENTORY while still refusing fabricated ids as VOICE_NOT_FOUND."
+    },
+    "Q3": {
+      "requirement": "Kokoro model license evidence persisted from official source",
+      "status": "PASS",
+      "evidence": "providers/license-evidence/local-kokoro.json is schema-valid (fingerprint 836ecfcbda3fdc2d). Official source https://huggingface.co/hexgrad/Kokoro-82M declares 'License: apache-2.0'; hexgrad/kokoro carries the full Apache-2.0 text. Both were re-verified live against the official sources during this run. runtimeBinding.upstreamReleasePinned is now true: the loaded kokoro-v1_0.pth SHA256 496dba118d1a58f5f3db2efc88dbdc216e0483fc89fe6e47ee1f2c53f18ad1e4 matches the officially published hash byte-for-byte."
+    },
+    "Q4": {
+      "requirement": "voice rights state honest and non-fabricated",
+      "status": "PASS",
+      "evidence": "Three separate claims, never collapsed: MODEL_LICENSE=VERIFIED (Apache-2.0), VOICE_ASSET_RIGHTS=REVIEW_REQUIRED, OUTPUT_USAGE_STATUS=REVIEW_REQUIRED. The prior basis text, which asserted that no official statement covering voice assets had been located, was corrected: voices/ sits inside the same repository carrying the repo-level apache-2.0 tag, and the runtime-loaded voice hash matches the per-voice SHA256 published in official VOICES.md. The status nevertheless stays REVIEW_REQUIRED by explicit operator policy and the basis now says exactly that, instead of claiming evidence is missing. VOICE_LICENSE_EVIDENCE_FABRICATED still rejects any VERIFIED claim lacking an official https source, a verbatim quote or evidenceRefs, and rejects an all-three-VERIFIED document."
+    },
+    "Q5": {
+      "requirement": "current Voice Bible version productionReady:true",
+      "status": "FAIL",
+      "evidence": "productionReady=false on vb-2997edea5ffa with one remaining blocker, VOICE_RIGHTS_REVIEW_REQUIRED. This is the correct outcome given the operator decision to keep VOICE_ASSET_RIGHTS and OUTPUT_USAGE_STATUS at REVIEW_REQUIRED. productionReadinessGate requires selectionStatus=OPERATOR_APPROVED AND all three rights claims VERIFIED: selection is now approved, rights deliberately are not. The gate was not weakened to manufacture a green result."
+    },
+    "Q6": {
+      "requirement": "manifest current Voice Bible status no longer UNRESOLVED",
+      "status": "FAIL",
+      "evidence": "manifest.artifacts.voiceBibleVersion = {version: vb-2997edea5ffa, status: UNRESOLVED, detail: 'v2 NOT production-ready: VOICE_RIGHTS_REVIEW_REQUIRED'}. The manifest correctly points at the NEW approved version; only the status cannot advance while Q5 fails. Status is derived from readiness by a single construction site, never asserted independently."
+    },
+    "Q7": {
+      "requirement": "previous unresolved Voice Bible historical/immutable",
+      "status": "PASS",
+      "evidence": "v1 vb-42744f223671 is byte-unchanged and still loadable. listVoiceBibles returns both v1 (af_heart, PROVIDER_DEFAULT, UNRESOLVED) and v2 (am_michael, OPERATOR_APPROVED, REVIEW_REQUIRED). persistVersion refuses to overwrite an existing id with VOICE_BIBLE_VERSION_CONFLICT."
+    },
+    "Q8": {
+      "requirement": "no secret/privacy regression",
+      "status": "PASS",
+      "evidence": "findSecretKeys + findSecretPastes over 7 persisted JSON artifacts: 0 findings. Credential-pattern sweep (openai key, aws key, github token, PEM private key, JWT) over 11 files including every changed source file: 0 hits. No credential was written to any artifact, log, or tracked file."
+    },
+    "Q9": {
+      "requirement": "F1-F16 PASS",
+      "status": "PASS",
+      "evidence": "node tests/voice-bible/test-fix01-license-voice-selection.js -> 141 passed, 0 failed (up from 89 before a runtime existed: F4 now asserts the real 54-voice discovery branch instead of the absent-runtime branch). node tests/voice-bible/test-voice-bible.js -> 187 passed, 0 failed. npm test -> 25 domains, 0 failed suites, 358.6s."
+    },
+    "Q10": {
+      "requirement": "open P0 = 0",
+      "status": "PASS",
+      "evidence": "none."
+    },
+    "Q11": {
+      "requirement": "open P1 = 0",
+      "status": "PASS",
+      "evidence": "none carried. Two latent defects were found and fixed in this run rather than logged as known issues: (1) the Kokoro adapter could never synthesize, because python -m kokoro requires -o and rejects BCP-47 language codes, and argparse exit 2 was misread as KOKORO_NOT_AVAILABLE; (2) voice discovery globbed *.pt inside the package directory, which is always empty because Kokoro resolves voices through hf_hub_download at synthesis time. A third, found by operator instruction: providerCatalog() knew only one voice per language, so any operator-approved narrator outside that single default was rejected as VOICE_NOT_FOUND."
+    }
+  },
+  "verdict": {
+    "qualityGate": "9 PASS / 2 FAIL (Q5 and Q6 fail by design; Q1-Q4 and Q7-Q11 pass)",
+    "PHASE_2_1_PRODUCTION_READINESS": "NOT_COMPLETE",
+    "NEXT": "FIX_PHASE_2_1_02",
+    "reason": "Q5 and Q6 cannot pass while VOICE_ASSET_RIGHTS and OUTPUT_USAGE_STATUS are REVIEW_REQUIRED. That is the operator's explicit policy choice, recorded as such, not an oversight. Selection is fully resolved; rights clearance is the only remaining gap."
+  },
+  "narratorSelection": {
+    "approvedVoiceId": "am_michael",
+    "approvalStatement": "APPROVED_NARRATOR_VOICE = am_michael",
+    "shortlistPresented": [
+      "am_fenrir",
+      "am_michael",
+      "am_puck"
+    ],
+    "mascotConstraint": "NARRATOR_MUST_BE_MALE",
+    "technicalRanking": [
+      {
+        "rank": 1,
+        "voiceId": "am_michael",
+        "totalScore": 88.3
+      },
+      {
+        "rank": 2,
+        "voiceId": "am_puck",
+        "totalScore": 87.7
+      },
+      {
+        "rank": 3,
+        "voiceId": "am_fenrir",
+        "totalScore": 81.5
+      }
+    ],
+    "recommendedAndChosen": "am_michael (rank 1 of 3 at 88.3/100, fatigue risk LOW)"
+  },
+  "voiceBibleVersions": {
+    "current": {
+      "voiceBibleId": "vb-2997edea5ffa",
+      "version": 2,
+      "voiceId": "am_michael",
+      "source": "OPERATOR_APPROVED",
+      "rightsStatus": "REVIEW_REQUIRED",
+      "productionReady": false
+    },
+    "previous": {
+      "voiceBibleId": "vb-42744f223671",
+      "version": 1,
+      "voiceId": "af_heart",
+      "source": "PROVIDER_DEFAULT",
+      "rightsStatus": "UNRESOLVED",
+      "immutable": true
+    }
+  },
+  "manifest": {
+    "voiceBibleVersion": {
+      "version": "vb-2997edea5ffa",
+      "status": "UNRESOLVED",
+      "ref": "voice/voice-bible/vb-2997edea5ffa.json",
+      "detail": "v2 NOT production-ready: VOICE_RIGHTS_REVIEW_REQUIRED: rights status is REVIEW_REQUIRED"
+    },
+    "projectVersion": 3,
+    "revision": 3
+  },
+  "rightsStates": {
+    "modelLicense": {
+      "status": "VERIFIED",
+      "licenseIdentifier": "Apache-2.0",
+      "scope": "Model weights of hexgrad/Kokoro-82M, published by hexgrad under the apache-2.0 license tag on the Hugging Face model repository.",
+      "basis": "Official model card metadata declares 'License: apache-2.0', and the official GitHub repository hexgrad/kokoro carries the full Apache License 2.0 text. The model card additionally states the weights are Apache-licensed and deployable in production and personal projects.",
+      "retrievedAt": "2026-10-05T00:00:00.000Z",
+      "evidenceRefs": [
+        "https://huggingface.co/hexgrad/Kokoro-82M",
+        "https://github.com/hexgrad/kokoro/blob/main/LICENSE"
+      ]
+    },
+    "voiceAssetRights": {
+      "status": "REVIEW_REQUIRED",
+      "licenseIdentifier": "Apache-2.0",
+      "scope": "Individual Kokoro voice pack files (.pt) that the runtime downloads on demand.",
+      "basis": "The voice files are distributed inside the SAME official model repository that carries the repository-level 'License: apache-2.0' tag, and Apache-2.0 section 4 grants reproduction and distribution of the Work, so the model-level grant appears to extend to them. The runtime is now installed and this was strengthened with byte-level evidence: the operator-approved narrator voice am_michael was loaded from the runtime and its locally measured SHA256 (9a443b79a4b22489a5b0ab7c651a0bcd1a30bef675c28333f06971abbd47bd37) matches the per-voice SHA256 published in the official VOICES.md, and the loaded model artifact hash matches the official model card. The status nevertheless remains REVIEW_REQUIRED by explicit OPERATOR POLICY (2026-10-05): a repository-level licence tag plus matching hashes is strong evidence, but it is an agent-side reading of licence scope rather than an official statement that voice assets are separately cleared for redistribution and commercial narration output. Nothing here is asserted beyond what the official source states; the clearance decision is the operator's.",
+      "retrievedAt": "2026-10-05T00:00:00.000Z",
+      "evidenceRefs": [
+        "https://huggingface.co/hexgrad/Kokoro-82M/tree/main/voices",
+        "https://huggingface.co/hexgrad/Kokoro-82M/blob/main/VOICES.md",
+        "https://huggingface.co/hexgrad/Kokoro-82M"
+      ]
+    },
+    "outputUsageStatus": {
+      "status": "REVIEW_REQUIRED",
+      "licenseIdentifier": null,
+      "scope": "Rights in the synthesized audio output produced by the model.",
+      "basis": "The official model card states the weights are Apache-licensed and may be deployed in production, which implies no additional output restriction, but it does not publish a separate output-usage grant. Recorded as REVIEW_REQUIRED rather than inferred as permissive.",
+      "retrievedAt": "2026-10-05T00:00:00.000Z",
+      "evidenceRefs": [
+        "https://huggingface.co/hexgrad/Kokoro-82M"
+      ]
+    }
+  },
+  "dag": {
+    "VOICE_BIBLE": {
+      "versionRef": "vb-2997edea5ffa",
+      "state": "CLEAN",
+      "lockTarget": {
+        "targetType": "VOICE_BIBLE",
+        "targetId": "vb-2997edea5ffa"
+      }
+    },
+    "VOICE": {
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [
+        {
+          "key": "VOICE_BIBLE",
+          "type": "VOICE_IDENTITY"
+        }
+      ]
+    }
+  },
+  "history": {
+    "decisionId": "dec-c1c82ea385e1",
+    "decision": "APPROVED",
+    "target": "VOICE_BIBLE::vb-2997edea5ffa",
+    "lockStatus": "LOCKED",
+    "silentRevisionRefused": "VOICE_BIBLE_LOCKED"
+  },
+  "runtime": {
+    "kokoro": "0.9.4",
+    "torch": "2.14.1+cpu",
+    "repoId": "hexgrad/Kokoro-82M",
+    "inventoryCount": 54,
+    "asr": "faster-whisper small (int8, cpu)"
+  }
+}

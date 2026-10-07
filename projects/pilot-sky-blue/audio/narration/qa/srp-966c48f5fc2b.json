@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0.0",
+  "policyId": "srp-966c48f5fc2b",
+  "version": 1,
+  "projectId": "pilot-sky-blue",
+  "narrator": "am_michael",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "contentClass": "FACTUAL",
+  "targetBand": {
+    "minWpm": 120,
+    "maxWpm": 180
+  },
+  "guardrails": {
+    "outlierFactor": 1.6,
+    "rateVarianceMax": 1200,
+    "maxSilenceMs": 1500
+  },
+  "reasons": [
+    "V6.2 golden catalog carries a [120,180] wpm TARGET_RANGE for narration (factual explainer) — adopted as the narrator band prior",
+    "am_michael Voice Bible speedDefault=1.0 + measured first-pass audio baseline; band re-derivable from N>=3 baselines later",
+    "outlierFactor 1.6 / rateVarianceMax 1200 detect uncontrolled swings without punishing natural emphasis pauses",
+    "maxSilenceMs 1500 catches unintended internal silence while allowing natural sentence gaps; directed BEAT/SECTION pauses are exempt (§15)"
+  ],
+  "baseline": {
+    "measuredFrom": "first-pass FINAL_NARRATION synthesis of fss-pilot-sky-blue@v2 (this run)",
+    "overallWpm": 150.72
+  },
+  "reviewPolicy": "outside band = FAIL (targeted regeneration); outliers/silence = REVIEW_REQUIRED; directed long pauses exempt",
+  "provenance": {
+    "createdAt": "2026-10-06T06:52:49.079Z",
+    "evidenceRefs": [
+      "golden/definitions.json",
+      "projects/phase2-1-validation/voice/voice-bible/vb-19f4fd6a4596.json"
+    ]
+  },
+  "fingerprint": "0a2e0af0508b93e5"
+}

@@ -1,0 +1,73 @@
+{
+  "planId": "mig-ec6fbf3262f1",
+  "mode": "DRY_RUN",
+  "gitHead": "4543124c60c1a20a66a3d8b96719e9aca161f35e",
+  "actions": [
+    {
+      "action": "CREATE",
+      "path": "projects/registry.json",
+      "reason": "project index (§11)",
+      "status": "EXECUTED"
+    },
+    {
+      "action": "CREATE",
+      "path": "lib/workspace/index.js",
+      "reason": "resolver/guard/lifecycle (§12–14)",
+      "status": "EXECUTED"
+    },
+    {
+      "action": "CREATE",
+      "path": "scripts/checks/workspace-check.js",
+      "reason": "hygiene gate command (§29)",
+      "status": "EXECUTED"
+    },
+    {
+      "action": "CREATE",
+      "path": "Report/INDEX.md",
+      "reason": "report index (§18)",
+      "status": "EXECUTED"
+    },
+    {
+      "action": "UPDATE",
+      "path": ".gitignore",
+      "reason": "lifecycle-aligned ignores (§19)",
+      "status": "EXECUTED"
+    },
+    {
+      "action": "UPDATE",
+      "path": "package.json",
+      "reason": "check:workspace script",
+      "status": "EXECUTED"
+    },
+    {
+      "action": "CREATE",
+      "path": "tests/workspace/test-workspace.js",
+      "reason": "W1–W24 matrix",
+      "status": "EXECUTED"
+    }
+  ],
+  "moves": [],
+  "deletes": [],
+  "reason": "no file met the DELETE-all-true rule (tracked history needs commits; out/ referenced+ignored; rest canonical/uncertain); no legacy path qualified for moving (reference migration unproven or unjustified aesthetics)",
+  "metrics": {
+    "repoTotalBytes": 1791918284,
+    "nodeModulesBytes": 322576068,
+    "workspaceBytesExclNodeModules": 1791918284,
+    "projectsBytes": 29260142,
+    "reportBytes": 4468510,
+    "outBytes": 8734249,
+    "files": 60756,
+    "dirs": 9701,
+    "orphanCount": "see storage/orphan scans per project (repo-level orphans: none proven deletable)",
+    "duplicateBytes": "see per-project dedup (no repo-level physical dedup executed)",
+    "cleanupEligibleBytes": 0,
+    "bytesReclaimed": 0,
+    "filesDeleted": 0,
+    "filesArchived": 0,
+    "filesMoved": 0,
+    "referencesUpdated": 0,
+    "workspaceViolations": 0,
+    "brokenRefs": 0
+  },
+  "planFingerprint": "c9f07ee8409fc5b0"
+}

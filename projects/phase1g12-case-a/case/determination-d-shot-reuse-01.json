@@ -1,0 +1,31 @@
+{
+  "version": "1.0.0",
+  "determinationId": "determination-d-shot-reuse-01",
+  "determinedAt": "2026-10-05T03:53:47.041Z",
+  "subject": {
+    "assetId": "as-d235316b9af5",
+    "shotId": "B-SH01 (Case B attempt-1)",
+    "description": "10s mascot video (Guide gesturing…), 1280x720@10005ms"
+  },
+  "question": "Can the earlier 10s mascot video count as one of D1/D2/D3 (task §41 reuse)?",
+  "verdict": "NOT_ELIGIBLE — keep as historical evidence only; proceed with new D1/D2/D3 (4s, Ingredients/References)",
+  "criteria": {
+    "referenceWorkflow": {
+      "met": false,
+      "evidence": "no VEO_REFERENCE/Ingredients resolution exists for this asset; its unit resolution mr-f43a8953897b was VEO_FIRST_FRAME 4s and the executed generation diverged from it (10s, opening ≠ affirmed source frame — likely text-to-video); the canonical mascot reference as-a7801df9bf0f did not exist at generation time"
+    },
+    "lineage": {
+      "met": false,
+      "evidence": "referenceIds=[as-1186233d1af6] (the REJECTED account avatar per finding-source-frame-identity-01); characterIds=[] — no mascot-guide character binding"
+    },
+    "instructionVersion": {
+      "met": true,
+      "evidence": "iv-7e784d73e229 (ceremony GATE_1_2 + asset record)"
+    },
+    "qaEvidence": {
+      "met": false,
+      "evidence": "1G.11 QA aggregate=REJECTED (structural duration FAIL 10005ms vs 4000ms; semantic action FAIL; continuity startState FAIL) — §42 requires each D shot to PASS QA"
+    }
+  },
+  "decision": "Reuse rejected on 3 of 4 criteria; asset remains immutable historical evidence (Case B attempt-1 repair history + identity finding context). Case D proceeds with 3 new 4s VEO_REFERENCE (Ingredients) generations against the locked mascot reference."
+}

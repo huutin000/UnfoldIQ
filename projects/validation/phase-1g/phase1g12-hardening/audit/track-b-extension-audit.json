@@ -1,0 +1,143 @@
+{
+  "version": "1.0.0",
+  "track": "B-extension",
+  "auditedAt": "2026-10-05T04:46:25.452Z",
+  "method": "read-only source sweep of flow-companion/extension/src + manifest + tests (Explore agent, very thorough)",
+  "summary": {
+    "p0": 0,
+    "p1": 0,
+    "p2": 4,
+    "p3": 9
+  },
+  "findings": [
+    {
+      "id": "B-1",
+      "severity": "P2",
+      "title": "MV3: approval gate state (approvals Map) in-memory only, dies with service worker",
+      "evidence": "src/background/service-worker.js:269,457,464-466; contrast resolver hint storage.session :278-291",
+      "impact": "worker reaped between APPROVE_RECORD and SUBMIT_GENERATE → false APPROVAL_REQUIRED failure on credit path (fail-safe: blocks, never duplicates)",
+      "recommendedAction": "persist approval {jobId,attempt,nonce,fingerprint,approvedAt} to chrome.storage.session; lazy rehydrate in consumeLocalApproval",
+      "status": "OPEN"
+    },
+    {
+      "id": "B-2",
+      "severity": "P2",
+      "title": "sidepanel bridgeCall has no timeout (approve/generate/import can wait forever)",
+      "evidence": "src/ui/sidepanel.js:112-132 plain fetch, no AbortController; bridge-client.js:32-63 has 15s timeout but is never loaded",
+      "impact": "hung loopback server → dead silent wait on credit path (Q17 violation surface)",
+      "recommendedAction": "AbortController+timeout in sidepanel bridgeCall",
+      "status": "OPEN"
+    },
+    {
+      "id": "B-3",
+      "severity": "P2",
+      "title": "render() rewrites jobCard.innerHTML every cycle, destroying keyboard focus during polling",
+      "evidence": "src/ui/sidepanel.js:229,249,252; called from AWAIT_SUBMIT_ACCEPTANCE loop :680-683 and guard() :100",
+      "impact": "focus dropped to body every ~5s for up to 10 min (a11y); DOM churn",
+      "recommendedAction": "skip re-render when rendered signature unchanged; never re-render while focus inside card",
+      "status": "OPEN"
+    },
+    {
+      "id": "B-4",
+      "severity": "P2",
+      "title": "GENERATING poll gives no user-visible feedback when Flow tab disappears (spins 10 min)",
+      "evidence": "src/ui/sidepanel.js:768-772 log-only + continue; deadline :759; same in acceptance loop :672-674",
+      "impact": "normal user sees busy CTA 10 min with no message despite diagnosable FLOW_TAB_NOT_FOUND",
+      "recommendedAction": "after N consecutive unreachable polls, surface friendly error + NEED_FLOW",
+      "status": "OPEN"
+    },
+    {
+      "id": "B-5",
+      "severity": "P3",
+      "title": "status chip accessible name static; no aria-live for state changes",
+      "evidence": "src/ui/sidepanel.html:20 aria-label overrides dynamic #status-text (sidepanel.js:225)",
+      "impact": "screen readers miss GENERATING/READY transitions",
+      "recommendedAction": "drop static aria-label; aria-live=polite on status text",
+      "status": "BACKLOG"
+    },
+    {
+      "id": "B-6",
+      "severity": "P3",
+      "title": "link-btn/toast-close below WCAG 2.5.8 24px target size",
+      "evidence": "components.css:109-113; toast.js:49-52",
+      "impact": "small hit areas",
+      "recommendedAction": "min 24x24 + padding",
+      "status": "BACKLOG"
+    },
+    {
+      "id": "B-7",
+      "severity": "P3",
+      "title": "BLOCKED CTA silently enables Developer Mode (persisted)",
+      "evidence": "src/ui/sidepanel.js:500-508",
+      "impact": "normal user switched to dev persona without notice",
+      "recommendedAction": "show human error card only; explicit opt-in for dev mode",
+      "status": "BACKLOG"
+    },
+    {
+      "id": "B-8",
+      "severity": "P3",
+      "title": "small unbounded buffers: #log pre grows unbounded; AWAIT_BASELINES/acceptancePolls Maps never pruned",
+      "evidence": "sidepanel.js:68-71; content-commands.js:72-73,983,1007-1011; observer hot paths bounded by timeoutMs",
+      "impact": "minor memory growth per session",
+      "recommendedAction": "cap log ~200 lines; prune Maps on acceptance",
+      "status": "BACKLOG"
+    },
+    {
+      "id": "B-9",
+      "severity": "P3",
+      "title": "dead listener DIAGNOSTICS_UPDATE (never sent)",
+      "evidence": "sidepanel.js:1086-1091 only occurrence",
+      "impact": "dead code implying nonexistent channel",
+      "recommendedAction": "remove",
+      "status": "BACKLOG"
+    },
+    {
+      "id": "B-10",
+      "severity": "P3",
+      "title": "token auto-recovery fires mid-typing (500ms debounce per keystroke)",
+      "evidence": "sidepanel.js:1043-1061",
+      "impact": "401 churn + toast noise during paste",
+      "recommendedAction": "debounce on silence + min length",
+      "status": "BACKLOG"
+    },
+    {
+      "id": "B-11",
+      "severity": "P3",
+      "title": "raw error code shown in toast on approval/generation failure",
+      "evidence": "sidepanel.js:753; import toast :860 loses lastError reason",
+      "impact": "normal mode sees raw code",
+      "recommendedAction": "show body in toast, codes stay in details card",
+      "status": "BACKLOG"
+    },
+    {
+      "id": "B-12",
+      "severity": "P3",
+      "title": "credit-gate helpers exported but untested (consumeLocalApproval nonce/fingerprint semantics)",
+      "evidence": "service-worker.js:141,202-221; tests/run.js has zero references",
+      "impact": "most credit-sensitive extension logic untested (Q15/Q16 evidence gap)",
+      "recommendedAction": "add TI test group: replay, attempt mismatch, nonce mismatch, fingerprint mismatch, both-absent compat",
+      "status": "OPEN (fix = add tests)"
+    },
+    {
+      "id": "B-13",
+      "severity": "P3",
+      "title": "FETCH_RESULT_BYTES credentialed fetch of message-supplied URL without origin constraint",
+      "evidence": "content-commands.js:1041-1057 credentials:include, only non-empty check; validateSender allows extension pages + Flow content scripts",
+      "impact": "defense-in-depth: content-script compromise could exfiltrate via credentialed fetch",
+      "recommendedAction": "constrain msg.url to captured result-candidate origins / google-owned https hosts",
+      "status": "OPEN (security hardening)"
+    }
+  ],
+  "clean": [
+    "normal-mode information hygiene (dev-mode gated; 5 user questions answered)",
+    "no auto-spend (multi-layer approval + acceptance handshake)",
+    "no indefinite keepalive (no alarms/held ports; bounded polls)",
+    "post-wake duplicate-submit protection (fail-safe direction; single-use approval bound jobId+attempt+nonce+fingerprint)",
+    "canonical tab resolver vs MV3 restarts (re-resolve + re-ping; storage.session non-secret)",
+    "token handling (persist only after auth success; never echoed; forget control; TRUSTED_CONTEXTS; loopback-locked; SW never holds token; no token logging)",
+    "debugger permission gating (op allowlist, origin+projectRef match, detach)",
+    "result correlation (no candidate adoption without persisted candidates; baseline diff; 60MB cap)",
+    "keyboard operability otherwise (native controls, focus-visible, no traps)",
+    "error message rendering (no [object Object])"
+  ]
+}

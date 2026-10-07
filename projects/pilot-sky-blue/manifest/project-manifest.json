@@ -1,0 +1,180 @@
+{
+  "schemaVersion": "1.6.0",
+  "manifestId": "pm-1ffc37ca1c38",
+  "projectId": "pilot-sky-blue",
+  "projectVersion": 15,
+  "revision": 15,
+  "pipelineVersion": null,
+  "contentMode": "everyday-physics-explainer",
+  "contentClass": "FACTUAL",
+  "createdAt": "2026-10-06T04:49:11.785Z",
+  "updatedAt": "2026-10-06T07:24:13.365Z",
+  "artifacts": {
+    "creativeBriefVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "channelBibleVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "storyBibleVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "characterBibleVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "worldBibleVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "visualBibleVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "researchPackVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "finalSpokenScriptVersion": {
+      "version": "fss-pilot-sky-blue@v2",
+      "status": "VERIFIED",
+      "ref": "input/final-spoken-script/fss-pilot-sky-blue-v2.json",
+      "detail": "productionScriptStatus=CANONICAL hum=hum-f3ab56c75605 fid=fid-18bda8f67bfa nqa=nqa-5c77553ddd03"
+    },
+    "voiceBibleVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "shotPlanVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "promptCompilerVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "agentInstructionsVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "assetRegistryVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "finalAudioVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "alignmentVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "timelineVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "renderVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "narrationDirectionVersion": {
+      "version": "nd-ba9e14b889f3",
+      "status": "VERIFIED",
+      "ref": "voice/narration-direction/nd-ba9e14b889f3.json",
+      "detail": "v2 coverage=25%"
+    },
+    "pronunciationProfileVersion": {
+      "version": "pron-b739edf0b550",
+      "status": "VERIFIED",
+      "ref": "voice/pronunciation-profile/pron-b739edf0b550.json",
+      "detail": "v1 0 entries"
+    },
+    "pronunciationRuntimePassVersion": {
+      "version": "prp-ef2591fc81ec",
+      "status": "VERIFIED",
+      "ref": "voice/pronunciation-pass/prp-ef2591fc81ec.json",
+      "detail": "v1 local-kokoro/kokoro-v1 statuses=CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN"
+    },
+    "ttsReadyPlanVersion": {
+      "version": "ttp-88f0ed96a524",
+      "status": "VERIFIED",
+      "ref": "voice/tts-ready-plan/ttp-88f0ed96a524.json",
+      "detail": "overall=READY_FOR_TTS segments=8"
+    },
+    "narrationAudioVersion": {
+      "version": "fnt-cfd231152fcd",
+      "status": "VERIFIED",
+      "ref": "assets/voice/narration-track/fnt-cfd231152fcd.json",
+      "detail": "v1 69675ms 8 segments"
+    },
+    "speechRateQaVersion": {
+      "version": "srq-dc6c4308edad",
+      "status": "VERIFIED",
+      "ref": "audio/narration/qa/srq-dc6c4308edad.json",
+      "detail": "PASS (8 entries)"
+    },
+    "performanceQaVersion": {
+      "version": "pfq-af33fbfcf5c0",
+      "status": "UNRESOLVED",
+      "ref": "audio/narration/qa/pfq-af33fbfcf5c0.json",
+      "detail": "REVIEW_REQUIRED (8 entries)"
+    },
+    "dialogueRoutingVersion": {
+      "version": "dlr-d7b183beca2b",
+      "status": "UNRESOLVED",
+      "ref": "audio/narration/qa/dlr-d7b183beca2b.json",
+      "detail": "NOT_APPLICABLE (4 entries)"
+    }
+  },
+  "providers": {
+    "registryVersion": null,
+    "selections": []
+  },
+  "state": {
+    "stage": "fix-pre-2.4",
+    "status": "ACTIVE"
+  },
+  "history": null,
+  "recovery": null,
+  "governance": null,
+  "lineage": {
+    "previousManifestId": null,
+    "previousProjectVersion": null
+  },
+  "fingerprint": "88caefddb4932f0e"
+}

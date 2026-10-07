@@ -1,0 +1,16 @@
+{
+  "sourceUrl": "https://blog.youtube/news-and-events/disclosing-ai-generated-content/",
+  "checkedAt": "2026-10-05T00:00:00.000Z",
+  "effectiveDate": "2024-03-18",
+  "contentHash": "c328300b54425650f0f7f699b3b42a01fd9e15c78e8c984dc42ea96d9cb06931",
+  "ruleQuotes": [
+    "disclose to viewers when realistic content - content a viewer could easily mistake for a real person, place, scene, or event - is made with altered or synthetic media, including generative AI",
+    "We are not requiring creators to disclose content that is clearly unrealistic, animated, includes special effects, or has used generative AI for production assistance",
+    "Using the likeness of a realistic person",
+    "Altering footage of real events or places",
+    "Generating realistic scenes",
+    "We won't require creators to disclose if generative AI was used for productivity, like generating scripts, content ideas, or automatic captions",
+    "Clearly unrealistic content, such as animation"
+  ],
+  "enforcementNote": "May-2026: automated detection + prominent labels reported by press (CBS/USA Today) as YouTube announcements; recorded as secondary note, not encoded as rules (official source preferred)"
+}

@@ -7,6 +7,8 @@
  * with an English voice.
  */
 
+const fs = require("fs");
+const os = require("os");
 const path = require("path");
 const { spawnSync } = require("child_process");
 const store = require("../artifact-store");
@@ -44,6 +46,24 @@ const DEFAULT_VOICES = {
 
 const KOKORO_MODEL = "kokoro-v1";
 const KOKORO_VERSION = "1.0.0";
+
+/**
+ * `python -m kokoro` accepts ONLY single-letter lang codes
+ * (`choices=["a","b","h","e","f","i","p","j","z"]`), not `en-us`. Passing a
+ * BCP-47 code makes argparse exit 2, which the adapter used to read as "CLI
+ * unavailable". Mirrors LANGUAGE_NAMES 1:1.
+ */
+const LANGUAGE_CODES = {
+  "en-us": "a",
+  "en-gb": "b",
+  hi: "h",
+  es: "e",
+  fr: "f",
+  it: "i",
+  "pt-br": "p",
+  ja: "j",
+  zh: "z",
+};
 
 function normalizeLanguage(input) {
   if (input === undefined || input === null) return "en-us";
@@ -84,35 +104,29 @@ function resolveVoice(lang, requested, ctx) {
   throw permanent("UNKNOWN_VOICE", `Voice ${requested} not configured for language ${lang}`);
 }
 
-/** Deterministic silent WAV (8000 Hz mono 16-bit, 800 samples). */
-function silentWavBytes() {
-  const dataSize = 1600;
-  const buf = Buffer.alloc(44 + dataSize);
-  buf.write("RIFF", 0);
-  buf.writeUInt32LE(36 + dataSize, 4);
-  buf.write("WAVE", 8);
-  buf.write("fmt ", 12);
-  buf.writeUInt32LE(16, 16);
-  buf.writeUInt16LE(1, 20);
-  buf.writeUInt16LE(1, 22);
-  buf.writeUInt32LE(8000, 24);
-  buf.writeUInt32LE(16000, 28);
-  buf.writeUInt16LE(2, 32);
-  buf.writeUInt16LE(16, 34);
-  buf.write("data", 36);
-  buf.writeUInt32LE(dataSize, 40);
-  return buf;
-}
-
-function tryRealCli(text, language, voice, speed) {
-  const span = spawnSync("python", ["-m", "kokoro", "--text", text, "--lang", language, "--voice", voice, "--speed", String(speed)], {
-    encoding: "buffer",
-    timeout: 60000,
-  });
-  if (span.error) return { unavailable: true };
-  if (span.status !== 0) return { unavailable: true };
-  const out = span.stdout && span.stdout.length > 0 ? span.stdout : null;
-  return { bytes: out };
+/**
+ * Real synthesis. `python -m kokoro` REQUIRES `-o/--output-file` (it writes a
+ * WAV file, never WAV bytes on stdout), so the call must go through a temp
+ * file. The default timeout is generous because the first call downloads the
+ * model + voice + spaCy model; every later call is cache-warm.
+ */
+function tryRealCli(text, language, voice, speed, timeoutMs) {
+  const langCode = LANGUAGE_CODES[String(language).toLowerCase()];
+  if (!langCode) return { unavailable: true, reason: `no kokoro lang code for ${language}` };
+  const tmp = path.join(os.tmpdir(), `unfoldiq-kokoro-${process.pid}-${Date.now()}.wav`);
+  try {
+    const span = spawnSync("python", ["-m", "kokoro", "--text", text, "--lang", langCode, "--voice", voice, "--speed", String(speed), "--output-file", tmp], {
+      encoding: "buffer",
+      timeout: timeoutMs || 300000,
+    });
+    if (span.error) return { unavailable: true, reason: String(span.error.message || span.error) };
+    if (span.status !== 0) return { unavailable: true, reason: `kokoro CLI exited ${span.status}` };
+    if (!fs.existsSync(tmp)) return { unavailable: true, reason: "kokoro CLI wrote no output file" };
+    const bytes = fs.readFileSync(tmp);
+    return { bytes: bytes.length > 0 ? bytes : null };
+  } finally {
+    try { fs.rmSync(tmp, { force: true }); } catch { /* temp cleanup is best effort */ }
+  }
 }
 
 async function execute(request, ctx = {}) {
@@ -159,7 +173,7 @@ async function execute(request, ctx = {}) {
   } else {
     let cli;
     try {
-      cli = tryRealCli(text, language, voice, speed);
+      cli = tryRealCli(text, language, voice, speed, ctx.kokoroTimeoutMs);
     } catch {
       cli = { unavailable: true };
     }
@@ -167,8 +181,11 @@ async function execute(request, ctx = {}) {
       throw unavailable("KOKORO_NOT_AVAILABLE", "Kokoro CLI (python -m kokoro) not available in this environment");
     }
     bytes = Buffer.from(cli.bytes);
+    // FIX 02 (P3-5): corrupt non-RIFF output is refused, never replaced with
+    // silent audio served as READY. A broken render fails loudly here instead
+    // of passing downstream checks as silence.
     if (format === "wav" && bytes.length >= 4 && bytes.slice(0, 4).toString() !== "RIFF") {
-      bytes = silentWavBytes();
+      throw permanent("KOKORO_EMPTY_OUTPUT", "Kokoro produced corrupt (non-RIFF) wav output");
     }
   }
 
@@ -214,13 +231,69 @@ function registerLocalKokoro() {
   return providerId;
 }
 
+/**
+ * FIX 01 Gap C — resolve the exact local Kokoro-82M weight file the
+ * `python -m kokoro` CLI loads (HuggingFace hub snapshot). Returns the newest
+ * snapshot's kokoro-v1_0.pth when several exist. No download, no mutation.
+ */
+function resolveLocalModelFile() {
+  const candidates = [];
+  const hubBase = process.env.HUGGINGFACE_HUB_CACHE
+    || (process.env.HF_HOME ? path.join(process.env.HF_HOME, "hub") : null)
+    || path.join(os.homedir(), ".cache", "huggingface", "hub");
+  const snapDir = path.join(hubBase, "models--hexgrad--Kokoro-82M", "snapshots");
+  try {
+    for (const snap of fs.readdirSync(snapDir)) {
+      const p = path.join(snapDir, snap, "kokoro-v1_0.pth");
+      try {
+        const st = fs.statSync(p);
+        if (st.isFile()) candidates.push({ modelFile: p, snapshot: snap, sizeBytes: st.size, mtimeMs: st.mtimeMs });
+      } catch { /* not present in this snapshot */ }
+    }
+  } catch {
+    return { ok: false, code: "MODEL_FILE_NOT_FOUND", message: `no Kokoro-82M snapshot under ${snapDir}` };
+  }
+  if (candidates.length === 0) {
+    return { ok: false, code: "MODEL_FILE_NOT_FOUND", message: `kokoro-v1_0.pth not found under ${snapDir}` };
+  }
+  candidates.sort((a, b) => b.mtimeMs - a.mtimeMs);
+  return { ok: true, ...candidates[0], modelRepo: "hexgrad/Kokoro-82M" };
+}
+
+function sha256File(modelFile) {
+  const crypto = require("crypto");
+  const stream = fs.readFileSync(modelFile);
+  return crypto.createHash("sha256").update(stream).digest("hex");
+}
+
+/**
+ * FIX 01 Gap C — hash the loaded local file and compare to the official
+ * upstream hash. Never copies an upstream hash into metadata: the local bytes
+ * are always hashed. Mismatch fails closed (MODEL_HASH_MISMATCH).
+ */
+function verifyLocalModel(expectedSha256) {
+  const resolved = resolveLocalModelFile();
+  if (!resolved.ok) return resolved;
+  const localSha256 = sha256File(resolved.modelFile);
+  if (localSha256 !== expectedSha256) {
+    return { ok: false, code: "MODEL_HASH_MISMATCH", message: `local ${resolved.modelFile} sha256 ${localSha256} != expected ${expectedSha256}`, modelFile: resolved.modelFile, localSha256, expectedSha256 };
+  }
+  return { ok: true, match: true, modelFile: resolved.modelFile, snapshot: resolved.snapshot, sizeBytes: resolved.sizeBytes, localSha256, expectedSha256, modelRepo: resolved.modelRepo };
+}
+
 module.exports = {
   execute,
   providerId,
   registerLocalKokoro,
+  resolveLocalModelFile,
+  sha256File,
+  verifyLocalModel,
   SUPPORTED_LANGUAGES,
   LANGUAGE_NAMES,
+  LANGUAGE_CODES,
   DEFAULT_VOICES,
+  KOKORO_MODEL,
+  KOKORO_VERSION,
   normalizeLanguage,
   isLanguageSupported,
   resolveVoice,

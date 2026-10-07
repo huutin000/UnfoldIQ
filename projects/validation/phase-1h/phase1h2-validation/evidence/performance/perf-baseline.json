@@ -1,0 +1,74 @@
+{
+  "artifact": "perf-baseline",
+  "capturedAt": "2026-10-07T03:35:19.456Z",
+  "method": "process.hrtime.bigint micro-benchmarks inside tests/history/test-history.js",
+  "sampleCounts": {
+    "validate": 50,
+    "load": 20,
+    "projection": 20,
+    "lockCheck": 50,
+    "append": 10,
+    "lockMutation": 10,
+    "variantSelect": 5
+  },
+  "environment": "local Windows, node",
+  "metrics": {
+    "validate": {
+      "samples": 50,
+      "minMs": 0.015,
+      "p50Ms": 0.019,
+      "maxMs": 0.054
+    },
+    "load": {
+      "samples": 20,
+      "minMs": 0.189,
+      "p50Ms": 0.21,
+      "maxMs": 0.442
+    },
+    "projection": {
+      "samples": 20,
+      "minMs": 0.181,
+      "p50Ms": 0.203,
+      "maxMs": 0.295
+    },
+    "lockCheck": {
+      "samples": 50,
+      "minMs": 0.172,
+      "p50Ms": 0.19,
+      "maxMs": 0.595
+    },
+    "append": {
+      "samples": 10,
+      "minMs": 1.36,
+      "p50Ms": 6.613,
+      "maxMs": 8.492
+    },
+    "lockMutation": {
+      "samples": 10,
+      "minMs": 6.515,
+      "p50Ms": 7.315,
+      "maxMs": 9.748
+    },
+    "variantSelect": {
+      "samples": 5,
+      "minMs": 22.841,
+      "p50Ms": 24.181,
+      "maxMs": 25.084
+    },
+    "sizeBytes": 18346,
+    "migrationMs": 219.47,
+    "eventsPerGeneration": 4.5,
+    "unnecessaryRewriteCount": 0
+  },
+  "budgets": {
+    "validateP50Ms": 5,
+    "loadP50Ms": 5,
+    "appendP50Ms": 25,
+    "projectionP50Ms": 5,
+    "lockCheckP50Ms": 2,
+    "sizeBytes": 65536,
+    "migrationMs": 1000
+  },
+  "reason": "history sits on Core guard paths; appends/projection/lock-checks must stay sub-millisecond-to-ms while the store stays small",
+  "result": "PASS"
+}

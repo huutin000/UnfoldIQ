@@ -1,0 +1,13 @@
+{
+  "entries": [
+    {
+      "assetId": "IMG_A",
+      "sourcePath": "assets/case-a-source.png",
+      "stagedPath": "unfoldiq/phase1g12-case-a/1186233d/case-a-source.png",
+      "staticFilePath": "unfoldiq/phase1g12-case-a/1186233d/case-a-source.png",
+      "contentHash": "1186233d1af671fcb50ff5084ded613777105ba87cf0d951481ab236ba5b322e",
+      "size": 2080,
+      "type": "image"
+    }
+  ]
+}

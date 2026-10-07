@@ -1,0 +1,7 @@
+{"t":"2026-10-04T15:19:36.122Z","event":"bundle-start","projectId":"phase1g12-case-a"}
+{"t":"2026-10-04T15:19:37.954Z","event":"bundle-done"}
+{"t":"2026-10-04T15:19:37.954Z","event":"select-start","compositionId":"UNFOLDIQVideo"}
+{"t":"2026-10-04T15:19:39.480Z","event":"select-done","durationInFrames":60}
+{"t":"2026-10-04T15:19:39.480Z","event":"render-start-attempt"}
+{"t":"2026-10-04T15:19:39.662Z","event":"render-start","frameCount":60,"parallelEncoding":true}
+{"t":"2026-10-04T15:19:42.918Z","event":"render-done","outputPath":"D:\\Project\\UNFOLDIQ\\projects\\phase1g12-case-a\\render\\attempt-2\\output.mp4","frameCount":60}

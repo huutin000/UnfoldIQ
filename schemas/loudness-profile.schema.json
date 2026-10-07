@@ -1,0 +1,21 @@
+{
+  "$id": "https://unfoldiq.io/schemas/loudness-profile.schema.json",
+  "title": "UNFOLDIQ Loudness Profile Contract (Phase 2.8)",
+  "description": "Versioned per-platform loudness policy: integrated loudness target, tolerance, true-peak ceiling, loudness range bounds",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["profileId", "version", "platform", "contentType", "targetIntegratedLoudness", "tolerance", "maxTruePeak"],
+  "properties": {
+    "profileId": { "type": "string", "minLength": 1 },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "platform": { "type": "string", "minLength": 1 },
+    "contentType": { "type": "string", "minLength": 1 },
+    "targetIntegratedLoudness": { "type": "number" },
+    "tolerance": { "type": "number", "minimum": 0 },
+    "maxTruePeak": { "type": "number" },
+    "minLoudnessRange": { "type": "number" },
+    "maxLoudnessRange": { "type": "number" },
+    "narrationTargetLufs": { "type": "number" },
+    "minSpeechSeparationDb": { "type": "number" }
+  }
+}

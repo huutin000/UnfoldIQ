@@ -1,0 +1,7 @@
+{
+  "status": "MEASURED",
+  "actualTimelineEndMs": 2000,
+  "sources": [
+    "validation:scene-script"
+  ]
+}

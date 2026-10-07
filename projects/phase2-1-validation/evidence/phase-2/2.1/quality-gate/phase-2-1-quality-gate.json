@@ -1,0 +1,122 @@
+{
+  "task": "PHASE_2_1_01",
+  "phase": "2.1 — Voice Bible + Narrator Persona",
+  "gate": "PHASE_2_1_QUALITY_GATE",
+  "roadmap": "V6.2",
+  "evaluatedAt": "2026-10-05",
+  "voiceBibleId": "vb-42744f223671",
+  "bibleVersion": 1,
+  "verdict": {
+    "TASK_VALIDATION": "PASS",
+    "PHASE_2_1_QUALITY_GATE": "PASS",
+    "PHASE_2_1": "COMPLETE",
+    "NEXT": "PHASE 2.2 — NARRATION DIRECTOR VERIFICATION"
+  },
+  "qualityGate": [
+    { "id": "Q1", "requirement": "canonical versioned Voice Bible exists", "status": "PASS", "evidence": "projects/phase2-1-validation/voice/voice-bible/vb-42744f223671.json (v1, immutable per-version file); evidence/schema/version-semantics.json" },
+    { "id": "Q2", "requirement": "narrator persona structured", "status": "PASS", "evidence": "narrator.persona with all 13 contract fields as controlled enums; evidence/persona/narrator-persona.json; V12" },
+    { "id": "Q3", "requirement": "provider/model/voice identity explicit", "status": "PASS", "evidence": "narrator.provider=local-kokoro, model=kokoro-v1, voiceId=af_heart (all required); V1/V7/V19" },
+    { "id": "Q4", "requirement": "Kokoro is current V1 provider; VoiceStudio not integrated", "status": "PASS", "evidence": "providers/CONFIG.yaml v1Provider=local-kokoro; VoiceStudio absent from providerCatalog() and fails VOICE_PROVIDER_UNSUPPORTED; V8/V28" },
+    { "id": "Q5", "requirement": "normalized provider contract exists", "status": "PASS", "evidence": "resolveVoiceSelection() returns {provider,model,voiceId,language,options}; toKokoroRuntimeConfig() is the single translation site; V7" },
+    { "id": "Q6", "requirement": "language/locale validation fail-closed", "status": "PASS", "evidence": "VOICE_LANGUAGE_UNSUPPORTED / VOICE_LOCALE_UNSUPPORTED with no cross-language fallback; V10" },
+    { "id": "Q7", "requirement": "speed default distinguished from final measured speech rate", "status": "PASS", "evidence": "speedDefault bounded [0.5,2.0] structurally excludes wpm; no wpm field exists; V11" },
+    { "id": "Q8", "requirement": "pronunciation profile reference contract exists", "status": "PASS", "evidence": "pronunciationProfileRef=pron-en-us-reference; schema checks shape, code checks pron- semantics; V15" },
+    { "id": "Q9", "requirement": "character voice mapping contract exists and may be empty", "status": "PASS", "evidence": "characterVoices=[] accepted; duplicate speakerId and narrator-voice reuse refused; V13/V14" },
+    { "id": "Q10", "requirement": "old versions immutable/loadable", "status": "PASS", "evidence": "persistVersion refuses to overwrite an existing voiceBibleId; loadVoiceBible(oldId) still works; V4/V6" },
+    { "id": "Q11", "requirement": "meaningful revision creates new version", "status": "PASS", "evidence": "speedDefault 1→1.1 produced v2 with a new id while v1 stayed loadable and unchanged; V6" },
+    { "id": "Q12", "requirement": "Manifest references current Voice Bible", "status": "PASS", "evidence": "artifacts.voiceBibleVersion.version=vb-42744f223671, ref=voice/voice-bible/vb-42744f223671.json, no body stored; V16/V27" },
+    { "id": "Q13", "requirement": "DAG invalidation scoped correctly", "status": "PASS", "evidence": "VOICE_BIBLE→VOICE is the only edge added; a revision marked VOICE DIRTY while RESEARCH_PACK/CREATIVE_BRIEF stayed CLEAN; V17" },
+    { "id": "Q14", "requirement": "history/lock semantics preserved", "status": "PASS", "evidence": "VOICE_BIBLE added to TARGET_TYPES + DAG lockTarget whitelist; locked config refuses revise with VOICE_BIBLE_LOCKED; unlock→revise creates v2; V18" },
+    { "id": "Q15", "requirement": "provenance/rights honest and inspectable", "status": "PASS", "evidence": "source=PROVIDER_DEFAULT, rights=UNRESOLVED with an explicit 'not proven' detail; readiness.blockers name both blockers; evidence/security/security-and-privacy.json" },
+    { "id": "Q16", "requirement": "no fabricated voice/rights selection", "status": "PASS", "evidence": "audit found no canonical selection; recorded PROVIDER_DEFAULT (not OPERATOR_APPROVED) and UNRESOLVED rights; productionReady=false; manifest UNRESOLVED; V20" },
+    { "id": "Q17", "requirement": "workspace governance applied", "status": "PASS", "evidence": "phase2-1-validation registered; path resolved via resolveArtifactPath(VOICE,DURABLE) and approved by validateWorkspacePath; check:workspace ok:true; V21/V22" },
+    { "id": "Q18", "requirement": "lifecycle-at-creation applied", "status": "PASS", "evidence": "VOICE_BIBLE_LIFECYCLE=DURABLE enforced at write; unclassified fails safe to RETENTION_MANAGED+review; V22/V23" },
+    { "id": "Q19", "requirement": "structured errors exist", "status": "PASS", "evidence": "all 14 roadmap codes declared in lib/voice-bible ERRORS and reachable in tests: VOICE_BIBLE_NOT_FOUND, VOICE_BIBLE_SCHEMA_INVALID, VOICE_BIBLE_VERSION_CONFLICT, VOICE_BIBLE_LOCKED, VOICE_PROVIDER_UNSUPPORTED, VOICE_MODEL_UNSUPPORTED, VOICE_NOT_FOUND, VOICE_LANGUAGE_UNSUPPORTED, VOICE_LOCALE_UNSUPPORTED, VOICE_CONFIGURATION_INVALID, NARRATOR_PERSONA_INVALID, CHARACTER_VOICE_CONFLICT, PRONUNCIATION_PROFILE_INVALID, VOICE_RIGHTS_REVIEW_REQUIRED" },
+    { "id": "Q20", "requirement": "secret/privacy checks PASS", "status": "PASS", "evidence": "key-name + paste scanners reject apiKey/Bearer/bridge_token; post-hoc injection fails validation; cloning const false; V24/V25" },
+    { "id": "Q21", "requirement": "observability integration PASS", "status": "PASS", "evidence": "5 event classes emitted with correlationId=voiceBibleId; CANONICAL_DURABLE retention; getTrace correlates ≥2 events; evidence/telemetry/observability.json; V25" },
+    { "id": "Q22", "requirement": "relevant performance baseline recorded", "status": "PASS", "evidence": "all 5 roadmap ops measured at 200 iterations (0.010–0.357ms warm); non-mutating; evidence/performance/voice-bible-performance-baseline.json" },
+    { "id": "Q23", "requirement": "V1–V28 PASS", "status": "PASS", "evidence": "187 assertions passed, 0 failed — node tests/voice-bible/test-voice-bible.js" },
+    { "id": "Q24", "requirement": "targeted regression PASS", "status": "PASS", "evidence": "workspace, project-manifest, history, recovery, dag, telemetry, golden, provenance/compliance, voice-bible, providers — all PASS via npm test" },
+    { "id": "Q25", "requirement": "full regression PASS", "status": "PASS", "evidence": "npm test — 25 domains, 0 failed suites, 317.6s; check:repo-structure OK; validate-schemas ALL PASSED" },
+    { "id": "Q26", "requirement": "open P0 = 0", "status": "PASS", "evidence": "no P0 found during implementation or regression" },
+    { "id": "Q27", "requirement": "open P1 = 0", "status": "PASS", "evidence": "no P1 found; all defects found during 2.1 were fixed at root cause and pinned with a regression assertion" },
+    { "id": "Q28", "requirement": "no 2.2+ behavior implemented prematurely", "status": "PASS", "evidence": "no per-segment direction field exists in the schema; no NARRATION_DIRECTION/TTS_AUDIO/FINAL_AUDIO/CAPTIONS node created; no synthesis, alignment, mix, caption, or speech-rate measurement performed; runtime probe deliberately NOT_PROBED" }
+  ],
+  "summary": {
+    "total": 28,
+    "pass": 28,
+    "fail": 0,
+    "notEvaluated": 0
+  },
+  "defectsFoundAndFixedDuring21": [
+    {
+      "id": "F1",
+      "severity": "P2",
+      "found": "V3/V10/V12/V13/V15 — validateVoiceBible returned precise codes (VOICE_LANGUAGE_UNSUPPORTED, NARRATOR_PERSONA_INVALID, CHARACTER_VOICE_CONFLICT, PRONUNCIATION_PROFILE_INVALID) but persistVersion collapsed them all into a generic VOICE_BIBLE_SCHEMA_INVALID.",
+      "rootCause": "persistVersion hardcoded the error code instead of propagating errors[0].code.",
+      "fix": "propagate the specific code; added tests asserting each structured code is reachable",
+      "pinnedBy": "V3, V10, V12, V13, V15"
+    },
+    {
+      "id": "F2",
+      "severity": "P2",
+      "found": "measureBaseline wrote artifacts.voiceBibleVersion with a hardcoded status:'VERIFIED'.",
+      "rootCause": "The perf probe duplicated manifest-ref construction instead of reusing it, so it would have silently upgraded this project's honest UNRESOLVED reference to a false VERIFIED.",
+      "fix": "extracted manifestReferenceFor() as the single construction site; the perf probe now measures the exact entry attachManifestReference would write",
+      "pinnedBy": "V16 (asserts the probe performs no manifest write and cannot flip UNRESOLVED→VERIFIED)"
+    },
+    {
+      "id": "F3",
+      "severity": "P2",
+      "found": "validateVoiceBible reported the persona/language symptom before the provider/language root cause.",
+      "rootCause": "check ordering — persona checks ran before identity resolution.",
+      "fix": "identity resolution now runs first so an unsupported language is never masked by the persona mismatch it causes",
+      "pinnedBy": "V10"
+    },
+    {
+      "id": "F4",
+      "severity": "P3",
+      "found": "character voice resolution inherited the bible locale, so a character speaking another language was wrongly refused with VOICE_LOCALE_UNSUPPORTED.",
+      "rootCause": "locale is a delivery-level property, not a per-speaker one.",
+      "fix": "locale now constrains the narrator only",
+      "pinnedBy": "V13, V14"
+    },
+    {
+      "id": "F6",
+      "severity": "P2",
+      "found": "registerDagNode left the VOICE_BIBLE node at state=NOT_CREATED_YET with lockTarget=null and producedBy=null whenever bootstrapDag had already created the node as a future pipeline class — even though a real Voice Bible existed and versionRef had been updated.",
+      "rootCause": "registerDagNode only handled the 'node absent' and 'versionRef changed' cases; it never completed a pre-existing placeholder node. Effect: the DAG misreported a real artifact as never-built AND the node had no lockTarget, so lock-aware invalidation silently opted the Voice Bible out of 1H.2 locking.",
+      "fix": "registerDagNode now completes a pre-existing node via the canonical setters (setNodeVersion / setNodeState / setNodeLockTarget), and inspectDagEvidence now probes voice/voice-bible/*.json from disk exactly like the shot plan, so bootstrap yields a real CLEAN node from evidence instead of a placeholder",
+      "pinnedBy": "V17 (asserts state/producedBy/provenance/lockTarget, plus a re-bootstrap-from-disk case)"
+    },
+    {
+      "id": "F7",
+      "severity": "P3",
+      "found": "adding VOICE_BIBLE to the DAG lockTarget whitelist failed schema validation: /nodes/VOICE_BIBLE/lockTarget/targetType must be equal to one of the allowed values.",
+      "rootCause": "schemas/recovery-state.schema.json carries a SECOND, independent lockTarget.targetType enum that was not updated alongside the artifactType enum and the TARGET_TYPES code list.",
+      "impact": "discovered only because F6 made the node actually attach a lockTarget; the broken enum was masked while the node stayed a placeholder",
+      "fix": "added VOICE_BIBLE to the recovery-state lockTarget enum",
+      "pinnedBy": "V17 (the assertions fail closed against the schema)"
+    },
+    {
+      "id": "F5",
+      "severity": "P3",
+      "found": "the golden-doc secret scanner rejected the metric key 'secretSafety' (matches /secret/i).",
+      "rootCause": "metric name collided with a security control's own vocabulary.",
+      "fix": "renamed the metric to credentialSafety rather than adding a scanner exception — a security control is never weakened for a naming convenience",
+      "pinnedBy": "V26"
+    }
+  ],
+  "openFindings": {
+    "file": "findings-phase-2-1.json",
+    "P0": 0,
+    "P1": 0,
+    "P2": 1,
+    "P3": 5
+  },
+  "notes": [
+    "Q16 PASSES precisely BECAUSE the selection was left unresolved. Marking the provider-default voice as operator-approved would have failed Q16.",
+    "Production readiness of the validation voice bible is blocked (P2-1). That is a legitimate blocker for production readiness per roadmap 26 and does not block the 2.1 gate.",
+    "roadmap 35 suggested evidence under projects/validation/phase-2/2.1/; the actual location is projects/phase2-1-validation/evidence/phase-2/2.1/ because artifact-store hardcodes root/projects/<projectId>. Disclosed in report section 16."
+  ]
+}

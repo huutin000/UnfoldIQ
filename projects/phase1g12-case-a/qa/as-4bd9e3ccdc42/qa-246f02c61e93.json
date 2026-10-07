@@ -1,0 +1,534 @@
+{
+  "version": "1.0.0",
+  "qaResultId": "qa-246f02c61e93",
+  "projectId": "phase1g12-case-a",
+  "assetId": "as-4bd9e3ccdc42",
+  "assetHash": "4bd9e3ccdc428fab8546d3bf746191e73166dcdf754fbfe484709031e2f10bcc",
+  "shotId": "A-SH01",
+  "sceneId": "A-SC01",
+  "qaPolicyVersion": "1g11-1.0.0",
+  "expectedContextFingerprint": "fp-576dc20202fdf7b7",
+  "expectationSnapshot": {
+    "assetId": "as-4bd9e3ccdc42",
+    "assetHash": "4bd9e3ccdc428fab8546d3bf746191e73166dcdf754fbfe484709031e2f10bcc",
+    "shotExpectationVersion": "case-a-shot-v1",
+    "sceneExpectationVersion": "case-a-scene-v1",
+    "scriptVersion": "case-a-noskript",
+    "characterBibleVersion": "n/a-fiction",
+    "worldBibleVersion": "n/a-fiction",
+    "visualBibleVersion": "n/a-fiction",
+    "platformAdaptationVersion": "pa-youtube-16x9",
+    "qaPolicyVersion": "1g11-1.0.0"
+  },
+  "structural": {
+    "status": "FAIL",
+    "severity": "BLOCKER",
+    "blocking": true,
+    "checks": [
+      {
+        "check": "file-type",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "decode",
+        "status": "FAIL",
+        "severity": "BLOCKER",
+        "reason": "bytes do not decode as declared media (CORRUPT_MEDIA)",
+        "blocking": true
+      },
+      {
+        "check": "media-type",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "dimensions",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "no dimensions expected for this media",
+        "blocking": false
+      },
+      {
+        "check": "aspect",
+        "status": "UNKNOWN",
+        "severity": "BLOCKER",
+        "reason": "expected aspect 16:9; actual unobservable",
+        "blocking": true
+      },
+      {
+        "check": "duration",
+        "status": "UNKNOWN",
+        "severity": "BLOCKER",
+        "reason": "video duration unobservable",
+        "blocking": true
+      },
+      {
+        "check": "temporal-stream",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "freeze",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      }
+    ],
+    "evidence": [
+      {
+        "evidenceId": "ev-ec735e3d26de",
+        "layer": "structural",
+        "check": "file-type",
+        "source": "MAGIC_BYTES",
+        "expected": "mp4",
+        "observed": "mp4",
+        "comparison": "match",
+        "confidence": "high",
+        "artifactRefs": []
+      },
+      {
+        "evidenceId": "ev-53602d891812",
+        "layer": "structural",
+        "check": "decode",
+        "source": "UNPROBED_BYTES",
+        "expected": "decodable media",
+        "observed": "decode failure",
+        "comparison": "mismatch",
+        "confidence": "high",
+        "artifactRefs": []
+      },
+      {
+        "evidenceId": "ev-dc036722d75b",
+        "layer": "structural",
+        "check": "media-type",
+        "source": "MAGIC_BYTES",
+        "expected": "video",
+        "observed": "video",
+        "comparison": "match",
+        "confidence": "medium",
+        "artifactRefs": []
+      }
+    ],
+    "reasons": [
+      "decode: bytes do not decode as declared media (CORRUPT_MEDIA)",
+      "aspect: expected aspect 16:9; actual unobservable",
+      "duration: video duration unobservable"
+    ]
+  },
+  "semantic": {
+    "status": "PASS",
+    "severity": "INFO",
+    "blocking": false,
+    "checks": [
+      {
+        "check": "scene",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "subject",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "action",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "motion-occurs",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "text",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "composition",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "media-type",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      }
+    ],
+    "evidence": [
+      {
+        "evidenceId": "ev-d0807f68d3ba",
+        "layer": "semantic",
+        "check": "scene",
+        "source": "MANUAL_REVIEW",
+        "expected": "A-SC01",
+        "observed": "A-SC01",
+        "comparison": "match",
+        "confidence": "high",
+        "artifactRefs": []
+      },
+      {
+        "evidenceId": "ev-be95e5dd2511",
+        "layer": "semantic",
+        "check": "subject",
+        "source": "MANUAL_REVIEW",
+        "expected": [
+          "validation slate"
+        ],
+        "observed": [
+          "validation slate"
+        ],
+        "comparison": "match",
+        "confidence": "high",
+        "artifactRefs": []
+      },
+      {
+        "evidenceId": "ev-266164b3eda6",
+        "layer": "semantic",
+        "check": "action",
+        "source": "MANUAL_REVIEW",
+        "expected": [
+          "slow zoom in"
+        ],
+        "observed": [
+          "slow zoom in"
+        ],
+        "comparison": "match",
+        "confidence": "high",
+        "artifactRefs": []
+      },
+      {
+        "evidenceId": "ev-1f8650cca47a",
+        "layer": "semantic",
+        "check": "motion-occurs",
+        "source": "FRAME_SAMPLE",
+        "expected": "action occurs",
+        "observed": "action observed",
+        "comparison": "match",
+        "confidence": "high",
+        "artifactRefs": []
+      },
+      {
+        "evidenceId": "ev-43c19a94bf20",
+        "layer": "semantic",
+        "check": "text",
+        "source": "MANUAL_REVIEW",
+        "expected": "no text",
+        "observed": "no text",
+        "comparison": "match",
+        "confidence": "high",
+        "artifactRefs": []
+      }
+    ],
+    "reasons": []
+  },
+  "factuality": {
+    "status": "NOT_APPLICABLE",
+    "severity": "INFO",
+    "blocking": false,
+    "checks": [
+      {
+        "check": "period",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "location",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "speciesPersonObject",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "clothing",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "architecture",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "toolsEquipment",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "mapGeography",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "chartDirection",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "numbersLabels",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "timelineOrder",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "onScreenFactualText",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      }
+    ],
+    "evidence": [],
+    "reasons": []
+  },
+  "continuity": {
+    "status": "UNKNOWN",
+    "severity": "WARNING",
+    "blocking": false,
+    "checks": [
+      {
+        "check": "faceIdentity",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "no continuity expectation for this domain",
+        "blocking": false
+      },
+      {
+        "check": "location",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "no continuity expectation for this domain",
+        "blocking": false
+      },
+      {
+        "check": "startState",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "no continuity expectation for this domain",
+        "blocking": false
+      },
+      {
+        "check": "endState",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "no continuity expectation for this domain",
+        "blocking": false
+      },
+      {
+        "check": "hair",
+        "status": "UNKNOWN",
+        "severity": "WARNING",
+        "reason": "continuity observation unavailable",
+        "blocking": false
+      },
+      {
+        "check": "clothing",
+        "status": "UNKNOWN",
+        "severity": "WARNING",
+        "reason": "continuity observation unavailable",
+        "blocking": false
+      },
+      {
+        "check": "props",
+        "status": "UNKNOWN",
+        "severity": "WARNING",
+        "reason": "continuity observation unavailable",
+        "blocking": false
+      },
+      {
+        "check": "timeOfDay",
+        "status": "UNKNOWN",
+        "severity": "WARNING",
+        "reason": "continuity observation unavailable",
+        "blocking": false
+      },
+      {
+        "check": "paletteStyle",
+        "status": "UNKNOWN",
+        "severity": "WARNING",
+        "reason": "continuity observation unavailable",
+        "blocking": false
+      },
+      {
+        "check": "motionContinuity",
+        "status": "UNKNOWN",
+        "severity": "WARNING",
+        "reason": "continuity observation unavailable",
+        "blocking": false
+      }
+    ],
+    "evidence": [],
+    "reasons": []
+  },
+  "aggregate": {
+    "status": "REJECTED",
+    "severity": "BLOCKER",
+    "timelineEligible": false,
+    "failedLayers": [
+      "structural"
+    ],
+    "warningLayers": [
+      "continuity"
+    ],
+    "unknownLayers": [
+      "continuity"
+    ],
+    "reasons": [
+      "structural: decode: bytes do not decode as declared media (CORRUPT_MEDIA)",
+      "structural: aspect: expected aspect 16:9; actual unobservable",
+      "structural: duration: video duration unobservable"
+    ],
+    "recommendation": "REPLACE_ASSET"
+  },
+  "sourceRefs": [],
+  "evidenceRefs": [],
+  "evidence": [
+    {
+      "evidenceId": "ev-ec735e3d26de",
+      "layer": "structural",
+      "check": "file-type",
+      "source": "MAGIC_BYTES",
+      "expected": "mp4",
+      "observed": "mp4",
+      "comparison": "match",
+      "confidence": "high",
+      "artifactRefs": []
+    },
+    {
+      "evidenceId": "ev-53602d891812",
+      "layer": "structural",
+      "check": "decode",
+      "source": "UNPROBED_BYTES",
+      "expected": "decodable media",
+      "observed": "decode failure",
+      "comparison": "mismatch",
+      "confidence": "high",
+      "artifactRefs": []
+    },
+    {
+      "evidenceId": "ev-dc036722d75b",
+      "layer": "structural",
+      "check": "media-type",
+      "source": "MAGIC_BYTES",
+      "expected": "video",
+      "observed": "video",
+      "comparison": "match",
+      "confidence": "medium",
+      "artifactRefs": []
+    },
+    {
+      "evidenceId": "ev-d0807f68d3ba",
+      "layer": "semantic",
+      "check": "scene",
+      "source": "MANUAL_REVIEW",
+      "expected": "A-SC01",
+      "observed": "A-SC01",
+      "comparison": "match",
+      "confidence": "high",
+      "artifactRefs": []
+    },
+    {
+      "evidenceId": "ev-be95e5dd2511",
+      "layer": "semantic",
+      "check": "subject",
+      "source": "MANUAL_REVIEW",
+      "expected": [
+        "validation slate"
+      ],
+      "observed": [
+        "validation slate"
+      ],
+      "comparison": "match",
+      "confidence": "high",
+      "artifactRefs": []
+    },
+    {
+      "evidenceId": "ev-266164b3eda6",
+      "layer": "semantic",
+      "check": "action",
+      "source": "MANUAL_REVIEW",
+      "expected": [
+        "slow zoom in"
+      ],
+      "observed": [
+        "slow zoom in"
+      ],
+      "comparison": "match",
+      "confidence": "high",
+      "artifactRefs": []
+    },
+    {
+      "evidenceId": "ev-1f8650cca47a",
+      "layer": "semantic",
+      "check": "motion-occurs",
+      "source": "FRAME_SAMPLE",
+      "expected": "action occurs",
+      "observed": "action observed",
+      "comparison": "match",
+      "confidence": "high",
+      "artifactRefs": []
+    },
+    {
+      "evidenceId": "ev-43c19a94bf20",
+      "layer": "semantic",
+      "check": "text",
+      "source": "MANUAL_REVIEW",
+      "expected": "no text",
+      "observed": "no text",
+      "comparison": "match",
+      "confidence": "high",
+      "artifactRefs": []
+    }
+  ],
+  "evaluatedAt": "2026-10-04T15:19:43.193Z"
+}

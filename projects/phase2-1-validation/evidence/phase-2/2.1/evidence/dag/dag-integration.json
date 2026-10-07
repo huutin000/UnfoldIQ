@@ -1,0 +1,52 @@
+{
+  "task": "PHASE_2_1_01",
+  "dagPath": "dependency-dag.json",
+  "voiceBibleNode": {
+    "artifactKey": "VOICE_BIBLE",
+    "artifactType": "VOICE_BIBLE",
+    "versionRef": "vb-42744f223671",
+    "state": "CLEAN",
+    "lockTarget": {
+      "targetType": "VOICE_BIBLE",
+      "targetId": "vb-42744f223671"
+    },
+    "provenance": "LIVE",
+    "effectiveState": "CLEAN"
+  },
+  "realDependenciesAdded": [
+    {
+      "upstream": "VOICE_BIBLE",
+      "downstream": "VOICE",
+      "type": "VOICE_IDENTITY",
+      "reason": "TTS audio is produced from the voice bible identity"
+    }
+  ],
+  "deliberatelyNotCreated": {
+    "nodes": [
+      "NARRATION_DIRECTION",
+      "TTS_AUDIO",
+      "FINAL_AUDIO",
+      "CAPTIONS",
+      "FORCED_ALIGNMENT"
+    ],
+    "reason": "roadmap 16 forbids fake Final Audio / downstream nodes when no such audio exists; those artifact classes belong to 2.2 / 2.4 / 2.5 and are pre-existing DAG classes that 2.1 does not invent"
+  },
+  "revisionScoping": {
+    "rule": "a Voice Bible version change marks only the forward descendants of VOICE_BIBLE DIRTY",
+    "audioBranch": [
+      "VOICE"
+    ],
+    "unaffectedBranches": [
+      "RESEARCH_PACK",
+      "CREATIVE_BRIEF",
+      "SHOT_PLAN",
+      "GENERATED_ASSET",
+      "RENDER"
+    ],
+    "reason": "those nodes have no inputRef path from VOICE_BIBLE, so forward invalidation cannot reach them"
+  },
+  "propagationApi": [
+    "registerDagNode",
+    "propagateRevision"
+  ]
+}

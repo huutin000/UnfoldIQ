@@ -1,0 +1,36 @@
+{
+  "version": "1.0.0",
+  "projectId": "live-1g1-http308",
+  "topic": "HTTP 308 Permanent Redirect semantics",
+  "researchGoal": "Establish the documented timeline, primary evidence, major interpretations, and unresolved disputes about \"HTTP 308 Permanent Redirect semantics\" needed to support a developers youtube video (unspecified-mode), without stating unverified claims as fact.",
+  "contentClass": "FACTUAL",
+  "criticalQuestions": [
+    "What is the documented timeline of \"HTTP 308 Permanent Redirect semantics\" (key dates, sequence, participants)?",
+    "What primary evidence (records, artifacts, measurements, official sources) supports the core claims about \"HTTP 308 Permanent Redirect semantics\"?",
+    "Which identities, dates, locations, and numbers in \"HTTP 308 Permanent Redirect semantics\" must be verified before scripting?",
+    "What are the major factual disputes or competing interpretations about \"HTTP 308 Permanent Redirect semantics\"?"
+  ],
+  "platform": "youtube",
+  "audience": "developers",
+  "freshnessRequirement": "EVERGREEN_OK; CURRENT_STATE claims require dated sources with access dates.",
+  "sourcePriority": [
+    "PRIMARY",
+    "OFFICIAL",
+    "peer-reviewed / institutional",
+    "reputable secondary",
+    "community / social only when the question requires testimony or sentiment"
+  ],
+  "supportingQuestions": [
+    "What historical or domain context is needed to explain \"HTTP 308 Permanent Redirect semantics\" to the target audience?",
+    "What do reputable experts conclude about \"HTTP 308 Permanent Redirect semantics\", and with what caveats?",
+    "What comparisons or precedents clarify \"HTTP 308 Permanent Redirect semantics\" without distorting it?"
+  ],
+  "optionalQuestions": [
+    "What color or detail about \"HTTP 308 Permanent Redirect semantics\" would enrich the narrative without affecting truthfulness?"
+  ],
+  "stopCriteria": "Stop when: all critical questions have at least one viable evidence path; high-impact claims have source requirements defined; freshness requirement can be satisfied; remaining optional questions are non-blocking; research budget is reached. (Actual SUFFICIENT / NEEDS_MORE_RESEARCH / BLOCKED evaluation belongs to a later stage.)",
+  "researchBudget": "maxQueries:12; maxSources:20; maxDeepResearchEscalations:1; maxTimeMin:120",
+  "deepResearchAllowed": false,
+  "researchRequired": "REQUIRED",
+  "researchMode": "STANDARD"
+}

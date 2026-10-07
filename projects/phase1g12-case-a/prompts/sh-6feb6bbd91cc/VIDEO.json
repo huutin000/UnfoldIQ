@@ -1,0 +1,137 @@
+{
+  "version": "1.0.0",
+  "promptPackageId": "pp-b42c2e0af4b2",
+  "projectId": "phase1g12-case-a",
+  "sceneId": "sc-f49ec2973868",
+  "shotId": "sh-6feb6bbd91cc",
+  "targetKind": "VIDEO",
+  "sourceRefs": {
+    "shotId": "sh-6feb6bbd91cc",
+    "sceneId": "sc-f49ec2973868",
+    "beatIds": [
+      "b-b1"
+    ],
+    "storySectionRefs": [
+      null
+    ],
+    "storyDraftRef": {
+      "draftId": null
+    },
+    "beatMapFingerprint": "dc634464069723d4",
+    "sourceShotFingerprint": "95be947f8d3cd2ab",
+    "sourceSceneFingerprint": "a76963581f8043bf"
+  },
+  "referenceRefs": [
+    {
+      "assetId": "as-fe697fd1fef8",
+      "kind": "FRAME",
+      "version": "fe697fd1fef86e607d743694c223ab8a93347754ba353f1f7eb0cccfbfab9ab7"
+    }
+  ],
+  "continuityLockRef": [
+    "referenceFrameAppearance"
+  ],
+  "promptSpec": {
+    "version": "1.0.0",
+    "promptSpecId": "ps-aade8d1b8766",
+    "projectId": "phase1g12-case-a",
+    "sceneId": "sc-f49ec2973868",
+    "shotId": "sh-6feb6bbd91cc",
+    "targetKind": null,
+    "platform": "youtube",
+    "contentClass": "FICTION",
+    "sourceRefs": {
+      "shotId": "sh-6feb6bbd91cc",
+      "sceneId": "sc-f49ec2973868",
+      "beatIds": [
+        "b-b1"
+      ],
+      "storySectionRefs": [
+        null
+      ],
+      "storyDraftRef": {
+        "draftId": null
+      },
+      "beatMapFingerprint": "dc634464069723d4",
+      "sourceShotFingerprint": "95be947f8d3cd2ab",
+      "sourceSceneFingerprint": "a76963581f8043bf"
+    },
+    "referenceRefs": [
+      {
+        "assetId": "as-fe697fd1fef8",
+        "kind": "FRAME",
+        "version": "fe697fd1fef86e607d743694c223ab8a93347754ba353f1f7eb0cccfbfab9ab7"
+      }
+    ],
+    "unknownReferences": [],
+    "continuityRefs": [],
+    "subject": {
+      "refs": [
+        "as-fe697fd1fef8"
+      ],
+      "descriptor": "A minimal matte blue circle rests centered on a clean light background; the camera pushes in slowly on the circle as it gently scales up, holding its shape and color without distortion.",
+      "referenceFirst": false
+    },
+    "action": "slow push-in on the blue circle",
+    "environment": {
+      "refs": [],
+      "descriptor": null
+    },
+    "composition": null,
+    "camera": null,
+    "focusLens": null,
+    "lightingAmbiance": null,
+    "style": null,
+    "environmentMotion": null,
+    "historicalConstraints": null,
+    "scientificConstraints": null,
+    "narrativeIntent": "EXPLAIN/DETAIL",
+    "shot": {
+      "startState": null,
+      "endState": null
+    },
+    "mustPreserve": [
+      "referenceFrameAppearance"
+    ],
+    "mustAvoid": [],
+    "claimRefs": [],
+    "classificationRefs": [],
+    "unknownReferencesCount": 0,
+    "fingerprint": "957f77af322404f6",
+    "status": "DRAFT"
+  },
+  "compiledPrompt": "MUST PRESERVE: referenceFrameAppearance\nSUBJECT: A minimal matte blue circle rests centered on a clean light background; the camera pushes in slowly on the circle as it gently scales up, holding its shape and color without distortion.\nACTION: slow push-in on the blue circle",
+  "generationMetadata": {
+    "platformComposition": {
+      "platform": "youtube",
+      "aspectRatio": "16:9",
+      "orientation": "landscape",
+      "source": "platforms/youtube/PROFILE.yaml"
+    },
+    "targetKind": "VIDEO",
+    "referenceFrameUsed": true,
+    "budgetChars": 2000
+  },
+  "requiredCapabilities": [
+    "VIDEO_GENERATION",
+    "IMAGE_TO_VIDEO"
+  ],
+  "adapterId": "VIDEO_GENERIC",
+  "adapterVersion": "1.0.0",
+  "sections": [
+    "CRITICAL",
+    "SUBJECT",
+    "ACTION"
+  ],
+  "droppedForBudget": [],
+  "validation": {
+    "valid": true,
+    "errors": [],
+    "warnings": []
+  },
+  "fingerprint": "c999cc096b9fdbf2",
+  "status": "VALID",
+  "createdAt": "2026-10-05T03:04:15.214Z",
+  "updatedAt": "2026-10-05T03:04:15.214Z",
+  "_force": false
+}

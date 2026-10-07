@@ -1,0 +1,110 @@
+{
+  "moves": [
+    {
+      "itemId": "mkdir:projects/debug",
+      "action": "mkdir",
+      "to": "projects/debug",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "mkdir:projects/validation/phase-1g",
+      "action": "mkdir",
+      "to": "projects/validation/phase-1g",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "mkdir:projects/validation/phase-1h",
+      "action": "mkdir",
+      "to": "projects/validation/phase-1h",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "mkdir:projects/demos",
+      "action": "mkdir",
+      "to": "projects/demos",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "mkdir:projects/archive",
+      "action": "mkdir",
+      "to": "projects/archive",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "mkdir:projects/active",
+      "action": "mkdir",
+      "to": "projects/active",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "move:projects/DBG_1G12",
+      "action": "move",
+      "from": "projects/DBG_1G12",
+      "to": "projects/debug/DBG_1G12",
+      "reason": "B4 frozen debug project with registry-only refs"
+    },
+    {
+      "itemId": "move:projects/DBG_H4",
+      "action": "move",
+      "from": "projects/DBG_H4",
+      "to": "projects/debug/DBG_H4",
+      "reason": "B4 frozen debug project with registry-only refs"
+    },
+    {
+      "itemId": "move:projects/E2E_bench_panel",
+      "action": "move",
+      "from": "projects/E2E_bench_panel",
+      "to": "projects/debug/E2E_bench_panel",
+      "reason": "B4 frozen debug project with registry-only refs"
+    },
+    {
+      "itemId": "move:projects/live-1g1-http308",
+      "action": "move",
+      "from": "projects/live-1g1-http308",
+      "to": "projects/debug/live-1g1-http308",
+      "reason": "B4 frozen debug project with registry-only refs"
+    },
+    {
+      "itemId": "move:projects/phase1g12-hardening",
+      "action": "move",
+      "from": "projects/phase1g12-hardening",
+      "to": "projects/validation/phase-1g/phase1g12-hardening",
+      "reason": "B3 frozen validation project, registry+history refs only"
+    },
+    {
+      "itemId": "move:projects/phase1h1-validation",
+      "action": "move",
+      "from": "projects/phase1h1-validation",
+      "to": "projects/validation/phase-1h/phase1h1-validation",
+      "reason": "B3 frozen validation project, test outDir constants updated alongside"
+    },
+    {
+      "itemId": "move:projects/phase1h2-validation",
+      "action": "move",
+      "from": "projects/phase1h2-validation",
+      "to": "projects/validation/phase-1h/phase1h2-validation",
+      "reason": "B3 frozen validation project, test outDir constants updated alongside"
+    },
+    {
+      "itemId": "move:projects/phase1h3-validation",
+      "action": "move",
+      "from": "projects/phase1h3-validation",
+      "to": "projects/validation/phase-1h/phase1h3-validation",
+      "reason": "B3 frozen validation project, test outDir constants updated alongside"
+    },
+    {
+      "itemId": "move:projects/phase1h45-validation",
+      "action": "move",
+      "from": "projects/phase1h45-validation",
+      "to": "projects/validation/phase-1h/phase1h45-validation",
+      "reason": "B3 frozen validation project, test outDir constants updated alongside"
+    },
+    {
+      "itemId": "move:projects/phase1h67-validation",
+      "action": "move",
+      "from": "projects/phase1h67-validation",
+      "to": "projects/validation/phase-1h/phase1h67-validation",
+      "reason": "B3 frozen validation project, test outDir constants updated alongside"
+    }
+  ]
+}

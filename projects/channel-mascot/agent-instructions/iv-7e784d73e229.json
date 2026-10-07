@@ -1,0 +1,59 @@
+{
+  "version": "1.0.0",
+  "schemaVersion": "1.0.0",
+  "instructionSetId": "is-7e784d73e229",
+  "projectId": "channel-mascot",
+  "instructionVersion": "iv-7e784d73e229",
+  "sourceVersions": {
+    "channelBible": null,
+    "characterBible": null,
+    "worldBible": null,
+    "visualBible": null,
+    "platformPolicy": null
+  },
+  "constraints": {
+    "characterIdentity": [
+      "The channel mascot is a young adult male presenter with short black hair.",
+      "Preserve the mascot's face, age, body identity, and overall appearance consistently across generations.",
+      "Default outfit: mustard-yellow overshirt with dark trousers.",
+      "Do not change the outfit, clothing colors, or signature appearance unless explicitly instructed."
+    ],
+    "visualStyle": [
+      "Match the visual style and medium of the approved mascot reference for this project.",
+      "If a reference image is attached to the Agent Instruction or generation, treat it as the visual source of truth.",
+      "Do not change art style or medium unless explicitly requested."
+    ],
+    "worldContinuity": [],
+    "palette": [],
+    "recurringReferenceRules": [],
+    "forbiddenMutations": [
+      "No random new characters.",
+      "No face mutation.",
+      "No spontaneous age change.",
+      "No spontaneous costume or clothing-color change.",
+      "No unexplained prop mutation.",
+      "No unexpected location replacement.",
+      "No reference substitution."
+    ],
+    "unwantedContent": [
+      "Avoid cluttered backgrounds; prefer clean, minimal backgrounds.",
+      "No text unless explicitly requested.",
+      "No logo unless explicitly requested.",
+      "No watermark unless explicitly requested."
+    ],
+    "platformCompositionRules": [
+      "Default master composition: YouTube long-form 16:9.",
+      "If a generation explicitly targets another platform or aspect ratio, adapt framing and layout while preserving the same mascot identity and visual style.",
+      "Shorts/TikTok 9:16 adaptations must not redefine the mascot's identity, outfit, or visual style."
+    ]
+  },
+  "referenceIds": [],
+  "referenceBindings": [],
+  "compiledText": "PROJECT INVARIANTS (apply to every generation in this project):\nCharacter identity:\n- The channel mascot is a young adult male presenter with short black hair.\n- Preserve the mascot's face, age, body identity, and overall appearance consistently across generations.\n- Default outfit: mustard-yellow overshirt with dark trousers.\n- Do not change the outfit, clothing colors, or signature appearance unless explicitly instructed.\nVisual style:\n- Match the visual style and medium of the approved mascot reference for this project.\n- If a reference image is attached to the Agent Instruction or generation, treat it as the visual source of truth.\n- Do not change art style or medium unless explicitly requested.\nForbidden mutations:\n- No random new characters.\n- No face mutation.\n- No spontaneous age change.\n- No spontaneous costume or clothing-color change.\n- No unexplained prop mutation.\n- No unexpected location replacement.\n- No reference substitution.\nUnwanted content:\n- Avoid cluttered backgrounds; prefer clean, minimal backgrounds.\n- No text unless explicitly requested.\n- No logo unless explicitly requested.\n- No watermark unless explicitly requested.\nPlatform composition:\n- Default master composition: YouTube long-form 16:9.\n- If a generation explicitly targets another platform or aspect ratio, adapt framing and layout while preserving the same mascot identity and visual style.\n- Shorts/TikTok 9:16 adaptations must not redefine the mascot's identity, outfit, or visual style.",
+  "compiledFingerprint": "778e8299f5dd0265",
+  "providerTargets": [
+    "GOOGLE_FLOW"
+  ],
+  "createdAt": "2026-10-03T14:20:19.740Z",
+  "updatedAt": "2026-10-03T14:20:19.740Z"
+}

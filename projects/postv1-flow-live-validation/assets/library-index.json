@@ -1,0 +1,211 @@
+{
+  "version": "1.0.0",
+  "assets": {
+    "as-1c6b6d3e67ce": {
+      "version": "1.0.0",
+      "assetId": "as-1c6b6d3e67ce",
+      "projectId": "postv1-flow-live-validation",
+      "type": "image",
+      "role": "OTHER",
+      "source": "migration",
+      "provider": null,
+      "jobId": null,
+      "shotId": null,
+      "characterIds": [],
+      "locationIds": [],
+      "promptVersion": null,
+      "modelVersion": null,
+      "referenceIds": [],
+      "instructionVersion": null,
+      "derivedFrom": [],
+      "hash": {
+        "algo": "sha256",
+        "value": "1c6b6d3e67ce3debba0e328815ebce2e466bab37fdc07b59fa732df6b27bcc9e"
+      },
+      "bytes": 251603,
+      "relativePath": "assets/image/CHAR_UNFOLDIQ_GUIDE_01/REF_GUIDE_MASTER_3Q_01_attempt-01.png",
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "durationMs": null,
+      "rights": {
+        "status": "UNKNOWN",
+        "note": "pre-existing file indexed by migration; origin and license unverified"
+      },
+      "provenance": {
+        "source": "migration",
+        "detail": "pre-existing file at assets/image/CHAR_UNFOLDIQ_GUIDE_01/REF_GUIDE_MASTER_3Q_01_attempt-01.png"
+      },
+      "qualityStatus": "UNREVIEWED",
+      "selection": {
+        "status": "UNSET",
+        "decidedAt": null,
+        "reason": null
+      },
+      "lock": {
+        "locked": false,
+        "reason": null,
+        "lockedAt": null,
+        "actor": null,
+        "unlockedAt": null,
+        "unlockReason": null
+      },
+      "createdAt": "2026-10-04T02:06:16.326Z",
+      "updatedAt": "2026-10-04T02:06:16.326Z"
+    },
+    "as-a7801df9bf0f": {
+      "version": "1.0.0",
+      "assetId": "as-a7801df9bf0f",
+      "projectId": "postv1-flow-live-validation",
+      "type": "image",
+      "role": "OTHER",
+      "source": "migration",
+      "provider": null,
+      "jobId": null,
+      "shotId": null,
+      "characterIds": [],
+      "locationIds": [],
+      "promptVersion": null,
+      "modelVersion": null,
+      "referenceIds": [],
+      "instructionVersion": null,
+      "derivedFrom": [],
+      "hash": {
+        "algo": "sha256",
+        "value": "a7801df9bf0f05ee20fb94a6e913824c2de151ad063994dd5d1c052d57428e7e"
+      },
+      "bytes": 47102,
+      "relativePath": "assets/image/CHAR_UNFOLDIQ_GUIDE_01/REF_GUIDE_MASTER_3Q_01_attempt-02.jpg",
+      "dimensions": null,
+      "durationMs": null,
+      "rights": {
+        "status": "UNKNOWN",
+        "note": "pre-existing file indexed by migration; origin and license unverified"
+      },
+      "provenance": {
+        "source": "migration",
+        "detail": "pre-existing file at assets/image/CHAR_UNFOLDIQ_GUIDE_01/REF_GUIDE_MASTER_3Q_01_attempt-02.jpg"
+      },
+      "qualityStatus": "UNREVIEWED",
+      "selection": {
+        "status": "UNSET",
+        "decidedAt": null,
+        "reason": null
+      },
+      "lock": {
+        "locked": false,
+        "reason": null,
+        "lockedAt": null,
+        "actor": null,
+        "unlockedAt": null,
+        "unlockReason": null
+      },
+      "createdAt": "2026-10-04T02:06:16.334Z",
+      "updatedAt": "2026-10-04T02:06:16.334Z"
+    },
+    "as-35a3f078f96c": {
+      "version": "1.0.0",
+      "assetId": "as-35a3f078f96c",
+      "projectId": "postv1-flow-live-validation",
+      "type": "image",
+      "role": "OTHER",
+      "source": "migration",
+      "provider": null,
+      "jobId": null,
+      "shotId": null,
+      "characterIds": [],
+      "locationIds": [],
+      "promptVersion": null,
+      "modelVersion": null,
+      "referenceIds": [],
+      "instructionVersion": null,
+      "derivedFrom": [],
+      "hash": {
+        "algo": "sha256",
+        "value": "35a3f078f96cc48c31c35506bb14e7a2a9581d178621e58baae7554872f01242"
+      },
+      "bytes": 175582,
+      "relativePath": "assets/image/CHAR_UNFOLDIQ_GUIDE_01/REF_GUIDE_MASTER_3Q_01_attempt-02.png",
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "durationMs": null,
+      "rights": {
+        "status": "UNKNOWN",
+        "note": "pre-existing file indexed by migration; origin and license unverified"
+      },
+      "provenance": {
+        "source": "migration",
+        "detail": "pre-existing file at assets/image/CHAR_UNFOLDIQ_GUIDE_01/REF_GUIDE_MASTER_3Q_01_attempt-02.png"
+      },
+      "qualityStatus": "UNREVIEWED",
+      "selection": {
+        "status": "UNSET",
+        "decidedAt": null,
+        "reason": null
+      },
+      "lock": {
+        "locked": false,
+        "reason": null,
+        "lockedAt": null,
+        "actor": null,
+        "unlockedAt": null,
+        "unlockReason": null
+      },
+      "createdAt": "2026-10-04T02:06:16.342Z",
+      "updatedAt": "2026-10-04T02:06:16.342Z"
+    },
+    "as-d235316b9af5": {
+      "version": "1.0.0",
+      "assetId": "as-d235316b9af5",
+      "projectId": "postv1-flow-live-validation",
+      "type": "video",
+      "role": "OTHER",
+      "source": "migration",
+      "provider": null,
+      "jobId": null,
+      "shotId": null,
+      "characterIds": [],
+      "locationIds": [],
+      "promptVersion": null,
+      "modelVersion": null,
+      "referenceIds": [],
+      "instructionVersion": null,
+      "derivedFrom": [],
+      "hash": {
+        "algo": "sha256",
+        "value": "d235316b9af51453393c19724949ec5f892258371255e2a2f7243b22dc538e89"
+      },
+      "bytes": 1599300,
+      "relativePath": "assets/video/CHAR_UNFOLDIQ_GUIDE_01/CHAR_UNFOLDIQ_GUIDE_01_motion_attempt-01.mp4",
+      "dimensions": null,
+      "durationMs": null,
+      "rights": {
+        "status": "UNKNOWN",
+        "note": "pre-existing file indexed by migration; origin and license unverified"
+      },
+      "provenance": {
+        "source": "migration",
+        "detail": "pre-existing file at assets/video/CHAR_UNFOLDIQ_GUIDE_01/CHAR_UNFOLDIQ_GUIDE_01_motion_attempt-01.mp4"
+      },
+      "qualityStatus": "UNREVIEWED",
+      "selection": {
+        "status": "UNSET",
+        "decidedAt": null,
+        "reason": null
+      },
+      "lock": {
+        "locked": false,
+        "reason": null,
+        "lockedAt": null,
+        "actor": null,
+        "unlockedAt": null,
+        "unlockReason": null
+      },
+      "createdAt": "2026-10-04T02:06:16.351Z",
+      "updatedAt": "2026-10-04T02:06:16.351Z"
+    }
+  }
+}

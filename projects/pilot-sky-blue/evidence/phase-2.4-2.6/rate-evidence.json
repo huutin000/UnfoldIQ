@@ -1,0 +1,103 @@
+{
+  "capturedAt": "2026-10-06T07:24:38.360Z",
+  "perSegment": {
+    "S2": {
+      "durationMs": 9425,
+      "sampleRate": 24000,
+      "channels": 1,
+      "peak": 16186,
+      "rms": 1316.82,
+      "wer": 0,
+      "effectiveSpeed": 1,
+      "audioContentHash": "fcbe7e3c3e85f22c1bc6a309f86ad4d3d54e653caaf40758a58a5d8b2f5bb116"
+    },
+    "S4": {
+      "durationMs": 7825,
+      "sampleRate": 24000,
+      "channels": 1,
+      "peak": 12557,
+      "rms": 1224.97,
+      "wer": 0,
+      "effectiveSpeed": 1,
+      "audioContentHash": "20c53f23978ab85595ef3fc19e44a83da9537bcd705a5fee85904c797d6a659b"
+    },
+    "S6": {
+      "durationMs": 9450,
+      "sampleRate": 24000,
+      "channels": 1,
+      "peak": 13664,
+      "rms": 1276.35,
+      "wer": 0,
+      "effectiveSpeed": 0.95,
+      "audioContentHash": "a33e9200bd68f332ce63a10f787c17ad3ac729cef5a82b901fcd7863614a7ef1"
+    },
+    "S5": {
+      "durationMs": 8300,
+      "sampleRate": 24000,
+      "channels": 1,
+      "peak": 18257,
+      "rms": 1311.41,
+      "wer": 0,
+      "effectiveSpeed": 1,
+      "audioContentHash": "c5950053f2b1f20fc39a077bfdcb3a13e68a6e70ab9a5bc96bcd5766833e21f3"
+    },
+    "S7": {
+      "durationMs": 8150,
+      "sampleRate": 24000,
+      "channels": 1,
+      "peak": 17543,
+      "rms": 1343.44,
+      "wer": 0,
+      "effectiveSpeed": 1,
+      "audioContentHash": "85dd26a3ec48b957480d0a52228c14cfc29c4b3f0011684a253d5a074f52a6c5"
+    },
+    "S3": {
+      "durationMs": 9950,
+      "sampleRate": 24000,
+      "channels": 1,
+      "peak": 16516,
+      "rms": 1339.98,
+      "wer": 0,
+      "effectiveSpeed": 1,
+      "audioContentHash": "ea5d5366233eb128865569d027d51a53ab03a8ccc2fe70f58db7a50b58488e6b"
+    },
+    "S8": {
+      "durationMs": 6550,
+      "sampleRate": 24000,
+      "channels": 1,
+      "peak": 15252,
+      "rms": 1351.89,
+      "wer": 0,
+      "effectiveSpeed": 1,
+      "audioContentHash": "7f851136c5fe0bd8572c125efcb42eae5e8595a1f98df2141dbe300cd6630ba8"
+    },
+    "S1": {
+      "durationMs": 8025,
+      "sampleRate": 24000,
+      "channels": 1,
+      "peak": 19680,
+      "rms": 1386.96,
+      "wer": 0,
+      "effectiveSpeed": 1,
+      "audioContentHash": "9638fec5ca8ff080db361ccc4e157a3e11c83b7e5082a22886deaf57ff5f9da6"
+    }
+  },
+  "overall": {
+    "overallWpm": 150.72,
+    "slowestSegment": {
+      "segmentId": "S3",
+      "wpm": 126.63
+    },
+    "fastestSegment": {
+      "segmentId": "S5",
+      "wpm": 173.49
+    },
+    "rateMean": 151.99,
+    "rateMedian": 150.51,
+    "rateVariance": 207.14,
+    "pauseDensity": 0.231,
+    "unexpectedLongSilenceCount": 0,
+    "totalDurationMs": 67675
+  },
+  "policyRef": "srp-966c48f5fc2b"
+}

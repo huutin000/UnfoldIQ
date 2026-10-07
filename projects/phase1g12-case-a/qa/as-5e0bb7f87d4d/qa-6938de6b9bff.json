@@ -1,0 +1,487 @@
+{
+  "version": "1.0.0",
+  "qaResultId": "qa-6938de6b9bff",
+  "projectId": "phase1g12-case-a",
+  "assetId": "as-5e0bb7f87d4d",
+  "assetHash": "5e0bb7f87d4ddcd9f36d886ce4160b7e8058e97546e9086fd59b558ede02d848",
+  "shotId": "C-SH01",
+  "sceneId": "C-SC01",
+  "qaPolicyVersion": "1g11-1.0.0",
+  "expectedContextFingerprint": "fp-a8ff42b58ef98c15",
+  "expectationSnapshot": {
+    "assetId": "as-5e0bb7f87d4d",
+    "assetHash": "5e0bb7f87d4ddcd9f36d886ce4160b7e8058e97546e9086fd59b558ede02d848",
+    "shotExpectationVersion": "case-c-sh01-endframe-v1",
+    "sceneExpectationVersion": "case-c-sc01-v1",
+    "scriptVersion": "case-c-noskript",
+    "characterBibleVersion": "n/a-fiction",
+    "worldBibleVersion": "n/a-fiction",
+    "visualBibleVersion": "n/a-fiction",
+    "platformAdaptationVersion": "pa-youtube-16x9",
+    "qaPolicyVersion": "1g11-1.0.0"
+  },
+  "structural": {
+    "status": "PASS",
+    "severity": "INFO",
+    "blocking": false,
+    "checks": [
+      {
+        "check": "file-type",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "decode",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "media-type",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "dimensions",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "aspect",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "no upstream aspect expectation",
+        "blocking": false
+      },
+      {
+        "check": "duration",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "duration applies to video expectations only",
+        "blocking": false
+      },
+      {
+        "check": "temporal-stream",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "temporal stream applies to video only",
+        "blocking": false
+      },
+      {
+        "check": "freeze",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "freeze applies to video only",
+        "blocking": false
+      }
+    ],
+    "evidence": [
+      {
+        "evidenceId": "ev-6d4eccac280b",
+        "layer": "structural",
+        "check": "file-type",
+        "source": "MAGIC_BYTES",
+        "expected": "jpeg",
+        "observed": "jpeg",
+        "comparison": "match",
+        "confidence": "high",
+        "artifactRefs": []
+      },
+      {
+        "evidenceId": "ev-f4f5fb333fbd",
+        "layer": "structural",
+        "check": "decode",
+        "source": "FFPROBE",
+        "expected": "decodable media",
+        "observed": "mjpeg",
+        "comparison": "match",
+        "confidence": "high",
+        "artifactRefs": []
+      },
+      {
+        "evidenceId": "ev-4876c237bb88",
+        "layer": "structural",
+        "check": "media-type",
+        "source": "MAGIC_BYTES",
+        "expected": "image",
+        "observed": "image",
+        "comparison": "match",
+        "confidence": "medium",
+        "artifactRefs": []
+      },
+      {
+        "evidenceId": "ev-73c0c593a9ef",
+        "layer": "structural",
+        "check": "dimensions",
+        "source": "FFPROBE",
+        "expected": "1280x720",
+        "observed": "1280x720",
+        "comparison": "measured",
+        "confidence": "high",
+        "artifactRefs": []
+      }
+    ],
+    "reasons": []
+  },
+  "semantic": {
+    "status": "PASS",
+    "severity": "INFO",
+    "blocking": false,
+    "checks": [
+      {
+        "check": "scene",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "subject",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "action",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "no upstream action expectation",
+        "blocking": false
+      },
+      {
+        "check": "text",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "composition",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "media-type",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      }
+    ],
+    "evidence": [
+      {
+        "evidenceId": "ev-cefca1509491",
+        "layer": "semantic",
+        "check": "scene",
+        "source": "MANUAL_REVIEW",
+        "expected": "C-SC01",
+        "observed": "C-SC01",
+        "comparison": "match",
+        "confidence": "high",
+        "artifactRefs": []
+      },
+      {
+        "evidenceId": "ev-597eee7f7cb8",
+        "layer": "semantic",
+        "check": "subject",
+        "source": "MANUAL_REVIEW",
+        "expected": [
+          "minimal-blue-circle"
+        ],
+        "observed": [
+          "minimal-blue-circle"
+        ],
+        "comparison": "match",
+        "confidence": "high",
+        "artifactRefs": []
+      },
+      {
+        "evidenceId": "ev-4333f52890f0",
+        "layer": "semantic",
+        "check": "text",
+        "source": "MANUAL_REVIEW",
+        "expected": "no text",
+        "observed": "no text",
+        "comparison": "match",
+        "confidence": "high",
+        "artifactRefs": []
+      }
+    ],
+    "reasons": []
+  },
+  "factuality": {
+    "status": "NOT_APPLICABLE",
+    "severity": "INFO",
+    "blocking": false,
+    "checks": [
+      {
+        "check": "period",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "location",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "speciesPersonObject",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "clothing",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "architecture",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "toolsEquipment",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "mapGeography",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "chartDirection",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "numbersLabels",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "timelineOrder",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "onScreenFactualText",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      }
+    ],
+    "evidence": [],
+    "reasons": []
+  },
+  "continuity": {
+    "status": "UNKNOWN",
+    "severity": "WARNING",
+    "blocking": false,
+    "checks": [
+      {
+        "check": "faceIdentity",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "no continuity expectation for this domain",
+        "blocking": false
+      },
+      {
+        "check": "location",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "no continuity expectation for this domain",
+        "blocking": false
+      },
+      {
+        "check": "startState",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "no continuity expectation for this domain",
+        "blocking": false
+      },
+      {
+        "check": "endState",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "no continuity expectation for this domain",
+        "blocking": false
+      },
+      {
+        "check": "hair",
+        "status": "UNKNOWN",
+        "severity": "WARNING",
+        "reason": "continuity observation unavailable",
+        "blocking": false
+      },
+      {
+        "check": "clothing",
+        "status": "UNKNOWN",
+        "severity": "WARNING",
+        "reason": "continuity observation unavailable",
+        "blocking": false
+      },
+      {
+        "check": "props",
+        "status": "UNKNOWN",
+        "severity": "WARNING",
+        "reason": "continuity observation unavailable",
+        "blocking": false
+      },
+      {
+        "check": "timeOfDay",
+        "status": "UNKNOWN",
+        "severity": "WARNING",
+        "reason": "continuity observation unavailable",
+        "blocking": false
+      },
+      {
+        "check": "paletteStyle",
+        "status": "UNKNOWN",
+        "severity": "WARNING",
+        "reason": "continuity observation unavailable",
+        "blocking": false
+      },
+      {
+        "check": "motionContinuity",
+        "status": "UNKNOWN",
+        "severity": "WARNING",
+        "reason": "continuity observation unavailable",
+        "blocking": false
+      }
+    ],
+    "evidence": [],
+    "reasons": []
+  },
+  "aggregate": {
+    "status": "READY_FOR_TIMELINE",
+    "severity": "WARNING",
+    "timelineEligible": true,
+    "failedLayers": [],
+    "warningLayers": [
+      "continuity"
+    ],
+    "unknownLayers": [
+      "continuity"
+    ],
+    "reasons": [],
+    "recommendation": "NONE"
+  },
+  "sourceRefs": [],
+  "evidenceRefs": [],
+  "evidence": [
+    {
+      "evidenceId": "ev-6d4eccac280b",
+      "layer": "structural",
+      "check": "file-type",
+      "source": "MAGIC_BYTES",
+      "expected": "jpeg",
+      "observed": "jpeg",
+      "comparison": "match",
+      "confidence": "high",
+      "artifactRefs": []
+    },
+    {
+      "evidenceId": "ev-f4f5fb333fbd",
+      "layer": "structural",
+      "check": "decode",
+      "source": "FFPROBE",
+      "expected": "decodable media",
+      "observed": "mjpeg",
+      "comparison": "match",
+      "confidence": "high",
+      "artifactRefs": []
+    },
+    {
+      "evidenceId": "ev-4876c237bb88",
+      "layer": "structural",
+      "check": "media-type",
+      "source": "MAGIC_BYTES",
+      "expected": "image",
+      "observed": "image",
+      "comparison": "match",
+      "confidence": "medium",
+      "artifactRefs": []
+    },
+    {
+      "evidenceId": "ev-73c0c593a9ef",
+      "layer": "structural",
+      "check": "dimensions",
+      "source": "FFPROBE",
+      "expected": "1280x720",
+      "observed": "1280x720",
+      "comparison": "measured",
+      "confidence": "high",
+      "artifactRefs": []
+    },
+    {
+      "evidenceId": "ev-cefca1509491",
+      "layer": "semantic",
+      "check": "scene",
+      "source": "MANUAL_REVIEW",
+      "expected": "C-SC01",
+      "observed": "C-SC01",
+      "comparison": "match",
+      "confidence": "high",
+      "artifactRefs": []
+    },
+    {
+      "evidenceId": "ev-597eee7f7cb8",
+      "layer": "semantic",
+      "check": "subject",
+      "source": "MANUAL_REVIEW",
+      "expected": [
+        "minimal-blue-circle"
+      ],
+      "observed": [
+        "minimal-blue-circle"
+      ],
+      "comparison": "match",
+      "confidence": "high",
+      "artifactRefs": []
+    },
+    {
+      "evidenceId": "ev-4333f52890f0",
+      "layer": "semantic",
+      "check": "text",
+      "source": "MANUAL_REVIEW",
+      "expected": "no text",
+      "observed": "no text",
+      "comparison": "match",
+      "confidence": "high",
+      "artifactRefs": []
+    }
+  ],
+  "evaluatedAt": "2026-10-05T03:21:15.976Z"
+}

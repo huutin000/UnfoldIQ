@@ -1,0 +1,74 @@
+{
+  "caseResult": {
+    "version": "1.0.0",
+    "caseId": "D",
+    "status": "PASS",
+    "projectId": "phase1g12-case-a",
+    "providerProjectRef": "8221824c-a1a6-4aa9-8d6b-fac24860d49e",
+    "shotIds": [
+      "D-SH01"
+    ],
+    "generationUnitIds": [
+      "gu-bde822cbe1dd"
+    ],
+    "attemptIds": [
+      "d1-attempt-01"
+    ],
+    "productionDecisionRefs": [
+      "scene/validation-scene-d.json"
+    ],
+    "modelResolutionRefs": [
+      "mr-526fb7a60ea0"
+    ],
+    "budgetPlanRef": "budget-plans/1g12-d-amendment.json (bp-1e463dea1689)",
+    "providerResultRefs": [
+      "case/case-d-D1-attempt-01-correlation.json"
+    ],
+    "assetIds": [
+      "as-a7801df9bf0f",
+      "as-0fde400d6392"
+    ],
+    "qaResultIds": [
+      "qa-a778b5a05d9f"
+    ],
+    "timelineEligibility": [
+      "as-0fde400d6392=READY_FOR_TIMELINE"
+    ],
+    "repairHistory": [],
+    "credits": {
+      "estimated": 7,
+      "reserved": 0,
+      "reconciled": 36,
+      "state": "RECONCILED"
+    },
+    "evidenceRefs": [
+      "qa/case-d-D1-attempt-01-qa-summary.json",
+      "downloads/Character_waving_friendly_stance_20261005105730.mp4",
+      "case/case-d-character.json"
+    ],
+    "caseResultId": "case-d-9c6c7bcc6933",
+    "completedAt": "2026-10-05T04:06:01.514Z"
+  },
+  "matrix": [
+    "D1=PASS",
+    "D2=PASS",
+    "D3=PASS",
+    "D4=PASS",
+    "D5=PASS",
+    "D6=PASS",
+    "D7=PASS",
+    "D8=PASS",
+    "D9=PASS",
+    "D10=PASS",
+    "D11=PENDING",
+    "D12=PENDING",
+    "D13=PENDING",
+    "D14=PENDING",
+    "D15=PASS",
+    "D16=PASS",
+    "D17=PASS",
+    "D18=PASS"
+  ],
+  "matrixStatus": "PENDING",
+  "shotKey": "D1"
+}

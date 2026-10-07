@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "narration-direction.schema.json",
+  "title": "UNFOLDIQ Narration Direction (Phase 2.2, schema 1.0.0)",
+  "description": "Versioned, machine-readable, segment-scoped delivery direction applied BEFORE final TTS. Sparse by design: only segments that need explicit direction appear in segments[]; every other segment inherits Voice Bible defaults. The Voice Bible remains authoritative for voice identity and emotional range. Source text is never mutated. Versions are immutable: a semantic change creates a new version.",
+  "type": "object",
+  "required": ["schemaVersion", "narrationDirectionId", "version", "projectId", "scriptRef", "voiceBibleRef", "language", "stats", "provenance", "fingerprint"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "narrationDirectionId": { "type": "string", "pattern": "^nd-[0-9a-f]{12}$" },
+    "version": { "type": "integer", "minimum": 1 },
+    "projectId": { "type": "string", "minLength": 1 },
+    "scriptRef": {
+      "type": "object",
+      "required": ["scriptArtifactId", "scriptVersion"],
+      "additionalProperties": false,
+      "properties": {
+        "scriptArtifactId": { "type": "string", "pattern": "^fss-[0-9a-z][0-9a-z-]{2,62}$" },
+        "scriptVersion": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "voiceBibleRef": { "type": "string", "pattern": "^vb-[0-9a-f]{12}$" },
+    "language": { "type": "string", "minLength": 2, "maxLength": 16 },
+    "segments": {
+      "type": "array",
+      "description": "Directed segments ONLY (sparse). Array position is never identity; segmentId + sourceTextHash bind a direction to the exact spoken text.",
+      "items": { "$ref": "#/definitions/directedSegment" }
+    },
+    "stats": { "$ref": "#/definitions/directionStats" },
+    "provenance": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "source": { "type": "string", "minLength": 1 },
+        "createdAt": { "type": ["string", "null"] },
+        "evidenceRefs": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" }
+  },
+  "definitions": {
+    "emphasisTarget": {
+      "type": "object",
+      "required": ["text", "occurrence"],
+      "additionalProperties": false,
+      "properties": {
+        "text": { "type": "string", "minLength": 1 },
+        "occurrence": { "type": "integer", "minimum": 1 },
+        "strength": { "enum": ["LIGHT", "MODERATE", "STRONG"] }
+      }
+    },
+    "pauseIntent": {
+      "type": "object",
+      "required": ["kind", "afterText"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": { "enum": ["MICRO", "CLAUSE", "BEAT", "SECTION"] },
+        "afterText": { "type": "string", "minLength": 1 },
+        "occurrence": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "directedSegment": {
+      "type": "object",
+      "required": ["segmentId", "segmentOrdinal", "sourceTextHash"],
+      "additionalProperties": false,
+      "properties": {
+        "segmentId": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$" },
+        "segmentOrdinal": { "type": "integer", "minimum": 0 },
+        "sourceTextHash": { "type": "string", "pattern": "^[0-9a-f]{16}$" },
+        "speakerId": { "type": ["string", "null"], "description": "null/absent = narrator (resolved through the Voice Bible; never duplicated as a literal voice id per segment)." },
+        "emphasis": { "type": "array", "items": { "$ref": "#/definitions/emphasisTarget" } },
+        "pauseIntent": { "type": "array", "items": { "$ref": "#/definitions/pauseIntent" } },
+        "energy": { "enum": ["LOW", "BALANCED", "ELEVATED", null] },
+        "emotion": { "type": ["string", "null"], "description": "Must be within the Voice Bible emotionalRange; enforced in lib/narration." },
+        "paceIntent": { "enum": ["SLOWER", "MODERATE", "FASTER", null] },
+        "directionReason": { "type": ["string", "null"], "maxLength": 280 }
+      }
+    },
+    "directionStats": {
+      "type": "object",
+      "required": ["totalSegments", "directedSegments", "directionCoveragePercent", "emphasisCount", "explicitPauseCount"],
+      "additionalProperties": false,
+      "properties": {
+        "totalSegments": { "type": "integer", "minimum": 1 },
+        "directedSegments": { "type": "integer", "minimum": 0 },
+        "directionCoveragePercent": { "type": "number", "minimum": 0, "maximum": 100 },
+        "emphasisCount": { "type": "integer", "minimum": 0 },
+        "explicitPauseCount": { "type": "integer", "minimum": 0 },
+        "overDirectionReview": { "type": "boolean", "description": "true when coverage crosses the over-direction review threshold; measured, never auto-failed." }
+      }
+    }
+  }
+}

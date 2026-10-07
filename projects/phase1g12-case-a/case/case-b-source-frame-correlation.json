@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "correlationId": "src-b-sh01-bluecircle",
+  "unitId": "gu-0ada6dc4cccc",
+  "shotId": "B-SH01",
+  "providerProjectRef": "8221824c-a1a6-4aa9-8d6b-fac24860d49e",
+  "jobId": "FLOW-COMPANION-LIVE-GEN-01",
+  "correlationMethod": "PERSISTED_CARD_DOWNLOAD + V1F_EVIDENCE_CHAIN",
+  "evidence": [
+    "card caption 'Blue circle on light background' matches the V1F prompt 'Create a simple minimal blue circle centered on a clean light background. No text.' (82 chars)",
+    "V1F job FLOW-COMPANION-LIVE-GEN-01: Nano Banana 2, 1:1, x1, accepted 2026-10-01T09:12:40.099Z (Report/POST-V1F_REAL_GENERATION_DOWNLOAD_IMPORT_REPORT.md)",
+    "operator download from the same Flow project 8221824c… (Mascot Live Validation)",
+    "download bytes sha256=fe697fd1fef86e607d743694c223ab8a93347754ba353f1f7eb0cccfbfab9ab7, 30087 bytes, 1024x1024"
+  ],
+  "file": "downloads/Blue_circle_on_light_background_20261005095739.jpg",
+  "sha256": "fe697fd1fef86e607d743694c223ab8a93347754ba353f1f7eb0cccfbfab9ab7",
+  "downloadedAt": "2026-10-05T03:03:21.580Z"
+}

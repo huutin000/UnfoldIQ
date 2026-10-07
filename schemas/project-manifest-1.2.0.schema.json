@@ -1,0 +1,117 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "project-manifest-1.2.0.schema.json",
+  "title": "UNFOLDIQ Versioned Project Manifest (1H.3: schema 1.2.0 adds recovery ref)",
+  "description": "Durable, machine-readable state contract: exactly which versions of the project, pipeline, artifacts, provider/model decisions, Agent Instructions, asset registry, timeline, and render state belong to a production run. Owned by UNFOLDIQ CORE.",
+  "type": "object",
+  "required": ["schemaVersion", "manifestId", "projectId", "projectVersion", "revision", "createdAt", "updatedAt", "artifacts", "providers", "state", "history", "recovery", "lineage", "fingerprint"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "1.2.0" },
+    "manifestId": { "type": "string", "pattern": "^pm-[0-9a-f]{12}$" },
+    "projectId": { "type": "string", "minLength": 1 },
+    "projectVersion": { "type": "integer", "minimum": 1 },
+    "revision": { "type": "integer", "minimum": 1 },
+    "pipelineVersion": { "type": ["string", "null"] },
+    "contentMode": { "type": ["string", "null"] },
+    "contentClass": { "type": ["string", "null"] },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "updatedAt": { "type": "string", "format": "date-time" },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "creativeBriefVersion": { "$ref": "#/definitions/artifactRef" },
+        "channelBibleVersion": { "$ref": "#/definitions/artifactRef" },
+        "storyBibleVersion": { "$ref": "#/definitions/artifactRef" },
+        "characterBibleVersion": { "$ref": "#/definitions/artifactRef" },
+        "worldBibleVersion": { "$ref": "#/definitions/artifactRef" },
+        "visualBibleVersion": { "$ref": "#/definitions/artifactRef" },
+        "researchPackVersion": { "$ref": "#/definitions/artifactRef" },
+        "finalSpokenScriptVersion": { "$ref": "#/definitions/artifactRef" },
+        "shotPlanVersion": { "$ref": "#/definitions/artifactRef" },
+        "promptCompilerVersion": { "$ref": "#/definitions/artifactRef" },
+        "agentInstructionsVersion": { "$ref": "#/definitions/artifactRef" },
+        "assetRegistryVersion": { "$ref": "#/definitions/artifactRef" },
+        "finalAudioVersion": { "$ref": "#/definitions/artifactRef" },
+        "alignmentVersion": { "$ref": "#/definitions/artifactRef" },
+        "timelineVersion": { "$ref": "#/definitions/artifactRef" },
+        "renderVersion": { "$ref": "#/definitions/artifactRef" }
+      }
+    },
+    "providers": {
+      "type": "object",
+      "required": ["selections"],
+      "additionalProperties": false,
+      "properties": {
+        "registryVersion": {
+          "anyOf": [{ "$ref": "#/definitions/artifactRef" }, { "type": "null" }]
+        },
+        "selections": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["modelId"],
+            "additionalProperties": false,
+            "properties": {
+              "modelId": { "type": "string", "minLength": 1 },
+              "providerId": { "type": ["string", "null"] },
+              "resolutionRef": { "type": ["string", "null"] },
+              "detail": { "type": ["string", "null"] }
+            }
+          }
+        }
+      }
+    },
+    "state": {
+      "type": "object",
+      "required": ["status"],
+      "additionalProperties": false,
+      "properties": {
+        "stage": { "type": ["string", "null"] },
+        "status": { "enum": ["DRAFT", "ACTIVE", "READY", "COMPLETE", "BLOCKED"] }
+      }
+    },
+    "history": {
+      "type": ["object", "null"],
+      "required": ["historySchemaVersion", "ref"],
+      "additionalProperties": false,
+      "properties": {
+        "historySchemaVersion": { "const": "1.0.0" },
+        "ref": { "type": "string", "minLength": 1 }
+      }
+    },
+    "recovery": {
+      "type": ["object", "null"],
+      "required": ["recoverySchemaVersion", "dagSchemaVersion", "ref"],
+      "additionalProperties": false,
+      "properties": {
+        "recoverySchemaVersion": { "const": "1.0.0" },
+        "dagSchemaVersion": { "const": "1.0.0" },
+        "ref": { "type": "string", "minLength": 1 }
+      }
+    },
+    "lineage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "previousManifestId": { "type": ["string", "null"] },
+        "previousProjectVersion": { "type": ["integer", "null"], "minimum": 1 }
+      }
+    },
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" }
+  },
+  "definitions": {
+    "artifactRef": {
+      "type": "object",
+      "required": ["version", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "version": { "type": ["string", "null"], "minLength": 1 },
+        "status": { "enum": ["VERIFIED", "MIGRATED", "UNRESOLVED", "NOT_CREATED_YET"] },
+        "ref": { "type": ["string", "null"] },
+        "detail": { "type": ["string", "null"] }
+      }
+    }
+  }
+}

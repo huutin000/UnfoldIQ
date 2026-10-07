@@ -1,0 +1,30 @@
+{
+  "task": "PHASE_2_1_01",
+  "schemaVersion": "1.0.0",
+  "schemaFile": "schemas/voice-bible.schema.json",
+  "dialect": "http://json-schema.org/draft-07/schema#",
+  "voiceBibleId": "vb-42744f223671",
+  "bibleVersion": 1,
+  "semanticFingerprint": "a7a4ada79a345836",
+  "fingerprint": "9765cfe62a8eadb4",
+  "valid": true,
+  "errors": [],
+  "failClosedRules": [
+    "voiceBibleId/version/narrator/language required; provider+model+voiceId required on narrator",
+    "speedDefault bounded [0.5,2.0] — structurally excludes a measured wpm value",
+    "emotionalRange / prosody / persona values are controlled enums, not prose",
+    "character speakerIds unique; a character may not reuse the narrator voice",
+    "no unknown schema keys (additionalProperties:false at every level)",
+    "no secret-shaped keys (manifestLib.findSecretKeys) or secret pastes (historyLib.findSecretPastes)",
+    "fingerprint must match the canonical computation or the doc is refused",
+    "voice cloning is structurally forbidden (rights.cloning is const false)"
+  ],
+  "negativeSchemaCases": [
+    "speedDefault: 145 rejected (measured wpm cannot be stored as a rate factor)",
+    "measuredSpeechRateWpm: 145 rejected (unknown key)",
+    "emotionalRange: [\"VERY_SAD\"] rejected (uncontrolled value)",
+    "rights.cloning: true rejected (cloning out of scope for 2.1)",
+    "narrator absent rejected (required)",
+    "voiceBibleVersion rejected on project-manifest 1.3.0 (slot requires schema 1.4.0)"
+  ]
+}

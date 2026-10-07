@@ -1,0 +1,132 @@
+{
+  "schemaVersion": "1.0.0",
+  "pronunciationPassId": "prp-a8403688332d",
+  "version": 1,
+  "projectId": "phase223-narration-pronunciation",
+  "scriptRef": {
+    "scriptArtifactId": "fss-phase223-validation",
+    "scriptVersion": 1
+  },
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "profileRef": "pron-058c1e575fd7",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "providerLanguageCode": "a",
+  "runtimeMode": "QUIET_PHONEMIZATION",
+  "language": "en-us",
+  "segments": [
+    {
+      "segmentId": "S1",
+      "sourceTextHash": "9ea87ca73e8c9f56",
+      "matchedEntries": [],
+      "compiledInputHash": "9ea87ca73e8c9f56",
+      "runtimeGraphemeHash": "9ea87ca73e8c9f56",
+      "runtimePhonemeHash": "f8d042da0334e4a9",
+      "issues": [],
+      "status": "CLEAN"
+    },
+    {
+      "segmentId": "S2",
+      "sourceTextHash": "9a372772983b9d3a",
+      "matchedEntries": [
+        {
+          "entryId": "pe-974e6b1d93db",
+          "term": "Kokoro",
+          "applied": true,
+          "notAppliedReason": null
+        }
+      ],
+      "compiledInputHash": "1cec88ac5bdcee56",
+      "runtimeGraphemeHash": "1cec88ac5bdcee56",
+      "runtimePhonemeHash": "53d62c59d2d64339",
+      "issues": [],
+      "status": "OVERRIDE_APPLIED"
+    },
+    {
+      "segmentId": "S3",
+      "sourceTextHash": "004ec52793d7e10c",
+      "matchedEntries": [
+        {
+          "entryId": "pe-b61c895013a5",
+          "term": "Reykjavik",
+          "applied": true,
+          "notAppliedReason": null
+        },
+        {
+          "entryId": "pe-82a8d9a5fc4c",
+          "term": "Reynolds",
+          "applied": true,
+          "notAppliedReason": null
+        }
+      ],
+      "compiledInputHash": "a91a4bb9222bb6ea",
+      "runtimeGraphemeHash": "a91a4bb9222bb6ea",
+      "runtimePhonemeHash": "1baca55249b99006",
+      "issues": [],
+      "status": "OVERRIDE_APPLIED"
+    },
+    {
+      "segmentId": "S4",
+      "sourceTextHash": "3940464efc048106",
+      "matchedEntries": [
+        {
+          "entryId": "pe-c119ccaf76b8",
+          "term": "CIA",
+          "applied": true,
+          "notAppliedReason": null
+        },
+        {
+          "entryId": "pe-65af818dc790",
+          "term": "NASA",
+          "applied": true,
+          "notAppliedReason": null
+        }
+      ],
+      "compiledInputHash": "48c0680393582bc0",
+      "runtimeGraphemeHash": "48c0680393582bc0",
+      "runtimePhonemeHash": "a7ddb8b6c73af210",
+      "issues": [],
+      "status": "OVERRIDE_APPLIED"
+    },
+    {
+      "segmentId": "S5",
+      "sourceTextHash": "bc9a34aac860bbc8",
+      "matchedEntries": [
+        {
+          "entryId": "pe-9e3dbe7e23a2",
+          "term": "Misaki",
+          "applied": true,
+          "notAppliedReason": null
+        },
+        {
+          "entryId": "pe-6e7fc9fd3b24",
+          "term": "UnfoldIQ",
+          "applied": true,
+          "notAppliedReason": null
+        }
+      ],
+      "compiledInputHash": "5d9b2393cc81f6ea",
+      "runtimeGraphemeHash": "5d9b2393cc81f6ea",
+      "runtimePhonemeHash": "635795db7acf5180",
+      "issues": [],
+      "status": "OVERRIDE_APPLIED"
+    },
+    {
+      "segmentId": "S6",
+      "sourceTextHash": "1bfd4a72694dfac8",
+      "matchedEntries": [],
+      "compiledInputHash": "1bfd4a72694dfac8",
+      "runtimeGraphemeHash": "1bfd4a72694dfac8",
+      "runtimePhonemeHash": "8b54004eb1261a02",
+      "issues": [],
+      "status": "CLEAN"
+    }
+  ],
+  "provenance": {
+    "source": "phase-2.3-runtime-pass",
+    "createdAt": "2026-10-06T02:35:59.111Z",
+    "runtimeEvidenceRef": "evidence/phase-2/2.2-2.3/runtime/quiet-phonemization-evidence.json",
+    "evidenceRefs": []
+  },
+  "fingerprint": "be2b67554c4034f3"
+}

@@ -51,6 +51,20 @@ try {
   check("selector health fixture present", statuses.length > 0, `statuses: ${[...new Set(statuses)].join(",")}`);
   const centralized = Object.keys(adapter).includes("prepareJob");
   check("adapter boundary centralized", centralized);
+  // FIX 02 §20 — instruction plumbing presence (static table + pure
+  // functions only; live verification stays a live-gate concern, never here).
+  const ikeys = ["AGENT_INSTRUCTIONS_BUTTON", "INSTRUCTION_ADD", "INSTRUCTION_EDITOR", "INSTRUCTION_REFERENCE_ATTACH", "INSTRUCTION_DONE", "INSTRUCTION_READBACK"];
+  check("instruction selectors table present", ikeys.every((k) => adapter.SELECTORS && adapter.SELECTORS[k]), `statuses: ${[...new Set(ikeys.map((k) => adapter.SELECTORS[k] && adapter.SELECTORS[k].status))].join(",")}`);
+  check("instruction diagnostics builder present", typeof adapter.buildInstructionDiagnostics === "function");
+  check("instruction identity extractor present", typeof adapter.extractFlowProjectIdentity === "function" && typeof adapter.verifyProjectIdentity === "function");
+  check("instruction apply gating present", typeof adapter.ensureAgentOn === "function" && typeof adapter.setInstructionGuidelines === "function");
+  try {
+    const cmds = require("../../flow-companion/extension/src/content/content-commands.js");
+    check("instruction apply command registered", cmds.COMMAND_TYPES.has("APPLY_AGENT_INSTRUCTIONS"));
+    check("instruction read command registered", cmds.COMMAND_TYPES.has("READ_AGENT_INSTRUCTIONS"));
+  } catch (e) {
+    check("instruction commands load", false, e.message);
+  }
 } catch (e) {
   check("adapter loads", false, e.message);
 }

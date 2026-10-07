@@ -95,7 +95,7 @@ runTest("C6 Stage 17 includes policy router/sources + final inputs", () => {
 });
 
 // C7 — Development history exclusion
-runTest("C7 Report/STEP-08_FIX_2_REPORT.md never in runtime route", () => {
+runTest("C7 Report/archive/phase-1/STEP-08_FIX_2_REPORT.md never in runtime route", () => {
   const stages = ["1", "2", "3A", "3B", "3C", "3D", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"];
   for (const s of stages) {
     const r = resolveRoute(s, "youtube");
@@ -104,7 +104,7 @@ runTest("C7 Report/STEP-08_FIX_2_REPORT.md never in runtime route", () => {
       throw new Error(`stage ${s} leaks development history into runtime route`);
     }
   }
-  console.log("  ✓ Report/STEP-08_FIX_2_REPORT.md absent from all 22 runtime routes");
+  console.log("  ✓ Report/archive/phase-1/STEP-08_FIX_2_REPORT.md absent from all 22 runtime routes");
   passed++;
 });
 

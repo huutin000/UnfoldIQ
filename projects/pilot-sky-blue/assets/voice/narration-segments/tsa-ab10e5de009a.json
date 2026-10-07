@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "1.0.0",
+  "ttsSegmentAudioId": "tsa-ab10e5de009a",
+  "version": 1,
+  "projectId": "pilot-sky-blue",
+  "scriptRef": {
+    "scriptArtifactId": "fss-pilot-sky-blue",
+    "scriptVersion": 2
+  },
+  "segmentId": "S7",
+  "segmentOrdinal": 6,
+  "sourceTextHash": "602025e78e434deb",
+  "compiledInputHash": "602025e78e434deb",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "narrationDirectionRef": "nd-ba9e14b889f3",
+  "pronunciationPassRef": "prp-ef2591fc81ec",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "runtimeIdentity": {
+    "runtimeMode": "LOCAL_SYNTHESIS",
+    "modelRepo": "hexgrad/Kokoro-82M",
+    "modelHash": "UNKNOWN_NOT_AVAILABLE",
+    "languageCode": "a"
+  },
+  "voiceId": "am_michael",
+  "effectiveSpeed": 1,
+  "pacePolicyVersion": "pace-speed-1.0.0",
+  "audioRef": "assets/voice/narration-segments/tsa-ab10e5de009a.wav",
+  "audioContentHash": "85dd26a3ec48b957480d0a52228c14cfc29c4b3f0011684a253d5a074f52a6c5",
+  "durationMs": 8150,
+  "sampleRate": 24000,
+  "channels": 1,
+  "technicalQa": {
+    "decodePass": true,
+    "nonSilent": true,
+    "finiteSamples": true,
+    "peak": 17543,
+    "rms": 1343.44,
+    "clippingSamples": 0,
+    "transcript": "Dust and pollution, on the other hand, scatter all colors equally. That is why a hazy sky looks pale and white.",
+    "wer": 0,
+    "missingWords": 0,
+    "substitutedWords": 0,
+    "repeatedWords": 0,
+    "hallucinatedWords": 0,
+    "criticalMismatch": false
+  },
+  "attempt": {
+    "number": 1,
+    "parentAttemptId": null,
+    "reason": "initial synthesis",
+    "selected": null
+  },
+  "issues": [],
+  "status": "READY",
+  "provenance": {
+    "createdAt": "2026-10-06T06:52:34.143Z",
+    "evidenceRefs": [
+      "scripts/cli/pilot-narration.js"
+    ]
+  },
+  "fingerprint": "90d20e47543ced76"
+}

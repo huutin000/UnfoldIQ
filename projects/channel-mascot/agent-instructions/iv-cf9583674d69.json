@@ -1,0 +1,54 @@
+{
+  "version": "1.0.0",
+  "schemaVersion": "1.0.0",
+  "instructionSetId": "is-cf9583674d69",
+  "projectId": "channel-mascot",
+  "instructionVersion": "iv-cf9583674d69",
+  "sourceVersions": {
+    "channelBible": null,
+    "characterBible": null,
+    "worldBible": null,
+    "visualBible": null,
+    "platformPolicy": null
+  },
+  "constraints": {
+    "characterIdentity": [
+      "The channel mascot is a young adult male presenter with short black hair",
+      "Signature outfit: mustard-yellow overshirt with dark trousers; never change costume or colors without an explicit instruction"
+    ],
+    "visualStyle": [
+      "Match the visual style and medium of the current reference mascot; do not change art style or medium unprompted"
+    ],
+    "worldContinuity": [],
+    "palette": [],
+    "recurringReferenceRules": [],
+    "forbiddenMutations": [
+      "no random new character",
+      "no face mutation",
+      "no spontaneous age change",
+      "no spontaneous costume change",
+      "no unexplained prop mutation",
+      "no unexpected location replacement",
+      "no reference substitution"
+    ],
+    "unwantedContent": [
+      "cluttered backgrounds; prefer clean minimal backgrounds",
+      "text unless explicitly requested",
+      "logo unless explicitly requested",
+      "watermark unless explicitly requested"
+    ],
+    "platformCompositionRules": [
+      "YouTube long-form master composition 16:9",
+      "9:16 Shorts/TikTok handled via Platform Policy/reframe; never re-lock the mascot per 9:16"
+    ]
+  },
+  "referenceIds": [],
+  "referenceBindings": [],
+  "compiledText": "PROJECT INVARIANTS (apply to every generation in this project):\nCharacter identity:\n- The channel mascot is a young adult male presenter with short black hair\n- Signature outfit: mustard-yellow overshirt with dark trousers; never change costume or colors without an explicit instruction\nVisual style:\n- Match the visual style and medium of the current reference mascot; do not change art style or medium unprompted\nForbidden mutations:\n- no random new character\n- no face mutation\n- no spontaneous age change\n- no spontaneous costume change\n- no unexplained prop mutation\n- no unexpected location replacement\n- no reference substitution\nUnwanted content:\n- cluttered backgrounds; prefer clean minimal backgrounds\n- text unless explicitly requested\n- logo unless explicitly requested\n- watermark unless explicitly requested\nPlatform composition:\n- YouTube long-form master composition 16:9\n- 9:16 Shorts/TikTok handled via Platform Policy/reframe; never re-lock the mascot per 9:16",
+  "compiledFingerprint": "71ed02261b713d36",
+  "providerTargets": [
+    "GOOGLE_FLOW"
+  ],
+  "createdAt": "2026-10-03T14:16:00.518Z",
+  "updatedAt": "2026-10-03T14:16:00.518Z"
+}

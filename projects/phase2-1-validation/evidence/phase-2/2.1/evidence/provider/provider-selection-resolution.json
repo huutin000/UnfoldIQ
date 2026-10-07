@@ -1,0 +1,138 @@
+{
+  "task": "PHASE_2_1_01",
+  "v1Provider": "local-kokoro",
+  "v1Model": "kokoro-v1",
+  "configDeclaration": "providers/CONFIG.yaml capabilities.tts.v1Provider=local-kokoro, v1Model=kokoro-v1",
+  "voiceStudio": {
+    "status": "POST-V1 / FUTURE EVALUATION",
+    "integrated": false,
+    "evidence": "absent from providerCatalog(), from providers/CONFIG.yaml tts routing as a V1 default, and from the Kokoro adapter; a request for it fails closed with VOICE_PROVIDER_UNSUPPORTED"
+  },
+  "catalog": {
+    "local-kokoro": {
+      "provider": "local-kokoro",
+      "models": [
+        "kokoro-v1"
+      ],
+      "voiceSource": "PROVIDER_DEFAULT",
+      "languages": [
+        "en-us",
+        "en-gb",
+        "hi",
+        "es",
+        "fr",
+        "it",
+        "pt-br",
+        "ja",
+        "zh"
+      ],
+      "voicesByLanguage": {
+        "en-us": [
+          "af_heart"
+        ],
+        "en-gb": [
+          "bf_emma"
+        ],
+        "hi": [
+          "hf_alpha"
+        ],
+        "es": [
+          "ef_dora"
+        ],
+        "fr": [
+          "ff_siwis"
+        ],
+        "it": [
+          "if_alpha"
+        ],
+        "pt-br": [
+          "pf_dora"
+        ],
+        "ja": [
+          "jf_alpha"
+        ],
+        "zh": [
+          "zf_xiaobei"
+        ]
+      },
+      "runtimeProbe": {
+        "status": "NOT_PROBED",
+        "reason": "Phase 2.1 validates configuration identity only; synthesis availability belongs to 2.4"
+      }
+    }
+  },
+  "normalizedContractShape": [
+    "provider",
+    "model",
+    "voiceId",
+    "language",
+    "options"
+  ],
+  "normalizationProof": {
+    "input": {
+      "provider": "local-kokoro",
+      "model": "kokoro-v1",
+      "voiceId": "af_heart",
+      "language": "en-us",
+      "speedDefault": 1.05
+    },
+    "resolved": {
+      "provider": "local-kokoro",
+      "model": "kokoro-v1",
+      "voiceId": "af_heart",
+      "language": "en-us",
+      "options": {},
+      "providerLanguageCode": "en-us",
+      "voiceSource": "PROVIDER_DEFAULT",
+      "runtimeConfig": {
+        "capability": "tts",
+        "provider": "local-kokoro",
+        "model": "kokoro-v1",
+        "input": {
+          "text": null,
+          "voice": "af_heart",
+          "language": "en-us",
+          "speed": 1.05
+        },
+        "outputRequirements": {
+          "format": "wav"
+        }
+      }
+    }
+  },
+  "kokoroSpecificFieldsLeakedIntoCore": "none — toKokoroRuntimeConfig() is the single translation site inside lib/voice-bible",
+  "kokoroBoundary": {
+    "permittedIn21": [
+      "provider identity",
+      "model identity",
+      "configured voice refs",
+      "language compatibility",
+      "runtime availability (configuration-level)"
+    ],
+    "forbiddenIn21": [
+      "render full final narration",
+      "speech-rate QA",
+      "Performance QA",
+      "mix/master audio",
+      "forced alignment",
+      "generate final captions"
+    ],
+    "runtimeProbe": {
+      "status": "NOT_PROBED",
+      "reason": "Phase 2.1 validates configuration identity only; synthesis availability belongs to 2.4"
+    },
+    "synthesisPerformed": false,
+    "smokeAudioGenerated": false
+  },
+  "kOKORO_DEFAULT_VOICES_readOnly": {
+    "en-us": "af_heart",
+    "en-gb": "bf_emma",
+    "hi": "hf_alpha",
+    "es": "ef_dora",
+    "fr": "ff_siwis",
+    "it": "if_alpha",
+    "pt-br": "pf_dora",
+    "ja": "jf_alpha",
+    "zh": "zf_xiaobei"
+  }
+}

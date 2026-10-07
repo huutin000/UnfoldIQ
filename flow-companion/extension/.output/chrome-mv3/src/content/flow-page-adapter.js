@@ -22,9 +22,9 @@
  * querySelector/querySelectorAll, so logic is unit-testable with a mock.
  */
 
-const ADAPTER_VERSION = "0.4.11-postv1f";
+const ADAPTER_VERSION = "0.4.13-fix03";
 // POST-v1E.1: selector candidate set version — bump when candidates change.
-const SELECTORS_VERSION = 3;
+const SELECTORS_VERSION = 6;
 
 const SELECTORS = {
   PROMPT_INPUT: {
@@ -162,6 +162,51 @@ const SELECTORS = {
     status: "NOT_VERIFIED",
     fallbacks: ['[aria-label*="flow agent" i]', '[role="switch"][aria-label*="agent" i]'],
   },
+  // 1G.9 Agent Instructions surface (official UI per Flow Help 17093911:
+  // prompt box → "Agent Instructions" → "Add instruction" → guidelines +
+  // reference image → "Done"). BEST-EFFORT PLACEHOLDERS, NOT_VERIFIED
+  // against live UI; missing surface fails safe, never blind-clicks.
+  AGENT_INSTRUCTIONS_BUTTON: {
+    // FIX 02 §9 ADOPTED 2026-10-03: element with this aria-label observed live
+    // on the operator tab (diagnostics + probe, Agent panel context, twice).
+    selector: '[aria-label*="agent instructions" i]',
+    status: "VERIFIED",
+    fallbacks: ['[data-testid="flow-agent-instructions"]', 'button[aria-label*="instructions" i]'],
+  },
+  INSTRUCTION_ADD: {
+    // FIX 02 §9 ADOPTED 2026-10-03 via text channel: visible "Add instruction"
+    // control observed live (diagnostics text-evidence + official chain
+    // "Agent Instructions → Add instruction"). Primary placeholder kept;
+    // live matches arrive through TEXT_FALLBACKS and must be unique (§13 gate).
+    selector: '[data-testid="flow-instruction-add"]',
+    status: "VERIFIED",
+    fallbacks: ['[aria-label*="add instruction" i]', 'button[aria-label*="add instruction" i]'],
+  },
+  INSTRUCTION_EDITOR: {
+    // FIX 02 §9 ADOPTED 2026-10-03: textarea[aria-label="Instruction
+    // description"] observed live in the open Instructions panel (probe).
+    selector: 'textarea[aria-label="Instruction description"]',
+    status: "VERIFIED",
+    fallbacks: ['[data-testid="flow-instruction-editor"]', 'textarea[aria-label*="instruction" i]', '[role="textbox"][aria-label*="instruction" i]', '[role="dialog"] textarea'],
+  },
+  INSTRUCTION_DONE: {
+    // FIX 02 §9 ADOPTED 2026-10-03 via text channel: visible "Done" observed
+    // live (diagnostics text-evidence + official "Click Done"). Same
+    // uniqueness rule as INSTRUCTION_ADD.
+    selector: '[data-testid="flow-instruction-done"]',
+    status: "VERIFIED",
+    fallbacks: ['button[aria-label*="done" i][aria-label*="instruction" i]', '[role="dialog"] button[aria-label*="done" i]'],
+  },
+  INSTRUCTION_READBACK: {
+    selector: '[data-testid="flow-instruction-readback"]',
+    status: "NOT_VERIFIED",
+    fallbacks: ['[aria-label*="agent instructions" i]', '[role="dialog"] [aria-label*="instruction" i]'],
+  },
+  INSTRUCTION_REFERENCE_ATTACH: {
+    selector: '[data-testid="flow-instruction-reference-attach"]',
+    status: "NOT_VERIFIED",
+    fallbacks: ['input[type="file"][aria-label*="reference" i]', 'input[type="file"][aria-label*="instruction" i]', 'button[aria-label*="attach reference" i]', 'button[aria-label*="add reference" i]'],
+  },
   SAFETY_MESSAGE: { selector: '[data-testid="flow-safety-message"]', status: "NOT_VERIFIED", fallbacks: ['[role="alert"]'] },
   POLICY_STATE: { selector: '[data-testid="flow-policy-state"]', status: "NOT_VERIFIED", fallbacks: [] },
   FAILURE_STATE: { selector: '[data-testid="flow-failure-state"]', status: "NOT_VERIFIED", fallbacks: ['[data-state="error"]'] },
@@ -189,6 +234,14 @@ const TEXT_FALLBACKS = {
   OUTPUT_COUNT: { selectors: ["button", '[role="button"]', '[role="spinbutton"]'], pattern: /output|per prompt/i, maxLen: 28 },
   DOWNLOAD_CONTROL: { selectors: ["button", '[role="menuitem"]', "a"], pattern: /download|\bsave\b|export/i, maxLen: 24 },
   CREDIT_DISPLAY: { selectors: ["button", '[role="button"]', "span"], pattern: /credit/i, maxLen: 40 },
+  // FIX 02 live evidence (operator tab 2026-10-03): the Agent pill and the
+  // instruction buttons carry visible text but no stable test/aria hooks, and
+  // the generic probe caps button output. Constrained text match is the only
+  // honest channel — always DEGRADED, adoption still needs §9 evidence.
+  AGENT_MODE: { selectors: ["button", '[role="button"]'], pattern: /^\s*agent\s*$/i, maxLen: 16 },
+  AGENT_INSTRUCTIONS_BUTTON: { selectors: ["button", '[role="button"]', '[role="menuitem"]'], pattern: /agent instructions/i, maxLen: 32 },
+  INSTRUCTION_ADD: { selectors: ["button", '[role="button"]', '[role="menuitem"]'], pattern: /add instruction/i, maxLen: 32 },
+  INSTRUCTION_DONE: { selectors: ["button", '[role="button"]'], pattern: /^\s*done\s*$/i, maxLen: 16 },
 };
 
 function shortControlLabel(el, maxLen) {
@@ -316,18 +369,534 @@ function detectPromptControl(root) {
 
 /** Standard Flow prompt UI vs Flow Agent UI detection (§9). Never toggles settings. */
 function detectFlowAgentMode(root) {
-  const agent = query(root, "AGENT_MODE");
+  const found = queryWithFallback(root, "AGENT_MODE");
+  const agent = found.el;
   if (!agent) return { detected: false, mode: "STANDARD" };
   let enabled = null;
   try {
-    const aria = agent.getAttribute && agent.getAttribute("aria-checked");
+    const aria = agent.getAttribute && (agent.getAttribute("aria-checked") || agent.getAttribute("aria-pressed"));
     if (aria === "true") enabled = true;
     else if (aria === "false") enabled = false;
     else if (typeof agent.checked === "boolean") enabled = agent.checked;
   } catch {
     enabled = null;
   }
-  return { detected: true, mode: enabled === true ? "AGENT" : enabled === false ? "STANDARD" : "AGENT_UI_PRESENT", enabled };
+  return { detected: true, mode: enabled === true ? "AGENT" : enabled === false ? "STANDARD" : "AGENT_UI_PRESENT", enabled, via: found.fallbackUsed ? "text" : "selector" };
+}
+
+/**
+ * 1G.9 Agent Instructions surface detection (read-only, never clicks).
+ * Returns which controls of the official apply chain are present:
+ * instructions button → add → editor → done, plus the readback surface.
+ * Anything missing fails safe to MANUAL_ASSIST_REQUIRED upstream.
+ */
+function detectInstructionsSurface(root) {
+  const present = (key) => !!query(root, key);
+  return {
+    instructionsButton: present("AGENT_INSTRUCTIONS_BUTTON"),
+    addControl: present("INSTRUCTION_ADD"),
+    editor: present("INSTRUCTION_EDITOR"),
+    doneControl: present("INSTRUCTION_DONE"),
+    readbackSurface: present("INSTRUCTION_READBACK"),
+  };
+}
+
+/**
+ * 1G.9 provider readback extractor (read-only). Reads guideline VALUES from
+ * actual editor fields across every match — never container text (icon
+ * ligatures like material-symbol names are not guidelines). Returns
+ * { available, text, referenceIds, rawEvidence } or { available:false,
+ * reason } with reason READBACK_SURFACE_MISSING (no editor/surface at all)
+ * vs READBACK_EMPTY (fields exist but hold no text). Never the attempted
+ * payload.
+ */
+function extractInstructionReadback(root) {
+  const seen = new Set();
+  const texts = [];
+  for (const sel of candidatesFor("INSTRUCTION_EDITOR")) {
+    let list = [];
+    try {
+      list = root.querySelectorAll(sel) || [];
+    } catch {
+      list = [];
+    }
+    for (const ed of list) {
+      if (seen.has(ed)) continue;
+      seen.add(ed);
+      const t = readInstructionEditorText(ed);
+      if (t && t.trim()) texts.push(t.trim().slice(0, 8000));
+    }
+  }
+  const referenceIds = [];
+  try {
+    const scopes = [];
+    for (const sel of [...candidatesFor("INSTRUCTION_READBACK"), ...candidatesFor("INSTRUCTION_EDITOR")]) {
+      try {
+        for (const el of root.querySelectorAll(sel) || []) scopes.push(el);
+      } catch { /* next selector */ }
+    }
+    for (const scope of scopes) {
+      const imgs = (scope.querySelectorAll && scope.querySelectorAll("img[alt], [data-reference-id], [data-asset-id]")) || [];
+      for (const img of imgs) {
+        const id = (img.getAttribute && (img.getAttribute("data-reference-id") || img.getAttribute("data-asset-id") || img.getAttribute("alt"))) || null;
+        if (id) referenceIds.push(String(id).slice(0, 128));
+      }
+    }
+  } catch {
+    /* reference extraction is best-effort; text readback stands alone */
+  }
+  if (texts.length > 0) {
+    return { available: true, text: texts[0], referenceIds, rawEvidence: `dom-readback:${texts.length}` };
+  }
+  let anyField = seen.size > 0;
+  if (!anyField) {
+    try {
+      anyField = !!query(root, "INSTRUCTION_READBACK");
+    } catch {
+      anyField = false;
+    }
+  }
+  if (!anyField) return { available: false, reason: "READBACK_SURFACE_MISSING", text: "", referenceIds };
+  return { available: false, reason: "READBACK_EMPTY", text: "", referenceIds };
+}
+
+/** Shared instruction-editor text reader (value → innerText → textContent). */
+function readInstructionEditorText(editor) {
+  try {
+    if (editor && typeof editor.value === "string" && editor.value.trim()) return editor.value;
+    if (editor && editor.innerText && editor.innerText.trim()) return editor.innerText;
+    if (editor && editor.textContent && editor.textContent.trim()) return editor.textContent;
+  } catch {
+    return "";
+  }
+  return "";
+}
+
+/**
+ * FIX 02 §5 — read-only provider project identity extraction.
+ * Preferred: stable provider project ref from URL/router pathname
+ * (query strings are stripped before matching so no tokens leak into
+ * evidence). No DOM project-name selector is known, so projectName stays
+ * null rather than invented; tab title is never identity.
+ * Returns { available, providerProjectRef, projectName, source,
+ * confidence, evidence }. confidence: HIGH (router id) | UNKNOWN.
+ */
+function extractFlowProjectIdentity(root, hrefOverride) {
+  let href = typeof hrefOverride === "string" ? hrefOverride : null;
+  if (!href) {
+    try {
+      href = (root && root.location && root.location.href) || null;
+    } catch {
+      href = null;
+    }
+  }
+  let pathname = null;
+  if (href) {
+    try {
+      pathname = new URL(href).pathname || null;
+    } catch {
+      pathname = null;
+    }
+  }
+  if (pathname) {
+    const m = pathname.match(/^\/(?:project|projects)\/([A-Za-z0-9-_]{1,128})(?:\/|$)/);
+    if (m) {
+      return { available: true, providerProjectRef: m[1], projectName: null, source: "url-router", confidence: "HIGH", evidence: "pathname:/project(s)/<ref>" };
+    }
+  }
+  return { available: false, providerProjectRef: "UNKNOWN", projectName: null, source: "none", confidence: "UNKNOWN", evidence: "no-router-id" };
+}
+
+/**
+ * FIX 02 §7 — pure project-identity gate. No DOM, no mutation.
+ * VERIFIED only when expected and observed refs are both known and equal.
+ */
+function verifyProjectIdentity(expectedRef, observedRef) {
+  if (!expectedRef || !observedRef || observedRef === "UNKNOWN") {
+    return { verified: false, code: "BLOCKED_PROJECT_IDENTITY_UNKNOWN" };
+  }
+  if (expectedRef !== observedRef) return { verified: false, code: "BLOCKED_PROJECT_MISMATCH" };
+  return { verified: true, code: "PROJECT_IDENTITY_VERIFIED" };
+}
+
+/**
+ * FIX 02 round 6 — select the guideline editor slot without duplicating rows.
+ * Rules: exact text present → reuse it (idempotent, no new row); else a single
+ * empty editor → use it; multiple empties → AMBIGUOUS (never pick one blind);
+ * all occupied differently → OCCUPIED (never clobber); none → ABSENT (caller
+ * may Add once, then select again).
+ */
+function findGuidelineTarget(root, desired) {
+  const want = String(desired || "");
+  // Provider-side normalization guard (FIX 03): Flow may normalize
+  // whitespace inside a persisted guideline, which would make a byte-exact
+  // comparison classify our own synced text as "occupied differently" and
+  // refuse every re-apply (idempotency broken). A slot whose text equals the
+  // desired text after harmless whitespace normalization is the SAME
+  // instruction — reuse it (mirrors compare.js harmless normalization).
+  const normalize = (s) => String(s || "").replace(/\s+/g, " ").trim();
+  const wantNorm = normalize(want);
+  const seen = new Set();
+  const editors = [];
+  for (const sel of candidatesFor("INSTRUCTION_EDITOR")) {
+    let list = [];
+    try {
+      list = root.querySelectorAll(sel) || [];
+    } catch {
+      list = [];
+    }
+    for (const ed of list) {
+      if (!seen.has(ed)) {
+        seen.add(ed);
+        editors.push(ed);
+      }
+    }
+  }
+  if (editors.length === 0) return { error: "INSTRUCTION_EDITOR_ABSENT" };
+  if (want) {
+    const exact = editors.find((ed) => readInstructionEditorText(ed) === want);
+    if (exact) return { el: exact, exact: true };
+    const normalizedExact = editors.find((ed) => normalize(readInstructionEditorText(ed)) === wantNorm);
+    if (normalizedExact) return { el: normalizedExact, exact: true, normalized: true };
+  }
+  const empties = editors.filter((ed) => !readInstructionEditorText(ed));
+  if (empties.length === 1) return { el: empties[0], exact: false };
+  if (empties.length > 1) return { error: "INSTRUCTION_CONTROL_AMBIGUOUS" };
+  return { error: "INSTRUCTION_SLOT_OCCUPIED" };
+}
+
+/**
+ * Native value setter for React-controlled fields (FIX 02 round 3). Assigning
+ * .value directly updates the DOM but not React state, so a later save can
+ * persist stale text. The prototype setter + input event keeps both in sync.
+ * Returns null outside real browsers (node tests use direct assignment).
+ */
+function nativeValueSetter(editor) {
+  try {
+    const tag = editor && editor.tagName;
+    const ctor = tag === "TEXTAREA"
+      ? (typeof HTMLTextAreaElement !== "undefined" ? HTMLTextAreaElement : null)
+      : tag === "INPUT"
+        ? (typeof HTMLInputElement !== "undefined" ? HTMLInputElement : null)
+        : null;
+    if (!ctor || !ctor.prototype) return null;
+    const desc = Object.getOwnPropertyDescriptor(ctor.prototype, "value");
+    return (desc && typeof desc.set === "function") ? desc.set : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * FIX 02 §10 — set instruction guidelines text with verified re-read.
+ * Single safe retry, exact comparison, precise codes. Never clicks Generate,
+ * never touches models/outputs/settings. Refuses to clobber a different
+ * existing text (INSTRUCTION_SLOT_OCCUPIED); identical text is a no-op success
+ * (idempotent re-apply creates no duplicates). No timers: DOM writes are
+ * synchronous; a controlled component that reverts on its own fails here
+ * instead of being chased.
+ */
+function setInstructionGuidelines(root, text) {
+  const desired = String(text || "");
+  if (!desired) return { ok: false, code: "INSTRUCTION_TEXT_EMPTY", verified: false };
+  const target = findGuidelineTarget(root, desired);
+  if (target.error) {
+    return { ok: false, code: target.error === "INSTRUCTION_EDITOR_ABSENT" ? "INSTRUCTION_EDITOR_MISSING" : target.error, verified: false };
+  }
+  if (target.exact) return { ok: true, verified: true, attempts: 0, unchanged: true, writePath: "none" };
+  const editor = target.el;
+  let writePath = "synthetic";
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    try {
+      // Focus → native set → input + change → blur: covers React-controlled
+      // (needs the native setter + input) and uncontrolled hybrids (read on
+      // change/blur). Live round 3 proved setter+input alone does not survive
+      // Flow's Done/save.
+      if (typeof editor.focus === "function") {
+        try {
+          editor.focus();
+        } catch { /* focus is best-effort */ }
+      }
+      // Live round 5: even insertText-semantics synthetic events did not
+      // survive — Flow's editor state likely ignores untrusted events.
+      // document.execCommand('insertText') makes the BROWSER emit trusted
+      // input events, the closest automation gets to real keystrokes.
+      // Absent outside real browsers (node) or on failure, fall through to
+      // the synthetic path below.
+      let trustedWrote = false;
+      if (typeof document !== "undefined" && document && typeof document.execCommand === "function") {
+        try {
+          // Guard: only emit into the focused editor — a missed focus would
+          // land keystrokes in whatever field actually has the caret.
+          if (document.activeElement === editor) trustedWrote = document.execCommand("insertText", false, desired) === true;
+        } catch {
+          trustedWrote = false;
+        }
+      }
+      if (trustedWrote) writePath = "trusted-execCommand";
+      if (!trustedWrote) {
+        const setter = nativeValueSetter(editor);
+        if (setter) setter.call(editor, desired);
+        else if (typeof editor.value === "string" || (editor.tagName && (editor.tagName === "TEXTAREA" || editor.tagName === "INPUT"))) editor.value = desired;
+        else editor.textContent = desired;
+      }
+      // Live round 4: plain Event('input') does not register with Flow's
+      // editor state (manual keystrokes persist, synthetic plain input did
+      // not). Emit an input event carrying insertText semantics when the
+      // constructor exists; plain Event remains the fallback.
+      const emit = (type, extra) => {
+        if (typeof Event === "undefined" || !editor || typeof editor.dispatchEvent !== "function") return;
+        try {
+          if (type === "input" && typeof InputEvent !== "undefined") {
+            editor.dispatchEvent(new InputEvent("input", { bubbles: true, inputType: "insertText", data: desired, ...(extra || {}) }));
+          } else {
+            editor.dispatchEvent(new Event(type, { bubbles: true }));
+          }
+        } catch { /* events are best-effort; the re-read below decides */ }
+      };
+      emit("input");
+      emit("change");
+      // No explicit blur: focus stays in the field until the real Done click,
+      // mirroring the manual flow (a programmatic blur risks committing or
+      // discarding through a stale frame before Done runs).
+    } catch {
+      return { ok: false, code: "INSTRUCTION_EDITOR_NOT_WRITABLE", verified: false };
+    }
+    if (readInstructionEditorText(editor) === desired) return { ok: true, verified: true, attempts: attempt, writePath };
+  }
+  return { ok: false, code: "GUIDELINES_VERIFY_FAILED", verified: false };
+}
+
+/**
+ * FIX 03 §8/§10 — least-privileged guidelines write with app-state
+ * acknowledgement. FIX 02 + FIX 03 live evidence: isolated-world writes AND
+ * main-world browser-emitted events verify in-DOM but never survive Done/save
+ * (the page framework never accepts the value). Strategy order, each gated by
+ * a framework-verifiable acknowledgement, never by the DOM text:
+ *   1. MAIN_WORLD_INPUT_SEQUENCE — page-world native setter + input/change;
+ *      accepted ONLY on REACT_PROPS (the framework's own state).
+ *   2. CDP trusted input (§10 last resort) — chrome.debugger Input commands
+ *      through the browser's real input pipeline, gated + detached in the
+ *      service worker; accepted on the post-insert value re-read.
+ *   3. ISOLATED_SYNTHETIC — legacy isolated-world path
+ *      (setInstructionGuidelines); diagnostics only, appStateAck always false.
+ * opts.mainWorldWrite / opts.trustedInputWrite: async transports injected by
+ * the content runtime (service-worker round-trips). Absent (node tests
+ * without a writer stub) → falls straight through to the isolated path.
+ */
+/**
+ * FIX 03 (live round 9–11 evidence): reset the guideline editor to empty
+ * between failed write strategies. Without this, a later transport's insert
+ * can CONCATENATE onto the previous strategy's DOM text (live round 9
+ * produced a doubled instruction). Only ever called on a slot that was
+ * empty or exact at selection time, so resetting restores the gate precondition.
+ */
+function clearInstructionEditor(editor) {
+  try {
+    const setter = nativeValueSetter(editor);
+    if (setter) setter.call(editor, "");
+    else if (typeof editor.value === "string") editor.value = "";
+    else return readInstructionEditorText(editor) === "";
+  } catch {
+    return false;
+  }
+  return readInstructionEditorText(editor) === "";
+}
+
+async function applyInstructionGuidelines(root, text, opts = {}) {
+  const desired = String(text || "");
+  if (!desired) return { ok: false, code: "INSTRUCTION_TEXT_EMPTY", verified: false, appStateAck: false };
+  const target = findGuidelineTarget(root, desired);
+  if (target.error) {
+    return { ok: false, code: target.error === "INSTRUCTION_EDITOR_ABSENT" ? "INSTRUCTION_EDITOR_MISSING" : target.error, verified: false, appStateAck: false };
+  }
+  if (target.exact) {
+    return { ok: true, verified: true, attempts: 0, unchanged: true, writePath: "none", writeTransport: "NONE", appStateAck: true, ackBasis: "ALREADY_SYNCED" };
+  }
+  const primary = (SELECTORS.INSTRUCTION_EDITOR && SELECTORS.INSTRUCTION_EDITOR.selector) || null;
+  let specIndex = -1;
+  if (primary) {
+    let primaries = [];
+    try {
+      primaries = Array.prototype.slice.call(root.querySelectorAll(primary) || []);
+    } catch {
+      primaries = [];
+    }
+    specIndex = primaries.indexOf(target.el);
+  }
+  let mainWorldTried = null;
+  if (typeof opts.mainWorldWrite === "function" && specIndex >= 0) {
+    let mw = null;
+    try {
+      mw = await opts.mainWorldWrite({ selector: primary, index: specIndex, text: desired });
+    } catch (e) {
+      mw = { ok: false, code: "MAIN_WORLD_WRITE_FAILED" };
+    }
+    // Main-world result is only accepted when the FRAMEWORK's own state
+    // acknowledged the value. Live rounds 5–7 (2026-10-04) proved
+    // BROWSER_INPUT_EVENTS (execCommand DOM re-read) does NOT survive Flow's
+    // save: Done accepts and closes, provider discards, reopen reads empty.
+    // Only REACT_PROPS is sufficient evidence from this transport.
+    if (mw && mw.ok === true && readInstructionEditorText(target.el) === desired && mw.ackBasis === "REACT_PROPS") {
+      return {
+        ok: true,
+        verified: true,
+        attempts: 1,
+        writePath: mw.writePath || "MAIN_WORLD_INPUT_SEQUENCE",
+        writeTransport: mw.writePath || "MAIN_WORLD_INPUT_SEQUENCE",
+        appStateAck: true,
+        ackBasis: mw.ackBasis,
+        mainWorld: {
+          valueMatches: mw.valueMatches === true,
+          valueLength: typeof mw.valueLength === "number" ? mw.valueLength : null,
+          propsValueLength: typeof mw.propsValueLength === "number" ? mw.propsValueLength : null,
+          fingerprint: mw.fingerprint || null,
+        },
+      };
+    }
+    // Otherwise fall through so the next strategy runs and diagnostics stay
+    // honest (the insufficient ack is never treated as a saveable write).
+    mainWorldTried = { writePath: mw.writePath || null, ackBasis: mw.ackBasis || null, appStateAck: mw.appStateAck === true };
+    // Never let a failed strategy's DOM text concat onto the next one.
+    clearInstructionEditor(target.el);
+  }
+  // FIX 03 §10 — trusted browser-level input (LAST RESORT, live-evidence
+  // backed): main-world input sequences and browser-emitted execCommand
+  // events both update the DOM but never reach Flow's editor state (rounds
+  // 5–6: Done accepts and closes, provider discards, reopen reads empty).
+  // The debugger transport inserts through the browser's real input
+  // pipeline; the service worker gates attach (verified tab + project URL
+  // recheck) and always detaches. The value re-read here decides.
+  let trustedInputCode = null;
+  if (typeof opts.trustedInputWrite === "function" && specIndex >= 0 && opts.projectRef) {
+    try {
+      if (typeof target.el.focus === "function") target.el.focus();
+      if (typeof target.el.select === "function") target.el.select();
+    } catch { /* focus/selection best-effort */ }
+    // Real per-character key events FIRST (what FIX 02's persisted operator
+    // typing actually produced); drop-in insertText is the fallback.
+    let ti = null;
+    let keyErr = null;
+    try {
+      ti = await opts.trustedInputWrite({ op: "keyText", projectRef: opts.projectRef, text: desired });
+    } catch (e) {
+      ti = { ok: false, code: String((e && e.message) || e).split(":")[0] };
+    }
+    if (!(ti && ti.ok === true && readInstructionEditorText(target.el) === desired)) {
+      // Key events did not land (or were refused): one insertText pass.
+      keyErr = ti && ti.ok === true ? "KEYTEXT_VERIFY_FAILED" : ti && ti.code ? ti.code : "KEYTEXT_FAILED";
+      let ti2 = null;
+      try {
+        ti2 = await opts.trustedInputWrite({ op: "insertText", projectRef: opts.projectRef, text: desired });
+      } catch (e) {
+        ti2 = { ok: false, code: String((e && e.message) || e).split(":")[0] };
+      }
+      ti = ti2 && ti2.ok === true ? ti2 : ti;
+    }
+    if (ti && ti.ok === true && readInstructionEditorText(target.el) === desired) {
+      return {
+        ok: true,
+        verified: true,
+        attempts: 1,
+        writePath: ti.op === "keyText" ? "CDP_KEY_EVENTS" : "CDP_INPUT_INSERT_TEXT",
+        writeTransport: ti.op === "keyText" ? "CDP_KEY_EVENTS" : "CDP_INPUT_INSERT_TEXT",
+        appStateAck: true,
+        ackBasis: "CDP_TRUSTED_INPUT",
+      };
+    }
+    // Trusted input refused/failed (e.g. TRUSTED_INPUT_PERMISSION_BLOCKED):
+    // fall through to the isolated path; the persistence boundary downstream
+    // keeps the verdict honest either way.
+    trustedInputCode = keyErr || (ti && ti.code) || "TRUSTED_INPUT_FAILED";
+    // Never let a failed strategy's DOM text concat onto the next one.
+    clearInstructionEditor(target.el);
+  }
+  const legacy = setInstructionGuidelines(root, desired);
+  if (!legacy.ok) {
+    return { ok: false, code: legacy.code || "GUIDELINES_VERIFY_FAILED", verified: false, appStateAck: false, attempts: legacy.attempts };
+  }
+  return {
+    ok: true,
+    verified: true,
+    attempts: legacy.attempts || 1,
+    unchanged: legacy.unchanged === true,
+    writePath: "ISOLATED_SYNTHETIC",
+    writeTransport: "ISOLATED_SYNTHETIC_EVENTS",
+    appStateAck: false,
+    ackBasis: legacy.unchanged ? "ALREADY_SYNCED" : "NO_FRAMEWORK_ACK",
+    mainWorldTried,
+    trustedInputCode: typeof trustedInputCode === "string" ? trustedInputCode : null,
+  };
+}
+
+/**
+ * FIX 02 §8 — instruction surface diagnostics (read-only).
+ * Per-control { status, selectorEvidence }; status: VERIFIED (primary hit
+ * on an adopted selector) | MISSING (no element) | UNKNOWN (fallback-only
+ * hit on a NOT_VERIFIED placeholder — purpose unconfirmed).
+ */
+function instructionControlState(root, key) {
+  const def = SELECTORS[key] || { selector: null, status: "NOT_VERIFIED" };
+  const found = queryWithFallback(root, key);
+  const evidence = { matchedSelector: found.matchedSelector, fallbackUsed: found.fallbackUsed, tableStatus: def.status };
+  if (!found.el) return { status: "MISSING", selectorEvidence: evidence };
+  // VERIFIED = adopted table entry reached through its primary selector, or
+  // through the adopted text channel (exact visible labels observed live).
+  // Any other fallback on any table state stays UNKNOWN: purpose unconfirmed.
+  if (def.status === "VERIFIED" && (!found.fallbackUsed || (found.matchedSelector || "").startsWith("text:"))) {
+    return { status: "VERIFIED", selectorEvidence: evidence };
+  }
+  return { status: "UNKNOWN", selectorEvidence: evidence };
+}
+
+/**
+ * FIX 02 §13 — count live matches behind an instruction control lookup.
+ * Mutation requires exactly one (INSTRUCTION_CONTROL_AMBIGUOUS otherwise):
+ * clicking the first of several same-labeled controls is never acceptable.
+ */
+function countInstructionMatches(root, key) {
+  const found = queryWithFallback(root, key);
+  if (!found.el || !found.matchedSelector) return { channel: "none", count: 0, matchedSelector: null };
+  if (found.matchedSelector.startsWith("text:")) {
+    const tf = TEXT_FALLBACKS[key];
+    let n = 0;
+    if (tf) {
+      for (const sel of tf.selectors) {
+        let list = [];
+        try {
+          list = root.querySelectorAll(sel) || [];
+        } catch {
+          list = [];
+        }
+        for (const el of list) {
+          const label = shortControlLabel(el, tf.maxLen || 28);
+          if (label && tf.pattern.test(label)) n++;
+        }
+      }
+    }
+    return { channel: "text", count: n, matchedSelector: found.matchedSelector };
+  }
+  let n = 0;
+  try {
+    const list = root.querySelectorAll(found.matchedSelector) || [];
+    n = list.length;
+  } catch {
+    n = 0;
+  }
+  return { channel: found.fallbackUsed ? "fallback" : "primary", count: n, matchedSelector: found.matchedSelector };
+}
+
+function buildInstructionDiagnostics(root) {
+  return {
+    agentMode: detectFlowAgentMode(root),
+    projectIdentity: extractFlowProjectIdentity(root),
+    agentInstructionsTrigger: instructionControlState(root, "AGENT_INSTRUCTIONS_BUTTON"),
+    addInstructionControl: instructionControlState(root, "INSTRUCTION_ADD"),
+    instructionEditor: instructionControlState(root, "INSTRUCTION_EDITOR"),
+    referenceAttachmentControl: instructionControlState(root, "INSTRUCTION_REFERENCE_ATTACH"),
+    doneSaveControl: instructionControlState(root, "INSTRUCTION_DONE"),
+    readbackSurface: instructionControlState(root, "INSTRUCTION_READBACK"),
+  };
 }
 
 function elementTextValue(el) {
@@ -2595,6 +3164,97 @@ function ensureStandardMode(root) {
 }
 
 /**
+ * FIX 02 §11 — forbidden keys inside an instruction-apply payload.
+ * Any payload carrying model/output/settings/generation/credential material
+ * is rejected before any DOM is touched. Single owner: this adapter
+ * (provider-side); the bridge evidence validator owns the sync-evidence side.
+ */
+const INSTRUCTION_FORBIDDEN_PAYLOAD_KEYS = [
+  "model",
+  "outputcount",
+  "confirmbefore",
+  "generate",
+  "cookie",
+  "authtoken",
+  "sessiontoken",
+  "apikey",
+  "password",
+  "credential",
+  "authorization",
+];
+
+function rejectForbiddenInstructionPayload(payload) {
+  const hits = [];
+  const walk = (v, trail) => {
+    if (Array.isArray(v)) {
+      v.forEach((x, i) => walk(x, `${trail}[${i}]`));
+      return;
+    }
+    if (v && typeof v === "object") {
+      for (const [k, val] of Object.entries(v)) {
+        const kl = String(k).toLowerCase().replace(/[_-]/g, "");
+        if (INSTRUCTION_FORBIDDEN_PAYLOAD_KEYS.some((f) => kl.includes(f))) hits.push(`${trail}.${k}`);
+        walk(val, `${trail}.${k}`);
+      }
+    }
+  };
+  walk(payload, "$");
+  return hits;
+}
+
+/**
+ * FIX 02 §13 — click one instruction control by selector key.
+ * Centralized here so the dispatcher never touches DOM directly (FP15).
+ * Throws SELECTOR_MISSING / INSTRUCTION_CONTROL_NOT_CLICKABLE.
+ */
+function clickInstructionControl(root, key) {
+  const found = queryWithFallback(root, key);
+  if (!found.el) throw new Error(`SELECTOR_MISSING: ${key}`);
+  if (typeof found.el.click !== "function") throw new Error(`INSTRUCTION_CONTROL_NOT_CLICKABLE: ${key}`);
+  found.el.click();
+  return { clicked: true, key, matchedSelector: found.matchedSelector, fallbackUsed: found.fallbackUsed };
+}
+
+/**
+ * FIX 02 §12 — Agent ON control (instruction path only). If Agent is already
+ * on, no click. Otherwise one toggle attempt on a plain switch control,
+ * then Agent state is RE-READ before anything else runs. Touches nothing
+ * else: no models, no outputs, no Confirm-before-generating.
+ */
+function ensureAgentOn(root) {
+  const before = detectFlowAgentMode(root);
+  if (before.detected && before.mode === "AGENT") return { agent: true, agentMode: before, alreadyOn: true };
+  if (!before.detected) {
+    return { agent: false, code: "BLOCKED_AGENT_STATE_UNKNOWN", agentMode: before, message: "Không thấy điều khiển Agent trên trang Flow." };
+  }
+  const control = query(root, "AGENT_MODE");
+  let toggleable = false;
+  try {
+    if (control && control.getAttribute) {
+      const role = control.getAttribute("role");
+      toggleable =
+        role === "switch" ||
+        control.getAttribute("aria-checked") === "false" ||
+        control.getAttribute("aria-pressed") === "false" ||
+        control.checked === false;
+    } else if (control && control.checked === false) {
+      toggleable = true;
+    }
+  } catch {
+    toggleable = false;
+  }
+  if (toggleable && control && typeof control.click === "function") {
+    control.click();
+    const after = detectFlowAgentMode(root);
+    if (after.detected && after.mode === "AGENT") {
+      return { agent: true, agentMode: after, switchedOn: true };
+    }
+    return { agent: false, code: "BLOCKED_AGENT_STATE_UNKNOWN", agentMode: after, message: "Đã thử bật Agent nhưng trạng thái sau đó không xác nhận được." };
+  }
+  return { agent: false, code: "BLOCKED_AGENT_STATE_UNKNOWN", agentMode: before, message: "Không bật được Agent một cách an toàn (điều khiển không phải công tắc)." };
+}
+
+/**
  * POST-v1E result baseline + generation-start evidence (§27–§28).
  * Baseline captured BEFORE Generate; only NEW results correlate.
  */
@@ -3984,6 +4644,8 @@ function buildLiveDiagnostics(root, env = {}) {
     generationType: generationTypeDiagnostics(root),
     creditCost: readCreditCost(root) || "UNKNOWN",
     composerProbe: composerProbe(root),
+    projectIdentity: extractFlowProjectIdentity(root),
+    instructionSurface: buildInstructionDiagnostics(root),
     lastError: env.lastError || null,
   };
 }
@@ -4055,6 +4717,20 @@ if (typeof module !== "undefined" && module.exports) {
     assessDryRunReadiness,
     verifyPromptContent,
     insertPromptDryRun,
+    detectInstructionsSurface,
+    extractInstructionReadback,
+    readInstructionEditorText,
+    extractFlowProjectIdentity,
+    verifyProjectIdentity,
+    setInstructionGuidelines,
+    applyInstructionGuidelines,
+    buildInstructionDiagnostics,
+    countInstructionMatches,
+    findGuidelineTarget,
+    ensureAgentOn,
+    INSTRUCTION_FORBIDDEN_PAYLOAD_KEYS,
+    rejectForbiddenInstructionPayload,
+    clickInstructionControl,
     submitAfterApproval,
 awaitSubmitAcceptance,
     snapshotConfirmCandidates,
@@ -4156,6 +4832,20 @@ try {
     assessDryRunReadiness,
     verifyPromptContent,
     insertPromptDryRun,
+      detectInstructionsSurface,
+      extractInstructionReadback,
+      readInstructionEditorText,
+      extractFlowProjectIdentity,
+      verifyProjectIdentity,
+      setInstructionGuidelines,
+      applyInstructionGuidelines,
+      buildInstructionDiagnostics,
+      countInstructionMatches,
+      findGuidelineTarget,
+      ensureAgentOn,
+      INSTRUCTION_FORBIDDEN_PAYLOAD_KEYS,
+      rejectForbiddenInstructionPayload,
+      clickInstructionControl,
       submitAfterApproval,
 awaitSubmitAcceptance,
     snapshotConfirmCandidates,

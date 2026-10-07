@@ -1,0 +1,66 @@
+{
+  "artifact": "perf-baseline-dag",
+  "capturedAt": "2026-10-07T03:32:43.547Z",
+  "method": "process.hrtime.bigint micro-benchmarks inside tests/dag/test-dag.js",
+  "sampleCounts": {
+    "smallMutation": 5,
+    "smallDirty": 5,
+    "smallPlan": 20,
+    "smallLoad": 20,
+    "mediumDirty": 3,
+    "mediumPlan": 5
+  },
+  "environment": "local Windows, node",
+  "metrics": {
+    "smallMutation": {
+      "samples": 5,
+      "minMs": 6.24,
+      "p50Ms": 6.59,
+      "maxMs": 7.438
+    },
+    "smallDirty": {
+      "samples": 5,
+      "minMs": 13.189,
+      "p50Ms": 14.169,
+      "maxMs": 14.366
+    },
+    "smallPlan": {
+      "samples": 20,
+      "minMs": 0.311,
+      "p50Ms": 0.331,
+      "maxMs": 5.796
+    },
+    "smallLoad": {
+      "samples": 20,
+      "minMs": 0.271,
+      "p50Ms": 0.281,
+      "maxMs": 0.341
+    },
+    "mediumDirty": {
+      "samples": 3,
+      "minMs": 19.935,
+      "p50Ms": 23.726,
+      "maxMs": 29.913
+    },
+    "mediumPlan": {
+      "samples": 5,
+      "minMs": 16.283,
+      "p50Ms": 18.68,
+      "maxMs": 22.725
+    },
+    "mediumSizeBytes": 129062,
+    "smallSizeBytes": 4551,
+    "writeAmplification": "1 atomic replace per effective mutation; 0 on dedupe"
+  },
+  "budgets": {
+    "smallMutationP50Ms": 25,
+    "smallDirtyP50Ms": 25,
+    "smallPlanP50Ms": 10,
+    "smallLoadP50Ms": 5,
+    "mediumDirtyP50Ms": 500,
+    "mediumPlanP50Ms": 500,
+    "mediumSizeBytes": 1048576
+  },
+  "reason": "DAG sits on planning paths; mutation/propagation/plan must stay interactive on small graphs and bounded on medium graphs",
+  "result": "PASS"
+}

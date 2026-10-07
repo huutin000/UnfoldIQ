@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "pronunciation-runtime-pass.schema.json",
+  "title": "UNFOLDIQ Pronunciation Runtime Pass (Phase 2.3, schema 1.0.0)",
+  "description": "Executable, non-audio pronunciation verification against the real configured pre-TTS runtime (local-kokoro quiet/model=False phonemization). Per segment: matched entries, compiled provider input hash, runtime grapheme/phoneme hashes, structured issues, status. Raw phoneme streams and provider diagnostics stay in evidence artifacts, never here.",
+  "type": "object",
+  "required": ["schemaVersion", "pronunciationPassId", "version", "projectId", "scriptRef", "voiceBibleRef", "profileRef", "provider", "providerModel", "language", "segments", "provenance", "fingerprint"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "pronunciationPassId": { "type": "string", "pattern": "^prp-[0-9a-f]{12}$" },
+    "version": { "type": "integer", "minimum": 1 },
+    "projectId": { "type": "string", "minLength": 1 },
+    "scriptRef": {
+      "type": "object",
+      "required": ["scriptArtifactId", "scriptVersion"],
+      "additionalProperties": false,
+      "properties": {
+        "scriptArtifactId": { "type": "string", "pattern": "^fss-[0-9a-z][0-9a-z-]{2,62}$" },
+        "scriptVersion": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "voiceBibleRef": { "type": "string", "pattern": "^vb-[0-9a-f]{12}$" },
+    "profileRef": { "type": "string", "pattern": "^pron-[0-9a-f]{12}$" },
+    "provider": { "enum": ["local-kokoro"] },
+    "providerModel": { "type": "string", "minLength": 1 },
+    "providerLanguageCode": { "type": ["string", "null"], "description": "Actual runtime language code mapping result (e.g. en-us -> a)." },
+    "runtimeMode": { "enum": ["QUIET_PHONEMIZATION"], "description": "Non-audio graphemes/phonemes only; final TTS synthesis is Phase 2.4 and is never executed here." },
+    "language": { "type": "string", "minLength": 2, "maxLength": 16 },
+    "segments": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/passSegment" }
+    },
+    "provenance": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "source": { "type": "string", "minLength": 1 },
+        "createdAt": { "type": ["string", "null"] },
+        "runtimeEvidenceRef": { "type": ["string", "null"], "description": "Evidence artifact carrying the raw phonemization records." },
+        "evidenceRefs": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" }
+  },
+  "definitions": {
+    "matchedEntry": {
+      "type": "object",
+      "required": ["entryId", "term"],
+      "additionalProperties": false,
+      "properties": {
+        "entryId": { "type": "string", "pattern": "^pe-[0-9a-f]{12}$" },
+        "term": { "type": "string", "minLength": 1 },
+        "applied": { "type": "boolean" },
+        "notAppliedReason": { "type": ["string", "null"], "maxLength": 120 }
+      }
+    },
+    "passSegment": {
+      "type": "object",
+      "required": ["segmentId", "sourceTextHash", "matchedEntries", "compiledInputHash", "runtimeGraphemeHash", "runtimePhonemeHash", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "segmentId": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$" },
+        "sourceTextHash": { "type": "string", "pattern": "^[0-9a-f]{16}$" },
+        "matchedEntries": { "type": "array", "items": { "$ref": "#/definitions/matchedEntry" } },
+        "compiledInputHash": { "type": ["string", "null"], "pattern": "^[0-9a-f]{16}$" },
+        "runtimeGraphemeHash": { "type": ["string", "null"], "pattern": "^[0-9a-f]{16}$" },
+        "runtimePhonemeHash": { "type": ["string", "null"], "pattern": "^[0-9a-f]{16}$" },
+        "issues": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["code"],
+            "additionalProperties": false,
+            "properties": {
+              "code": { "type": "string", "minLength": 3 },
+              "detail": { "type": ["string", "null"], "maxLength": 280 }
+            }
+          }
+        },
+        "status": { "enum": ["CLEAN", "OVERRIDE_APPLIED", "REVIEW_REQUIRED", "FAILED"] }
+      }
+    }
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "schemaVersion": "1.0.0",
+  "ttsReadyPlanId": "ttp-4ccc5151fc9f",
+  "version": 1,
+  "projectId": "phase223-narration-pronunciation",
+  "scriptRef": {
+    "scriptArtifactId": "fss-phase223-validation",
+    "scriptVersion": 1
+  },
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "narrationDirectionRef": "nd-18a1afd2f330",
+  "pronunciationPassRef": "prp-8b1d3436ff29",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "language": "en-us",
+  "overall": "READY_FOR_TTS",
+  "productionTtsBlocked": true,
+  "segments": [
+    {
+      "segmentId": "S1",
+      "sourceTextHash": "9ea87ca73e8c9f56",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "9ea87ca73e8c9f56",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "S2",
+      "sourceTextHash": "9a372772983b9d3a",
+      "speakerId": "narrator",
+      "directionRef": "nd-18a1afd2f330#v1",
+      "compiledTextHash": "bc846ba6a0e09be4",
+      "pronunciationStatus": "OVERRIDE_APPLIED",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "S3",
+      "sourceTextHash": "004ec52793d7e10c",
+      "speakerId": "narrator",
+      "directionRef": "nd-18a1afd2f330#v1",
+      "compiledTextHash": "a91a4bb9222bb6ea",
+      "pronunciationStatus": "OVERRIDE_APPLIED",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "S4",
+      "sourceTextHash": "3940464efc048106",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "48c0680393582bc0",
+      "pronunciationStatus": "OVERRIDE_APPLIED",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "S5",
+      "sourceTextHash": "bc9a34aac860bbc8",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "5d9b2393cc81f6ea",
+      "pronunciationStatus": "OVERRIDE_APPLIED",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "S6",
+      "sourceTextHash": "1bfd4a72694dfac8",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "1bfd4a72694dfac8",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    }
+  ],
+  "provenance": {
+    "source": "phase-2.2-2.3",
+    "createdAt": "2026-10-06T04:00:44.933Z",
+    "productionScriptStatus": "NOT_APPLICABLE",
+    "evidenceRefs": []
+  },
+  "fingerprint": "5c8554628f2ebf11"
+}

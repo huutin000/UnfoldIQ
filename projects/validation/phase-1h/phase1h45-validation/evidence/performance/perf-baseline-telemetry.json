@@ -1,0 +1,49 @@
+{
+  "artifact": "perf-baseline-telemetry",
+  "capturedAt": "2026-10-07T03:43:39.032Z",
+  "method": "process.hrtime.bigint micro-benchmarks inside tests/telemetry/test-telemetry.js",
+  "sampleCounts": {
+    "append": 20,
+    "query": 20,
+    "trace": 20,
+    "costQuery": 20
+  },
+  "environment": "local Windows, node",
+  "metrics": {
+    "append": {
+      "samples": 20,
+      "minMs": 10.241,
+      "p50Ms": 11.893,
+      "maxMs": 16.983
+    },
+    "query": {
+      "samples": 20,
+      "minMs": 1.313,
+      "p50Ms": 1.767,
+      "maxMs": 10.206
+    },
+    "trace": {
+      "samples": 20,
+      "minMs": 1.345,
+      "p50Ms": 1.61,
+      "maxMs": 1.992
+    },
+    "costQuery": {
+      "samples": 20,
+      "minMs": 1.248,
+      "p50Ms": 1.45,
+      "maxMs": 1.774
+    },
+    "sizeBytes": 42572,
+    "writeAmplification": "1 atomic replace per effective append; 0 on dedupe"
+  },
+  "budgets": {
+    "appendP50Ms": 25,
+    "queryP50Ms": 10,
+    "traceP50Ms": 10,
+    "costQueryP50Ms": 10,
+    "sizeBytes": 1048576
+  },
+  "reason": "telemetry must not materially slow Core; queries back LOG-FIRST investigation",
+  "result": "PASS"
+}

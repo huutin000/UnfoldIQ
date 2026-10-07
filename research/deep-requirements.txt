@@ -14,6 +14,11 @@ gpt-researcher==0.15.1
 # No-key retriever runtime for RETRIEVER=duckduckgo (gpt-researcher raises
 # ImportError without it). Verified 2026-10-02: ddgs 9.7.0 imports in deep venv.
 ddgs==9.7.0
+# ddgs 9.7.0 declares only primp>=0.15.0, but primp 2.x removed the versioned
+# impersonation targets (e.g. chrome_114) that ddgs's HttpClient randomly picks
+# -> BuilderError on every DuckDuckGo search. primp 1.3.1 (last 1.x) accepts
+# them (unknown targets degrade to 'random' with a warning). Verified 2026-10-02.
+primp==1.3.1
 # Adapter for the google_genai LLM provider (FAST/SMART/STRATEGIC_LLM).
 # Official PyPI package; required because gpt-researcher delegates to
 # langchain_google_genai.ChatGoogleGenerativeAI. Verified 2026-10-02.

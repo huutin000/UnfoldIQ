@@ -48,8 +48,32 @@
       `resultControlFound: ${d.resultControlFound}`,
       `downloadControlFound: ${dl.found}`,
       `agentMode: ${(d.agentMode && d.agentMode.mode) || "unknown"}`,
+      `projectIdentity: ${renderProjectIdentity(d.projectIdentity)}`,
+      `instructionSurface: ${renderInstructionSurface(d.instructionSurface)}`,
       `lastError: ${d.lastError || "none"}`,
     ].join("\n");
+  }
+
+  // FIX 02 §8 — one-line renders for the instruction live gate (paste-friendly).
+  function renderProjectIdentity(pi) {
+    if (!pi) return "UNKNOWN (no data)";
+    if (!pi.available) return `UNKNOWN (confidence=${pi.confidence || "UNKNOWN"}, evidence=${pi.evidence || "n/a"})`;
+    return `ref=${pi.providerProjectRef} (confidence=${pi.confidence}, source=${pi.source})`;
+  }
+
+  function renderInstructionSurface(surface) {
+    if (!surface) return "no data";
+    const short = (c) => (c && c.status) || "?";
+    const ev = (c) => (c && c.selectorEvidence && (c.selectorEvidence.matchedSelector || "—")) || "—";
+    return [
+      `trigger=${short(surface.agentInstructionsTrigger)}`,
+      `add=${short(surface.addInstructionControl)}`,
+      `editor=${short(surface.instructionEditor)}`,
+      `refAttach=${short(surface.referenceAttachmentControl)}`,
+      `done=${short(surface.doneSaveControl)}`,
+      `readback=${short(surface.readbackSurface)}`,
+      `evidence=[${[surface.agentInstructionsTrigger, surface.addInstructionControl, surface.instructionEditor, surface.doneSaveControl, surface.readbackSurface].map(ev).join(" | ")}]`,
+    ].join(" ");
   }
 
   function pillFor(status) {

@@ -1,0 +1,239 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectId": "phase1g12-case-a",
+  "revision": 7,
+  "createdAt": "2026-10-05T08:09:54.576Z",
+  "updatedAt": "2026-10-05T08:09:54.659Z",
+  "snapshots": {
+    "pol-f97cd0115d4b": {
+      "snapshotId": "pol-f97cd0115d4b",
+      "platform": "YOUTUBE",
+      "policyType": "AI_DISCLOSURE",
+      "sourceUrl": "https://blog.youtube/news-and-events/disclosing-ai-generated-content/",
+      "sourceTitle": "How we're helping creators disclose altered or synthetic content (YouTube Blog)",
+      "checkedAt": "2026-10-05T00:00:00.000Z",
+      "effectiveDate": "2024-03-18",
+      "contentHash": "c328300b54425650f0f7f699b3b42a01fd9e15c78e8c984dc42ea96d9cb06931",
+      "reviewAfterDays": 180,
+      "rules": [
+        {
+          "ruleId": "R6-veo-unrealistic",
+          "match": {
+            "platformNativeGenAI": true,
+            "clearlyUnrealisticAnimation": true
+          },
+          "requireKnown": [
+            "platformNativeGenAI",
+            "clearlyUnrealisticAnimation"
+          ],
+          "decision": "AI_DISCLOSURE_NOT_REQUIRED",
+          "reason": "Veo/Flow-originated but clearly unrealistic animation (mascot/abstract): no creator disclosure required. Note: May-2026 platform behavior may auto-apply labels to Veo-originated content — verify in YouTube Studio; the creator-side decision stands on characteristics."
+        },
+        {
+          "ruleId": "R4-likeness",
+          "match": {
+            "depictsRealPerson": true,
+            "syntheticallyAlteredOrGenerated": true
+          },
+          "requireKnown": [
+            "depictsRealPerson",
+            "syntheticallyAlteredOrGenerated"
+          ],
+          "decision": "AI_DISCLOSURE_REQUIRED",
+          "reason": "realistic likeness altered/synthesized: disclosure required (official examples: face replacement, synthetic voice narration)"
+        },
+        {
+          "ruleId": "R5-real-event-place",
+          "match": {
+            "depictsRealEventOrPlace": true,
+            "meaningfullyAltered": true
+          },
+          "requireKnown": [
+            "depictsRealEventOrPlace",
+            "meaningfullyAltered"
+          ],
+          "decision": "AI_DISCLOSURE_REQUIRED",
+          "reason": "real event/place meaningfully altered (official examples: fake fire, altered cityscape, realistic fictional disaster)"
+        },
+        {
+          "ruleId": "R1-realistic-synthetic",
+          "match": {
+            "photorealistic": true,
+            "syntheticallyAlteredOrGenerated": true
+          },
+          "requireKnown": [
+            "photorealistic",
+            "syntheticallyAlteredOrGenerated"
+          ],
+          "decision": "AI_DISCLOSURE_REQUIRED",
+          "reason": "realistic altered/synthetic content viewers could mistake for real"
+        },
+        {
+          "ruleId": "R2-unrealistic",
+          "match": {
+            "clearlyUnrealisticAnimation": true
+          },
+          "requireKnown": [
+            "clearlyUnrealisticAnimation"
+          ],
+          "decision": "AI_DISCLOSURE_NOT_REQUIRED",
+          "reason": "clearly unrealistic content such as animation (official exception)"
+        },
+        {
+          "ruleId": "R3-assistance",
+          "match": {
+            "productionAssistanceOnly": true
+          },
+          "requireKnown": [
+            "productionAssistanceOnly"
+          ],
+          "decision": "AI_DISCLOSURE_NOT_REQUIRED",
+          "reason": "generative AI for productivity only (scripts/ideas/captions)"
+        }
+      ],
+      "status": "CURRENT",
+      "supersededBy": null
+    }
+  },
+  "decisions": {
+    "ccd-bd2113be8e5a": {
+      "decisionId": "ccd-bd2113be8e5a",
+      "projectId": "phase1g12-case-a",
+      "assetId": "as-0fde400d6392",
+      "publishUnitId": null,
+      "platform": "YOUTUBE",
+      "policyType": "AI_DISCLOSURE",
+      "policySnapshotId": "pol-f97cd0115d4b",
+      "contentCharacteristics": {
+        "syntheticallyAlteredOrGenerated": true,
+        "clearlyUnrealisticAnimation": true,
+        "photorealistic": false,
+        "depictsRealPerson": false,
+        "depictsRealEventOrPlace": false,
+        "meaningfullyAltered": false,
+        "productionAssistanceOnly": false,
+        "platformNativeGenAI": true
+      },
+      "decision": "AI_DISCLOSURE_NOT_REQUIRED",
+      "reason": "Veo/Flow-originated but clearly unrealistic animation (mascot/abstract): no creator disclosure required. Note: May-2026 platform behavior may auto-apply labels to Veo-originated content — verify in YouTube Studio; the creator-side decision stands on characteristics.",
+      "manualOverride": null,
+      "evidenceRefs": [
+        "projects/phase1g12-case-a/case/case-d-cross-shot-continuity.json"
+      ],
+      "decidedAt": "2026-10-05T08:09:54.621Z",
+      "freshness": "FRESH",
+      "supersedes": null
+    },
+    "ccd-7b7f99d28f37": {
+      "decisionId": "ccd-7b7f99d28f37",
+      "projectId": "phase1g12-case-a",
+      "assetId": "as-fafd1ac4c96b",
+      "publishUnitId": null,
+      "platform": "YOUTUBE",
+      "policyType": "AI_DISCLOSURE",
+      "policySnapshotId": "pol-f97cd0115d4b",
+      "contentCharacteristics": {
+        "syntheticallyAlteredOrGenerated": true,
+        "clearlyUnrealisticAnimation": true,
+        "photorealistic": false,
+        "depictsRealPerson": false,
+        "depictsRealEventOrPlace": false,
+        "meaningfullyAltered": false,
+        "productionAssistanceOnly": false,
+        "platformNativeGenAI": true
+      },
+      "decision": "AI_DISCLOSURE_NOT_REQUIRED",
+      "reason": "Veo/Flow-originated but clearly unrealistic animation (mascot/abstract): no creator disclosure required. Note: May-2026 platform behavior may auto-apply labels to Veo-originated content — verify in YouTube Studio; the creator-side decision stands on characteristics.",
+      "manualOverride": null,
+      "evidenceRefs": [
+        "projects/phase1g12-case-a/qa/case-b-attempt-02-qa-summary.json"
+      ],
+      "decidedAt": "2026-10-05T08:09:54.630Z",
+      "freshness": "FRESH",
+      "supersedes": null
+    },
+    "ccd-c8a389724189": {
+      "decisionId": "ccd-c8a389724189",
+      "projectId": "phase1g12-case-a",
+      "assetId": "as-6182cea3f996",
+      "publishUnitId": null,
+      "platform": "YOUTUBE",
+      "policyType": "AI_DISCLOSURE",
+      "policySnapshotId": "pol-f97cd0115d4b",
+      "contentCharacteristics": {
+        "syntheticallyAlteredOrGenerated": true,
+        "clearlyUnrealisticAnimation": true,
+        "photorealistic": false,
+        "depictsRealPerson": false,
+        "depictsRealEventOrPlace": false,
+        "meaningfullyAltered": false,
+        "productionAssistanceOnly": false,
+        "platformNativeGenAI": true
+      },
+      "decision": "AI_DISCLOSURE_NOT_REQUIRED",
+      "reason": "Veo/Flow-originated but clearly unrealistic animation (mascot/abstract): no creator disclosure required. Note: May-2026 platform behavior may auto-apply labels to Veo-originated content — verify in YouTube Studio; the creator-side decision stands on characteristics.",
+      "manualOverride": null,
+      "evidenceRefs": [
+        "projects/phase1g12-case-a/qa/case-c-attempt-01-qa-summary.json"
+      ],
+      "decidedAt": "2026-10-05T08:09:54.640Z",
+      "freshness": "FRESH",
+      "supersedes": null
+    },
+    "ccd-e0e37f8deef1": {
+      "decisionId": "ccd-e0e37f8deef1",
+      "projectId": "phase1g12-case-a",
+      "assetId": "as-a7801df9bf0f",
+      "publishUnitId": null,
+      "platform": "YOUTUBE",
+      "policyType": "AI_DISCLOSURE",
+      "policySnapshotId": "pol-f97cd0115d4b",
+      "contentCharacteristics": {
+        "syntheticallyAlteredOrGenerated": true,
+        "clearlyUnrealisticAnimation": true,
+        "photorealistic": false,
+        "depictsRealPerson": false,
+        "depictsRealEventOrPlace": false,
+        "meaningfullyAltered": false,
+        "productionAssistanceOnly": false,
+        "platformNativeGenAI": true
+      },
+      "decision": "AI_DISCLOSURE_NOT_REQUIRED",
+      "reason": "Veo/Flow-originated but clearly unrealistic animation (mascot/abstract): no creator disclosure required. Note: May-2026 platform behavior may auto-apply labels to Veo-originated content — verify in YouTube Studio; the creator-side decision stands on characteristics.",
+      "manualOverride": null,
+      "evidenceRefs": [
+        "projects/phase1g12-case-a/case/case-d-character.json"
+      ],
+      "decidedAt": "2026-10-05T08:09:54.650Z",
+      "freshness": "FRESH",
+      "supersedes": null
+    },
+    "ccd-b24568fe9b8c": {
+      "decisionId": "ccd-b24568fe9b8c",
+      "projectId": "phase1g12-case-a",
+      "assetId": "IMG_A",
+      "publishUnitId": null,
+      "platform": "YOUTUBE",
+      "policyType": "AI_DISCLOSURE",
+      "policySnapshotId": "pol-f97cd0115d4b",
+      "contentCharacteristics": {
+        "syntheticallyAlteredOrGenerated": true,
+        "clearlyUnrealisticAnimation": true,
+        "photorealistic": false,
+        "productionAssistanceOnly": true,
+        "platformNativeGenAI": false
+      },
+      "decision": "AI_DISCLOSURE_NOT_REQUIRED",
+      "reason": "clearly unrealistic content such as animation (official exception)",
+      "manualOverride": null,
+      "evidenceRefs": [
+        "projects/phase1g12-case-a/asset-manifest.json",
+        "projects/phase1g12-case-a/render/render-input-case-a.json"
+      ],
+      "decidedAt": "2026-10-05T08:09:54.659Z",
+      "freshness": "FRESH",
+      "supersedes": null
+    }
+  },
+  "fingerprint": "d2af01248644cb21"
+}

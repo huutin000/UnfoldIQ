@@ -1,0 +1,207 @@
+{
+  "schemaVersion": "1.0.0",
+  "pronunciationProfileId": "pron-6e7fd87f4366",
+  "version": 2,
+  "projectId": "phase223-narration-pronunciation",
+  "language": "en-us",
+  "entries": [
+    {
+      "entryId": "pe-82a8d9a5fc4c",
+      "normalizedTerm": "reynolds",
+      "displayTerm": "Reynolds",
+      "language": "en-us",
+      "locale": null,
+      "category": "NAME",
+      "reading": {
+        "notation": "READ_AS",
+        "value": "RAYN-ulz"
+      },
+      "acronymMode": null,
+      "scope": {
+        "level": "GLOBAL_LANGUAGE",
+        "projectId": null,
+        "scriptArtifactId": null,
+        "segmentId": null
+      },
+      "source": "OPERATOR_OVERRIDE",
+      "quality": "VERIFIED",
+      "notes": null,
+      "provenance": {
+        "createdAt": "2026-10-06T02:35:50.307Z",
+        "origin": null,
+        "evidenceRefs": []
+      }
+    },
+    {
+      "entryId": "pe-2991e56e8144",
+      "normalizedTerm": "kokoro",
+      "displayTerm": "Kokoro",
+      "language": "en-us",
+      "locale": null,
+      "category": "FOREIGN_TERM",
+      "reading": {
+        "notation": "IPA",
+        "value": "kˈOkəɹO"
+      },
+      "acronymMode": null,
+      "scope": {
+        "level": "GLOBAL_LANGUAGE",
+        "projectId": null,
+        "scriptArtifactId": null,
+        "segmentId": null
+      },
+      "source": "VERIFIED_SOURCE",
+      "quality": "VERIFIED",
+      "notes": null,
+      "provenance": {
+        "createdAt": "2026-10-06T04:00:36.729Z",
+        "origin": "hexgrad/kokoro official README example [Kokoro](/kˈOkəɹO/)",
+        "evidenceRefs": []
+      }
+    },
+    {
+      "entryId": "pe-65af818dc790",
+      "normalizedTerm": "nasa",
+      "displayTerm": "NASA",
+      "language": "en-us",
+      "locale": null,
+      "category": "ACRONYM",
+      "reading": {
+        "notation": "READ_AS",
+        "value": "NASA"
+      },
+      "acronymMode": "WORD",
+      "scope": {
+        "level": "GLOBAL_LANGUAGE",
+        "projectId": null,
+        "scriptArtifactId": null,
+        "segmentId": null
+      },
+      "source": "CANONICAL_LEXICON",
+      "quality": "AUTO",
+      "notes": null,
+      "provenance": {
+        "createdAt": "2026-10-06T02:35:50.307Z",
+        "origin": null,
+        "evidenceRefs": []
+      }
+    },
+    {
+      "entryId": "pe-c119ccaf76b8",
+      "normalizedTerm": "cia",
+      "displayTerm": "CIA",
+      "language": "en-us",
+      "locale": null,
+      "category": "ACRONYM",
+      "reading": {
+        "notation": "READ_AS",
+        "value": "C.I.A."
+      },
+      "acronymMode": "LETTER_BY_LETTER",
+      "scope": {
+        "level": "GLOBAL_LANGUAGE",
+        "projectId": null,
+        "scriptArtifactId": null,
+        "segmentId": null
+      },
+      "source": "CANONICAL_LEXICON",
+      "quality": "AUTO",
+      "notes": null,
+      "provenance": {
+        "createdAt": "2026-10-06T02:35:50.307Z",
+        "origin": null,
+        "evidenceRefs": []
+      }
+    },
+    {
+      "entryId": "pe-b61c895013a5",
+      "normalizedTerm": "reykjavik",
+      "displayTerm": "Reykjavik",
+      "language": "en-us",
+      "locale": null,
+      "category": "PLACE_NAME",
+      "reading": {
+        "notation": "READ_AS",
+        "value": "RAYK-yah-veek"
+      },
+      "acronymMode": null,
+      "scope": {
+        "level": "GLOBAL_LANGUAGE",
+        "projectId": null,
+        "scriptArtifactId": null,
+        "segmentId": null
+      },
+      "source": "VERIFIED_SOURCE",
+      "quality": "VERIFIED",
+      "notes": null,
+      "provenance": {
+        "createdAt": "2026-10-06T02:35:50.307Z",
+        "origin": null,
+        "evidenceRefs": []
+      }
+    },
+    {
+      "entryId": "pe-9e3dbe7e23a2",
+      "normalizedTerm": "misaki",
+      "displayTerm": "Misaki",
+      "language": "en-us",
+      "locale": null,
+      "category": "DOMAIN_TERM",
+      "reading": {
+        "notation": "READ_AS",
+        "value": "mee-SAH-kee"
+      },
+      "acronymMode": null,
+      "scope": {
+        "level": "GLOBAL_LANGUAGE",
+        "projectId": null,
+        "scriptArtifactId": null,
+        "segmentId": null
+      },
+      "source": "OPERATOR_OVERRIDE",
+      "quality": "VERIFIED",
+      "notes": null,
+      "provenance": {
+        "createdAt": "2026-10-06T02:35:50.307Z",
+        "origin": null,
+        "evidenceRefs": []
+      }
+    },
+    {
+      "entryId": "pe-6e7fc9fd3b24",
+      "normalizedTerm": "unfoldiq",
+      "displayTerm": "UnfoldIQ",
+      "language": "en-us",
+      "locale": null,
+      "category": "CUSTOM",
+      "reading": {
+        "notation": "READ_AS",
+        "value": "Unfold I Q"
+      },
+      "acronymMode": null,
+      "scope": {
+        "level": "GLOBAL_LANGUAGE",
+        "projectId": null,
+        "scriptArtifactId": null,
+        "segmentId": null
+      },
+      "source": "OPERATOR_OVERRIDE",
+      "quality": "VERIFIED",
+      "notes": null,
+      "provenance": {
+        "createdAt": "2026-10-06T02:35:50.307Z",
+        "origin": null,
+        "evidenceRefs": []
+      }
+    }
+  ],
+  "provenance": {
+    "source": "phase-2.2-2.3 validation",
+    "createdAt": "2026-10-06T04:00:36.739Z",
+    "evidenceRefs": [
+      "Report/phases/phase-2/PHASE_2_2_2_3_NARRATION_DIRECTION_AND_PRONUNCIATION_RUNTIME_REPORT.md"
+    ],
+    "revisedFrom": "pron-058c1e575fd7"
+  },
+  "fingerprint": "3a362a419340048b"
+}

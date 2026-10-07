@@ -201,6 +201,13 @@ function runRender(opts) {
       inputProps: inputProps,
       outputLocation: outputLocation,
       concurrency: renderConfig.concurrency,
+      // Official Remotion option: run the compositor/ffmpeg/ffprobe from an
+      // alternate directory. Used on machines where Smart App Control blocks
+      // the unsigned upstream ffmpeg.exe/ffprobe.exe (see
+      // scripts/maintenance/setup-render-binaries.js). Inert when unset.
+      ...(process.env.UNFOLDIQ_REMOTION_BINARIES_DIR
+        ? { binariesDirectory: process.env.UNFOLDIQ_REMOTION_BINARIES_DIR }
+        : {}),
       // Branch A render-config.js uses timeoutMs; older callers may pass
       // timeoutInMilliseconds. Accept both.
       timeoutInMilliseconds: (typeof renderConfig.timeoutInMilliseconds === "number"

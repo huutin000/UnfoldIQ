@@ -1,0 +1,113 @@
+{
+  "task": "PHASE_2_1_01",
+  "phase": "2.1 — Voice Bible + Narrator Persona",
+  "recordedAt": "2026-10-05",
+  "counts": { "P0": 0, "P1": 0, "P2": 0, "P3": 4 },
+  "findings": [
+    {
+      "id": "P2-1",
+      "severity": "P2",
+      "status": "RESOLVED",
+      "owner": "operator",
+      "title": "Voice bible is not production-ready: selection unapproved and rights unproven",
+      "detail": "The validation voice bible records provenance.source=PROVIDER_DEFAULT (the af_heart en-us default declared by providers/runtime/adapters/local-kokoro.js, NOT an operator decision) and provenance.rights.status=UNRESOLVED. No artifact in this repository proves Kokoro voice licence/redistribution terms. readiness.blockers=[VOICE_SELECTION_PROVIDER_DEFAULT, VOICE_RIGHTS_REVIEW_REQUIRED]; productionReady=false; manifest artifacts.voiceBibleVersion.status=UNRESOLVED.",
+      "resolution": "FIX 01 recorded APPROVED_NARRATOR_VOICE = am_michael with an approvalRef (Voice Bible v2 vb-2997edea5ffa). FIX 02 recorded the explicit operator decision ACCEPT_RESIDUAL_RIGHTS_RISK (Voice Bible v3 vb-19f4fd6a4596, rights RISK_ACCEPTED under bounded scope, MODEL_LICENSE VERIFIED). Neither closure invents an approvalRef nor asserts a VERIFIED licence the evidence does not support. productionReady=true; manifest VERIFIED.",
+      "resolvedBy": "FIX_PHASE_2_1_01 (selection) + FIX_PHASE_2_1_02 (rights decision)",
+      "impact": "Blocks production narration, not the Phase 2.1 gate. Any later phase that treats the bible as an approved voice decision would be acting on an unproven assumption.",
+      "requiredToClose": [
+        "an explicit operator-approved narrator voice selection (set provenance.source=OPERATOR_APPROVED with an approvalRef), and",
+        "proven voice licence/redistribution evidence recorded in provenance.rights + evidenceRefs"
+      ],
+      "notToBeClosedBy": "inventing a plausible-looking approvalRef or asserting a licence status that no evidence supports",
+      "evidence": "projects/phase2-1-validation/evidence/phase-2/2.1/evidence/security/security-and-privacy.json"
+    },
+    {
+      "id": "P3-1",
+      "severity": "P3",
+      "status": "OPEN",
+      "introducedBy": "pre-existing (1G), not by Phase 2.1",
+      "title": "providers/INDEX.md logical-ID table is stale",
+      "detail": "The logical-ID table omits local-kokoro, local-whisper, local-comfyui-image, local-comfyui-video, configured-cloud-tts/stt/image/video, agent-native-tts, remote-mcp-video — all of which appear in providers/CONFIG.yaml and are registered by providers/runtime/bootstrap.js.",
+      "impact": "An agent reading INDEX.md alone may conclude local-kokoro is not a real provider id.",
+      "relevantTo21": "yes — 2.1 makes local-kokoro the declared V1 TTS provider, so the stale table now actively misleads about the V1 provider.",
+      "suggestedFix": "regenerate the INDEX.md logical-ID table from providers/runtime/registry.js + CONFIG.yaml",
+      "evidence": "providers/INDEX.md lines 30-41 vs providers/CONFIG.yaml"
+    },
+    {
+      "id": "P3-2",
+      "severity": "P3",
+      "status": "OPEN",
+      "introducedBy": "pre-existing, not by Phase 2.1",
+      "title": "providers/local/SETUP_KOKORO.md documents env vars the adapter never reads",
+      "detail": "KOKORO_LANGS and KOKORO_MODEL are documented but unused by the adapter (only KOKORO_VOICES is read, at local-kokoro.js:73). The KOKORO_VOICES example shows a single id (af_heart) while the adapter expects a comma-separated list.",
+      "impact": "An operator setting KOKORO_LANGS/KOKORO_MODEL gets no effect and may believe the language set is configurable when it is not.",
+      "relevantTo21": "yes — language compatibility is a 2.1 fail-closed gate and this doc misdescribes the only language knob.",
+      "suggestedFix": "either implement the two vars or remove them from the doc; correct the KOKORO_VOICES example to a comma-separated list",
+      "evidence": "providers/local/SETUP_KOKORO.md lines 22-27 vs providers/runtime/adapters/local-kokoro.js:69-78"
+    },
+    {
+      "id": "P3-3",
+      "severity": "P3",
+      "status": "OPEN",
+      "introducedBy": "pre-existing, not by Phase 2.1",
+      "title": "audio-manifest.schema.json rejects its own committed data",
+      "detail": "schemas/audio-manifest.schema.json sets additionalProperties:false on tracks/items but declares no voiceId, language or providerId property, while committed projects/pilot-sky-blue/audio-manifest.json carries voiceId, providerId and language on every track (and audio-mix-plan.json likewise).",
+      "impact": "Real pilot data does not validate against its own schema; a strict validator would reject legitimate voice/audio metadata.",
+      "relevantTo21": "adjacent — 2.1 owns voice identity, but the audio manifest schema is where downstream voice metadata would land (2.4).",
+      "suggestedFix": "add voiceId/providerId/language to the audio-manifest item contract, or drop them from committed data — decide before 2.4",
+      "evidence": "schemas/audio-manifest.schema.json vs projects/pilot-sky-blue/audio-manifest.json lines 15,31,47,63,79,95,111,127"
+    },
+    {
+      "id": "P3-4",
+      "severity": "P3",
+      "status": "OPEN",
+      "introducedBy": "pre-existing STEP-14 residue",
+      "title": "providerId windows-sapi is recorded in committed artifacts but is not a registered provider",
+      "detail": "projects/pilot-sky-blue/audio-manifest.json, audio/audio-mix-plan.json, asset-manifest.json and preflight/media-preflight.json all record providerId/sourceProvider 'windows-sapi'. No adapter exists and it appears nowhere in providers/CONFIG.yaml or the runtime registry.",
+      "impact": "Historical pilot metadata names a provider that cannot be resolved; it will silently fail any provider resolution that trusts it.",
+      "relevantTo21": "yes — it is a competing, non-canonical voice-selection record, exactly the kind of source Phase 2.1 must not mistake for a canonical narrator selection.",
+      "suggestedFix": "either register a windows-sapi adapter or reclassify those pilot records as LEGACY_MANAGED with an explicit non-canonical note",
+      "evidence": "projects/pilot-sky-blue/audio-manifest.json; grep windows-sapi over providers/ returns nothing"
+    },
+    {
+      "id": "P3-5",
+      "severity": "P3",
+      "status": "RESOLVED",
+      "resolvedBy": "FIX_PHASE_2_1_02 (root-cause fix per the finding's own suggested fix)",
+      "title": "Kokoro adapter can return a fabricated silent WAV while reporting status READY",
+      "detail": "providers/runtime/adapters/local-kokoro.js lines 170-172 substitute a hardcoded 8000Hz mono 16-bit 800-sample silent buffer whenever a wav request does not begin with 'RIFF', and still return status:'READY'. The same adapter correctly refuses an unsupported language rather than synthesizing with an English voice, so the two behaviours contradict each other.",
+      "impact": "A broken Kokoro install yields silent audio marked READY, which would pass downstream existence/size checks and fail only at speech-rate QA (2.4) or listener review. Fabricated audio is exactly what the provider contract forbids.",
+      "relevantTo21": "yes — the Kokoro boundary is a 2.1 concern even though the fix is not. 2.1 deliberately did not probe synthesis runtime for this reason (runtimeProbe=NOT_PROBED).",
+      "suggestedFix": "throw unavailable('KOKORO_EMPTY_OUTPUT') instead of substituting silence; require real RIFF/WAVE bytes for a wav result",
+      "evidence": "providers/runtime/adapters/local-kokoro.js:170-172 vs the language refusal at :135-140"
+    }
+  ],
+  "deviations": [
+    {
+      "id": "DEV-1",
+      "roadmapSection": "35",
+      "suggested": "projects/validation/phase-2/2.1/",
+      "actual": "projects/phase2-1-validation/evidence/phase-2/2.1/",
+      "reason": "providers/runtime/artifact-store.js resolveProjectPath hardcodes root/projects/<projectId>; a nested registry path would make the Workspace Resolver and the artifact writer disagree about the truth. The flat <phase>-validation form matches all 8 pre-existing phase validation projects. The suggested wording was 'or resolver-approved equivalent'.",
+      "approved": true
+    },
+    {
+      "id": "DEV-2",
+      "roadmapSection": "30",
+      "note": "roadmap lists voiceBibleLoadLatency / voiceBibleValidateLatency / voiceSelectionResolveLatency / voiceBibleWriteLatency / manifestReferenceUpdateLatency. All five are measured. No TTS synthesis benchmark was run (out of 2.1 scope).",
+      "approved": true
+    },
+    {
+      "id": "DEV-3",
+      "roadmapSection": "27",
+      "note": "CLI provides the five roadmap commands (create/validate/show/list/revise) plus one extra, perf, because roadmap 30 requires a recorded performance baseline and a machine-readable way to produce it is strictly better than a bespoke script. No dashboard was built.",
+      "approved": true
+    },
+    {
+      "id": "DEV-4",
+      "roadmapSection": "16",
+      "note": "roadmap lists the chain VOICE_BIBLE → NARRATION_DIRECTION → TTS_AUDIO. Only VOICE_BIBLE → VOICE was added, because NARRATION_DIRECTION is a 2.2 artifact and TTS_AUDIO does not exist as a DAG class; roadmap 16 itself forbids fake Final Audio nodes when no audio exists, and Q28 forbids premature 2.2+ behavior.",
+      "approved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "characterId": "mascot-guide",
+  "referenceAssetId": "as-a7801df9bf0f",
+  "sha256": "a7801df9bf0f05ee20fb94a6e913824c2de151ad063994dd5d1c052d57428e7e",
+  "dimensions": {
+    "width": 1024,
+    "height": 1024
+  },
+  "instructionVersion": "iv-7e784d73e229",
+  "providerMapping": {
+    "providerSlot": "Ingredients / References to Video (character ingredient)",
+    "canonicalAssetId": "as-a7801df9bf0f",
+    "workflow": "VEO_REFERENCE (REFERENCE_GUIDED_VIDEO)",
+    "resolutionRefs": [
+      "mr-526fb7a60ea0",
+      "mr-530bec09f9f1",
+      "mr-0538f0b00d8e"
+    ]
+  },
+  "qaResultId": "qa-b718611eb7bb"
+}

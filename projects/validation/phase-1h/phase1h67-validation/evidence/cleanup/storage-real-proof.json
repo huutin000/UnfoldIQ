@@ -1,0 +1,44 @@
+{
+  "inventoryFiles": 125,
+  "stats": {
+    "totalBytes": 7203495,
+    "byClass": {
+      "TEMPORARY": 11066,
+      "SELECTED_ASSET": 43233,
+      "EVIDENCE": 2245494,
+      "CACHE": 2764526,
+      "RENDERED_PROXY": 2139176
+    },
+    "entries": 125
+  },
+  "lockedVerdict": "BLOCKED",
+  "evidenceVerdict": "RETAIN",
+  "goldenVerdict": "RETAIN",
+  "downloadCount": 8,
+  "dryRun": {
+    "candidates": 125,
+    "safeToDelete": 0,
+    "eligibleBytes": 0,
+    "mode": "DRY_RUN"
+  },
+  "cacheDryRun": {
+    "safeToDelete": 8,
+    "eligibleBytes": 2764526,
+    "refs": [
+      "downloads/Adult_guide_character_illustrati…_20261005103521.jpg",
+      "downloads/Blue_circle_grows_on_background_20261005103017.mp4",
+      "downloads/Blue_circle_on_light_background_20261005095739.jpg",
+      "downloads/Character_presenting_palm-up_ges…_20261005111411.mp4",
+      "downloads/Character_turning_to_hips_stance_20261005112125.mp4",
+      "downloads/Character_waving_friendly_stance_20261005105730.mp4"
+    ]
+  },
+  "safeRefs": [],
+  "tempRule": "SAFE_TO_DELETE",
+  "duplicateSets": 7,
+  "duplicateBytes": 3067889,
+  "b1video": {
+    "assetId": "as-d235316b9af5",
+    "selection": "UNSET"
+  }
+}

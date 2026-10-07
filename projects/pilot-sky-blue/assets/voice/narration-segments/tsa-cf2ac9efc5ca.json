@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "1.0.0",
+  "ttsSegmentAudioId": "tsa-cf2ac9efc5ca",
+  "version": 1,
+  "projectId": "pilot-sky-blue",
+  "scriptRef": {
+    "scriptArtifactId": "fss-pilot-sky-blue",
+    "scriptVersion": 2
+  },
+  "segmentId": "S8",
+  "segmentOrdinal": 7,
+  "sourceTextHash": "96b056ec77dae7cb",
+  "compiledInputHash": "96b056ec77dae7cb",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "narrationDirectionRef": "nd-ba9e14b889f3",
+  "pronunciationPassRef": "prp-ef2591fc81ec",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "runtimeIdentity": {
+    "runtimeMode": "LOCAL_SYNTHESIS",
+    "modelRepo": "hexgrad/Kokoro-82M",
+    "modelHash": "UNKNOWN_NOT_AVAILABLE",
+    "languageCode": "a"
+  },
+  "voiceId": "am_michael",
+  "effectiveSpeed": 1,
+  "pacePolicyVersion": "pace-speed-1.0.0",
+  "audioRef": "assets/voice/narration-segments/tsa-cf2ac9efc5ca.wav",
+  "audioContentHash": "7f851136c5fe0bd8572c125efcb42eae5e8595a1f98df2141dbe300cd6630ba8",
+  "durationMs": 6550,
+  "sampleRate": 24000,
+  "channels": 1,
+  "technicalQa": {
+    "decodePass": true,
+    "nonSilent": true,
+    "finiteSamples": true,
+    "peak": 15252,
+    "rms": 1351.89,
+    "clippingSamples": 0,
+    "transcript": "So the blue sky is not a thing. It is sunlight rearranged by the air. Thanks for watching.",
+    "wer": 0,
+    "missingWords": 0,
+    "substitutedWords": 0,
+    "repeatedWords": 0,
+    "hallucinatedWords": 0,
+    "criticalMismatch": false
+  },
+  "attempt": {
+    "number": 1,
+    "parentAttemptId": null,
+    "reason": "initial synthesis",
+    "selected": null
+  },
+  "issues": [],
+  "status": "READY",
+  "provenance": {
+    "createdAt": "2026-10-06T06:52:49.069Z",
+    "evidenceRefs": [
+      "scripts/cli/pilot-narration.js"
+    ]
+  },
+  "fingerprint": "d156eaece5a1b90f"
+}

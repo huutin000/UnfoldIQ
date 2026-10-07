@@ -1,0 +1,80 @@
+{
+  "$id": "https://unfoldiq.io/schemas/music-analysis.schema.json",
+  "title": "UNFOLDIQ Music Analysis Contract (Phase 2.7)",
+  "description": "One-time heavy analysis of an ingested music asset: energy curve, sections, safe cuts, loop candidates, loudness/peak metadata",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["assetId", "analysisVersion", "durationMs", "analyzedAt"],
+  "properties": {
+    "assetId": { "type": "string", "minLength": 1 },
+    "analysisVersion": { "type": "string", "minLength": 1 },
+    "durationMs": { "type": "integer", "minimum": 1 },
+    "bpm": { "type": "number" },
+    "bpmConfidence": { "type": "number", "minimum": 0, "maximum": 1 },
+    "beatsMs": { "type": "array", "items": { "type": "integer", "minimum": 0 } },
+    "sections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["startMs", "endMs", "type"],
+        "properties": {
+          "startMs": { "type": "integer", "minimum": 0 },
+          "endMs": { "type": "integer", "minimum": 0 },
+          "type": { "enum": ["INTRO", "LOW_ENERGY", "BUILD", "CLIMAX", "OUTRO", "UNKNOWN"] },
+          "energy": { "type": "number", "minimum": 0, "maximum": 1 }
+        }
+      }
+    },
+    "energyCurve": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["timeMs", "value"],
+        "properties": {
+          "timeMs": { "type": "integer", "minimum": 0 },
+          "value": { "type": "number", "minimum": 0, "maximum": 1 }
+        }
+      }
+    },
+    "safeCutPointsMs": { "type": "array", "items": { "type": "integer", "minimum": 0 } },
+    "loopCandidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["startMs", "endMs", "confidence"],
+        "properties": {
+          "startMs": { "type": "integer", "minimum": 0 },
+          "endMs": { "type": "integer", "minimum": 0 },
+          "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+        }
+      }
+    },
+    "silenceRegions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["startMs", "endMs"],
+        "properties": {
+          "startMs": { "type": "integer", "minimum": 0 },
+          "endMs": { "type": "integer", "minimum": 0 }
+        }
+      }
+    },
+    "loudness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status"],
+      "properties": {
+        "status": { "enum": ["MEASURED", "NOT_MEASURED"] },
+        "integratedLufs": { "type": "number" },
+        "peakDb": { "type": "number" },
+        "tool": { "type": "string" }
+      }
+    },
+    "analyzedAt": { "type": "string" }
+  }
+}

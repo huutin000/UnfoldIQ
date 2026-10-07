@@ -1,0 +1,45 @@
+{
+  "$id": "https://unfoldiq.io/schemas/music-intent.schema.json",
+  "title": "UNFOLDIQ Music Intent Contract (Phase 2.7)",
+  "description": "Per-segment music presence/purpose/vocal-policy decision made BEFORE track selection",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "projectId", "intents", "status"],
+  "properties": {
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "projectId": { "type": "string", "minLength": 1 },
+    "intents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["segmentId", "presence", "vocalPolicy", "reason", "confidence"],
+        "properties": {
+          "segmentId": { "type": "string", "minLength": 1 },
+          "presence": { "enum": ["NONE", "BED", "FEATURED"] },
+          "purpose": {
+            "enum": ["EMOTION", "TENSION", "PACING", "TRANSITION", "IDENTITY", "ENERGY", "CONTRAST", null]
+          },
+          "vocalPolicy": { "enum": ["INSTRUMENTAL_ONLY", "VOCAL_ALLOWED", "VOCAL_FEATURED"] },
+          "mood": { "type": "array", "items": { "type": "string" } },
+          "energy": { "type": "number", "minimum": 0, "maximum": 1 },
+          "tension": { "type": "number", "minimum": 0, "maximum": 1 },
+          "bpmPreference": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "min": { "type": "number" },
+              "max": { "type": "number" }
+            }
+          },
+          "instrumentationPreference": { "type": "array", "items": { "type": "string" } },
+          "intentionalSilence": { "type": "boolean" },
+          "reason": { "type": "string", "minLength": 1 },
+          "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+        }
+      }
+    },
+    "status": { "enum": ["READY", "REVIEW_REQUIRED", "BLOCKED"] },
+    "generatedAt": { "type": "string" }
+  }
+}

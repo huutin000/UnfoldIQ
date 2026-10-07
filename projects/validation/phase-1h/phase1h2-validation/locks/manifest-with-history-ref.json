@@ -1,0 +1,151 @@
+{
+  "schemaVersion": "1.1.0",
+  "manifestId": "pm-170a9f2f093c",
+  "projectId": "phase1g12-case-a",
+  "projectVersion": 4,
+  "revision": 4,
+  "pipelineVersion": "1.0.0",
+  "contentMode": null,
+  "contentClass": "FICTION",
+  "createdAt": "2026-10-05T06:22:34.080Z",
+  "updatedAt": "2026-10-05T06:43:07.433Z",
+  "artifacts": {
+    "creativeBriefVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": "none of creative-brief.json, brief/creative-brief.json"
+    },
+    "channelBibleVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": "none of bibles/channel.json, channel-bible.json"
+    },
+    "storyBibleVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": "none of bibles/story.json, story-bible.json"
+    },
+    "characterBibleVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": "none of bibles/character.json, character-bible.json"
+    },
+    "worldBibleVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": "none of bibles/world.json, world-bible.json"
+    },
+    "visualBibleVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": "none of bibles/visual.json, visual-bible.json"
+    },
+    "researchPackVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": "none of research-pack.json, story/research-pack.json"
+    },
+    "finalSpokenScriptVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": "none of final-spoken-script.json, script/final-spoken-script.json"
+    },
+    "shotPlanVersion": {
+      "version": "1b32df71a718b193",
+      "status": "MIGRATED",
+      "ref": "case/case-d-shot-plan.json",
+      "detail": "no version field on the plan file; version is the content hash (deterministic identity, not fabricated)"
+    },
+    "promptCompilerVersion": {
+      "version": "1.0.0",
+      "status": "MIGRATED",
+      "ref": "prompts/",
+      "detail": "6 compiled packages on disk; compiler const 1.0.0 (package files carry version 1.0.0)"
+    },
+    "agentInstructionsVersion": {
+      "version": "iv-7e784d73e229",
+      "status": "MIGRATED",
+      "ref": "assets/library-index.json",
+      "detail": "most-common instructionVersion stamp (6/11 records); canonical store is lib/agent-instructions, not re-resolved here"
+    },
+    "assetRegistryVersion": {
+      "version": "1.0.0",
+      "status": "VERIFIED",
+      "ref": "assets/library-index.json",
+      "detail": "11 records"
+    },
+    "finalAudioVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": "none of audio/final-mix.json, final-audio.json"
+    },
+    "alignmentVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": "none of alignment.json, audio/alignment.json"
+    },
+    "timelineVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": "timing/timeline-measured.json is a measurement, not a timeline; no timeline implementation (1H non-goal)"
+    },
+    "renderVersion": {
+      "version": "b81ce8c86542dc4c",
+      "status": "MIGRATED",
+      "ref": "render/render-input-case-a.json",
+      "detail": "render input hash; no versioned render-output artifact exists"
+    }
+  },
+  "providers": {
+    "registryVersion": {
+      "version": "rs-flow-baseline-2026-10-03",
+      "status": "MIGRATED",
+      "ref": "providers/model-registry/snapshots/flow-baseline-2026-10-03.json",
+      "detail": "global registry snapshot applicable to this project (no fingerprint field; identity is snapshotId)"
+    },
+    "selections": [
+      {
+        "modelId": "google--gemini-omni-flash--1-1",
+        "providerId": null,
+        "resolutionRef": "mr-526fb7a60ea0",
+        "detail": "case-d-resolutions.json:D1"
+      },
+      {
+        "modelId": "google--gemini-omni-flash--1-1",
+        "providerId": null,
+        "resolutionRef": "mr-530bec09f9f1",
+        "detail": "case-d-resolutions.json:D2"
+      },
+      {
+        "modelId": "google--gemini-omni-flash--1-1",
+        "providerId": null,
+        "resolutionRef": "mr-0538f0b00d8e",
+        "detail": "case-d-resolutions.json:D3"
+      }
+    ]
+  },
+  "state": {
+    "stage": null,
+    "status": "ACTIVE"
+  },
+  "lineage": {
+    "previousManifestId": null,
+    "previousProjectVersion": null
+  },
+  "fingerprint": "e5418fcf68415e0c",
+  "history": {
+    "historySchemaVersion": "1.0.0",
+    "ref": "history/history.json"
+  }
+}

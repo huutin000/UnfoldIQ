@@ -25,6 +25,15 @@ __pycache__/
 node_modules/
 out/
 
+# POST-1H workspace governance: lifecycle EPHEMERAL/REGENERABLE paths.
+# Canonical evidence lives in tracked dirs with explicit names
+# (*.jsonl, Report/, golden/, projects/); these patterns cover only
+# proven-disposable scratch (run tmp, rebuildable caches, agent dumps).
+**/tmp/
+**/cache/
+*.tmp
+.playwright-cli/
+
 # Playwright test output
 playwright-report/
 test-results/
@@ -34,3 +43,6 @@ test-results/
 .env.*
 !.env.example
 
+
+# SAC-blocked Remotion binaries runtime dir (non-committed, Fix 6)
+remotion/.render-binaries/

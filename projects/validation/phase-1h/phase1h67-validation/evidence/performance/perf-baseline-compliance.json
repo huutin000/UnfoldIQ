@@ -1,0 +1,40 @@
+{
+  "artifact": "perf-baseline-compliance",
+  "capturedAt": "2026-10-07T03:32:30.837Z",
+  "method": "process.hrtime.bigint micro-benchmarks inside tests/compliance/test-compliance.js",
+  "sampleCounts": {
+    "snapshotLoad": 20,
+    "evaluate": 10,
+    "freshness": 50
+  },
+  "environment": "local Windows, node",
+  "metrics": {
+    "snapshotLoad": {
+      "samples": 20,
+      "minMs": 0.258,
+      "p50Ms": 0.321,
+      "maxMs": 8.684
+    },
+    "evaluate": {
+      "samples": 10,
+      "minMs": 1.547,
+      "p50Ms": 8.711,
+      "maxMs": 10.123
+    },
+    "freshness": {
+      "samples": 50,
+      "minMs": 0.391,
+      "p50Ms": 0.502,
+      "maxMs": 6.405
+    },
+    "sizeBytes": 8154
+  },
+  "budgets": {
+    "snapshotLoadP50Ms": 5,
+    "evaluateP50Ms": 25,
+    "freshnessP50Ms": 2,
+    "sizeBytes": 1048576
+  },
+  "reason": "compliance decides at publish time; evaluation must stay interactive",
+  "result": "PASS"
+}

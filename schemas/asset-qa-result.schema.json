@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://unfoldiq.local/schemas/asset-qa-result.schema.json",
+  "title": "AssetQaResult (1G.11 structural/semantic/factuality/continuity QA)",
+  "type": "object",
+  "required": ["version", "qaResultId", "projectId", "assetId", "assetHash", "qaPolicyVersion", "expectedContextFingerprint", "structural", "semantic", "factuality", "continuity", "aggregate", "evaluatedAt"],
+  "definitions": {
+    "layerStatus": { "enum": ["PASS", "FAIL", "WARN", "UNKNOWN", "NOT_APPLICABLE"] },
+    "severity": { "enum": ["INFO", "WARNING", "ERROR", "BLOCKER"] },
+    "check": {
+      "type": "object",
+      "required": ["check", "status", "severity", "blocking"],
+      "properties": {
+        "check": { "type": "string", "minLength": 1 },
+        "status": { "$ref": "#/definitions/layerStatus" },
+        "severity": { "$ref": "#/definitions/severity" },
+        "reason": { "type": ["string", "null"] },
+        "blocking": { "type": "boolean" }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["evidenceId", "layer", "check"],
+      "properties": {
+        "evidenceId": { "type": "string", "minLength": 1 },
+        "layer": { "type": ["string", "null"] },
+        "check": { "type": ["string", "null"] },
+        "source": { "type": ["string", "null"] },
+        "expected": {},
+        "observed": {},
+        "comparison": { "type": ["string", "null"] },
+        "confidence": { "type": ["string", "null"] },
+        "artifactRefs": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "layer": {
+      "type": "object",
+      "required": ["status", "severity", "blocking", "checks", "evidence", "reasons"],
+      "properties": {
+        "status": { "$ref": "#/definitions/layerStatus" },
+        "severity": { "$ref": "#/definitions/severity" },
+        "blocking": { "type": "boolean" },
+        "checks": { "type": "array", "items": { "$ref": "#/definitions/check" } },
+        "evidence": { "type": "array", "items": { "$ref": "#/definitions/evidence" } },
+        "reasons": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  },
+  "properties": {
+    "version": { "type": "string" },
+    "qaResultId": { "type": "string", "pattern": "^qa-[0-9a-f]{12}$" },
+    "projectId": { "type": "string", "minLength": 1 },
+    "assetId": { "type": "string", "minLength": 1 },
+    "assetHash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "shotId": { "type": ["string", "null"] },
+    "sceneId": { "type": ["string", "null"] },
+    "qaPolicyVersion": { "type": "string", "minLength": 1 },
+    "expectedContextFingerprint": { "type": "string", "minLength": 1 },
+    "expectationSnapshot": { "type": "object" },
+    "structural": { "$ref": "#/definitions/layer" },
+    "semantic": { "$ref": "#/definitions/layer" },
+    "factuality": { "$ref": "#/definitions/layer" },
+    "continuity": { "$ref": "#/definitions/layer" },
+    "aggregate": {
+      "type": "object",
+      "required": ["status", "timelineEligible", "failedLayers", "warningLayers", "unknownLayers", "reasons"],
+      "properties": {
+        "status": { "enum": ["READY_FOR_TIMELINE", "REVIEW_REQUIRED", "REJECTED"] },
+        "severity": { "$ref": "#/definitions/severity" },
+        "timelineEligible": { "type": "boolean" },
+        "failedLayers": { "type": "array", "items": { "type": "string" } },
+        "warningLayers": { "type": "array", "items": { "type": "string" } },
+        "unknownLayers": { "type": "array", "items": { "type": "string" } },
+        "reasons": { "type": "array", "items": { "type": "string" } },
+        "recommendation": { "enum": ["REPLACE_ASSET", "REGENERATE_SHOT", "RECOMPOSE", "RELABEL", "MANUAL_REVIEW", "NONE"] }
+      }
+    },
+    "sourceRefs": { "type": "array", "items": { "type": "string" } },
+    "evidenceRefs": { "type": "array", "items": { "type": "string" } },
+    "evidence": { "type": "array", "items": { "$ref": "#/definitions/evidence" } },
+    "evaluatedAt": { "type": "string", "minLength": 1 }
+  }
+}

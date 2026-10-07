@@ -1,0 +1,47 @@
+{
+  "task": "PHASE_2_1_01",
+  "secretScanners": [
+    "manifestLib.findSecretKeys (key-name scan)",
+    "historyLib.findSecretPastes (value paste scan)"
+  ],
+  "neverPersisted": [
+    "provider API key",
+    "OAuth token",
+    "cookie",
+    "Authorization header",
+    "private key",
+    "raw env secret"
+  ],
+  "persistedInstead": [
+    "provider id",
+    "model id",
+    "voice id",
+    "version ids",
+    "semantic fingerprints",
+    "safe evidence refs"
+  ],
+  "clonedOrRealPersonVoiceConsent": {
+    "inScope": false,
+    "handlingWhenAdded": "protected governance evidence (must not live in the Voice Bible body)"
+  },
+  "rights": {
+    "status": "UNRESOLVED",
+    "licenseType": "UNRESOLVED",
+    "detail": "Kokoro voice license/redistribution terms are not proven by any artifact in this repository; no rights are asserted.",
+    "fabricated": false,
+    "policy": "UNRESOLVED / REVIEW_REQUIRED when rights cannot be proven; rights never guessed",
+    "effectOnGate": "blocks production readiness, does not block the 2.1 gate",
+    "manifestEffect": "voiceBibleVersion indexes as UNRESOLVED"
+  },
+  "voiceCloning": {
+    "supported": false,
+    "structuralEnforcement": "schemas/voice-bible.schema.json rights.cloning is const false"
+  },
+  "telemetryCredentials": "none — only safe ids/refs are recorded; V25 asserts no /sk-|Bearer |password/ shape in stored events",
+  "secretRejectionCases": [
+    "providerOptions.apiKey refused",
+    "evidenceRefs containing 'Authorization: Bearer ...' refused",
+    "evidenceRefs containing 'bridge_token=...' refused",
+    "post-hoc secret injection fails validateVoiceBible"
+  ]
+}

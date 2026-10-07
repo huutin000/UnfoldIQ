@@ -1,0 +1,14 @@
+{"t":"2026-10-04T15:18:34.308Z","event":"bundle-start","projectId":"phase1g12-case-a"}
+{"t":"2026-10-04T15:18:36.109Z","event":"bundle-done"}
+{"t":"2026-10-04T15:18:36.110Z","event":"select-start","compositionId":"UNFOLDIQVideo"}
+{"t":"2026-10-04T15:18:37.610Z","event":"select-done","durationInFrames":60}
+{"t":"2026-10-04T15:18:37.610Z","event":"render-start-attempt"}
+{"t":"2026-10-04T15:18:37.764Z","event":"render-start","frameCount":60,"parallelEncoding":true}
+{"t":"2026-10-04T15:18:41.090Z","event":"render-done","outputPath":"D:\\Project\\UNFOLDIQ\\projects\\phase1g12-case-a\\render\\attempt-1\\output.mp4","frameCount":60}
+{"t":"2026-10-04T15:19:13.216Z","event":"bundle-start","projectId":"phase1g12-case-a"}
+{"t":"2026-10-04T15:19:14.844Z","event":"bundle-done"}
+{"t":"2026-10-04T15:19:14.844Z","event":"select-start","compositionId":"UNFOLDIQVideo"}
+{"t":"2026-10-04T15:19:16.317Z","event":"select-done","durationInFrames":60}
+{"t":"2026-10-04T15:19:16.317Z","event":"render-start-attempt"}
+{"t":"2026-10-04T15:19:16.490Z","event":"render-start","frameCount":60,"parallelEncoding":true}
+{"t":"2026-10-04T15:19:19.625Z","event":"render-failed","errorClass":"UNKNOWN","detail":"code=EEXIST: Error: EEXIST: file already exists, link 'D:\\Project\\UNFOLDIQ\\projects\\phase1g12-case-a\\render\\attempt-1\\output.mp4.c5c8f97f-1e47-4220-897b-7ea68beab2be.remotion-in-progress' -> 'D:\\Project\\UNFOLDIQ\\projects\\phase1g12-case-a\\render\\attempt-1\\output.mp4'"}

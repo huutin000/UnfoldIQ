@@ -1,0 +1,108 @@
+{
+  "version": "1.0.0",
+  "assets": {
+    "as-1186233d1af6": {
+      "version": "1.0.0",
+      "assetId": "as-1186233d1af6",
+      "projectId": "postv1b-flow-companion-live",
+      "type": "image",
+      "role": "OTHER",
+      "source": "migration",
+      "provider": null,
+      "jobId": null,
+      "shotId": null,
+      "characterIds": [],
+      "locationIds": [],
+      "promptVersion": null,
+      "modelVersion": null,
+      "referenceIds": [],
+      "instructionVersion": null,
+      "derivedFrom": [],
+      "hash": {
+        "algo": "sha256",
+        "value": "1186233d1af671fcb50ff5084ded613777105ba87cf0d951481ab236ba5b322e"
+      },
+      "bytes": 2080,
+      "relativePath": "assets/image/GEN01/GEN01_attempt-01.png",
+      "dimensions": {
+        "width": 32,
+        "height": 32
+      },
+      "durationMs": null,
+      "rights": {
+        "status": "UNKNOWN",
+        "note": "pre-existing file indexed by migration; origin and license unverified"
+      },
+      "provenance": {
+        "source": "migration",
+        "detail": "pre-existing file at assets/image/GEN01/GEN01_attempt-01.png"
+      },
+      "qualityStatus": "UNREVIEWED",
+      "selection": {
+        "status": "UNSET",
+        "decidedAt": null,
+        "reason": null
+      },
+      "lock": {
+        "locked": true,
+        "reason": "approved live result GEN01 (Flow Companion import; reference lock)",
+        "lockedAt": "2026-10-04T02:06:33.270Z",
+        "actor": "fix02-migration",
+        "unlockedAt": null,
+        "unlockReason": null
+      },
+      "createdAt": "2026-10-04T02:06:11.090Z",
+      "updatedAt": "2026-10-04T02:06:33.271Z"
+    },
+    "as-803b8db7080b": {
+      "version": "1.0.0",
+      "assetId": "as-803b8db7080b",
+      "projectId": "postv1b-flow-companion-live",
+      "type": "image",
+      "role": "OTHER",
+      "source": "migration",
+      "provider": null,
+      "jobId": null,
+      "shotId": null,
+      "characterIds": [],
+      "locationIds": [],
+      "promptVersion": null,
+      "modelVersion": null,
+      "referenceIds": [],
+      "instructionVersion": null,
+      "derivedFrom": [],
+      "hash": {
+        "algo": "sha256",
+        "value": "803b8db7080be4d23dca62c82136f3da5c0b46adfb1a4d0765ac4112e8c4ec37"
+      },
+      "bytes": 4522,
+      "relativePath": "assets/image/GEN01/GEN01_attempt-01.webp",
+      "dimensions": null,
+      "durationMs": null,
+      "rights": {
+        "status": "UNKNOWN",
+        "note": "pre-existing file indexed by migration; origin and license unverified"
+      },
+      "provenance": {
+        "source": "migration",
+        "detail": "pre-existing file at assets/image/GEN01/GEN01_attempt-01.webp"
+      },
+      "qualityStatus": "UNREVIEWED",
+      "selection": {
+        "status": "UNSET",
+        "decidedAt": null,
+        "reason": null
+      },
+      "lock": {
+        "locked": false,
+        "reason": null,
+        "lockedAt": null,
+        "actor": null,
+        "unlockedAt": null,
+        "unlockReason": null
+      },
+      "createdAt": "2026-10-04T02:06:11.098Z",
+      "updatedAt": "2026-10-04T02:06:11.098Z"
+    }
+  }
+}

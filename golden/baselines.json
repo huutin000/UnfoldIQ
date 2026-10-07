@@ -1,0 +1,879 @@
+{
+  "schemaVersion": "1.0.0",
+  "revision": 16,
+  "createdAt": "2026-10-05T07:40:52.157Z",
+  "updatedAt": "2026-10-06T08:18:34.073Z",
+  "fingerprint": "a5718eb2659e7613",
+  "baselines": {
+    "gold-factual-explainer:b1": {
+      "baselineId": "base-481819836e8c",
+      "goldenProjectId": "gold-factual-explainer",
+      "goldenVersion": 1,
+      "version": 1,
+      "metrics": {
+        "sourceCoverage": {
+          "status": "MEASURED",
+          "value": 1,
+          "evidenceRefs": [
+            "projects/pilot-sky-blue/research/research-brief.json"
+          ]
+        },
+        "unsupportedFactualClaims": {
+          "status": "MEASURED",
+          "value": 0,
+          "evidenceRefs": [
+            "projects/pilot-sky-blue/research/research-brief.json",
+            "projects/pilot-sky-blue/script.json"
+          ]
+        },
+        "aspectCorrectness": {
+          "status": "MEASURED",
+          "value": "16:9",
+          "evidenceRefs": [
+            "projects/pilot-sky-blue/video-spec.json"
+          ]
+        },
+        "scriptNaturalness": {
+          "status": "NOT_MEASURED",
+          "reason": "no reviewer run; method: native-speaker read-aloud review against beats + claimRefs"
+        },
+        "visualFactuality": {
+          "status": "NOT_MEASURED",
+          "reason": "no reviewer run; method: frame-vs-claim review against approved frames"
+        },
+        "evidenceFidelity": {
+          "status": "NOT_MEASURED",
+          "reason": "judgment nuance needs reviewer; claim→source trace exists but is ungraded"
+        },
+        "promptAdherence": {
+          "status": "NOT_MEASURED",
+          "reason": "no compiled prompt packages in pilot evidence"
+        },
+        "failureRate": {
+          "status": "NOT_MEASURED",
+          "reason": "no attempt records in pilot evidence"
+        },
+        "cost": {
+          "status": "NOT_MEASURED",
+          "reason": "no cost evidence in pilot evidence"
+        }
+      },
+      "pipelineVersion": "1.0.0",
+      "providerVersions": [],
+      "promptPolicyVersion": null,
+      "instructionsVersion": null,
+      "artifactVersions": {
+        "research-brief": "1.0.0",
+        "script": "1.0.0"
+      },
+      "perf": null,
+      "cost": null,
+      "evidenceRefs": [
+        "projects/pilot-sky-blue/research/research-brief.json",
+        "projects/pilot-sky-blue/script.json",
+        "projects/pilot-sky-blue/video-spec.json"
+      ],
+      "createdAt": "2026-10-05T07:40:52.177Z",
+      "reason": "V1 baseline from shipped pilot evidence (7 claims, 8 beats, 16:9 contract)",
+      "metricSchemaVersion": "1.0.0"
+    },
+    "gold-fiction-continuity:b1": {
+      "baselineId": "base-7b8b731b2715",
+      "goldenProjectId": "gold-fiction-continuity",
+      "goldenVersion": 1,
+      "version": 1,
+      "metrics": {
+        "aspectCorrectness": {
+          "status": "MEASURED",
+          "value": "16:9",
+          "evidenceRefs": [
+            "projects/phase1g12-case-a/qa/case-b-attempt-02-qa-summary.json"
+          ]
+        },
+        "continuity": {
+          "status": "MEASURED",
+          "value": "PASS",
+          "evidenceRefs": [
+            "projects/phase1g12-case-a/case/case-d-cross-shot-continuity.json"
+          ]
+        },
+        "promptAdherence": {
+          "status": "MEASURED",
+          "value": "PASS",
+          "evidenceRefs": [
+            "projects/phase1g12-case-a/case/live-ceremony-log.jsonl"
+          ]
+        },
+        "failureRate": {
+          "status": "MEASURED",
+          "value": 0.167,
+          "evidenceRefs": [
+            "projects/phase1g12-case-a/case/case-b-attempt-01-result.json"
+          ]
+        },
+        "cost": {
+          "status": "MEASURED",
+          "value": 50,
+          "evidenceRefs": [
+            "projects/phase1g12-case-a/budget/ledger.json"
+          ]
+        },
+        "unsupportedFactualClaims": {
+          "status": "NOT_APPLICABLE",
+          "reason": "FICTION has no factual claims; factual rules never govern fiction"
+        },
+        "generationTime": {
+          "status": "NOT_MEASURED",
+          "reason": "no provider timestamps in ceremony evidence"
+        }
+      },
+      "pipelineVersion": "1.0.0",
+      "providerVersions": [
+        "google--gemini-omni-flash--1-1"
+      ],
+      "promptPolicyVersion": "1.0.0",
+      "instructionsVersion": "iv-7e784d73e229",
+      "artifactVersions": {
+        "ledger": "50-reconciled",
+        "crossShot": "PASS"
+      },
+      "perf": null,
+      "cost": null,
+      "evidenceRefs": [
+        "projects/phase1g12-case-a/budget/ledger.json",
+        "projects/phase1g12-case-a/case/case-d-cross-shot-continuity.json"
+      ],
+      "createdAt": "2026-10-05T07:40:52.186Z",
+      "reason": "V1 baseline from Task-01 real E2E (5 PASS + 1 preserved FAIL, 50 credits reconciled)",
+      "metricSchemaVersion": "1.0.0"
+    },
+    "gold-originality-study:b1": {
+      "baselineId": "base-32618ee4c972",
+      "goldenProjectId": "gold-originality-study",
+      "goldenVersion": 1,
+      "version": 1,
+      "metrics": {
+        "originality": {
+          "status": "MEASURED",
+          "value": 0.2,
+          "evidenceRefs": [
+            "projects/phase1g12-case-a/qa/case-b-attempt-02-qa-summary.json",
+            "projects/phase1g12-case-a/qa/case-c-attempt-01-qa-summary.json"
+          ]
+        },
+        "aspectCorrectness": {
+          "status": "MEASURED",
+          "value": "16:9",
+          "evidenceRefs": [
+            "projects/phase1g12-case-a/qa/case-c-attempt-01-qa-summary.json"
+          ]
+        }
+      },
+      "pipelineVersion": "1.0.0",
+      "providerVersions": [
+        "google--gemini-omni-flash--1-1"
+      ],
+      "promptPolicyVersion": null,
+      "instructionsVersion": null,
+      "artifactVersions": {},
+      "perf": null,
+      "cost": null,
+      "evidenceRefs": [
+        "projects/phase1g12-case-a/qa/"
+      ],
+      "createdAt": "2026-10-05T07:40:52.196Z",
+      "reason": "V1 baseline: opening-action repetition proxy (1 shared push-in opener across 5 videos = 0.2); consistency never punished",
+      "metricSchemaVersion": "1.0.0"
+    },
+    "gold-voice-caption:b1": {
+      "baselineId": "base-bb3466e140ef",
+      "goldenProjectId": "gold-voice-caption",
+      "goldenVersion": 1,
+      "version": 1,
+      "metrics": {
+        "captionSync": {
+          "status": "MEASURED",
+          "value": "PASS",
+          "evidenceRefs": [
+            "projects/pilot-sky-blue/captions/captions.json"
+          ]
+        },
+        "speechRate": {
+          "status": "MEASURED",
+          "value": 141.4,
+          "evidenceRefs": [
+            "projects/pilot-sky-blue/audio/timing.json"
+          ]
+        },
+        "pronunciation": {
+          "status": "NOT_MEASURED",
+          "reason": "no reviewer run; method: native-speaker sample review with timestamps"
+        },
+        "captionFlicker": {
+          "status": "NOT_MEASURED",
+          "reason": "needs rendered frames; no frame-level caption render evidence"
+        }
+      },
+      "pipelineVersion": "1.0.0",
+      "providerVersions": [],
+      "promptPolicyVersion": null,
+      "instructionsVersion": null,
+      "artifactVersions": {},
+      "perf": null,
+      "cost": null,
+      "evidenceRefs": [
+        "projects/pilot-sky-blue/captions/captions.json",
+        "projects/pilot-sky-blue/audio/timing.json"
+      ],
+      "createdAt": "2026-10-05T07:40:52.204Z",
+      "reason": "V1 baseline: 16 cues, 0 overlaps, 141.4 wpm measured from segment timing",
+      "metricSchemaVersion": "1.0.0"
+    },
+    "gold-image-only:b1": {
+      "baselineId": "base-221a49f78a07",
+      "goldenProjectId": "gold-image-only",
+      "goldenVersion": 1,
+      "version": 1,
+      "metrics": {
+        "aspectCorrectness": {
+          "status": "MEASURED",
+          "value": "16:9",
+          "evidenceRefs": [
+            "projects/phase1g12-case-a/render/render-input-case-a.json"
+          ]
+        },
+        "cost": {
+          "status": "MEASURED",
+          "value": 0,
+          "evidenceRefs": [
+            "projects/phase1g12-case-a/budget/ledger.json"
+          ]
+        },
+        "promptAdherence": {
+          "status": "NOT_APPLICABLE",
+          "reason": "image-only Remotion path carries no prompt tuple"
+        },
+        "failureRate": {
+          "status": "NOT_MEASURED",
+          "reason": "render/attempt-N dirs exist but attempt semantics are unproven"
+        },
+        "generationTime": {
+          "status": "NOT_MEASURED",
+          "reason": "no provider generation on this path by design"
+        }
+      },
+      "pipelineVersion": "1.0.0",
+      "providerVersions": [],
+      "promptPolicyVersion": null,
+      "instructionsVersion": null,
+      "artifactVersions": {},
+      "perf": null,
+      "cost": null,
+      "evidenceRefs": [
+        "projects/phase1g12-case-a/render/render-input-case-a.json",
+        "projects/phase1g12-case-a/asset-manifest.json"
+      ],
+      "createdAt": "2026-10-05T07:40:52.213Z",
+      "reason": "V1 baseline: zero-Veo path, 0 Flow credits, 16:9 Remotion composition",
+      "metricSchemaVersion": "1.0.0"
+    },
+    "gold-factual-explainer:b2": {
+      "baselineId": "base-8d5b137e76d4",
+      "goldenProjectId": "gold-factual-explainer",
+      "goldenVersion": 1,
+      "version": 2,
+      "metrics": {
+        "sourceCoverage": {
+          "status": "MEASURED",
+          "value": 1,
+          "evidenceRefs": [
+            "projects/pilot-sky-blue/research/research-brief.json"
+          ]
+        },
+        "unsupportedFactualClaims": {
+          "status": "MEASURED",
+          "value": 0,
+          "evidenceRefs": [
+            "projects/pilot-sky-blue/research/research-brief.json",
+            "projects/pilot-sky-blue/script.json"
+          ]
+        },
+        "aspectCorrectness": {
+          "status": "MEASURED",
+          "value": "16:9",
+          "evidenceRefs": [
+            "projects/pilot-sky-blue/video-spec.json"
+          ]
+        },
+        "scriptNaturalness": {
+          "status": "NOT_MEASURED",
+          "reason": "no reviewer run; method: native-speaker read-aloud review against beats + claimRefs"
+        },
+        "visualFactuality": {
+          "status": "NOT_MEASURED",
+          "reason": "no reviewer run; method: frame-vs-claim review against approved frames"
+        },
+        "evidenceFidelity": {
+          "status": "NOT_MEASURED",
+          "reason": "judgment nuance needs reviewer; claim→source trace exists but is ungraded"
+        },
+        "promptAdherence": {
+          "status": "NOT_MEASURED",
+          "reason": "no compiled prompt packages in pilot evidence"
+        },
+        "failureRate": {
+          "status": "NOT_MEASURED",
+          "reason": "no attempt records in pilot evidence"
+        },
+        "cost": {
+          "status": "NOT_MEASURED",
+          "reason": "no cost evidence in pilot evidence"
+        }
+      },
+      "pipelineVersion": "1.0.0",
+      "providerVersions": [],
+      "promptPolicyVersion": null,
+      "instructionsVersion": null,
+      "artifactVersions": {
+        "research-brief": "1.0.0",
+        "script": "1.0.0"
+      },
+      "perf": null,
+      "cost": null,
+      "evidenceRefs": [
+        "projects/pilot-sky-blue/research/research-brief.json",
+        "projects/pilot-sky-blue/script.json",
+        "projects/pilot-sky-blue/video-spec.json"
+      ],
+      "createdAt": "2026-10-05T07:41:05.836Z",
+      "reason": "V1 baseline from shipped pilot evidence (7 claims, 8 beats, 16:9 contract)",
+      "metricSchemaVersion": "1.0.0"
+    },
+    "gold-fiction-continuity:b2": {
+      "baselineId": "base-1cd98908e405",
+      "goldenProjectId": "gold-fiction-continuity",
+      "goldenVersion": 1,
+      "version": 2,
+      "metrics": {
+        "aspectCorrectness": {
+          "status": "MEASURED",
+          "value": "16:9",
+          "evidenceRefs": [
+            "projects/phase1g12-case-a/qa/case-b-attempt-02-qa-summary.json"
+          ]
+        },
+        "continuity": {
+          "status": "MEASURED",
+          "value": "PASS",
+          "evidenceRefs": [
+            "projects/phase1g12-case-a/case/case-d-cross-shot-continuity.json"
+          ]
+        },
+        "promptAdherence": {
+          "status": "MEASURED",
+          "value": "PASS",
+          "evidenceRefs": [
+            "projects/phase1g12-case-a/case/live-ceremony-log.jsonl"
+          ]
+        },
+        "failureRate": {
+          "status": "MEASURED",
+          "value": 0.167,
+          "evidenceRefs": [
+            "projects/phase1g12-case-a/case/case-b-attempt-01-result.json"
+          ]
+        },
+        "cost": {
+          "status": "MEASURED",
+          "value": 50,
+          "evidenceRefs": [
+            "projects/phase1g12-case-a/budget/ledger.json"
+          ]
+        },
+        "unsupportedFactualClaims": {
+          "status": "NOT_APPLICABLE",
+          "reason": "FICTION has no factual claims; factual rules never govern fiction"
+        },
+        "generationTime": {
+          "status": "NOT_MEASURED",
+          "reason": "no provider timestamps in ceremony evidence"
+        }
+      },
+      "pipelineVersion": "1.0.0",
+      "providerVersions": [
+        "google--gemini-omni-flash--1-1"
+      ],
+      "promptPolicyVersion": "1.0.0",
+      "instructionsVersion": "iv-7e784d73e229",
+      "artifactVersions": {
+        "ledger": "50-reconciled",
+        "crossShot": "PASS"
+      },
+      "perf": null,
+      "cost": null,
+      "evidenceRefs": [
+        "projects/phase1g12-case-a/budget/ledger.json",
+        "projects/phase1g12-case-a/case/case-d-cross-shot-continuity.json"
+      ],
+      "createdAt": "2026-10-05T07:41:05.847Z",
+      "reason": "V1 baseline from Task-01 real E2E (5 PASS + 1 preserved FAIL, 50 credits reconciled)",
+      "metricSchemaVersion": "1.0.0"
+    },
+    "gold-originality-study:b2": {
+      "baselineId": "base-6ad88ce34a24",
+      "goldenProjectId": "gold-originality-study",
+      "goldenVersion": 1,
+      "version": 2,
+      "metrics": {
+        "originality": {
+          "status": "MEASURED",
+          "value": 0.2,
+          "evidenceRefs": [
+            "projects/phase1g12-case-a/qa/case-b-attempt-02-qa-summary.json",
+            "projects/phase1g12-case-a/qa/case-c-attempt-01-qa-summary.json"
+          ]
+        },
+        "aspectCorrectness": {
+          "status": "MEASURED",
+          "value": "16:9",
+          "evidenceRefs": [
+            "projects/phase1g12-case-a/qa/case-c-attempt-01-qa-summary.json"
+          ]
+        }
+      },
+      "pipelineVersion": "1.0.0",
+      "providerVersions": [
+        "google--gemini-omni-flash--1-1"
+      ],
+      "promptPolicyVersion": null,
+      "instructionsVersion": null,
+      "artifactVersions": {},
+      "perf": null,
+      "cost": null,
+      "evidenceRefs": [
+        "projects/phase1g12-case-a/qa/"
+      ],
+      "createdAt": "2026-10-05T07:41:05.856Z",
+      "reason": "V1 baseline: opening-action repetition proxy (1 shared push-in opener across 5 videos = 0.2); consistency never punished",
+      "metricSchemaVersion": "1.0.0"
+    },
+    "gold-voice-caption:b2": {
+      "baselineId": "base-32c095c100aa",
+      "goldenProjectId": "gold-voice-caption",
+      "goldenVersion": 1,
+      "version": 2,
+      "metrics": {
+        "captionSync": {
+          "status": "MEASURED",
+          "value": "PASS",
+          "evidenceRefs": [
+            "projects/pilot-sky-blue/captions/captions.json"
+          ]
+        },
+        "speechRate": {
+          "status": "MEASURED",
+          "value": 141.4,
+          "evidenceRefs": [
+            "projects/pilot-sky-blue/audio/timing.json"
+          ]
+        },
+        "pronunciation": {
+          "status": "NOT_MEASURED",
+          "reason": "no reviewer run; method: native-speaker sample review with timestamps"
+        },
+        "captionFlicker": {
+          "status": "NOT_MEASURED",
+          "reason": "needs rendered frames; no frame-level caption render evidence"
+        }
+      },
+      "pipelineVersion": "1.0.0",
+      "providerVersions": [],
+      "promptPolicyVersion": null,
+      "instructionsVersion": null,
+      "artifactVersions": {},
+      "perf": null,
+      "cost": null,
+      "evidenceRefs": [
+        "projects/pilot-sky-blue/captions/captions.json",
+        "projects/pilot-sky-blue/audio/timing.json"
+      ],
+      "createdAt": "2026-10-05T07:41:05.865Z",
+      "reason": "V1 baseline: 16 cues, 0 overlaps, 141.4 wpm measured from segment timing",
+      "metricSchemaVersion": "1.0.0"
+    },
+    "gold-image-only:b2": {
+      "baselineId": "base-89d680fabe48",
+      "goldenProjectId": "gold-image-only",
+      "goldenVersion": 1,
+      "version": 2,
+      "metrics": {
+        "aspectCorrectness": {
+          "status": "MEASURED",
+          "value": "16:9",
+          "evidenceRefs": [
+            "projects/phase1g12-case-a/render/render-input-case-a.json"
+          ]
+        },
+        "cost": {
+          "status": "MEASURED",
+          "value": 0,
+          "evidenceRefs": [
+            "projects/phase1g12-case-a/budget/ledger.json"
+          ]
+        },
+        "promptAdherence": {
+          "status": "NOT_APPLICABLE",
+          "reason": "image-only Remotion path carries no prompt tuple"
+        },
+        "failureRate": {
+          "status": "NOT_MEASURED",
+          "reason": "render/attempt-N dirs exist but attempt semantics are unproven"
+        },
+        "generationTime": {
+          "status": "NOT_MEASURED",
+          "reason": "no provider generation on this path by design"
+        }
+      },
+      "pipelineVersion": "1.0.0",
+      "providerVersions": [],
+      "promptPolicyVersion": null,
+      "instructionsVersion": null,
+      "artifactVersions": {},
+      "perf": null,
+      "cost": null,
+      "evidenceRefs": [
+        "projects/phase1g12-case-a/render/render-input-case-a.json",
+        "projects/phase1g12-case-a/asset-manifest.json"
+      ],
+      "createdAt": "2026-10-05T07:41:05.873Z",
+      "reason": "V1 baseline: zero-Veo path, 0 Flow credits, 16:9 Remotion composition",
+      "metricSchemaVersion": "1.0.0"
+    },
+    "gold-voice-bible:b1": {
+      "baselineId": "base-48e30bcfd9ab",
+      "goldenProjectId": "gold-voice-bible",
+      "goldenVersion": 1,
+      "version": 1,
+      "metrics": {
+        "schemaStability": {
+          "status": "MEASURED",
+          "value": "PASS"
+        },
+        "versionImmutability": {
+          "status": "MEASURED",
+          "value": "PASS"
+        },
+        "voiceIdentity": {
+          "status": "MEASURED",
+          "value": "PASS"
+        },
+        "personaStability": {
+          "status": "MEASURED",
+          "value": "PASS"
+        },
+        "languageCompatibility": {
+          "status": "MEASURED",
+          "value": "PASS"
+        },
+        "credentialSafety": {
+          "status": "MEASURED",
+          "value": "PASS"
+        },
+        "dagInvalidation": {
+          "status": "MEASURED",
+          "value": "PASS"
+        },
+        "speechRate": {
+          "status": "NOT_MEASURED",
+          "reason": "Phase 2.1 does not synthesize; measured words-per-minute belongs to 2.4 speech-rate QA"
+        },
+        "pronunciation": {
+          "status": "NOT_MEASURED",
+          "reason": "Phase 2.1 stores a pronunciation profile REFERENCE only; runtime validation belongs to 2.3"
+        },
+        "captionSync": {
+          "status": "NOT_APPLICABLE",
+          "reason": "Phase 2.1 produces no captions; caption sync belongs to 2.5"
+        }
+      },
+      "pipelineVersion": null,
+      "providerVersions": [],
+      "promptPolicyVersion": null,
+      "instructionsVersion": null,
+      "artifactVersions": {},
+      "perf": null,
+      "cost": null,
+      "evidenceRefs": [
+        "projects/phase2-1-validation/voice/voice-bible",
+        "projects/phase2-1-validation/manifest/project-manifest.json"
+      ],
+      "createdAt": "2026-10-05T09:47:49.378Z",
+      "reason": "Phase 2.1 initial voice identity/governance baseline (no synthesis, no TTS quality claim)",
+      "metricSchemaVersion": "1.0.0"
+    },
+    "gold-narration-pronunciation:b1": {
+      "baselineId": "base-529d4c487ca1",
+      "goldenProjectId": "gold-narration-pronunciation",
+      "goldenVersion": 1,
+      "version": 1,
+      "metrics": {
+        "schemaStability": {
+          "status": "MEASURED",
+          "value": true
+        },
+        "versionImmutability": {
+          "status": "MEASURED",
+          "value": true
+        },
+        "dagInvalidation": {
+          "status": "MEASURED",
+          "value": "SCOPE_CORRECT"
+        },
+        "directionSparsity": {
+          "status": "MEASURED",
+          "value": true
+        },
+        "pronunciationRuntime": {
+          "status": "MEASURED",
+          "value": "REAL_RUNTIME_PROVEN"
+        },
+        "pronunciation": {
+          "status": "NOT_MEASURED",
+          "reason": "judgment on synthesized audio; measured in Phase 2.4, never fabricated here"
+        },
+        "speechRate": {
+          "status": "NOT_MEASURED",
+          "reason": "final TTS synthesis is Phase 2.4; not measured in 2.2/2.3"
+        },
+        "unsupportedFactualClaims": {
+          "status": "NOT_APPLICABLE",
+          "reason": "no factual claims in a pronunciation contract fixture"
+        }
+      },
+      "pipelineVersion": null,
+      "providerVersions": [],
+      "promptPolicyVersion": null,
+      "instructionsVersion": null,
+      "artifactVersions": {},
+      "perf": null,
+      "cost": null,
+      "evidenceRefs": [
+        "tests/narration/test-narration-direction.js",
+        "tests/pronunciation/test-pronunciation-profile.js",
+        "tests/pronunciation/test-pronunciation-runtime.js",
+        "tests/pronunciation/test-pronunciation-invalidation.js",
+        "tests/narration/test-e2e-phase223.js",
+        "projects/validation/phase223-narration-pronunciation"
+      ],
+      "createdAt": "2026-10-06T02:33:23.021Z",
+      "reason": "Phase 2.2+2.3 initial golden baseline",
+      "metricSchemaVersion": "1.0.0"
+    },
+    "gold-spoken-script:b1": {
+      "baselineId": "base-53766a39abe6",
+      "goldenProjectId": "gold-spoken-script",
+      "goldenVersion": 1,
+      "version": 1,
+      "metrics": {
+        "schemaStability": {
+          "status": "MEASURED",
+          "value": true
+        },
+        "versionImmutability": {
+          "status": "MEASURED",
+          "value": true
+        },
+        "dagInvalidation": {
+          "status": "MEASURED",
+          "value": "SCOPE_CORRECT"
+        },
+        "directionSparsity": {
+          "status": "MEASURED",
+          "value": true
+        },
+        "pronunciationRuntime": {
+          "status": "MEASURED",
+          "value": "REAL_RUNTIME_PROVEN"
+        },
+        "unsupportedFactualClaims": {
+          "status": "MEASURED",
+          "value": 0,
+          "evidenceRefs": [
+            "tests/spoken-script/test-fidelity.js"
+          ]
+        },
+        "pronunciation": {
+          "status": "NOT_MEASURED",
+          "reason": "judgment on synthesized audio; Phase 2.4"
+        },
+        "speechRate": {
+          "status": "NOT_MEASURED",
+          "reason": "final TTS synthesis is Phase 2.4"
+        }
+      },
+      "pipelineVersion": null,
+      "providerVersions": [],
+      "promptPolicyVersion": null,
+      "instructionsVersion": null,
+      "artifactVersions": {},
+      "perf": null,
+      "cost": null,
+      "evidenceRefs": [
+        "tests/spoken-script/test-humanization.js",
+        "tests/spoken-script/test-fidelity.js",
+        "tests/spoken-script/test-naturalness.js",
+        "tests/spoken-script/test-canonicalization.js",
+        "tests/spoken-script/test-e2e-fss-backfill.js",
+        "projects/pilot-sky-blue/voice/evidence-fidelity",
+        "Report/fixes/phase-2/FIX_PRE_2_4_FINAL_SPOKEN_SCRIPT_PIPELINE_REPORT.md"
+      ],
+      "createdAt": "2026-10-06T05:02:09.886Z",
+      "reason": "FIX PRE-2.4 initial golden baseline",
+      "metricSchemaVersion": "1.0.0"
+    },
+    "gold-tts-behavior:b1": {
+      "baselineId": "base-31c7cd49f5a4",
+      "goldenProjectId": "gold-tts-behavior",
+      "goldenVersion": 1,
+      "version": 1,
+      "metrics": {
+        "schemaStability": {
+          "status": "MEASURED",
+          "value": true
+        },
+        "versionImmutability": {
+          "status": "MEASURED",
+          "value": true
+        },
+        "dagInvalidation": {
+          "status": "MEASURED",
+          "value": "SCOPE_CORRECT"
+        },
+        "speechRate": {
+          "status": "MEASURED",
+          "value": "REAL_AUDIO_MEASURED"
+        },
+        "pronunciation": {
+          "status": "MEASURED",
+          "value": "WER_CONTRACT_STABLE",
+          "method": "deterministic-contract",
+          "reviewer": "golden-test",
+          "confidence": "high",
+          "evidenceRefs": [
+            "tests/golden/test-tts-behavior-golden.js"
+          ]
+        },
+        "voiceIdentity": {
+          "status": "MEASURED",
+          "value": "am_michael_LOCKED"
+        },
+        "languageCompatibility": {
+          "status": "MEASURED",
+          "value": "FAIL_CLOSED"
+        },
+        "credentialSafety": {
+          "status": "MEASURED",
+          "value": "ZERO_EXTERNAL"
+        },
+        "failureRate": {
+          "status": "MEASURED",
+          "value": "FAIL_CLOSED_CODES"
+        },
+        "cost": {
+          "status": "MEASURED",
+          "value": "ZERO_LOCAL"
+        }
+      },
+      "pipelineVersion": null,
+      "providerVersions": [],
+      "promptPolicyVersion": null,
+      "instructionsVersion": null,
+      "artifactVersions": {},
+      "perf": null,
+      "cost": null,
+      "evidenceRefs": [
+        "tests/golden/test-tts-behavior-golden.js",
+        "tests/real-e2e/test-tts-targeted-regen.js",
+        "tests/providers/test-kokoro-model-identity.js",
+        "tests/providers/test-kokoro-local-benchmark.js",
+        "providers/model-registry/kokoro-v1-identity.json",
+        "projects/pilot-sky-blue/audio/narration/qa"
+      ],
+      "createdAt": "2026-10-06T08:17:59.292Z",
+      "reason": "FIX 01 initial TTS behavior baseline",
+      "metricSchemaVersion": "1.0.0"
+    },
+    "gold-tts-behavior:b2": {
+      "baselineId": "base-48f6c2aaf069",
+      "goldenProjectId": "gold-tts-behavior",
+      "goldenVersion": 1,
+      "version": 2,
+      "metrics": {
+        "schemaStability": {
+          "status": "MEASURED",
+          "value": true
+        },
+        "versionImmutability": {
+          "status": "MEASURED",
+          "value": true
+        },
+        "dagInvalidation": {
+          "status": "MEASURED",
+          "value": "SCOPE_CORRECT"
+        },
+        "speechRate": {
+          "status": "MEASURED",
+          "value": 150.72
+        },
+        "pronunciation": {
+          "status": "MEASURED",
+          "value": 1,
+          "method": "deterministic-contract",
+          "reviewer": "golden-test",
+          "confidence": "high",
+          "evidenceRefs": [
+            "tests/golden/test-tts-behavior-golden.js"
+          ]
+        },
+        "voiceIdentity": {
+          "status": "MEASURED",
+          "value": "am_michael_LOCKED"
+        },
+        "languageCompatibility": {
+          "status": "MEASURED",
+          "value": "FAIL_CLOSED"
+        },
+        "credentialSafety": {
+          "status": "MEASURED",
+          "value": true
+        },
+        "failureRate": {
+          "status": "MEASURED",
+          "value": 0
+        },
+        "cost": {
+          "status": "MEASURED",
+          "value": 0
+        }
+      },
+      "pipelineVersion": null,
+      "providerVersions": [],
+      "promptPolicyVersion": null,
+      "instructionsVersion": null,
+      "artifactVersions": {},
+      "perf": null,
+      "cost": null,
+      "evidenceRefs": [
+        "tests/golden/test-tts-behavior-golden.js",
+        "tests/real-e2e/test-tts-targeted-regen.js",
+        "tests/providers/test-kokoro-model-identity.js",
+        "tests/providers/test-kokoro-local-benchmark.js",
+        "providers/model-registry/kokoro-v1-identity.json",
+        "projects/pilot-sky-blue/audio/narration/qa"
+      ],
+      "createdAt": "2026-10-06T08:18:34.073Z",
+      "reason": "FIX 01 TTS behavior baseline",
+      "metricSchemaVersion": "1.0.0"
+    }
+  }
+}

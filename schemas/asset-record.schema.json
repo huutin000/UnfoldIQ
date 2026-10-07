@@ -1,0 +1,86 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://unfoldiq.local/schemas/asset-record.schema.json",
+  "title": "AssetRecord (1G.10 reference/asset library)",
+  "type": "object",
+  "required": ["version", "assetId", "projectId", "type", "role", "source", "hash", "bytes", "createdAt"],
+  "properties": {
+    "version": { "type": "string" },
+    "assetId": { "type": "string", "pattern": "^as-[0-9a-f]{12}$" },
+    "projectId": { "type": "string", "minLength": 1 },
+    "type": { "enum": ["image", "video", "audio", "other"] },
+    "role": {
+      "enum": ["CHARACTER_IDENTITY", "WORLD_LOCATION", "STYLE", "PALETTE", "PROJECT_GUIDE", "BROLL", "MUSIC", "SFX", "VOICE", "CAPTION", "OTHER"]
+    },
+    "source": { "enum": ["generated", "stock", "local-library", "migration", "existing"] },
+    "provider": { "type": ["string", "null"] },
+    "jobId": { "type": ["string", "null"] },
+    "shotId": { "type": ["string", "null"] },
+    "characterIds": { "type": "array", "items": { "type": "string" } },
+    "locationIds": { "type": "array", "items": { "type": "string" } },
+    "promptVersion": { "type": ["string", "null"] },
+    "modelVersion": { "type": ["string", "null"] },
+    "referenceIds": { "type": "array", "items": { "type": "string" } },
+    "instructionVersion": { "type": ["string", "null"] },
+    "derivedFrom": { "type": "array", "items": { "type": "string" } },
+    "hash": {
+      "type": "object",
+      "required": ["algo", "value"],
+      "properties": {
+        "algo": { "enum": ["sha256"] },
+        "value": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    },
+    "bytes": { "type": "integer", "minimum": 0 },
+    "relativePath": { "type": ["string", "null"] },
+    "dimensions": {
+      "type": ["object", "null"],
+      "required": ["width", "height"],
+      "properties": {
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "durationMs": { "type": ["integer", "null"], "minimum": 0 },
+    "rights": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": { "enum": ["VERIFIED", "UNVERIFIED", "UNKNOWN"] },
+        "note": { "type": ["string", "null"] }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["source"],
+      "properties": {
+        "source": { "type": "string" },
+        "detail": { "type": ["string", "null"] }
+      }
+    },
+    "qualityStatus": { "enum": ["UNREVIEWED", "APPROVED", "REJECTED"] },
+    "selection": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": { "enum": ["SELECTED", "REJECTED", "UNSET"] },
+        "decidedAt": { "type": ["string", "null"] },
+        "reason": { "type": ["string", "null"] }
+      }
+    },
+    "lock": {
+      "type": "object",
+      "required": ["locked"],
+      "properties": {
+        "locked": { "type": "boolean" },
+        "reason": { "type": ["string", "null"] },
+        "lockedAt": { "type": ["string", "null"] },
+        "actor": { "type": ["string", "null"] },
+        "unlockedAt": { "type": ["string", "null"] },
+        "unlockReason": { "type": ["string", "null"] }
+      }
+    },
+    "createdAt": { "type": "string" },
+    "updatedAt": { "type": "string" }
+  }
+}

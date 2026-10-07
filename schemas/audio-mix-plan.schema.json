@@ -14,6 +14,7 @@
         "clipId": { "type": "string", "minLength": 1 },
         "path": { "type": "string", "minLength": 1 },
         "fromMs": { "type": "integer", "minimum": 0 },
+        "startMs": { "type": "integer", "minimum": 0 },
         "trimStartMs": { "type": "integer", "minimum": 0 },
         "trimEndMs": { "type": "integer", "minimum": 0 },
         "gainDb": { "type": "number", "minimum": -60, "maximum": 12 },
@@ -27,6 +28,8 @@
           "properties": {
             "enabled": { "type": "boolean" },
             "targetAudioId": { "type": "string" },
+            "intensity": { "enum": ["LIGHT", "MEDIUM", "STRONG"] },
+            "recoveryIntent": { "enum": ["NATURAL", "FAST", "SLOW"] },
             "reductionDb": { "type": "number" },
             "ranges": {
               "type": "array",
@@ -39,6 +42,22 @@
         "language": { "type": "string" },
         "voiceId": { "type": "string" },
         "providerId": { "type": "string" },
+        "segmentId": { "type": "string" },
+        "importance": { "enum": ["NORMAL", "IMPORTANT", "CRITICAL"] },
+        "priority": { "enum": ["BACKGROUND", "SUPPORTING", "FEATURED"] },
+        "duckMusic": { "type": "boolean" },
+        "loopPlan": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "strategy": { "type": "string" },
+            "loopStartMs": { "type": "integer", "minimum": 0 },
+            "loopEndMs": { "type": "integer", "minimum": 0 },
+            "crossfadeMs": { "type": "integer", "minimum": 0 },
+            "repetitions": { "type": "integer", "minimum": 0 },
+            "confidence": { "type": "number" }
+          }
+        },
         "timingStatus": { "type": "string", "enum": ["PLANNED", "MEASURED", "UNKNOWN"] },
         "timingSource": { "type": "string" },
         "durationMs": { "type": "integer", "minimum": 0 }
@@ -66,6 +85,10 @@
           "items": { "$ref": "#/definitions/clip" }
         },
         "music": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/clip" }
+        },
+        "ambience": {
           "type": "array",
           "items": { "$ref": "#/definitions/clip" }
         },
@@ -102,6 +125,45 @@
     "timelineEvidence": {
       "type": "object",
       "description": "Evidence linking mix ranges to the measured timeline"
-    }
+    },
+    "loudnessProfileRef": {
+      "type": "string",
+      "description": "Phase 2.8: versioned loudness profile backing the mix policy"
+    },
+    "peakPolicyRef": { "type": "string" },
+    "narrationTrack": { "type": "string" },
+    "gainAutomation": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["targetId", "startMs", "endMs", "startGain", "endGain", "reason"],
+        "properties": {
+          "targetId": { "type": "string" },
+          "startMs": { "type": "integer", "minimum": 0 },
+          "endMs": { "type": "integer", "minimum": 0 },
+          "startGain": { "type": "number" },
+          "endGain": { "type": "number" },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "duckingRules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["targetId", "againstId", "intensity", "reason"],
+        "properties": {
+          "targetId": { "type": "string" },
+          "againstId": { "type": "string" },
+          "intensity": { "enum": ["LIGHT", "MEDIUM", "STRONG"] },
+          "attackMs": { "type": "integer", "minimum": 0 },
+          "releaseMs": { "type": "integer", "minimum": 0 },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "inputHashes": { "type": "object", "additionalProperties": { "type": "string" } }
   }
 }

@@ -1,0 +1,132 @@
+{
+  "schemaVersion": "1.4.0",
+  "manifestId": "pm-cc7499e5db2f",
+  "projectId": "phase2-1-validation",
+  "projectVersion": 4,
+  "revision": 4,
+  "pipelineVersion": null,
+  "contentMode": null,
+  "contentClass": "FACTUAL",
+  "createdAt": "2026-10-05T09:53:07.079Z",
+  "updatedAt": "2026-10-05T15:07:58.743Z",
+  "artifacts": {
+    "creativeBriefVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "channelBibleVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "storyBibleVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "characterBibleVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "worldBibleVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "visualBibleVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "researchPackVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "finalSpokenScriptVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "voiceBibleVersion": {
+      "version": "vb-19f4fd6a4596",
+      "status": "VERIFIED",
+      "ref": "voice/voice-bible/vb-19f4fd6a4596.json",
+      "detail": "v3 local-kokoro/am_michael"
+    },
+    "shotPlanVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "promptCompilerVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "agentInstructionsVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "assetRegistryVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "finalAudioVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "alignmentVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "timelineVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "renderVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    }
+  },
+  "providers": {
+    "registryVersion": null,
+    "selections": []
+  },
+  "state": {
+    "stage": "phase-2.1",
+    "status": "ACTIVE"
+  },
+  "history": null,
+  "recovery": null,
+  "governance": null,
+  "lineage": {
+    "previousManifestId": null,
+    "previousProjectVersion": null
+  },
+  "fingerprint": "38ca90a46ec0b5a1"
+}

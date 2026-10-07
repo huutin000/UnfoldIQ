@@ -1,0 +1,313 @@
+{
+  "proposalId": "bp-9b02221225dd",
+  "hardBudget": {
+    "unit": "CREDITS",
+    "limit": 100,
+    "scope": "PROJECT",
+    "source": "operator-proposal (pending approval)"
+  },
+  "estimateState": {
+    "state": "EXACT",
+    "knownCredits": 50,
+    "exactTotalCredits": 50,
+    "unknownUnitCount": 0,
+    "conflictingUnitCount": 0,
+    "staleUnitCount": 0
+  },
+  "units": [
+    {
+      "unitId": "gu-0ada6dc4cccc",
+      "shotId": "B-SH01",
+      "workflow": "Frames to Video: First",
+      "modelId": "google--gemini-omni-flash--1-1",
+      "costState": "EXACT",
+      "cost": 7
+    },
+    {
+      "unitId": "gu-3ff6b479331a",
+      "shotId": "C-SH01",
+      "workflow": "Frames to Video: First and Last",
+      "modelId": "google--gemini-omni-flash--1-1",
+      "costState": "EXACT",
+      "cost": 7
+    },
+    {
+      "unitId": "gu-8b90d85091fb",
+      "shotId": "D-SH01",
+      "workflow": "Frames to Video: First",
+      "modelId": "google--gemini-omni-flash--1-1",
+      "costState": "EXACT",
+      "cost": 12
+    },
+    {
+      "unitId": "gu-db85c90f8627",
+      "shotId": "D-SH02",
+      "workflow": "Frames to Video: First",
+      "modelId": "google--gemini-omni-flash--1-1",
+      "costState": "EXACT",
+      "cost": 12
+    },
+    {
+      "unitId": "gu-159b73f5fc5d",
+      "shotId": "D-SH03",
+      "workflow": "Frames to Video: First",
+      "modelId": "google--gemini-omni-flash--1-1",
+      "costState": "EXACT",
+      "cost": 12
+    }
+  ],
+  "retryPolicies": {
+    "gu-0ada6dc4cccc": {
+      "maxAdditionalAttempts": 1,
+      "reservedCredits": 7,
+      "allowedFailureClasses": [
+        "QA_MOTION_DIRECTION",
+        "QA_MOTION_ABSENT",
+        "QA_CONTINUITY_OUTFIT",
+        "QA_CONTINUITY_IDENTITY",
+        "QA_LOCATION",
+        "QA_START_END_STATE",
+        "QA_FACTUAL_VISUAL",
+        "QA_STRUCTURAL",
+        "QA_SEMANTIC"
+      ]
+    },
+    "gu-3ff6b479331a": {
+      "maxAdditionalAttempts": 1,
+      "reservedCredits": 7,
+      "allowedFailureClasses": [
+        "QA_MOTION_DIRECTION",
+        "QA_MOTION_ABSENT",
+        "QA_CONTINUITY_OUTFIT",
+        "QA_CONTINUITY_IDENTITY",
+        "QA_LOCATION",
+        "QA_START_END_STATE",
+        "QA_FACTUAL_VISUAL",
+        "QA_STRUCTURAL",
+        "QA_SEMANTIC"
+      ]
+    },
+    "gu-8b90d85091fb": {
+      "maxAdditionalAttempts": 1,
+      "reservedCredits": 12,
+      "allowedFailureClasses": [
+        "QA_MOTION_DIRECTION",
+        "QA_MOTION_ABSENT",
+        "QA_CONTINUITY_OUTFIT",
+        "QA_CONTINUITY_IDENTITY",
+        "QA_LOCATION",
+        "QA_START_END_STATE",
+        "QA_FACTUAL_VISUAL",
+        "QA_STRUCTURAL",
+        "QA_SEMANTIC"
+      ]
+    },
+    "gu-db85c90f8627": {
+      "maxAdditionalAttempts": 1,
+      "reservedCredits": 12,
+      "allowedFailureClasses": [
+        "QA_MOTION_DIRECTION",
+        "QA_MOTION_ABSENT",
+        "QA_CONTINUITY_OUTFIT",
+        "QA_CONTINUITY_IDENTITY",
+        "QA_LOCATION",
+        "QA_START_END_STATE",
+        "QA_FACTUAL_VISUAL",
+        "QA_STRUCTURAL",
+        "QA_SEMANTIC"
+      ]
+    },
+    "gu-159b73f5fc5d": {
+      "maxAdditionalAttempts": 1,
+      "reservedCredits": 12,
+      "allowedFailureClasses": [
+        "QA_MOTION_DIRECTION",
+        "QA_MOTION_ABSENT",
+        "QA_CONTINUITY_OUTFIT",
+        "QA_CONTINUITY_IDENTITY",
+        "QA_LOCATION",
+        "QA_START_END_STATE",
+        "QA_FACTUAL_VISUAL",
+        "QA_STRUCTURAL",
+        "QA_SEMANTIC"
+      ]
+    }
+  },
+  "resolutions": [
+    {
+      "shotId": "B-SH01",
+      "caseId": "B",
+      "status": "PROVISIONAL",
+      "resolutionId": "mr-f43a8953897b",
+      "renderMode": "VEO_FIRST_FRAME",
+      "recommendedModel": "google--gemini-omni-flash--1-1",
+      "costEstimate": {
+        "state": "KNOWN",
+        "reason": "total = 7 × 1 generations",
+        "unit": "credits_per_generation",
+        "valuePerGeneration": 7,
+        "estimatedTotal": 7
+      },
+      "selectionReasons": [
+        "hard_requirement_fit: satisfies VIDEO_GENERATION (Text to Video)",
+        "hard_requirement_fit: supports orientation 16:9 for VIDEO_GENERATION",
+        "hard_requirement_fit: supports requested 4s duration for VIDEO_GENERATION",
+        "hard_requirement_fit: output shape LANDSCAPE_OUTPUT agrees with required orientation",
+        "hard_requirement_fit: satisfies IMAGE_TO_VIDEO (Frames to Video: First)",
+        "hard_requirement_fit: supports orientation 16:9 for IMAGE_TO_VIDEO",
+        "hard_requirement_fit: supports requested 4s duration for IMAGE_TO_VIDEO",
+        "availability_unknown: RUNTIME_AVAILABILITY_NOT_VERIFIED",
+        "fresh_capability_evidence: all required rules FRESH",
+        "verified_cost: 7 credits_per_generation",
+        "deterministic_tiebreak: equal rank — modelId ascending wins"
+      ]
+    },
+    {
+      "shotId": "C-SH01",
+      "caseId": "C",
+      "status": "PROVISIONAL",
+      "resolutionId": "mr-e9f72db7d52a",
+      "renderMode": "VEO_FIRST_LAST",
+      "recommendedModel": "google--gemini-omni-flash--1-1",
+      "costEstimate": {
+        "state": "KNOWN",
+        "reason": "total = 7 × 1 generations",
+        "unit": "credits_per_generation",
+        "valuePerGeneration": 7,
+        "estimatedTotal": 7
+      },
+      "selectionReasons": [
+        "hard_requirement_fit: satisfies VIDEO_GENERATION (Text to Video)",
+        "hard_requirement_fit: supports orientation 16:9 for VIDEO_GENERATION",
+        "hard_requirement_fit: supports requested 4s duration for VIDEO_GENERATION",
+        "hard_requirement_fit: output shape LANDSCAPE_OUTPUT agrees with required orientation",
+        "hard_requirement_fit: satisfies FIRST_LAST_FRAME_VIDEO (Frames to Video: First and Last)",
+        "hard_requirement_fit: supports orientation 16:9 for FIRST_LAST_FRAME_VIDEO",
+        "hard_requirement_fit: supports requested 4s duration for FIRST_LAST_FRAME_VIDEO",
+        "hard_requirement_fit: satisfies IMAGE_TO_VIDEO (Frames to Video: First)",
+        "hard_requirement_fit: supports orientation 16:9 for IMAGE_TO_VIDEO",
+        "hard_requirement_fit: supports requested 4s duration for IMAGE_TO_VIDEO",
+        "hard_requirement_fit: first+last workflow accepts START_FRAME + END_FRAME",
+        "availability_unknown: RUNTIME_AVAILABILITY_NOT_VERIFIED",
+        "fresh_capability_evidence: all required rules FRESH",
+        "verified_cost: 7 credits_per_generation",
+        "deterministic_tiebreak: equal rank — modelId ascending wins"
+      ]
+    },
+    {
+      "shotId": "D-SH01",
+      "caseId": "D1",
+      "status": "PROVISIONAL",
+      "resolutionId": "mr-acbfe2a923c1",
+      "renderMode": "VEO_FIRST_FRAME",
+      "recommendedModel": "google--gemini-omni-flash--1-1",
+      "costEstimate": {
+        "state": "KNOWN",
+        "reason": "total = 12 × 1 generations",
+        "unit": "credits_per_generation",
+        "valuePerGeneration": 12,
+        "estimatedTotal": 12
+      },
+      "selectionReasons": [
+        "hard_requirement_fit: satisfies IMAGE_TO_VIDEO (Frames to Video: First)",
+        "hard_requirement_fit: supports orientation 16:9 for IMAGE_TO_VIDEO",
+        "hard_requirement_fit: supports requested 8s duration for IMAGE_TO_VIDEO",
+        "hard_requirement_fit: satisfies REFERENCE_GUIDED_VIDEO (Ingredients / References to Video)",
+        "hard_requirement_fit: supports orientation 16:9 for REFERENCE_GUIDED_VIDEO",
+        "hard_requirement_fit: supports requested 8s duration for REFERENCE_GUIDED_VIDEO",
+        "hard_requirement_fit: output shape LANDSCAPE_OUTPUT agrees with required orientation",
+        "hard_requirement_fit: satisfies VIDEO_GENERATION (Text to Video)",
+        "hard_requirement_fit: supports orientation 16:9 for VIDEO_GENERATION",
+        "hard_requirement_fit: supports requested 8s duration for VIDEO_GENERATION",
+        "hard_requirement_fit: reference-guided workflow supported (no role restriction declared)",
+        "availability_unknown: RUNTIME_AVAILABILITY_NOT_VERIFIED",
+        "fresh_capability_evidence: all required rules FRESH",
+        "provisional_evidence_penalty: conflict/unknown evidence sorts below clean support",
+        "verified_cost: 12 credits_per_generation",
+        "deterministic_tiebreak: equal rank — modelId ascending wins"
+      ]
+    },
+    {
+      "shotId": "D-SH02",
+      "caseId": "D2",
+      "status": "PROVISIONAL",
+      "resolutionId": "mr-e081815748e4",
+      "renderMode": "VEO_FIRST_FRAME",
+      "recommendedModel": "google--gemini-omni-flash--1-1",
+      "costEstimate": {
+        "state": "KNOWN",
+        "reason": "total = 12 × 1 generations",
+        "unit": "credits_per_generation",
+        "valuePerGeneration": 12,
+        "estimatedTotal": 12
+      },
+      "selectionReasons": [
+        "hard_requirement_fit: satisfies IMAGE_TO_VIDEO (Frames to Video: First)",
+        "hard_requirement_fit: supports orientation 16:9 for IMAGE_TO_VIDEO",
+        "hard_requirement_fit: supports requested 8s duration for IMAGE_TO_VIDEO",
+        "hard_requirement_fit: satisfies REFERENCE_GUIDED_VIDEO (Ingredients / References to Video)",
+        "hard_requirement_fit: supports orientation 16:9 for REFERENCE_GUIDED_VIDEO",
+        "hard_requirement_fit: supports requested 8s duration for REFERENCE_GUIDED_VIDEO",
+        "hard_requirement_fit: output shape LANDSCAPE_OUTPUT agrees with required orientation",
+        "hard_requirement_fit: satisfies VIDEO_GENERATION (Text to Video)",
+        "hard_requirement_fit: supports orientation 16:9 for VIDEO_GENERATION",
+        "hard_requirement_fit: supports requested 8s duration for VIDEO_GENERATION",
+        "hard_requirement_fit: reference-guided workflow supported (no role restriction declared)",
+        "availability_unknown: RUNTIME_AVAILABILITY_NOT_VERIFIED",
+        "fresh_capability_evidence: all required rules FRESH",
+        "provisional_evidence_penalty: conflict/unknown evidence sorts below clean support",
+        "verified_cost: 12 credits_per_generation",
+        "deterministic_tiebreak: equal rank — modelId ascending wins"
+      ]
+    },
+    {
+      "shotId": "D-SH03",
+      "caseId": "D3",
+      "status": "PROVISIONAL",
+      "resolutionId": "mr-a0f224b505ab",
+      "renderMode": "VEO_FIRST_FRAME",
+      "recommendedModel": "google--gemini-omni-flash--1-1",
+      "costEstimate": {
+        "state": "KNOWN",
+        "reason": "total = 12 × 1 generations",
+        "unit": "credits_per_generation",
+        "valuePerGeneration": 12,
+        "estimatedTotal": 12
+      },
+      "selectionReasons": [
+        "hard_requirement_fit: satisfies IMAGE_TO_VIDEO (Frames to Video: First)",
+        "hard_requirement_fit: supports orientation 16:9 for IMAGE_TO_VIDEO",
+        "hard_requirement_fit: supports requested 8s duration for IMAGE_TO_VIDEO",
+        "hard_requirement_fit: satisfies REFERENCE_GUIDED_VIDEO (Ingredients / References to Video)",
+        "hard_requirement_fit: supports orientation 16:9 for REFERENCE_GUIDED_VIDEO",
+        "hard_requirement_fit: supports requested 8s duration for REFERENCE_GUIDED_VIDEO",
+        "hard_requirement_fit: output shape LANDSCAPE_OUTPUT agrees with required orientation",
+        "hard_requirement_fit: satisfies VIDEO_GENERATION (Text to Video)",
+        "hard_requirement_fit: supports orientation 16:9 for VIDEO_GENERATION",
+        "hard_requirement_fit: supports requested 8s duration for VIDEO_GENERATION",
+        "hard_requirement_fit: reference-guided workflow supported (no role restriction declared)",
+        "availability_unknown: RUNTIME_AVAILABILITY_NOT_VERIFIED",
+        "fresh_capability_evidence: all required rules FRESH",
+        "provisional_evidence_penalty: conflict/unknown evidence sorts below clean support",
+        "verified_cost: 12 credits_per_generation",
+        "deterministic_tiebreak: equal rank — modelId ascending wins"
+      ]
+    }
+  ],
+  "budgetPlanPath": "projects/phase1g12-case-a/budget-plans/1g12-bcd.json",
+  "authorizationRequired": "OPERATOR_CREDIT_AUTHORIZATION = APPROVED before the first paid generation",
+  "creditAuthorization": {
+    "status": "APPROVED",
+    "approvedBy": "operator",
+    "approvedAt": "2026-10-04T15:37:50.258Z",
+    "hardBudgetCredits": 100,
+    "scope": "1G.12 Cases B/C/D: 5 base generations + 1 retry each",
+    "basis": "proposal bp-9b02221225dd, real 1G.5/1G.6/1G.8 chain",
+    "unlimitedAuthInferred": false
+  },
+  "ledgerState": {
+    "creditsSpentSoFar": 0,
+    "reservationsActive": [],
+    "notes": "no paid generation has occurred yet"
+  }
+}

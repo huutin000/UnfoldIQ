@@ -65,9 +65,47 @@
     if (!adapter || !dispatch || !root) {
       return { connected: false, error: "FLOW_PAGE_NOT_READY: adapter, dispatcher, or document unavailable" };
     }
+    function instructionMainWorldWrite(spec) {
+      return new Promise(function (resolve, reject) {
+        try {
+          chrome.runtime.sendMessage({ kind: "MAIN_WORLD_INSTRUCTION_WRITE", spec: spec }, function (resp) {
+            if (chrome.runtime.lastError) return reject(new Error(chrome.runtime.lastError.message));
+            if (!resp || resp.ok !== true) return reject(new Error((resp && resp.error) || "MAIN_WORLD_WRITE_ERROR"));
+            resolve(resp.result);
+          });
+        } catch (e) {
+          reject(e);
+        }
+      });
+    }
+    function instructionTrustedInput(spec) {
+      return new Promise(function (resolve, reject) {
+        try {
+          chrome.runtime.sendMessage({ kind: "INSTRUCTION_TRUSTED_INPUT", spec: spec }, function (resp) {
+            if (chrome.runtime.lastError) return reject(new Error(chrome.runtime.lastError.message));
+            if (!resp || resp.ok !== true) return reject(new Error((resp && resp.error) || "TRUSTED_INPUT_ERROR"));
+            resolve(resp.result);
+          });
+        } catch (e) {
+          reject(e);
+        }
+      });
+    }
+    function makeCtx() {
+      return {
+        extensionVersion: EXT_VERSION,
+        flowOrigin: FLOW_ORIGIN,
+        bridgeReachable: null,
+        // PHASE 1G.9 FIX 03: main-world write transport (service-worker
+        // round-trip; injected function is fixed + data-only there).
+        instructionMainWorldWrite: instructionMainWorldWrite,
+        // FIX 03 §10 trusted-input fallback (last resort; debugger attach is
+        // gated + allowlisted + detached inside the service worker).
+        instructionTrustedInput: instructionTrustedInput,
+      };
+    }
     function answer(msg) {
-      var ctx = { extensionVersion: EXT_VERSION, flowOrigin: FLOW_ORIGIN, bridgeReachable: null };
-      return dispatch(adapter, root, msg, ctx);
+      return dispatch(adapter, root, msg, makeCtx());
     }
     // Canonical transport: direct messages (chrome.tabs.sendMessage from the
     // worker after resolveLiveFlowTab). Same dispatcher as the port path —
@@ -109,7 +147,7 @@
       void e;
     }
     port.onMessage.addListener(function (msg) {
-      var ctx = { extensionVersion: EXT_VERSION, flowOrigin: FLOW_ORIGIN, bridgeReachable: null };
+      var ctx = makeCtx();
       var done;
       try {
         done = dispatch(adapter, root, msg, ctx);

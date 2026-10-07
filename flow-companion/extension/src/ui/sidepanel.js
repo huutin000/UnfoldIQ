@@ -54,6 +54,11 @@
   let lastApprovalSnapshot = null; // POST-v1E §22 frozen packet (single-use)
   let lastError = null; // { title, body, code }
   let lastResult = null; // { artifactPath, sha256, detectedAt }
+  // FIX 02 live instruction apply (single-project scope): the canonical set
+  // lives under this local project; the provider ref always comes from live
+  // GET_STATE identity, never typed. Memory-only; cleared on job switch.
+  const INSTRUCTION_PROJECT_ID = "channel-mascot";
+  let lastInstructionApply = null; // { projectId, syncId, providerProjectRef, applyStatus, appliedAt }
   let uiState = "CONNECTING";
   let connected = false;
   let devMode = false;
@@ -104,17 +109,29 @@
     return `${u.protocol}//${u.host}`;
   }
 
-  async function bridgeCall(method, path, body) {
+  async function bridgeCall(method, path, body, opts = {}) {
     if (!cfg.bridgeToken) throw new Error("BRIDGE_TOKEN_REQUIRED: nhập mã truy cập Bridge trước");
+    // Hardening sweep (B-2): a hung loopback bridge must never leave a credit
+    // action (approve/generate/import) in a dead silent wait — abort after a
+    // bounded timeout and surface an explicit, retryable error instead.
+    const timeoutMs = opts.timeoutMs || 15000;
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), timeoutMs);
     let res;
     try {
       res = await fetch(`${normalizeBridgeUrl(cfg.bridgeUrl)}${path}`, {
         method,
         headers: { "Content-Type": "application/json", "x-bridge-token": cfg.bridgeToken },
         body: body ? JSON.stringify(body) : undefined,
+        signal: ctrl.signal,
       });
     } catch (e) {
+      if (e && e.name === "AbortError") {
+        throw new Error(`BRIDGE_TIMEOUT: Bridge không phản hồi trong ${Math.round(timeoutMs / 1000)}s tại ${cfg.bridgeUrl}${path}`);
+      }
       throw new Error(`BRIDGE_UNREACHABLE: không thể kết nối Bridge tại ${cfg.bridgeUrl} (${e && e.message ? e.message : "network error"})`);
+    } finally {
+      clearTimeout(timer);
     }
     let parsed = null;
     try {
@@ -214,6 +231,17 @@
   }
 
   /* ---------------- render (task focused; single CTA source of truth) ---------------- */
+  // Hardening sweep (B-3): the polling loops re-render every cycle, which
+  // rewrote jobCard.innerHTML and dropped keyboard focus to <body> while the
+  // user was interacting with the card. Region-scoped swap: each region is
+  // only rewritten when its rendered HTML actually changes.
+  const lastRegionHtml = { jobCard: null, stepper: null, reference: null };
+  function setRegionHtml(el, key, html) {
+    if (!el) return;
+    if (lastRegionHtml[key] === html && el.innerHTML === html) return;
+    lastRegionHtml[key] = html;
+    el.innerHTML = html;
+  }
   function render() {
     const mapped = UIState ? UIState.resolveUIState(uiState) : null;
     // Status chip.
@@ -221,30 +249,36 @@
     if (statusChip && mapped) statusChip.setAttribute("data-tone", mapped.statusTone || "busy");
     // Job card.
     if (jobCardEl && JobCard) {
-      jobCardEl.innerHTML = JobCard.renderJobCard(currentJob, lastDiagnostics, T, lastApprovalSnapshot);
-      const btn = jobCardEl.querySelector('[data-action="toggle-prompt"]');
-      if (btn) {
-        btn.addEventListener("click", () => {
-          const p = jobCardEl.querySelector("[data-prompt]");
-          const expanded = p && p.classList.toggle("expanded");
-          btn.textContent = expanded ? T.showLess : T.viewFull;
-          btn.setAttribute("aria-expanded", expanded ? "true" : "false");
-        });
-      }
-      const details = jobCardEl.querySelector("details.tech-details summary");
-      if (details) {
-        details.addEventListener("click", () => {
-          setTimeout(() => {
-            details.textContent = jobCardEl.querySelector("details.tech-details").open ? T.hideDetails : T.viewDetails;
-          }, 0);
-        });
+      const cardHtml = JobCard.renderJobCard(currentJob, lastDiagnostics, T, lastApprovalSnapshot);
+      if (lastRegionHtml.jobCard === cardHtml && jobCardEl.innerHTML === cardHtml) {
+        // unchanged: keep the live DOM (and any keyboard focus inside it)
+      } else {
+        lastRegionHtml.jobCard = cardHtml;
+        jobCardEl.innerHTML = cardHtml;
+        const btn = jobCardEl.querySelector('[data-action="toggle-prompt"]');
+        if (btn) {
+          btn.addEventListener("click", () => {
+            const p = jobCardEl.querySelector("[data-prompt]");
+            const expanded = p && p.classList.toggle("expanded");
+            btn.textContent = expanded ? T.showLess : T.viewFull;
+            btn.setAttribute("aria-expanded", expanded ? "true" : "false");
+          });
+        }
+        const details = jobCardEl.querySelector("details.tech-details summary");
+        if (details) {
+          details.addEventListener("click", () => {
+            setTimeout(() => {
+              details.textContent = jobCardEl.querySelector("details.tech-details").open ? T.hideDetails : T.viewDetails;
+            }, 0);
+          });
+        }
       }
     }
     // Stepper.
-    if (stepperSlot && Stepper && mapped) stepperSlot.innerHTML = Stepper.renderStepper(mapped.stepper, T);
+    if (stepperSlot && Stepper && mapped) setRegionHtml(stepperSlot, "stepper", Stepper.renderStepper(mapped.stepper, T));
     // Reference (conditional — hidden when the job needs none).
     if (refSlot && RefSummary) {
-      refSlot.innerHTML = RefSummary.renderReferenceSummary(readReferenceFields(), T);
+      setRegionHtml(refSlot, "reference", RefSummary.renderReferenceSummary(readReferenceFields(), T));
       const edit = refSlot.querySelector('[data-action="edit-reference"]');
       if (edit) edit.addEventListener("click", () => showSettings());
     }
@@ -404,6 +438,12 @@
     lastGenerationState = null;
     lastApprovalSnapshot = null;
     lastResult = null;
+    lastInstructionApply = null;
+    // A READY job imported in an earlier session carries its artifact on the
+    // bridge record — hydrate so the result card + "Xem kết quả" work here too.
+    if (job && job.status === "READY" && job.deliveredArtifact) {
+      lastResult = { artifactPath: job.deliveredArtifact, sha256: job.artifactSha256 || null, detectedAt: null };
+    }
     lastError = null;
     try {
       const d = await tabRelay({ type: "GET_STATE", jobId: job.jobId, jobState: job.status }, 30000).catch(() => null);
@@ -477,7 +517,13 @@
     }
     if (mode === "result") {
       const card = resultSlot && resultSlot.querySelector(".result-card");
-      if (card && card.scrollIntoView) card.scrollIntoView({ block: "nearest" });
+      if (card && card.scrollIntoView) {
+        card.scrollIntoView({ block: "nearest" });
+        return;
+      }
+      // No rendered card (e.g. READY without a bridge artifact): never fail silent.
+      if (lastResult && lastResult.artifactPath) toast(`Asset: ${lastResult.artifactPath}`, "info", 8000);
+      else toast("Công việc HOÀN TẤT nhưng chưa có artifact để hiển thị", "warning");
       return;
     }
     if (mode === "issue") {
@@ -582,8 +628,9 @@
       return;
     }
     // §6: PREPARED must auto-advance — no infrastructure click allowed here.
+    let outcome = null;
     if (preparer && currentJob) {
-      const outcome = await preparer.ensureCurrentJobPrepared(currentJob);
+      outcome = await preparer.ensureCurrentJobPrepared(currentJob);
       if (outcome && outcome.resumed && uiState === "GENERATING") {
         if (attempt !== null) prepStatus.clear(attempt); // attempt already generating — no preparing status left behind
         await resumeGenerationPoll(currentJob);
@@ -596,7 +643,13 @@
       if (attempt !== null) prepStatus.success(attempt); // "Đang chuẩn bị…" → "Đã chuẩn bị xong"
       toast(T.toastReady || "Đã sẵn sàng", "success");
     } else if (attempt !== null) {
-      prepStatus.failure(attempt); // "Đang chuẩn bị…" → "Không thể hoàn tất chuẩn bị"
+      // A job that needed no preparation (already READY/resumed/mapped) never
+      // failed — clear the attempt instead of painting a phantom failure.
+      const action = AutoPrepare && typeof AutoPrepare.prepToastAction === "function"
+        ? AutoPrepare.prepToastAction(outcome, uiState)
+        : "failure";
+      if (action === "clear") prepStatus.clear(attempt);
+      else prepStatus.failure(attempt); // "Đang chuẩn bị…" → "Không thể hoàn tất chuẩn bị"
     }
     render();
   }
@@ -678,13 +731,37 @@
         approval.fingerprint = lastApprovalSnapshot.fingerprint;
         approval.snapshot = lastApprovalSnapshot;
       }
-      // POST-v1F: approve RECORDS the approval only. The job stays
-      // AWAITING_USER_APPROVAL until the browser proves Google Flow accepted
-      // the submit — a click alone proves nothing.
-      const approved = await bridgeCall("POST", `/jobs/${encodeURIComponent(currentJob.jobId)}/approve?projectId=${encodeURIComponent(currentJob.projectId)}`, approval);
-      log(`bridge approval recorded, status=${approved.status}`);
-      currentJob.status = approved.status || currentJob.status;
+      // Hardening sweep (C-2): a lost-ACK retry must REUSE the bridge's still-
+      // unused approval (same nonce) instead of silently re-arming the gate —
+      // the bridge refuses an overwrite without an explicit supersede nonce.
+      const priorApproval = currentJob.approval;
+      const reusablePrior = priorApproval && priorApproval.used !== true && priorApproval.attempt === currentJob.attempt
+        && (!approval.nonce || !priorApproval.nonce || priorApproval.nonce === approval.nonce)
+        && (!approval.fingerprint || !priorApproval.fingerprint || priorApproval.fingerprint === approval.fingerprint);
+      if (reusablePrior) {
+        approval.nonce = approval.nonce || priorApproval.nonce;
+        approval.fingerprint = approval.fingerprint || priorApproval.fingerprint;
+        log(`reusing unused bridge approval (nonce=${approval.nonce || "legacy"}) — no re-record`);
+      } else {
+        if (priorApproval && priorApproval.used !== true && priorApproval.nonce && approval.nonce && priorApproval.nonce !== approval.nonce) {
+          approval.supersedesNonce = priorApproval.nonce;
+        }
+        // POST-v1F: approve RECORDS the approval only. The job stays
+        // AWAITING_USER_APPROVAL until the browser proves Google Flow accepted
+        // the submit — a click alone proves nothing.
+        const approved = await bridgeCall("POST", `/jobs/${encodeURIComponent(currentJob.jobId)}/approve?projectId=${encodeURIComponent(currentJob.projectId)}`, approval);
+        log(`bridge approval recorded, status=${approved.status}`);
+        currentJob.status = approved.status || currentJob.status;
+        currentJob.approval = { ...approval, used: false };
+      }
       await swMessage({ kind: "APPROVE_RECORD", approval: { ...approval } });
+      if (approval.nonce) {
+        // Durable submit-issued record (bridge hardening): idempotent for the
+        // same nonce; a different unresolved submit is rejected — the second
+        // credit action is blocked at the source, not by page heuristics.
+        const issued = await bridgeCall("POST", `/jobs/${encodeURIComponent(currentJob.jobId)}/submit-issued?projectId=${encodeURIComponent(currentJob.projectId)}`, { approvalNonce: approval.nonce });
+        log(`submit-issued recorded: status=${issued.status} at=${issued.submitIssuedAt || "already"}`);
+      }
       const submitted = await tabRelay(
         { type: "SUBMIT_GENERATE", jobId: currentJob.jobId, attempt: currentJob.attempt, approval: { ...approval, approved: true } },
         180000
@@ -716,7 +793,7 @@
         if (!startedAt) throw new Error("SUBMIT_NOT_ACCEPTED: user gesture never confirmed by Google Flow");
         log(`submit accepted by Flow at ${startedAt} (user gesture)`);
       }
-      const generating = await bridgeCall("POST", `/jobs/${encodeURIComponent(currentJob.jobId)}/generate?projectId=${encodeURIComponent(currentJob.projectId)}`, {});
+      const generating = await bridgeCall("POST", `/jobs/${encodeURIComponent(currentJob.jobId)}/generate?projectId=${encodeURIComponent(currentJob.projectId)}`, { approvalNonce: (currentJob.approval && currentJob.approval.nonce) || (approval && approval.nonce) || undefined });
       log(`bridge generation started, status=${generating.status} generationCount=${generating.generationCount}`);
       currentJob.status = generating.status || "GENERATING";
       uiState = "GENERATING";
@@ -734,6 +811,7 @@
   async function pollResultLoop(job, startedAt, resultBaseline = null) {
     const deadline = Date.now() + 10 * 60 * 1000;
     let attempt = 0;
+    let unreachableStreak = 0;
     while (Date.now() < deadline) {
       attempt += 1;
       await new Promise((r) => setTimeout(r, 5000));
@@ -742,8 +820,20 @@
         // POST-v1E §28: correlate only NEW results against the pre-Generate
         // baseline (pre-existing media never matches this attempt).
         read = await tabRelay({ type: "READ_RESULT", baseline: resultBaseline }, 30000);
+        unreachableStreak = 0;
       } catch (e) {
+        // Hardening sweep (B-4): a closed/moved Flow tab is immediately
+        // diagnosable — surface it instead of spinning "Đang xử lý" until the
+        // 10-minute deadline with no message.
+        unreachableStreak += 1;
         log(`result poll #${attempt}: tab unreachable (${e.message})`);
+        if (unreachableStreak >= 3 || /FLOW_TAB_NOT_FOUND|NO_FLOW_TAB/.test(String((e && e.message) || ""))) {
+          lastError = { title: "Mất kết nối với tab Google Flow.", body: "Mở lại tab Flow (cùng project) rồi bấm thử lại.", code: (e && e.message) || "FLOW_TAB_UNREACHABLE" };
+          uiState = "NEED_FLOW";
+          toast("Mất kết nối với tab Google Flow", "error", 0);
+          render();
+          return;
+        }
         continue;
       }
       if (read && read.refusal && read.refusal.refused) {
@@ -862,6 +952,108 @@
     });
   }
 
+  async function onApplyInstructions() {
+    await guard("apply-instructions", async () => {
+      try {
+        // Observed identity only — the expected ref is never typed or guessed.
+        const st = await tabRelay({ type: "GET_STATE" }, 30000);
+        const ident = st && st.diagnostics && st.diagnostics.projectIdentity;
+        const ref = ident && ident.available ? ident.providerProjectRef : null;
+        if (!ref || ref === "UNKNOWN") throw new Error("BLOCKED_PROJECT_IDENTITY_UNKNOWN: mở đúng Flow project rồi thử lại");
+        const reg = await bridgeCall("POST", `/instruction/apply?projectId=${encodeURIComponent(INSTRUCTION_PROJECT_ID)}`, { providerProjectRef: ref });
+        log(`instruction apply registered: attempt=${reg.applyAttemptId} version=${reg.instructionVersion} binding=${reg.bindingState}${reg.previousSyncRef ? ` previousSync=${reg.previousSyncRef}` : ""}`);
+        const ap = await tabRelay({
+          type: "APPLY_AGENT_INSTRUCTIONS",
+          providerProjectRef: ref,
+          instructionSetId: reg.instructionSetId,
+          instructionVersion: reg.instructionVersion,
+          compiledText: reg.compiledText,
+          referenceBindings: reg.referenceBindings || [],
+          desiredFingerprint: reg.desiredFingerprint,
+          applyAttemptId: reg.applyAttemptId,
+        }, 120000);
+        log(`instruction apply result: ok=${ap && ap.ok} status=${ap && ap.status} code=${ap && ap.code} detail=${ap && ap.detail} transport=${ap && ap.writeTransport} ackBasis=${ap && ap.ackBasis} appStateAck=${ap && ap.appStateAck} saveConfirmed=${ap && ap.saveConfirmed}`);
+        if (ap && ap.agentMode) log(`instruction agentMode: ${JSON.stringify(ap.agentMode)}`);
+        if (ap && ap.surface) {
+          const s = ap.surface;
+          log(`instruction surface: trigger=${s.agentInstructionsTrigger && s.agentInstructionsTrigger.status} editor=${s.instructionEditor && s.instructionEditor.status} done=${s.doneSaveControl && s.doneSaveControl.status} add=${s.addInstructionControl && s.addInstructionControl.status}`);
+        }
+        if (ap && ap.readback) log(`instruction readback-after-save: available=${ap.readback.available} reason=${ap.readback.reason || "n/a"}`);
+        if (ap && ap.guidelines && ap.guidelines.writePath !== "none") log(`instruction strategies: ${JSON.stringify(ap.guidelines).slice(0, 400)}`);
+        // FIX 03 §12: one hands-free chain — the evidence call carries the
+        // post-reopen provider readback (ap.readback, provider-derived only,
+        // never the attempted payload) plus non-secret transport metadata.
+        // A failed/unacked apply reports FAILED honestly (sync never faked).
+        const evBody = {
+          syncId: reg.applyAttemptId,
+          applyResult: {
+            applyAttemptId: reg.applyAttemptId,
+            status: ap && ap.ok ? "APPLIED" : "FAILED",
+            appliedAt: ap && ap.appliedAt ? ap.appliedAt : new Date().toISOString(),
+            automationMode: "HANDS_FREE",
+            operatorTextEntry: false,
+            writeTransport: (ap && ap.writeTransport) || null,
+          },
+        };
+        if (ap && !ap.ok) evBody.applyResult.applyError = ap.code || "APPLY_FAILED";
+        if (ap && ap.ok && ap.readback && ap.readback.available) {
+          evBody.readback = {
+            visibleGuidelines: ap.readback.text,
+            providerReferences: ap.readback.referenceIds || [],
+            readbackAt: ap.readback.readbackAt,
+          };
+        }
+        lastInstructionApply = { projectId: INSTRUCTION_PROJECT_ID, syncId: reg.applyAttemptId, providerProjectRef: ref, applyStatus: evBody.applyResult.status, appliedAt: evBody.applyResult.appliedAt };
+        const ev = await bridgeCall("POST", `/instruction/evidence?projectId=${encodeURIComponent(INSTRUCTION_PROJECT_ID)}`, evBody);
+        log(`instruction sync: status=${ev.syncStatus} compare=${ev.semanticCompareStatus} verifiedAt=${ev.verifiedAt || "n/a"}`);
+        if (ev.differences && ev.differences.length > 0) log(`instruction differences: ${JSON.stringify(ev.differences).slice(0, 500)}`);
+        if (ev.syncStatus === "VERIFIED") {
+          toast("Instructions VERIFIED hands-free (write → save → reopen → readback → MATCH)", "success", 8000);
+        } else if (ap && ap.ok && ev.syncStatus === "READBACK_PENDING") {
+          log(`readback unavailable post-reopen: ${(ap.readback && ap.readback.reason) || "unknown"}`);
+          toast(`Apply APPLIED nhưng readback chưa xác nhận (${ev.syncStatus}). Bấm Đọc sau khi đóng/mở Agent Instructions.`, "warning", 8000);
+        } else {
+          toast(`Sync: ${ev.syncStatus} (${ev.semanticCompareStatus || "PENDING"})`, ev.syncStatus === "FAILED" ? "error" : "warning", 8000);
+        }
+        render();
+      } catch (e) {
+        log(`instruction apply failed: ${e.message}`);
+        toast(`Apply instructions thất bại: ${e.message}`, "error", 0);
+      }
+    });
+  }
+
+  async function onReadInstructions() {
+    await guard("read-instructions", async () => {
+      try {
+        log("instruction readback starting (visible provider state only — never the local payload)");
+        const res = await tabRelay({ type: "READ_AGENT_INSTRUCTIONS" }, 30000);
+        if (!res || !res.ok) throw new Error((res && (res.code || res.reason)) || "read failed");
+        log(`instruction readback: project=${res.providerProjectRef} refs=${(res.providerReferences || []).length} at=${res.readbackAt}`);
+        log(`instruction guidelines: ${res.visibleGuidelines}`);
+        log(`instruction references: ${JSON.stringify(res.providerReferences || [])}`);
+        // FIX 02 §§17–19: a readback following our own APPLIED attempt closes
+        // the loop server-side (compare + transition + persist). Read-only
+        // otherwise — no pending attempt, no evidence call.
+        if (lastInstructionApply && lastInstructionApply.providerProjectRef === res.providerProjectRef) {
+          const ev = await bridgeCall("POST", `/instruction/evidence?projectId=${encodeURIComponent(lastInstructionApply.projectId)}`, {
+            syncId: lastInstructionApply.syncId,
+            applyResult: { applyAttemptId: lastInstructionApply.syncId, status: lastInstructionApply.applyStatus, appliedAt: lastInstructionApply.appliedAt },
+            readback: { visibleGuidelines: res.visibleGuidelines, providerReferences: res.providerReferences || [], readbackAt: res.readbackAt },
+          });
+          log(`instruction sync: status=${ev.syncStatus} compare=${ev.semanticCompareStatus} verifiedAt=${ev.verifiedAt || "n/a"}`);
+          if (ev.differences && ev.differences.length > 0) log(`instruction differences: ${JSON.stringify(ev.differences).slice(0, 500)}`);
+          toast(ev.syncStatus === "VERIFIED" ? "Instructions VERIFIED khớp provider" : `Sync: ${ev.syncStatus} (${ev.semanticCompareStatus})`, ev.syncStatus === "VERIFIED" ? "success" : "warning", 8000);
+        } else {
+          toast("Đã đọc instructions từ Flow", "success");
+        }
+      } catch (e) {
+        log(`instruction readback failed: ${e.message}`);
+        toast(`Đọc instructions thất bại: ${e.message}`, "error", 0);
+      }
+    });
+  }
+
   async function onReject() {
     if (!currentJob) return;
     await guard("reject", async () => {
@@ -903,6 +1095,10 @@
   });
   const probeBtn = $("probe-dom");
   if (probeBtn) probeBtn.addEventListener("click", onProbeDom);
+  const readBtn = $("read-instructions");
+  if (readBtn) readBtn.addEventListener("click", onReadInstructions);
+  const applyBtn = $("apply-instructions");
+  if (applyBtn) applyBtn.addEventListener("click", onApplyInstructions);
   const forgetBtn = $("forget-token");
   if (forgetBtn) forgetBtn.addEventListener("click", () => guard("forget", onForgetToken));
 

@@ -1,0 +1,559 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectId": "phase1g12-case-a",
+  "revision": 23,
+  "createdAt": "2026-10-05T06:42:20.490Z",
+  "updatedAt": "2026-10-05T06:42:20.733Z",
+  "generations": {
+    "gen-842fc6ecaa2b": {
+      "generationId": "gen-842fc6ecaa2b",
+      "projectId": "phase1g12-case-a",
+      "runId": null,
+      "jobId": "b1",
+      "attemptId": "b1-attempt-01",
+      "shotId": "B-SH01",
+      "sceneId": "B-SC01",
+      "segmentId": null,
+      "paragraphId": null,
+      "generationUnitId": "gu-0ada6dc4cccc",
+      "provider": "google-flow",
+      "model": null,
+      "modelResolutionRef": "mr-f43a8953897b",
+      "promptVersion": "UNRECORDED_ATTEMPT_1",
+      "agentInstructionsVersion": "iv-7e784d73e229",
+      "referenceIds": [
+        "as-1186233d1af6"
+      ],
+      "createdAt": "2026-10-05T02:32:09.209Z",
+      "completedAt": "2026-10-05T02:32:09.209Z",
+      "status": "FAILED",
+      "resultAssetIds": [
+        "as-d235316b9af5"
+      ],
+      "costEvidence": {
+        "observedCredits": 15,
+        "evidenceStrength": "CANONICAL_COST_TABLE_RECONCILED"
+      },
+      "parentGenerationId": null,
+      "retryOf": null,
+      "provenance": "MIGRATED"
+    },
+    "gen-27127e490b85": {
+      "generationId": "gen-27127e490b85",
+      "projectId": "phase1g12-case-a",
+      "runId": null,
+      "jobId": "b1",
+      "attemptId": "b1-attempt-02",
+      "shotId": "B-SH01",
+      "sceneId": "B-SC01",
+      "segmentId": null,
+      "paragraphId": null,
+      "generationUnitId": "gu-0ada6dc4cccc",
+      "provider": "google-flow",
+      "model": null,
+      "modelResolutionRef": "mr-f43a8953897b",
+      "promptVersion": "pp-b42c2e0af4b2",
+      "agentInstructionsVersion": "iv-7e784d73e229",
+      "referenceIds": [
+        "as-fe697fd1fef8"
+      ],
+      "createdAt": "2026-10-05T03:19:50.018Z",
+      "completedAt": "2026-10-05T03:19:50.018Z",
+      "status": "SUCCEEDED",
+      "resultAssetIds": [
+        "as-fafd1ac4c96b"
+      ],
+      "costEvidence": {
+        "observedCredits": 7,
+        "evidenceStrength": "LIVE_UI_OBSERVED"
+      },
+      "parentGenerationId": null,
+      "retryOf": "b1-attempt-01",
+      "provenance": "MIGRATED"
+    },
+    "gen-572483f8bb86": {
+      "generationId": "gen-572483f8bb86",
+      "projectId": "phase1g12-case-a",
+      "runId": null,
+      "jobId": "c1",
+      "attemptId": "c1-attempt-01",
+      "shotId": "C-SH01",
+      "sceneId": "C-SC01",
+      "segmentId": null,
+      "paragraphId": null,
+      "generationUnitId": "gu-3ff6b479331a",
+      "provider": "google-flow",
+      "model": null,
+      "modelResolutionRef": "mr-e9f72db7d52a",
+      "promptVersion": "pp-c-sh01-v1",
+      "agentInstructionsVersion": "iv-7e784d73e229",
+      "referenceIds": [
+        "as-fe697fd1fef8",
+        "as-5e0bb7f87d4d"
+      ],
+      "createdAt": "2026-10-05T03:31:26.032Z",
+      "completedAt": "2026-10-05T03:31:26.032Z",
+      "status": "SUCCEEDED",
+      "resultAssetIds": [
+        "as-6182cea3f996"
+      ],
+      "costEvidence": {
+        "observedCredits": 7,
+        "evidenceStrength": "LIVE_UI_OBSERVED"
+      },
+      "parentGenerationId": null,
+      "retryOf": null,
+      "provenance": "MIGRATED"
+    },
+    "gen-8c040d547094": {
+      "generationId": "gen-8c040d547094",
+      "projectId": "phase1g12-case-a",
+      "runId": null,
+      "jobId": "d11",
+      "attemptId": "d1-attempt-01",
+      "shotId": "D-SH01",
+      "sceneId": "D-SC01",
+      "segmentId": null,
+      "paragraphId": null,
+      "generationUnitId": "gu-bde822cbe1dd",
+      "provider": "google-flow",
+      "model": null,
+      "modelResolutionRef": "mr-526fb7a60ea0",
+      "promptVersion": "pp-d-D1-v1",
+      "agentInstructionsVersion": "iv-7e784d73e229",
+      "referenceIds": [
+        "as-a7801df9bf0f"
+      ],
+      "createdAt": "2026-10-05T04:06:01.278Z",
+      "completedAt": "2026-10-05T04:06:01.278Z",
+      "status": "SUCCEEDED",
+      "resultAssetIds": [
+        "as-0fde400d6392"
+      ],
+      "costEvidence": {
+        "observedCredits": 7,
+        "evidenceStrength": "LIVE_UI_OBSERVED"
+      },
+      "parentGenerationId": null,
+      "retryOf": null,
+      "provenance": "MIGRATED"
+    },
+    "gen-87bfea47775e": {
+      "generationId": "gen-87bfea47775e",
+      "projectId": "phase1g12-case-a",
+      "runId": null,
+      "jobId": "d21",
+      "attemptId": "d2-attempt-01",
+      "shotId": "D-SH02",
+      "sceneId": "D-SC01",
+      "segmentId": null,
+      "paragraphId": null,
+      "generationUnitId": "gu-1b8dbfa2ee4a",
+      "provider": "google-flow",
+      "model": null,
+      "modelResolutionRef": "mr-530bec09f9f1",
+      "promptVersion": "pp-d-D2-v1",
+      "agentInstructionsVersion": "iv-7e784d73e229",
+      "referenceIds": [
+        "as-a7801df9bf0f"
+      ],
+      "createdAt": "2026-10-05T04:15:50.162Z",
+      "completedAt": "2026-10-05T04:15:50.162Z",
+      "status": "SUCCEEDED",
+      "resultAssetIds": [
+        "as-c9f0fdc1d1e4"
+      ],
+      "costEvidence": {
+        "observedCredits": 7,
+        "evidenceStrength": "LIVE_UI_OBSERVED"
+      },
+      "parentGenerationId": null,
+      "retryOf": null,
+      "provenance": "MIGRATED"
+    },
+    "gen-540dd65b1f5c": {
+      "generationId": "gen-540dd65b1f5c",
+      "projectId": "phase1g12-case-a",
+      "runId": null,
+      "jobId": "d31",
+      "attemptId": "d3-attempt-01",
+      "shotId": "D-SH03",
+      "sceneId": "D-SC01",
+      "segmentId": null,
+      "paragraphId": null,
+      "generationUnitId": "gu-223a6fbe0e28",
+      "provider": "google-flow",
+      "model": null,
+      "modelResolutionRef": "mr-0538f0b00d8e",
+      "promptVersion": "pp-d-D3-v1",
+      "agentInstructionsVersion": "iv-7e784d73e229",
+      "referenceIds": [
+        "as-a7801df9bf0f"
+      ],
+      "createdAt": "2026-10-05T04:22:12.253Z",
+      "completedAt": "2026-10-05T04:22:12.253Z",
+      "status": "SUCCEEDED",
+      "resultAssetIds": [
+        "as-0625f69f9867"
+      ],
+      "costEvidence": {
+        "observedCredits": 7,
+        "evidenceStrength": "LIVE_UI_OBSERVED"
+      },
+      "parentGenerationId": null,
+      "retryOf": null,
+      "provenance": "MIGRATED"
+    }
+  },
+  "variants": {
+    "var-148a9a34c976": {
+      "variantId": "var-148a9a34c976",
+      "targetType": "SHOT",
+      "targetId": "B-SH01",
+      "generationId": "gen-842fc6ecaa2b",
+      "assetId": "as-d235316b9af5",
+      "createdAt": "2026-10-05T02:32:09.209Z",
+      "status": "REJECTED",
+      "decisionId": "dec-7743769df690",
+      "decidedAt": "2026-10-05T02:32:09.209Z"
+    },
+    "var-bf22d2c23576": {
+      "variantId": "var-bf22d2c23576",
+      "targetType": "SHOT",
+      "targetId": "B-SH01",
+      "generationId": "gen-27127e490b85",
+      "assetId": "as-fafd1ac4c96b",
+      "createdAt": "2026-10-05T03:19:50.018Z",
+      "status": "SELECTED",
+      "decisionId": "dec-a75769237e3a",
+      "decidedAt": "2026-10-05T03:19:50.018Z"
+    },
+    "var-7a5082e39d71": {
+      "variantId": "var-7a5082e39d71",
+      "targetType": "SHOT",
+      "targetId": "C-SH01",
+      "generationId": "gen-572483f8bb86",
+      "assetId": "as-6182cea3f996",
+      "createdAt": "2026-10-05T03:31:26.032Z",
+      "status": "SELECTED",
+      "decisionId": "dec-b783416d2ecf",
+      "decidedAt": "2026-10-05T03:31:26.032Z"
+    },
+    "var-feb3e8697fd7": {
+      "variantId": "var-feb3e8697fd7",
+      "targetType": "SHOT",
+      "targetId": "D-SH01",
+      "generationId": "gen-8c040d547094",
+      "assetId": "as-0fde400d6392",
+      "createdAt": "2026-10-05T04:06:01.278Z",
+      "status": "SELECTED",
+      "decisionId": "dec-cf3fa6dc225b",
+      "decidedAt": "2026-10-05T04:06:01.278Z"
+    },
+    "var-bab561ea6be4": {
+      "variantId": "var-bab561ea6be4",
+      "targetType": "SHOT",
+      "targetId": "D-SH02",
+      "generationId": "gen-87bfea47775e",
+      "assetId": "as-c9f0fdc1d1e4",
+      "createdAt": "2026-10-05T04:15:50.162Z",
+      "status": "SELECTED",
+      "decisionId": "dec-acf985690e92",
+      "decidedAt": "2026-10-05T04:15:50.162Z"
+    },
+    "var-ee2578462640": {
+      "variantId": "var-ee2578462640",
+      "targetType": "SHOT",
+      "targetId": "D-SH03",
+      "generationId": "gen-540dd65b1f5c",
+      "assetId": "as-0625f69f9867",
+      "createdAt": "2026-10-05T04:22:12.253Z",
+      "status": "SELECTED",
+      "decisionId": "dec-2b1e9a479b71",
+      "decidedAt": "2026-10-05T04:22:12.253Z"
+    }
+  },
+  "decisions": {
+    "dec-7743769df690": {
+      "decisionId": "dec-7743769df690",
+      "targetType": "SHOT",
+      "targetId": "B-SH01",
+      "variantId": "var-148a9a34c976",
+      "decision": "REJECTED",
+      "reason": "case verdict FAIL / QA REJECTED (attempt preserved, never overwritten)",
+      "evidenceRefs": [
+        "case/case-b-attempt-01-correlation.json",
+        "case/case-b-attempt-01-result.json",
+        "qa/case-b-attempt-01-qa-summary.json"
+      ],
+      "decidedAt": "2026-10-05T02:32:09.209Z",
+      "actorType": "migration",
+      "provenance": "MIGRATED"
+    },
+    "dec-a75769237e3a": {
+      "decisionId": "dec-a75769237e3a",
+      "targetType": "SHOT",
+      "targetId": "B-SH01",
+      "variantId": "var-bf22d2c23576",
+      "decision": "APPROVED",
+      "reason": "QA READY_FOR_TIMELINE (qa/case-b-attempt-02-qa-summary.json) + case verdict PASS",
+      "evidenceRefs": [
+        "case/case-b-attempt-02-correlation.json",
+        "case/case-b-attempt-02-result.json",
+        "qa/case-b-attempt-02-qa-summary.json"
+      ],
+      "decidedAt": "2026-10-05T03:19:50.018Z",
+      "actorType": "migration",
+      "provenance": "MIGRATED"
+    },
+    "dec-b783416d2ecf": {
+      "decisionId": "dec-b783416d2ecf",
+      "targetType": "SHOT",
+      "targetId": "C-SH01",
+      "variantId": "var-7a5082e39d71",
+      "decision": "APPROVED",
+      "reason": "QA READY_FOR_TIMELINE (qa/case-c-attempt-01-qa-summary.json) + case verdict PASS",
+      "evidenceRefs": [
+        "case/case-c-attempt-01-correlation.json",
+        "case/case-c-attempt-01-result.json",
+        "qa/case-c-attempt-01-qa-summary.json"
+      ],
+      "decidedAt": "2026-10-05T03:31:26.032Z",
+      "actorType": "migration",
+      "provenance": "MIGRATED"
+    },
+    "dec-cf3fa6dc225b": {
+      "decisionId": "dec-cf3fa6dc225b",
+      "targetType": "SHOT",
+      "targetId": "D-SH01",
+      "variantId": "var-feb3e8697fd7",
+      "decision": "APPROVED",
+      "reason": "QA READY_FOR_TIMELINE (qa/case-d-D1-attempt-01-qa-summary.json) + case verdict PASS",
+      "evidenceRefs": [
+        "case/case-d-D1-attempt-01-correlation.json",
+        "case/case-d-D1-attempt-01-result.json",
+        "qa/case-d-D1-attempt-01-qa-summary.json"
+      ],
+      "decidedAt": "2026-10-05T04:06:01.278Z",
+      "actorType": "migration",
+      "provenance": "MIGRATED"
+    },
+    "dec-acf985690e92": {
+      "decisionId": "dec-acf985690e92",
+      "targetType": "SHOT",
+      "targetId": "D-SH02",
+      "variantId": "var-bab561ea6be4",
+      "decision": "APPROVED",
+      "reason": "QA READY_FOR_TIMELINE (qa/case-d-D2-attempt-01-qa-summary.json) + case verdict PASS",
+      "evidenceRefs": [
+        "case/case-d-D2-attempt-01-correlation.json",
+        "case/case-d-D2-attempt-01-result.json",
+        "qa/case-d-D2-attempt-01-qa-summary.json"
+      ],
+      "decidedAt": "2026-10-05T04:15:50.162Z",
+      "actorType": "migration",
+      "provenance": "MIGRATED"
+    },
+    "dec-2b1e9a479b71": {
+      "decisionId": "dec-2b1e9a479b71",
+      "targetType": "SHOT",
+      "targetId": "D-SH03",
+      "variantId": "var-ee2578462640",
+      "decision": "APPROVED",
+      "reason": "QA READY_FOR_TIMELINE (qa/case-d-D3-attempt-01-qa-summary.json) + case verdict PASS",
+      "evidenceRefs": [
+        "case/case-d-D3-attempt-01-correlation.json",
+        "case/case-d-D3-attempt-01-result.json",
+        "qa/case-d-D3-attempt-01-qa-summary.json"
+      ],
+      "decidedAt": "2026-10-05T04:22:12.253Z",
+      "actorType": "migration",
+      "provenance": "MIGRATED"
+    },
+    "dec-06b36882fef6": {
+      "decisionId": "dec-06b36882fef6",
+      "targetType": "ASSET",
+      "targetId": "as-1186233d1af6",
+      "variantId": null,
+      "decision": "REJECTED",
+      "reason": "account avatar, never a generation result (finding-source-frame-identity-01); registry selection corrected to REJECTED+locked",
+      "evidenceRefs": [
+        "case/source-frame-identity-finding.json"
+      ],
+      "decidedAt": "2026-10-05T02:54:41.089Z",
+      "actorType": "migration",
+      "provenance": "MIGRATED"
+    }
+  },
+  "locks": {
+    "SHOT::B-SH01": {
+      "targetType": "SHOT",
+      "targetId": "B-SH01",
+      "status": "LOCKED",
+      "reason": "approved content protection (dec-a75769237e3a)",
+      "sourceDecisionId": "dec-a75769237e3a",
+      "createdAt": "2026-10-05T03:19:50.018Z",
+      "updatedAt": "2026-10-05T03:19:50.018Z",
+      "lockVersion": 1,
+      "expectedProjectVersion": null,
+      "events": [
+        {
+          "status": "LOCKED",
+          "reason": "approved content protection (dec-a75769237e3a)",
+          "sourceDecisionId": "dec-a75769237e3a",
+          "actor": null,
+          "at": "2026-10-05T03:19:50.018Z",
+          "lockVersion": 1
+        }
+      ]
+    },
+    "SHOT::C-SH01": {
+      "targetType": "SHOT",
+      "targetId": "C-SH01",
+      "status": "LOCKED",
+      "reason": "approved content protection (dec-b783416d2ecf)",
+      "sourceDecisionId": "dec-b783416d2ecf",
+      "createdAt": "2026-10-05T03:31:26.032Z",
+      "updatedAt": "2026-10-05T03:31:26.032Z",
+      "lockVersion": 1,
+      "expectedProjectVersion": null,
+      "events": [
+        {
+          "status": "LOCKED",
+          "reason": "approved content protection (dec-b783416d2ecf)",
+          "sourceDecisionId": "dec-b783416d2ecf",
+          "actor": null,
+          "at": "2026-10-05T03:31:26.032Z",
+          "lockVersion": 1
+        }
+      ]
+    },
+    "SHOT::D-SH01": {
+      "targetType": "SHOT",
+      "targetId": "D-SH01",
+      "status": "LOCKED",
+      "reason": "approved content protection (dec-cf3fa6dc225b)",
+      "sourceDecisionId": "dec-cf3fa6dc225b",
+      "createdAt": "2026-10-05T04:06:01.278Z",
+      "updatedAt": "2026-10-05T04:06:01.278Z",
+      "lockVersion": 1,
+      "expectedProjectVersion": null,
+      "events": [
+        {
+          "status": "LOCKED",
+          "reason": "approved content protection (dec-cf3fa6dc225b)",
+          "sourceDecisionId": "dec-cf3fa6dc225b",
+          "actor": null,
+          "at": "2026-10-05T04:06:01.278Z",
+          "lockVersion": 1
+        }
+      ]
+    },
+    "SHOT::D-SH02": {
+      "targetType": "SHOT",
+      "targetId": "D-SH02",
+      "status": "LOCKED",
+      "reason": "approved content protection (dec-acf985690e92)",
+      "sourceDecisionId": "dec-acf985690e92",
+      "createdAt": "2026-10-05T04:15:50.162Z",
+      "updatedAt": "2026-10-05T04:15:50.162Z",
+      "lockVersion": 1,
+      "expectedProjectVersion": null,
+      "events": [
+        {
+          "status": "LOCKED",
+          "reason": "approved content protection (dec-acf985690e92)",
+          "sourceDecisionId": "dec-acf985690e92",
+          "actor": null,
+          "at": "2026-10-05T04:15:50.162Z",
+          "lockVersion": 1
+        }
+      ]
+    },
+    "SHOT::D-SH03": {
+      "targetType": "SHOT",
+      "targetId": "D-SH03",
+      "status": "LOCKED",
+      "reason": "approved content protection (dec-2b1e9a479b71)",
+      "sourceDecisionId": "dec-2b1e9a479b71",
+      "createdAt": "2026-10-05T04:22:12.253Z",
+      "updatedAt": "2026-10-05T04:22:12.253Z",
+      "lockVersion": 1,
+      "expectedProjectVersion": null,
+      "events": [
+        {
+          "status": "LOCKED",
+          "reason": "approved content protection (dec-2b1e9a479b71)",
+          "sourceDecisionId": "dec-2b1e9a479b71",
+          "actor": null,
+          "at": "2026-10-05T04:22:12.253Z",
+          "lockVersion": 1
+        }
+      ]
+    },
+    "ASSET::as-fe697fd1fef8": {
+      "targetType": "ASSET",
+      "targetId": "as-fe697fd1fef8",
+      "status": "LOCKED",
+      "reason": "mirror canonical registry lock (1G.12 Case B approved first-frame source)",
+      "sourceDecisionId": null,
+      "createdAt": "2026-10-05T06:42:20.714Z",
+      "updatedAt": "2026-10-05T06:42:20.714Z",
+      "lockVersion": 1,
+      "expectedProjectVersion": null,
+      "events": [
+        {
+          "status": "LOCKED",
+          "reason": "mirror canonical registry lock (1G.12 Case B approved first-frame source)",
+          "sourceDecisionId": null,
+          "actor": null,
+          "at": "2026-10-05T06:42:20.714Z",
+          "lockVersion": 1
+        }
+      ]
+    },
+    "ASSET::as-5e0bb7f87d4d": {
+      "targetType": "ASSET",
+      "targetId": "as-5e0bb7f87d4d",
+      "status": "LOCKED",
+      "reason": "mirror canonical registry lock (1G.12 Case C approved end frame)",
+      "sourceDecisionId": null,
+      "createdAt": "2026-10-05T06:42:20.723Z",
+      "updatedAt": "2026-10-05T06:42:20.723Z",
+      "lockVersion": 1,
+      "expectedProjectVersion": null,
+      "events": [
+        {
+          "status": "LOCKED",
+          "reason": "mirror canonical registry lock (1G.12 Case C approved end frame)",
+          "sourceDecisionId": null,
+          "actor": null,
+          "at": "2026-10-05T06:42:20.723Z",
+          "lockVersion": 1
+        }
+      ]
+    },
+    "ASSET::as-a7801df9bf0f": {
+      "targetType": "ASSET",
+      "targetId": "as-a7801df9bf0f",
+      "status": "LOCKED",
+      "reason": "mirror canonical registry lock (1G.12 Case D locked character reference (mascot-guide))",
+      "sourceDecisionId": null,
+      "createdAt": "2026-10-05T06:42:20.733Z",
+      "updatedAt": "2026-10-05T06:42:20.733Z",
+      "lockVersion": 1,
+      "expectedProjectVersion": null,
+      "events": [
+        {
+          "status": "LOCKED",
+          "reason": "mirror canonical registry lock (1G.12 Case D locked character reference (mascot-guide))",
+          "sourceDecisionId": null,
+          "actor": null,
+          "at": "2026-10-05T06:42:20.733Z",
+          "lockVersion": 1
+        }
+      ]
+    }
+  },
+  "fingerprint": "8914767c29407633"
+}

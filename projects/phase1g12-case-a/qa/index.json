@@ -1,0 +1,78 @@
+{
+  "version": "1.0.0",
+  "assets": {
+    "as-4bd9e3ccdc42": {
+      "currentQaResultId": "qa-fafe08bf36c5",
+      "history": [
+        "qa-246f02c61e93",
+        "qa-fafe08bf36c5"
+      ],
+      "updatedAt": "2026-10-04T15:20:20.090Z"
+    },
+    "as-d235316b9af5": {
+      "currentQaResultId": "qa-a28bffe727e1",
+      "history": [
+        "qa-1fa9f696fbcf",
+        "qa-a28bffe727e1"
+      ],
+      "updatedAt": "2026-10-05T02:32:09.502Z"
+    },
+    "as-fe697fd1fef8": {
+      "currentQaResultId": "qa-7d78ef7c4104",
+      "history": [
+        "qa-482d8c2b6b93",
+        "qa-7d78ef7c4104"
+      ],
+      "updatedAt": "2026-10-05T03:03:21.672Z"
+    },
+    "as-fafd1ac4c96b": {
+      "currentQaResultId": "qa-59111996c7d3",
+      "history": [
+        "qa-59111996c7d3"
+      ],
+      "updatedAt": "2026-10-05T03:19:50.242Z"
+    },
+    "as-5e0bb7f87d4d": {
+      "currentQaResultId": "qa-6938de6b9bff",
+      "history": [
+        "qa-6938de6b9bff"
+      ],
+      "updatedAt": "2026-10-05T03:21:15.977Z"
+    },
+    "as-6182cea3f996": {
+      "currentQaResultId": "qa-fa372cd95c4f",
+      "history": [
+        "qa-fa372cd95c4f"
+      ],
+      "updatedAt": "2026-10-05T03:31:26.258Z"
+    },
+    "as-a7801df9bf0f": {
+      "currentQaResultId": "qa-b718611eb7bb",
+      "history": [
+        "qa-b718611eb7bb"
+      ],
+      "updatedAt": "2026-10-05T03:36:25.420Z"
+    },
+    "as-0fde400d6392": {
+      "currentQaResultId": "qa-a778b5a05d9f",
+      "history": [
+        "qa-a778b5a05d9f"
+      ],
+      "updatedAt": "2026-10-05T04:06:01.506Z"
+    },
+    "as-c9f0fdc1d1e4": {
+      "currentQaResultId": "qa-5e0a58b7ef46",
+      "history": [
+        "qa-5e0a58b7ef46"
+      ],
+      "updatedAt": "2026-10-05T04:15:50.419Z"
+    },
+    "as-0625f69f9867": {
+      "currentQaResultId": "qa-d5deba72dc40",
+      "history": [
+        "qa-d5deba72dc40"
+      ],
+      "updatedAt": "2026-10-05T04:22:12.530Z"
+    }
+  }
+}

@@ -1,0 +1,491 @@
+{
+  "tool": "scripts/diagnostics/narrator-qa-compare.js",
+  "generatedFor": "PHASE_2_1_FIX_01 narrator selection",
+  "approvesNothing": "This tool produces a technical recommendation only. It records no approval; approveNarratorVoice() remains the only path to a selection, and the operator decision is still outstanding.",
+  "conditions": {
+    "language": "en-us",
+    "speedDefault": 1,
+    "format": "wav",
+    "sampleRate": 24000,
+    "bitsPerSample": 16,
+    "noMusic": true,
+    "noSfx": true,
+    "externalPaidCredits": 0,
+    "costClass": "ZERO_LOCAL"
+  },
+  "scripts": [
+    {
+      "id": "A",
+      "label": "neutral explainer, recommendation-mechanism passage (American spellings: the test language is en-us, and British spellings in the source were previously scored as ASR errors rather than voice errors)",
+      "words": 148
+    },
+    {
+      "id": "B",
+      "label": "neutral explainer, software-robustness passage",
+      "words": 157
+    }
+  ],
+  "asrEngine": {
+    "name": "faster-whisper",
+    "model": "small",
+    "computeType": "int8",
+    "device": "cpu",
+    "language": "en",
+    "beamSize": 5,
+    "vadFilter": false
+  },
+  "rubric": {
+    "intelligibility": {
+      "max": 25,
+      "rule": "25 at WER 0%, minus 25 points per 1% WER, floored at 0"
+    },
+    "wordFidelity": {
+      "max": 15,
+      "rule": "15 minus 3 per missing/substituted/repeated/hallucinated word, floored at 0"
+    },
+    "rate": {
+      "max": 10,
+      "rule": "10 inside the 135-165 wpm narration band, tapering to 0 at 100 or 200 wpm"
+    },
+    "pauseBehaviour": {
+      "max": 10,
+      "rule": "10 when no internal pause exceeds 0.8s and silence ratio is 0.15-0.45; penalties for long silence or dead air"
+    },
+    "alignment": {
+      "max": 10,
+      "rule": "10 minus 2 per overlap / non-monotonic timestamp / long internal gap / extreme word duration / duplicate-word anomaly"
+    },
+    "prosody": {
+      "max": 15,
+      "rule": "peaks at healthy variation (F0 range 60-260 Hz, long-term energy CV 0.15-0.45); penalises monotone and erratic extremes"
+    },
+    "consistency": {
+      "max": 5,
+      "rule": "5 minus penalties for rate/pitch/level drift between the two clips"
+    },
+    "cleanliness": {
+      "max": 10,
+      "rule": "10 when zero clipping, headroom >= 3 dB and SNR >= 30 dB; penalised otherwise"
+    }
+  },
+  "totalMax": 100,
+  "ranking": [
+    {
+      "rank": 1,
+      "voiceId": "am_michael",
+      "totalScore": 88.3,
+      "dimensions": {
+        "intelligibility": 16.5,
+        "wordFidelity": 13.5,
+        "rate": 10,
+        "pauseBehaviour": 8.7,
+        "alignment": 10,
+        "prosody": 15,
+        "consistency": 4.6,
+        "cleanliness": 10
+      },
+      "fatigueRisk": {
+        "riskScore": 0,
+        "rating": "LOW",
+        "reasons": []
+      }
+    },
+    {
+      "rank": 2,
+      "voiceId": "am_puck",
+      "totalScore": 87.7,
+      "dimensions": {
+        "intelligibility": 25,
+        "wordFidelity": 15,
+        "rate": 4.3,
+        "pauseBehaviour": 8.5,
+        "alignment": 8,
+        "prosody": 15,
+        "consistency": 3,
+        "cleanliness": 8.9
+      },
+      "fatigueRisk": {
+        "riskScore": 15,
+        "rating": "LOW",
+        "reasons": [
+          "fast delivery (193.9 wpm) - raises fatigue over long form"
+        ]
+      }
+    },
+    {
+      "rank": 3,
+      "voiceId": "am_fenrir",
+      "totalScore": 81.5,
+      "dimensions": {
+        "intelligibility": 16.5,
+        "wordFidelity": 13.5,
+        "rate": 5.6,
+        "pauseBehaviour": 9.5,
+        "alignment": 10,
+        "prosody": 15,
+        "consistency": 3,
+        "cleanliness": 8.4
+      },
+      "fatigueRisk": {
+        "riskScore": 15,
+        "rating": "LOW",
+        "reasons": [
+          "fast delivery (186.9 wpm) - raises fatigue over long form"
+        ]
+      }
+    }
+  ],
+  "detail": [
+    {
+      "voiceId": "am_michael",
+      "totalScore": 88.3,
+      "maxScore": 100,
+      "dimensions": {
+        "intelligibility": 16.5,
+        "wordFidelity": 13.5,
+        "rate": 10,
+        "pauseBehaviour": 8.7,
+        "alignment": 10,
+        "prosody": 15,
+        "consistency": 4.6,
+        "cleanliness": 10
+      },
+      "consistencyDrift": {
+        "wpm": 10.5,
+        "f0Hz": 0,
+        "rmsDb": 0.2
+      },
+      "fatigueRisk": {
+        "riskScore": 0,
+        "rating": "LOW",
+        "reasons": []
+      },
+      "meanWpm": 151.9,
+      "meanF0Hz": 116.5,
+      "meanRmsDbfs": -28,
+      "clips": [
+        {
+          "scriptId": "A",
+          "rel": "projects/phase2-1-validation/assets/voice/voice-qa-A/qaA-am_michael.wav",
+          "durationSec": 57.7,
+          "wpm": 157.1,
+          "wpmWallClock": 153.9,
+          "werPct": 0.68,
+          "substitutions": 1,
+          "deletions": 0,
+          "insertions": 0,
+          "repeatedWords": 0,
+          "pauseCount": 106,
+          "pauseMeanSec": 0.122,
+          "pauseMedianSec": 0.04,
+          "pauseMaxSec": 1.02,
+          "silenceRatio": 0.2447,
+          "f0MedianHz": 116.5,
+          "f0RangeHz": 79.8,
+          "energyCv": 0.6292,
+          "longTermEnergyCv": 0.2288,
+          "energyDecayPct": -1.01,
+          "pitchDriftPct": 2.45,
+          "peakDbfs": -4.48,
+          "rmsDbfs": -28.08,
+          "noiseFloorDbfs": -86.04,
+          "snrDb": 57.96,
+          "headroomDb": 4.48,
+          "clippedSamples": 0,
+          "alignment": {
+            "overlaps": 0,
+            "nonMonotonic": 0,
+            "zeroOrNegDuration": 0,
+            "extremeDurations": 0,
+            "longGaps": 0,
+            "repeatedWords": 0
+          },
+          "transcript": "Most people learn the basic idea behind a recommendation system without ever seeing the mathematics behind it. At its simplest, the system looks at what you have already chosen, compares that history with the choices of many other people, and then ranks the options that resemble your own past behavior most closely. The resemblance can be measured in several ways. Some systems compare the items themselves, treating each product as a long list of features. Others compare the people, finding groups of viewers whose habits overlap with yours. A third approach mixes both signals together and lets a model learn the waiting on its own. Each approach has a cost. Comparing items is expensive when the catalog is large. Comparing people becomes unreliable when a new viewer arrives with very little history. Mixing the two is the most flexible approach, but it is also the hardest to explain.",
+          "wordOps": [
+            {
+              "op": "S",
+              "ref": "weighting",
+              "hyp": "waiting"
+            }
+          ]
+        },
+        {
+          "scriptId": "B",
+          "rel": "projects/phase2-1-validation/assets/voice/voice-qa-B/qaB-am_michael.wav",
+          "durationSec": 65.225,
+          "wpm": 146.6,
+          "wpmWallClock": 144.4,
+          "werPct": 0,
+          "substitutions": 0,
+          "deletions": 0,
+          "insertions": 0,
+          "repeatedWords": 0,
+          "pauseCount": 110,
+          "pauseMeanSec": 0.129,
+          "pauseMedianSec": 0.04,
+          "pauseMaxSec": 1.1,
+          "silenceRatio": 0.2331,
+          "f0MedianHz": 116.5,
+          "f0RangeHz": 85.5,
+          "energyCv": 0.6651,
+          "longTermEnergyCv": 0.2607,
+          "energyDecayPct": 1.2,
+          "pitchDriftPct": 0.49,
+          "peakDbfs": -4.58,
+          "rmsDbfs": -27.85,
+          "noiseFloorDbfs": -85.05,
+          "snrDb": 57.2,
+          "headroomDb": 4.58,
+          "clippedSamples": 0,
+          "alignment": {
+            "overlaps": 0,
+            "nonMonotonic": 0,
+            "zeroOrNegDuration": 0,
+            "extremeDurations": 0,
+            "longGaps": 0,
+            "repeatedWords": 0
+          },
+          "transcript": "Before a piece of software is released to the public, it passes through several distinct stages of checking. The first stage looks for crashes, which are situations where the program stops responding entirely and the user loses unsaved work. The second stage checks whether the program produces the correct answer for the inputs it was designed to handle. The third stage is the least comfortable because it deliberately supplies unusual or malformed inputs to see whether the program degrades safely rather than failing outright. A program that handles these cases well is usually described as robust and robustness turns out to matter more than raw speed in almost every real deployment. Teams that skip this work discover the problem later in production, where the cost of a fix is far higher and the users who encounter the fault cannot easily report it. The habit of testing early is therefore not bureaucracy. It is the cheapest available insurance.",
+          "wordOps": []
+        }
+      ],
+      "rank": 1
+    },
+    {
+      "voiceId": "am_puck",
+      "totalScore": 87.7,
+      "maxScore": 100,
+      "dimensions": {
+        "intelligibility": 25,
+        "wordFidelity": 15,
+        "rate": 4.3,
+        "pauseBehaviour": 8.5,
+        "alignment": 8,
+        "prosody": 15,
+        "consistency": 3,
+        "cleanliness": 8.9
+      },
+      "consistencyDrift": {
+        "wpm": 41.6,
+        "f0Hz": 0.4,
+        "rmsDb": 0.8
+      },
+      "fatigueRisk": {
+        "riskScore": 15,
+        "rating": "LOW",
+        "reasons": [
+          "fast delivery (193.9 wpm) - raises fatigue over long form"
+        ]
+      },
+      "meanWpm": 193.9,
+      "meanF0Hz": 106.9,
+      "meanRmsDbfs": -23.1,
+      "clips": [
+        {
+          "scriptId": "A",
+          "rel": "projects/phase2-1-validation/assets/voice/voice-qa-A/qaA-am_puck.wav",
+          "durationSec": 42.4,
+          "wpm": 214.7,
+          "wpmWallClock": 209.4,
+          "werPct": 0,
+          "substitutions": 0,
+          "deletions": 0,
+          "insertions": 0,
+          "repeatedWords": 0,
+          "pauseCount": 90,
+          "pauseMeanSec": 0.079,
+          "pauseMedianSec": 0.04,
+          "pauseMaxSec": 1,
+          "silenceRatio": 0.1915,
+          "f0MedianHz": 107.1,
+          "f0RangeHz": 62.5,
+          "energyCv": 0.6516,
+          "longTermEnergyCv": 0.2609,
+          "energyDecayPct": 3.21,
+          "pitchDriftPct": 0,
+          "peakDbfs": -3.49,
+          "rmsDbfs": -23.48,
+          "noiseFloorDbfs": -67.71,
+          "snrDb": 44.23,
+          "headroomDb": 3.49,
+          "clippedSamples": 0,
+          "alignment": {
+            "overlaps": 0,
+            "nonMonotonic": 0,
+            "zeroOrNegDuration": 0,
+            "extremeDurations": 0,
+            "longGaps": 1,
+            "repeatedWords": 0
+          },
+          "transcript": "Most people learn the basic idea behind a recommendation system without ever seeing the mathematics behind it. At its simplest, the system looks at what you have already chosen, compares that history with the choices of many other people, and then ranks the options that resemble your own past behavior most closely. The resemblance can be measured in several ways. Some systems compare the items themselves, treating each product as a long list of features. Others compare the people, finding groups of viewers whose habits overlap with yours. A third approach mixes both signals together and lets a model learn the weighting on its own. Each approach has a cost. Comparing items is expensive when the catalog is large. Comparing people becomes unreliable when a new viewer arrives with very little history. Mixing the two is the most flexible approach, but it is also the hardest to explain.",
+          "wordOps": []
+        },
+        {
+          "scriptId": "B",
+          "rel": "projects/phase2-1-validation/assets/voice/voice-qa-B/qaB-am_puck.wav",
+          "durationSec": 55.525,
+          "wpm": 173.1,
+          "wpmWallClock": 169.7,
+          "werPct": 0,
+          "substitutions": 0,
+          "deletions": 0,
+          "insertions": 0,
+          "repeatedWords": 0,
+          "pauseCount": 116,
+          "pauseMeanSec": 0.086,
+          "pauseMedianSec": 0.04,
+          "pauseMaxSec": 1.22,
+          "silenceRatio": 0.2003,
+          "f0MedianHz": 106.7,
+          "f0RangeHz": 126,
+          "energyCv": 0.6666,
+          "longTermEnergyCv": 0.3288,
+          "energyDecayPct": -5.57,
+          "pitchDriftPct": -6.44,
+          "peakDbfs": -1.52,
+          "rmsDbfs": -22.7,
+          "noiseFloorDbfs": -60.41,
+          "snrDb": 37.71,
+          "headroomDb": 1.52,
+          "clippedSamples": 0,
+          "alignment": {
+            "overlaps": 0,
+            "nonMonotonic": 0,
+            "zeroOrNegDuration": 0,
+            "extremeDurations": 0,
+            "longGaps": 1,
+            "repeatedWords": 0
+          },
+          "transcript": "Before a piece of software is released to the public, it passes through several distinct stages of checking. The first stage looks for crashes, which are situations where the program stops responding entirely and the user loses unsaved work. The second stage checks whether the program produces the correct answer for the inputs it was designed to handle. The third stage is the least comfortable because it deliberately supplies unusual or malformed inputs to see whether the program degrades safely rather than failing outright. A program that handles these cases well is usually described as robust, and robustness turns out to matter more than raw speed in almost every real deployment. Teams that skip this work discover the problem later in production where the cost of a fix is far higher and the users who encounter the fault cannot easily report it. The habit of testing early is therefore not bureaucracy, it is the cheapest available insurance.",
+          "wordOps": []
+        }
+      ],
+      "rank": 2
+    },
+    {
+      "voiceId": "am_fenrir",
+      "totalScore": 81.5,
+      "maxScore": 100,
+      "dimensions": {
+        "intelligibility": 16.5,
+        "wordFidelity": 13.5,
+        "rate": 5.6,
+        "pauseBehaviour": 9.5,
+        "alignment": 10,
+        "prosody": 15,
+        "consistency": 3,
+        "cleanliness": 8.4
+      },
+      "consistencyDrift": {
+        "wpm": 38.1,
+        "f0Hz": 1.4,
+        "rmsDb": 0.7
+      },
+      "fatigueRisk": {
+        "riskScore": 15,
+        "rating": "LOW",
+        "reasons": [
+          "fast delivery (186.9 wpm) - raises fatigue over long form"
+        ]
+      },
+      "meanWpm": 186.9,
+      "meanF0Hz": 130.4,
+      "meanRmsDbfs": -23.1,
+      "clips": [
+        {
+          "scriptId": "A",
+          "rel": "projects/phase2-1-validation/assets/voice/voice-qa-A/qaA-am_fenrir.wav",
+          "durationSec": 44.025,
+          "wpm": 205.9,
+          "wpmWallClock": 201.7,
+          "werPct": 0.68,
+          "substitutions": 1,
+          "deletions": 0,
+          "insertions": 0,
+          "repeatedWords": 0,
+          "pauseCount": 102,
+          "pauseMeanSec": 0.073,
+          "pauseMedianSec": 0.04,
+          "pauseMaxSec": 0.8,
+          "silenceRatio": 0.1899,
+          "f0MedianHz": 131.1,
+          "f0RangeHz": 91.3,
+          "energyCv": 0.6792,
+          "longTermEnergyCv": 0.2231,
+          "energyDecayPct": 1.02,
+          "pitchDriftPct": 0,
+          "peakDbfs": -2.25,
+          "rmsDbfs": -23.47,
+          "noiseFloorDbfs": -86.31,
+          "snrDb": 62.84,
+          "headroomDb": 2.25,
+          "clippedSamples": 0,
+          "alignment": {
+            "overlaps": 0,
+            "nonMonotonic": 0,
+            "zeroOrNegDuration": 0,
+            "extremeDurations": 0,
+            "longGaps": 0,
+            "repeatedWords": 0
+          },
+          "transcript": "Most people learn the basic idea behind a recommendation system without ever seeing the mathematics behind it. At its simplest, the system looks at what you have already chosen, compares that history with the choices of many other people, and then ranks the options that resemble your own past behavior most closely. The resemblance can be measured in several ways. Some systems compare the items themselves, treating each product as a long list of features. Others compare the people finding groups of viewers whose habits overlap with yours. A third approach mixes both signals together and lets a model learn the waiting on its own. Each approach has a cost, comparing items is expensive when the catalog is large, comparing people becomes unreliable when a new viewer arrives with very little history. Mixing the two is the most flexible approach, but it is also the hardest to explain.",
+          "wordOps": [
+            {
+              "op": "S",
+              "ref": "weighting",
+              "hyp": "waiting"
+            }
+          ]
+        },
+        {
+          "scriptId": "B",
+          "rel": "projects/phase2-1-validation/assets/voice/voice-qa-B/qaB-am_fenrir.wav",
+          "durationSec": 57,
+          "wpm": 167.8,
+          "wpmWallClock": 165.3,
+          "werPct": 0,
+          "substitutions": 0,
+          "deletions": 0,
+          "insertions": 0,
+          "repeatedWords": 0,
+          "pauseCount": 119,
+          "pauseMeanSec": 0.079,
+          "pauseMedianSec": 0.04,
+          "pauseMaxSec": 1.02,
+          "silenceRatio": 0.1807,
+          "f0MedianHz": 129.7,
+          "f0RangeHz": 132.7,
+          "energyCv": 0.6851,
+          "longTermEnergyCv": 0.2324,
+          "energyDecayPct": -0.8,
+          "pitchDriftPct": -4.23,
+          "peakDbfs": -1.52,
+          "rmsDbfs": -22.76,
+          "noiseFloorDbfs": -86.19,
+          "snrDb": 63.43,
+          "headroomDb": 1.52,
+          "clippedSamples": 0,
+          "alignment": {
+            "overlaps": 0,
+            "nonMonotonic": 0,
+            "zeroOrNegDuration": 0,
+            "extremeDurations": 0,
+            "longGaps": 0,
+            "repeatedWords": 0
+          },
+          "transcript": "Before a piece of software is released to the public, it passes through several distinct stages of checking. The first stage looks for crashes, which are situations where the program stops responding entirely and the user loses unsaved work. The second stage checks whether the program produces the correct answer for the inputs it was designed to handle. The third stage is the least comfortable because it deliberately supplies unusual or malformed inputs to see whether the program degrades safely rather than failing outright. A program that handles these cases well is usually described as robust and robustness turns out to matter more than raw speed in almost every real deployment. Teams that skip this work discover the problem later in production where the cost of a fix is far higher and the users who encounter the fault cannot easily report it. The habit of testing early is therefore not bureaucracy, it is the cheapest available insurance.",
+          "wordOps": []
+        }
+      ],
+      "rank": 3
+    }
+  ],
+  "invalidatedRuns": [
+    {
+      "run": "first WER run, script A with British spellings (behaviour, catalogue) under en-us ASR",
+      "status": "INVALIDATED_BY_TEST_REFERENCE_ERROR",
+      "reason": "Test-material error, not a voice defect: the ASR spelling normalisation was scored as pronunciation error. Script corrected to American spellings and the whole comparison re-rendered and re-run from scratch; this file is the canonical rerun.",
+      "preservedAudio": "no audio preserved — the run was re-rendered from scratch, not patched arithmetically"
+    }
+  ]
+}

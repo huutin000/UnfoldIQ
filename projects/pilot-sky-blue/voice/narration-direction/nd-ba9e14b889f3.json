@@ -1,0 +1,64 @@
+{
+  "schemaVersion": "1.0.0",
+  "narrationDirectionId": "nd-ba9e14b889f3",
+  "version": 2,
+  "projectId": "pilot-sky-blue",
+  "scriptRef": {
+    "scriptArtifactId": "fss-pilot-sky-blue",
+    "scriptVersion": 2
+  },
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "language": "en-us",
+  "segments": [
+    {
+      "segmentId": "S1",
+      "segmentOrdinal": 0,
+      "sourceTextHash": "21bba832a39f9337",
+      "speakerId": null,
+      "emphasis": [
+        {
+          "text": "blue",
+          "occurrence": 1,
+          "strength": "MODERATE"
+        }
+      ],
+      "pauseIntent": [
+        {
+          "kind": "BEAT",
+          "afterText": "White.",
+          "occurrence": 1
+        }
+      ],
+      "energy": "BALANCED",
+      "emotion": "CURIOSITY",
+      "paceIntent": "MODERATE",
+      "directionReason": "hook question setup"
+    },
+    {
+      "segmentId": "S6",
+      "segmentOrdinal": 5,
+      "sourceTextHash": "86080df78f870926",
+      "speakerId": null,
+      "emphasis": [],
+      "pauseIntent": [],
+      "energy": "BALANCED",
+      "emotion": "INSTRUCTIVE",
+      "paceIntent": "SLOWER",
+      "directionReason": "sunset contrast walkthrough"
+    }
+  ],
+  "stats": {
+    "totalSegments": 8,
+    "directedSegments": 2,
+    "directionCoveragePercent": 25,
+    "emphasisCount": 1,
+    "explicitPauseCount": 1,
+    "overDirectionReview": false
+  },
+  "provenance": {
+    "source": "phase-2.2",
+    "createdAt": "2026-10-06T05:09:54.118Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "21bb2c3743e9a586"
+}

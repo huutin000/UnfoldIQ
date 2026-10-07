@@ -1,0 +1,25 @@
+{
+  "phase": "2.4-2.6",
+  "measuredAt": "2026-10-06T07:24:38.358Z",
+  "ttsColdStartLatencyMs": "UNKNOWN_NOT_INSTRUMENTED_FIRST_PASS",
+  "ttsWarmSegmentLatencyMs": "UNKNOWN_NOT_INSTRUMENTED_FIRST_PASS",
+  "ttsTotalSynthesisLatencyMs": "UNKNOWN_NOT_INSTRUMENTED_FIRST_PASS",
+  "audioSecondsGenerated": 67.675,
+  "trackSecondsGenerated": 69.675,
+  "realTimeFactor": "UNKNOWN_NOT_INSTRUMENTED_FIRST_PASS",
+  "speechRateQaLatencyMs": "UNKNOWN_NOT_INSTRUMENTED_FIRST_PASS",
+  "performanceQaLatencyMs": "UNKNOWN_NOT_INSTRUMENTED_FIRST_PASS",
+  "asrQaLatencyMs": "UNKNOWN_NOT_INSTRUMENTED_FIRST_PASS",
+  "segmentCount": 8,
+  "attemptCount": 8,
+  "regenerationCount": 0,
+  "externalCreditsSpent": 0,
+  "provider": {
+    "provider": "local-kokoro",
+    "modelRepo": "hexgrad/Kokoro-82M",
+    "modelHash": "UNKNOWN_NOT_AVAILABLE",
+    "voiceId": "am_michael",
+    "credits": 0
+  },
+  "notes": "first-pass CLI (2026-10-06T06:5xZ) completed synthesis+QA+assembly but exited before writing this file (manifest-1.5.0 slot gap + dialogue ref-path bug, both fixed 07:3xZ); latencies therefore unrecorded. Local synthesis only; no external upload; faster-whisper QA local. No cost-optimization claim made."
+}

@@ -1,0 +1,102 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "tts-segment-audio.schema.json",
+  "title": "UNFOLDIQ TTS Segment Audio (Phase 2.4, schema 1.0.0)",
+  "description": "One independently addressable narration audio artifact per spoken segment, synthesized from canonical refs only (FSS + Voice Bible + Narration Direction + Pronunciation Runtime Pass). One doc = one attempt; versions/attempt lineage are immutable; failed attempts are never overwritten. WAV bytes live on disk, never in the Manifest.",
+  "type": "object",
+  "required": ["schemaVersion", "ttsSegmentAudioId", "version", "projectId", "scriptRef", "segmentId", "segmentOrdinal", "sourceTextHash", "compiledInputHash", "voiceBibleRef", "narrationDirectionRef", "pronunciationPassRef", "provider", "providerModel", "voiceId", "effectiveSpeed", "audioRef", "audioContentHash", "durationMs", "sampleRate", "channels", "technicalQa", "status", "provenance", "fingerprint"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "ttsSegmentAudioId": { "type": "string", "pattern": "^tsa-[0-9a-f]{12}$" },
+    "version": { "type": "integer", "minimum": 1 },
+    "projectId": { "type": "string", "minLength": 1 },
+    "scriptRef": {
+      "type": "object",
+      "required": ["scriptArtifactId", "scriptVersion"],
+      "additionalProperties": false,
+      "properties": {
+        "scriptArtifactId": { "type": "string", "pattern": "^fss-[0-9a-z][0-9a-z-]{2,62}$" },
+        "scriptVersion": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "segmentId": { "type": "string", "minLength": 1 },
+    "segmentOrdinal": { "type": "integer", "minimum": 0 },
+    "sourceTextHash": { "type": "string", "pattern": "^[0-9a-f]{16}$" },
+    "compiledInputHash": { "type": "string", "pattern": "^[0-9a-f]{16}$" },
+    "voiceBibleRef": { "type": "string", "pattern": "^vb-[0-9a-f]{12}$" },
+    "narrationDirectionRef": { "type": "string", "pattern": "^nd-[0-9a-f]{12}$" },
+    "pronunciationPassRef": { "type": "string", "pattern": "^prp-[0-9a-f]{12}$" },
+    "provider": { "const": "local-kokoro" },
+    "providerModel": { "type": "string", "minLength": 1 },
+    "runtimeIdentity": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "runtimeMode": { "type": ["string", "null"] },
+        "modelRepo": { "type": ["string", "null"] },
+        "modelHash": { "type": ["string", "null"], "description": "Pinned model artifact hash; UNKNOWN_NOT_AVAILABLE when the runtime does not expose it. Never fabricated." },
+        "languageCode": { "type": ["string", "null"] }
+      }
+    },
+    "voiceId": { "type": "string", "minLength": 1 },
+    "effectiveSpeed": { "type": "number", "minimum": 0.5, "maximum": 2 },
+    "pacePolicyVersion": { "type": ["string", "null"] },
+    "audioRef": { "type": "string", "minLength": 1 },
+    "audioContentHash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "durationMs": { "type": "integer", "minimum": 1 },
+    "sampleRate": { "type": "integer", "minimum": 8000 },
+    "channels": { "type": "integer", "minimum": 1 },
+    "technicalQa": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "decodePass": { "type": "boolean" },
+        "nonSilent": { "type": "boolean" },
+        "finiteSamples": { "type": "boolean" },
+        "peak": { "type": ["number", "null"] },
+        "rms": { "type": ["number", "null"] },
+        "clippingSamples": { "type": ["integer", "null"] },
+        "transcript": { "type": ["string", "null"] },
+        "wer": { "type": ["number", "null"] },
+        "missingWords": { "type": ["integer", "null"] },
+        "substitutedWords": { "type": ["integer", "null"] },
+        "repeatedWords": { "type": ["integer", "null"] },
+        "hallucinatedWords": { "type": ["integer", "null"] },
+        "criticalMismatch": { "type": ["boolean", "null"] }
+      }
+    },
+    "attempt": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "number": { "type": ["integer", "null"], "minimum": 1 },
+        "parentAttemptId": { "type": ["string", "null"], "pattern": "^tsa-[0-9a-f]{12}$" },
+        "reason": { "type": ["string", "null"], "maxLength": 300 },
+        "selected": { "type": ["boolean", "null"] }
+      }
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["code"],
+        "additionalProperties": false,
+        "properties": {
+          "code": { "type": "string", "minLength": 3 },
+          "detail": { "type": ["string", "null"], "maxLength": 300 }
+        }
+      }
+    },
+    "status": { "enum": ["READY", "REJECTED", "FAILED"] },
+    "provenance": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "createdAt": { "type": ["string", "null"] },
+        "evidenceRefs": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" }
+  }
+}

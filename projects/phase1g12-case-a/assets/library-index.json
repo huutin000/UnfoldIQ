@@ -1,0 +1,629 @@
+{
+  "version": "1.0.0",
+  "assets": {
+    "as-1186233d1af6": {
+      "version": "1.0.0",
+      "assetId": "as-1186233d1af6",
+      "projectId": "phase1g12-case-a",
+      "type": "image",
+      "role": "BROLL",
+      "source": "existing",
+      "provider": null,
+      "jobId": null,
+      "shotId": null,
+      "characterIds": [],
+      "locationIds": [],
+      "promptVersion": null,
+      "modelVersion": null,
+      "referenceIds": [
+        "as-1186233d1af6"
+      ],
+      "instructionVersion": null,
+      "derivedFrom": [],
+      "hash": {
+        "algo": "sha256",
+        "value": "1186233d1af671fcb50ff5084ded613777105ba87cf0d951481ab236ba5b322e"
+      },
+      "bytes": 2080,
+      "relativePath": null,
+      "dimensions": null,
+      "durationMs": null,
+      "rights": {
+        "status": "UNKNOWN",
+        "note": null
+      },
+      "provenance": {
+        "source": "existing",
+        "detail": "byte-identical reuse of postv1b-flow-companion-live:as-1186233d1af6"
+      },
+      "qualityStatus": "REJECTED",
+      "selection": {
+        "status": "REJECTED",
+        "decidedAt": "2026-10-05T05:36:43.042Z",
+        "reason": "Task-02 A-21: REJECTED per finding-source-frame-identity-01 (account avatar)"
+      },
+      "lock": {
+        "locked": true,
+        "reason": "Task-02 A-21: lock the corrected REJECTED verdict",
+        "lockedAt": "2026-10-05T05:36:43.058Z",
+        "actor": null,
+        "unlockedAt": "2026-10-05T05:36:43.040Z",
+        "unlockReason": "Task-02 hardening A-21/S5.1: explicit correction migration"
+      },
+      "createdAt": "2026-10-04T15:17:55.535Z",
+      "updatedAt": "2026-10-05T05:36:43.058Z"
+    },
+    "as-4bd9e3ccdc42": {
+      "version": "1.0.0",
+      "assetId": "as-4bd9e3ccdc42",
+      "projectId": "phase1g12-case-a",
+      "type": "video",
+      "role": "BROLL",
+      "source": "existing",
+      "provider": null,
+      "jobId": null,
+      "shotId": "A-SH01",
+      "characterIds": [],
+      "locationIds": [],
+      "promptVersion": null,
+      "modelVersion": null,
+      "referenceIds": [
+        "as-1186233d1af6"
+      ],
+      "instructionVersion": null,
+      "derivedFrom": [
+        "as-1186233d1af6"
+      ],
+      "hash": {
+        "algo": "sha256",
+        "value": "4bd9e3ccdc428fab8546d3bf746191e73166dcdf754fbfe484709031e2f10bcc"
+      },
+      "bytes": 708511,
+      "relativePath": null,
+      "dimensions": {
+        "width": 1920,
+        "height": 1080
+      },
+      "durationMs": 2000,
+      "rights": {
+        "status": "UNKNOWN",
+        "note": null
+      },
+      "provenance": {
+        "source": "local-render",
+        "detail": "Case A Remotion render attempt-1 (SLOW_ZOOM_IN over locked source)"
+      },
+      "qualityStatus": "UNREVIEWED",
+      "selection": {
+        "status": "UNSET",
+        "decidedAt": null,
+        "reason": null
+      },
+      "lock": {
+        "locked": false,
+        "reason": null,
+        "lockedAt": null,
+        "actor": null,
+        "unlockedAt": null,
+        "unlockReason": null
+      },
+      "createdAt": "2026-10-04T15:18:41.396Z",
+      "updatedAt": "2026-10-04T15:18:41.396Z"
+    },
+    "as-d235316b9af5": {
+      "version": "1.0.0",
+      "assetId": "as-d235316b9af5",
+      "projectId": "phase1g12-case-a",
+      "type": "video",
+      "role": "BROLL",
+      "source": "generated",
+      "provider": "google-flow",
+      "jobId": "b1",
+      "shotId": "B-SH01",
+      "characterIds": [],
+      "locationIds": [],
+      "promptVersion": "UNRECORDED_ATTEMPT_1",
+      "modelVersion": "google--gemini-omni-flash--1-1",
+      "referenceIds": [
+        "as-1186233d1af6"
+      ],
+      "instructionVersion": "iv-7e784d73e229",
+      "derivedFrom": [
+        "as-1186233d1af6"
+      ],
+      "hash": {
+        "algo": "sha256",
+        "value": "d235316b9af51453393c19724949ec5f892258371255e2a2f7243b22dc538e89"
+      },
+      "bytes": 1599300,
+      "relativePath": null,
+      "dimensions": {
+        "width": 1280,
+        "height": 720
+      },
+      "durationMs": 10005,
+      "rights": {
+        "status": "UNKNOWN",
+        "note": null
+      },
+      "provenance": {
+        "source": "provider-download",
+        "detail": "Case B attempt 1: Flow download of B1 generation result (Omni Flash 1.1, operator-attributed, single-generation correlation)"
+      },
+      "qualityStatus": "UNREVIEWED",
+      "selection": {
+        "status": "UNSET",
+        "decidedAt": null,
+        "reason": null
+      },
+      "lock": {
+        "locked": false,
+        "reason": null,
+        "lockedAt": null,
+        "actor": null,
+        "unlockedAt": null,
+        "unlockReason": null
+      },
+      "createdAt": "2026-10-05T02:30:58.157Z",
+      "updatedAt": "2026-10-05T02:30:58.157Z"
+    },
+    "as-fe697fd1fef8": {
+      "version": "1.0.0",
+      "assetId": "as-fe697fd1fef8",
+      "projectId": "phase1g12-case-a",
+      "type": "image",
+      "role": "BROLL",
+      "source": "generated",
+      "provider": "google-flow",
+      "jobId": "FLOW-COMPANION-LIVE-GEN-01",
+      "shotId": "B-SH01",
+      "characterIds": [],
+      "locationIds": [],
+      "promptVersion": "pf-v1f-bluecircle-82char",
+      "modelVersion": "google--nano-banana-2",
+      "referenceIds": [],
+      "instructionVersion": null,
+      "derivedFrom": [],
+      "hash": {
+        "algo": "sha256",
+        "value": "fe697fd1fef86e607d743694c223ab8a93347754ba353f1f7eb0cccfbfab9ab7"
+      },
+      "bytes": 30087,
+      "relativePath": null,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "durationMs": null,
+      "rights": {
+        "status": "UNKNOWN",
+        "note": null
+      },
+      "provenance": {
+        "source": "provider-download",
+        "detail": "Real V1F generation result (blue circle), downloaded from the Flow project card; replaces rejected avatar asset as-1186233d1af6 as Case B first-frame source"
+      },
+      "qualityStatus": "APPROVED",
+      "selection": {
+        "status": "SELECTED",
+        "decidedAt": "2026-10-05T03:03:21.674Z",
+        "reason": "1G.12 Case B source frame (replacement for rejected as-1186233d1af6)"
+      },
+      "lock": {
+        "locked": true,
+        "reason": "1G.12 Case B approved first-frame source",
+        "lockedAt": "2026-10-05T03:03:30.985Z",
+        "actor": null,
+        "unlockedAt": "2026-10-05T03:03:30.964Z",
+        "unlockReason": "set quality after QA pass"
+      },
+      "createdAt": "2026-10-05T03:02:36.241Z",
+      "updatedAt": "2026-10-05T03:03:30.985Z"
+    },
+    "as-fafd1ac4c96b": {
+      "version": "1.0.0",
+      "assetId": "as-fafd1ac4c96b",
+      "projectId": "phase1g12-case-a",
+      "type": "video",
+      "role": "BROLL",
+      "source": "generated",
+      "provider": "google-flow",
+      "jobId": "b1",
+      "shotId": "B-SH01",
+      "characterIds": [],
+      "locationIds": [],
+      "promptVersion": "pp-b42c2e0af4b2",
+      "modelVersion": "google--gemini-omni-flash--1-1",
+      "referenceIds": [
+        "as-fe697fd1fef8"
+      ],
+      "instructionVersion": "iv-7e784d73e229",
+      "derivedFrom": [
+        "as-fe697fd1fef8"
+      ],
+      "hash": {
+        "algo": "sha256",
+        "value": "fafd1ac4c96b37ee98eaf6599b529dcf3a60e97b4947b961a195ea530629998c"
+      },
+      "bytes": 466189,
+      "relativePath": null,
+      "dimensions": {
+        "width": 1280,
+        "height": 720
+      },
+      "durationMs": 4010,
+      "rights": {
+        "status": "UNKNOWN",
+        "note": null
+      },
+      "provenance": {
+        "source": "provider-download",
+        "detail": "Case B attempt 2: Flow download of B1 generation result (Omni Flash 1.1, operator-attributed, single-generation correlation)"
+      },
+      "qualityStatus": "UNREVIEWED",
+      "selection": {
+        "status": "UNSET",
+        "decidedAt": null,
+        "reason": null
+      },
+      "lock": {
+        "locked": false,
+        "reason": null,
+        "lockedAt": null,
+        "actor": null,
+        "unlockedAt": null,
+        "unlockReason": null
+      },
+      "createdAt": "2026-10-05T03:18:43.405Z",
+      "updatedAt": "2026-10-05T03:18:43.405Z"
+    },
+    "as-5e0bb7f87d4d": {
+      "version": "1.0.0",
+      "assetId": "as-5e0bb7f87d4d",
+      "projectId": "phase1g12-case-a",
+      "type": "image",
+      "role": "BROLL",
+      "source": "generated",
+      "provider": null,
+      "jobId": null,
+      "shotId": "C-SH01",
+      "characterIds": [],
+      "locationIds": [],
+      "promptVersion": null,
+      "modelVersion": null,
+      "referenceIds": [
+        "as-fafd1ac4c96b"
+      ],
+      "instructionVersion": null,
+      "derivedFrom": [
+        "as-fafd1ac4c96b"
+      ],
+      "hash": {
+        "algo": "sha256",
+        "value": "5e0bb7f87d4ddcd9f36d886ce4160b7e8058e97546e9086fd59b558ede02d848"
+      },
+      "bytes": 18935,
+      "relativePath": null,
+      "dimensions": {
+        "width": 1280,
+        "height": 720
+      },
+      "durationMs": null,
+      "rights": {
+        "status": "UNKNOWN",
+        "note": null
+      },
+      "provenance": {
+        "source": "frame-extract",
+        "detail": "End frame extracted at t=3.9s from QA-PASS Case B attempt-2 video as-fafd1ac4c96b (ffprobe-verified bytes); Case C FIRST+LAST end-state contract"
+      },
+      "qualityStatus": "APPROVED",
+      "selection": {
+        "status": "SELECTED",
+        "decidedAt": "2026-10-05T03:21:15.979Z",
+        "reason": "1G.12 Case C end frame (FIRST+LAST end-state contract)"
+      },
+      "lock": {
+        "locked": true,
+        "reason": "1G.12 Case C approved end frame",
+        "lockedAt": "2026-10-05T03:21:15.998Z",
+        "actor": null,
+        "unlockedAt": "2026-10-05T03:21:15.978Z",
+        "unlockReason": "idempotent re-run"
+      },
+      "createdAt": "2026-10-05T03:21:15.900Z",
+      "updatedAt": "2026-10-05T03:21:15.998Z"
+    },
+    "as-6182cea3f996": {
+      "version": "1.0.0",
+      "assetId": "as-6182cea3f996",
+      "projectId": "phase1g12-case-a",
+      "type": "video",
+      "role": "BROLL",
+      "source": "generated",
+      "provider": "google-flow",
+      "jobId": "c1",
+      "shotId": "C-SH01",
+      "characterIds": [],
+      "locationIds": [],
+      "promptVersion": "pp-c-sh01-v1",
+      "modelVersion": "google--gemini-omni-flash--1-1",
+      "referenceIds": [
+        "as-fe697fd1fef8",
+        "as-5e0bb7f87d4d"
+      ],
+      "instructionVersion": "iv-7e784d73e229",
+      "derivedFrom": [
+        "as-fe697fd1fef8",
+        "as-5e0bb7f87d4d"
+      ],
+      "hash": {
+        "algo": "sha256",
+        "value": "6182cea3f996e973ee8c99cf43cd7f5527c18975f8a6e8d0487587913ff04c3f"
+      },
+      "bytes": 513968,
+      "relativePath": null,
+      "dimensions": {
+        "width": 1280,
+        "height": 720
+      },
+      "durationMs": 4010,
+      "rights": {
+        "status": "UNKNOWN",
+        "note": null
+      },
+      "provenance": {
+        "source": "provider-download",
+        "detail": "Case C attempt 1: Flow download of the FIRST+LAST generation result (Omni Flash 1.1, operator-attributed, single-generation correlation)"
+      },
+      "qualityStatus": "UNREVIEWED",
+      "selection": {
+        "status": "UNSET",
+        "decidedAt": null,
+        "reason": null
+      },
+      "lock": {
+        "locked": false,
+        "reason": null,
+        "lockedAt": null,
+        "actor": null,
+        "unlockedAt": null,
+        "unlockReason": null
+      },
+      "createdAt": "2026-10-05T03:31:26.035Z",
+      "updatedAt": "2026-10-05T03:31:26.035Z"
+    },
+    "as-a7801df9bf0f": {
+      "version": "1.0.0",
+      "assetId": "as-a7801df9bf0f",
+      "projectId": "phase1g12-case-a",
+      "type": "image",
+      "role": "CHARACTER_IDENTITY",
+      "source": "generated",
+      "provider": "google-flow",
+      "jobId": null,
+      "shotId": null,
+      "characterIds": [
+        "mascot-guide"
+      ],
+      "locationIds": [],
+      "promptVersion": null,
+      "modelVersion": null,
+      "referenceIds": [],
+      "instructionVersion": null,
+      "derivedFrom": [],
+      "hash": {
+        "algo": "sha256",
+        "value": "a7801df9bf0f05ee20fb94a6e913824c2de151ad063994dd5d1c052d57428e7e"
+      },
+      "bytes": 47102,
+      "relativePath": null,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "durationMs": null,
+      "rights": {
+        "status": "UNKNOWN",
+        "note": null
+      },
+      "provenance": {
+        "source": "provider-download",
+        "detail": "Recurring mascot reference downloaded from the Flow project media (operator-attributed asset from the earlier mascot live-validation phase); canonical character identity for 1G.12 Case D"
+      },
+      "qualityStatus": "APPROVED",
+      "selection": {
+        "status": "SELECTED",
+        "decidedAt": "2026-10-05T03:36:25.422Z",
+        "reason": "1G.12 Case D recurring-character reference"
+      },
+      "lock": {
+        "locked": true,
+        "reason": "1G.12 Case D locked character reference (mascot-guide)",
+        "lockedAt": "2026-10-05T03:36:25.440Z",
+        "actor": null,
+        "unlockedAt": "2026-10-05T03:36:25.421Z",
+        "unlockReason": "idempotent re-run"
+      },
+      "createdAt": "2026-10-05T03:36:25.345Z",
+      "updatedAt": "2026-10-05T03:36:25.440Z"
+    },
+    "as-0fde400d6392": {
+      "version": "1.0.0",
+      "assetId": "as-0fde400d6392",
+      "projectId": "phase1g12-case-a",
+      "type": "video",
+      "role": "BROLL",
+      "source": "generated",
+      "provider": "google-flow",
+      "jobId": "d11",
+      "shotId": "D-SH01",
+      "characterIds": [
+        "mascot-guide"
+      ],
+      "locationIds": [],
+      "promptVersion": "pp-d-D1-v1",
+      "modelVersion": "google--gemini-omni-flash--1-1",
+      "referenceIds": [
+        "as-a7801df9bf0f"
+      ],
+      "instructionVersion": "iv-7e784d73e229",
+      "derivedFrom": [
+        "as-a7801df9bf0f"
+      ],
+      "hash": {
+        "algo": "sha256",
+        "value": "0fde400d63929dcea574645d2fa8eea6f4990d8ac199db9446f1c26b7cbc3250"
+      },
+      "bytes": 480069,
+      "relativePath": null,
+      "dimensions": {
+        "width": 1280,
+        "height": 720
+      },
+      "durationMs": 4010,
+      "rights": {
+        "status": "UNKNOWN",
+        "note": null
+      },
+      "provenance": {
+        "source": "provider-download",
+        "detail": "Case D shot D1 attempt 1: Flow download (neutral presenter), mascot-guide reference-guided (Ingredients) lineage"
+      },
+      "qualityStatus": "UNREVIEWED",
+      "selection": {
+        "status": "UNSET",
+        "decidedAt": null,
+        "reason": null
+      },
+      "lock": {
+        "locked": false,
+        "reason": null,
+        "lockedAt": null,
+        "actor": null,
+        "unlockedAt": null,
+        "unlockReason": null
+      },
+      "createdAt": "2026-10-05T04:05:07.634Z",
+      "updatedAt": "2026-10-05T04:05:07.634Z"
+    },
+    "as-c9f0fdc1d1e4": {
+      "version": "1.0.0",
+      "assetId": "as-c9f0fdc1d1e4",
+      "projectId": "phase1g12-case-a",
+      "type": "video",
+      "role": "BROLL",
+      "source": "generated",
+      "provider": "google-flow",
+      "jobId": "d21",
+      "shotId": "D-SH02",
+      "characterIds": [
+        "mascot-guide"
+      ],
+      "locationIds": [],
+      "promptVersion": "pp-d-D2-v1",
+      "modelVersion": "google--gemini-omni-flash--1-1",
+      "referenceIds": [
+        "as-a7801df9bf0f"
+      ],
+      "instructionVersion": "iv-7e784d73e229",
+      "derivedFrom": [
+        "as-a7801df9bf0f"
+      ],
+      "hash": {
+        "algo": "sha256",
+        "value": "c9f0fdc1d1e4cca299b01f7074d4913635c58ff7c9570d507e0a7e085b677b05"
+      },
+      "bytes": 681479,
+      "relativePath": null,
+      "dimensions": {
+        "width": 1280,
+        "height": 720
+      },
+      "durationMs": 4010,
+      "rights": {
+        "status": "UNKNOWN",
+        "note": null
+      },
+      "provenance": {
+        "source": "provider-download",
+        "detail": "Case D shot D2 attempt 1: Flow download (presenting gesture), mascot-guide reference-guided (Ingredients) lineage"
+      },
+      "qualityStatus": "UNREVIEWED",
+      "selection": {
+        "status": "UNSET",
+        "decidedAt": null,
+        "reason": null
+      },
+      "lock": {
+        "locked": false,
+        "reason": null,
+        "lockedAt": null,
+        "actor": null,
+        "unlockedAt": null,
+        "unlockReason": null
+      },
+      "createdAt": "2026-10-05T04:15:50.165Z",
+      "updatedAt": "2026-10-05T04:15:50.165Z"
+    },
+    "as-0625f69f9867": {
+      "version": "1.0.0",
+      "assetId": "as-0625f69f9867",
+      "projectId": "phase1g12-case-a",
+      "type": "video",
+      "role": "BROLL",
+      "source": "generated",
+      "provider": "google-flow",
+      "jobId": "d31",
+      "shotId": "D-SH03",
+      "characterIds": [
+        "mascot-guide"
+      ],
+      "locationIds": [],
+      "promptVersion": "pp-d-D3-v1",
+      "modelVersion": "google--gemini-omni-flash--1-1",
+      "referenceIds": [
+        "as-a7801df9bf0f"
+      ],
+      "instructionVersion": "iv-7e784d73e229",
+      "derivedFrom": [
+        "as-a7801df9bf0f"
+      ],
+      "hash": {
+        "algo": "sha256",
+        "value": "0625f69f986751809600e51bb1628e0fef6b717fdda5048cdd4ad96576901f9c"
+      },
+      "bytes": 526697,
+      "relativePath": null,
+      "dimensions": {
+        "width": 1280,
+        "height": 720
+      },
+      "durationMs": 4010,
+      "rights": {
+        "status": "UNKNOWN",
+        "note": null
+      },
+      "provenance": {
+        "source": "provider-download",
+        "detail": "Case D shot D3 attempt 1: Flow download (turn + settle), mascot-guide reference-guided (Ingredients) lineage"
+      },
+      "qualityStatus": "UNREVIEWED",
+      "selection": {
+        "status": "UNSET",
+        "decidedAt": null,
+        "reason": null
+      },
+      "lock": {
+        "locked": false,
+        "reason": null,
+        "lockedAt": null,
+        "actor": null,
+        "unlockedAt": null,
+        "unlockReason": null
+      },
+      "createdAt": "2026-10-05T04:22:12.257Z",
+      "updatedAt": "2026-10-05T04:22:12.257Z"
+    }
+  }
+}

@@ -1,0 +1,5083 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectId": "phase1g12-case-a",
+  "revision": 7,
+  "createdAt": "2026-10-05T08:09:59.866Z",
+  "updatedAt": "2026-10-05T08:14:55.847Z",
+  "policy": {
+    "policyVersion": "1.0.0",
+    "createdAt": "2026-10-05T08:09:59.866Z",
+    "rules": [
+      {
+        "match": "/^assets\\//",
+        "class": "SELECTED_ASSET",
+        "durability": "DURABLE",
+        "why": "managed asset bytes"
+      },
+      {
+        "match": "/^(qa|case|budget|budget-plans|telemetry|history|manifest|golden)\\//",
+        "class": "EVIDENCE",
+        "durability": "DURABLE",
+        "why": "evidence / canonical state"
+      },
+      {
+        "match": "/^decision\\//",
+        "class": "EVIDENCE",
+        "durability": "DURABLE",
+        "why": "production decision record"
+      },
+      {
+        "match": "/^prompts\\//",
+        "class": "SELECTED_ASSET",
+        "durability": "DURABLE",
+        "why": "compiled production input"
+      },
+      {
+        "match": "/^scene\\//",
+        "class": "EVIDENCE",
+        "durability": "DURABLE",
+        "why": "scene contract"
+      },
+      {
+        "match": "/^render\\//",
+        "class": "RENDERED_PROXY",
+        "durability": "RETENTION_MANAGED",
+        "why": "render input/staging (final outputs elevate separately)"
+      },
+      {
+        "match": "/^timing\\//",
+        "class": "EVIDENCE",
+        "durability": "DURABLE",
+        "why": "measured timing evidence"
+      },
+      {
+        "match": "/^preflight\\//",
+        "class": "EVIDENCE",
+        "durability": "DURABLE",
+        "why": "preflight gate evidence"
+      },
+      {
+        "match": "/^downloads\\//",
+        "class": "CACHE",
+        "durability": "REGENERABLE",
+        "why": "provider download staging (re-downloadable)"
+      },
+      {
+        "match": "/\\.tmp$|\\.bak$|~$/",
+        "class": "TEMPORARY",
+        "durability": "EPHEMERAL",
+        "why": "scratch naming"
+      }
+    ],
+    "defaultRejectedRetention": "KEEP_FOR_PROJECT"
+  },
+  "inventory": {
+    "asset-manifest.json": {
+      "artifactRef": "asset-manifest.json",
+      "path": "asset-manifest.json",
+      "size": 233,
+      "hash": "3db3babd20b0f7189e75d53e13f50ea7b5564cdd50852f59a848f5c8cce405e7",
+      "storageClass": "TEMPORARY",
+      "durability": "RETENTION_MANAGED",
+      "retentionReasons": [
+        "NEEDS_CLASSIFICATION"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "assets/case-a-source.png": {
+      "artifactRef": "assets/case-a-source.png",
+      "path": "assets/case-a-source.png",
+      "size": 2080,
+      "hash": "1186233d1af671fcb50ff5084ded613777105ba87cf0d951481ab236ba5b322e",
+      "storageClass": "SELECTED_ASSET",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "FINAL_OUTPUT"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "assets/library-index.json": {
+      "artifactRef": "assets/library-index.json",
+      "path": "assets/library-index.json",
+      "size": 18065,
+      "hash": "bfec6d9175f67271ba4be8ba3ec6f38f0c57ebaf0ca9d5960e2bb24c2ef734ca",
+      "storageClass": "SELECTED_ASSET",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "FINAL_OUTPUT",
+        "LOCKED"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "budget-plans/1g12-bcd.json": {
+      "artifactRef": "budget-plans/1g12-bcd.json",
+      "path": "budget-plans/1g12-bcd.json",
+      "size": 3122,
+      "hash": "d4076ac4833d5155811d8e0e20a68e0bc1a56db854578cc08e73096e113a8fde",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "budget-plans/1g12-d-amendment.json": {
+      "artifactRef": "budget-plans/1g12-d-amendment.json",
+      "path": "budget-plans/1g12-d-amendment.json",
+      "size": 2423,
+      "hash": "a41a2ace7647d63110123298c992269c60dd9f414eb8eebc350b6ad1b417a5c0",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "budget/case-bcd-proposal.json": {
+      "artifactRef": "budget/case-bcd-proposal.json",
+      "path": "budget/case-bcd-proposal.json",
+      "size": 12447,
+      "hash": "f9bb79734c5d6e7cda63f80c88ea901d45908a319a1bdb956fccd4cba7d4b3f9",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "budget/ledger.json": {
+      "artifactRef": "budget/ledger.json",
+      "path": "budget/ledger.json",
+      "size": 3527,
+      "hash": "1270435c7de1a8dbe9e40e8124f1b3f82a1e8d2ed444ae41ae9676a0acca5acf",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE",
+        "GOLDEN_BASELINE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "case/b-sh01-prompt-v2.json": {
+      "artifactRef": "case/b-sh01-prompt-v2.json",
+      "path": "case/b-sh01-prompt-v2.json",
+      "size": 657,
+      "hash": "fc12e099054cc7e966eb7c7c26dbd3b688a57bc601f6403c14ed75290c98ccef",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "case/c-sh01-prompt-v1.json": {
+      "artifactRef": "case/c-sh01-prompt-v1.json",
+      "path": "case/c-sh01-prompt-v1.json",
+      "size": 817,
+      "hash": "a2228e26ebdbf4f5423066013b77d9c04ffdb6baf2b68b8905bcb1f1c4086a6b",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "case/case-a-result.json": {
+      "artifactRef": "case/case-a-result.json",
+      "path": "case/case-a-result.json",
+      "size": 1245,
+      "hash": "f2213d97ebee0816c5048032d23436656fd669d6c6eca3fe0a8ce711ff557de4",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "case/case-b-attempt-01-correlation.json": {
+      "artifactRef": "case/case-b-attempt-01-correlation.json",
+      "path": "case/case-b-attempt-01-correlation.json",
+      "size": 937,
+      "hash": "9ad2b366879544125e0636f33d19995b23c888dc2465a47081ea424b76f1329d",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "case/case-b-attempt-01-repair.json": {
+      "artifactRef": "case/case-b-attempt-01-repair.json",
+      "path": "case/case-b-attempt-01-repair.json",
+      "size": 678,
+      "hash": "eb8a32dbabe8936e7393619c695b83531e431691f3578d6e48e9a12d373ec78c",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "case/case-b-attempt-01-result.json": {
+      "artifactRef": "case/case-b-attempt-01-result.json",
+      "path": "case/case-b-attempt-01-result.json",
+      "size": 1437,
+      "hash": "05f1c005687caaf9504ab763ef0de4ee857cb5582df60292af7947522ba33cca",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "case/case-b-attempt-02-correlation.json": {
+      "artifactRef": "case/case-b-attempt-02-correlation.json",
+      "path": "case/case-b-attempt-02-correlation.json",
+      "size": 927,
+      "hash": "8e9c6d2e97109665c65ee08701859916cb08a9d98eb4afe47f2ecb57b3faa4ae",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "case/case-b-attempt-02-result.json": {
+      "artifactRef": "case/case-b-attempt-02-result.json",
+      "path": "case/case-b-attempt-02-result.json",
+      "size": 1554,
+      "hash": "7c745866c63a59affc3ec1d4369cdcb849092f974e5ea555b13c99cf531dcbcb",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "case/case-b-source-frame-correlation.json": {
+      "artifactRef": "case/case-b-source-frame-correlation.json",
+      "path": "case/case-b-source-frame-correlation.json",
+      "size": 1059,
+      "hash": "01c192ae6222d5c2f7651f0d3f3d4592a6070380e3c5a3c375c5120560617b0a",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "case/case-b-source-frame.json": {
+      "artifactRef": "case/case-b-source-frame.json",
+      "path": "case/case-b-source-frame.json",
+      "size": 371,
+      "hash": "61c182824b39e5c396e0f0dcc698bed89b647050f79d79468e691fb90257f56b",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "case/case-c-attempt-01-correlation.json": {
+      "artifactRef": "case/case-c-attempt-01-correlation.json",
+      "path": "case/case-c-attempt-01-correlation.json",
+      "size": 835,
+      "hash": "ba759d0a6ab98bbf10357b839af1b5d8d67df923adfd82b62945d43fd6e7a527",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "case/case-c-attempt-01-result.json": {
+      "artifactRef": "case/case-c-attempt-01-result.json",
+      "path": "case/case-c-attempt-01-result.json",
+      "size": 1528,
+      "hash": "405ef2b062e13be029e05fdb0147e0a3a9550e2f8f6f29b9e67f43895ddc8c07",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "case/case-c-frames.json": {
+      "artifactRef": "case/case-c-frames.json",
+      "path": "case/case-c-frames.json",
+      "size": 252,
+      "hash": "06b7e595461095fa16dcbad66d8ca89fca1dc930597439269fa081d5b689b5e4",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "case/case-d-D1-attempt-01-correlation.json": {
+      "artifactRef": "case/case-d-D1-attempt-01-correlation.json",
+      "path": "case/case-d-D1-attempt-01-correlation.json",
+      "size": 803,
+      "hash": "c79558cb42ca4feaaa9ffa1b91ac2e4afe1774659099056e47bd394de533ae7e",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "case/case-d-D1-attempt-01-result.json": {
+      "artifactRef": "case/case-d-D1-attempt-01-result.json",
+      "path": "case/case-d-D1-attempt-01-result.json",
+      "size": 1619,
+      "hash": "c77d13050a1cd9ed30a104ef001cd37bb2f030fa4b2527fe0956090b847a9dd9",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "case/case-d-D2-attempt-01-correlation.json": {
+      "artifactRef": "case/case-d-D2-attempt-01-correlation.json",
+      "path": "case/case-d-D2-attempt-01-correlation.json",
+      "size": 806,
+      "hash": "d54f6bd23a13f64ab5d5168a3de13af10b16e3b4888374be9f5a40eab715c991",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "case/case-d-D2-attempt-01-result.json": {
+      "artifactRef": "case/case-d-D2-attempt-01-result.json",
+      "path": "case/case-d-D2-attempt-01-result.json",
+      "size": 1622,
+      "hash": "c5c1f97cbb6b6c0dcf7c2d7df44fe62cfdbb29bf8074a7eacd501fd70a4eded8",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "case/case-d-D3-attempt-01-correlation.json": {
+      "artifactRef": "case/case-d-D3-attempt-01-correlation.json",
+      "path": "case/case-d-D3-attempt-01-correlation.json",
+      "size": 803,
+      "hash": "90ed945c42a219c7725af5031db84cb1a8b8383e81adee294cd92bd5da92fb90",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "case/case-d-D3-attempt-01-result.json": {
+      "artifactRef": "case/case-d-D3-attempt-01-result.json",
+      "path": "case/case-d-D3-attempt-01-result.json",
+      "size": 1619,
+      "hash": "8a1eaf6eb98f14056fa9485c613bd714188c6d23c8f34ee67ea4cc40cbf745ec",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "case/case-d-amendment-summary.json": {
+      "artifactRef": "case/case-d-amendment-summary.json",
+      "path": "case/case-d-amendment-summary.json",
+      "size": 3120,
+      "hash": "0bf916c3cdb68b20b9a5daeab3ab0e5be41720365e51b3c647d6a6d1a1090265",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "case/case-d-character.json": {
+      "artifactRef": "case/case-d-character.json",
+      "path": "case/case-d-character.json",
+      "size": 609,
+      "hash": "ea1c50954959eb6ddf9219fdd78ed05260c2f6550475ddce88170a22c10d4892",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "case/case-d-cross-shot-continuity.json": {
+      "artifactRef": "case/case-d-cross-shot-continuity.json",
+      "path": "case/case-d-cross-shot-continuity.json",
+      "size": 2037,
+      "hash": "e36d916c45b8cb23da3227c21f6503491cfdca47616f8a469c3f62b57600fe93",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE",
+        "GOLDEN_BASELINE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "case/case-d-resolutions.json": {
+      "artifactRef": "case/case-d-resolutions.json",
+      "path": "case/case-d-resolutions.json",
+      "size": 972,
+      "hash": "d094e90bc304aab7c7ac742203648bd858e281bae3489febadbef71647ba4686",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "case/case-d-result.json": {
+      "artifactRef": "case/case-d-result.json",
+      "path": "case/case-d-result.json",
+      "size": 2124,
+      "hash": "96e121592f20d4821e0dcd00bed28a0cd17c5864fdf11388dcae0d54dddf3c05",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "case/case-d-shot-plan.json": {
+      "artifactRef": "case/case-d-shot-plan.json",
+      "path": "case/case-d-shot-plan.json",
+      "size": 1875,
+      "hash": "62d7a8204b34a88bbdc877a01d227001e1761a85866d9bf62bf0c0636617efbf",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "case/determination-d-shot-reuse-01.json": {
+      "artifactRef": "case/determination-d-shot-reuse-01.json",
+      "path": "case/determination-d-shot-reuse-01.json",
+      "size": 1761,
+      "hash": "c8aa4906a7207f145d214bc8380bb11c444f3d3550538919e1815132afd2893d",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "case/live-ceremony-log.jsonl": {
+      "artifactRef": "case/live-ceremony-log.jsonl",
+      "path": "case/live-ceremony-log.jsonl",
+      "size": 15418,
+      "hash": "53b4aaaf83b7beded2b72ad9b26a9ce9761726c2fb1f0de6fda7f0e324968826",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "case/source-frame-identity-finding.json": {
+      "artifactRef": "case/source-frame-identity-finding.json",
+      "path": "case/source-frame-identity-finding.json",
+      "size": 3532,
+      "hash": "98dec3c7e7fa41249d95586bd877e6f87459372056d1a30616a3fe0cafe04a6b",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "decision/production-decision.json": {
+      "artifactRef": "decision/production-decision.json",
+      "path": "decision/production-decision.json",
+      "size": 1132,
+      "hash": "7e18e273e27254180c35b8a25e704e7832f15fb5c863ec4f674ffa311db7be4c",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "dependency-dag.json": {
+      "artifactRef": "dependency-dag.json",
+      "path": "dependency-dag.json",
+      "size": 10629,
+      "hash": "78eda876980cb650a3e232e719a0d39d8bf4873416d8701b4ea54960a75be2f1",
+      "storageClass": "TEMPORARY",
+      "durability": "RETENTION_MANAGED",
+      "retentionReasons": [
+        "NEEDS_CLASSIFICATION"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "downloads/Adult_guide_character_illustrati…_20261005103521.jpg": {
+      "artifactRef": "downloads/Adult_guide_character_illustrati…_20261005103521.jpg",
+      "path": "downloads/Adult_guide_character_illustrati…_20261005103521.jpg",
+      "size": 47102,
+      "hash": "a7801df9bf0f05ee20fb94a6e913824c2de151ad063994dd5d1c052d57428e7e",
+      "storageClass": "CACHE",
+      "durability": "REGENERABLE",
+      "retentionReasons": [],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "downloads/Blue_circle_grows_on_background_20261005103017.mp4": {
+      "artifactRef": "downloads/Blue_circle_grows_on_background_20261005103017.mp4",
+      "path": "downloads/Blue_circle_grows_on_background_20261005103017.mp4",
+      "size": 513968,
+      "hash": "6182cea3f996e973ee8c99cf43cd7f5527c18975f8a6e8d0487587913ff04c3f",
+      "storageClass": "CACHE",
+      "durability": "REGENERABLE",
+      "retentionReasons": [],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "downloads/Blue_circle_on_light_background_20261005095739.jpg": {
+      "artifactRef": "downloads/Blue_circle_on_light_background_20261005095739.jpg",
+      "path": "downloads/Blue_circle_on_light_background_20261005095739.jpg",
+      "size": 30087,
+      "hash": "fe697fd1fef86e607d743694c223ab8a93347754ba353f1f7eb0cccfbfab9ab7",
+      "storageClass": "CACHE",
+      "durability": "REGENERABLE",
+      "retentionReasons": [],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "downloads/Character_presenting_palm-up_ges…_20261005111411.mp4": {
+      "artifactRef": "downloads/Character_presenting_palm-up_ges…_20261005111411.mp4",
+      "path": "downloads/Character_presenting_palm-up_ges…_20261005111411.mp4",
+      "size": 681479,
+      "hash": "c9f0fdc1d1e4cca299b01f7074d4913635c58ff7c9570d507e0a7e085b677b05",
+      "storageClass": "CACHE",
+      "durability": "REGENERABLE",
+      "retentionReasons": [],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "downloads/Character_turning_to_hips_stance_20261005112125.mp4": {
+      "artifactRef": "downloads/Character_turning_to_hips_stance_20261005112125.mp4",
+      "path": "downloads/Character_turning_to_hips_stance_20261005112125.mp4",
+      "size": 526697,
+      "hash": "0625f69f986751809600e51bb1628e0fef6b717fdda5048cdd4ad96576901f9c",
+      "storageClass": "CACHE",
+      "durability": "REGENERABLE",
+      "retentionReasons": [],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "downloads/Character_waving_friendly_stance_20261005105730.mp4": {
+      "artifactRef": "downloads/Character_waving_friendly_stance_20261005105730.mp4",
+      "path": "downloads/Character_waving_friendly_stance_20261005105730.mp4",
+      "size": 480069,
+      "hash": "0fde400d63929dcea574645d2fa8eea6f4990d8ac199db9446f1c26b7cbc3250",
+      "storageClass": "CACHE",
+      "durability": "REGENERABLE",
+      "retentionReasons": [],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "downloads/Slow_push-in_on_blue_circle_20261005101624.mp4": {
+      "artifactRef": "downloads/Slow_push-in_on_blue_circle_20261005101624.mp4",
+      "path": "downloads/Slow_push-in_on_blue_circle_20261005101624.mp4",
+      "size": 466189,
+      "hash": "fafd1ac4c96b37ee98eaf6599b529dcf3a60e97b4947b961a195ea530629998c",
+      "storageClass": "CACHE",
+      "durability": "REGENERABLE",
+      "retentionReasons": [],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "downloads/c-end-frame-candidate.jpg": {
+      "artifactRef": "downloads/c-end-frame-candidate.jpg",
+      "path": "downloads/c-end-frame-candidate.jpg",
+      "size": 18935,
+      "hash": "5e0bb7f87d4ddcd9f36d886ce4160b7e8058e97546e9086fd59b558ede02d848",
+      "storageClass": "CACHE",
+      "durability": "REGENERABLE",
+      "retentionReasons": [],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "governance/compliance.json": {
+      "artifactRef": "governance/compliance.json",
+      "path": "governance/compliance.json",
+      "size": 9499,
+      "hash": "473f69a2f90bfeda94eca25d4781210f26b40e031acd17fef05bcfea255386cc",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "governance/provenance.json": {
+      "artifactRef": "governance/provenance.json",
+      "path": "governance/provenance.json",
+      "size": 17627,
+      "hash": "966fcf0c8672d034f8266f07101ecf59769131c6d982e333b3905dbdbe100881",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "governance/storage.json": {
+      "artifactRef": "governance/storage.json",
+      "path": "governance/storage.json",
+      "size": 89673,
+      "hash": "2389e54baf81456f2000b495ee9710d4e7eb062161df31b71556ba48fa844885",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "history/history.json": {
+      "artifactRef": "history/history.json",
+      "path": "history/history.json",
+      "size": 18001,
+      "hash": "bf3705a6b77cd56058c6c5f0e635e236d00dc4939ec7a0a99e28a59b850a5c91",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "manifest/project-manifest.json": {
+      "artifactRef": "manifest/project-manifest.json",
+      "path": "manifest/project-manifest.json",
+      "size": 4995,
+      "hash": "4d374b5ad8816afbf674e630d17cef944dd740ecf00cec067bfe9ed16edc8b39",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "preflight/media-preflight.json": {
+      "artifactRef": "preflight/media-preflight.json",
+      "path": "preflight/media-preflight.json",
+      "size": 301,
+      "hash": "265e8d9fe6e41887380ad1057fcb791dce1850d6ddbacac017112a85e6343c3e",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "prompts/B-SH01/VIDEO.json": {
+      "artifactRef": "prompts/B-SH01/VIDEO.json",
+      "path": "prompts/B-SH01/VIDEO.json",
+      "size": 4162,
+      "hash": "992570d75d36819562b7f41acde4da809c210ee6ea48e6df90b30b090fdc71d9",
+      "storageClass": "SELECTED_ASSET",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "FINAL_OUTPUT"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "prompts/sh-45705d133244/VIDEO.json": {
+      "artifactRef": "prompts/sh-45705d133244/VIDEO.json",
+      "path": "prompts/sh-45705d133244/VIDEO.json",
+      "size": 3604,
+      "hash": "19222a6b95ab8297c0bb34bdafb545a235a06c46775bc720018194f47d6aec29",
+      "storageClass": "SELECTED_ASSET",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "FINAL_OUTPUT"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "prompts/sh-6feb6bbd91cc/VIDEO.json": {
+      "artifactRef": "prompts/sh-6feb6bbd91cc/VIDEO.json",
+      "path": "prompts/sh-6feb6bbd91cc/VIDEO.json",
+      "size": 3771,
+      "hash": "0c36956c64955c4f785f197e5e791db09da541cb1c1515a7d0b8f36e21158a75",
+      "storageClass": "SELECTED_ASSET",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "FINAL_OUTPUT"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "prompts/sh-cc6f74a027f8/VIDEO.json": {
+      "artifactRef": "prompts/sh-cc6f74a027f8/VIDEO.json",
+      "path": "prompts/sh-cc6f74a027f8/VIDEO.json",
+      "size": 4381,
+      "hash": "e033527a7a8185b7a15f2ba96b77e64ad868773299e5034413bb30d21f60e476",
+      "storageClass": "SELECTED_ASSET",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "FINAL_OUTPUT"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "prompts/sh-da55407b73e4/VIDEO.json": {
+      "artifactRef": "prompts/sh-da55407b73e4/VIDEO.json",
+      "path": "prompts/sh-da55407b73e4/VIDEO.json",
+      "size": 3582,
+      "hash": "9bd1ad4fd832fad6b7d90d5d1d1a54ae2fb53c0946d5f03370122a757a00123a",
+      "storageClass": "SELECTED_ASSET",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "FINAL_OUTPUT"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "prompts/sh-fd0464c1c9b4/VIDEO.json": {
+      "artifactRef": "prompts/sh-fd0464c1c9b4/VIDEO.json",
+      "path": "prompts/sh-fd0464c1c9b4/VIDEO.json",
+      "size": 3588,
+      "hash": "5f02a39573d87b8bc88076c0be80c997f029189e4a6beb3dedb3d24582361bb1",
+      "storageClass": "SELECTED_ASSET",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "FINAL_OUTPUT"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/as-0625f69f9867/qa-d5deba72dc40.json": {
+      "artifactRef": "qa/as-0625f69f9867/qa-d5deba72dc40.json",
+      "path": "qa/as-0625f69f9867/qa-d5deba72dc40.json",
+      "size": 14044,
+      "hash": "28e8311e9f4e03cd5e094905bb1382f3f43b4a74f66150cca25e9f5906bcf18c",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/as-0fde400d6392/qa-a778b5a05d9f.json": {
+      "artifactRef": "qa/as-0fde400d6392/qa-a778b5a05d9f.json",
+      "path": "qa/as-0fde400d6392/qa-a778b5a05d9f.json",
+      "size": 14024,
+      "hash": "045e478647d83847139c8198ec9a1c372f6137a2effd0d53cf69fed80e5f5b04",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/as-4bd9e3ccdc42/qa-246f02c61e93.json": {
+      "artifactRef": "qa/as-4bd9e3ccdc42/qa-246f02c61e93.json",
+      "path": "qa/as-4bd9e3ccdc42/qa-246f02c61e93.json",
+      "size": 13688,
+      "hash": "1e510434ad1c774aff5230b6ef1953da6d846ea355dd05808cc23234f195b3cf",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/as-4bd9e3ccdc42/qa-fafe08bf36c5.json": {
+      "artifactRef": "qa/as-4bd9e3ccdc42/qa-fafe08bf36c5.json",
+      "path": "qa/as-4bd9e3ccdc42/qa-fafe08bf36c5.json",
+      "size": 13642,
+      "hash": "71bb8fb4e257cfafaa4abd0b62342d59d18fa2c2279f44441c700e9d348e95a7",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/as-5e0bb7f87d4d/qa-6938de6b9bff.json": {
+      "artifactRef": "qa/as-5e0bb7f87d4d/qa-6938de6b9bff.json",
+      "path": "qa/as-5e0bb7f87d4d/qa-6938de6b9bff.json",
+      "size": 12425,
+      "hash": "2aa795c04bbbbaec40aedeae1ea48d2395ca4c460ead87fad6f78353f1fcdcc1",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/as-6182cea3f996/qa-fa372cd95c4f.json": {
+      "artifactRef": "qa/as-6182cea3f996/qa-fa372cd95c4f.json",
+      "path": "qa/as-6182cea3f996/qa-fa372cd95c4f.json",
+      "size": 13452,
+      "hash": "42d60a4b39e243f9d03d72aa7b3be3f8dba9f76696c309300908985329335734",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/as-a7801df9bf0f/qa-b718611eb7bb.json": {
+      "artifactRef": "qa/as-a7801df9bf0f/qa-b718611eb7bb.json",
+      "path": "qa/as-a7801df9bf0f/qa-b718611eb7bb.json",
+      "size": 11855,
+      "hash": "3b3a63269ab5a12485eddea32c647d9ec7189627889e5a1f2bd81b563ac37e66",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/as-c9f0fdc1d1e4/qa-5e0a58b7ef46.json": {
+      "artifactRef": "qa/as-c9f0fdc1d1e4/qa-5e0a58b7ef46.json",
+      "path": "qa/as-c9f0fdc1d1e4/qa-5e0a58b7ef46.json",
+      "size": 14044,
+      "hash": "407abcba2085a52724f1a00bcb038db2d6d25b3d297096fbd55969341f868ea7",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/as-d235316b9af5/qa-1fa9f696fbcf.json": {
+      "artifactRef": "qa/as-d235316b9af5/qa-1fa9f696fbcf.json",
+      "path": "qa/as-d235316b9af5/qa-1fa9f696fbcf.json",
+      "size": 16816,
+      "hash": "f5d8c3cb54d940c775ce64f30228a48178934c255d9b4dc587564ba252ba95a0",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/as-d235316b9af5/qa-a28bffe727e1.json": {
+      "artifactRef": "qa/as-d235316b9af5/qa-a28bffe727e1.json",
+      "path": "qa/as-d235316b9af5/qa-a28bffe727e1.json",
+      "size": 15232,
+      "hash": "a9732478a78cd6a852876ab42e6def7a8dc77a7f034f8d3e40cab5611d0dbc33",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/as-fafd1ac4c96b/qa-59111996c7d3.json": {
+      "artifactRef": "qa/as-fafd1ac4c96b/qa-59111996c7d3.json",
+      "path": "qa/as-fafd1ac4c96b/qa-59111996c7d3.json",
+      "size": 13490,
+      "hash": "e98225aede8719baab5d208de2f09633965f5588b37b2678bae452e8c933b033",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/as-fe697fd1fef8/qa-482d8c2b6b93.json": {
+      "artifactRef": "qa/as-fe697fd1fef8/qa-482d8c2b6b93.json",
+      "path": "qa/as-fe697fd1fef8/qa-482d8c2b6b93.json",
+      "size": 12725,
+      "hash": "0d65c71041a62fcbbdc1b7e3183acb0c6075dfe44d0943097e76fec871f8ce01",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/as-fe697fd1fef8/qa-7d78ef7c4104.json": {
+      "artifactRef": "qa/as-fe697fd1fef8/qa-7d78ef7c4104.json",
+      "path": "qa/as-fe697fd1fef8/qa-7d78ef7c4104.json",
+      "size": 12428,
+      "hash": "10d94c360cca38d158a3a4abdbeda48882bc8b86b1b0598160d543b3155bc8ee",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/b1-frame-first.png": {
+      "artifactRef": "qa/b1-frame-first.png",
+      "path": "qa/b1-frame-first.png",
+      "size": 137956,
+      "hash": "31e10fb10492d47a800c5274ffdd0c2076c1db6f42f7b6332443242c8221f1aa",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/b1-frame-last.png": {
+      "artifactRef": "qa/b1-frame-last.png",
+      "path": "qa/b1-frame-last.png",
+      "size": 257329,
+      "hash": "e3eb8993a506c89af909de30ffdf521e11b230e66999f1979c7f3c49d695bcfe",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/b1-frame-t2.png": {
+      "artifactRef": "qa/b1-frame-t2.png",
+      "path": "qa/b1-frame-t2.png",
+      "size": 50198,
+      "hash": "8f3fdd2b5d6d132182bf2f285df899e09f5065ac18b1bd8cffa4ffb501442e07",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/b1-frame-t4.png": {
+      "artifactRef": "qa/b1-frame-t4.png",
+      "path": "qa/b1-frame-t4.png",
+      "size": 50997,
+      "hash": "80c8daaed32571e20aaa1d57ad157b71d0183395aa845f184a2f2e4799b07422",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/b1-frame-t6.png": {
+      "artifactRef": "qa/b1-frame-t6.png",
+      "path": "qa/b1-frame-t6.png",
+      "size": 56115,
+      "hash": "669493d4ac6e34ee44c03e6ec0199cdc14aa45630472f258c4514b3b9c9f0f0a",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/b1-frame-t8.png": {
+      "artifactRef": "qa/b1-frame-t8.png",
+      "path": "qa/b1-frame-t8.png",
+      "size": 53924,
+      "hash": "4cea880a672b41b480c43613c21711efe20509e13df2be1f178e9dec8b104402",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/b2-frame-t0.1.png": {
+      "artifactRef": "qa/b2-frame-t0.1.png",
+      "path": "qa/b2-frame-t0.1.png",
+      "size": 35628,
+      "hash": "64c05805b2265cad86ebf2885a3610d9276c7b17be6c66af944d395ff3e571d3",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/b2-frame-t2.png": {
+      "artifactRef": "qa/b2-frame-t2.png",
+      "path": "qa/b2-frame-t2.png",
+      "size": 31069,
+      "hash": "06a7755c74db9d77ae96a3d091efa2d36a53113ae4076837d846630c59cbbc6e",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/b2-frame-t3.8.png": {
+      "artifactRef": "qa/b2-frame-t3.8.png",
+      "path": "qa/b2-frame-t3.8.png",
+      "size": 32834,
+      "hash": "df40645dc9dbc08a203fff3bc4993ca08e1b7979021e9ba9c5bd447834ca7c41",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/c1-frame-t0.1.png": {
+      "artifactRef": "qa/c1-frame-t0.1.png",
+      "path": "qa/c1-frame-t0.1.png",
+      "size": 27865,
+      "hash": "17c8af4709db39a071255dcd1c1b12065c96b4ca46bc196b6a482d6119f11bf3",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/c1-frame-t3.9.png": {
+      "artifactRef": "qa/c1-frame-t3.9.png",
+      "path": "qa/c1-frame-t3.9.png",
+      "size": 39099,
+      "hash": "a74c8cecee6941a1bf27096017a49d38c8efb883c08618d25dcd2db391477d90",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/case-a-qa-summary.json": {
+      "artifactRef": "qa/case-a-qa-summary.json",
+      "path": "qa/case-a-qa-summary.json",
+      "size": 872,
+      "hash": "04be0f2cb5487ee7e34d7e021aed06e0eddebf602eafa9478824402c64f254a4",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/case-b-attempt-01-qa-summary.json": {
+      "artifactRef": "qa/case-b-attempt-01-qa-summary.json",
+      "path": "qa/case-b-attempt-01-qa-summary.json",
+      "size": 1742,
+      "hash": "bc6f628b1d938527e884fcb13264d7ae13982262cc1bc096113e0011cb587efb",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/case-b-attempt-02-qa-summary.json": {
+      "artifactRef": "qa/case-b-attempt-02-qa-summary.json",
+      "path": "qa/case-b-attempt-02-qa-summary.json",
+      "size": 760,
+      "hash": "204abe7843a223f0623e325205dca91c9a05d6f05e59a1bad4958741862d303a",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/case-c-attempt-01-qa-summary.json": {
+      "artifactRef": "qa/case-c-attempt-01-qa-summary.json",
+      "path": "qa/case-c-attempt-01-qa-summary.json",
+      "size": 760,
+      "hash": "2413eb60c1ae7d452b655b5f7dc17e4d5aba467de9aca2a4cac2b8ac4b8a9ce2",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/case-d-D1-attempt-01-qa-summary.json": {
+      "artifactRef": "qa/case-d-D1-attempt-01-qa-summary.json",
+      "path": "qa/case-d-D1-attempt-01-qa-summary.json",
+      "size": 760,
+      "hash": "5fd505721f0a522d35575851261476ba45271eb88ed11cfcec1e8255f1e1a94f",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/case-d-D2-attempt-01-qa-summary.json": {
+      "artifactRef": "qa/case-d-D2-attempt-01-qa-summary.json",
+      "path": "qa/case-d-D2-attempt-01-qa-summary.json",
+      "size": 760,
+      "hash": "1123a74efb943955931e6a527c3e90e5afa9be7a3c97b3431a1bf06653457356",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/case-d-D3-attempt-01-qa-summary.json": {
+      "artifactRef": "qa/case-d-D3-attempt-01-qa-summary.json",
+      "path": "qa/case-d-D3-attempt-01-qa-summary.json",
+      "size": 760,
+      "hash": "328493b8d6539e63a079b34524bac44aaa523726c81071b583504a7c9b11dc5c",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/d1-frame-t0.1.png": {
+      "artifactRef": "qa/d1-frame-t0.1.png",
+      "path": "qa/d1-frame-t0.1.png",
+      "size": 37603,
+      "hash": "ef3f62306d51e3129ab9b7ddbef6285f1ee0a818582187b2f2e29d0bee663af8",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/d1-frame-t2.png": {
+      "artifactRef": "qa/d1-frame-t2.png",
+      "path": "qa/d1-frame-t2.png",
+      "size": 45466,
+      "hash": "3e8e3d4c4c5126fd2aa283f2acebecf9ad4c27a5c184b0932dd596cd16f2dceb",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/d1-frame-t3.8.png": {
+      "artifactRef": "qa/d1-frame-t3.8.png",
+      "path": "qa/d1-frame-t3.8.png",
+      "size": 41292,
+      "hash": "214b11c91fc613ff7855e437354eaff5c4f681e2358ca1b1dd77100cf96fbae0",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/d1-frames/d1-frame-t0.1.png": {
+      "artifactRef": "qa/d1-frames/d1-frame-t0.1.png",
+      "path": "qa/d1-frames/d1-frame-t0.1.png",
+      "size": 37603,
+      "hash": "ef3f62306d51e3129ab9b7ddbef6285f1ee0a818582187b2f2e29d0bee663af8",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/d1-frames/d1-frame-t2.png": {
+      "artifactRef": "qa/d1-frames/d1-frame-t2.png",
+      "path": "qa/d1-frames/d1-frame-t2.png",
+      "size": 45466,
+      "hash": "3e8e3d4c4c5126fd2aa283f2acebecf9ad4c27a5c184b0932dd596cd16f2dceb",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/d1-frames/d1-frame-t3.8.png": {
+      "artifactRef": "qa/d1-frames/d1-frame-t3.8.png",
+      "path": "qa/d1-frames/d1-frame-t3.8.png",
+      "size": 41292,
+      "hash": "214b11c91fc613ff7855e437354eaff5c4f681e2358ca1b1dd77100cf96fbae0",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/d2-frame-t0.1.png": {
+      "artifactRef": "qa/d2-frame-t0.1.png",
+      "path": "qa/d2-frame-t0.1.png",
+      "size": 105244,
+      "hash": "02604b62680f2801d900a8191c124acf0065361ba2b68082bd2cb913c44bf45b",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/d2-frame-t2.png": {
+      "artifactRef": "qa/d2-frame-t2.png",
+      "path": "qa/d2-frame-t2.png",
+      "size": 119059,
+      "hash": "6a0138473b986702c761dc1b1fe583565c6843aa713b0be1935d9a2a6a8dc472",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/d2-frame-t3.8.png": {
+      "artifactRef": "qa/d2-frame-t3.8.png",
+      "path": "qa/d2-frame-t3.8.png",
+      "size": 122514,
+      "hash": "9bcb38bb40148b64142e72b94b06468096b7c299ac2b4115b12102c48a589a2f",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/d2-frames/d2-frame-t0.1.png": {
+      "artifactRef": "qa/d2-frames/d2-frame-t0.1.png",
+      "path": "qa/d2-frames/d2-frame-t0.1.png",
+      "size": 105244,
+      "hash": "02604b62680f2801d900a8191c124acf0065361ba2b68082bd2cb913c44bf45b",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/d2-frames/d2-frame-t2.png": {
+      "artifactRef": "qa/d2-frames/d2-frame-t2.png",
+      "path": "qa/d2-frames/d2-frame-t2.png",
+      "size": 119059,
+      "hash": "6a0138473b986702c761dc1b1fe583565c6843aa713b0be1935d9a2a6a8dc472",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/d2-frames/d2-frame-t3.8.png": {
+      "artifactRef": "qa/d2-frames/d2-frame-t3.8.png",
+      "path": "qa/d2-frames/d2-frame-t3.8.png",
+      "size": 122514,
+      "hash": "9bcb38bb40148b64142e72b94b06468096b7c299ac2b4115b12102c48a589a2f",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/d3-frame-t0.1.png": {
+      "artifactRef": "qa/d3-frame-t0.1.png",
+      "path": "qa/d3-frame-t0.1.png",
+      "size": 35619,
+      "hash": "588e188e2749eff7950f8ca3fd969fb6045137cfcf696be1aa02aec0642347e9",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/d3-frame-t2.png": {
+      "artifactRef": "qa/d3-frame-t2.png",
+      "path": "qa/d3-frame-t2.png",
+      "size": 31070,
+      "hash": "58d652655d5a1f3a8f2f767a3af202ded9ec428976039901024a537e64c5fc3c",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/d3-frame-t3.8.png": {
+      "artifactRef": "qa/d3-frame-t3.8.png",
+      "path": "qa/d3-frame-t3.8.png",
+      "size": 36598,
+      "hash": "92bf0e9cc36ffd04426f4a3514243c5365ba1a8299b5aa20219c85d9c54cd5bb",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "qa/index.json": {
+      "artifactRef": "qa/index.json",
+      "path": "qa/index.json",
+      "size": 1903,
+      "hash": "ea4852f3d21ba89d114859184af8f520e2b3facc516c6fcf955d91ec27a20512",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "recovery/checkpoints.json": {
+      "artifactRef": "recovery/checkpoints.json",
+      "path": "recovery/checkpoints.json",
+      "size": 9096,
+      "hash": "7729016862a5eb7ae98fc73079fc7599433d522846a2dfeef4487caed856e2ec",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "recovery/operations.json": {
+      "artifactRef": "recovery/operations.json",
+      "path": "recovery/operations.json",
+      "size": 4817,
+      "hash": "ae3527a3687f3fba876d743d9e5bcb61e82824984240bdfb6ddf75113505d430",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "render/attempt-1/output.mp4": {
+      "artifactRef": "render/attempt-1/output.mp4",
+      "path": "render/attempt-1/output.mp4",
+      "size": 708511,
+      "hash": "4bd9e3ccdc428fab8546d3bf746191e73166dcdf754fbfe484709031e2f10bcc",
+      "storageClass": "RENDERED_PROXY",
+      "durability": "RETENTION_MANAGED",
+      "retentionReasons": [],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "render/attempt-1/progress.jsonl": {
+      "artifactRef": "render/attempt-1/progress.jsonl",
+      "path": "render/attempt-1/progress.jsonl",
+      "size": 3624,
+      "hash": "332d7ce2972076184a637a381b8315ea2e061bb423d3903a5d5b5a74e9696221",
+      "storageClass": "RENDERED_PROXY",
+      "durability": "RETENTION_MANAGED",
+      "retentionReasons": [],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "render/attempt-1/render.log": {
+      "artifactRef": "render/attempt-1/render.log",
+      "path": "render/attempt-1/render.log",
+      "size": 1473,
+      "hash": "c9ad5b47d26d0a8a583daa456cbc9e38a507c31c7e17b71cf29b898b26ed936b",
+      "storageClass": "RENDERED_PROXY",
+      "durability": "RETENTION_MANAGED",
+      "retentionReasons": [],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "render/attempt-2/output.mp4": {
+      "artifactRef": "render/attempt-2/output.mp4",
+      "path": "render/attempt-2/output.mp4",
+      "size": 708511,
+      "hash": "4bd9e3ccdc428fab8546d3bf746191e73166dcdf754fbfe484709031e2f10bcc",
+      "storageClass": "RENDERED_PROXY",
+      "durability": "RETENTION_MANAGED",
+      "retentionReasons": [],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "render/attempt-2/progress.jsonl": {
+      "artifactRef": "render/attempt-2/progress.jsonl",
+      "path": "render/attempt-2/progress.jsonl",
+      "size": 1841,
+      "hash": "326a0018086f0d91e6c660d83e762827114f585abae440cab13dc032c16c663b",
+      "storageClass": "RENDERED_PROXY",
+      "durability": "RETENTION_MANAGED",
+      "retentionReasons": [],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "render/attempt-2/render.log": {
+      "artifactRef": "render/attempt-2/render.log",
+      "path": "render/attempt-2/render.log",
+      "size": 634,
+      "hash": "836b6b31ad4d6be4d9ff75e4d8389d0e75bd12585b47d168466046fa399f9a6a",
+      "storageClass": "RENDERED_PROXY",
+      "durability": "RETENTION_MANAGED",
+      "retentionReasons": [],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "render/attempt-3/output.mp4": {
+      "artifactRef": "render/attempt-3/output.mp4",
+      "path": "render/attempt-3/output.mp4",
+      "size": 708511,
+      "hash": "4bd9e3ccdc428fab8546d3bf746191e73166dcdf754fbfe484709031e2f10bcc",
+      "storageClass": "RENDERED_PROXY",
+      "durability": "RETENTION_MANAGED",
+      "retentionReasons": [],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "render/attempt-3/progress.jsonl": {
+      "artifactRef": "render/attempt-3/progress.jsonl",
+      "path": "render/attempt-3/progress.jsonl",
+      "size": 1841,
+      "hash": "eb424bf4b7c4b4ba66de08a5a4793679bee25a9d72fad0b182a4d3904f590e28",
+      "storageClass": "RENDERED_PROXY",
+      "durability": "RETENTION_MANAGED",
+      "retentionReasons": [],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "render/attempt-3/render.log": {
+      "artifactRef": "render/attempt-3/render.log",
+      "path": "render/attempt-3/render.log",
+      "size": 634,
+      "hash": "5d65c34ac1bd3b857163154d7e26a03ee9a0cad214a72d14ab4790fed6757797",
+      "storageClass": "RENDERED_PROXY",
+      "durability": "RETENTION_MANAGED",
+      "retentionReasons": [],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "render/render-input-case-a.json": {
+      "artifactRef": "render/render-input-case-a.json",
+      "path": "render/render-input-case-a.json",
+      "size": 3201,
+      "hash": "67308ad01dd2cc7369412e0471291122772454e288f66cac8e25ced1ddf060f5",
+      "storageClass": "RENDERED_PROXY",
+      "durability": "RETENTION_MANAGED",
+      "retentionReasons": [],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "render/staging-manifest.json": {
+      "artifactRef": "render/staging-manifest.json",
+      "path": "render/staging-manifest.json",
+      "size": 395,
+      "hash": "648e224a2f002ce369b2a1a1e3d297b8c0e8c35d0676bd720c13326c8b553f46",
+      "storageClass": "RENDERED_PROXY",
+      "durability": "RETENTION_MANAGED",
+      "retentionReasons": [],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "scene-script.json": {
+      "artifactRef": "scene-script.json",
+      "path": "scene-script.json",
+      "size": 204,
+      "hash": "2a3f39ca0df9dbd6f9a322c6c7dd4add219c939f9f8c4902a31484b6c0f726df",
+      "storageClass": "TEMPORARY",
+      "durability": "RETENTION_MANAGED",
+      "retentionReasons": [
+        "NEEDS_CLASSIFICATION"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "scene/validation-scene-b.json": {
+      "artifactRef": "scene/validation-scene-b.json",
+      "path": "scene/validation-scene-b.json",
+      "size": 960,
+      "hash": "74bbfe42e99e73436989d179a142ea8ca5fe1ba45b0eac394c9bc6483c2302fe",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "scene/validation-scene-c.json": {
+      "artifactRef": "scene/validation-scene-c.json",
+      "path": "scene/validation-scene-c.json",
+      "size": 1041,
+      "hash": "169a207b7674eabc4568e0df5f1eaca90d0ccb2fdf6e2d895bf745979a01ac05",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "scene/validation-scene-d.json": {
+      "artifactRef": "scene/validation-scene-d.json",
+      "path": "scene/validation-scene-d.json",
+      "size": 951,
+      "hash": "feb26ef4ec1e53e3c33f7051395845aae823dea534ec5d0920c001698e05756f",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "scene/validation-scene.json": {
+      "artifactRef": "scene/validation-scene.json",
+      "path": "scene/validation-scene.json",
+      "size": 834,
+      "hash": "a6cdfa9148e334d6b0ce8264659cd67e4161a9a37c3200f6cf500605a24921df",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "telemetry/events.json": {
+      "artifactRef": "telemetry/events.json",
+      "path": "telemetry/events.json",
+      "size": 7071,
+      "hash": "a242e89d88bfacd5a8b5ae7350b43ff77db3621220d4f6f39223c3c6bbf11467",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "telemetry/evidence.json": {
+      "artifactRef": "telemetry/evidence.json",
+      "path": "telemetry/evidence.json",
+      "size": 2014,
+      "hash": "0d4430dddf620f3ed03fd61ca94cb14eba2288f691db93efa92c2e0c8231d9fa",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    },
+    "timing/timeline-measured.json": {
+      "artifactRef": "timing/timeline-measured.json",
+      "path": "timing/timeline-measured.json",
+      "size": 107,
+      "hash": "8547d30defe915a0e20e8cfe24f96050f1d2d23597034c86f25623f29a8371d7",
+      "storageClass": "EVIDENCE",
+      "durability": "DURABLE",
+      "retentionReasons": [
+        "QA_EVIDENCE"
+      ],
+      "createdAt": null,
+      "dependencyRefs": [],
+      "provenanceRef": null
+    }
+  },
+  "plans": {
+    "cln-96693500b36d": {
+      "planId": "cln-96693500b36d",
+      "projectId": "phase1g12-case-a",
+      "policyVersion": "1.0.0",
+      "candidates": [
+        {
+          "ref": "asset-manifest.json",
+          "size": 233,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "assets/case-a-source.png",
+          "size": 2080,
+          "verdict": "RETAIN",
+          "reason": "retention: FINAL_OUTPUT",
+          "blockingRefs": [
+            "FINAL_OUTPUT"
+          ]
+        },
+        {
+          "ref": "assets/library-index.json",
+          "size": 18065,
+          "verdict": "BLOCKED",
+          "reason": "locked target — explicit unlock/revision first",
+          "blockingRefs": [
+            "lock"
+          ]
+        },
+        {
+          "ref": "budget-plans/1g12-bcd.json",
+          "size": 3122,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "budget-plans/1g12-d-amendment.json",
+          "size": 2423,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "budget/case-bcd-proposal.json",
+          "size": 12447,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "budget/ledger.json",
+          "size": 3527,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE,GOLDEN_BASELINE",
+          "blockingRefs": [
+            "QA_EVIDENCE",
+            "GOLDEN_BASELINE"
+          ]
+        },
+        {
+          "ref": "case/b-sh01-prompt-v2.json",
+          "size": 657,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/c-sh01-prompt-v1.json",
+          "size": 817,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-a-result.json",
+          "size": 1245,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-b-attempt-01-correlation.json",
+          "size": 937,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-b-attempt-01-repair.json",
+          "size": 678,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-b-attempt-01-result.json",
+          "size": 1437,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-b-attempt-02-correlation.json",
+          "size": 927,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-b-attempt-02-result.json",
+          "size": 1554,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-b-source-frame-correlation.json",
+          "size": 1059,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-b-source-frame.json",
+          "size": 371,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-c-attempt-01-correlation.json",
+          "size": 835,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-c-attempt-01-result.json",
+          "size": 1528,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-c-frames.json",
+          "size": 252,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-D1-attempt-01-correlation.json",
+          "size": 803,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-D1-attempt-01-result.json",
+          "size": 1619,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-D2-attempt-01-correlation.json",
+          "size": 806,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-D2-attempt-01-result.json",
+          "size": 1622,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-D3-attempt-01-correlation.json",
+          "size": 803,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-D3-attempt-01-result.json",
+          "size": 1619,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-amendment-summary.json",
+          "size": 3120,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-character.json",
+          "size": 609,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-cross-shot-continuity.json",
+          "size": 2037,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE,GOLDEN_BASELINE",
+          "blockingRefs": [
+            "QA_EVIDENCE",
+            "GOLDEN_BASELINE"
+          ]
+        },
+        {
+          "ref": "case/case-d-resolutions.json",
+          "size": 972,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-result.json",
+          "size": 2124,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-shot-plan.json",
+          "size": 1875,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/determination-d-shot-reuse-01.json",
+          "size": 1761,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/live-ceremony-log.jsonl",
+          "size": 15418,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/source-frame-identity-finding.json",
+          "size": 3532,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "decision/production-decision.json",
+          "size": 1132,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "dependency-dag.json",
+          "size": 10629,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "downloads/Adult_guide_character_illustrati…_20261005103521.jpg",
+          "size": 47102,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "cache rebuildability unproven",
+          "blockingRefs": []
+        },
+        {
+          "ref": "downloads/Blue_circle_grows_on_background_20261005103017.mp4",
+          "size": 513968,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "cache rebuildability unproven",
+          "blockingRefs": []
+        },
+        {
+          "ref": "downloads/Blue_circle_on_light_background_20261005095739.jpg",
+          "size": 30087,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "cache rebuildability unproven",
+          "blockingRefs": []
+        },
+        {
+          "ref": "downloads/Character_presenting_palm-up_ges…_20261005111411.mp4",
+          "size": 681479,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "cache rebuildability unproven",
+          "blockingRefs": []
+        },
+        {
+          "ref": "downloads/Character_turning_to_hips_stance_20261005112125.mp4",
+          "size": 526697,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "cache rebuildability unproven",
+          "blockingRefs": []
+        },
+        {
+          "ref": "downloads/Character_waving_friendly_stance_20261005105730.mp4",
+          "size": 480069,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "cache rebuildability unproven",
+          "blockingRefs": []
+        },
+        {
+          "ref": "downloads/Slow_push-in_on_blue_circle_20261005101624.mp4",
+          "size": 466189,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "cache rebuildability unproven",
+          "blockingRefs": []
+        },
+        {
+          "ref": "downloads/c-end-frame-candidate.jpg",
+          "size": 18935,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "cache rebuildability unproven",
+          "blockingRefs": []
+        },
+        {
+          "ref": "governance/compliance.json",
+          "size": 9499,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "governance/provenance.json",
+          "size": 17627,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "governance/storage.json",
+          "size": 59494,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "history/history.json",
+          "size": 18001,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "manifest/project-manifest.json",
+          "size": 4995,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "preflight/media-preflight.json",
+          "size": 301,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "prompts/B-SH01/VIDEO.json",
+          "size": 4162,
+          "verdict": "RETAIN",
+          "reason": "retention: FINAL_OUTPUT",
+          "blockingRefs": [
+            "FINAL_OUTPUT"
+          ]
+        },
+        {
+          "ref": "prompts/sh-45705d133244/VIDEO.json",
+          "size": 3604,
+          "verdict": "RETAIN",
+          "reason": "retention: FINAL_OUTPUT",
+          "blockingRefs": [
+            "FINAL_OUTPUT"
+          ]
+        },
+        {
+          "ref": "prompts/sh-6feb6bbd91cc/VIDEO.json",
+          "size": 3771,
+          "verdict": "RETAIN",
+          "reason": "retention: FINAL_OUTPUT",
+          "blockingRefs": [
+            "FINAL_OUTPUT"
+          ]
+        },
+        {
+          "ref": "prompts/sh-cc6f74a027f8/VIDEO.json",
+          "size": 4381,
+          "verdict": "RETAIN",
+          "reason": "retention: FINAL_OUTPUT",
+          "blockingRefs": [
+            "FINAL_OUTPUT"
+          ]
+        },
+        {
+          "ref": "prompts/sh-da55407b73e4/VIDEO.json",
+          "size": 3582,
+          "verdict": "RETAIN",
+          "reason": "retention: FINAL_OUTPUT",
+          "blockingRefs": [
+            "FINAL_OUTPUT"
+          ]
+        },
+        {
+          "ref": "prompts/sh-fd0464c1c9b4/VIDEO.json",
+          "size": 3588,
+          "verdict": "RETAIN",
+          "reason": "retention: FINAL_OUTPUT",
+          "blockingRefs": [
+            "FINAL_OUTPUT"
+          ]
+        },
+        {
+          "ref": "qa/as-0625f69f9867/qa-d5deba72dc40.json",
+          "size": 14044,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-0fde400d6392/qa-a778b5a05d9f.json",
+          "size": 14024,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-4bd9e3ccdc42/qa-246f02c61e93.json",
+          "size": 13688,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-4bd9e3ccdc42/qa-fafe08bf36c5.json",
+          "size": 13642,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-5e0bb7f87d4d/qa-6938de6b9bff.json",
+          "size": 12425,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-6182cea3f996/qa-fa372cd95c4f.json",
+          "size": 13452,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-a7801df9bf0f/qa-b718611eb7bb.json",
+          "size": 11855,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-c9f0fdc1d1e4/qa-5e0a58b7ef46.json",
+          "size": 14044,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-d235316b9af5/qa-1fa9f696fbcf.json",
+          "size": 16816,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-d235316b9af5/qa-a28bffe727e1.json",
+          "size": 15232,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-fafd1ac4c96b/qa-59111996c7d3.json",
+          "size": 13490,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-fe697fd1fef8/qa-482d8c2b6b93.json",
+          "size": 12725,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-fe697fd1fef8/qa-7d78ef7c4104.json",
+          "size": 12428,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/b1-frame-first.png",
+          "size": 137956,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/b1-frame-last.png",
+          "size": 257329,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/b1-frame-t2.png",
+          "size": 50198,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/b1-frame-t4.png",
+          "size": 50997,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/b1-frame-t6.png",
+          "size": 56115,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/b1-frame-t8.png",
+          "size": 53924,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/b2-frame-t0.1.png",
+          "size": 35628,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/b2-frame-t2.png",
+          "size": 31069,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/b2-frame-t3.8.png",
+          "size": 32834,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/c1-frame-t0.1.png",
+          "size": 27865,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/c1-frame-t3.9.png",
+          "size": 39099,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/case-a-qa-summary.json",
+          "size": 872,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/case-b-attempt-01-qa-summary.json",
+          "size": 1742,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/case-b-attempt-02-qa-summary.json",
+          "size": 760,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/case-c-attempt-01-qa-summary.json",
+          "size": 760,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/case-d-D1-attempt-01-qa-summary.json",
+          "size": 760,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/case-d-D2-attempt-01-qa-summary.json",
+          "size": 760,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/case-d-D3-attempt-01-qa-summary.json",
+          "size": 760,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d1-frame-t0.1.png",
+          "size": 37603,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d1-frame-t2.png",
+          "size": 45466,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d1-frame-t3.8.png",
+          "size": 41292,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d1-frames/d1-frame-t0.1.png",
+          "size": 37603,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d1-frames/d1-frame-t2.png",
+          "size": 45466,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d1-frames/d1-frame-t3.8.png",
+          "size": 41292,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d2-frame-t0.1.png",
+          "size": 105244,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d2-frame-t2.png",
+          "size": 119059,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d2-frame-t3.8.png",
+          "size": 122514,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d2-frames/d2-frame-t0.1.png",
+          "size": 105244,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d2-frames/d2-frame-t2.png",
+          "size": 119059,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d2-frames/d2-frame-t3.8.png",
+          "size": 122514,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d3-frame-t0.1.png",
+          "size": 35619,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d3-frame-t2.png",
+          "size": 31070,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d3-frame-t3.8.png",
+          "size": 36598,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/index.json",
+          "size": 1903,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "recovery/checkpoints.json",
+          "size": 9096,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "recovery/operations.json",
+          "size": 4817,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "render/attempt-1/output.mp4",
+          "size": 708511,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "render/attempt-1/progress.jsonl",
+          "size": 3624,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "render/attempt-1/render.log",
+          "size": 1473,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "render/attempt-2/output.mp4",
+          "size": 708511,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "render/attempt-2/progress.jsonl",
+          "size": 1841,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "render/attempt-2/render.log",
+          "size": 634,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "render/attempt-3/output.mp4",
+          "size": 708511,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "render/attempt-3/progress.jsonl",
+          "size": 1841,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "render/attempt-3/render.log",
+          "size": 634,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "render/render-input-case-a.json",
+          "size": 3201,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "render/staging-manifest.json",
+          "size": 395,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "scene-script.json",
+          "size": 204,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "scene/validation-scene-b.json",
+          "size": 960,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "scene/validation-scene-c.json",
+          "size": 1041,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "scene/validation-scene-d.json",
+          "size": 951,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "scene/validation-scene.json",
+          "size": 834,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "telemetry/events.json",
+          "size": 7071,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "telemetry/evidence.json",
+          "size": 2014,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "timing/timeline-measured.json",
+          "size": 107,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        }
+      ],
+      "planFingerprint": "041478a00d6f7b5c",
+      "storageRevision": 4,
+      "mode": "DRY_RUN",
+      "createdAt": "2026-10-05T08:14:35.722Z",
+      "executedAt": null,
+      "status": "PROPOSED"
+    },
+    "cln-2a136d5c535c": {
+      "planId": "cln-2a136d5c535c",
+      "projectId": "phase1g12-case-a",
+      "policyVersion": "1.0.0",
+      "candidates": [
+        {
+          "ref": "asset-manifest.json",
+          "size": 233,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "assets/case-a-source.png",
+          "size": 2080,
+          "verdict": "RETAIN",
+          "reason": "retention: FINAL_OUTPUT",
+          "blockingRefs": [
+            "FINAL_OUTPUT"
+          ]
+        },
+        {
+          "ref": "assets/library-index.json",
+          "size": 18065,
+          "verdict": "BLOCKED",
+          "reason": "locked target — explicit unlock/revision first",
+          "blockingRefs": [
+            "lock"
+          ]
+        },
+        {
+          "ref": "budget-plans/1g12-bcd.json",
+          "size": 3122,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "budget-plans/1g12-d-amendment.json",
+          "size": 2423,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "budget/case-bcd-proposal.json",
+          "size": 12447,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "budget/ledger.json",
+          "size": 3527,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE,GOLDEN_BASELINE",
+          "blockingRefs": [
+            "QA_EVIDENCE",
+            "GOLDEN_BASELINE"
+          ]
+        },
+        {
+          "ref": "case/b-sh01-prompt-v2.json",
+          "size": 657,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/c-sh01-prompt-v1.json",
+          "size": 817,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-a-result.json",
+          "size": 1245,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-b-attempt-01-correlation.json",
+          "size": 937,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-b-attempt-01-repair.json",
+          "size": 678,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-b-attempt-01-result.json",
+          "size": 1437,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-b-attempt-02-correlation.json",
+          "size": 927,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-b-attempt-02-result.json",
+          "size": 1554,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-b-source-frame-correlation.json",
+          "size": 1059,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-b-source-frame.json",
+          "size": 371,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-c-attempt-01-correlation.json",
+          "size": 835,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-c-attempt-01-result.json",
+          "size": 1528,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-c-frames.json",
+          "size": 252,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-D1-attempt-01-correlation.json",
+          "size": 803,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-D1-attempt-01-result.json",
+          "size": 1619,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-D2-attempt-01-correlation.json",
+          "size": 806,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-D2-attempt-01-result.json",
+          "size": 1622,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-D3-attempt-01-correlation.json",
+          "size": 803,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-D3-attempt-01-result.json",
+          "size": 1619,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-amendment-summary.json",
+          "size": 3120,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-character.json",
+          "size": 609,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-cross-shot-continuity.json",
+          "size": 2037,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE,GOLDEN_BASELINE",
+          "blockingRefs": [
+            "QA_EVIDENCE",
+            "GOLDEN_BASELINE"
+          ]
+        },
+        {
+          "ref": "case/case-d-resolutions.json",
+          "size": 972,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-result.json",
+          "size": 2124,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-shot-plan.json",
+          "size": 1875,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/determination-d-shot-reuse-01.json",
+          "size": 1761,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/live-ceremony-log.jsonl",
+          "size": 15418,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/source-frame-identity-finding.json",
+          "size": 3532,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "decision/production-decision.json",
+          "size": 1132,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "dependency-dag.json",
+          "size": 10629,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "downloads/Adult_guide_character_illustrati…_20261005103521.jpg",
+          "size": 47102,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "cache rebuildability unproven",
+          "blockingRefs": []
+        },
+        {
+          "ref": "downloads/Blue_circle_grows_on_background_20261005103017.mp4",
+          "size": 513968,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "cache rebuildability unproven",
+          "blockingRefs": []
+        },
+        {
+          "ref": "downloads/Blue_circle_on_light_background_20261005095739.jpg",
+          "size": 30087,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "cache rebuildability unproven",
+          "blockingRefs": []
+        },
+        {
+          "ref": "downloads/Character_presenting_palm-up_ges…_20261005111411.mp4",
+          "size": 681479,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "cache rebuildability unproven",
+          "blockingRefs": []
+        },
+        {
+          "ref": "downloads/Character_turning_to_hips_stance_20261005112125.mp4",
+          "size": 526697,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "cache rebuildability unproven",
+          "blockingRefs": []
+        },
+        {
+          "ref": "downloads/Character_waving_friendly_stance_20261005105730.mp4",
+          "size": 480069,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "cache rebuildability unproven",
+          "blockingRefs": []
+        },
+        {
+          "ref": "downloads/Slow_push-in_on_blue_circle_20261005101624.mp4",
+          "size": 466189,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "cache rebuildability unproven",
+          "blockingRefs": []
+        },
+        {
+          "ref": "downloads/c-end-frame-candidate.jpg",
+          "size": 18935,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "cache rebuildability unproven",
+          "blockingRefs": []
+        },
+        {
+          "ref": "governance/compliance.json",
+          "size": 9499,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "governance/provenance.json",
+          "size": 17627,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "governance/storage.json",
+          "size": 89673,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "history/history.json",
+          "size": 18001,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "manifest/project-manifest.json",
+          "size": 4995,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "preflight/media-preflight.json",
+          "size": 301,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "prompts/B-SH01/VIDEO.json",
+          "size": 4162,
+          "verdict": "RETAIN",
+          "reason": "retention: FINAL_OUTPUT",
+          "blockingRefs": [
+            "FINAL_OUTPUT"
+          ]
+        },
+        {
+          "ref": "prompts/sh-45705d133244/VIDEO.json",
+          "size": 3604,
+          "verdict": "RETAIN",
+          "reason": "retention: FINAL_OUTPUT",
+          "blockingRefs": [
+            "FINAL_OUTPUT"
+          ]
+        },
+        {
+          "ref": "prompts/sh-6feb6bbd91cc/VIDEO.json",
+          "size": 3771,
+          "verdict": "RETAIN",
+          "reason": "retention: FINAL_OUTPUT",
+          "blockingRefs": [
+            "FINAL_OUTPUT"
+          ]
+        },
+        {
+          "ref": "prompts/sh-cc6f74a027f8/VIDEO.json",
+          "size": 4381,
+          "verdict": "RETAIN",
+          "reason": "retention: FINAL_OUTPUT",
+          "blockingRefs": [
+            "FINAL_OUTPUT"
+          ]
+        },
+        {
+          "ref": "prompts/sh-da55407b73e4/VIDEO.json",
+          "size": 3582,
+          "verdict": "RETAIN",
+          "reason": "retention: FINAL_OUTPUT",
+          "blockingRefs": [
+            "FINAL_OUTPUT"
+          ]
+        },
+        {
+          "ref": "prompts/sh-fd0464c1c9b4/VIDEO.json",
+          "size": 3588,
+          "verdict": "RETAIN",
+          "reason": "retention: FINAL_OUTPUT",
+          "blockingRefs": [
+            "FINAL_OUTPUT"
+          ]
+        },
+        {
+          "ref": "qa/as-0625f69f9867/qa-d5deba72dc40.json",
+          "size": 14044,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-0fde400d6392/qa-a778b5a05d9f.json",
+          "size": 14024,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-4bd9e3ccdc42/qa-246f02c61e93.json",
+          "size": 13688,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-4bd9e3ccdc42/qa-fafe08bf36c5.json",
+          "size": 13642,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-5e0bb7f87d4d/qa-6938de6b9bff.json",
+          "size": 12425,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-6182cea3f996/qa-fa372cd95c4f.json",
+          "size": 13452,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-a7801df9bf0f/qa-b718611eb7bb.json",
+          "size": 11855,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-c9f0fdc1d1e4/qa-5e0a58b7ef46.json",
+          "size": 14044,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-d235316b9af5/qa-1fa9f696fbcf.json",
+          "size": 16816,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-d235316b9af5/qa-a28bffe727e1.json",
+          "size": 15232,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-fafd1ac4c96b/qa-59111996c7d3.json",
+          "size": 13490,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-fe697fd1fef8/qa-482d8c2b6b93.json",
+          "size": 12725,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-fe697fd1fef8/qa-7d78ef7c4104.json",
+          "size": 12428,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/b1-frame-first.png",
+          "size": 137956,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/b1-frame-last.png",
+          "size": 257329,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/b1-frame-t2.png",
+          "size": 50198,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/b1-frame-t4.png",
+          "size": 50997,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/b1-frame-t6.png",
+          "size": 56115,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/b1-frame-t8.png",
+          "size": 53924,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/b2-frame-t0.1.png",
+          "size": 35628,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/b2-frame-t2.png",
+          "size": 31069,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/b2-frame-t3.8.png",
+          "size": 32834,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/c1-frame-t0.1.png",
+          "size": 27865,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/c1-frame-t3.9.png",
+          "size": 39099,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/case-a-qa-summary.json",
+          "size": 872,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/case-b-attempt-01-qa-summary.json",
+          "size": 1742,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/case-b-attempt-02-qa-summary.json",
+          "size": 760,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/case-c-attempt-01-qa-summary.json",
+          "size": 760,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/case-d-D1-attempt-01-qa-summary.json",
+          "size": 760,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/case-d-D2-attempt-01-qa-summary.json",
+          "size": 760,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/case-d-D3-attempt-01-qa-summary.json",
+          "size": 760,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d1-frame-t0.1.png",
+          "size": 37603,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d1-frame-t2.png",
+          "size": 45466,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d1-frame-t3.8.png",
+          "size": 41292,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d1-frames/d1-frame-t0.1.png",
+          "size": 37603,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d1-frames/d1-frame-t2.png",
+          "size": 45466,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d1-frames/d1-frame-t3.8.png",
+          "size": 41292,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d2-frame-t0.1.png",
+          "size": 105244,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d2-frame-t2.png",
+          "size": 119059,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d2-frame-t3.8.png",
+          "size": 122514,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d2-frames/d2-frame-t0.1.png",
+          "size": 105244,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d2-frames/d2-frame-t2.png",
+          "size": 119059,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d2-frames/d2-frame-t3.8.png",
+          "size": 122514,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d3-frame-t0.1.png",
+          "size": 35619,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d3-frame-t2.png",
+          "size": 31070,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d3-frame-t3.8.png",
+          "size": 36598,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/index.json",
+          "size": 1903,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "recovery/checkpoints.json",
+          "size": 9096,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "recovery/operations.json",
+          "size": 4817,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "render/attempt-1/output.mp4",
+          "size": 708511,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "render/attempt-1/progress.jsonl",
+          "size": 3624,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "render/attempt-1/render.log",
+          "size": 1473,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "render/attempt-2/output.mp4",
+          "size": 708511,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "render/attempt-2/progress.jsonl",
+          "size": 1841,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "render/attempt-2/render.log",
+          "size": 634,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "render/attempt-3/output.mp4",
+          "size": 708511,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "render/attempt-3/progress.jsonl",
+          "size": 1841,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "render/attempt-3/render.log",
+          "size": 634,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "render/render-input-case-a.json",
+          "size": 3201,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "render/staging-manifest.json",
+          "size": 395,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "scene-script.json",
+          "size": 204,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "scene/validation-scene-b.json",
+          "size": 960,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "scene/validation-scene-c.json",
+          "size": 1041,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "scene/validation-scene-d.json",
+          "size": 951,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "scene/validation-scene.json",
+          "size": 834,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "telemetry/events.json",
+          "size": 7071,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "telemetry/evidence.json",
+          "size": 2014,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "timing/timeline-measured.json",
+          "size": 107,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        }
+      ],
+      "planFingerprint": "551bb94cb367ea5f",
+      "storageRevision": 6,
+      "mode": "DRY_RUN",
+      "createdAt": "2026-10-05T08:14:55.821Z",
+      "executedAt": null,
+      "status": "PROPOSED"
+    },
+    "cln-ffccbadd9551": {
+      "planId": "cln-ffccbadd9551",
+      "projectId": "phase1g12-case-a",
+      "policyVersion": "1.0.0",
+      "candidates": [
+        {
+          "ref": "asset-manifest.json",
+          "size": 233,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "assets/case-a-source.png",
+          "size": 2080,
+          "verdict": "RETAIN",
+          "reason": "retention: FINAL_OUTPUT",
+          "blockingRefs": [
+            "FINAL_OUTPUT"
+          ]
+        },
+        {
+          "ref": "assets/library-index.json",
+          "size": 18065,
+          "verdict": "BLOCKED",
+          "reason": "locked target — explicit unlock/revision first",
+          "blockingRefs": [
+            "lock"
+          ]
+        },
+        {
+          "ref": "budget-plans/1g12-bcd.json",
+          "size": 3122,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "budget-plans/1g12-d-amendment.json",
+          "size": 2423,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "budget/case-bcd-proposal.json",
+          "size": 12447,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "budget/ledger.json",
+          "size": 3527,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE,GOLDEN_BASELINE",
+          "blockingRefs": [
+            "QA_EVIDENCE",
+            "GOLDEN_BASELINE"
+          ]
+        },
+        {
+          "ref": "case/b-sh01-prompt-v2.json",
+          "size": 657,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/c-sh01-prompt-v1.json",
+          "size": 817,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-a-result.json",
+          "size": 1245,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-b-attempt-01-correlation.json",
+          "size": 937,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-b-attempt-01-repair.json",
+          "size": 678,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-b-attempt-01-result.json",
+          "size": 1437,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-b-attempt-02-correlation.json",
+          "size": 927,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-b-attempt-02-result.json",
+          "size": 1554,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-b-source-frame-correlation.json",
+          "size": 1059,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-b-source-frame.json",
+          "size": 371,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-c-attempt-01-correlation.json",
+          "size": 835,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-c-attempt-01-result.json",
+          "size": 1528,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-c-frames.json",
+          "size": 252,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-D1-attempt-01-correlation.json",
+          "size": 803,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-D1-attempt-01-result.json",
+          "size": 1619,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-D2-attempt-01-correlation.json",
+          "size": 806,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-D2-attempt-01-result.json",
+          "size": 1622,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-D3-attempt-01-correlation.json",
+          "size": 803,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-D3-attempt-01-result.json",
+          "size": 1619,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-amendment-summary.json",
+          "size": 3120,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-character.json",
+          "size": 609,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-cross-shot-continuity.json",
+          "size": 2037,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE,GOLDEN_BASELINE",
+          "blockingRefs": [
+            "QA_EVIDENCE",
+            "GOLDEN_BASELINE"
+          ]
+        },
+        {
+          "ref": "case/case-d-resolutions.json",
+          "size": 972,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-result.json",
+          "size": 2124,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/case-d-shot-plan.json",
+          "size": 1875,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/determination-d-shot-reuse-01.json",
+          "size": 1761,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/live-ceremony-log.jsonl",
+          "size": 15418,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "case/source-frame-identity-finding.json",
+          "size": 3532,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "decision/production-decision.json",
+          "size": 1132,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "dependency-dag.json",
+          "size": 10629,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "downloads/Adult_guide_character_illustrati…_20261005103521.jpg",
+          "size": 47102,
+          "verdict": "SAFE_TO_DELETE",
+          "reason": "cache with known rebuild path and live canonical source",
+          "blockingRefs": []
+        },
+        {
+          "ref": "downloads/Blue_circle_grows_on_background_20261005103017.mp4",
+          "size": 513968,
+          "verdict": "SAFE_TO_DELETE",
+          "reason": "cache with known rebuild path and live canonical source",
+          "blockingRefs": []
+        },
+        {
+          "ref": "downloads/Blue_circle_on_light_background_20261005095739.jpg",
+          "size": 30087,
+          "verdict": "SAFE_TO_DELETE",
+          "reason": "cache with known rebuild path and live canonical source",
+          "blockingRefs": []
+        },
+        {
+          "ref": "downloads/Character_presenting_palm-up_ges…_20261005111411.mp4",
+          "size": 681479,
+          "verdict": "SAFE_TO_DELETE",
+          "reason": "cache with known rebuild path and live canonical source",
+          "blockingRefs": []
+        },
+        {
+          "ref": "downloads/Character_turning_to_hips_stance_20261005112125.mp4",
+          "size": 526697,
+          "verdict": "SAFE_TO_DELETE",
+          "reason": "cache with known rebuild path and live canonical source",
+          "blockingRefs": []
+        },
+        {
+          "ref": "downloads/Character_waving_friendly_stance_20261005105730.mp4",
+          "size": 480069,
+          "verdict": "SAFE_TO_DELETE",
+          "reason": "cache with known rebuild path and live canonical source",
+          "blockingRefs": []
+        },
+        {
+          "ref": "downloads/Slow_push-in_on_blue_circle_20261005101624.mp4",
+          "size": 466189,
+          "verdict": "SAFE_TO_DELETE",
+          "reason": "cache with known rebuild path and live canonical source",
+          "blockingRefs": []
+        },
+        {
+          "ref": "downloads/c-end-frame-candidate.jpg",
+          "size": 18935,
+          "verdict": "SAFE_TO_DELETE",
+          "reason": "cache with known rebuild path and live canonical source",
+          "blockingRefs": []
+        },
+        {
+          "ref": "governance/compliance.json",
+          "size": 9499,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "governance/provenance.json",
+          "size": 17627,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "governance/storage.json",
+          "size": 89673,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "history/history.json",
+          "size": 18001,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "manifest/project-manifest.json",
+          "size": 4995,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "preflight/media-preflight.json",
+          "size": 301,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "prompts/B-SH01/VIDEO.json",
+          "size": 4162,
+          "verdict": "RETAIN",
+          "reason": "retention: FINAL_OUTPUT",
+          "blockingRefs": [
+            "FINAL_OUTPUT"
+          ]
+        },
+        {
+          "ref": "prompts/sh-45705d133244/VIDEO.json",
+          "size": 3604,
+          "verdict": "RETAIN",
+          "reason": "retention: FINAL_OUTPUT",
+          "blockingRefs": [
+            "FINAL_OUTPUT"
+          ]
+        },
+        {
+          "ref": "prompts/sh-6feb6bbd91cc/VIDEO.json",
+          "size": 3771,
+          "verdict": "RETAIN",
+          "reason": "retention: FINAL_OUTPUT",
+          "blockingRefs": [
+            "FINAL_OUTPUT"
+          ]
+        },
+        {
+          "ref": "prompts/sh-cc6f74a027f8/VIDEO.json",
+          "size": 4381,
+          "verdict": "RETAIN",
+          "reason": "retention: FINAL_OUTPUT",
+          "blockingRefs": [
+            "FINAL_OUTPUT"
+          ]
+        },
+        {
+          "ref": "prompts/sh-da55407b73e4/VIDEO.json",
+          "size": 3582,
+          "verdict": "RETAIN",
+          "reason": "retention: FINAL_OUTPUT",
+          "blockingRefs": [
+            "FINAL_OUTPUT"
+          ]
+        },
+        {
+          "ref": "prompts/sh-fd0464c1c9b4/VIDEO.json",
+          "size": 3588,
+          "verdict": "RETAIN",
+          "reason": "retention: FINAL_OUTPUT",
+          "blockingRefs": [
+            "FINAL_OUTPUT"
+          ]
+        },
+        {
+          "ref": "qa/as-0625f69f9867/qa-d5deba72dc40.json",
+          "size": 14044,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-0fde400d6392/qa-a778b5a05d9f.json",
+          "size": 14024,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-4bd9e3ccdc42/qa-246f02c61e93.json",
+          "size": 13688,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-4bd9e3ccdc42/qa-fafe08bf36c5.json",
+          "size": 13642,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-5e0bb7f87d4d/qa-6938de6b9bff.json",
+          "size": 12425,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-6182cea3f996/qa-fa372cd95c4f.json",
+          "size": 13452,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-a7801df9bf0f/qa-b718611eb7bb.json",
+          "size": 11855,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-c9f0fdc1d1e4/qa-5e0a58b7ef46.json",
+          "size": 14044,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-d235316b9af5/qa-1fa9f696fbcf.json",
+          "size": 16816,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-d235316b9af5/qa-a28bffe727e1.json",
+          "size": 15232,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-fafd1ac4c96b/qa-59111996c7d3.json",
+          "size": 13490,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-fe697fd1fef8/qa-482d8c2b6b93.json",
+          "size": 12725,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/as-fe697fd1fef8/qa-7d78ef7c4104.json",
+          "size": 12428,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/b1-frame-first.png",
+          "size": 137956,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/b1-frame-last.png",
+          "size": 257329,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/b1-frame-t2.png",
+          "size": 50198,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/b1-frame-t4.png",
+          "size": 50997,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/b1-frame-t6.png",
+          "size": 56115,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/b1-frame-t8.png",
+          "size": 53924,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/b2-frame-t0.1.png",
+          "size": 35628,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/b2-frame-t2.png",
+          "size": 31069,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/b2-frame-t3.8.png",
+          "size": 32834,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/c1-frame-t0.1.png",
+          "size": 27865,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/c1-frame-t3.9.png",
+          "size": 39099,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/case-a-qa-summary.json",
+          "size": 872,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/case-b-attempt-01-qa-summary.json",
+          "size": 1742,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/case-b-attempt-02-qa-summary.json",
+          "size": 760,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/case-c-attempt-01-qa-summary.json",
+          "size": 760,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/case-d-D1-attempt-01-qa-summary.json",
+          "size": 760,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/case-d-D2-attempt-01-qa-summary.json",
+          "size": 760,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/case-d-D3-attempt-01-qa-summary.json",
+          "size": 760,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d1-frame-t0.1.png",
+          "size": 37603,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d1-frame-t2.png",
+          "size": 45466,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d1-frame-t3.8.png",
+          "size": 41292,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d1-frames/d1-frame-t0.1.png",
+          "size": 37603,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d1-frames/d1-frame-t2.png",
+          "size": 45466,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d1-frames/d1-frame-t3.8.png",
+          "size": 41292,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d2-frame-t0.1.png",
+          "size": 105244,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d2-frame-t2.png",
+          "size": 119059,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d2-frame-t3.8.png",
+          "size": 122514,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d2-frames/d2-frame-t0.1.png",
+          "size": 105244,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d2-frames/d2-frame-t2.png",
+          "size": 119059,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d2-frames/d2-frame-t3.8.png",
+          "size": 122514,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d3-frame-t0.1.png",
+          "size": 35619,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d3-frame-t2.png",
+          "size": 31070,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/d3-frame-t3.8.png",
+          "size": 36598,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "qa/index.json",
+          "size": 1903,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "recovery/checkpoints.json",
+          "size": 9096,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "recovery/operations.json",
+          "size": 4817,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "render/attempt-1/output.mp4",
+          "size": 708511,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "render/attempt-1/progress.jsonl",
+          "size": 3624,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "render/attempt-1/render.log",
+          "size": 1473,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "render/attempt-2/output.mp4",
+          "size": 708511,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "render/attempt-2/progress.jsonl",
+          "size": 1841,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "render/attempt-2/render.log",
+          "size": 634,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "render/attempt-3/output.mp4",
+          "size": 708511,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "render/attempt-3/progress.jsonl",
+          "size": 1841,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "render/attempt-3/render.log",
+          "size": 634,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "render/render-input-case-a.json",
+          "size": 3201,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "render/staging-manifest.json",
+          "size": 395,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "scene-script.json",
+          "size": 204,
+          "verdict": "REVIEW_REQUIRED",
+          "reason": "no safe rule matched — human decides",
+          "blockingRefs": []
+        },
+        {
+          "ref": "scene/validation-scene-b.json",
+          "size": 960,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "scene/validation-scene-c.json",
+          "size": 1041,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "scene/validation-scene-d.json",
+          "size": 951,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "scene/validation-scene.json",
+          "size": 834,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "telemetry/events.json",
+          "size": 7071,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "telemetry/evidence.json",
+          "size": 2014,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        },
+        {
+          "ref": "timing/timeline-measured.json",
+          "size": 107,
+          "verdict": "RETAIN",
+          "reason": "retention: QA_EVIDENCE",
+          "blockingRefs": [
+            "QA_EVIDENCE"
+          ]
+        }
+      ],
+      "planFingerprint": "364b9fa636e9d267",
+      "storageRevision": 7,
+      "mode": "DRY_RUN",
+      "createdAt": "2026-10-05T08:14:55.847Z",
+      "executedAt": null,
+      "status": "PROPOSED"
+    }
+  },
+  "tombstones": {},
+  "fingerprint": "0aabacdc20b8dcca"
+}

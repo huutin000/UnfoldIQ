@@ -1,0 +1,565 @@
+{
+  "version": "1.0.0",
+  "qaResultId": "qa-d5deba72dc40",
+  "projectId": "phase1g12-case-a",
+  "assetId": "as-0625f69f9867",
+  "assetHash": "0625f69f986751809600e51bb1628e0fef6b717fdda5048cdd4ad96576901f9c",
+  "shotId": "D-SH03",
+  "sceneId": "D-SC01",
+  "qaPolicyVersion": "1g11-1.0.0",
+  "expectedContextFingerprint": "fp-c196441da8747f5c",
+  "expectationSnapshot": {
+    "assetId": "as-0625f69f9867",
+    "assetHash": "0625f69f986751809600e51bb1628e0fef6b717fdda5048cdd4ad96576901f9c",
+    "shotExpectationVersion": "case-d-D3-attempt-1",
+    "sceneExpectationVersion": "case-d-v1",
+    "scriptVersion": "case-d-noskript",
+    "characterBibleVersion": "n/a-fiction",
+    "worldBibleVersion": "n/a-fiction",
+    "visualBibleVersion": "n/a-fiction",
+    "platformAdaptationVersion": "pa-youtube-16x9",
+    "qaPolicyVersion": "1g11-1.0.0"
+  },
+  "structural": {
+    "status": "PASS",
+    "severity": "INFO",
+    "blocking": false,
+    "checks": [
+      {
+        "check": "file-type",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "decode",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "media-type",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "dimensions",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "aspect",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "duration",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "temporal-stream",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "freeze",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      }
+    ],
+    "evidence": [
+      {
+        "evidenceId": "ev-b3b12021c1f2",
+        "layer": "structural",
+        "check": "file-type",
+        "source": "MAGIC_BYTES",
+        "expected": "mp4",
+        "observed": "mp4",
+        "comparison": "match",
+        "confidence": "high",
+        "artifactRefs": []
+      },
+      {
+        "evidenceId": "ev-603371b30938",
+        "layer": "structural",
+        "check": "decode",
+        "source": "FFPROBE",
+        "expected": "decodable media",
+        "observed": "h264",
+        "comparison": "match",
+        "confidence": "high",
+        "artifactRefs": []
+      },
+      {
+        "evidenceId": "ev-d42e8e7385ce",
+        "layer": "structural",
+        "check": "media-type",
+        "source": "MAGIC_BYTES",
+        "expected": "video",
+        "observed": "video",
+        "comparison": "match",
+        "confidence": "medium",
+        "artifactRefs": []
+      },
+      {
+        "evidenceId": "ev-53e45351d124",
+        "layer": "structural",
+        "check": "dimensions",
+        "source": "FFPROBE",
+        "expected": "1280x720",
+        "observed": "1280x720",
+        "comparison": "measured",
+        "confidence": "high",
+        "artifactRefs": []
+      }
+    ],
+    "reasons": []
+  },
+  "semantic": {
+    "status": "PASS",
+    "severity": "INFO",
+    "blocking": false,
+    "checks": [
+      {
+        "check": "scene",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "subject",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "action",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "motion-occurs",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "text",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "composition",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "media-type",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      }
+    ],
+    "evidence": [
+      {
+        "evidenceId": "ev-d3716ef198c0",
+        "layer": "semantic",
+        "check": "scene",
+        "source": "FRAME_SAMPLE",
+        "expected": "D-SC01",
+        "observed": "D-SC01",
+        "comparison": "match",
+        "confidence": "high",
+        "artifactRefs": []
+      },
+      {
+        "evidenceId": "ev-7bf7b02b06e3",
+        "layer": "semantic",
+        "check": "subject",
+        "source": "FRAME_SAMPLE",
+        "expected": [
+          "mascot-guide"
+        ],
+        "observed": [
+          "mascot-guide"
+        ],
+        "comparison": "match",
+        "confidence": "high",
+        "artifactRefs": []
+      },
+      {
+        "evidenceId": "ev-38f3b79800fe",
+        "layer": "semantic",
+        "check": "action",
+        "source": "FRAME_SAMPLE",
+        "expected": [
+          "turn-settle-stance"
+        ],
+        "observed": [
+          "turn-settle-stance"
+        ],
+        "comparison": "match",
+        "confidence": "high",
+        "artifactRefs": []
+      },
+      {
+        "evidenceId": "ev-107946a3ea4f",
+        "layer": "semantic",
+        "check": "motion-occurs",
+        "source": "FRAME_SAMPLE",
+        "expected": "action occurs",
+        "observed": "action observed",
+        "comparison": "match",
+        "confidence": "high",
+        "artifactRefs": []
+      },
+      {
+        "evidenceId": "ev-fa7519b04e33",
+        "layer": "semantic",
+        "check": "text",
+        "source": "FRAME_SAMPLE",
+        "expected": "no text",
+        "observed": "no text",
+        "comparison": "match",
+        "confidence": "high",
+        "artifactRefs": []
+      }
+    ],
+    "reasons": []
+  },
+  "factuality": {
+    "status": "NOT_APPLICABLE",
+    "severity": "INFO",
+    "blocking": false,
+    "checks": [
+      {
+        "check": "period",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "location",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "speciesPersonObject",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "clothing",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "architecture",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "toolsEquipment",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "mapGeography",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "chartDirection",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "numbersLabels",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "timelineOrder",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      },
+      {
+        "check": "onScreenFactualText",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "FICTION without factual elements",
+        "blocking": false
+      }
+    ],
+    "evidence": [],
+    "reasons": []
+  },
+  "continuity": {
+    "status": "PASS",
+    "severity": "INFO",
+    "blocking": false,
+    "checks": [
+      {
+        "check": "faceIdentity",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "hair",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "clothing",
+        "status": "PASS",
+        "severity": "INFO",
+        "reason": null,
+        "blocking": false
+      },
+      {
+        "check": "location",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "no location expectation",
+        "blocking": false
+      },
+      {
+        "check": "props",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "no continuity-relevant props tracked",
+        "blocking": false
+      },
+      {
+        "check": "timeOfDay",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "no time-of-day expectation",
+        "blocking": false
+      },
+      {
+        "check": "paletteStyle",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "no palette/style expectation",
+        "blocking": false
+      },
+      {
+        "check": "startState",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "no locked startState expectation",
+        "blocking": false
+      },
+      {
+        "check": "endState",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "no locked endState expectation",
+        "blocking": false
+      },
+      {
+        "check": "motionContinuity",
+        "status": "NOT_APPLICABLE",
+        "severity": "INFO",
+        "reason": "no motion continuity contract for this shot",
+        "blocking": false
+      }
+    ],
+    "evidence": [
+      {
+        "evidenceId": "ev-941ebf3edc39",
+        "layer": "continuity",
+        "check": "faceIdentity",
+        "source": "FRAME_SAMPLE",
+        "expected": "mascot-guide",
+        "observed": "mascot-guide",
+        "comparison": "match",
+        "confidence": "high",
+        "artifactRefs": []
+      }
+    ],
+    "reasons": []
+  },
+  "aggregate": {
+    "status": "READY_FOR_TIMELINE",
+    "severity": "INFO",
+    "timelineEligible": true,
+    "failedLayers": [],
+    "warningLayers": [],
+    "unknownLayers": [],
+    "reasons": [],
+    "recommendation": "NONE"
+  },
+  "sourceRefs": [],
+  "evidenceRefs": [],
+  "evidence": [
+    {
+      "evidenceId": "ev-b3b12021c1f2",
+      "layer": "structural",
+      "check": "file-type",
+      "source": "MAGIC_BYTES",
+      "expected": "mp4",
+      "observed": "mp4",
+      "comparison": "match",
+      "confidence": "high",
+      "artifactRefs": []
+    },
+    {
+      "evidenceId": "ev-603371b30938",
+      "layer": "structural",
+      "check": "decode",
+      "source": "FFPROBE",
+      "expected": "decodable media",
+      "observed": "h264",
+      "comparison": "match",
+      "confidence": "high",
+      "artifactRefs": []
+    },
+    {
+      "evidenceId": "ev-d42e8e7385ce",
+      "layer": "structural",
+      "check": "media-type",
+      "source": "MAGIC_BYTES",
+      "expected": "video",
+      "observed": "video",
+      "comparison": "match",
+      "confidence": "medium",
+      "artifactRefs": []
+    },
+    {
+      "evidenceId": "ev-53e45351d124",
+      "layer": "structural",
+      "check": "dimensions",
+      "source": "FFPROBE",
+      "expected": "1280x720",
+      "observed": "1280x720",
+      "comparison": "measured",
+      "confidence": "high",
+      "artifactRefs": []
+    },
+    {
+      "evidenceId": "ev-d3716ef198c0",
+      "layer": "semantic",
+      "check": "scene",
+      "source": "FRAME_SAMPLE",
+      "expected": "D-SC01",
+      "observed": "D-SC01",
+      "comparison": "match",
+      "confidence": "high",
+      "artifactRefs": []
+    },
+    {
+      "evidenceId": "ev-7bf7b02b06e3",
+      "layer": "semantic",
+      "check": "subject",
+      "source": "FRAME_SAMPLE",
+      "expected": [
+        "mascot-guide"
+      ],
+      "observed": [
+        "mascot-guide"
+      ],
+      "comparison": "match",
+      "confidence": "high",
+      "artifactRefs": []
+    },
+    {
+      "evidenceId": "ev-38f3b79800fe",
+      "layer": "semantic",
+      "check": "action",
+      "source": "FRAME_SAMPLE",
+      "expected": [
+        "turn-settle-stance"
+      ],
+      "observed": [
+        "turn-settle-stance"
+      ],
+      "comparison": "match",
+      "confidence": "high",
+      "artifactRefs": []
+    },
+    {
+      "evidenceId": "ev-107946a3ea4f",
+      "layer": "semantic",
+      "check": "motion-occurs",
+      "source": "FRAME_SAMPLE",
+      "expected": "action occurs",
+      "observed": "action observed",
+      "comparison": "match",
+      "confidence": "high",
+      "artifactRefs": []
+    },
+    {
+      "evidenceId": "ev-fa7519b04e33",
+      "layer": "semantic",
+      "check": "text",
+      "source": "FRAME_SAMPLE",
+      "expected": "no text",
+      "observed": "no text",
+      "comparison": "match",
+      "confidence": "high",
+      "artifactRefs": []
+    },
+    {
+      "evidenceId": "ev-941ebf3edc39",
+      "layer": "continuity",
+      "check": "faceIdentity",
+      "source": "FRAME_SAMPLE",
+      "expected": "mascot-guide",
+      "observed": "mascot-guide",
+      "comparison": "match",
+      "confidence": "high",
+      "artifactRefs": []
+    }
+  ],
+  "evaluatedAt": "2026-10-05T04:22:12.529Z"
+}

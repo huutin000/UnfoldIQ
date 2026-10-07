@@ -1,0 +1,47 @@
+{
+  "version": "1.0.0",
+  "schemaVersion": "1.0.0",
+  "instructionSetId": "is-94f3ffebb441",
+  "projectId": "pilot-sky-blue",
+  "instructionVersion": "iv-94f3ffebb441",
+  "sourceVersions": {
+    "channelBible": null,
+    "characterBible": null,
+    "worldBible": null,
+    "visualBible": "vb-pilot-1",
+    "platformPolicy": null
+  },
+  "constraints": {
+    "characterIdentity": [],
+    "visualStyle": [
+      "flat vector diagrams, sky-blue system, spectrum accents"
+    ],
+    "worldContinuity": [],
+    "palette": [],
+    "recurringReferenceRules": [],
+    "forbiddenMutations": [
+      "no random new character",
+      "no face mutation",
+      "no spontaneous age change",
+      "no spontaneous costume change",
+      "no unexplained prop mutation",
+      "no unexpected location replacement",
+      "no reference substitution"
+    ],
+    "unwantedContent": [
+      "text",
+      "logo",
+      "watermark unless explicitly requested"
+    ],
+    "platformCompositionRules": []
+  },
+  "referenceIds": [],
+  "referenceBindings": [],
+  "compiledText": "PROJECT INVARIANTS (apply to every generation in this project):\nVisual style:\n- flat vector diagrams, sky-blue system, spectrum accents\nForbidden mutations:\n- no random new character\n- no face mutation\n- no spontaneous age change\n- no spontaneous costume change\n- no unexplained prop mutation\n- no unexpected location replacement\n- no reference substitution\nUnwanted content:\n- text\n- logo\n- watermark unless explicitly requested",
+  "compiledFingerprint": "780ccba50d2f1498",
+  "providerTargets": [
+    "GOOGLE_FLOW"
+  ],
+  "createdAt": "2026-10-03T13:17:17.904Z",
+  "updatedAt": "2026-10-03T13:17:17.904Z"
+}

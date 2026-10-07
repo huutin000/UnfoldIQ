@@ -1,0 +1,64 @@
+{
+  "task": "PHASE_2_1_01",
+  "commands": [
+    {
+      "command": "node tests/voice-bible/test-voice-bible.js",
+      "scope": "V1–V28 voice-bible matrix",
+      "result": "179 assertions passed, 0 failed"
+    },
+    {
+      "command": "node scripts/checks/validate-schemas.js",
+      "scope": "schema syntax + instance validation (governance, 1.3.0, 1.4.0, voice-bible)",
+      "result": "RESULT: ALL TESTS PASSED"
+    },
+    {
+      "command": "npm run check:workspace",
+      "scope": "registry / resolver / guard / lifecycle",
+      "result": "ok:true, violations:[], warnings:[], projects:18"
+    },
+    {
+      "command": "npm run check:repo-structure",
+      "scope": "root cleanliness + temp artifacts",
+      "result": "REPOSITORY_STRUCTURE_OK"
+    },
+    {
+      "command": "npm test",
+      "scope": "full regression, 25 domains",
+      "result": "0 failed suites"
+    }
+  ],
+  "targetedDomainsReRun": [
+    "workspace",
+    "project-manifest",
+    "history",
+    "dag",
+    "telemetry",
+    "golden",
+    "provenance",
+    "compliance",
+    "voice-bible",
+    "providers (Kokoro adapter touched: KOKORO_MODEL/KOKORO_VERSION export only)"
+  ],
+  "extension": {
+    "modified": false,
+    "rerun": false,
+    "reason": "roadmap 21 answered NO (Core-first); no user-facing voice selection required in the Extension, so no Extension suite was re-run for ritual"
+  },
+  "weakenedAssertions": "none",
+  "skipsAdded": "none",
+  "testsDeleted": "none",
+  "golden": {
+    "definition": "gold-voice-bible:v1",
+    "baseline": "gold-voice-bible:b1",
+    "metrics": [
+      "schemaStability",
+      "versionImmutability",
+      "voiceIdentity",
+      "personaStability",
+      "languageCompatibility",
+      "credentialSafety",
+      "dagInvalidation"
+    ],
+    "ttsQualityEvaluation": "not required in 2.1; speechRate/pronunciation/captionSync recorded NOT_MEASURED / NOT_APPLICABLE"
+  }
+}

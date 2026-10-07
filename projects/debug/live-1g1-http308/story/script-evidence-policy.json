@@ -1,0 +1,32 @@
+{
+  "gateId": "gate-badb977fc948",
+  "gateVersion": "1.0.0",
+  "contentClass": "FACTUAL",
+  "researchPackRef": {
+    "packId": "pack-badb977fc948",
+    "packHash": "badb977fc9489b80"
+  },
+  "generatedAt": "2026-10-03T02:24:56.078Z",
+  "allowedClaims": [
+    {
+      "claimId": "clm-ede7c751ff68",
+      "rule": "SUPPORTED_FACT_USE"
+    },
+    {
+      "claimId": "clm-d03297df9a11",
+      "rule": "SUPPORTED_FACT_USE"
+    },
+    {
+      "claimId": "clm-c59412e9d345",
+      "rule": "SUPPORTED_FACT_USE"
+    }
+  ],
+  "restrictedClaims": [],
+  "disputedClaims": [],
+  "forbiddenAsFact": [],
+  "requiredAttributions": [],
+  "requiredQualifiers": [],
+  "fictionalizationBoundaries": [],
+  "unknownsToPreserve": [],
+  "targetedFactClaims": []
+}

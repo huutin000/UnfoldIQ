@@ -1,0 +1,34 @@
+{
+  "scene": {
+    "sceneId": "C-SC01",
+    "order": 2,
+    "beatIds": ["c-b1"],
+    "storySectionRefs": [],
+    "narrativePurpose": "1G.12 Case C validation: FIRST+LAST transition between two canonical frames",
+    "visualObjective": "EXPLAIN",
+    "subjectRefs": ["as-fe697fd1fef8"],
+    "environmentRefs": [],
+    "continuityGroup": "cg-case-c",
+    "stateBefore": null,
+    "stateAfter": null
+  },
+  "shot": {
+    "shotId": "C-SH01",
+    "parentSceneId": "C-SC01",
+    "orderWithinScene": 0,
+    "beatIds": ["c-b1"],
+    "claimRefs": [],
+    "shotPurpose": "DETAIL",
+    "visualObjective": "EXPLAIN",
+    "subjectRefs": ["as-fe697fd1fef8"],
+    "actionIntent": "slow push-in; the circle scales from the start size to the end size",
+    "framingIntent": "centered composition",
+    "cameraIntent": "SLOW_PUSH_IN",
+    "continuityRefs": ["cg-case-c"],
+    "startState": "blue circle small (start frame)",
+    "endState": "blue circle larger (end frame)",
+    "relativeWeight": 1
+  },
+  "contentClass": "FICTION",
+  "platform": "youtube"
+}

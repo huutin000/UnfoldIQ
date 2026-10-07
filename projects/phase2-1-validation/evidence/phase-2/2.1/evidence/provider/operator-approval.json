@@ -1,0 +1,24 @@
+{
+  "task": "PHASE_2_1_FIX_01",
+  "approval": {
+    "selectionStatus": "OPERATOR_APPROVED",
+    "approvedVoiceId": "am_michael",
+    "approvalStatement": "APPROVED_NARRATOR_VOICE = am_michael",
+    "previewRef": "projects/phase2-1-validation/assets/voice/voice-preview/preview-am_michael.wav",
+    "shortlistPresented": [
+      "am_fenrir",
+      "am_michael",
+      "am_puck"
+    ],
+    "decidedAt": "2026-10-05T14:24:37.054Z",
+    "decidedBy": "operator"
+  },
+  "technicalRecommendationHonoured": "narrator-qa-comparison.json ranked am_michael #1 at 88.3/100; the operator selected it explicitly.",
+  "candidateEvidence": "projects/phase2-1-validation/evidence/phase-2/2.1/evidence/provider/voice-selection-and-preview-pack.json",
+  "mascotConstraintApplied": "NARRATOR_MUST_BE_MALE (operator instruction 2026-10-05)",
+  "qaClipsForApprovedVoice": [
+    "projects/phase2-1-validation/assets/voice/voice-preview/preview-am_michael.wav",
+    "projects/phase2-1-validation/assets/voice/voice-qa-A/qaA-am_michael.wav",
+    "projects/phase2-1-validation/assets/voice/voice-qa-B/qaB-am_michael.wav"
+  ]
+}

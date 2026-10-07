@@ -1,0 +1,64 @@
+{
+  "schemaVersion": "1.1.0",
+  "scriptArtifactId": "fss-pilot-sky-blue",
+  "scriptVersion": 2,
+  "projectId": "pilot-sky-blue",
+  "language": "en-us",
+  "contentMode": "everyday-physics-explainer",
+  "contentClass": "FACTUAL",
+  "segments": [
+    {
+      "segmentId": "S1",
+      "ordinal": 0,
+      "text": "Look up on a clear day. The sky is blue. But sunlight itself? White. So where does the blue actually come from?"
+    },
+    {
+      "segmentId": "S2",
+      "ordinal": 1,
+      "text": "The answer is written into the air itself — tiny molecules of nitrogen and oxygen, each one far smaller than a wave of light."
+    },
+    {
+      "segmentId": "S3",
+      "ordinal": 2,
+      "text": "When sunlight hits those molecules, they scatter short blue wavelengths in every direction — several times more strongly than they scatter red."
+    },
+    {
+      "segmentId": "S4",
+      "ordinal": 3,
+      "text": "That scattered blue light reaches your eyes from everywhere overhead. And that is why the whole sky glows blue."
+    },
+    {
+      "segmentId": "S5",
+      "ordinal": 4,
+      "text": "Violet gets scattered even more. But there is less of it in sunlight to begin with, and your eyes are less sensitive to it."
+    },
+    {
+      "segmentId": "S6",
+      "ordinal": 5,
+      "text": "At sunset, that sunlight crosses much more air. The blue gets scattered away along the way, and the reds and oranges remain."
+    },
+    {
+      "segmentId": "S7",
+      "ordinal": 6,
+      "text": "Dust and pollution, on the other hand, scatter all colors equally. That is why a hazy sky looks pale and white."
+    },
+    {
+      "segmentId": "S8",
+      "ordinal": 7,
+      "text": "So the blue sky is not a thing. It is sunlight, rearranged by the air. Thanks for watching."
+    }
+  ],
+  "provenance": {
+    "source": "FIX PRE-2.4 humanizer → fidelity → naturalness chain",
+    "createdAt": "2026-10-06T05:09:54.002Z",
+    "productionScriptStatus": "CANONICAL",
+    "sourceScriptRef": {
+      "artifact": "script.json",
+      "version": "1.0.0"
+    },
+    "humanizationRef": "hum-f3ab56c75605",
+    "evidenceFidelityRef": "fid-18bda8f67bfa",
+    "naturalnessQaRef": "nqa-5c77553ddd03"
+  },
+  "fingerprint": "9aacf13b94bdf01c"
+}

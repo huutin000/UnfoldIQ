@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "naturalness-qa.schema.json",
+  "title": "UNFOLDIQ Naturalness QA (FIX PRE-2.4, schema 1.0.0)",
+  "description": "Explainable spoken-language QA. Never a single AI-detector score: concrete measurable signals (sentence-length variance, repeated transitions/openings, template rhetoric, abstract/summary density, cadence uniformity) with a located issue taxonomy.",
+  "type": "object",
+  "required": ["schemaVersion", "qaId", "version", "projectId", "humanizationRef", "metrics", "issues", "decision", "provenance", "fingerprint"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "qaId": { "type": "string", "pattern": "^nqa-[0-9a-f]{12}$" },
+    "version": { "type": "integer", "minimum": 1 },
+    "projectId": { "type": "string", "minLength": 1 },
+    "humanizationRef": { "type": "string", "pattern": "^hum-[0-9a-f]{12}$" },
+    "metrics": { "$ref": "#/definitions/naturalnessMetrics" },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["code", "blocking"],
+        "additionalProperties": false,
+        "properties": {
+          "code": { "enum": ["OVER_UNIFORM_CADENCE", "REPETITIVE_TRANSITION", "REPETITIVE_SENTENCE_OPENING", "TEMPLATE_RHETORIC", "ABSTRACT_DENSITY", "SUMMARY_HEAVY", "REDUNDANT_RECAP", "WRITTEN_NOT_SPOKEN", "AWKWARD_BREATH_GROUP", "RUN_ON_SENTENCE", "FRAGMENT_OVERUSE", "EXCESSIVE_HEDGE", "EXCESSIVE_EMPHASIS_WORDING"] },
+          "segmentId": { "type": ["string", "null"] },
+          "span": { "type": ["string", "null"], "maxLength": 200 },
+          "detail": { "type": ["string", "null"], "maxLength": 500 },
+          "blocking": { "type": "boolean" }
+        }
+      }
+    },
+    "decision": { "enum": ["PASS", "REVIEW_REQUIRED", "FAIL"] },
+    "provenance": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "createdAt": { "type": ["string", "null"] },
+        "evidenceRefs": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" }
+  },
+  "definitions": {
+    "naturalnessMetrics": {
+      "type": "object",
+      "required": ["sentenceCount", "sentenceLengthMean", "sentenceLengthVariance"],
+      "additionalProperties": false,
+      "properties": {
+        "sentenceCount": { "type": "integer", "minimum": 0 },
+        "sentenceLengthMean": { "type": "number", "minimum": 0 },
+        "sentenceLengthVariance": { "type": "number", "minimum": 0 },
+        "sentenceLengthDistribution": { "type": "array", "items": { "type": "integer", "minimum": 0 } },
+        "repeatedTransitionPhrases": { "type": "array", "items": { "type": "string" } },
+        "repeatedOpenings": { "type": "array", "items": { "type": "string" } },
+        "repeatedRhetoricalPatterns": { "type": "array", "items": { "type": "string" } },
+        "abstractLanguageFlags": { "type": "array", "items": { "type": "string" } },
+        "summaryPhraseFlags": { "type": "array", "items": { "type": "string" } },
+        "paragraphRhythmUniformity": { "type": ["number", "null"] },
+        "cadenceUniformity": { "type": ["number", "null"], "description": "0 = fully varied, 1 = perfectly uniform." },
+        "redundancyFlags": { "type": "array", "items": { "type": "string" } },
+        "awkwardSpokenPhrases": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

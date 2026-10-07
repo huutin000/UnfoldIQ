@@ -1,0 +1,125 @@
+{
+  "version": "1.0.0",
+  "budgetPlanId": "bp-9b02221225dd",
+  "projectId": "phase1g12-case-a",
+  "scopeId": "1g12-bcd",
+  "scope": "PROJECT",
+  "sourceRefs": [
+    "1G.5-production-decision",
+    "1G.6-model-resolution",
+    "1G.7-platform-adaptation"
+  ],
+  "policyVersion": "output-cost-policy-1.0.0",
+  "registrySnapshotRef": {
+    "snapshotId": "rs-flow-baseline-2026-10-03"
+  },
+  "platformPolicyRefs": [],
+  "hardBudget": {
+    "unit": "CREDITS",
+    "limit": 100,
+    "scope": "PROJECT",
+    "source": "operator-proposal (pending approval)"
+  },
+  "parentBudget": null,
+  "plannedItems": [
+    "gu-0ada6dc4cccc",
+    "gu-3ff6b479331a",
+    "gu-8b90d85091fb",
+    "gu-db85c90f8627",
+    "gu-159b73f5fc5d"
+  ],
+  "unitCount": 5,
+  "retryPolicies": {
+    "gu-0ada6dc4cccc": {
+      "maxAdditionalAttempts": 1,
+      "reservedCredits": 7,
+      "allowedFailureClasses": [
+        "QA_MOTION_DIRECTION",
+        "QA_MOTION_ABSENT",
+        "QA_CONTINUITY_OUTFIT",
+        "QA_CONTINUITY_IDENTITY",
+        "QA_LOCATION",
+        "QA_START_END_STATE",
+        "QA_FACTUAL_VISUAL",
+        "QA_STRUCTURAL",
+        "QA_SEMANTIC"
+      ]
+    },
+    "gu-3ff6b479331a": {
+      "maxAdditionalAttempts": 1,
+      "reservedCredits": 7,
+      "allowedFailureClasses": [
+        "QA_MOTION_DIRECTION",
+        "QA_MOTION_ABSENT",
+        "QA_CONTINUITY_OUTFIT",
+        "QA_CONTINUITY_IDENTITY",
+        "QA_LOCATION",
+        "QA_START_END_STATE",
+        "QA_FACTUAL_VISUAL",
+        "QA_STRUCTURAL",
+        "QA_SEMANTIC"
+      ]
+    },
+    "gu-8b90d85091fb": {
+      "maxAdditionalAttempts": 1,
+      "reservedCredits": 12,
+      "allowedFailureClasses": [
+        "QA_MOTION_DIRECTION",
+        "QA_MOTION_ABSENT",
+        "QA_CONTINUITY_OUTFIT",
+        "QA_CONTINUITY_IDENTITY",
+        "QA_LOCATION",
+        "QA_START_END_STATE",
+        "QA_FACTUAL_VISUAL",
+        "QA_STRUCTURAL",
+        "QA_SEMANTIC"
+      ]
+    },
+    "gu-db85c90f8627": {
+      "maxAdditionalAttempts": 1,
+      "reservedCredits": 12,
+      "allowedFailureClasses": [
+        "QA_MOTION_DIRECTION",
+        "QA_MOTION_ABSENT",
+        "QA_CONTINUITY_OUTFIT",
+        "QA_CONTINUITY_IDENTITY",
+        "QA_LOCATION",
+        "QA_START_END_STATE",
+        "QA_FACTUAL_VISUAL",
+        "QA_STRUCTURAL",
+        "QA_SEMANTIC"
+      ]
+    },
+    "gu-159b73f5fc5d": {
+      "maxAdditionalAttempts": 1,
+      "reservedCredits": 12,
+      "allowedFailureClasses": [
+        "QA_MOTION_DIRECTION",
+        "QA_MOTION_ABSENT",
+        "QA_CONTINUITY_OUTFIT",
+        "QA_CONTINUITY_IDENTITY",
+        "QA_LOCATION",
+        "QA_START_END_STATE",
+        "QA_FACTUAL_VISUAL",
+        "QA_STRUCTURAL",
+        "QA_SEMANTIC"
+      ]
+    }
+  },
+  "strictUnknownCost": false,
+  "summary": {
+    "estimatedImages": 0,
+    "estimatedVeoShots": 5,
+    "estimatedVariants": 5,
+    "knownCredits": 50,
+    "exactTotalCredits": 50
+  },
+  "estimateState": "EXACT",
+  "warnings": [],
+  "blockers": [],
+  "supersedes": null,
+  "fingerprint": "bf9ba1290bfaaf6a",
+  "status": "DRAFT",
+  "createdAt": "2026-10-04T15:22:33.281Z",
+  "updatedAt": "2026-10-04T15:22:33.282Z"
+}

@@ -1,0 +1,99 @@
+{
+  "schemaVersion": "1.0.0",
+  "revision": 16,
+  "createdAt": "2026-10-05T07:46:12.095Z",
+  "updatedAt": "2026-10-05T07:47:52.718Z",
+  "fingerprint": "10266c1225728ff9",
+  "canaries": {
+    "can-e40c68970cfa": {
+      "canaryId": "can-e40c68970cfa",
+      "change": {
+        "changeType": "PROMPT_POLICY",
+        "costEstimate": {
+          "paidGenerations": 0,
+          "note": "mock only"
+        }
+      },
+      "goldenSubset": [
+        "gold-factual-explainer",
+        "gold-fiction-continuity",
+        "gold-image-only",
+        "gold-originality-study"
+      ],
+      "status": "PROMOTE_ALLOWED",
+      "comparisonIds": [
+        "cmp-bef01a032c57",
+        "cmp-801a7e07bf69",
+        "cmp-93ba88778734",
+        "cmp-4ad22562104e"
+      ],
+      "promotedBaselineRef": null,
+      "createdAt": "2026-10-05T07:46:12.096Z",
+      "decidedAt": "2026-10-05T07:46:12.188Z",
+      "costEstimate": {
+        "paidGenerations": 0,
+        "note": "mock only"
+      }
+    },
+    "can-085c483d53b1": {
+      "canaryId": "can-085c483d53b1",
+      "change": {
+        "changeType": "PROMPT_POLICY",
+        "costEstimate": {
+          "paidGenerations": 0,
+          "note": "mock only"
+        }
+      },
+      "goldenSubset": [
+        "gold-factual-explainer",
+        "gold-fiction-continuity",
+        "gold-image-only",
+        "gold-originality-study"
+      ],
+      "status": "PROMOTE_ALLOWED",
+      "comparisonIds": [
+        "cmp-bef01a032c57",
+        "cmp-801a7e07bf69",
+        "cmp-93ba88778734",
+        "cmp-4ad22562104e"
+      ],
+      "promotedBaselineRef": null,
+      "createdAt": "2026-10-05T07:47:16.263Z",
+      "decidedAt": "2026-10-05T07:47:16.318Z",
+      "costEstimate": {
+        "paidGenerations": 0,
+        "note": "mock only"
+      }
+    },
+    "can-99361d473ce4": {
+      "canaryId": "can-99361d473ce4",
+      "change": {
+        "changeType": "PROMPT_POLICY",
+        "costEstimate": {
+          "paidGenerations": 0,
+          "note": "mock only"
+        }
+      },
+      "goldenSubset": [
+        "gold-factual-explainer",
+        "gold-fiction-continuity",
+        "gold-image-only",
+        "gold-originality-study"
+      ],
+      "status": "PROMOTE_ALLOWED",
+      "comparisonIds": [
+        "cmp-bef01a032c57",
+        "cmp-801a7e07bf69",
+        "cmp-93ba88778734",
+        "cmp-4ad22562104e"
+      ],
+      "promotedBaselineRef": null,
+      "createdAt": "2026-10-05T07:47:52.658Z",
+      "decidedAt": "2026-10-05T07:47:52.718Z",
+      "costEstimate": {
+        "paidGenerations": 0,
+        "note": "mock only"
+      }
+    }
+  }
+}

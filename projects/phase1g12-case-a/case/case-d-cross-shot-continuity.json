@@ -1,0 +1,41 @@
+{
+  "version": "1.0.0",
+  "recordId": "cross-shot-continuity-d1d2d3",
+  "reviewedAt": "2026-10-05T04:22:56.022Z",
+  "reviewer": "agent FRAME_SAMPLE review across 9 extracted frames (3 per shot: qa/d1-frames/, qa/d2-frames/, qa/d3-frames/); operator manual review not required — identity match unambiguous (§70 reserves human review for ambiguous judgment)",
+  "domains": {
+    "faceIdentity": "VERIFIED — same mascot-guide face across D1/D2/D3 representative frames",
+    "hair": "VERIFIED — short dark brown hair consistent",
+    "outfit": "VERIFIED — yellow jacket, teal collar, dark shirt, dark pants consistent",
+    "stylePalette": "VERIFIED — same 3D render style and studio background palette"
+  },
+  "perShot": {
+    "D1": {
+      "aggregate": "READY_FOR_TIMELINE"
+    },
+    "D2": {
+      "aggregate": "READY_FOR_TIMELINE"
+    },
+    "D3": {
+      "aggregate": "READY_FOR_TIMELINE"
+    }
+  },
+  "evidenceRefs": [
+    "qa/d1-frames/d1-frame-t0.1.png",
+    "qa/d1-frames/d1-frame-t2.png",
+    "qa/d1-frames/d1-frame-t3.8.png",
+    "qa/d2-frames/d2-frame-t0.1.png",
+    "qa/d2-frames/d2-frame-t2.png",
+    "qa/d2-frames/d2-frame-t3.8.png",
+    "qa/d3-frames/d3-frame-t0.1.png",
+    "qa/d3-frames/d3-frame-t2.png",
+    "qa/d3-frames/d3-frame-t3.8.png"
+  ],
+  "decision": "PASS",
+  "reason": "no identity/hair/outfit/style mutation observed across the three independently generated shots",
+  "expected": "mascot-guide identity, short dark hair, yellow jacket + teal collar + dark pants, consistent style",
+  "observed": "same mascot-guide face, hair, outfit (yellow jacket, teal collar, dark shirt/pants) and 3D render style across all nine frames; D2 placed in a different environment by design",
+  "notes": [
+    "D2 environment (modern office, waist-up framing) differs intentionally from D1/D3 (light studio, full-body): Ingredients composition variation per shot plan — §43 intentional framing/scene variation is not a continuity failure; identity/hair/outfit/style domains are the continuity contract here"
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "schemaVersion": "1.0.0",
+  "narrationDirectionId": "nd-18a1afd2f330",
+  "version": 1,
+  "projectId": "phase223-narration-pronunciation",
+  "scriptRef": {
+    "scriptArtifactId": "fss-phase223-validation",
+    "scriptVersion": 1
+  },
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "language": "en-us",
+  "segments": [
+    {
+      "segmentId": "S2",
+      "segmentOrdinal": 1,
+      "sourceTextHash": "9a372772983b9d3a",
+      "speakerId": null,
+      "emphasis": [
+        {
+          "text": "Kokoro",
+          "occurrence": 1,
+          "strength": "MODERATE"
+        }
+      ],
+      "pauseIntent": [
+        {
+          "kind": "BEAT",
+          "afterText": "Kokoro.",
+          "occurrence": 1
+        }
+      ],
+      "energy": "BALANCED",
+      "emotion": "CURIOSITY",
+      "paceIntent": "MODERATE",
+      "directionReason": "key term introduction"
+    },
+    {
+      "segmentId": "S3",
+      "segmentOrdinal": 2,
+      "sourceTextHash": "004ec52793d7e10c",
+      "speakerId": null,
+      "emphasis": [],
+      "pauseIntent": [],
+      "energy": "BALANCED",
+      "emotion": "INSTRUCTIVE",
+      "paceIntent": "SLOWER",
+      "directionReason": "names/places walkthrough"
+    }
+  ],
+  "stats": {
+    "totalSegments": 6,
+    "directedSegments": 2,
+    "directionCoveragePercent": 33.33,
+    "emphasisCount": 1,
+    "explicitPauseCount": 1,
+    "overDirectionReview": false
+  },
+  "provenance": {
+    "source": "phase-2.2",
+    "createdAt": "2026-10-06T02:35:50.235Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "c174268321fac6f0"
+}

@@ -1,0 +1,78 @@
+{
+  "version": "1.0.0",
+  "status": "CANCELLED",
+  "attempt": 1,
+  "generationCount": 0,
+  "history": [
+    {
+      "from": null,
+      "to": "PENDING",
+      "at": "2026-10-07T03:32:45.137Z",
+      "actor": "system"
+    },
+    {
+      "from": "PENDING",
+      "to": "VALIDATED",
+      "at": "2026-10-07T03:32:45.143Z",
+      "actor": "test"
+    },
+    {
+      "from": "VALIDATED",
+      "to": "PREPARED",
+      "at": "2026-10-07T03:32:45.148Z",
+      "actor": "test"
+    },
+    {
+      "from": "PREPARED",
+      "to": "AWAITING_USER_APPROVAL",
+      "at": "2026-10-07T03:32:45.155Z",
+      "actor": "test"
+    },
+    {
+      "from": "AWAITING_USER_APPROVAL",
+      "to": "AWAITING_USER_APPROVAL",
+      "at": "2026-10-07T03:32:45.160Z",
+      "actor": "user",
+      "note": "approval-recorded"
+    },
+    {
+      "from": "AWAITING_USER_APPROVAL",
+      "to": "AWAITING_PROVIDER_ACCEPTANCE",
+      "at": "2026-10-07T03:32:45.167Z",
+      "actor": "extension"
+    },
+    {
+      "from": "AWAITING_PROVIDER_ACCEPTANCE",
+      "to": "CANCELLED",
+      "at": "2026-10-07T03:32:45.173Z",
+      "actor": "user"
+    }
+  ],
+  "projectId": "HARDENING_1G12",
+  "jobId": "H8-JOB",
+  "requestId": "REQ-H8-JOB",
+  "sceneId": "S01",
+  "capability": "video",
+  "mode": "ASSISTED_APPROVAL",
+  "prompt": "hardening sweep test prompt",
+  "platform": "youtube",
+  "flowProject": {
+    "mode": "REUSE"
+  },
+  "outputRequirements": {
+    "aspectRatio": "16:9"
+  },
+  "creativeContext": {},
+  "expectedOutputPath": "assets/video/S01/H8-JOB.mp4",
+  "approval": {
+    "jobId": "H8-JOB",
+    "attempt": 1,
+    "approvedBy": "user",
+    "nonce": "nonce-H8-a",
+    "fingerprint": "fp-nonce-H8-a",
+    "approvedAt": "2026-10-07T03:32:45.160Z",
+    "used": false
+  },
+  "submitIssuedAt": "2026-10-07T03:32:45.167Z",
+  "submitNonce": "nonce-H8-a"
+}

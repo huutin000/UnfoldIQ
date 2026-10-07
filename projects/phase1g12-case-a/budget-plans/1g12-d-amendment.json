@@ -1,0 +1,96 @@
+{
+  "version": "1.0.0",
+  "budgetPlanId": "bp-1e463dea1689",
+  "projectId": "phase1g12-case-a",
+  "scopeId": "1g12-d-amendment",
+  "scope": "PROJECT",
+  "sourceRefs": [
+    "1G.5-production-decision",
+    "1G.6-model-resolution",
+    "1G.7-platform-adaptation"
+  ],
+  "policyVersion": "output-cost-policy-1.0.0",
+  "registrySnapshotRef": {
+    "snapshotId": "rs-flow-baseline-2026-10-03"
+  },
+  "platformPolicyRefs": [],
+  "hardBudget": {
+    "unit": "CREDITS",
+    "limit": 100,
+    "scope": "PROJECT",
+    "source": "operator direction: minimum-cost re-resolution, D shots at 4s"
+  },
+  "parentBudget": null,
+  "plannedItems": [
+    "gu-bde822cbe1dd",
+    "gu-1b8dbfa2ee4a",
+    "gu-223a6fbe0e28"
+  ],
+  "unitCount": 3,
+  "retryPolicies": {
+    "gu-bde822cbe1dd": {
+      "maxAdditionalAttempts": 1,
+      "reservedCredits": 7,
+      "allowedFailureClasses": [
+        "QA_MOTION_DIRECTION",
+        "QA_MOTION_ABSENT",
+        "QA_CONTINUITY_OUTFIT",
+        "QA_CONTINUITY_IDENTITY",
+        "QA_LOCATION",
+        "QA_START_END_STATE",
+        "QA_FACTUAL_VISUAL",
+        "QA_STRUCTURAL",
+        "QA_SEMANTIC"
+      ]
+    },
+    "gu-1b8dbfa2ee4a": {
+      "maxAdditionalAttempts": 1,
+      "reservedCredits": 7,
+      "allowedFailureClasses": [
+        "QA_MOTION_DIRECTION",
+        "QA_MOTION_ABSENT",
+        "QA_CONTINUITY_OUTFIT",
+        "QA_CONTINUITY_IDENTITY",
+        "QA_LOCATION",
+        "QA_START_END_STATE",
+        "QA_FACTUAL_VISUAL",
+        "QA_STRUCTURAL",
+        "QA_SEMANTIC"
+      ]
+    },
+    "gu-223a6fbe0e28": {
+      "maxAdditionalAttempts": 1,
+      "reservedCredits": 7,
+      "allowedFailureClasses": [
+        "QA_MOTION_DIRECTION",
+        "QA_MOTION_ABSENT",
+        "QA_CONTINUITY_OUTFIT",
+        "QA_CONTINUITY_IDENTITY",
+        "QA_LOCATION",
+        "QA_START_END_STATE",
+        "QA_FACTUAL_VISUAL",
+        "QA_STRUCTURAL",
+        "QA_SEMANTIC"
+      ]
+    }
+  },
+  "strictUnknownCost": false,
+  "summary": {
+    "estimatedImages": 0,
+    "estimatedVeoShots": 3,
+    "estimatedVariants": 3,
+    "knownCredits": 21,
+    "exactTotalCredits": 21
+  },
+  "estimateState": "EXACT",
+  "warnings": [],
+  "blockers": [],
+  "supersedes": {
+    "budgetPlanId": "bp-9b02221225dd",
+    "scope": "D units only (durationSeconds 8 → 4)"
+  },
+  "fingerprint": "37c8ce1e32af9db5",
+  "status": "DRAFT",
+  "createdAt": "2026-10-05T03:46:47.437Z",
+  "updatedAt": "2026-10-05T03:46:47.437Z"
+}

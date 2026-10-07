@@ -1,0 +1,16 @@
+{
+  "schemaVersion": "1.0.0",
+  "pronunciationProfileId": "pron-b739edf0b550",
+  "version": 1,
+  "projectId": "pilot-sky-blue",
+  "language": "en-us",
+  "entries": [],
+  "provenance": {
+    "source": "fix-pre-2.4",
+    "createdAt": "2026-10-06T04:49:12.055Z",
+    "evidenceRefs": [
+      "projects/pilot-sky-blue/voice/narration-direction"
+    ]
+  },
+  "fingerprint": "f15817f34d1b0062"
+}

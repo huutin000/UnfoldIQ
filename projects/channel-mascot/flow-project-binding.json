@@ -1,0 +1,8 @@
+{
+  "projectId": "channel-mascot",
+  "provider": "GOOGLE_FLOW",
+  "providerProjectRef": "8221824c-a1a6-4aa9-8d6b-fac24860d49e",
+  "providerProjectName": null,
+  "verifiedAt": "2026-10-03T14:16:00.558Z",
+  "evidenceRef": "operator-confirmed + url-router HIGH (address bar + DOM extraction agree)"
+}

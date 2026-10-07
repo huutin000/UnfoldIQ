@@ -1,0 +1,15 @@
+{
+  "assets": [
+    {
+      "assetId": "IMG_A",
+      "type": "image",
+      "path": "assets/case-a-source.png",
+      "status": "READY",
+      "sceneIds": [
+        "A-SC01"
+      ],
+      "width": 32,
+      "height": 32
+    }
+  ]
+}

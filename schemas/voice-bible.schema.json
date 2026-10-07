@@ -1,0 +1,204 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "voice-bible.schema.json",
+  "title": "UNFOLDIQ Voice Bible + Narrator Persona (Phase 2.1, schema 1.0.0)",
+  "description": "Canonical versioned voice identity + narrator persona. Owns WHO speaks (provider/model/voiceId/timbre/persona) and the DEFAULT synthesis intent. Does NOT own per-segment performance direction (Phase 2.2), pronunciation runtime validation (2.3), measured speech rate (2.4), captions (2.5). Versions are immutable: a semantic change creates a new version, never an in-place edit.",
+  "type": "object",
+  "required": ["schemaVersion", "voiceBibleId", "version", "language", "narrator", "characterVoices", "provenance", "fingerprint"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "voiceBibleId": { "type": "string", "pattern": "^vb-[0-9a-f]{12}$" },
+    "version": { "type": "integer", "minimum": 1 },
+    "projectId": { "type": ["string", "null"] },
+    "channelId": { "type": ["string", "null"] },
+    "language": { "type": "string", "minLength": 2, "maxLength": 16 },
+    "locale": {
+      "type": ["string", "null"],
+      "description": "BCP-47 style region tag. Stored explicitly; never inferred from the voice name.",
+      "pattern": "^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$"
+    },
+    "narrator": { "$ref": "#/definitions/narratorVoice" },
+    "characterVoices": {
+      "type": "array",
+      "description": "Optional dialogue voices for FICTION/HYBRID. Empty array is valid; unused voices are never created.",
+      "items": { "$ref": "#/definitions/characterVoice" }
+    },
+    "pronunciationProfileRef": {
+      "type": ["string", "null"],
+      "description": "Reference contract only (shape). Must be a pron-<slug> ref; the semantic rule is enforced in lib/voice-bible. Runtime pronunciation validation belongs to Phase 2.3.",
+      "pattern": "^[a-z0-9][a-z0-9-]{1,63}$"
+    },
+    "providerOptions": {
+      "type": ["object", "null"],
+      "description": "Normalized provider options only. Provider-specific fields never leak into Core.",
+      "additionalProperties": { "type": ["string", "number", "boolean"] },
+      "propertyNames": { "pattern": "^[A-Za-z][A-Za-z0-9_]{0,48}$" }
+    },
+    "provenance": { "$ref": "#/definitions/voiceProvenance" },
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" }
+  },
+  "definitions": {
+    "narratorVoice": {
+      "type": "object",
+      "description": "VOICE IDENTITY + defaults. PERFORMANCE DIRECTION per segment is Phase 2.2 and never mutates this record.",
+      "required": ["personaId", "provider", "model", "voiceId", "speakingStyle", "prosodyDefaults", "speedDefault", "emotionalRange", "prohibitedTraits", "persona"],
+      "additionalProperties": false,
+      "properties": {
+        "personaId": { "$ref": "#/definitions/personaId" },
+        "displayName": { "type": ["string", "null"], "maxLength": 80 },
+        "provider": { "type": "string", "minLength": 1, "maxLength": 64 },
+        "model": { "type": "string", "minLength": 1, "maxLength": 96 },
+        "voiceId": { "type": "string", "minLength": 1, "maxLength": 96 },
+        "speakingStyle": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "prosodyDefaults": { "$ref": "#/definitions/prosodyDefaults" },
+        "speedDefault": {
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 2.0,
+          "description": "SYNTHESIS INTENT ONLY (provider rate factor). This is NOT measured words-per-minute; measured speech rate QA belongs to Phase 2.4. The [0.5,2.0] bound structurally excludes a wpm value."
+        },
+        "pitchDefault": { "type": ["number", "null"], "minimum": 0.5, "maximum": 2.0 },
+        "energyDefault": { "$ref": "#/definitions/energy" },
+        "emotionalRange": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/definitions/emotion" }
+        },
+        "prohibitedTraits": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/definitions/prohibitedPattern" }
+        },
+        "persona": { "$ref": "#/definitions/narratorPersona" }
+      }
+    },
+    "narratorPersona": {
+      "type": "object",
+      "description": "Semantic identity of the narrator, not only a voiceId.",
+      "required": ["personaId", "role", "audience", "tone", "energy", "paceIntent", "warmth", "directness", "formality", "storytellingStyle", "emotionalRange", "prohibitedDeliveryPatterns", "language"],
+      "additionalProperties": false,
+      "properties": {
+        "personaId": { "$ref": "#/definitions/personaId" },
+        "role": { "$ref": "#/definitions/personaRole" },
+        "audience": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "tone": { "$ref": "#/definitions/tone" },
+        "energy": { "$ref": "#/definitions/energy" },
+        "paceIntent": { "$ref": "#/definitions/paceIntent" },
+        "warmth": { "$ref": "#/definitions/warmth" },
+        "directness": { "$ref": "#/definitions/directness" },
+        "formality": { "$ref": "#/definitions/formality" },
+        "storytellingStyle": { "$ref": "#/definitions/storytellingStyle" },
+        "emotionalRange": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/definitions/emotion" }
+        },
+        "prohibitedDeliveryPatterns": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/definitions/prohibitedPattern" }
+        },
+        "language": { "type": "string", "minLength": 2, "maxLength": 16 },
+        "notes": { "type": ["string", "null"], "maxLength": 400 }
+      }
+    },
+    "characterVoice": {
+      "type": "object",
+      "required": ["speakerId", "provider", "model", "voiceId"],
+      "additionalProperties": false,
+      "properties": {
+        "speakerId": { "type": "string", "minLength": 1, "maxLength": 64 },
+        "personaId": { "$ref": "#/definitions/personaId" },
+        "provider": { "type": "string", "minLength": 1, "maxLength": 64 },
+        "model": { "type": "string", "minLength": 1, "maxLength": 96 },
+        "voiceId": { "type": "string", "minLength": 1, "maxLength": 96 },
+        "styleDefaults": { "$ref": "#/definitions/prosodyDefaults" },
+        "language": { "type": ["string", "null"], "minLength": 2, "maxLength": 16 }
+      }
+    },
+    "prosodyDefaults": {
+      "type": "object",
+      "description": "Bounded controlled defaults. Never a large unstructured prose blob.",
+      "required": ["paceIntent", "energy", "pauseStyle", "sentenceFlow", "emphasisStyle", "emotionalBaseline"],
+      "additionalProperties": false,
+      "properties": {
+        "paceIntent": { "$ref": "#/definitions/paceIntent" },
+        "energy": { "$ref": "#/definitions/energy" },
+        "pauseStyle": { "$ref": "#/definitions/pauseStyle" },
+        "sentenceFlow": { "$ref": "#/definitions/sentenceFlow" },
+        "emphasisStyle": { "$ref": "#/definitions/emphasisStyle" },
+        "emotionalBaseline": { "$ref": "#/definitions/emotionalBaseline" }
+      }
+    },
+    "voiceProvenance": {
+      "type": "object",
+      "description": "Honest source of the selection. Never fabricated. Rights are recorded, never guessed.",
+      "required": ["source", "createdAt", "rights", "evidenceRefs"],
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "enum": ["OPERATOR_APPROVED", "CANONICAL_BOOTSTRAP", "PROVIDER_DEFAULT", "PENDING_OPERATOR"],
+          "description": "PROVIDER_DEFAULT means the voice came from the provider's per-language default, not an operator decision. PENDING_OPERATOR means production readiness is blocked."
+        },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "rights": {
+          "type": "object",
+          "required": ["status", "licenseType", "cloning"],
+          "additionalProperties": false,
+          "properties": {
+            "status": { "$ref": "#/definitions/rightsStatus" },
+            "licenseType": { "$ref": "#/definitions/licenseType" },
+            "detail": { "type": ["string", "null"], "maxLength": 240 },
+            "cloning": {
+              "const": false,
+              "description": "Voice cloning is out of scope for Phase 2.1 and structurally forbidden."
+            }
+          }
+        },
+        "evidenceRefs": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1, "maxLength": 240 }
+        },
+        "approvalRef": { "type": ["string", "null"], "maxLength": 240 }
+      }
+    },
+    "personaId": { "type": "string", "pattern": "^per-[0-9a-z-]{1,64}$" },
+    "emotion": {
+      "enum": ["NEUTRAL", "FRIENDLY", "CONFIDENT", "CURIOSITY", "SURPRISE", "CONCERN", "EXCITEMENT", "TENDERNESS", "URGENCY", "SOMBER", "HUMOR", "INSTRUCTIVE"]
+    },
+    "prohibitedPattern": {
+      "enum": ["UNNATURALLY_SLOW_CINEMATIC", "CONSTANT_DRAGMATIC_EMPHASIS", "MONOTONE_CADENCE", "OVERACTING", "ROBOTIC_CLAUSE_RHYTHM", "EXCESSIVE_PAUSES", "ANNOUNCER_BOMBAST", "WHISPERED_DELIVERY", "SHOUTED_DELIVERY"]
+    },
+    "personaRole": {
+      "enum": ["NARRATOR", "HOST", "GUIDE", "REPORTER", "EDUCATOR", "COMPENDIUM"]
+    },
+    "tone": {
+      "enum": ["AUTHORITATIVE", "CONVERSATIONAL", "EXPLAINING", "NARRATIVE", "DOCUMENTARY", "COMPANION"]
+    },
+    "energy": { "enum": ["FLAT", "CALM", "BALANCED", "LIVELY", "HIGH"] },
+    "paceIntent": { "enum": ["SLOW", "MODERATE", "BRIGHT", "BRISK"] },
+    "warmth": { "enum": ["COLD", "NEUTRAL", "WARM", "ENTHUSIASTIC"] },
+    "directness": { "enum": ["INDIRECT", "BALANCED", "DIRECT"] },
+    "formality": { "enum": ["CASUAL", "CONVERSATIONAL", "PROFESSIONAL", "FORMAL"] },
+    "storytellingStyle": {
+      "enum": ["EXPLAINER", "NARRATIVE_ARC", "DOCUMENTARY_WALKTHROUGH", "DIRECT_ADDRESS", "QUESTION_AND_ANSWER", "EVIDENCE_WALKTHROUGH", "COMPARATIVE_REVIEW"]
+    },
+    "pauseStyle": { "enum": ["MINIMAL", "NATURAL", "DELIBERATE"] },
+    "sentenceFlow": { "enum": ["CONNECTED", "CLIPPED", "NARRATIVE", "MEASURED"] },
+    "emphasisStyle": { "enum": ["SUBTLE", "SELECTIVE", "EXPLICIT"] },
+    "emotionalBaseline": {
+      "enum": ["NEUTRAL", "WARM", "ENGAGED", "SOMBER", "URGENT", "DOCUMENTARY"]
+    },
+    "rightsStatus": {
+      "enum": ["OWNED", "LICENSED", "PERMISSION_GRANTED", "PLATFORM_GENERATED", "PUBLIC_DOMAIN_ASSERTED", "UNRESOLVED", "REVIEW_REQUIRED", "RISK_ACCEPTED", "NOT_APPLICABLE"]
+    },
+    "licenseType": {
+      "enum": ["ORIGINAL", "LICENSED", "ROYALTY_FREE_WITH_LICENSE", "PLATFORM_LIBRARY", "PUBLIC_DOMAIN_ASSERTED", "UNRESOLVED", "NOT_APPLICABLE"]
+    }
+  }
+}

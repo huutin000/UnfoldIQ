@@ -1,0 +1,18 @@
+{
+  "phase": "2.2-2.3",
+  "measuredAt": "2026-10-07T03:36:07.694Z",
+  "unit": "ms unless noted",
+  "narrationDirectionResolveLatencyMs": 36,
+  "narrationDirectionValidateLatencyMs": 0,
+  "pronunciationProfileResolveLatencyMs": 20,
+  "pronunciationRuntimePhonemizeLatencyMs": 8436,
+  "ttsReadyPlanLatencyMs": 1,
+  "pronunciationCompileLatencyMs": 0,
+  "localizedInvalidationPlanLatencyMs": 19,
+  "segmentCount": 6,
+  "candidateTermCount": 7,
+  "overrideCount": 7,
+  "phonemeOutputCount": 6,
+  "coldWarm": "cold batch included one real python cold start; R9 second pass in tests/pronunciation/test-pronunciation-runtime.js provides the warm comparison",
+  "note": "local runtime only; no final TTS synthesis benchmarked"
+}

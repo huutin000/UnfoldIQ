@@ -1,0 +1,58 @@
+{
+  "caseResult": {
+    "version": "1.0.0",
+    "caseId": "A",
+    "status": "PASS",
+    "projectId": "phase1g12-case-a",
+    "providerProjectRef": null,
+    "shotIds": [
+      "A-SH01"
+    ],
+    "generationUnitIds": [],
+    "attemptIds": [
+      "render-attempt-3"
+    ],
+    "productionDecisionRefs": [
+      "decision/production-decision.json"
+    ],
+    "modelResolutionRefs": [],
+    "budgetPlanRef": "no-spend-plan (0 video credits)",
+    "providerResultRefs": [],
+    "assetIds": [
+      "as-1186233d1af6",
+      "as-4bd9e3ccdc42"
+    ],
+    "qaResultIds": [
+      "qa-fafe08bf36c5"
+    ],
+    "timelineEligibility": [
+      "as-4bd9e3ccdc42=READY_FOR_TIMELINE"
+    ],
+    "repairHistory": [],
+    "credits": {
+      "estimated": 0,
+      "reserved": 0,
+      "reconciled": 0,
+      "state": "RECONCILED_ZERO_SPEND"
+    },
+    "evidenceRefs": [
+      "render/attempt-1/output.mp4",
+      "qa/case-a-qa-summary.json",
+      "render/render-input-case-a.json"
+    ],
+    "caseResultId": "case-a-d1670f2c6920",
+    "completedAt": "2026-10-04T15:20:20.097Z"
+  },
+  "matrix": [
+    "A1=PASS",
+    "A2=PASS",
+    "A3=PASS",
+    "A4=PASS",
+    "A5=PASS",
+    "A6=PASS",
+    "A7=PASS",
+    "A8=PASS",
+    "A9=PASS"
+  ],
+  "matrixStatus": "PASS"
+}

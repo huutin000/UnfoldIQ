@@ -1,0 +1,62 @@
+{
+  "capturedAt": "2026-10-07T03:36:18.533Z",
+  "runtimeMode": "QUIET_PHONEMIZATION",
+  "modelLoaded": false,
+  "audioGenerated": false,
+  "records": [
+    {
+      "index": 0,
+      "graphemes": [
+        "In 2024, voice AI crossed a threshold that used to sound like science fiction."
+      ],
+      "phonemes": [
+        "ɪn twˈɛnti twˈɛnti fˈɔɹ, vˈYs ˈAˌI kɹˈɔst ɐ θɹˈɛʃhˌOld ðæt jˈust tə sˈWnd lˈIk sˈIəns fˈɪkʃən."
+      ]
+    },
+    {
+      "index": 1,
+      "graphemes": [
+        "That threshold was Kokoro. And it changed everything."
+      ],
+      "phonemes": [
+        "ðˈæt θɹˈɛʃhˌOld wʌz kəkˈɔɹO. ˌænd ɪt ʧˈAnʤd ˈɛvəɹiθˌɪŋ."
+      ]
+    },
+    {
+      "index": 2,
+      "graphemes": [
+        "Mica Reynolds walked through Reykjavik while recording narration for this series."
+      ],
+      "phonemes": [
+        "mˈIkə ɹˈɛnᵊldz wˈɔkt θɹu ɹˈAkjəvˌɪk wˌIl ɹəkˈɔɹdɪŋ nɛɹˈAʃən fɔɹ ðɪs sˈɪɹiz."
+      ]
+    },
+    {
+      "index": 3,
+      "graphemes": [
+        "NASA released the weights while CIA briefings mentioned synthetic audio."
+      ],
+      "phonemes": [
+        "nˈæsə ɹəlˈist ðə wˈAts wˌIl sˌiˌIˈA bɹˈifɪŋz mˈɛnʧᵊnd sɪnθˈɛTɪk ˈɔdiO."
+      ]
+    },
+    {
+      "index": 4,
+      "graphemes": [
+        "Misaki turns graphemes into phonemes before UnfoldIQ renders a video."
+      ],
+      "phonemes": [
+        "mɪsəki tˈɜɹnz ɡɹˈæfimz ˈɪntu fˈOnˌimz bəfˈɔɹ ˌʌnfˈOldIkjˌu ɹˈɛndəɹz ɐ vˈɪdiO."
+      ]
+    },
+    {
+      "index": 5,
+      "graphemes": [
+        "The rest of this series explains how each piece works."
+      ],
+      "phonemes": [
+        "ðə ɹˈɛst ʌv ðɪs sˈɪɹiz ɪksplˈAnz hˌW ˈiʧ pˈis wˈɜɹks."
+      ]
+    }
+  ]
+}

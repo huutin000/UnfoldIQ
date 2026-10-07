@@ -1,0 +1,80 @@
+{
+  "capturedAt": "2026-10-07T03:43:31.625Z",
+  "runtimeMode": "QUIET_PHONEMIZATION",
+  "modelLoaded": false,
+  "audioGenerated": false,
+  "records": [
+    {
+      "index": 0,
+      "graphemes": [
+        "Look up on a clear day. The sky is blue. But sunlight itself? White. So where does the blue actually come from?"
+      ],
+      "phonemes": [
+        "lˈʊk ˌʌp ˌɔn ɐ klˈɪɹ dˈA. ðə skˈI ɪz blˈu. bˌʌt sˈʌnlˌIt ɪtsˈɛlf? wˈIt. sˌO wˌɛɹ dˈʌz ðə blˈu ˈækʧəwəli kˈʌm fɹʌm?"
+      ]
+    },
+    {
+      "index": 1,
+      "graphemes": [
+        "The answer is written into the air itself — tiny molecules of nitrogen and oxygen, each one far smaller than a wave of light."
+      ],
+      "phonemes": [
+        "ði ˈænsəɹ ɪz ɹˈɪtn ˈɪntu ði ˈɛɹ ɪtsˈɛlf — tˈIni mˈɑləkjˌulz ʌv nˈItɹəʤᵊn ænd ˈɑksəʤᵊn, ˈiʧ wˈʌn fˈɑɹ smˈɔləɹ ðən ɐ wˈAv ʌv lˈIt."
+      ]
+    },
+    {
+      "index": 2,
+      "graphemes": [
+        "When sunlight hits those molecules, they scatter short blue wavelengths in every direction — several times more strongly than they scatter red."
+      ],
+      "phonemes": [
+        "wˌɛn sˈʌnlˌIt hˈɪts ðOz mˈɑləkjˌulz, ðA skˈæTəɹ ʃˈɔɹt blˈu wˈAvlˌɛŋθs ɪn ˈɛvəɹi dəɹˈɛkʃən — sˈɛvəɹəl tˈImz mˈɔɹ stɹˈɔŋli ðən ðA skˈæTəɹ ɹˈɛd."
+      ]
+    },
+    {
+      "index": 3,
+      "graphemes": [
+        "That scattered blue light reaches your eyes from everywhere overhead. And that is why the whole sky glows blue."
+      ],
+      "phonemes": [
+        "ðˈæt skˈæTəɹd blˈu lˈIt ɹˈiʧᵻz jʊɹ ˈIz fɹʌm ˈɛvɹiwˌɛɹ ˌOvəɹhˈɛd. ˌænd ðˈæt ɪz wˌI ðə hˈOl skˈI ɡlˈOz blˈu."
+      ]
+    },
+    {
+      "index": 4,
+      "graphemes": [
+        "Violet gets scattered even more. But there is less of it in sunlight to begin with, and your eyes are less sensitive to it."
+      ],
+      "phonemes": [
+        "vˈIᵊlət ɡɛts skˈæTəɹd ˈivən mˈɔɹ. bˌʌt ðɛɹ ɪz lˈɛs ʌv ɪt ɪn sˈʌnlˌIt tə bəɡˈɪn wɪð, ænd jʊɹ ˈIz ɑɹ lˈɛs sˈɛnsəTɪv tʊ ɪt."
+      ]
+    },
+    {
+      "index": 5,
+      "graphemes": [
+        "At sunset, that sunlight crosses much more air. The blue gets scattered away along the way, and the reds and oranges remain."
+      ],
+      "phonemes": [
+        "ˌæt sˈʌnsˌɛt, ðæt sˈʌnlˌIt kɹˈɔsᵻz mˈʌʧ mˈɔɹ ˈɛɹ. ðə blˈu ɡɛts skˈæTəɹd əwˈA əlˈɔŋ ðə wˈA, ænd ðə ɹˈɛdz ænd ˈɔɹᵊnʤᵻz ɹəmˈAn."
+      ]
+    },
+    {
+      "index": 6,
+      "graphemes": [
+        "Dust and pollution, on the other hand, scatter all colors equally. That is why a hazy sky looks pale and white."
+      ],
+      "phonemes": [
+        "dˈʌst ænd pəlˈuʃən, ˌɔn ði ˈʌðəɹ hˈænd, skˈæTəɹ ˈɔl kˈʌləɹz ˈikwəli. ðˈæt ɪz wˌI ɐ hˈAzi skˈI lˈʊks pˈAl ænd wˈIt."
+      ]
+    },
+    {
+      "index": 7,
+      "graphemes": [
+        "So the blue sky is not a thing. It is sunlight, rearranged by the air. Thanks for watching."
+      ],
+      "phonemes": [
+        "sˌO ðə blˈu skˈI ɪz nˌɑt ɐ θˈɪŋ. ˌɪt ɪz sˈʌnlˌIt, ɹˌiəɹˈAnʤd bI ði ˈɛɹ. θˈæŋks fɔɹ wˈɑʧɪŋ."
+      ]
+    }
+  ]
+}

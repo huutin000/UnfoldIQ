@@ -62,6 +62,17 @@ function main() {
   line(`extension manifest: ${fs.existsSync(path.join(PROJECT_ROOT, "flow-companion/extension/manifest.json")) ? "PRESENT" : "MISSING"}`);
   line(`flow-web registered: ${flowRegistered ? "yes" : "no"}`);
   line("uiSelectors: NOT_VERIFIED (placeholders; live UI not verified from CLI)");
+  try {
+    const adapter = safeRequire("flow-companion/extension/src/content/flow-page-adapter.js");
+    const ikeys = ["AGENT_INSTRUCTIONS_BUTTON", "INSTRUCTION_ADD", "INSTRUCTION_EDITOR", "INSTRUCTION_REFERENCE_ATTACH", "INSTRUCTION_DONE", "INSTRUCTION_READBACK"];
+    const istatus = [...new Set(ikeys.map((k) => (adapter.SELECTORS[k] || {}).status))].join(",");
+    line(`instructionSelectors: ${istatus} (static table; live adoption needs authenticated DOM evidence)`);
+    line(`instructionReadback: ${typeof adapter.extractInstructionReadback === "function" ? "EXTRACTOR_PRESENT" : "MISSING"} (read-only; live proof is a live-gate concern)`);
+    line(`instructionApply: ${typeof adapter.ensureAgentOn === "function" && typeof adapter.setInstructionGuidelines === "function" ? "GATED_COMMAND_AVAILABLE" : "MISSING"} (preconditions enforced in-dispatcher; doctor never mutates)`);
+    line(`projectIdentity: ${typeof adapter.extractFlowProjectIdentity === "function" ? "EXTRACTOR_PRESENT" : "MISSING"} (read-only; no binding invented by doctor)`);
+  } catch (e) {
+    line(`instructionPlumbing: UNVERIFIABLE (${e.message})`);
+  }
   line("live generation: NOT_VERIFIED (no credits consumed by doctor)");
   // §28A origin compatibility
   try {

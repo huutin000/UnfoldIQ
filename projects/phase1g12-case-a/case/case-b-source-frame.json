@@ -1,0 +1,14 @@
+{
+  "assetId": "as-fe697fd1fef8",
+  "sha256": "fe697fd1fef86e607d743694c223ab8a93347754ba353f1f7eb0cccfbfab9ab7",
+  "bytes": 30087,
+  "dimensions": {
+    "width": 1024,
+    "height": 1024
+  },
+  "role": "B-SH01 first-frame source",
+  "correlationRef": "case/case-b-source-frame-correlation.json",
+  "qaResultId": "qa-7d78ef7c4104",
+  "selected": true,
+  "locked": true
+}

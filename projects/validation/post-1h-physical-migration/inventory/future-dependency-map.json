@@ -1,0 +1,260 @@
+{
+  "migrationId": "post1h-physical-migration",
+  "roadmapAreas": [
+    "Phase 2 voice/audio/caption regression",
+    "Phase 3 timeline/editorial inputs",
+    "Phase 4 publishable pilot / real E2E proof",
+    "Phase 5 provider/model canary + perf regression",
+    "Phase 6 creative-quality comparison",
+    "Phase 7 long-form hardening",
+    "Post-V1 maintenance/debug reproducibility"
+  ],
+  "note": "Roadmap V6.2 file lives outside the repo (Downloads All); areas taken from FIX POST-1H 01 section 9D. No dependency fabricated: entries with no proven consumer use empty futureConsumers.",
+  "acceptedDeviations": [
+    {
+      "id": "DEV-MAP-1",
+      "deviation": "Phase 2-7 areas sourced from the FIX text section 9D instead of the canonical Roadmap V6.2 file, which is not present anywhere in the repository (verified: no ROADMAP*V6* file in-repo).",
+      "compensatingProof": "All 7 executed deletions were R0/EPHEMERAL playwright/bridge rerun scratch with futureDependencyStatus NONE. Full-repo scan (4,263 files) for the 7 purged basenames finds references only in this FIX's own evidence (journal PURGED events, artifact-registry PURGED records, this map, the move plan, before-trees, the canonical report) plus frozen pre-migration snapshots describing before-state; zero references in tests/scripts/lib/golden/schemas/core/pipeline/remotion/platforms/providers, and zero in Phase 2-7 contract owners (lib/voice-bible, golden/, core/WORKFLOW.md, provider contracts). Canonical evidence for those runs was extracted long ago to Report/evidence/post-v1f-real-execution/.",
+      "status": "ACCEPTED"
+    }
+  ],
+  "entries": [
+    {
+      "path": "out/bridge-2g-live.log",
+      "artifactId": null,
+      "currentRefs": [],
+      "futureConsumers": [],
+      "futurePhaseRefs": [],
+      "regenerationClass": "R0",
+      "retentionClass": "EPHEMERAL",
+      "lifecycleStatus": "EPHEMERAL",
+      "exactArtifactRequired": false,
+      "quarantineRequired": false,
+      "decision": "DELETE",
+      "reason": "Playwright/bridge scratch log; canonical failure evidence extracted to Report/evidence/post-v1f-real-execution/. No current refs, no Phase 2-7 future refs. Rerun regenerates."
+    },
+    {
+      "path": "out/_cdp2g.js",
+      "artifactId": null,
+      "currentRefs": [],
+      "futureConsumers": [],
+      "futurePhaseRefs": [],
+      "regenerationClass": "R0",
+      "retentionClass": "EPHEMERAL",
+      "lifecycleStatus": "EPHEMERAL",
+      "exactArtifactRequired": false,
+      "quarantineRequired": false,
+      "decision": "DELETE",
+      "reason": "Bridge debug scratch; no refs. Rerun regenerates."
+    },
+    {
+      "path": "out/_e_logincheck.txt",
+      "artifactId": null,
+      "currentRefs": [],
+      "futureConsumers": [],
+      "futurePhaseRefs": [],
+      "regenerationClass": "R0",
+      "retentionClass": "EPHEMERAL",
+      "lifecycleStatus": "EPHEMERAL",
+      "exactArtifactRequired": false,
+      "quarantineRequired": false,
+      "decision": "DELETE",
+      "reason": "Login-check scratch; no refs. Rerun regenerates."
+    },
+    {
+      "path": "out/_launch2g.js",
+      "artifactId": null,
+      "currentRefs": [],
+      "futureConsumers": [],
+      "futurePhaseRefs": [],
+      "regenerationClass": "R0",
+      "retentionClass": "EPHEMERAL",
+      "lifecycleStatus": "EPHEMERAL",
+      "exactArtifactRequired": false,
+      "quarantineRequired": false,
+      "decision": "DELETE",
+      "reason": "Launch scratch; no refs. Rerun regenerates."
+    },
+    {
+      "path": "out/_pw.err",
+      "artifactId": null,
+      "currentRefs": [],
+      "futureConsumers": [],
+      "futurePhaseRefs": [],
+      "regenerationClass": "R0",
+      "retentionClass": "EPHEMERAL",
+      "lifecycleStatus": "EPHEMERAL",
+      "exactArtifactRequired": false,
+      "quarantineRequired": false,
+      "decision": "DELETE",
+      "reason": "Playwright stderr scratch; no refs. Rerun regenerates."
+    },
+    {
+      "path": "out/_pw.log",
+      "artifactId": null,
+      "currentRefs": [],
+      "futureConsumers": [],
+      "futurePhaseRefs": [],
+      "regenerationClass": "R0",
+      "retentionClass": "EPHEMERAL",
+      "lifecycleStatus": "EPHEMERAL",
+      "exactArtifactRequired": false,
+      "quarantineRequired": false,
+      "decision": "DELETE",
+      "reason": "Playwright log scratch; no refs. Rerun regenerates."
+    },
+    {
+      "path": "out/_pw.ps1",
+      "artifactId": null,
+      "currentRefs": [],
+      "futureConsumers": [],
+      "futurePhaseRefs": [],
+      "regenerationClass": "R0",
+      "retentionClass": "EPHEMERAL",
+      "lifecycleStatus": "EPHEMERAL",
+      "exactArtifactRequired": false,
+      "quarantineRequired": false,
+      "decision": "DELETE",
+      "reason": "Playwright helper scratch; no refs. Rerun regenerates."
+    },
+    {
+      "path": "node_modules/",
+      "artifactId": null,
+      "currentRefs": [
+        "package.json",
+        "package-lock.json"
+      ],
+      "futureConsumers": [
+        "all future npm work"
+      ],
+      "futurePhaseRefs": [
+        "Phase 2-7 (test/build tooling)"
+      ],
+      "regenerationClass": "R1",
+      "retentionClass": "REGENERABLE",
+      "lifecycleStatus": null,
+      "exactArtifactRequired": false,
+      "quarantineRequired": false,
+      "decision": "KEEP",
+      "reason": "Active dependency tree (322MB). Reinstall via npm ci is proven but breaks all work until done; no storage pressure justifies it. Reclaimable bytes reported separately.",
+      "regenerationMethod": "npm ci (package-lock.json)",
+      "regenerationDeterministic": true,
+      "regenerationCostClass": "ZERO_LOCAL",
+      "futureDependencyStatus": "REGENERABLE_SAFE"
+    },
+    {
+      "path": "remotion/node_modules/",
+      "artifactId": null,
+      "currentRefs": [
+        "remotion/package.json"
+      ],
+      "futureConsumers": [
+        "Phase 4 render work"
+      ],
+      "futurePhaseRefs": [
+        "Phase 4"
+      ],
+      "regenerationClass": "R1",
+      "retentionClass": "REGENERABLE",
+      "lifecycleStatus": null,
+      "exactArtifactRequired": false,
+      "quarantineRequired": false,
+      "decision": "KEEP",
+      "reason": "Active render dependency tree (843MB). Same rationale as root.",
+      "regenerationMethod": "npm ci in remotion/",
+      "regenerationDeterministic": true,
+      "regenerationCostClass": "ZERO_LOCAL",
+      "futureDependencyStatus": "REGENERABLE_SAFE"
+    },
+    {
+      "path": ".opencode/node_modules/",
+      "artifactId": null,
+      "currentRefs": [
+        ".opencode tooling"
+      ],
+      "futureConsumers": [
+        "agent tooling"
+      ],
+      "futurePhaseRefs": [],
+      "regenerationClass": "R1",
+      "retentionClass": "REGENERABLE",
+      "lifecycleStatus": null,
+      "exactArtifactRequired": false,
+      "quarantineRequired": false,
+      "decision": "KEEP",
+      "reason": "Agent tooling deps (55MB). KEEP.",
+      "regenerationMethod": "tooling reinstall",
+      "regenerationDeterministic": true,
+      "regenerationCostClass": "ZERO_LOCAL",
+      "futureDependencyStatus": "REGENERABLE_SAFE"
+    },
+    {
+      "path": "flow-companion/extension/.output/",
+      "artifactId": null,
+      "currentRefs": [
+        "extension E2E (possible)"
+      ],
+      "futureConsumers": [
+        "Post-V1 extension maintenance"
+      ],
+      "futurePhaseRefs": [
+        "Post-V1"
+      ],
+      "regenerationClass": "R1",
+      "retentionClass": "REGENERABLE",
+      "lifecycleStatus": null,
+      "exactArtifactRequired": false,
+      "quarantineRequired": false,
+      "decision": "KEEP",
+      "reason": "Build output (0.5MB), regenerable via build.js but trivially small; extension tests may consume. KEEP.",
+      "regenerationMethod": "flow-companion/extension/build.js",
+      "regenerationDeterministic": true,
+      "regenerationCostClass": "ZERO_LOCAL",
+      "futureDependencyStatus": "REVIEW_REQUIRED"
+    },
+    {
+      "path": "out/final/pilot-sky-blue/final.mp4",
+      "artifactId": "artifact:out-final-pilot-sky-blue-mp4",
+      "currentRefs": [
+        "Report/STEP-14_REPORT.md (prose)"
+      ],
+      "futureConsumers": [
+        "Phase 4 publishable pilot proof",
+        "Phase 6 creative comparison baseline"
+      ],
+      "futurePhaseRefs": [
+        "Phase 4",
+        "Phase 6"
+      ],
+      "regenerationClass": "R4",
+      "retentionClass": "DURABLE",
+      "lifecycleStatus": "APPROVED",
+      "exactArtifactRequired": true,
+      "quarantineRequired": true,
+      "decision": "KEEP_EXACT",
+      "reason": "Final deliverable; re-render is R1 but exact QA-stamped bytes are canonical evidence. Moved to out/final/, never deleted.",
+      "futureDependencyStatus": "KEEP_EXACT"
+    },
+    {
+      "path": "out/final/postv1-flow-live-validation/validation.mp4",
+      "artifactId": "artifact:out-final-postv1-validation-mp4",
+      "currentRefs": [
+        "phase1hyg reference-graph (snapshot)"
+      ],
+      "futureConsumers": [
+        "Post-V1 maintenance reproducibility"
+      ],
+      "futurePhaseRefs": [
+        "Post-V1"
+      ],
+      "regenerationClass": "R4",
+      "retentionClass": "RETENTION_MANAGED",
+      "lifecycleStatus": "GENERATED",
+      "exactArtifactRequired": true,
+      "quarantineRequired": true,
+      "decision": "KEEP_EXACT",
+      "reason": "Real E2E validation output; provider-involved generation. Moved to out/final/, never deleted.",
+      "futureDependencyStatus": "KEEP_EXACT"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.0.0",
+  "scriptArtifactId": "fss-phase223-validation",
+  "scriptVersion": 1,
+  "projectId": "phase223-narration-pronunciation",
+  "language": "en-us",
+  "contentMode": null,
+  "contentClass": "FACTUAL",
+  "segments": [
+    {
+      "segmentId": "S1",
+      "ordinal": 0,
+      "text": "In 2024, voice AI crossed a threshold that used to sound like science fiction."
+    },
+    {
+      "segmentId": "S2",
+      "ordinal": 1,
+      "text": "That threshold was Kokoro. And it changed everything."
+    },
+    {
+      "segmentId": "S3",
+      "ordinal": 2,
+      "text": "Mica Reynolds walked through Reykjavik while recording narration for this series."
+    },
+    {
+      "segmentId": "S4",
+      "ordinal": 3,
+      "text": "NASA released the weights while CIA briefings mentioned synthetic audio."
+    },
+    {
+      "segmentId": "S5",
+      "ordinal": 4,
+      "text": "Misaki turns graphemes into phonemes before UnfoldIQ renders a video."
+    },
+    {
+      "segmentId": "S6",
+      "ordinal": 5,
+      "text": "The rest of this series explains how each piece works."
+    }
+  ],
+  "provenance": {
+    "source": "phase-2.2-2.3 bounded validation fixture",
+    "createdAt": "2026-10-06T00:00:00.000Z",
+    "productionScriptStatus": "NOT_APPLICABLE"
+  },
+  "fingerprint": "2a02d1e975b9fd30"
+}

@@ -1,0 +1,139 @@
+{
+  "version": "1.0.0",
+  "promptPackageId": "pp-05d4a66564c5",
+  "projectId": "phase1g12-case-a",
+  "sceneId": "sc-45a913fac912",
+  "shotId": "sh-da55407b73e4",
+  "targetKind": "VIDEO",
+  "sourceRefs": {
+    "shotId": "sh-da55407b73e4",
+    "sceneId": "sc-45a913fac912",
+    "beatIds": [
+      "d-b1-D2"
+    ],
+    "storySectionRefs": [
+      null
+    ],
+    "storyDraftRef": {
+      "draftId": null
+    },
+    "beatMapFingerprint": "745f997d5579818a",
+    "sourceShotFingerprint": "c17f25678f392bc2",
+    "sourceSceneFingerprint": "368685c1720a009e"
+  },
+  "referenceRefs": [
+    {
+      "assetId": "as-a7801df9bf0f",
+      "kind": "CHARACTER",
+      "version": "a7801df9bf0f05ee20fb94a6e913824c2de151ad063994dd5d1c052d57428e7e"
+    }
+  ],
+  "continuityLockRef": [
+    "characterIdentity"
+  ],
+  "promptSpec": {
+    "version": "1.0.0",
+    "promptSpecId": "ps-5ad984690cfa",
+    "projectId": "phase1g12-case-a",
+    "sceneId": "sc-45a913fac912",
+    "shotId": "sh-da55407b73e4",
+    "targetKind": null,
+    "platform": "youtube",
+    "contentClass": "FICTION",
+    "sourceRefs": {
+      "shotId": "sh-da55407b73e4",
+      "sceneId": "sc-45a913fac912",
+      "beatIds": [
+        "d-b1-D2"
+      ],
+      "storySectionRefs": [
+        null
+      ],
+      "storyDraftRef": {
+        "draftId": null
+      },
+      "beatMapFingerprint": "745f997d5579818a",
+      "sourceShotFingerprint": "c17f25678f392bc2",
+      "sourceSceneFingerprint": "368685c1720a009e"
+    },
+    "referenceRefs": [
+      {
+        "assetId": "as-a7801df9bf0f",
+        "kind": "CHARACTER",
+        "version": "a7801df9bf0f05ee20fb94a6e913824c2de151ad063994dd5d1c052d57428e7e"
+      }
+    ],
+    "unknownReferences": [],
+    "continuityRefs": [
+      "cg-case-d"
+    ],
+    "subject": {
+      "refs": [
+        "as-a7801df9bf0f"
+      ],
+      "descriptor": "established character [as-a7801df9bf0f]",
+      "referenceFirst": true
+    },
+    "action": "raised palm-up presenting gesture",
+    "environment": {
+      "refs": [],
+      "descriptor": null
+    },
+    "composition": null,
+    "camera": null,
+    "focusLens": null,
+    "lightingAmbiance": null,
+    "style": null,
+    "environmentMotion": null,
+    "historicalConstraints": null,
+    "scientificConstraints": null,
+    "narrativeIntent": "EXPLAIN/PRESENTER",
+    "shot": {
+      "startState": null,
+      "endState": null
+    },
+    "mustPreserve": [
+      "characterIdentity"
+    ],
+    "mustAvoid": [],
+    "claimRefs": [],
+    "classificationRefs": [],
+    "unknownReferencesCount": 0,
+    "fingerprint": "6d0bd3691a05f4e8",
+    "status": "DRAFT"
+  },
+  "compiledPrompt": "MUST PRESERVE: characterIdentity\nSUBJECT: established character [as-a7801df9bf0f] — animate the established visual; appearance already locked by the reference\nACTION: raised palm-up presenting gesture",
+  "generationMetadata": {
+    "platformComposition": {
+      "platform": "youtube",
+      "aspectRatio": "16:9",
+      "orientation": "landscape",
+      "source": "platforms/youtube/PROFILE.yaml"
+    },
+    "targetKind": "VIDEO",
+    "referenceFrameUsed": false,
+    "budgetChars": 2000
+  },
+  "requiredCapabilities": [
+    "VIDEO_GENERATION",
+    "IMAGE_REFERENCE"
+  ],
+  "adapterId": "VIDEO_GENERIC",
+  "adapterVersion": "1.0.0",
+  "sections": [
+    "CRITICAL",
+    "SUBJECT",
+    "ACTION"
+  ],
+  "droppedForBudget": [],
+  "validation": {
+    "valid": true,
+    "errors": [],
+    "warnings": []
+  },
+  "fingerprint": "9db18ee3d8b9e9fa",
+  "status": "VALID",
+  "createdAt": "2026-10-05T03:36:25.581Z",
+  "updatedAt": "2026-10-05T03:36:25.581Z",
+  "_force": false
+}

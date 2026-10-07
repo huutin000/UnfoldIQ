@@ -1,0 +1,57 @@
+{
+  "version": "1.0.0",
+  "capturedAt": "2026-10-05T04:45:13.999Z",
+  "track": "C-integration",
+  "metrics": [
+    {
+      "metric": "bridgeHealthLatency",
+      "method": "loopback HTTP GET /health against in-process bridge (test token, ephemeral port)",
+      "sampleCount": 50,
+      "environment": "local Windows",
+      "baseline": {
+        "minMs": 0.2,
+        "p50Ms": 0.36,
+        "p95Ms": 0.85,
+        "maxMs": 12.21
+      },
+      "targetOrBudget": "p95 < 50ms",
+      "reasonForTarget": "bridge round-trip is the core↔extension control plane",
+      "result": "PASS"
+    },
+    {
+      "metric": "bridgeAuthRejectLatency",
+      "method": "loopback HTTP wrong-token 401",
+      "sampleCount": 20,
+      "environment": "local Windows",
+      "baseline": {
+        "p50Ms": 0.25,
+        "maxMs": 0.54
+      },
+      "targetOrBudget": "p50 < 50ms",
+      "reasonForTarget": "token gate must not be a bottleneck or an oracle",
+      "result": "PASS"
+    },
+    {
+      "metric": "bridgeHealthPayloadSize",
+      "method": "response byte count",
+      "sampleCount": 1,
+      "environment": "local Windows",
+      "baseline": {
+        "bytes": 356
+      },
+      "targetOrBudget": "<10KB",
+      "reasonForTarget": "payload hygiene",
+      "result": "PASS"
+    }
+  ],
+  "notMeasured": [
+    {
+      "metric": "bridgeToExtensionLatency",
+      "reason": "requires the extension service worker attached to a real Chrome session with the Flow page; operator-session-bound (no remote debugging available) — not measurable in this task without the operator environment"
+    },
+    {
+      "metric": "ackLatency/queueWait/duplicateExecutionRate",
+      "reason": "measured via deterministic tests (tests/flow) rather than live telemetry; live telemetry requires a real generation ceremony"
+    }
+  ]
+}

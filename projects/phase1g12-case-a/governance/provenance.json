@@ -1,0 +1,475 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectId": "phase1g12-case-a",
+  "revision": 12,
+  "createdAt": "2026-10-05T08:09:35.645Z",
+  "updatedAt": "2026-10-05T08:09:35.771Z",
+  "provenance": {
+    "as-1186233d1af6": {
+      "assetId": "as-1186233d1af6",
+      "current": 1,
+      "versions": {
+        "1": {
+          "provenanceId": "prov-5a9d98d420f9",
+          "assetId": "as-1186233d1af6",
+          "provenanceVersion": 1,
+          "assetHash": "1186233d1af671fcb50ff5084ded613777105ba87cf0d951481ab236ba5b322e",
+          "originType": "UNKNOWN",
+          "provider": null,
+          "model": null,
+          "sourceRef": "byte-identical reuse of postv1b-flow-companion-live:as-1186233d1af6",
+          "parentAssetIds": [],
+          "referenceAssetIds": [
+            "as-1186233d1af6"
+          ],
+          "createdAt": "2026-10-04T15:17:55.535Z",
+          "importedAt": "2026-10-05T05:36:43.058Z",
+          "factualSourceRefs": [],
+          "rights": {
+            "ownershipStatus": "UNRESOLVED",
+            "referenceRightsStatus": "UNRESOLVED",
+            "licenseType": null,
+            "licenseRef": null,
+            "licenseEvidenceRefs": [],
+            "musicRightsStatus": null,
+            "voiceRightsStatus": null,
+            "likenessRightsStatus": null,
+            "voiceDetail": null,
+            "musicDetail": null
+          },
+          "evidenceRefs": [
+            "assets/library-index.json#as-1186233d1af6"
+          ],
+          "provenanceStatus": "REVIEW_REQUIRED",
+          "supersedes": null,
+          "detail": "pre-existing bytes of unproven origin (avatar class: never call it GENERATED)"
+        }
+      }
+    },
+    "as-4bd9e3ccdc42": {
+      "assetId": "as-4bd9e3ccdc42",
+      "current": 1,
+      "versions": {
+        "1": {
+          "provenanceId": "prov-fa31990b45f9",
+          "assetId": "as-4bd9e3ccdc42",
+          "provenanceVersion": 1,
+          "assetHash": "4bd9e3ccdc428fab8546d3bf746191e73166dcdf754fbfe484709031e2f10bcc",
+          "originType": "UNKNOWN",
+          "provider": null,
+          "model": null,
+          "sourceRef": "Case A Remotion render attempt-1 (SLOW_ZOOM_IN over locked source)",
+          "parentAssetIds": [
+            "as-1186233d1af6"
+          ],
+          "referenceAssetIds": [
+            "as-1186233d1af6"
+          ],
+          "createdAt": "2026-10-04T15:18:41.396Z",
+          "importedAt": "2026-10-04T15:18:41.396Z",
+          "factualSourceRefs": [],
+          "rights": {
+            "ownershipStatus": "UNRESOLVED",
+            "referenceRightsStatus": "UNRESOLVED",
+            "licenseType": null,
+            "licenseRef": null,
+            "licenseEvidenceRefs": [],
+            "musicRightsStatus": null,
+            "voiceRightsStatus": null,
+            "likenessRightsStatus": null,
+            "voiceDetail": null,
+            "musicDetail": null
+          },
+          "evidenceRefs": [
+            "assets/library-index.json#as-4bd9e3ccdc42"
+          ],
+          "provenanceStatus": "REVIEW_REQUIRED",
+          "supersedes": null,
+          "detail": "pre-existing bytes of unproven origin (avatar class: never call it GENERATED)"
+        }
+      }
+    },
+    "as-d235316b9af5": {
+      "assetId": "as-d235316b9af5",
+      "current": 1,
+      "versions": {
+        "1": {
+          "provenanceId": "prov-a47f14424828",
+          "assetId": "as-d235316b9af5",
+          "provenanceVersion": 1,
+          "assetHash": "d235316b9af51453393c19724949ec5f892258371255e2a2f7243b22dc538e89",
+          "originType": "GENERATED",
+          "provider": "google-flow",
+          "model": "google--gemini-omni-flash--1-1",
+          "sourceRef": "Case B attempt 1: Flow download of B1 generation result (Omni Flash 1.1, operator-attributed, single-generation correlation)",
+          "parentAssetIds": [
+            "as-1186233d1af6"
+          ],
+          "referenceAssetIds": [
+            "as-1186233d1af6"
+          ],
+          "createdAt": "2026-10-05T02:30:58.157Z",
+          "importedAt": "2026-10-05T02:30:58.157Z",
+          "factualSourceRefs": [],
+          "rights": {
+            "ownershipStatus": "UNRESOLVED",
+            "referenceRightsStatus": "UNRESOLVED",
+            "licenseType": null,
+            "licenseRef": null,
+            "licenseEvidenceRefs": [],
+            "musicRightsStatus": null,
+            "voiceRightsStatus": null,
+            "likenessRightsStatus": null,
+            "voiceDetail": null,
+            "musicDetail": null
+          },
+          "evidenceRefs": [
+            "assets/library-index.json#as-d235316b9af5"
+          ],
+          "provenanceStatus": "REVIEW_REQUIRED",
+          "supersedes": null,
+          "detail": "registry fields complete; rights still UNRESOLVED (generated != cleared)"
+        }
+      }
+    },
+    "as-fe697fd1fef8": {
+      "assetId": "as-fe697fd1fef8",
+      "current": 1,
+      "versions": {
+        "1": {
+          "provenanceId": "prov-9fe4d2ecb28c",
+          "assetId": "as-fe697fd1fef8",
+          "provenanceVersion": 1,
+          "assetHash": "fe697fd1fef86e607d743694c223ab8a93347754ba353f1f7eb0cccfbfab9ab7",
+          "originType": "GENERATED",
+          "provider": "google-flow",
+          "model": "google--nano-banana-2",
+          "sourceRef": "Real V1F generation result (blue circle), downloaded from the Flow project card; replaces rejected avatar asset as-1186233d1af6 as Case B first-frame source",
+          "parentAssetIds": [],
+          "referenceAssetIds": [],
+          "createdAt": "2026-10-05T03:02:36.241Z",
+          "importedAt": "2026-10-05T03:03:30.985Z",
+          "factualSourceRefs": [],
+          "rights": {
+            "ownershipStatus": "UNRESOLVED",
+            "referenceRightsStatus": "UNRESOLVED",
+            "licenseType": null,
+            "licenseRef": null,
+            "licenseEvidenceRefs": [],
+            "musicRightsStatus": null,
+            "voiceRightsStatus": null,
+            "likenessRightsStatus": null,
+            "voiceDetail": null,
+            "musicDetail": null
+          },
+          "evidenceRefs": [
+            "assets/library-index.json#as-fe697fd1fef8"
+          ],
+          "provenanceStatus": "MIGRATED",
+          "supersedes": null,
+          "detail": "registry fields complete; rights still UNRESOLVED (generated != cleared)"
+        }
+      }
+    },
+    "as-fafd1ac4c96b": {
+      "assetId": "as-fafd1ac4c96b",
+      "current": 1,
+      "versions": {
+        "1": {
+          "provenanceId": "prov-dee6670a72be",
+          "assetId": "as-fafd1ac4c96b",
+          "provenanceVersion": 1,
+          "assetHash": "fafd1ac4c96b37ee98eaf6599b529dcf3a60e97b4947b961a195ea530629998c",
+          "originType": "GENERATED",
+          "provider": "google-flow",
+          "model": "google--gemini-omni-flash--1-1",
+          "sourceRef": "Case B attempt 2: Flow download of B1 generation result (Omni Flash 1.1, operator-attributed, single-generation correlation)",
+          "parentAssetIds": [
+            "as-fe697fd1fef8"
+          ],
+          "referenceAssetIds": [
+            "as-fe697fd1fef8"
+          ],
+          "createdAt": "2026-10-05T03:18:43.405Z",
+          "importedAt": "2026-10-05T03:18:43.405Z",
+          "factualSourceRefs": [],
+          "rights": {
+            "ownershipStatus": "UNRESOLVED",
+            "referenceRightsStatus": "UNRESOLVED",
+            "licenseType": null,
+            "licenseRef": null,
+            "licenseEvidenceRefs": [],
+            "musicRightsStatus": null,
+            "voiceRightsStatus": null,
+            "likenessRightsStatus": null,
+            "voiceDetail": null,
+            "musicDetail": null
+          },
+          "evidenceRefs": [
+            "assets/library-index.json#as-fafd1ac4c96b"
+          ],
+          "provenanceStatus": "REVIEW_REQUIRED",
+          "supersedes": null,
+          "detail": "registry fields complete; rights still UNRESOLVED (generated != cleared)"
+        }
+      }
+    },
+    "as-5e0bb7f87d4d": {
+      "assetId": "as-5e0bb7f87d4d",
+      "current": 1,
+      "versions": {
+        "1": {
+          "provenanceId": "prov-b79fd2a66199",
+          "assetId": "as-5e0bb7f87d4d",
+          "provenanceVersion": 1,
+          "assetHash": "5e0bb7f87d4ddcd9f36d886ce4160b7e8058e97546e9086fd59b558ede02d848",
+          "originType": "GENERATED",
+          "provider": null,
+          "model": null,
+          "sourceRef": "End frame extracted at t=3.9s from QA-PASS Case B attempt-2 video as-fafd1ac4c96b (ffprobe-verified bytes); Case C FIRST+LAST end-state contract",
+          "parentAssetIds": [
+            "as-fafd1ac4c96b"
+          ],
+          "referenceAssetIds": [
+            "as-fafd1ac4c96b"
+          ],
+          "createdAt": "2026-10-05T03:21:15.900Z",
+          "importedAt": "2026-10-05T03:21:15.998Z",
+          "factualSourceRefs": [],
+          "rights": {
+            "ownershipStatus": "UNRESOLVED",
+            "referenceRightsStatus": "UNRESOLVED",
+            "licenseType": null,
+            "licenseRef": null,
+            "licenseEvidenceRefs": [],
+            "musicRightsStatus": null,
+            "voiceRightsStatus": null,
+            "likenessRightsStatus": null,
+            "voiceDetail": null,
+            "musicDetail": null
+          },
+          "evidenceRefs": [
+            "assets/library-index.json#as-5e0bb7f87d4d"
+          ],
+          "provenanceStatus": "REVIEW_REQUIRED",
+          "supersedes": null,
+          "detail": "lineage gaps: no provider, no job linkage, no model version; generated != rights-cleared"
+        }
+      }
+    },
+    "as-6182cea3f996": {
+      "assetId": "as-6182cea3f996",
+      "current": 1,
+      "versions": {
+        "1": {
+          "provenanceId": "prov-83b5403f522e",
+          "assetId": "as-6182cea3f996",
+          "provenanceVersion": 1,
+          "assetHash": "6182cea3f996e973ee8c99cf43cd7f5527c18975f8a6e8d0487587913ff04c3f",
+          "originType": "GENERATED",
+          "provider": "google-flow",
+          "model": "google--gemini-omni-flash--1-1",
+          "sourceRef": "Case C attempt 1: Flow download of the FIRST+LAST generation result (Omni Flash 1.1, operator-attributed, single-generation correlation)",
+          "parentAssetIds": [
+            "as-fe697fd1fef8",
+            "as-5e0bb7f87d4d"
+          ],
+          "referenceAssetIds": [
+            "as-fe697fd1fef8",
+            "as-5e0bb7f87d4d"
+          ],
+          "createdAt": "2026-10-05T03:31:26.035Z",
+          "importedAt": "2026-10-05T03:31:26.035Z",
+          "factualSourceRefs": [],
+          "rights": {
+            "ownershipStatus": "UNRESOLVED",
+            "referenceRightsStatus": "UNRESOLVED",
+            "licenseType": null,
+            "licenseRef": null,
+            "licenseEvidenceRefs": [],
+            "musicRightsStatus": null,
+            "voiceRightsStatus": null,
+            "likenessRightsStatus": null,
+            "voiceDetail": null,
+            "musicDetail": null
+          },
+          "evidenceRefs": [
+            "assets/library-index.json#as-6182cea3f996"
+          ],
+          "provenanceStatus": "REVIEW_REQUIRED",
+          "supersedes": null,
+          "detail": "registry fields complete; rights still UNRESOLVED (generated != cleared)"
+        }
+      }
+    },
+    "as-a7801df9bf0f": {
+      "assetId": "as-a7801df9bf0f",
+      "current": 1,
+      "versions": {
+        "1": {
+          "provenanceId": "prov-c773bed43d07",
+          "assetId": "as-a7801df9bf0f",
+          "provenanceVersion": 1,
+          "assetHash": "a7801df9bf0f05ee20fb94a6e913824c2de151ad063994dd5d1c052d57428e7e",
+          "originType": "GENERATED",
+          "provider": "google-flow",
+          "model": null,
+          "sourceRef": "Recurring mascot reference downloaded from the Flow project media (operator-attributed asset from the earlier mascot live-validation phase); canonical character identity for 1G.12 Case D",
+          "parentAssetIds": [],
+          "referenceAssetIds": [],
+          "createdAt": "2026-10-05T03:36:25.345Z",
+          "importedAt": "2026-10-05T03:36:25.440Z",
+          "factualSourceRefs": [],
+          "rights": {
+            "ownershipStatus": "UNRESOLVED",
+            "referenceRightsStatus": "UNRESOLVED",
+            "licenseType": null,
+            "licenseRef": null,
+            "licenseEvidenceRefs": [],
+            "musicRightsStatus": null,
+            "voiceRightsStatus": null,
+            "likenessRightsStatus": null,
+            "voiceDetail": null,
+            "musicDetail": null
+          },
+          "evidenceRefs": [
+            "assets/library-index.json#as-a7801df9bf0f"
+          ],
+          "provenanceStatus": "REVIEW_REQUIRED",
+          "supersedes": null,
+          "detail": "lineage gaps: no job linkage, no model version; generated != rights-cleared"
+        }
+      }
+    },
+    "as-0fde400d6392": {
+      "assetId": "as-0fde400d6392",
+      "current": 1,
+      "versions": {
+        "1": {
+          "provenanceId": "prov-b75282cf8d00",
+          "assetId": "as-0fde400d6392",
+          "provenanceVersion": 1,
+          "assetHash": "0fde400d63929dcea574645d2fa8eea6f4990d8ac199db9446f1c26b7cbc3250",
+          "originType": "GENERATED",
+          "provider": "google-flow",
+          "model": "google--gemini-omni-flash--1-1",
+          "sourceRef": "Case D shot D1 attempt 1: Flow download (neutral presenter), mascot-guide reference-guided (Ingredients) lineage",
+          "parentAssetIds": [
+            "as-a7801df9bf0f"
+          ],
+          "referenceAssetIds": [
+            "as-a7801df9bf0f"
+          ],
+          "createdAt": "2026-10-05T04:05:07.634Z",
+          "importedAt": "2026-10-05T04:05:07.634Z",
+          "factualSourceRefs": [],
+          "rights": {
+            "ownershipStatus": "UNRESOLVED",
+            "referenceRightsStatus": "UNRESOLVED",
+            "licenseType": null,
+            "licenseRef": null,
+            "licenseEvidenceRefs": [],
+            "musicRightsStatus": null,
+            "voiceRightsStatus": null,
+            "likenessRightsStatus": null,
+            "voiceDetail": null,
+            "musicDetail": null
+          },
+          "evidenceRefs": [
+            "assets/library-index.json#as-0fde400d6392"
+          ],
+          "provenanceStatus": "REVIEW_REQUIRED",
+          "supersedes": null,
+          "detail": "registry fields complete; rights still UNRESOLVED (generated != cleared)"
+        }
+      }
+    },
+    "as-c9f0fdc1d1e4": {
+      "assetId": "as-c9f0fdc1d1e4",
+      "current": 1,
+      "versions": {
+        "1": {
+          "provenanceId": "prov-4432cc923cec",
+          "assetId": "as-c9f0fdc1d1e4",
+          "provenanceVersion": 1,
+          "assetHash": "c9f0fdc1d1e4cca299b01f7074d4913635c58ff7c9570d507e0a7e085b677b05",
+          "originType": "GENERATED",
+          "provider": "google-flow",
+          "model": "google--gemini-omni-flash--1-1",
+          "sourceRef": "Case D shot D2 attempt 1: Flow download (presenting gesture), mascot-guide reference-guided (Ingredients) lineage",
+          "parentAssetIds": [
+            "as-a7801df9bf0f"
+          ],
+          "referenceAssetIds": [
+            "as-a7801df9bf0f"
+          ],
+          "createdAt": "2026-10-05T04:15:50.165Z",
+          "importedAt": "2026-10-05T04:15:50.165Z",
+          "factualSourceRefs": [],
+          "rights": {
+            "ownershipStatus": "UNRESOLVED",
+            "referenceRightsStatus": "UNRESOLVED",
+            "licenseType": null,
+            "licenseRef": null,
+            "licenseEvidenceRefs": [],
+            "musicRightsStatus": null,
+            "voiceRightsStatus": null,
+            "likenessRightsStatus": null,
+            "voiceDetail": null,
+            "musicDetail": null
+          },
+          "evidenceRefs": [
+            "assets/library-index.json#as-c9f0fdc1d1e4"
+          ],
+          "provenanceStatus": "REVIEW_REQUIRED",
+          "supersedes": null,
+          "detail": "registry fields complete; rights still UNRESOLVED (generated != cleared)"
+        }
+      }
+    },
+    "as-0625f69f9867": {
+      "assetId": "as-0625f69f9867",
+      "current": 1,
+      "versions": {
+        "1": {
+          "provenanceId": "prov-a48ae04f4b51",
+          "assetId": "as-0625f69f9867",
+          "provenanceVersion": 1,
+          "assetHash": "0625f69f986751809600e51bb1628e0fef6b717fdda5048cdd4ad96576901f9c",
+          "originType": "GENERATED",
+          "provider": "google-flow",
+          "model": "google--gemini-omni-flash--1-1",
+          "sourceRef": "Case D shot D3 attempt 1: Flow download (turn + settle), mascot-guide reference-guided (Ingredients) lineage",
+          "parentAssetIds": [
+            "as-a7801df9bf0f"
+          ],
+          "referenceAssetIds": [
+            "as-a7801df9bf0f"
+          ],
+          "createdAt": "2026-10-05T04:22:12.257Z",
+          "importedAt": "2026-10-05T04:22:12.257Z",
+          "factualSourceRefs": [],
+          "rights": {
+            "ownershipStatus": "UNRESOLVED",
+            "referenceRightsStatus": "UNRESOLVED",
+            "licenseType": null,
+            "licenseRef": null,
+            "licenseEvidenceRefs": [],
+            "musicRightsStatus": null,
+            "voiceRightsStatus": null,
+            "likenessRightsStatus": null,
+            "voiceDetail": null,
+            "musicDetail": null
+          },
+          "evidenceRefs": [
+            "assets/library-index.json#as-0625f69f9867"
+          ],
+          "provenanceStatus": "REVIEW_REQUIRED",
+          "supersedes": null,
+          "detail": "registry fields complete; rights still UNRESOLVED (generated != cleared)"
+        }
+      }
+    }
+  },
+  "fingerprint": "8ccada45796e3778"
+}

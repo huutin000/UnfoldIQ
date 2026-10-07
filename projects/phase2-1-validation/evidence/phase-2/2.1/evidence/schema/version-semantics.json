@@ -1,0 +1,27 @@
+{
+  "task": "PHASE_2_1_01",
+  "immutable": true,
+  "storage": "projects/<pid>/voice/voice-bible/<voiceBibleId>.json (one file per version)",
+  "currentIndexOwner": "Project Manifest artifacts.voiceBibleVersion (no second source of truth)",
+  "semanticFingerprintRule": "whole document minus {voiceBibleId, version, provenance.createdAt, provenance.source, provenance.approvalRef, fingerprint}, PLUS provenance.rights and provenance.evidenceRefs",
+  "rationale": "timestamps/approval refs must not fake a version bump; a rights or evidence change must never be silently dropped",
+  "noFakeBumpOnReplay": "same semantic content → revise returns changed:false, deduped:true and writes nothing (V5)",
+  "meaningfulChangeNewVersion": "voiceId / provider / model / language / speedDefault / persona tone / prohibited delivery pattern / pronunciationProfileRef / rights → new voiceBibleId + version+1 (V6)",
+  "oldVersionsRemainLoadable": true,
+  "observedVersions": [
+    {
+      "voiceBibleId": "vb-42744f223671",
+      "version": 1,
+      "language": "en-us",
+      "provider": "local-kokoro",
+      "model": "kokoro-v1",
+      "voiceId": "af_heart",
+      "personaId": "per-explanatory-narrator-en",
+      "characterVoiceCount": 0,
+      "semanticFingerprint": "a7a4ada79a345836",
+      "provenanceSource": "PROVIDER_DEFAULT",
+      "rightsStatus": "UNRESOLVED",
+      "productionReady": false
+    }
+  ]
+}

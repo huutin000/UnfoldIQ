@@ -1,0 +1,71 @@
+{
+  "caseResult": {
+    "version": "1.0.0",
+    "caseId": "B",
+    "status": "PASS",
+    "projectId": "phase1g12-case-a",
+    "providerProjectRef": "8221824c-a1a6-4aa9-8d6b-fac24860d49e",
+    "shotIds": [
+      "B-SH01"
+    ],
+    "generationUnitIds": [
+      "gu-0ada6dc4cccc"
+    ],
+    "attemptIds": [
+      "b1-attempt-02"
+    ],
+    "productionDecisionRefs": [
+      "scene/validation-scene-b.json"
+    ],
+    "modelResolutionRefs": [
+      "mr-f43a8953897b"
+    ],
+    "budgetPlanRef": "budget-plans/1g12-bcd.json (bp-9b02221225dd)",
+    "providerResultRefs": [
+      "case/case-b-attempt-02-correlation.json"
+    ],
+    "assetIds": [
+      "as-fafd1ac4c96b"
+    ],
+    "qaResultIds": [
+      "qa-59111996c7d3"
+    ],
+    "timelineEligibility": [
+      "as-fafd1ac4c96b=READY_FOR_TIMELINE"
+    ],
+    "repairHistory": [
+      "case/case-b-attempt-01-repair.json",
+      "case/source-frame-identity-finding.json"
+    ],
+    "credits": {
+      "estimated": 7,
+      "reserved": 0,
+      "reconciled": 22,
+      "state": "RECONCILED"
+    },
+    "evidenceRefs": [
+      "qa/case-b-attempt-02-qa-summary.json",
+      "downloads/Slow_push-in_on_blue_circle_20261005101624.mp4"
+    ],
+    "caseResultId": "case-b-8dd053a50a05",
+    "completedAt": "2026-10-05T03:19:50.254Z"
+  },
+  "matrix": [
+    "B1=PASS",
+    "B2=PASS",
+    "B3=PASS",
+    "B4=PASS",
+    "B5=PASS",
+    "B6=PASS",
+    "B7=PASS",
+    "B8=PASS",
+    "B9=PASS",
+    "B10=PASS",
+    "B11=PASS",
+    "B12=PASS",
+    "B13=PASS",
+    "B14=PASS",
+    "B15=PASS"
+  ],
+  "matrixStatus": "PASS"
+}

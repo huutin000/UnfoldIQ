@@ -1,0 +1,41 @@
+{
+  "qaResultId": "qa-fafe08bf36c5",
+  "aggregate": {
+    "status": "READY_FOR_TIMELINE",
+    "severity": "WARNING",
+    "timelineEligible": true,
+    "failedLayers": [],
+    "warningLayers": [
+      "continuity"
+    ],
+    "unknownLayers": [
+      "continuity"
+    ],
+    "reasons": [],
+    "recommendation": "NONE"
+  },
+  "gate": {
+    "eligible": true,
+    "status": "READY_FOR_TIMELINE",
+    "reasons": [],
+    "qaResultId": "qa-fafe08bf36c5",
+    "aggregate": {
+      "status": "READY_FOR_TIMELINE",
+      "severity": "WARNING",
+      "timelineEligible": true,
+      "failedLayers": [],
+      "warningLayers": [
+        "continuity"
+      ],
+      "unknownLayers": [
+        "continuity"
+      ],
+      "reasons": [],
+      "recommendation": "NONE"
+    }
+  },
+  "structural": "PASS",
+  "semantic": "PASS",
+  "factuality": "NOT_APPLICABLE",
+  "continuity": "UNKNOWN"
+}

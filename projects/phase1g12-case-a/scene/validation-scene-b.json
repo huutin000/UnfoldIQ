@@ -1,0 +1,34 @@
+{
+  "scene": {
+    "sceneId": "B-SC01",
+    "order": 1,
+    "beatIds": ["b-b1"],
+    "storySectionRefs": [],
+    "narrativePurpose": "1G.12 Case B validation: first-frame motion over the locked source frame",
+    "visualObjective": "EXPLAIN",
+    "subjectRefs": ["as-1186233d1af6"],
+    "environmentRefs": [],
+    "continuityGroup": "cg-case-b",
+    "stateBefore": null,
+    "stateAfter": null
+  },
+  "shot": {
+    "shotId": "B-SH01",
+    "parentSceneId": "B-SC01",
+    "orderWithinScene": 0,
+    "beatIds": ["b-b1"],
+    "claimRefs": [],
+    "shotPurpose": "DETAIL",
+    "visualObjective": "EXPLAIN",
+    "subjectRefs": ["as-1186233d1af6"],
+    "actionIntent": "gentle breeze motion on the drink + slow push-in",
+    "framingIntent": "close product view",
+    "cameraIntent": "SLOW_PUSH_IN",
+    "continuityRefs": ["cg-case-b"],
+    "startState": null,
+    "endState": null,
+    "relativeWeight": 1
+  },
+  "contentClass": "FICTION",
+  "platform": "youtube"
+}

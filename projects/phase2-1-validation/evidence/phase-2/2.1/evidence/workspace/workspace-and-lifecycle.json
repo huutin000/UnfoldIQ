@@ -1,0 +1,56 @@
+{
+  "task": "PHASE_2_1_01",
+  "governanceStack": [
+    "Project Registry (projects/registry.json)",
+    "Workspace Resolver (lib/workspace)",
+    "Workspace Guard (validateWorkspacePath)",
+    "lifecycle-at-creation (classifyNewArtifact)"
+  ],
+  "registryEntry": {
+    "kind": "VALIDATION",
+    "manifestRef": "projects/phase2-1-validation/manifest/project-manifest.json",
+    "path": "projects/phase2-1-validation",
+    "projectId": "phase2-1-validation",
+    "status": "ACTIVE"
+  },
+  "liveRegistryProjects": 18,
+  "projectIdConvention": "projects/<projectId>",
+  "suggestedPathDeviation": {
+    "specSuggestion": "projects/validation/phase-2/2.1/",
+    "actual": "projects/phase2-1-validation",
+    "reason": "providers/runtime/artifact-store.js resolveProjectPath hardcodes root/projects/<projectId>; a nested registry path would split Workspace Resolver truth from artifact-write truth. The flat <phase>-validation form matches all 8 pre-existing phase validation projects."
+  },
+  "resolvedArtifactPath": {
+    "rel": "voice/voice-bible/vb-42744f223671.json",
+    "lifecycleClass": null
+  },
+  "approvedPath": {
+    "ok": false,
+    "code": "VOICE_BIBLE_PATH_NOT_ALLOWED",
+    "message": "path is outside approved workspace locations: outside repository"
+  },
+  "refusedPath": {
+    "code": "VOICE_BIBLE_PATH_NOT_ALLOWED",
+    "message": "path is outside approved workspace locations: outside repository"
+  },
+  "adHocWriteRefused": true,
+  "lifecycleClassification": {
+    "Voice Bible schema/config": "DURABLE",
+    "approved Voice Bible version": "DURABLE",
+    "migration evidence": "DURABLE",
+    "test fixture": "RETENTION_MANAGED",
+    "provider smoke audio": "EPHEMERAL",
+    "debug logs": "EPHEMERAL",
+    "availableClasses": [
+      "DURABLE",
+      "RETENTION_MANAGED",
+      "REGENERABLE",
+      "EPHEMERAL"
+    ],
+    "unclassifiedFailsSafe": "RETENTION_MANAGED + reviewRequired (never disposable) — proven by classifyNewArtifact({artifactType:'VOICE'})"
+  },
+  "evidencePaths": {
+    "root": "projects/phase2-1-validation/evidence/phase-2/2.1/",
+    "resolverApproved": false
+  }
+}

@@ -1,0 +1,151 @@
+{
+  "version": "1.0.0",
+  "promptPackageId": "pp-fa1fb99c6516",
+  "projectId": "phase1g12-case-a",
+  "sceneId": "B-SC01",
+  "shotId": "B-SH01",
+  "targetKind": "VIDEO",
+  "sourceRefs": {
+    "shotId": "B-SH01",
+    "sceneId": "B-SC01",
+    "beatIds": [
+      "b-b1"
+    ],
+    "storySectionRefs": [
+      null
+    ],
+    "storyDraftRef": {
+      "draftId": null
+    },
+    "sourceShotFingerprint": "4bbb0f772f2d5d24",
+    "sourceSceneFingerprint": "7d14c3a6e9e57d60"
+  },
+  "referenceRefs": [
+    {
+      "assetId": "as-1186233d1af6",
+      "kind": "FRAME",
+      "version": "1186233d1af671fcb50ff5084ded613777105ba87cf0d951481ab236ba5b322e"
+    }
+  ],
+  "continuityLockRef": [
+    "referenceFrameAppearance"
+  ],
+  "promptSpec": {
+    "version": "1.0.0",
+    "promptSpecId": "ps-85fe10447b4b",
+    "projectId": "phase1g12-case-a",
+    "sceneId": "B-SC01",
+    "shotId": "B-SH01",
+    "targetKind": null,
+    "platform": "youtube",
+    "contentClass": "FICTION",
+    "sourceRefs": {
+      "shotId": "B-SH01",
+      "sceneId": "B-SC01",
+      "beatIds": [
+        "b-b1"
+      ],
+      "storySectionRefs": [
+        null
+      ],
+      "storyDraftRef": {
+        "draftId": null
+      },
+      "sourceShotFingerprint": "4bbb0f772f2d5d24",
+      "sourceSceneFingerprint": "7d14c3a6e9e57d60"
+    },
+    "referenceRefs": [
+      {
+        "assetId": "as-1186233d1af6",
+        "kind": "FRAME",
+        "version": "1186233d1af671fcb50ff5084ded613777105ba87cf0d951481ab236ba5b322e"
+      }
+    ],
+    "unknownReferences": [],
+    "continuityRefs": [],
+    "subject": {
+      "refs": [
+        "as-1186233d1af6"
+      ],
+      "descriptor": "A coconut drink with a straw stands on a small beach table; ice shifts inside, the straw wobbles gently in the sea breeze, palm shadows sway across the table; the camera pushes in slowly on the drink.",
+      "referenceFirst": false
+    },
+    "action": "gentle breeze motion on the drink + slow push-in",
+    "environment": {
+      "refs": [],
+      "descriptor": null
+    },
+    "composition": null,
+    "camera": null,
+    "focusLens": null,
+    "lightingAmbiance": null,
+    "style": null,
+    "environmentMotion": null,
+    "historicalConstraints": null,
+    "scientificConstraints": null,
+    "narrativeIntent": "EXPLAIN/DETAIL",
+    "shot": {
+      "startState": null,
+      "endState": null
+    },
+    "mustPreserve": [
+      "referenceFrameAppearance"
+    ],
+    "mustAvoid": [],
+    "claimRefs": [],
+    "classificationRefs": [],
+    "unknownReferencesCount": 0,
+    "fingerprint": "e5c89a580bfbc733",
+    "status": "DRAFT"
+  },
+  "compiledPrompt": "MUST PRESERVE: referenceFrameAppearance\nSUBJECT: A coconut drink with a straw stands on a small beach table; ice shifts inside, the straw wobbles gently in the sea breeze, palm shadows sway across the table; the camera pushes in slowly on the drink.\nACTION: gentle breeze motion on the drink + slow push-in",
+  "generationMetadata": {
+    "platformComposition": {
+      "platform": "youtube",
+      "aspectRatio": "16:9",
+      "orientation": "landscape",
+      "source": "platforms/youtube/PROFILE.yaml"
+    },
+    "targetKind": "VIDEO",
+    "referenceFrameUsed": true,
+    "budgetChars": 2000
+  },
+  "requiredCapabilities": [
+    "VIDEO_GENERATION",
+    "IMAGE_TO_VIDEO"
+  ],
+  "adapterId": "VIDEO_GENERIC",
+  "adapterVersion": "1.0.0",
+  "sections": [
+    "CRITICAL",
+    "SUBJECT",
+    "ACTION"
+  ],
+  "droppedForBudget": [],
+  "validation": {
+    "valid": false,
+    "errors": [
+      {
+        "dimension": "schema",
+        "code": "SCHEMA_PROMPT_PACKAGE",
+        "message": "/sceneId must match pattern \"^sc-[0-9a-f]{12}$\""
+      },
+      {
+        "dimension": "schema",
+        "code": "SCHEMA_PROMPT_PACKAGE",
+        "message": "/shotId must match pattern \"^sh-[0-9a-f]{12}$\""
+      },
+      {
+        "dimension": "lineage",
+        "code": "LINEAGE_FINGERPRINTS_MISSING",
+        "message": "source fingerprints required for stale detection"
+      }
+    ],
+    "warnings": []
+  },
+  "fingerprint": "d656f74fc9b4cf4d",
+  "status": "BLOCKED",
+  "createdAt": "2026-10-05T02:32:15.020Z",
+  "updatedAt": "2026-10-05T02:32:15.021Z",
+  "_force": false
+}

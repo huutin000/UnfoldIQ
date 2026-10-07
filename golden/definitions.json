@@ -1,0 +1,228 @@
+{
+  "schemaVersion": "1.0.0",
+  "revision": 10,
+  "createdAt": "2026-10-05T07:40:52.073Z",
+  "updatedAt": "2026-10-06T08:16:43.833Z",
+  "fingerprint": "cf5e1d7aaa82c176",
+  "definitions": {
+    "gold-factual-explainer:v1": {
+      "goldenProjectId": "gold-factual-explainer",
+      "version": 1,
+      "name": "GOLDEN_A factual research-heavy explainer",
+      "categories": [
+        "factual",
+        "research-heavy",
+        "visual-factuality",
+        "spoken-humanization"
+      ],
+      "fixture": {
+        "projectId": "pilot-sky-blue",
+        "kind": "evidence",
+        "detail": "research brief + script + captions + video-spec"
+      },
+      "contentClass": "FACTUAL",
+      "platform": "youtube",
+      "aspectRatio": "16:9",
+      "requiredCapabilities": [],
+      "expectedArtifacts": [],
+      "evaluationProfile": "v1-local-evidence",
+      "baselineRef": null,
+      "status": "ACTIVE",
+      "supersedes": null
+    },
+    "gold-fiction-continuity:v1": {
+      "goldenProjectId": "gold-fiction-continuity",
+      "version": 1,
+      "name": "GOLDEN_B fiction character continuity selective Veo",
+      "categories": [
+        "fiction",
+        "character-continuity",
+        "selective-veo"
+      ],
+      "fixture": {
+        "projectId": "phase1g12-case-a",
+        "kind": "evidence",
+        "detail": "Case B/C/D real generations + QA + cross-shot continuity"
+      },
+      "contentClass": "FICTION",
+      "platform": "youtube",
+      "aspectRatio": "16:9",
+      "requiredCapabilities": [],
+      "expectedArtifacts": [],
+      "evaluationProfile": "v1-local-evidence",
+      "baselineRef": null,
+      "status": "ACTIVE",
+      "supersedes": null
+    },
+    "gold-originality-study:v1": {
+      "goldenProjectId": "gold-originality-study",
+      "version": 1,
+      "name": "GOLDEN_C originality across fiction outputs",
+      "categories": [
+        "fiction",
+        "originality",
+        "aspect-adaptation"
+      ],
+      "fixture": {
+        "projectId": "phase1g12-case-a",
+        "kind": "evidence",
+        "detail": "B2/C/D1-D3 opening-action tokens from QA semantic observations"
+      },
+      "contentClass": "FICTION",
+      "platform": "youtube",
+      "aspectRatio": "16:9",
+      "requiredCapabilities": [],
+      "expectedArtifacts": [],
+      "evaluationProfile": "v1-local-evidence",
+      "baselineRef": null,
+      "status": "ACTIVE",
+      "supersedes": null
+    },
+    "gold-voice-caption:v1": {
+      "goldenProjectId": "gold-voice-caption",
+      "version": 1,
+      "name": "GOLDEN_D voice-caption contract fixture",
+      "categories": [
+        "voice-caption",
+        "spoken-humanization"
+      ],
+      "fixture": {
+        "projectId": "pilot-sky-blue",
+        "kind": "evidence",
+        "detail": "16 timed caption cues + measured segment timing"
+      },
+      "contentClass": "FACTUAL",
+      "platform": "youtube",
+      "aspectRatio": "16:9",
+      "requiredCapabilities": [],
+      "expectedArtifacts": [],
+      "evaluationProfile": "v1-local-evidence",
+      "baselineRef": null,
+      "status": "ACTIVE",
+      "supersedes": null
+    },
+    "gold-image-only:v1": {
+      "goldenProjectId": "gold-image-only",
+      "version": 1,
+      "name": "GOLDEN_E image-only zero-Veo path",
+      "categories": [
+        "fiction",
+        "image-only",
+        "zero-veo"
+      ],
+      "fixture": {
+        "projectId": "phase1g12-case-a",
+        "kind": "evidence",
+        "detail": "Case A source image + Remotion render input + staging manifest"
+      },
+      "contentClass": "FICTION",
+      "platform": "youtube",
+      "aspectRatio": "16:9",
+      "requiredCapabilities": [],
+      "expectedArtifacts": [],
+      "evaluationProfile": "v1-local-evidence",
+      "baselineRef": null,
+      "status": "ACTIVE",
+      "supersedes": null
+    },
+    "gold-voice-bible:v1": {
+      "goldenProjectId": "gold-voice-bible",
+      "version": 1,
+      "name": "GOLDEN_F Voice Bible + narrator persona identity/governance contract",
+      "categories": [
+        "voice-bible",
+        "voice-caption",
+        "spoken-humanization"
+      ],
+      "fixture": {
+        "projectId": "phase2-1-validation",
+        "kind": "evidence",
+        "detail": "versioned Voice Bible + narrator persona + normalized Kokoro selection + manifest/DAG references"
+      },
+      "contentClass": "FACTUAL",
+      "platform": "youtube",
+      "aspectRatio": "16:9",
+      "requiredCapabilities": [],
+      "expectedArtifacts": [],
+      "evaluationProfile": "v1-local-evidence",
+      "baselineRef": null,
+      "status": "ACTIVE",
+      "supersedes": null
+    },
+    "gold-narration-pronunciation:v1": {
+      "goldenProjectId": "gold-narration-pronunciation",
+      "version": 1,
+      "name": "GOLDEN_NP Narration Direction + Pronunciation Runtime contract (Phase 2.2+2.3)",
+      "categories": [
+        "narration-direction",
+        "pronunciation-runtime",
+        "spoken-humanization"
+      ],
+      "fixture": {
+        "projectId": "phase223-narration-pronunciation",
+        "kind": "evidence",
+        "detail": "versioned narration direction + provider-agnostic pronunciation profile + real quiet-phonemization runtime pass + tts-ready plan"
+      },
+      "contentClass": "FACTUAL",
+      "platform": "youtube",
+      "aspectRatio": "16:9",
+      "requiredCapabilities": [],
+      "expectedArtifacts": [],
+      "evaluationProfile": "v1-local-evidence",
+      "baselineRef": null,
+      "status": "DRAFT",
+      "supersedes": null
+    },
+    "gold-spoken-script:v1": {
+      "goldenProjectId": "gold-spoken-script",
+      "version": 1,
+      "name": "GOLDEN_SSS Spoken-script backfill chain (humanizer → fidelity → naturalness → canonical FSS)",
+      "categories": [
+        "spoken-humanization",
+        "evidence-fidelity",
+        "naturalness-qa",
+        "spoken-humanization"
+      ],
+      "fixture": {
+        "projectId": "pilot-sky-blue",
+        "kind": "evidence",
+        "detail": "canonical FSS fss-pilot-sky-blue@v1 with full gate lineage"
+      },
+      "contentClass": "FACTUAL",
+      "platform": "youtube",
+      "aspectRatio": "16:9",
+      "requiredCapabilities": [],
+      "expectedArtifacts": [],
+      "evaluationProfile": "v1-local-evidence",
+      "baselineRef": null,
+      "status": "DRAFT",
+      "supersedes": null
+    },
+    "gold-tts-behavior:v1": {
+      "goldenProjectId": "gold-tts-behavior",
+      "version": 1,
+      "name": "Phase 2.4-2.6 TTS behavior contract",
+      "categories": [
+        "tts-synthesis",
+        "speech-rate-qa",
+        "performance-qa",
+        "dialogue-routing",
+        "recovery"
+      ],
+      "fixture": {
+        "projectId": "pilot-sky-blue",
+        "kind": "evidence",
+        "detail": "8 am_michael segments + srq/pfq/fnt/dlr artifacts + stub-transport behavior drills"
+      },
+      "contentClass": "FACTUAL",
+      "platform": "youtube",
+      "aspectRatio": "16:9",
+      "requiredCapabilities": [],
+      "expectedArtifacts": [],
+      "evaluationProfile": "v1-local-evidence",
+      "baselineRef": null,
+      "status": "DRAFT",
+      "supersedes": null
+    }
+  }
+}

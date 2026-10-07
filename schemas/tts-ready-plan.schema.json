@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "tts-ready-plan.schema.json",
+  "title": "UNFOLDIQ TTS-Ready Input Plan (Phase 2.2+2.3 output, schema 1.0.0)",
+  "description": "Machine-readable downstream plan consumed by Phase 2.4 (final narration/TTS). Indexes per-segment speaker, direction ref, compiled-text hash and pronunciation status. NEVER stores audio paths, final timing, or any Phase 2.4+ artifact: this package ends at a verified TTS-ready input plan.",
+  "type": "object",
+  "required": ["schemaVersion", "ttsReadyPlanId", "version", "projectId", "scriptRef", "voiceBibleRef", "narrationDirectionRef", "pronunciationPassRef", "provider", "providerModel", "language", "overall", "productionTtsBlocked", "segments", "provenance", "fingerprint"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "ttsReadyPlanId": { "type": "string", "pattern": "^ttp-[0-9a-f]{12}$" },
+    "version": { "type": "integer", "minimum": 1 },
+    "projectId": { "type": "string", "minLength": 1 },
+    "scriptRef": {
+      "type": "object",
+      "required": ["scriptArtifactId", "scriptVersion"],
+      "additionalProperties": false,
+      "properties": {
+        "scriptArtifactId": { "type": "string", "pattern": "^fss-[0-9a-z][0-9a-z-]{2,62}$" },
+        "scriptVersion": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "voiceBibleRef": { "type": "string", "pattern": "^vb-[0-9a-f]{12}$" },
+    "narrationDirectionRef": { "type": ["string", "null"], "pattern": "^nd-[0-9a-f]{12}$" },
+    "pronunciationPassRef": { "type": ["string", "null"], "pattern": "^prp-[0-9a-f]{12}$" },
+    "provider": { "enum": ["local-kokoro"] },
+    "providerModel": { "type": "string", "minLength": 1 },
+    "language": { "type": "string", "minLength": 2, "maxLength": 16 },
+    "overall": { "enum": ["READY_FOR_TTS", "BLOCKED", "REVIEW_REQUIRED"] },
+    "productionTtsBlocked": {
+      "type": "boolean",
+      "description": "True when the source script is not a CANONICAL Final Spoken Script (validation fixture or pending humanizer chain). Technically-ready segments stay readyForTts, but production TTS consumption is blocked until a canonical Final Spoken Script exists."
+    },
+    "segments": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/planSegment" }
+    },
+    "provenance": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "source": { "type": "string", "minLength": 1 },
+        "createdAt": { "type": ["string", "null"] },
+        "productionScriptStatus": { "enum": ["NOT_APPLICABLE", "CANONICAL", "PENDING"], "description": "Copied from the source script contract; anything other than CANONICAL blocks production TTS." },
+        "evidenceRefs": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" }
+  },
+  "definitions": {
+    "planSegment": {
+      "type": "object",
+      "required": ["segmentId", "sourceTextHash", "speakerId", "directionRef", "compiledTextHash", "pronunciationStatus", "readyForTts", "blockers"],
+      "additionalProperties": false,
+      "properties": {
+        "segmentId": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$" },
+        "sourceTextHash": { "type": "string", "pattern": "^[0-9a-f]{16}$" },
+        "speakerId": { "type": "string", "minLength": 1, "description": "Logical speaker ('narrator'); the concrete voice resolves through the Voice Bible." },
+        "directionRef": { "type": ["string", "null"], "description": "null = segment inherits Voice Bible defaults (no explicit direction)." },
+        "compiledTextHash": { "type": ["string", "null"], "pattern": "^[0-9a-f]{16}$" },
+        "pronunciationStatus": { "enum": ["CLEAN", "OVERRIDE_APPLIED", "REVIEW_REQUIRED", "FAILED"] },
+        "readyForTts": { "type": "boolean" },
+        "blockers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["code"],
+            "additionalProperties": false,
+            "properties": {
+              "code": { "type": "string", "minLength": 3 },
+              "detail": { "type": ["string", "null"], "maxLength": 280 }
+            }
+          }
+        }
+      }
+    }
+  }
+}

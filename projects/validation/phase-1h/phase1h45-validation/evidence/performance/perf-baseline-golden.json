@@ -1,0 +1,41 @@
+{
+  "artifact": "perf-baseline-golden",
+  "capturedAt": "2026-10-07T03:34:41.999Z",
+  "method": "process.hrtime.bigint micro-benchmarks inside tests/golden/test-golden.js",
+  "sampleCounts": {
+    "goldenLoad": 20,
+    "baselineLoad": 20,
+    "compare": 10
+  },
+  "environment": "local Windows, node",
+  "metrics": {
+    "goldenLoad": {
+      "samples": 20,
+      "minMs": 0.257,
+      "p50Ms": 0.418,
+      "maxMs": 0.789
+    },
+    "baselineLoad": {
+      "samples": 20,
+      "minMs": 0.742,
+      "p50Ms": 0.997,
+      "maxMs": 1.364
+    },
+    "compare": {
+      "samples": 10,
+      "minMs": 0.302,
+      "p50Ms": 0.35,
+      "maxMs": 8.198
+    },
+    "metadataBytes": 35325,
+    "providerTimeMs": 0
+  },
+  "budgets": {
+    "goldenLoadP50Ms": 10,
+    "baselineLoadP50Ms": 10,
+    "compareP50Ms": 25,
+    "metadataBytes": 1048576
+  },
+  "reason": "golden evaluation is local-only in V1 (provider time = 0); loads/compares must stay interactive",
+  "result": "PASS"
+}

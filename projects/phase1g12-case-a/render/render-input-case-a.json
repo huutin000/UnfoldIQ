@@ -1,0 +1,125 @@
+{
+  "motionMapping": "SLOW_ZOOM_IN (from editorMotionPlan techniques [OBJECT_FOCUS,ZOOM,PARALLAX_2_5D,CROP_REFRAME])",
+  "input": {
+    "version": "1.0.0",
+    "projectId": "phase1g12-case-a",
+    "platform": "youtube",
+    "composition": {
+      "id": "UNFOLDIQVideo",
+      "width": 1920,
+      "height": 1080,
+      "fps": 30,
+      "durationMs": 2000,
+      "durationInFrames": 60,
+      "background": "#0b0e14",
+      "outputName": "phase1g12-case-a"
+    },
+    "timeline": {
+      "actualTimelineEndMs": 2000,
+      "sources": [
+        "validation:scene-script"
+      ]
+    },
+    "scenes": [
+      {
+        "sceneId": "A-SC01",
+        "startMs": 0,
+        "endMs": 2000,
+        "durationMs": 2000,
+        "background": "#0b0e14",
+        "layers": [
+          {
+            "layerId": "A-SC01_bg",
+            "kind": "BACKGROUND",
+            "fill": {
+              "kind": "solid",
+              "color": "#0b0e14"
+            },
+            "startMs": 0,
+            "endMs": 2000
+          },
+          {
+            "layerId": "A-SC01_visual",
+            "kind": "IMAGE",
+            "assetId": "IMG_A",
+            "fit": "cover",
+            "position": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "opacity": 1,
+            "scale": 1,
+            "motion": "SLOW_ZOOM_IN",
+            "startMs": 0,
+            "endMs": 2000
+          }
+        ],
+        "transition": {
+          "type": "CUT"
+        },
+        "purpose": "validation"
+      }
+    ],
+    "assets": {
+      "IMG_A": {
+        "assetId": "IMG_A",
+        "type": "image",
+        "stagedPath": "unfoldiq/phase1g12-case-a/1186233d/case-a-source.png",
+        "staticFilePath": "unfoldiq/phase1g12-case-a/1186233d/case-a-source.png",
+        "width": 32,
+        "height": 32
+      }
+    },
+    "audio": {
+      "voice": [],
+      "music": [],
+      "sfx": [],
+      "generatedClipAudioPolicy": "MUTE_GENERATED_CLIP_AUDIO"
+    },
+    "captions": {
+      "mode": "NONE",
+      "items": []
+    },
+    "visualSystem": {
+      "background": "#0b0e14",
+      "foreground": "#f5f7fa",
+      "muted": "#8a93a6",
+      "accent": "#4da3ff",
+      "fontFamily": "system-ui, sans-serif",
+      "titleSize": 64,
+      "bodySize": 32,
+      "captionSize": 28,
+      "cornerRadius": 8,
+      "spacing": 16,
+      "overlayOpacity": 0.55
+    },
+    "provenance": {
+      "preflightVersion": "1.0.0",
+      "timelineHash": "d2433d0d",
+      "assetManifestHash": "05457523",
+      "audioMixHash": "74234e98",
+      "captionsHash": "74234e98",
+      "visualBibleVersion": "default",
+      "continuityRegistryVersion": "none",
+      "durationContractVersion": "none",
+      "platformProfileVersion": "1.0.0",
+      "remotionVersions": {
+        "remotion": "^4.0.529",
+        "@remotion/renderer": "^4.0.529",
+        "@remotion/bundler": "^4.0.529",
+        "@remotion/cli": "^4.0.529"
+      }
+    },
+    "warnings": [
+      {
+        "code": "AUDIO_MIX_MISSING",
+        "message": "audio/audio-mix-plan.json absent: voice/music/sfx empty"
+      },
+      {
+        "code": "CAPTIONS_MISSING",
+        "message": "captions/captions.json absent: mode NONE"
+      }
+    ],
+    "status": "READY"
+  }
+}

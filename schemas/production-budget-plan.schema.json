@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "production-budget-plan.schema.json",
+  "title": "UNFOLDIQ Production Budget Plan (1G.8)",
+  "description": "Spend-capable planning artifact: generation units, output counts, sourced cost state, explicit hard budget, retry policy. Planning only — never executes generation.",
+  "type": "object",
+  "required": ["version", "budgetPlanId", "projectId", "scopeId", "hardBudget", "plannedItems", "summary", "estimateState", "fingerprint", "status"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "const": "1.0.0" },
+    "budgetPlanId": { "type": "string", "pattern": "^bp-[0-9a-f]{12}$" },
+    "projectId": { "type": ["string", "null"] },
+    "scopeId": { "type": "string", "minLength": 1 },
+    "scope": { "enum": ["PROJECT", "SEQUENCE", "SCENE", "SHOT", "GENERATION_JOB"] },
+    "sourceRefs": { "type": "array", "items": { "type": "string" } },
+    "policyVersion": { "type": ["string", "null"] },
+    "registrySnapshotRef": { "type": ["object", "null"] },
+    "platformPolicyRefs": { "type": "array" },
+    "hardBudget": {
+      "type": "object",
+      "required": ["unit", "limit"],
+      "properties": {
+        "unit": { "const": "CREDITS" },
+        "limit": { "type": "number", "minimum": 0 },
+        "scope": { "type": "string" },
+        "source": { "type": "string" }
+      }
+    },
+    "parentBudget": { "type": ["object", "null"] },
+    "plannedItems": { "type": "array", "items": { "type": "string" } },
+    "unitCount": { "type": "number", "minimum": 0 },
+    "retryPolicies": { "type": "object" },
+    "strictUnknownCost": { "type": "boolean" },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "estimatedImages": { "type": "number", "minimum": 0 },
+        "estimatedVeoShots": { "type": "number", "minimum": 0 },
+        "estimatedVariants": { "type": "number", "minimum": 0 },
+        "knownCredits": { "type": "number", "minimum": 0 },
+        "exactTotalCredits": { "type": ["number", "null"], "minimum": 0 }
+      }
+    },
+    "estimateState": { "enum": ["EXACT", "PARTIAL", "UNKNOWN", "CONFLICT", "STALE"] },
+    "warnings": { "type": "array", "items": { "type": "string" } },
+    "blockers": { "type": "array", "items": { "type": "string" } },
+    "supersedes": { "type": ["string", "null"] },
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" },
+    "status": { "type": "string" },
+    "createdAt": { "type": "string" },
+    "updatedAt": { "type": "string" }
+  }
+}

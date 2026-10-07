@@ -1,0 +1,19 @@
+{
+  "version": "1.0.0",
+  "attemptId": "b1-attempt-01",
+  "unitId": "gu-0ada6dc4cccc",
+  "shotId": "B-SH01",
+  "providerProjectRef": "8221824c-a1a6-4aa9-8d6b-fac24860d49e",
+  "jobId": "b1",
+  "submitAtApprox": "2026-10-04T15:56:00.000Z",
+  "correlationMethod": "SINGLE_GENERATION_ATTRIBUTION",
+  "evidence": [
+    "operator affirmed exactly ONE generation submitted for this unit (ceremony 2026-10-04T15:56Z)",
+    "Flow project 'UNFOLDIQ — Mascot Live Validation' contains exactly one video card",
+    "provider download filename embeds the prompt fingerprint 'Guide_gesturing_in_educational_s…'",
+    "download bytes sha256=d235316b9af51453393c19724949ec5f892258371255e2a2f7243b22dc538e89, 1599300 bytes, 1280x720@10.0s"
+  ],
+  "file": "downloads/Guide_gesturing_in_educational_s…_20261005092031.mp4",
+  "sha256": "d235316b9af51453393c19724949ec5f892258371255e2a2f7243b22dc538e89",
+  "downloadedAt": "2026-10-05T02:32:09.209Z"
+}

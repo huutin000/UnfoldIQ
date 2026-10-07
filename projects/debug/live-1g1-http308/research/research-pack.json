@@ -1,0 +1,185 @@
+{
+  "packId": "pack-badb977fc948",
+  "packVersion": "1.0.0",
+  "projectId": "live-1g1-http308",
+  "contentClass": "FACTUAL",
+  "contentMode": null,
+  "creativeBriefRef": null,
+  "researchPlanRef": {
+    "topic": "HTTP 308 Permanent Redirect semantics"
+  },
+  "evidencePolicyVersion": "evidence-policy-1.0.0",
+  "sufficiencyRef": {
+    "decision": "SUFFICIENT"
+  },
+  "generatedAt": "2026-10-03T02:24:56.077Z",
+  "researchObjective": "Establish the documented timeline, primary evidence, major interpretations, and unresolved disputes about \"HTTP 308 Permanent Redirect semantics\" needed to support a developers youtube video (unspecified-mode), without stating unverified claims as fact.",
+  "viewerContext": {
+    "audience": "developers",
+    "platform": "youtube",
+    "targetDuration": null,
+    "viewerPromise": null
+  },
+  "verifiedFacts": [
+    {
+      "claimId": "clm-ede7c751ff68",
+      "statement": "HTTP 308 Permanent Redirect indicates the resource has permanently moved to the Location URI, and the request method and body must not be altered when following the redirect.",
+      "sourceIds": [
+        "src-048e66b5112e",
+        "src-9c7cc5db9f6d",
+        "src-204d096ca9ed"
+      ],
+      "contentHashes": [
+        "359cf28aed3b7f066a21af0f18c65a431689c912f4784d8f5e73889a636a6099",
+        "b5642f6a1984da5d2f5c4910fe6915908e9632cae0ec0fcaea4b31c517f81bff",
+        "52962aaa56c2a88904f627ccbbb618c7a90df1e4b4747c963660f7090c8260c1"
+      ],
+      "evidenceStatus": "SUPPORTED",
+      "corroborationStatus": "MULTI_SOURCE_CONFIRMED",
+      "claimClass": "SUPPORTED_FACT",
+      "materiality": "critical"
+    },
+    {
+      "claimId": "clm-d03297df9a11",
+      "statement": "HTTP 308 was originally defined by RFC 7538 and was later absorbed into RFC 9110 HTTP Semantics.",
+      "sourceIds": [
+        "src-048e66b5112e",
+        "src-9c7cc5db9f6d",
+        "src-204d096ca9ed"
+      ],
+      "contentHashes": [
+        "359cf28aed3b7f066a21af0f18c65a431689c912f4784d8f5e73889a636a6099",
+        "b5642f6a1984da5d2f5c4910fe6915908e9632cae0ec0fcaea4b31c517f81bff",
+        "52962aaa56c2a88904f627ccbbb618c7a90df1e4b4747c963660f7090c8260c1"
+      ],
+      "evidenceStatus": "SUPPORTED",
+      "corroborationStatus": "MULTI_SOURCE_CONFIRMED",
+      "claimClass": "SUPPORTED_FACT",
+      "materiality": "medium"
+    },
+    {
+      "claimId": "clm-c59412e9d345",
+      "statement": "Unlike 301, which may incorrectly change a POST request into a GET request, 308 never changes the request method.",
+      "sourceIds": [
+        "src-048e66b5112e",
+        "src-9c7cc5db9f6d",
+        "src-204d096ca9ed"
+      ],
+      "contentHashes": [
+        "359cf28aed3b7f066a21af0f18c65a431689c912f4784d8f5e73889a636a6099",
+        "b5642f6a1984da5d2f5c4910fe6915908e9632cae0ec0fcaea4b31c517f81bff",
+        "52962aaa56c2a88904f627ccbbb618c7a90df1e4b4747c963660f7090c8260c1"
+      ],
+      "evidenceStatus": "SUPPORTED",
+      "corroborationStatus": "MULTI_SOURCE_CONFIRMED",
+      "claimClass": "SUPPORTED_FACT",
+      "materiality": "high"
+    }
+  ],
+  "primarySourceFacts": [],
+  "independentlyCorroboratedFacts": [
+    {
+      "claimId": "clm-ede7c751ff68",
+      "statement": "HTTP 308 Permanent Redirect indicates the resource has permanently moved to the Location URI, and the request method and body must not be altered when following the redirect.",
+      "sourceIds": [
+        "src-048e66b5112e",
+        "src-9c7cc5db9f6d",
+        "src-204d096ca9ed"
+      ],
+      "contentHashes": [
+        "359cf28aed3b7f066a21af0f18c65a431689c912f4784d8f5e73889a636a6099",
+        "b5642f6a1984da5d2f5c4910fe6915908e9632cae0ec0fcaea4b31c517f81bff",
+        "52962aaa56c2a88904f627ccbbb618c7a90df1e4b4747c963660f7090c8260c1"
+      ],
+      "evidenceStatus": "SUPPORTED",
+      "corroborationStatus": "MULTI_SOURCE_CONFIRMED",
+      "claimClass": "SUPPORTED_FACT",
+      "materiality": "critical"
+    },
+    {
+      "claimId": "clm-d03297df9a11",
+      "statement": "HTTP 308 was originally defined by RFC 7538 and was later absorbed into RFC 9110 HTTP Semantics.",
+      "sourceIds": [
+        "src-048e66b5112e",
+        "src-9c7cc5db9f6d",
+        "src-204d096ca9ed"
+      ],
+      "contentHashes": [
+        "359cf28aed3b7f066a21af0f18c65a431689c912f4784d8f5e73889a636a6099",
+        "b5642f6a1984da5d2f5c4910fe6915908e9632cae0ec0fcaea4b31c517f81bff",
+        "52962aaa56c2a88904f627ccbbb618c7a90df1e4b4747c963660f7090c8260c1"
+      ],
+      "evidenceStatus": "SUPPORTED",
+      "corroborationStatus": "MULTI_SOURCE_CONFIRMED",
+      "claimClass": "SUPPORTED_FACT",
+      "materiality": "medium"
+    },
+    {
+      "claimId": "clm-c59412e9d345",
+      "statement": "Unlike 301, which may incorrectly change a POST request into a GET request, 308 never changes the request method.",
+      "sourceIds": [
+        "src-048e66b5112e",
+        "src-9c7cc5db9f6d",
+        "src-204d096ca9ed"
+      ],
+      "contentHashes": [
+        "359cf28aed3b7f066a21af0f18c65a431689c912f4784d8f5e73889a636a6099",
+        "b5642f6a1984da5d2f5c4910fe6915908e9632cae0ec0fcaea4b31c517f81bff",
+        "52962aaa56c2a88904f627ccbbb618c7a90df1e4b4747c963660f7090c8260c1"
+      ],
+      "evidenceStatus": "SUPPORTED",
+      "corroborationStatus": "MULTI_SOURCE_CONFIRMED",
+      "claimClass": "SUPPORTED_FACT",
+      "materiality": "high"
+    }
+  ],
+  "derivedContext": [],
+  "conflictingClaims": [],
+  "unverifiedClaims": [],
+  "timeline": [],
+  "people": [],
+  "places": [],
+  "usefulContext": [
+    "clm-d03297df9a11"
+  ],
+  "unknowns": [],
+  "sourceLimitations": [
+    "src-048e66b5112e: fitMarkdown empty; analysis must fall back to rawMarkdown",
+    "src-048e66b5112e: authority UNKNOWN — treat with care",
+    "src-9c7cc5db9f6d: fitMarkdown empty; analysis must fall back to rawMarkdown",
+    "src-9c7cc5db9f6d: authority UNKNOWN — treat with care",
+    "src-204d096ca9ed: rawMarkdown truncated at acquisition limit; evidence may be incomplete",
+    "src-204d096ca9ed: fitMarkdown empty; analysis must fall back to rawMarkdown",
+    "src-204d096ca9ed: authority UNKNOWN — treat with care"
+  ],
+  "sourceRefs": [
+    {
+      "sourceId": "src-048e66b5112e",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/308",
+      "title": "308 Permanent Redirect - HTTP | MDN",
+      "sourceType": "UNKNOWN",
+      "independenceStatus": "INDEPENDENT",
+      "contentHash": "359cf28aed3b7f066a21af0f18c65a431689c912f4784d8f5e73889a636a6099"
+    },
+    {
+      "sourceId": "src-9c7cc5db9f6d",
+      "url": "https://www.rfc-editor.org/info/rfc7538/",
+      "title": "RFC 7538: The Hypertext Transfer Protocol Status Code 308 (Permanent Redirect) | RFC Editor",
+      "sourceType": "UNKNOWN",
+      "independenceStatus": "INDEPENDENT",
+      "contentHash": "b5642f6a1984da5d2f5c4910fe6915908e9632cae0ec0fcaea4b31c517f81bff"
+    },
+    {
+      "sourceId": "src-204d096ca9ed",
+      "url": "https://datatracker.ietf.org/doc/html/rfc9110",
+      "title": "RFC 9110 - HTTP Semantics",
+      "sourceType": "UNKNOWN",
+      "independenceStatus": "INDEPENDENT",
+      "contentHash": "52962aaa56c2a88904f627ccbbb618c7a90df1e4b4747c963660f7090c8260c1"
+    }
+  ],
+  "timelineStatus": "not established",
+  "peopleStatus": "not established",
+  "placesStatus": "not established",
+  "packHash": "badb977fc9489b80"
+}

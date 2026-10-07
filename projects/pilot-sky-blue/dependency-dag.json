@@ -1,0 +1,454 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectId": "pilot-sky-blue",
+  "revision": 56,
+  "createdAt": "2026-10-06T04:49:11.841Z",
+  "updatedAt": "2026-10-06T07:23:52.934Z",
+  "nodes": {
+    "SHOT_PLAN": {
+      "artifactKey": "SHOT_PLAN",
+      "artifactType": "SHOT_PLAN",
+      "versionRef": "dc82d845e37a4c06",
+      "state": "DIRTY",
+      "inputRefs": [
+        {
+          "key": "FINAL_SPOKEN_SCRIPT",
+          "type": "SPOKEN_TEXT"
+        }
+      ],
+      "dependencyFingerprint": "0906466672d3b25a",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": "MIGRATED"
+    },
+    "VOICE_BIBLE": {
+      "artifactKey": "VOICE_BIBLE",
+      "artifactType": "VOICE_BIBLE",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "FINAL_SPOKEN_SCRIPT": {
+      "artifactKey": "FINAL_SPOKEN_SCRIPT",
+      "artifactType": "FINAL_SPOKEN_SCRIPT",
+      "versionRef": "fss-pilot-sky-blue@v2",
+      "state": "CLEAN",
+      "inputRefs": [
+        {
+          "key": "NATURALNESS_QA",
+          "type": "NATURALNESS_EVIDENCE"
+        },
+        {
+          "key": "SPOKEN_HUMANIZATION",
+          "type": "SOURCE_LINEAGE"
+        }
+      ],
+      "dependencyFingerprint": "6f61a3bffef89dc0",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "VOICE": {
+      "artifactKey": "VOICE",
+      "artifactType": "VOICE",
+      "versionRef": null,
+      "state": "DIRTY",
+      "inputRefs": [
+        {
+          "key": "FINAL_SPOKEN_SCRIPT",
+          "type": "SPOKEN_TEXT"
+        }
+      ],
+      "dependencyFingerprint": "0906466672d3b25a",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "FINAL_AUDIO": {
+      "artifactKey": "FINAL_AUDIO",
+      "artifactType": "FINAL_AUDIO",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "FORCED_ALIGNMENT": {
+      "artifactKey": "FORCED_ALIGNMENT",
+      "artifactType": "FORCED_ALIGNMENT",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "CAPTIONS": {
+      "artifactKey": "CAPTIONS",
+      "artifactType": "CAPTIONS",
+      "versionRef": null,
+      "state": "DIRTY",
+      "inputRefs": [
+        {
+          "key": "FINAL_SPOKEN_SCRIPT",
+          "type": "SPOKEN_TEXT"
+        }
+      ],
+      "dependencyFingerprint": "0906466672d3b25a",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "MASTER_TIMELINE": {
+      "artifactKey": "MASTER_TIMELINE",
+      "artifactType": "MASTER_TIMELINE",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "SCENE_TIMING": {
+      "artifactKey": "SCENE_TIMING",
+      "artifactType": "SCENE_TIMING",
+      "versionRef": null,
+      "state": "DIRTY",
+      "inputRefs": [
+        {
+          "key": "FINAL_SPOKEN_SCRIPT",
+          "type": "SPOKEN_TEXT"
+        }
+      ],
+      "dependencyFingerprint": "0906466672d3b25a",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "VISUAL_TIMING": {
+      "artifactKey": "VISUAL_TIMING",
+      "artifactType": "VISUAL_TIMING",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "ANIMATION_TIMING": {
+      "artifactKey": "ANIMATION_TIMING",
+      "artifactType": "ANIMATION_TIMING",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "THUMBNAIL": {
+      "artifactKey": "THUMBNAIL",
+      "artifactType": "THUMBNAIL",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "PUBLISH_PACKAGE": {
+      "artifactKey": "PUBLISH_PACKAGE",
+      "artifactType": "PUBLISH_PACKAGE",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "CREATIVE_BRIEF": {
+      "artifactKey": "CREATIVE_BRIEF",
+      "artifactType": "CREATIVE_BRIEF",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "RESEARCH_PACK": {
+      "artifactKey": "RESEARCH_PACK",
+      "artifactType": "RESEARCH_PACK",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "SPOKEN_HUMANIZATION": {
+      "artifactKey": "SPOKEN_HUMANIZATION",
+      "artifactType": "SPOKEN_HUMANIZATION",
+      "versionRef": "hum-f3ab56c75605",
+      "state": "CLEAN",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": "fix-pre-2.4:humanizer",
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": "LIVE"
+    },
+    "EVIDENCE_FIDELITY_DECISION": {
+      "artifactKey": "EVIDENCE_FIDELITY_DECISION",
+      "artifactType": "EVIDENCE_FIDELITY_DECISION",
+      "versionRef": "fid-18bda8f67bfa",
+      "state": "CLEAN",
+      "inputRefs": [
+        {
+          "key": "SPOKEN_HUMANIZATION",
+          "type": "HUMANIZATION_CANDIDATE"
+        }
+      ],
+      "dependencyFingerprint": "e1a8a5e466c0013f",
+      "producedBy": "fix-pre-2.4:fidelity",
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": "LIVE"
+    },
+    "NATURALNESS_QA": {
+      "artifactKey": "NATURALNESS_QA",
+      "artifactType": "NATURALNESS_QA",
+      "versionRef": "nqa-5c77553ddd03",
+      "state": "CLEAN",
+      "inputRefs": [
+        {
+          "key": "EVIDENCE_FIDELITY_DECISION",
+          "type": "FIDELITY_EVIDENCE"
+        }
+      ],
+      "dependencyFingerprint": "151e250a0ce29abe",
+      "producedBy": "fix-pre-2.4:naturalness",
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": "LIVE"
+    },
+    "NARRATION_DIRECTION": {
+      "artifactKey": "NARRATION_DIRECTION",
+      "artifactType": "NARRATION_DIRECTION",
+      "versionRef": "nd-ba9e14b889f3",
+      "state": "CLEAN",
+      "inputRefs": [
+        {
+          "key": "FINAL_SPOKEN_SCRIPT",
+          "type": "SPOKEN_TEXT"
+        },
+        {
+          "key": "VOICE_BIBLE",
+          "type": "VOICE_IDENTITY"
+        }
+      ],
+      "dependencyFingerprint": "bec3da89adc856ab",
+      "producedBy": "phase-2.2:narration-direction",
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": "LIVE"
+    },
+    "PRONUNCIATION_PROFILE": {
+      "artifactKey": "PRONUNCIATION_PROFILE",
+      "artifactType": "PRONUNCIATION_PROFILE",
+      "versionRef": "pron-b739edf0b550",
+      "state": "CLEAN",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": "phase-2.3:pronunciation",
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": "LIVE"
+    },
+    "PRONUNCIATION_RUNTIME_PASS": {
+      "artifactKey": "PRONUNCIATION_RUNTIME_PASS",
+      "artifactType": "PRONUNCIATION_RUNTIME_PASS",
+      "versionRef": "prp-ef2591fc81ec",
+      "state": "CLEAN",
+      "inputRefs": [
+        {
+          "key": "FINAL_SPOKEN_SCRIPT",
+          "type": "SPOKEN_TEXT"
+        },
+        {
+          "key": "PRONUNCIATION_PROFILE",
+          "type": "PRONUNCIATION_READINGS"
+        }
+      ],
+      "dependencyFingerprint": "3e98526f92555132",
+      "producedBy": "phase-2.3:pronunciation",
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": "LIVE"
+    },
+    "TTS_READY_PLAN": {
+      "artifactKey": "TTS_READY_PLAN",
+      "artifactType": "TTS_READY_PLAN",
+      "versionRef": "ttp-88f0ed96a524",
+      "state": "CLEAN",
+      "inputRefs": [
+        {
+          "key": "NARRATION_DIRECTION",
+          "type": "DIRECTION"
+        },
+        {
+          "key": "PRONUNCIATION_RUNTIME_PASS",
+          "type": "PRONUNCIATION_EVIDENCE"
+        }
+      ],
+      "dependencyFingerprint": "7195f7fd4ce0427a",
+      "producedBy": "phase-2.2-2.3:tts-ready-plan",
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": "LIVE"
+    },
+    "RENDER": {
+      "artifactKey": "RENDER",
+      "artifactType": "RENDER",
+      "versionRef": null,
+      "state": "DIRTY",
+      "inputRefs": [
+        {
+          "key": "FINAL_SPOKEN_SCRIPT",
+          "type": "SPOKEN_TEXT"
+        }
+      ],
+      "dependencyFingerprint": "0906466672d3b25a",
+      "producedBy": "fix-pre-2.4:legacy-consumer",
+      "lockTarget": null,
+      "blockedReason": "pre-DAG legacy artifact (render/) derived from the superseded pre-humanized script text; re-derive before any reuse",
+      "provenance": "LIVE"
+    },
+    "DIALOGUE_ROUTING_DECISION": {
+      "artifactKey": "DIALOGUE_ROUTING_DECISION",
+      "artifactType": "DIALOGUE_ROUTING_DECISION",
+      "versionRef": "dlr-d7b183beca2b",
+      "state": "CLEAN",
+      "inputRefs": [
+        {
+          "key": "VOICE_BIBLE",
+          "type": "VOICE_IDENTITY"
+        }
+      ],
+      "dependencyFingerprint": "2cf2636b429649c7",
+      "producedBy": "phase-2.6:dialogue-routing",
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": "LIVE"
+    },
+    "TTS_SEGMENT_AUDIO": {
+      "artifactKey": "TTS_SEGMENT_AUDIO",
+      "artifactType": "TTS_SEGMENT_AUDIO",
+      "versionRef": "tsa-batch@fss-pilot-sky-blue@v2",
+      "state": "CLEAN",
+      "inputRefs": [
+        {
+          "key": "FINAL_SPOKEN_SCRIPT",
+          "type": "SPOKEN_TEXT"
+        },
+        {
+          "key": "VOICE_BIBLE",
+          "type": "VOICE_IDENTITY"
+        },
+        {
+          "key": "NARRATION_DIRECTION",
+          "type": "DIRECTION"
+        },
+        {
+          "key": "PRONUNCIATION_RUNTIME_PASS",
+          "type": "PRONUNCIATION"
+        }
+      ],
+      "dependencyFingerprint": "550107b1531b05b9",
+      "producedBy": "phase-2.4-2.6:tts-audio",
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": "LIVE"
+    },
+    "SPEECH_RATE_QA": {
+      "artifactKey": "SPEECH_RATE_QA",
+      "artifactType": "SPEECH_RATE_QA",
+      "versionRef": "srq-dc6c4308edad",
+      "state": "CLEAN",
+      "inputRefs": [
+        {
+          "key": "TTS_SEGMENT_AUDIO",
+          "type": "SEGMENT_AUDIO"
+        }
+      ],
+      "dependencyFingerprint": "507af050e30fb98f",
+      "producedBy": "phase-2.4-2.6:tts-audio",
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": "LIVE"
+    },
+    "PERFORMANCE_QA": {
+      "artifactKey": "PERFORMANCE_QA",
+      "artifactType": "PERFORMANCE_QA",
+      "versionRef": "pfq-af33fbfcf5c0",
+      "state": "CLEAN",
+      "inputRefs": [
+        {
+          "key": "TTS_SEGMENT_AUDIO",
+          "type": "SEGMENT_AUDIO"
+        }
+      ],
+      "dependencyFingerprint": "507af050e30fb98f",
+      "producedBy": "phase-2.4-2.6:tts-audio",
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": "LIVE"
+    },
+    "FINAL_NARRATION_TRACK": {
+      "artifactKey": "FINAL_NARRATION_TRACK",
+      "artifactType": "FINAL_NARRATION_TRACK",
+      "versionRef": "fnt-cfd231152fcd",
+      "state": "CLEAN",
+      "inputRefs": [
+        {
+          "key": "TTS_SEGMENT_AUDIO",
+          "type": "SELECTED_SEGMENTS"
+        }
+      ],
+      "dependencyFingerprint": "89d564e7c29b19a7",
+      "producedBy": "phase-2.4-2.6:tts-audio",
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": "LIVE"
+    }
+  },
+  "fingerprint": "bbf719fc248cba35"
+}

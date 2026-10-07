@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0",
+  "artifactId": "v61-status-correction-1g12",
+  "createdAt": "2026-10-05T04:40:00.170Z",
+  "statement": {
+    "task01": "FUNCTIONAL PASS (A/B/C/D real E2E, real QA integration, targeted repair loop exercised, credits reconciled)",
+    "roadmapV61QualityGate": "NOT YET PROVEN",
+    "phase1g": "NOT_COMPLETE (until Task 02 quality gate passes)"
+  },
+  "basis": [
+    "Report/PHASE_1G12_01_VEO_REAL_E2E_REPORT.md (61 sections, verdict PASS)",
+    "V6.1 requires: baseline/measurement, optimization, hardening, regression, quality gate — out of Task 01 scope"
+  ],
+  "rule": "Task 01 history preserved unchanged; this artifact supersedes its PHASE_1G=COMPLETE claim under Roadmap V6.1"
+}

@@ -1,0 +1,406 @@
+{
+  "schemaVersion": "1.0.0",
+  "evidenceId": "lice-a1a589eb2773",
+  "provider": "local-kokoro",
+  "model": "kokoro-v1",
+  "retrievedAt": "2026-10-05T00:00:00.000Z",
+  "officialSource": {
+    "publisher": "hexgrad",
+    "url": "https://huggingface.co/hexgrad/Kokoro-82M",
+    "modelCardUrl": "https://huggingface.co/hexgrad/Kokoro-82M",
+    "licenseFileUrl": "https://github.com/hexgrad/kokoro/blob/main/LICENSE",
+    "quotedStatement": "With Apache-licensed weights, Kokoro can be deployed anywhere from production environments to personal projects. / This is an Apache-licensed model, and Kokoro has been deployed in numerous projects and commercial APIs."
+  },
+  "upstreamArtifact": {
+    "name": "Kokoro-82M",
+    "release": "v1.0",
+    "releaseDate": "2025-01-27",
+    "sha256": "496dba118d1a58f5f3db2efc88dbdc216e0483fc89fe6e47ee1f2c53f18ad1e4",
+    "languageCount": 8,
+    "voiceCount": 54
+  },
+  "runtimeBinding": {
+    "runtimeLabel": "kokoro-v1",
+    "upstreamReleasePinned": true,
+    "installed": true,
+    "installRequirement": "pip install \"kokoro>=0.9.2\" soundfile torch (installed 2026-10-05 under explicit operator authorization; providers/local/SETUP_KOKORO.md forbids UNFOLDIQ auto-install). espeak-ng is provided by the espeakng_loader package, so no separate Windows PATH entry is required.",
+    "note": "Pinned 2026-10-05. The runtime that actually loaded the model was kokoro 0.9.4 (torch 2.14.1+cpu). The artifact it fetched is kokoro-v1_0.pth, whose locally measured SHA256 is 496dba118d1a58f5f3db2efc88dbdc216e0483fc89fe6e47ee1f2c53f18ad1e4 - byte-identical to the SHA256 published on the official model card. The repo-internal label 'kokoro-v1' is still not itself an upstream version string; the pin rests on the artifact hash matching the official publication, not on the label."
+  },
+  "claims": {
+    "modelLicense": {
+      "status": "VERIFIED",
+      "licenseIdentifier": "Apache-2.0",
+      "scope": "Model weights of hexgrad/Kokoro-82M, published by hexgrad under the apache-2.0 license tag on the Hugging Face model repository.",
+      "basis": "Official model card metadata declares 'License: apache-2.0', and the official GitHub repository hexgrad/kokoro carries the full Apache License 2.0 text. The model card additionally states the weights are Apache-licensed and deployable in production and personal projects.",
+      "retrievedAt": "2026-10-05T00:00:00.000Z",
+      "evidenceRefs": [
+        "https://huggingface.co/hexgrad/Kokoro-82M",
+        "https://github.com/hexgrad/kokoro/blob/main/LICENSE"
+      ]
+    },
+    "voiceAssetRights": {
+      "status": "RISK_ACCEPTED",
+      "licenseIdentifier": "Apache-2.0",
+      "scope": "Individual Kokoro voice pack files (.pt) that the runtime downloads on demand.",
+      "basis": "The voice files are distributed inside the SAME official model repository that carries the repository-level 'License: apache-2.0' tag, and Apache-2.0 section 4 grants reproduction and distribution of the Work, so the model-level grant appears to extend to them. The runtime is now installed and this was strengthened with byte-level evidence: the operator-approved narrator voice am_michael was loaded from the runtime and its locally measured SHA256 (9a443b79a4b22489a5b0ab7c651a0bcd1a30bef675c28333f06971abbd47bd37) matches the per-voice SHA256 published in the official VOICES.md, and the loaded model artifact hash matches the official model card. The status nevertheless remains REVIEW_REQUIRED by explicit OPERATOR POLICY (2026-10-05): a repository-level licence tag plus matching hashes is strong evidence, but it is an agent-side reading of licence scope rather than an official statement that voice assets are separately cleared for redistribution and commercial narration output. Nothing here is asserted beyond what the official source states; the clearance decision is the operator's.",
+      "retrievedAt": "2026-10-05T00:00:00.000Z",
+      "evidenceRefs": [
+        "https://huggingface.co/hexgrad/Kokoro-82M/tree/main/voices",
+        "https://huggingface.co/hexgrad/Kokoro-82M/blob/main/VOICES.md",
+        "https://huggingface.co/hexgrad/Kokoro-82M",
+        "providers/license-evidence/local-kokoro.json"
+      ]
+    },
+    "outputUsageStatus": {
+      "status": "RISK_ACCEPTED",
+      "licenseIdentifier": null,
+      "scope": "Rights in the synthesized audio output produced by the model.",
+      "basis": "The official model card states the weights are Apache-licensed and may be deployed in production, which implies no additional output restriction, but it does not publish a separate output-usage grant. Recorded as REVIEW_REQUIRED rather than inferred as permissive.",
+      "retrievedAt": "2026-10-05T00:00:00.000Z",
+      "evidenceRefs": [
+        "https://huggingface.co/hexgrad/Kokoro-82M",
+        "providers/license-evidence/local-kokoro.json"
+      ]
+    }
+  },
+  "trainingDataDisclosure": [
+    {
+      "name": "Koniwa",
+      "license": "CC BY 3.0",
+      "url": "https://github.com/koniwa/koniwa"
+    },
+    {
+      "name": "SIWIS",
+      "license": "CC BY 4.0",
+      "url": "https://datashare.ed.ac.uk/handle/10283/2353"
+    }
+  ],
+  "notAsserted": [
+    "No official statement specific to voice-asset redistribution or commercial narration use of the voice packs was located. Voice rights therefore stay REVIEW_REQUIRED by operator policy even though repository-level licensing and byte-level hashes are consistent with coverage.",
+    "No separate synthesized-output usage grant is published; output usage is therefore REVIEW_REQUIRED, not permissive.",
+    "No warranty of fitness, voice-quality ranking, or channel-persona suitability is asserted by this evidence. The narrator QA ranking in projects/phase2-1-validation/evidence/phase-2/2.1/evidence/provider/narrator-qa-comparison.json is a measurement, not a rights or quality clearance.",
+    "Training-data attribution (Koniwa CC BY 3.0, SIWIS CC BY 4.0) is disclosed by the official model card as data that formed the training set; it is NOT asserted here as a restriction on use of the released weights or on output."
+  ],
+  "evidenceRefs": [
+    "https://huggingface.co/hexgrad/Kokoro-82M",
+    "https://huggingface.co/hexgrad/Kokoro-82M/blob/main/VOICES.md",
+    "https://github.com/hexgrad/kokoro",
+    "https://github.com/hexgrad/kokoro/blob/main/LICENSE",
+    "providers/local/SETUP_KOKORO.md",
+    "projects/phase2-1-validation/evidence/phase-2/2.1/evidence/provider/voice-selection-and-preview-pack.json"
+  ],
+  "fingerprint": "a7c15c826dfacb48",
+  "runtimeVoiceInventory": [
+    {
+      "voiceId": "af_alloy",
+      "language": "en-us",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "af_aoede",
+      "language": "en-us",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "af_bella",
+      "language": "en-us",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "af_heart",
+      "language": "en-us",
+      "runtimeVerified": true
+    },
+    {
+      "voiceId": "af_jessica",
+      "language": "en-us",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "af_kore",
+      "language": "en-us",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "af_nicole",
+      "language": "en-us",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "af_nova",
+      "language": "en-us",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "af_river",
+      "language": "en-us",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "af_sarah",
+      "language": "en-us",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "af_sky",
+      "language": "en-us",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "am_adam",
+      "language": "en-us",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "am_echo",
+      "language": "en-us",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "am_eric",
+      "language": "en-us",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "am_fenrir",
+      "language": "en-us",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "am_liam",
+      "language": "en-us",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "am_michael",
+      "language": "en-us",
+      "runtimeVerified": true
+    },
+    {
+      "voiceId": "am_onyx",
+      "language": "en-us",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "am_puck",
+      "language": "en-us",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "am_santa",
+      "language": "en-us",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "bf_alice",
+      "language": "en-gb",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "bf_emma",
+      "language": "en-gb",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "bf_isabella",
+      "language": "en-gb",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "bf_lily",
+      "language": "en-gb",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "bm_daniel",
+      "language": "en-gb",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "bm_fable",
+      "language": "en-gb",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "bm_george",
+      "language": "en-gb",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "bm_lewis",
+      "language": "en-gb",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "ef_dora",
+      "language": "es",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "em_alex",
+      "language": "es",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "em_santa",
+      "language": "es",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "ff_siwis",
+      "language": "fr",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "hf_alpha",
+      "language": "hi",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "hf_beta",
+      "language": "hi",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "hm_omega",
+      "language": "hi",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "hm_psi",
+      "language": "hi",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "if_sara",
+      "language": "it",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "im_nicola",
+      "language": "it",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "jf_alpha",
+      "language": "ja",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "jf_gongitsune",
+      "language": "ja",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "jf_nezumi",
+      "language": "ja",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "jf_tebukuro",
+      "language": "ja",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "jm_kumo",
+      "language": "ja",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "pf_dora",
+      "language": "pt-br",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "pm_alex",
+      "language": "pt-br",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "pm_santa",
+      "language": "pt-br",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "zf_xiaobei",
+      "language": "zh",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "zf_xiaoni",
+      "language": "zh",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "zf_xiaoxiao",
+      "language": "zh",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "zf_xiaoyi",
+      "language": "zh",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "zm_yunjian",
+      "language": "zh",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "zm_yunxi",
+      "language": "zh",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "zm_yunxia",
+      "language": "zh",
+      "runtimeVerified": false
+    },
+    {
+      "voiceId": "zm_yunyang",
+      "language": "zh",
+      "runtimeVerified": false
+    }
+  ],
+  "rightsDecision": {
+    "decision": "ACCEPT_RESIDUAL_RIGHTS_RISK",
+    "decisionAt": "2026-10-05T15:07:43.522Z",
+    "decidedBy": "operator",
+    "scope": {
+      "provider": "local-kokoro",
+      "model": "kokoro-v1",
+      "voiceId": "am_michael",
+      "use": "UNFOLDIQ English narration",
+      "noVoiceCloning": true,
+      "noImpersonation": true
+    },
+    "evidenceRefs": [
+      "https://huggingface.co/hexgrad/Kokoro-82M",
+      "https://huggingface.co/hexgrad/Kokoro-82M/blob/main/VOICES.md",
+      "https://huggingface.co/hexgrad/Kokoro-82M/tree/main/voices",
+      "https://github.com/hexgrad/kokoro/blob/main/LICENSE",
+      "providers/local/SETUP_KOKORO.md",
+      "projects/phase2-1-validation/evidence/phase-2/2.1/evidence/provider/voice-selection-and-preview-pack.json",
+      "projects/phase2-1-validation/evidence/phase-2/2.1/evidence/provider/operator-approval.json",
+      "projects/phase2-1-validation/evidence/phase-2/2.1/evidence/provider/narrator-qa-comparison.json"
+    ],
+    "residualRisks": [
+      "Repository-level Apache-2.0 tag is an agent-side reading of licence scope for the built-in voice packs, not an official statement separately clearing voice-asset redistribution",
+      "No separate synthesized-output usage grant is published upstream",
+      "Speaker/personality/publicity rights for built-in voice timbres are not explicitly addressed by the official source",
+      "Commercial and distribution use proceeds under operator risk acceptance, not upstream clearance"
+    ],
+    "reviewTriggers": [
+      "provider",
+      "model/version",
+      "voiceId",
+      "repository license",
+      "voice file/hash",
+      "intended distribution/use",
+      "voice cloning introduced",
+      "impersonation/real-person use introduced",
+      "commercial/distribution policy materially changes",
+      "official source publishes conflicting terms"
+    ]
+  }
+}

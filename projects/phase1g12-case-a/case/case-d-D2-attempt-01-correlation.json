@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "attemptId": "d2-attempt-01",
+  "unitId": "gu-1b8dbfa2ee4a",
+  "shotId": "D-SH02",
+  "providerProjectRef": "8221824c-a1a6-4aa9-8d6b-fac24860d49e",
+  "jobId": "d21",
+  "correlationMethod": "SINGLE_GENERATION_ATTRIBUTION",
+  "evidence": [
+    "operator affirmed exactly ONE generation submitted for D2 (ceremony log D_D2_SUBMIT_EVIDENCE)",
+    "character reference as-a7801df9bf0f (mascot-guide) used as first frame, per case/case-d-character.json",
+    "download bytes sha256=c9f0fdc1d1e4cca299b01f7074d4913635c58ff7c9570d507e0a7e085b677b05, 681479 bytes, 1280x720@4.0s"
+  ],
+  "file": "downloads/Character_presenting_palm-up_ges…_20261005111411.mp4",
+  "sha256": "c9f0fdc1d1e4cca299b01f7074d4913635c58ff7c9570d507e0a7e085b677b05",
+  "downloadedAt": "2026-10-05T04:15:50.162Z"
+}

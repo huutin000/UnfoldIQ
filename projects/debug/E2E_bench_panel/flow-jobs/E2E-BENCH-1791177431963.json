@@ -1,0 +1,30 @@
+{
+  "version": "1.0.0",
+  "status": "PENDING",
+  "attempt": 1,
+  "generationCount": 0,
+  "history": [
+    {
+      "from": null,
+      "to": "PENDING",
+      "at": "2026-10-05T05:17:12.196Z",
+      "actor": "system"
+    }
+  ],
+  "projectId": "E2E_bench_panel",
+  "jobId": "E2E-BENCH-1791177431963",
+  "requestId": "REQ-1",
+  "sceneId": "S01",
+  "capability": "image",
+  "mode": "ASSISTED_APPROVAL",
+  "prompt": "bench prompt",
+  "platform": "youtube",
+  "flowProject": {
+    "mode": "REUSE"
+  },
+  "outputRequirements": {
+    "aspectRatio": "16:9"
+  },
+  "creativeContext": {},
+  "expectedOutputPath": "assets/image/S01/S01_attempt-01.png"
+}

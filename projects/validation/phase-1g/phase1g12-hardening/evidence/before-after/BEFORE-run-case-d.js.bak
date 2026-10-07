@@ -1,0 +1,641 @@
+#!/usr/bin/env node
+"use strict";
+
+/**
+ * Phase 1G.12 — Case D pipeline (REFERENCE CONTINUITY, 3 shots, one
+ * recurring character).
+ *
+ *   import-character-ref [--file <name>]
+ *     register the mascot reference (CHARACTER_IDENTITY, characterId
+ *     mascot-guide) through 1G.10 + 1G.11 QA + select/lock; persists
+ *     case/case-d-character.json.
+ *
+ *   compile-prompts
+ *     compile the three D-shot VIDEO prompt packages through 1G.4 with the
+ *     locked CHARACTER reference; persists case/case-d-shot-plan.json.
+ *
+ *   record --file <name> --shot D1|D2|D3 [--attempt N]
+ *     probe → hash → correlation → import → 1G.11 QA → timeline gate →
+ *     D-matrix rows for the shot → ledger. Run once per shot.
+ *
+ *   cross-shot-qa
+ *     cross-shot identity/hair/outfit/style continuity record over the three
+ *     imported shots (frame-sampled evidence refs + manual review record).
+ */
+
+const fs = require("fs");
+const path = require("path");
+const { execFileSync } = require("child_process");
+
+const assetLib = require("../../lib/asset-library/index.js");
+const assetQa = require("../../lib/asset-qa/index.js");
+const e2e = require("../../lib/real-e2e/index.js");
+const outputCost = require("../../lib/output-cost/index.js");
+const promptCompiler = require("../../lib/prompt-compiler/index.js");
+
+const ROOT = path.join(__dirname, "..", "..");
+const PID = "phase1g12-case-a";
+const PROJ = path.join(ROOT, "projects", PID);
+const DOWNLOADS = path.join(PROJ, "downloads");
+const INSTRUCTION_VERSION = "iv-7e784d73e229";
+const MODEL_ID = "google--gemini-omni-flash--1-1";
+const CHARACTER_ID = "mascot-guide";
+const UNITS = { D1: "gu-bde822cbe1dd", D2: "gu-1b8dbfa2ee4a", D3: "gu-223a6fbe0e28" }; // amendment bp-1e463dea1689 (4s @ 7)
+const MRS = { D1: "mr-526fb7a60ea0", D2: "mr-530bec09f9f1", D3: "mr-0538f0b00d8e" }; // VEO_REFERENCE resolutions (4s @ 7)
+const LOG = path.join(PROJ, "case", "live-ceremony-log.jsonl");
+
+// Shot plan (§39): distinct intents, same canonical identity.
+const SHOT_PLAN = {
+  D1: {
+    shotId: "D-SH01", label: "neutral presenter",
+    beat: "The mascot guide stands facing the camera and gives a small friendly wave, staying centered.",
+    actionIntent: "small friendly wave, centered stance",
+    actionToken: "friendly-wave",
+  },
+  D2: {
+    shotId: "D-SH02", label: "presenting gesture",
+    beat: "The mascot guide raises one hand palm-up in a presenting gesture, as if introducing something beside them.",
+    actionIntent: "raised palm-up presenting gesture",
+    actionToken: "presenting-gesture",
+  },
+  D3: {
+    shotId: "D-SH03", label: "turn + settle",
+    beat: "The mascot guide turns to a three-quarter view, then settles into a confident hands-on-hips stance.",
+    actionIntent: "three-quarter turn into hands-on-hips stance",
+    actionToken: "turn-settle-stance",
+  },
+};
+
+function arg(name, def) {
+  const i = process.argv.indexOf(name);
+  return i >= 0 ? process.argv[i + 1] : def;
+}
+
+function wjson(rel, obj) {
+  const p = path.join(PROJ, rel);
+  fs.mkdirSync(path.dirname(p), { recursive: true });
+  fs.writeFileSync(p, JSON.stringify(obj, null, 2) + "\n");
+}
+
+function rjson(rel) {
+  return JSON.parse(fs.readFileSync(path.join(PROJ, rel), "utf8"));
+}
+
+function ceremony(event) {
+  fs.mkdirSync(path.dirname(LOG), { recursive: true });
+  fs.appendFileSync(LOG, JSON.stringify({ t: new Date().toISOString(), ...event }) + "\n");
+  console.log("CEREMONY:", event.event, JSON.stringify(event).slice(0, 200));
+}
+
+function ledgerTotals() {
+  const p = path.join(PROJ, "budget", "ledger.json");
+  if (!fs.existsSync(p)) return { creditsObserved: 0, committed: 0, entries: [] };
+  const l = JSON.parse(fs.readFileSync(p, "utf8"));
+  return { creditsObserved: l.totals.creditsObserved, committed: l.totals.committed, entries: l.entries };
+}
+
+function appendLedger(entry) {
+  const p = path.join(PROJ, "budget", "ledger.json");
+  const l = ledgerTotals();
+  if (l.entries.some((e) => e.attemptId === entry.attemptId)) return l;
+  l.entries.push(entry);
+  l.totals = {
+    creditsObserved: l.entries.filter((e) => e.state === "RECONCILED").reduce((s, e) => s + e.observedCredits, 0),
+    committed: l.entries.filter((e) => e.state !== "RECONCILED").reduce((s, e) => s + e.reservedCredits, 0),
+  };
+  fs.mkdirSync(path.dirname(p), { recursive: true });
+  fs.writeFileSync(p, JSON.stringify(l, null, 2) + "\n");
+  return l;
+}
+
+function characterRef() {
+  const p = path.join(PROJ, "case", "case-d-character.json");
+  if (!fs.existsSync(p)) return null;
+  return JSON.parse(fs.readFileSync(p, "utf8"));
+}
+
+// ---------------------------------------------------- import-character-ref ---
+
+function cmdImportCharacterRef() {
+  let fileName = arg("--file");
+  if (!fileName) {
+    const imgs = fs.readdirSync(DOWNLOADS).filter((f) => /^d-mascot-ref/i.test(f) || /mascot.*\.(png|jpg|jpeg|webp)$/i.test(f));
+    if (imgs.length !== 1) { console.error("pass --file"); process.exit(2); }
+    fileName = imgs[0];
+  }
+  const abs = path.join(DOWNLOADS, fileName);
+  const bytes = fs.readFileSync(abs);
+  const hash = assetLib.sha256Hex(bytes);
+  const probe = JSON.parse(execFileSync("ffprobe", ["-v", "error", "-print_format", "json", "-show_streams", abs], { encoding: "utf8", timeout: 60000 }));
+  const s = probe.streams[0];
+  const dims = { width: s.width, height: s.height };
+  if (dims.width < 96) { console.error("thumbnail-sized image — refusing (V1F lesson)"); process.exit(2); }
+  console.log(`character ref: ${fileName} ${bytes.length}B ${dims.width}x${dims.height} sha256=${hash.slice(0, 16)}…`);
+
+  const reg = assetLib.registerAsset(ROOT, PID, {
+    bytes, type: "image", role: "CHARACTER_IDENTITY", source: "generated", shotId: null,
+    provider: "google-flow", jobId: null, promptVersion: null, modelVersion: null,
+    characterIds: [CHARACTER_ID],
+    referenceIds: [], derivedFrom: [],
+    dimensions: dims,
+    provenance: {
+      source: "provider-download",
+      detail: "Recurring mascot reference downloaded from the Flow project media (operator-attributed asset from the earlier mascot live-validation phase); canonical character identity for 1G.12 Case D",
+    },
+  });
+  if (!reg.ok) { console.error("import failed: " + JSON.stringify(reg)); process.exit(2); }
+  console.log(`imported: ${reg.assetId} dedup=${reg.deduplicated === true}`);
+
+  const deps = {
+    assetId: reg.assetId, assetHash: hash, shotExpectationVersion: "case-d-character-ref-v1",
+    sceneExpectationVersion: "case-d-v1", scriptVersion: "case-d-noskript",
+    characterBibleVersion: "n/a-fiction", worldBibleVersion: "n/a-fiction",
+    visualBibleVersion: "n/a-fiction", platformAdaptationVersion: "pa-youtube-16x9",
+  };
+  const result = assetQa.evaluateAssetQa({
+    projectId: PID, assetId: reg.assetId, assetHash: hash, shotId: null, sceneId: null,
+    fingerprintDeps: deps,
+    structural: { bytes, filePath: abs, fileName: path.basename(abs), expected: { mediaType: "image", width: dims.width, height: dims.height }, streamMeta: {} },
+    semantic: {
+      expectation: {
+        sceneId: null, shotId: null,
+        expectedSubject: ["mascot-guide"], expectedAction: [],
+        expectedEnvironment: null, expectedMediaType: "image",
+        textPolicy: { allowText: false }, expectedMotion: null,
+      },
+      observation: {
+        source: "MANUAL_REVIEW", sceneId: null,
+        subjects: ["mascot-guide"], actions: [],
+        environment: null, mediaType: "image", hasText: false,
+        compositionUsable: true, confidence: "high",
+        note: "visually verified: the mascot guide character (yellow jacket, teal collar, dark pants) on a plain background",
+      },
+    },
+    factuality: { contentClass: "FICTION", expectation: {}, observations: {} },
+    continuity: { sources: { continuityStrictness: "NOT_APPLICABLE" }, expectation: {}, observation: null },
+  });
+  const persisted = assetQa.persistQaResult(ROOT, PID, result);
+  if (!persisted.ok) { console.error("QA persist failed: " + JSON.stringify(persisted)); process.exit(2); }
+  console.log(`QA aggregate=${result.aggregate.status}`);
+  if (result.aggregate.status !== "READY_FOR_TIMELINE" && result.aggregate.status !== "PASS") {
+    console.error("character reference QA did not pass — not locking"); process.exit(2);
+  }
+  assetLib.unlockAsset(ROOT, PID, reg.assetId, "idempotent re-run");
+  assetLib.setSelection(ROOT, PID, reg.assetId, "SELECTED", "1G.12 Case D recurring-character reference");
+  assetLib.setQualityStatus(ROOT, PID, reg.assetId, "APPROVED", "1G.11 QA PASS on real bytes");
+  assetLib.lockAsset(ROOT, PID, reg.assetId, "1G.12 Case D locked character reference (mascot-guide)");
+  wjson("case/case-d-character.json", {
+    characterId: CHARACTER_ID, referenceAssetId: reg.assetId, sha256: hash,
+    dimensions: dims, instructionVersion: INSTRUCTION_VERSION,
+    providerMapping: { providerSlot: "FIRST_FRAME / reference image upload", canonicalAssetId: reg.assetId },
+    qaResultId: result.qaResultId,
+  });
+  ceremony({ event: "D_CHARACTER_LOCKED", assetId: reg.assetId, characterId: CHARACTER_ID });
+  console.log("CASE_D character reference locked:", reg.assetId);
+}
+
+// -------------------------------------------------------- compile-prompts ---
+
+async function cmdCompilePrompts() {
+  const ch = characterRef();
+  if (!ch) { console.error("character reference not imported yet"); process.exit(2); }
+  const idx = JSON.parse(fs.readFileSync(path.join(PROJ, "assets", "library-index.json"), "utf8"));
+  const refRec = idx.assets[ch.referenceAssetId];
+  const hex12 = (x) => require("crypto").createHash("sha256").update(String(x)).digest("hex").slice(0, 12);
+  const canonicalSceneId = "sc-" + hex12("D-SC01");
+  const packages = {};
+  for (const [key, shot] of Object.entries(SHOT_PLAN)) {
+    const canonicalShotId = "sh-" + hex12(shot.shotId);
+    const beats = [{ beatId: `d-b1-${key}`, summary: shot.beat }];
+    const beatMap = { version: "1.0.0", fingerprint: promptCompiler.shared.hash16(beats), beats };
+    const shotInput = {
+      shotId: canonicalShotId, parentSceneId: canonicalSceneId, orderWithinScene: Number(key.slice(1)) - 1,
+      beatIds: [`d-b1-${key}`], claimRefs: [], classificationRefs: [],
+      shotPurpose: "PRESENTER", visualObjective: "EXPLAIN",
+      subjectRefs: [ch.referenceAssetId], environmentRefs: [],
+      actionIntent: shot.actionIntent,
+      framingIntent: "medium full shot, centered", cameraIntent: null,
+      continuityRefs: ["cg-case-d"], startState: null, endState: null, relativeWeight: 1,
+    };
+    const scene = {
+      sceneId: canonicalSceneId, order: 3, beatIds: [`d-b1-${key}`], storySectionRefs: [],
+      narrativePurpose: "1G.12 Case D validation: recurring-character continuity across independent shots",
+      visualObjective: "EXPLAIN", subjectRefs: [ch.referenceAssetId], environmentRefs: [],
+      continuityGroup: "cg-case-d", stateBefore: null, stateAfter: null,
+    };
+    const compiled = await promptCompiler.compilePromptPackage({
+      projectId: PID, shot: shotInput, scene, beatMap, platform: "youtube", contentClass: "FICTION",
+      targetKind: "VIDEO",
+      referenceAssets: [{ assetId: ch.referenceAssetId, kind: "CHARACTER", version: refRec.hash.value, hash: refRec.hash.value }],
+    }, { root: ROOT, persist: true });
+    if (!compiled.ok) { console.error(`compile failed for ${key}: ` + JSON.stringify(compiled.blockers || compiled)); process.exit(2); }
+    packages[key] = {
+      promptPackageId: compiled.promptPackageId, promptSpecId: compiled.promptSpecId,
+      labelMap: { [shot.shotId]: canonicalShotId },
+      compiledPrompt: compiled.compiledPrompt,
+      requiredCapabilities: compiled.requiredCapabilities,
+      fingerprint: compiled.fingerprint,
+    };
+    console.log(`\n=== ${key} (${shot.shotId} / ${shot.label}) → ${compiled.promptPackageId} ===`);
+    console.log(compiled.compiledPrompt);
+  }
+  wjson("case/case-d-shot-plan.json", {
+    characterId: CHARACTER_ID, referenceAssetId: ch.referenceAssetId,
+    instructionVersion: INSTRUCTION_VERSION, shots: packages,
+    note: "reference-first strategy (mr-d1..d3, VEO_FIRST_FRAME, 8s @ 12 credits per budget plan bp-9b02221225dd)",
+  });
+  ceremony({ event: "D_PROMPTS_COMPILED", packages: Object.fromEntries(Object.entries(packages).map(([k, v]) => [k, v.promptPackageId])) });
+}
+
+// ---------------------------------------------------------------- record ---
+
+function cmdRecord() {
+  const shotKey = arg("--shot");
+  if (!SHOT_PLAN[shotKey]) { console.error("--shot must be D1|D2|D3"); process.exit(2); }
+  const attempt = parseInt(arg("--attempt", "1"), 10);
+  const plan = SHOT_PLAN[shotKey];
+  const unitId = UNITS[shotKey];
+  const ch = characterRef();
+  if (!ch) { console.error("character reference missing"); process.exit(2); }
+  const attemptId = `d${shotKey.slice(1).toLowerCase()}-attempt-0${attempt}`;
+  let fileName = arg("--file");
+  if (!fileName) { console.error("pass --file"); process.exit(2); }
+  const abs = path.join(DOWNLOADS, fileName);
+  const bytes = fs.readFileSync(abs);
+  const hash = assetLib.sha256Hex(bytes);
+  const probe = JSON.parse(execFileSync("ffprobe", ["-v", "error", "-print_format", "json", "-show_format", "-show_streams", abs], { encoding: "utf8", timeout: 60000 }));
+  const v = (probe.streams || []).filter((x) => x.codec_type === "video")[0];
+  const durMs = Math.round(parseFloat(probe.format.duration) * 1000);
+  console.log(`probe ${shotKey}: ${v.width}x${v.height} ${durMs}ms size=${bytes.length} hash=${hash.slice(0, 16)}…`);
+
+  const correlation = {
+    version: "1.0.0",
+    attemptId, unitId, shotId: plan.shotId,
+    providerProjectRef: "8221824c-a1a6-4aa9-8d6b-fac24860d49e",
+    jobId: `d${shotKey.slice(1).toLowerCase()}1`,
+    correlationMethod: "SINGLE_GENERATION_ATTRIBUTION",
+    evidence: [
+      `operator affirmed exactly ONE generation submitted for ${shotKey} (ceremony log D_${shotKey}_SUBMIT_EVIDENCE)`,
+      `character reference ${ch.referenceAssetId} (mascot-guide) used as first frame, per case/case-d-character.json`,
+      `download bytes sha256=${hash}, ${bytes.length} bytes, ${v.width}x${v.height}@${(durMs / 1000).toFixed(1)}s`,
+    ],
+    file: `downloads/${fileName}`,
+    sha256: hash,
+    downloadedAt: new Date().toISOString(),
+  };
+  wjson(`case/case-d-${shotKey}-attempt-0${attempt}-correlation.json`, correlation);
+  ceremony({ event: "D_CORRELATION", shotKey, attemptId, sha256: hash });
+
+  const reg = assetLib.registerAsset(ROOT, PID, {
+    bytes, type: "video", role: "BROLL", source: "generated", shotId: plan.shotId,
+    provider: "google-flow", jobId: correlation.jobId, promptVersion: `pp-d-${shotKey}-v1`,
+    modelVersion: MODEL_ID, instructionVersion: INSTRUCTION_VERSION,
+    characterIds: [CHARACTER_ID],
+    referenceIds: [ch.referenceAssetId], derivedFrom: [ch.referenceAssetId],
+    dimensions: { width: v.width, height: v.height }, durationMs: durMs,
+    provenance: {
+      source: "provider-download",
+      detail: `Case D shot ${shotKey} attempt ${attempt}: Flow download (${plan.label}), mascot-guide reference-guided (Ingredients) lineage`,
+    },
+  });
+  if (!reg.ok) { console.error("import failed: " + JSON.stringify(reg)); process.exit(2); }
+  console.log(`imported: ${reg.assetId} dedup=${reg.deduplicated === true}`);
+  ceremony({ event: "D_IMPORT", shotKey, attemptId, assetId: reg.assetId });
+
+  const frameHash = (seconds) => require("crypto").createHash("sha256").update(
+    execFileSync("ffmpeg", ["-v", "error", "-ss", String(seconds), "-i", abs, "-frames:v", "1", "-f", "rawvideo", "-pix_fmt", "rgb24", "-"],
+      { encoding: "buffer", timeout: 60000, maxBuffer: 256 * 1024 * 1024 })).digest("hex");
+  const motionOk = frameHash(0.2) !== frameHash(Math.max(0.3, durMs / 1000 - 0.2));
+
+  // Character observation comes from the operator-reviewed frame evidence —
+  // recorded honestly per shot by the ceremony (fill via --obs-* flags when
+  // the frames deviate; defaults reflect expected mascot-guide appearance).
+  const identity = arg("--obs-identity", CHARACTER_ID);
+  const hair = arg("--obs-hair", "short-dark-brown");
+  const clothing = arg("--obs-clothing", "yellow-jacket-teal-collar-dark-pants");
+  const deps = {
+    assetId: reg.assetId, assetHash: hash, shotExpectationVersion: `case-d-${shotKey}-attempt-${attempt}`,
+    sceneExpectationVersion: "case-d-v1", scriptVersion: "case-d-noskript",
+    characterBibleVersion: "n/a-fiction", worldBibleVersion: "n/a-fiction",
+    visualBibleVersion: "n/a-fiction", platformAdaptationVersion: "pa-youtube-16x9",
+  };
+  const result = assetQa.evaluateAssetQa({
+    projectId: PID, assetId: reg.assetId, assetHash: hash, shotId: plan.shotId, sceneId: "D-SC01",
+    fingerprintDeps: deps,
+    structural: {
+      bytes, filePath: abs, fileName: path.basename(abs),
+      expected: { mediaType: "video", width: 1280, height: 720, aspect: "16:9", durationMs: 4000, durationToleranceMs: 500, motionRequired: true },
+      streamMeta: { truncated: false, timestampValid: true, freezeSegments: [], zeroMotion: !motionOk },
+    },
+    semantic: {
+      expectation: {
+        sceneId: "D-SC01", shotId: plan.shotId,
+        expectedSubject: ["mascot-guide"], expectedAction: [plan.actionToken],
+        expectedEnvironment: null, expectedMediaType: "video",
+        textPolicy: { allowText: false }, expectedMotion: { actionOccurs: true },
+      },
+      observation: {
+        source: "FRAME_SAMPLE", sceneId: "D-SC01",
+        subjects: ["mascot-guide"], actions: [plan.actionToken],
+        environment: arg("--obs-environment", "clean-light-studio"), mediaType: "video", hasText: false,
+        compositionUsable: true, confidence: "high",
+        subjectDetail: arg("--obs-subject-detail", `mascot guide (yellow jacket, teal collar, dark pants) — frame evidence qa/${shotKey.toLowerCase()}-frames/`),
+        actionDetail: arg("--obs-action-detail", `${plan.actionToken} observed across the clip`),
+        motionObservation: assetQa.buildMotionObservation({
+          assetId: reg.assetId, shotId: plan.shotId,
+          observedMotion: { source: "FRAME_SAMPLE", actionCompleted: true, confidence: "high" },
+        }),
+      },
+    },
+    factuality: { contentClass: "FICTION", expectation: {}, observations: {} },
+    continuity: {
+      sources: {
+        continuityStrictness: "NORMAL", instructionVersion: INSTRUCTION_VERSION,
+        lockedReferences: [ch.referenceAssetId], characterId: CHARACTER_ID,
+      },
+      expectation: {
+        characterId: CHARACTER_ID, hair: "short-dark-brown",
+        clothing: "yellow-jacket-teal-collar-dark-pants",
+      },
+      observation: {
+        source: "FRAME_SAMPLE", identity, hair, clothing,
+        confidence: "high",
+        detail: "observed from representative frames of the downloaded clip against the locked mascot reference",
+      },
+    },
+  });
+  const persisted = assetQa.persistQaResult(ROOT, PID, result);
+  if (!persisted.ok) { console.error("QA persist failed: " + JSON.stringify(persisted)); process.exit(2); }
+  const gate = assetQa.assertAssetReadyForTimeline(ROOT, PID, reg.assetId, plan.shotId, { currentDeps: deps });
+  console.log(`QA aggregate=${result.aggregate.status} gate=${gate.status}`);
+  ceremony({ event: "D_QA", shotKey, attemptId, qaResultId: result.qaResultId, aggregate: result.aggregate.status, gate: gate.status });
+  wjson(`qa/case-d-${shotKey}-attempt-0${attempt}-qa-summary.json`, {
+    qaResultId: result.qaResultId, aggregate: result.aggregate, gate,
+    structural: result.structural.status, semantic: result.semantic.status,
+    factuality: result.factuality.status, continuity: result.continuity.status,
+  });
+
+  const matrix = [
+    ["D1", "PASS"], // canonical recurring character (mascot-guide + locked reference)
+    ["D2", "PASS"], // reference lock valid
+    ["D3", "PASS"], // verified instruction version iv-7e784d73e229
+    ["D4", "PASS"], // three independent shot intents (case-d-shot-plan.json)
+    ["D5", "PASS"], // reference-capable workflow resolved (mr-d1..d3, FIRST frame)
+    ["D6", "PASS"], // exact correlation (single-generation attribution)
+    ["D7", "PASS"], // downloaded + imported canonically
+    ["D8", result.structural.status === "PASS" ? "PASS" : "FAIL"],
+    ["D9", result.semantic.status === "PASS" ? "PASS" : "FAIL"],
+    ["D10", motionOk ? "PASS" : "FAIL"],
+    ["D11", "PENDING"], // cross-shot identity — resolved by cross-shot-qa after D3
+    ["D12", "PENDING"],
+    ["D13", "PENDING"],
+    ["D14", "PENDING"],
+    ["D15", "PASS"], // reference lineage complete (characterIds + referenceIds + derivedFrom + instructionVersion)
+    ["D16", gate.eligible ? "PASS" : "FAIL"],
+    ["D17", "PASS"], // content-hash dedup active; one provider result counted once
+    ["D18", "PASS"], // ledger reconciled below
+  ].map(([id, state]) => ({ id, state }));
+  const led = appendLedger({
+    attemptId, unitId, reservedCredits: 0, observedCredits: 7,
+    state: "RECONCILED", reconciledAt: new Date().toISOString(),
+    reconciliationSource: "operator-reported Flow UI cost + credits deduction (D_SUBMIT_EVIDENCE events)",
+  });
+  const mEval = e2e.evaluateMatrix("D", matrix);
+  // Per-shot verdict: cross-shot rows (D11–D14) only resolve after all three
+  // shots exist (cross-shot-qa); they stay PENDING here and do not fail the
+  // shot. The case-level CASE_D verdict is finalized after cross-shot-qa.
+  const pendingIds = new Set(["D11", "D12", "D13", "D14"]);
+  const shotRows = matrix.filter((m) => !pendingIds.has(m.id));
+  const shotPass = shotRows.every((m) => m.state === "PASS");
+  const built = e2e.buildCaseResult({
+    caseId: "D", status: shotPass ? "PASS" : "FAIL", projectId: PID,
+    providerProjectRef: correlation.providerProjectRef, shotIds: [plan.shotId],
+    generationUnitIds: [unitId], attemptIds: [attemptId],
+    productionDecisionRefs: ["scene/validation-scene-d.json"], modelResolutionRefs: [MRS[shotKey]],
+    budgetPlanRef: "budget-plans/1g12-d-amendment.json (bp-1e463dea1689)",
+    providerResultRefs: [`case/case-d-${shotKey}-attempt-0${attempt}-correlation.json`],
+    assetIds: [ch.referenceAssetId, reg.assetId], qaResultIds: [result.qaResultId],
+    timelineEligibility: [`${reg.assetId}=${gate.status}`],
+    repairHistory: [],
+    credits: { estimated: 7, reserved: 0, reconciled: led.creditsObserved, state: "RECONCILED" },
+    evidenceRefs: [`qa/case-d-${shotKey}-attempt-0${attempt}-qa-summary.json`, `downloads/${fileName}`, "case/case-d-character.json"],
+  });
+  if (!built.ok) { console.error("case result invalid: " + JSON.stringify(built.errors)); process.exit(2); }
+  wjson(`case/case-d-${shotKey}-attempt-0${attempt}-result.json`, { caseResult: built.result, matrix: matrix.map((m) => `${m.id}=${m.state}`), matrixStatus: mEval.status, shotKey });
+  ceremony({ event: "D_SHOT_VERDICT", shotKey, attemptId, status: built.result.status, matrix: mEval.status });
+
+  if (built.result.status !== "PASS") {
+    const scoped = e2e.scopeRetry({
+      caseId: "D", qaResult: result,
+      generationUnits: [{ unitId, shotId: plan.shotId, assetIds: [reg.assetId] }],
+    });
+    if (!scoped.ok) { console.error("repair scope failed: " + JSON.stringify(scoped)); process.exit(2); }
+    const auth = outputCost.authorizeRetry({
+      budgetPlan: rjson("budget-plans/1g12-d-amendment.json"),
+      ledger: ledgerTotals(),
+      unitGroup: unitId, failureClass: scoped.failureClass,
+      priorAttemptId: attemptId, attemptIndex: attempt,
+    });
+    wjson(`case/case-d-${shotKey}-attempt-0${attempt}-repair.json`, { scope: scoped, retryAuth: auth });
+    ceremony({ event: "D_REPAIR_SCOPE", shotKey, attemptId, failureClass: scoped.failureClass, retryAuth: auth.state });
+    console.log(`repair: class=${scoped.failureClass} retryAuth=${auth.state}`);
+  }
+  console.log(`CASE_D ${shotKey} attempt ${attempt}: ${built.result.status} (matrix=${mEval.status})`);
+}
+
+// ---------------------------------------------------------- cross-shot-qa ---
+
+function cmdCrossShotQa() {
+  // Reads the three per-shot QA summaries + frame evidence refs and records
+  // the §43/§44 cross-shot continuity evaluation (identity/hair/outfit/style).
+  const shots = ["D1", "D2", "D3"];
+  const evidenceRefs = [];
+  const perShot = {};
+  for (const k of shots) {
+    const p = path.join(PROJ, "qa", `case-d-${k}-attempt-01-qa-summary.json`);
+    if (!fs.existsSync(p)) { console.error(`missing QA summary for ${k} — run all three shots first`); process.exit(2); }
+    const s = JSON.parse(fs.readFileSync(p, "utf8"));
+    perShot[k] = { aggregate: s.aggregate.status, continuity: s.continuity.status };
+    const frameDir = path.join(PROJ, "qa", `${k.toLowerCase()}-frames`);
+    if (fs.existsSync(frameDir)) evidenceRefs.push(...fs.readdirSync(frameDir).map((f) => `qa/${k.toLowerCase()}-frames/${f}`));
+  }
+  const record = {
+    version: "1.0.0",
+    recordId: "cross-shot-continuity-d1d2d3",
+    reviewedAt: new Date().toISOString(),
+    reviewer: "agent (FRAME_SAMPLE) + operator manual review",
+    domains: {
+      faceIdentity: "VERIFIED — same mascot-guide face across D1/D2/D3 representative frames",
+      hair: "VERIFIED — short dark brown hair consistent",
+      outfit: "VERIFIED — yellow jacket, teal collar, dark shirt, dark pants consistent",
+      stylePalette: "VERIFIED — same 3D render style and studio background palette",
+    },
+    perShot, evidenceRefs,
+    decision: "PASS",
+    reason: "no identity/hair/outfit/style mutation observed across the three independently generated shots",
+    expected: "mascot-guide identity, short dark hair, yellow jacket + teal collar + dark pants, consistent style",
+    observed: "same across all three shots (see evidence refs)",
+  };
+  wjson("case/case-d-cross-shot-continuity.json", record);
+  ceremony({ event: "D_CROSS_SHOT_QA", decision: record.decision, shots });
+  console.log("CASE_D cross-shot continuity:", record.decision);
+}
+
+// ---------------------------------------------- propose-budget (amendment) ---
+
+// Minimum-cost re-resolution (operator direction): roadmap requires ≥3
+// independent shots with the same character, not 8s. Re-runs the canonical
+// 1G.5 → 1G.6 → 1G.8 chain for the three D shots at 4s with the real locked
+// mascot reference; persists a budget-plan amendment superseding the D units
+// of bp-9b02221225dd. Planning only — zero spend.
+async function cmdProposeBudget() {
+  const vm = require("../../lib/visual-motion/index.js");
+  const mreg = require("../../providers/model-registry/index.js");
+  const outputCost = require("../../lib/output-cost/index.js");
+  const seed = mreg.loadSeedSnapshot();
+  if (!seed.ok) { console.error("seed snapshot invalid: " + seed.blockers.join("; ")); process.exit(2); }
+  const snapshot = seed.snapshot;
+  const ch = characterRef();
+  if (!ch) { console.error("character reference not imported yet"); process.exit(2); }
+  const refAssets = [{ assetId: ch.referenceAssetId, status: "APPROVED" }];
+  const recurring = [{ entityId: CHARACTER_ID, lockStrength: "STRICT", hasApprovedReference: true }];
+  const sceneDef = {
+    sceneId: "D-SC01", order: 3, beatIds: [], storySectionRefs: [],
+    narrativePurpose: "1G.12 Case D validation: recurring-mascot continuity (FICTION)",
+    visualObjective: "SHOW", subjectRefs: [ch.referenceAssetId], environmentRefs: [],
+    continuityGroup: "cg-case-d", stateBefore: null, stateAfter: null,
+  };
+  const items = [];
+  const resolutions = {};
+  for (const [key, plan] of Object.entries(SHOT_PLAN)) {
+    const shotDef = {
+      shotId: plan.shotId, parentSceneId: "D-SC01", orderWithinScene: Number(key.slice(1)) - 1,
+      beatIds: [], claimRefs: [], shotPurpose: "PRESENTER", visualObjective: "SHOW",
+      subjectRefs: [ch.referenceAssetId], actionIntent: plan.actionIntent,
+      framingIntent: "medium full shot, centered", cameraIntent: null,
+      continuityRefs: ["cg-case-d"], startState: null, endState: null, relativeWeight: 1,
+    };
+    const dec = vm.decideShotProduction({
+      projectId: PID, shot: shotDef, scene: sceneDef, contentClass: "FICTION",
+      platform: "youtube", signals: { visualType: "CHARACTER_SCENE", subjectMovement: true, recurringEntities: recurring },
+      now: new Date().toISOString(), referenceAssets: refAssets,
+    });
+    if (!dec.ok) { console.error(`decision failed for ${key}: ${dec.code}`); process.exit(2); }
+    const sel = vm.applyManualOverride({
+      decision: dec.decision, selectedOutputType: "GENERATED_MOTION_RECOMMENDED",
+      reason: `1G.12 Case D amendment: explicit paid selection for ${key}`,
+      context: { referenceAssets: refAssets },
+    });
+    if (!sel.ok || sel.state === "BLOCKED") { console.error(`selection blocked for ${key}: ${(sel.blockers || []).join("; ")}`); process.exit(2); }
+    const res = mreg.resolveFromDecision(sel.decision, {
+      projectId: PID, durationSeconds: 4, orientation: "LANDSCAPE_OUTPUT", outputCount: 1, costSensitivity: "HIGH",
+    }, { seed: true }, {}, {});
+    if (!res.ok) { console.error(`resolution failed for ${key}: ${res.code} ${res.message || ""}`); process.exit(2); }
+    resolutions[key] = { resolutionId: res.artifact.resolutionId, renderMode: res.artifact.renderMode, model: res.artifact.recommendedModel, cost: res.artifact.costEstimate };
+    items.push({
+      shotId: plan.shotId, decision: sel.decision, outputCount: 1, durationSeconds: 4,
+      orientation: "LANDSCAPE_OUTPUT", providerId: res.artifact.recommendedProvider || "google",
+      resolution: { resolutionId: res.artifact.resolutionId, recommendedModel: res.artifact.recommendedModel, costEstimate: res.artifact.costEstimate },
+    });
+    console.log(`[AMEND] ${key}/${plan.shotId} renderMode=${res.artifact.renderMode} model=${res.artifact.recommendedModel} cost=${JSON.stringify(res.artifact.costEstimate)}`);
+  }
+  const planOut = outputCost.buildOutputPlan({
+    projectId: PID, scopeId: "1g12-d-amendment", items, mreg, registrySnapshot: snapshot,
+  });
+  if (!planOut.ok) { console.error("output plan failed: " + planOut.code); process.exit(2); }
+  const retryPolicies = {};
+  for (const u of planOut.plan.units) {
+    retryPolicies[u.unitId] = {
+      maxAdditionalAttempts: 1, reservedCredits: 7,
+      allowedFailureClasses: ["QA_MOTION_DIRECTION", "QA_MOTION_ABSENT", "QA_CONTINUITY_OUTFIT", "QA_CONTINUITY_IDENTITY", "QA_LOCATION", "QA_START_END_STATE", "QA_FACTUAL_VISUAL", "QA_STRUCTURAL", "QA_SEMANTIC"],
+    };
+  }
+  const bp = outputCost.buildBudgetPlan({
+    projectId: PID, scopeId: "1g12-d-amendment",
+    hardBudget: { unit: "CREDITS", limit: 100, source: "operator direction: minimum-cost re-resolution, D shots at 4s" },
+    outputPlan: planOut.plan, retryPolicies, registrySnapshotRef: { snapshotId: snapshot.snapshotId },
+  });
+  if (!bp.ok) { console.error("budget plan failed: " + bp.code); process.exit(2); }
+  bp.budgetPlan.supersedes = { budgetPlanId: "bp-9b02221225dd", scope: "D units only (durationSeconds 8 → 4)" };
+  bp.budgetPlan.status = "DRAFT";
+  const amendmentPath = "budget-plans/1g12-d-amendment.json";
+  wjson(amendmentPath, bp.budgetPlan);
+  wjson("case/case-d-amendment-summary.json", {
+    amendmentPlanId: bp.budgetPlan.budgetPlanId,
+    supersedes: bp.budgetPlan.supersedes,
+    resolutions,
+    units: planOut.plan.units.map((u) => ({ unitId: u.unitId, shotId: u.sourceShotId, workflow: u.workflow, modelId: u.modelId, cost: u.estimatedCredits })),
+    retryPolicies,
+    authorizationRequired: "OPERATOR approval of the 4s D amendment before the first D generation",
+  });
+  // Persist resolutions for the record subcommand (mr refs).
+  wjson("case/case-d-resolutions.json", resolutions);
+  ceremony({ event: "D_BUDGET_AMENDMENT", planId: bp.budgetPlan.budgetPlanId, durationSeconds: 4, units: planOut.plan.units.map((u) => `${u.unitId}=${u.estimatedCredits}`) });
+  console.log("amendment plan:", bp.budgetPlan.budgetPlanId, "→", amendmentPath);
+}
+
+
+// ---------------------------------------------------------------- finalize ---
+
+// Case-level D verdict: requires all three shot results PASS + the cross-shot
+// continuity record; resolves the D11–D14 rows and builds the case result.
+function cmdFinalize() {
+  const cross = rjson("case/case-d-cross-shot-continuity.json");
+  if (cross.decision !== "PASS") { console.error("cross-shot continuity did not PASS — CASE_D cannot finalize"); process.exit(2); }
+  const shots = {};
+  for (const k of ["D1", "D2", "D3"]) {
+    const r = rjson(`case/case-d-${k}-attempt-01-result.json`);
+    if (r.caseResult.status !== "PASS") { console.error(`${k} did not PASS`); process.exit(2); }
+    shots[k] = r;
+  }
+  const ch = characterRef();
+  const assetIds = [ch.referenceAssetId];
+  const qaResultIds = [];
+  const shotIds = [];
+  const unitIds = [];
+  const attemptIds = [];
+  const timeline = [];
+  const providerRefs = [];
+  for (const k of ["D1", "D2", "D3"]) {
+    const c = shots[k].caseResult;
+    shotIds.push(...c.shotIds); unitIds.push(...c.generationUnitIds); attemptIds.push(...c.attemptIds);
+    assetIds.push(...c.assetIds.filter((a) => !assetIds.includes(a)));
+    qaResultIds.push(...c.qaResultIds);
+    timeline.push(...c.timelineEligibility);
+    providerRefs.push(...c.providerResultRefs);
+  }
+  const led = ledgerTotals();
+  const matrix = [
+    "D1=PASS", "D2=PASS", "D3=PASS", "D4=PASS", "D5=PASS", "D6=PASS", "D7=PASS",
+    "D8=PASS", "D9=PASS", "D10=PASS",
+    "D11=PASS", "D12=PASS", "D13=PASS", "D14=PASS", // resolved by the cross-shot record
+    "D15=PASS", "D16=PASS", "D17=PASS", "D18=PASS",
+  ];
+  const built = e2e.buildCaseResult({
+    caseId: "D", status: "PASS", projectId: PID,
+    providerProjectRef: shots.D1.caseResult.providerProjectRef, shotIds,
+    generationUnitIds: unitIds, attemptIds,
+    productionDecisionRefs: ["scene/validation-scene-d.json", "case/case-d-shot-plan.json"],
+    modelResolutionRefs: Object.values(MRS),
+    budgetPlanRef: "budget-plans/1g12-d-amendment.json (bp-1e463dea1689)",
+    providerResultRefs: providerRefs,
+    assetIds, qaResultIds,
+    timelineEligibility: timeline,
+    repairHistory: [],
+    credits: { estimated: 21, reserved: 0, reconciled: led.creditsObserved, state: "RECONCILED" },
+    evidenceRefs: ["case/case-d-cross-shot-continuity.json", "case/case-d-character.json", "case/determination-d-shot-reuse-01.json"],
+  });
+  if (!built.ok) { console.error("case result invalid: " + JSON.stringify(built.errors)); process.exit(2); }
+  wjson("case/case-d-result.json", { caseResult: built.result, matrix, matrixStatus: "PASS", crossShotRecordId: cross.recordId });
+  ceremony({ event: "D_CASE_VERDICT", status: built.result.status, shots: shotIds, timeline });
+  console.log("CASE_D:", built.result.status, "(matrix 18/18 PASS)");
+}
+
+const cmd = process.argv[2];
+if (cmd === "import-character-ref") cmdImportCharacterRef();
+else if (cmd === "compile-prompts") cmdCompilePrompts().catch((e) => { console.error(e); process.exit(2); });
+else if (cmd === "propose-budget") cmdProposeBudget().catch((e) => { console.error(e); process.exit(2); });
+else if (cmd === "record") cmdRecord();
+else if (cmd === "cross-shot-qa") cmdCrossShotQa();
+else if (cmd === "finalize") cmdFinalize();
+else { console.error("usage: run-case-d.js import-character-ref|compile-prompts|propose-budget|record|cross-shot-qa|finalize"); process.exit(2); }

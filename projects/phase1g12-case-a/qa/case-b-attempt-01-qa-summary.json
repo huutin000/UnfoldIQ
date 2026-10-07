@@ -1,0 +1,48 @@
+{
+  "qaResultId": "qa-a28bffe727e1",
+  "aggregate": {
+    "status": "REJECTED",
+    "severity": "BLOCKER",
+    "timelineEligible": false,
+    "failedLayers": [
+      "structural",
+      "continuity"
+    ],
+    "warningLayers": [],
+    "unknownLayers": [],
+    "reasons": [
+      "structural: duration: expected 4000ms ±500ms but measured 10005ms",
+      "continuity: startState: wrong startState: expected source-frame:as-1186233d1af6 (coconut drink with straw on beach) observed mascot standing full-body in gray studio — not the locked source frame content"
+    ],
+    "recommendation": "REPLACE_ASSET"
+  },
+  "gate": {
+    "eligible": false,
+    "status": "REJECTED",
+    "reasons": [
+      "structural: duration: expected 4000ms ±500ms but measured 10005ms",
+      "continuity: startState: wrong startState: expected source-frame:as-1186233d1af6 (coconut drink with straw on beach) observed mascot standing full-body in gray studio — not the locked source frame content"
+    ],
+    "qaResultId": "qa-a28bffe727e1",
+    "aggregate": {
+      "status": "REJECTED",
+      "severity": "BLOCKER",
+      "timelineEligible": false,
+      "failedLayers": [
+        "structural",
+        "continuity"
+      ],
+      "warningLayers": [],
+      "unknownLayers": [],
+      "reasons": [
+        "structural: duration: expected 4000ms ±500ms but measured 10005ms",
+        "continuity: startState: wrong startState: expected source-frame:as-1186233d1af6 (coconut drink with straw on beach) observed mascot standing full-body in gray studio — not the locked source frame content"
+      ],
+      "recommendation": "REPLACE_ASSET"
+    }
+  },
+  "structural": "FAIL",
+  "semantic": "PASS",
+  "factuality": "NOT_APPLICABLE",
+  "continuity": "FAIL"
+}

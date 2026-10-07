@@ -1,0 +1,47 @@
+{
+  "task": "PHASE_2_1_01",
+  "manifestPath": "manifest/project-manifest.json",
+  "schemaVersion": "1.4.0",
+  "currentSchemaVersion": "1.4.0",
+  "supportedSchemaVersions": [
+    "1.0.0",
+    "1.1.0",
+    "1.2.0",
+    "1.3.0",
+    "1.4.0"
+  ],
+  "artifactKey": "voiceBibleVersion",
+  "reference": {
+    "version": "vb-42744f223671",
+    "status": "UNRESOLVED",
+    "ref": "voice/voice-bible/vb-42744f223671.json",
+    "detail": "v1 NOT production-ready: VOICE_SELECTION_PROVIDER_DEFAULT: voice came from the provider per-language default, not an operator decision | VOICE_RIGHTS_REVIEW_REQUIRED: rights status is UNRESOLVED"
+  },
+  "manifestIsIndexNotBody": {
+    "holdsVoiceBibleId": "vb-42744f223671",
+    "holdsPersonaOrDefaultsBody": false,
+    "proof": "no persona/prosody/voiceId field appears anywhere in the manifest document"
+  },
+  "migration": {
+    "function": "migrateSchema1_3_0_to_1_4_0",
+    "from": "1.3.0",
+    "to": "1.4.0",
+    "addsSlot": "artifacts.voiceBibleVersion = { version: null, status: NOT_CREATED_YET, ref: null, detail: null }",
+    "explicit": true,
+    "refusesWrongInput": true,
+    "refusesRepeat": true,
+    "oldVersionsRemainLoadable": [
+      "1.0.0",
+      "1.1.0",
+      "1.2.0",
+      "1.3.0",
+      "1.4.0"
+    ],
+    "additiveSlotSemantics": "schemaAtLeast() keeps the 1.2.0 recovery slot and 1.3.0 governance slot writable on 1.4.0"
+  },
+  "statusHonesty": {
+    "status": "UNRESOLVED",
+    "rule": "productionReady ? VERIFIED : UNRESOLVED",
+    "note": "this validation bible is UNRESOLVED because rights/approval are unproven; it is never upgraded to VERIFIED by a read or a perf probe (pinned by V16)"
+  }
+}

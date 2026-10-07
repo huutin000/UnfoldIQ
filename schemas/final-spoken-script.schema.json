@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "final-spoken-script.schema.json",
+  "title": "UNFOLDIQ Final Spoken Script (Phase 2 consumer contract, schema 1.0.0)",
+  "description": "The spoken-text contract consumed by Narration Direction (Phase 2.2) and the Pronunciation Runtime Pass (Phase 2.3). Owns STABLE SEGMENT IDENTITY only: segmentId is stable within one scriptVersion; sourceTextHash (computed downstream, never stored here) binds every direction/pronunciation result to the exact spoken bytes. Full script-pipeline ownership (storytelling/humanization) stays with Stage 4; this schema formalizes the downstream identity contract without inventing production script content.",
+  "type": "object",
+  "required": ["schemaVersion", "scriptArtifactId", "scriptVersion", "projectId", "language", "segments", "fingerprint"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "scriptArtifactId": { "type": "string", "pattern": "^fss-[0-9a-z][0-9a-z-]{2,62}$" },
+    "scriptVersion": { "type": "integer", "minimum": 1 },
+    "projectId": { "type": "string", "minLength": 1 },
+    "language": { "type": "string", "minLength": 2, "maxLength": 16 },
+    "contentMode": { "type": ["string", "null"] },
+    "contentClass": { "type": ["string", "null"], "enum": [null, "FACTUAL", "FICTION", "HYBRID"] },
+    "segments": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/spokenSegment" }
+    },
+    "provenance": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "source": { "type": "string", "minLength": 1 },
+        "createdAt": { "type": ["string", "null"] },
+        "productionScriptStatus": { "enum": ["NOT_APPLICABLE", "CANONICAL", "PENDING"], "description": "NOT_APPLICABLE = bounded validation fixture, no canonical production script exists." }
+      }
+    },
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" }
+  },
+  "definitions": {
+    "spokenSegment": {
+      "type": "object",
+      "required": ["segmentId", "ordinal", "text"],
+      "additionalProperties": false,
+      "properties": {
+        "segmentId": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$" },
+        "ordinal": { "type": "integer", "minimum": 0 },
+        "text": { "type": "string", "minLength": 1 },
+        "beatRefs": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+      }
+    }
+  }
+}

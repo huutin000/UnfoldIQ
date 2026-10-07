@@ -65,6 +65,13 @@ function listJobs(projectRoot, projectId) {
     .map((f) => path.basename(f, ".json"));
 }
 
+// Atomicity note (hardening sweep C-4): transitionJob/updateJob/recordApproval
+// are read-modify-write cycles, but every step is SYNCHRONOUS fs work with no
+// await inside, so on Node's single-threaded event loop two HTTP requests can
+// never interleave inside a cycle — each request handler completes its whole
+// read-modify-write before yielding. A mutex would add async plumbing without
+// changing that guarantee. If a mutator ever becomes async, serialize first.
+
 function transitionJob(projectRoot, projectId, jobId, to, opts = {}) {
   const job = getJob(projectRoot, projectId, jobId);
   if (!job) throw new Error(`JOB_NOT_FOUND: ${jobId}`);
@@ -85,9 +92,64 @@ function recordApproval(projectRoot, projectId, jobId, approval) {
   if (!approval || approval.jobId !== jobId || approval.attempt !== job.attempt) {
     throw new Error("APPROVAL_MISMATCH: approval must match jobId+attempt");
   }
+  const existing = job.approval;
+  let superseded = false;
+  if (existing && !existing.used) {
+    // A lost-ACK retry must REUSE the still-unused approval or explicitly
+    // supersede it by nonce. Silently re-arming the approval gate is the
+    // duplicate-credit-spend path.
+    const explicitSupersede =
+      approval.supersedesNonce && existing.nonce && approval.supersedesNonce === existing.nonce;
+    if (!explicitSupersede) {
+      throw new Error(
+        "DUPLICATE_APPROVAL: an unused approval is already recorded; reuse it or supersede it by nonce"
+      );
+    }
+    superseded = true;
+  }
   job.approval = { ...approval, approvedAt: approval.approvedAt || new Date().toISOString(), used: false };
-  job.history.push({ from: job.status, to: job.status, at: new Date().toISOString(), actor: approval.approvedBy || "user", note: "approval-recorded" });
+  job.history.push({
+    from: job.status,
+    to: job.status,
+    at: new Date().toISOString(),
+    actor: approval.approvedBy || "user",
+    note: superseded ? "approval-superseded" : "approval-recorded",
+  });
   return writeJob(projectRoot, projectId, job);
 }
 
-module.exports = { jobsDir, createJob, getJob, listJobs, transitionJob, updateJob, recordApproval, resolveProjectPath };
+/**
+ * Durable "submit issued to the provider page" record (credit-spend guard,
+ * hardening sweep C-2/C-3). Idempotent for the same submit nonce; a DIFFERENT
+ * nonce while a submit is unresolved is rejected — a second submit must never
+ * be armed while the first one's outcome is unknown.
+ */
+function markSubmitIssued(projectRoot, projectId, jobId, submitNonce) {
+  const job = getJob(projectRoot, projectId, jobId);
+  if (!job) throw new Error(`JOB_NOT_FOUND: ${jobId}`);
+  if (job.status === "AWAITING_PROVIDER_ACCEPTANCE") {
+    if (job.submitNonce && job.submitNonce !== submitNonce) {
+      throw new Error(
+        "SUBMIT_ALREADY_ISSUED: an unresolved submit with a different approval is outstanding; duplicate credit action blocked"
+      );
+    }
+    return { ...job }; // idempotent same-nonce re-issue (lost ACK retry)
+  }
+  const next = transition(job, "AWAITING_PROVIDER_ACCEPTANCE", {
+    actor: "extension",
+    submitNonce,
+  });
+  return writeJob(projectRoot, projectId, next);
+}
+
+module.exports = {
+  jobsDir,
+  createJob,
+  getJob,
+  listJobs,
+  transitionJob,
+  updateJob,
+  recordApproval,
+  markSubmitIssued,
+  resolveProjectPath,
+};

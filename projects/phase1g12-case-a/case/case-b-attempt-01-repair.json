@@ -1,0 +1,30 @@
+{
+  "scope": {
+    "ok": true,
+    "caseId": "B",
+    "affectedUnitIds": [
+      "gu-0ada6dc4cccc"
+    ],
+    "unaffectedUnitIds": [],
+    "failedShotIds": [
+      "B-SH01"
+    ],
+    "failedAssetIds": [
+      "as-d235316b9af5"
+    ],
+    "failureClass": "QA_START_END_STATE",
+    "recommendation": "REPLACE_ASSET",
+    "priorRefs": {
+      "qaResultId": "qa-a28bffe727e1"
+    },
+    "newAssetRequired": true
+  },
+  "retryAuth": {
+    "state": "APPROVED",
+    "reasons": [
+      "retry fits reserved retry budget (7 <= 93)",
+      "retry lineage b1-attempt-01 -> new attempt (variant and attempt indexes stay separate)"
+    ],
+    "attemptId": "gu-0ada6dc4cccc:attempt-1"
+  }
+}

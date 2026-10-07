@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "generation-cost-ledger.schema.json",
+  "title": "UNFOLDIQ Generation Cost Ledger (1G.8)",
+  "description": "Runtime accounting: planned/actual/failed/retried/creditsObserved from idempotent observations. Never merges estimates with observed spend.",
+  "type": "object",
+  "required": ["version", "ledgerId", "projectId", "budgetPlanId", "entries", "totals", "reconciliationState", "fingerprint"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "const": "1.0.0" },
+    "ledgerId": { "type": "string", "pattern": "^cl-[0-9a-f]{12}$" },
+    "projectId": { "type": ["string", "null"] },
+    "budgetPlanId": { "type": ["string", "null"] },
+    "hardBudgetLimit": { "type": ["number", "null"] },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["entryId", "attemptId", "observationId", "status"],
+        "properties": {
+          "entryId": { "type": "string" },
+          "budgetPlanId": { "type": ["string", "null"] },
+          "generationUnitId": { "type": ["string", "null"] },
+          "jobId": { "type": ["string", "null"] },
+          "attemptId": { "type": "string" },
+          "observationId": { "type": "string" },
+          "plannedCredits": { "type": ["number", "null"] },
+          "reservedCredits": { "type": ["number", "null"] },
+          "creditsObserved": { "type": ["number", "null"], "minimum": 0 },
+          "costReconciliation": { "type": ["string", "null"] },
+          "status": { "type": "string" },
+          "failureClass": { "type": ["string", "null"] },
+          "retryOfAttemptId": { "type": ["string", "null"] },
+          "providerResultRef": { "type": ["object", "null"] },
+          "modelResolutionRef": { "type": ["object", "null"] },
+          "costObservationRef": { "type": ["object", "null"] },
+          "observedAt": { "type": "string" },
+          "source": { "type": ["string", "null"] },
+          "fingerprint": { "type": "string" }
+        }
+      }
+    },
+    "totals": {
+      "type": "object",
+      "properties": {
+        "planned": { "type": "number", "minimum": 0 },
+        "actual": { "type": "number", "minimum": 0 },
+        "committed": { "type": "number", "minimum": 0 },
+        "observed": { "type": "number", "minimum": 0 },
+        "unknown": { "type": "number", "minimum": 0 },
+        "failed": { "type": "number", "minimum": 0 },
+        "retried": { "type": "number", "minimum": 0 },
+        "creditsObserved": { "type": "number", "minimum": 0 }
+      }
+    },
+    "remainingBudget": { "type": ["number", "null"] },
+    "reconciliationState": { "enum": ["RECONCILED", "PARTIAL", "UNRECONCILED", "CONFLICT"] },
+    "warnings": { "type": "array" },
+    "blockers": { "type": "array" },
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" },
+    "createdAt": { "type": "string" },
+    "updatedAt": { "type": "string" }
+  }
+}

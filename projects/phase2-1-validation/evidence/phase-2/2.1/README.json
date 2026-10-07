@@ -1,0 +1,19 @@
+{
+  "task": "PHASE_2_1_01",
+  "phase": "2.1 — Voice Bible + Narrator Persona",
+  "voiceBibleId": "vb-42744f223671",
+  "bibleVersion": 1,
+  "provider": "local-kokoro",
+  "model": "kokoro-v1",
+  "voiceId": "af_heart",
+  "language": "en-us",
+  "personaId": "per-explanatory-narrator-en",
+  "productionReady": false,
+  "readinessBlockers": [
+    "VOICE_SELECTION_PROVIDER_DEFAULT: voice came from the provider per-language default, not an operator decision",
+    "VOICE_RIGHTS_REVIEW_REQUIRED: rights status is UNRESOLVED"
+  ],
+  "manifestStatus": "UNRESOLVED",
+  "evidenceFiles": 12,
+  "report": "Report/PHASE_2_1_01_VOICE_BIBLE_AND_NARRATOR_PERSONA_REPORT.md"
+}

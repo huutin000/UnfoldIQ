@@ -1,0 +1,47 @@
+{
+  "characterId": "mascot-guide",
+  "referenceAssetId": "as-a7801df9bf0f",
+  "instructionVersion": "iv-7e784d73e229",
+  "shots": {
+    "D1": {
+      "promptPackageId": "pp-3cf8c99df03f",
+      "promptSpecId": "ps-7bddc03a7cb2",
+      "labelMap": {
+        "D-SH01": "sh-fd0464c1c9b4"
+      },
+      "compiledPrompt": "MUST PRESERVE: characterIdentity\nSUBJECT: established character [as-a7801df9bf0f] — animate the established visual; appearance already locked by the reference\nACTION: small friendly wave, centered stance",
+      "requiredCapabilities": [
+        "VIDEO_GENERATION",
+        "IMAGE_REFERENCE"
+      ],
+      "fingerprint": "71a468fb301b7cd6"
+    },
+    "D2": {
+      "promptPackageId": "pp-05d4a66564c5",
+      "promptSpecId": "ps-5ad984690cfa",
+      "labelMap": {
+        "D-SH02": "sh-da55407b73e4"
+      },
+      "compiledPrompt": "MUST PRESERVE: characterIdentity\nSUBJECT: established character [as-a7801df9bf0f] — animate the established visual; appearance already locked by the reference\nACTION: raised palm-up presenting gesture",
+      "requiredCapabilities": [
+        "VIDEO_GENERATION",
+        "IMAGE_REFERENCE"
+      ],
+      "fingerprint": "9db18ee3d8b9e9fa"
+    },
+    "D3": {
+      "promptPackageId": "pp-9e1a1e5fb589",
+      "promptSpecId": "ps-b3aff1c3debb",
+      "labelMap": {
+        "D-SH03": "sh-45705d133244"
+      },
+      "compiledPrompt": "MUST PRESERVE: characterIdentity\nSUBJECT: established character [as-a7801df9bf0f] — animate the established visual; appearance already locked by the reference\nACTION: three-quarter turn into hands-on-hips stance",
+      "requiredCapabilities": [
+        "VIDEO_GENERATION",
+        "IMAGE_REFERENCE"
+      ],
+      "fingerprint": "d7f5d65316331153"
+    }
+  },
+  "note": "reference-first strategy (mr-d1..d3, VEO_FIRST_FRAME, 8s @ 12 credits per budget plan bp-9b02221225dd)"
+}

@@ -1,0 +1,42 @@
+{
+  "version": "1.0.0",
+  "track": "C-integration",
+  "auditedAt": "2026-10-05T05:00:00.000Z",
+  "method": "read-only source sweep of flow-companion/bridge/* + extension background/content + tests/flow (Explore agent, very thorough)",
+  "summary": { "p0": 0, "p1": 2, "p2": 6, "p3": 5 },
+  "findings": [
+    { "id": "C-1", "severity": "P1", "title": "Artifact transport cap (256KB) contradicts the 60MB artifact limit; real media can never be imported via the bridge", "evidence": "flow-companion/bridge/server.js:59 (256KB readBody) vs :37 (ARTIFACT_MAX_BYTES 60MB); artifact arrives base64 in the same JSON body", "impact": "panel-driven import unreachable for real Flow outputs; PAYLOAD_TOO_LARGE surfaced as 500", "recommendedAction": "per-route body cap (ARTIFACT_MAX_BYTES*4/3 + slack) + map PAYLOAD_TOO_LARGE to 400", "status": "FIXED (readBody Buffer-safe + per-route cap + 400 mapping; tests/flow/test-flow-hardening.js H5/H6)" },
+    { "id": "C-2", "severity": "P1", "title": "Lost ACK after a provider-accepted submit can produce a second generation (no durable submit-issued record; approval overwrite)", "evidence": "bridge has no submit-issued state; /approve + recordApproval overwrite unused approvals (server.js:145-153, job-store.js:82-91); worker approval map volatile; panel retry re-records approval then re-submits", "impact": "duplicate credit spend possible — the exact class the pipeline must prevent", "recommendedAction": "durable submit-issued record + state; recordApproval refuses unused-approval overwrite without supersedes nonce; /generate binds approval nonce", "status": "FIXED (AWAITING_PROVIDER_ACCEPTANCE state + POST /jobs/:id/submit-issued route + DUPLICATE_APPROVAL guard + APPROVAL_NONCE_MISMATCH binding; tests H1–H4)" },
+    { "id": "C-3", "severity": "P2", "title": "No distinct provider-execution ACK states; unknown submit outcome has no reconciliation entry", "evidence": "state-machine.js transitions; RECONCILIATION_REQUIRED only reachable from GENERATING", "impact": "a missed acceptance signal leaves stale AWAITING_USER_APPROVAL that a later approval can re-submit", "recommendedAction": "AWAITING_PROVIDER_ACCEPTANCE state with exits GENERATING/RECONCILIATION_REQUIRED/CANCELLED", "status": "FIXED (state added; H8 verifies RECONCILIATION_REQUIRED exit)" },
+    { "id": "C-4", "severity": "P2", "title": "job-store read-modify-write unsynchronized (concurrent routes lose updates)", "evidence": "job-store.js getJob→mutate→writeJob", "impact": "theoretical lost-update on concurrent routes", "recommendedAction": "serialize mutations", "status": "VERIFIED-NOT-A-BUG (all mutator bodies are fully synchronous fs work with no await — on Node's single-threaded event loop two requests can never interleave inside a cycle; atomicity note added to job-store.js. A mutex was prototyped and removed because async plumbing changed mutator return contracts without adding guarantees)" },
+    { "id": "C-5", "severity": "P2", "title": "Bridge records approvals without settings-tuple fingerprint binding; no generationUnitId", "evidence": "server.js /approve accepts {jobId, attempt, approvedBy} only; binding enforced extension-side only", "impact": "durable layer cannot distinguish exact-tuple approval", "recommendedAction": "require fingerprint with nonce at /approve; bind approval nonce at /generate", "status": "FIXED (fingerprint-required-with-nonce at /approve; APPROVAL_NONCE_MISMATCH at /generate; approval nonce recorded + echoed)" },
+    { "id": "C-6", "severity": "P2", "title": "Origin allowlists treat every chrome-extension:// origin as trusted (worker validateSender, sender-check, bridge allowlist prefix)", "evidence": "flow-companion/extension/src/background/service-worker.js:26-33; src/security/sender-check.js:11-16; bridge/security.js:39-43", "impact": "a co-installed malicious extension can drive the content-script command surface unauthenticated", "recommendedAction": "pin chrome.runtime.id for extension senders in worker + sender-check; bridge keeps token gate", "status": "OPEN" },
+    { "id": "C-7", "severity": "P2", "title": "Side-panel bridgeCall has no timeout (duplicate of Track B finding B-2)", "evidence": "sidepanel.js:112-132 bare fetch; bridge-client.js:32-63 unused", "impact": "hung bridge → dead silent wait on credit path", "recommendedAction": "AbortController timeout in panel bridgeCall", "status": "OPEN (tracked as B-2)" },
+    { "id": "C-8", "severity": "P2", "title": "POST /jobs never validates the flow-job contract", "evidence": "server.js:106-114; contracts/job-contract.js checkJobShape never applied bridge-side", "impact": "missing requestId fails only at import time (late)", "recommendedAction": "checkJobShape in createJob route; reject SCHEMA_INVALID", "status": "FIXED (server validates via contracts/job-contract.js before persisting; test H7)" },
+    { "id": "C-9", "severity": "P3", "title": "Wire messages carry no contractVersion/correlationId; per-command identity partial", "evidence": "content-commands.js:75-79 validates only type; no correlationId anywhere", "impact": "stale build reported not rejected; no cross-layer correlation id", "recommendedAction": "stamp commands with {contractVersion, jobId, attempt, correlationId}", "status": "BACKLOG (submit-issued + approval-nonce binding covers the credit path)" },
+    { "id": "C-10", "severity": "P3", "title": "Cancellation does not propagate after result detection (RESULT_DETECTED has no CANCELLED exit; poll loop never re-checks status)", "evidence": "state-machine.js:19; sidepanel.js:758-823", "impact": "panel keeps polling a cancelled job", "recommendedAction": "add RESULT_DETECTED→CANCELLED; per-poll status check", "status": "BACKLOG" },
+    { "id": "C-11", "severity": "P3", "title": "Unbounded in-memory maps in content script (AWAIT_BASELINES, acceptancePolls)", "evidence": "content-commands.js:72-73,983,1006-1011", "impact": "page-lifetime leak, few entries per job", "recommendedAction": "evict on acceptance", "status": "BACKLOG (tracked as B-8)" },
+    { "id": "C-12", "severity": "P3", "title": "Acceptance-baseline recapture after tab refresh can make an accepted submit unobservable", "evidence": "content-commands.js:1007-1009 baseline from current DOM", "impact": "SUBMIT_NOT_ACCEPTED while Flow generates (10-min burn)", "recommendedAction": "treat submitIssuedAt + new candidates as acceptance evidence", "status": "BACKLOG" },
+    { "id": "C-13", "severity": "P3", "title": "readBody concatenates Buffer chunks as strings (UTF-8 boundary corruption)", "evidence": "server.js:56-70", "impact": "JSON corruption on multi-byte split", "recommendedAction": "Buffer.concat", "status": "FIXED (readBody rewritten Buffer-safe)" }
+  ],
+  "clean": [
+    "loopback-only bind enforced + tested (BR3)",
+    "constant-time token compare; token persisted 0600 outside repo; env override never printed",
+    "credential payload rejection + response stripping (BR9)",
+    "magic-byte/MIME/capability/candidate-correlation/QA gating on artifacts",
+    "prompt secrecy in failure paths",
+    "single-use approval chain (content check → worker consume → machine used+generationCount) well-guarded and well-tested (E9, C10, BR11, BR12)",
+    "stale approval packet + tuple change after approval covered (E7/E8 APPROVAL_STALE_CHANGED)",
+    "result replay/download replay/import retry covered (E10/E14/E15, D1–D3, L5/L6)",
+    "worker restart → tab resync covered (L10)"
+  ],
+  "coverageGaps": [
+    "AWAIT_SUBMIT_ACCEPTANCE handshake semantics: NO COVERAGE",
+    "unknown submit outcome (vs uncertain result): NO COVERAGE (H8 adds state-machine level)",
+    "lost ACK + retry: NO COVERAGE (H1–H4 add bridge level)",
+    "concurrent delivery race: N/A (see C-4 atomicity note)",
+    "large-payload artifact path: NO COVERAGE (H6 adds)",
+    "cross-extension sender rejection: NO COVERAGE (open with C-6)",
+    "backpressure/queue bounds: NO COVERAGE (single-job UI implicit)"
+  ]
+}

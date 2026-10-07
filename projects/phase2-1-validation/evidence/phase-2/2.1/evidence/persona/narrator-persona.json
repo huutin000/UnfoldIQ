@@ -1,0 +1,169 @@
+{
+  "task": "PHASE_2_1_01",
+  "personaId": "per-explanatory-narrator-en",
+  "persona": {
+    "personaId": "per-explanatory-narrator-en",
+    "role": "GUIDE",
+    "audience": "general viewers who did not know they cared about this topic",
+    "tone": "EXPLAINING",
+    "energy": "BALANCED",
+    "paceIntent": "MODERATE",
+    "warmth": "WARM",
+    "directness": "BALANCED",
+    "formality": "CONVERSATIONAL",
+    "storytellingStyle": "EVIDENCE_WALKTHROUGH",
+    "emotionalRange": [
+      "NEUTRAL",
+      "FRIENDLY",
+      "CURIOSITY",
+      "CONFIDENT",
+      "INSTRUCTIVE"
+    ],
+    "prohibitedDeliveryPatterns": [
+      "UNNATURALLY_SLOW_CINEMATIC",
+      "CONSTANT_DRAGMATIC_EMPHASIS",
+      "MONOTONE_CADENCE",
+      "OVERACTING",
+      "ROBOTIC_CLAUSE_RHYTHM",
+      "EXCESSIVE_PAUSES",
+      "ANNOUNCER_BOMBAST"
+    ],
+    "language": "en-us",
+    "notes": "Validation reference persona for Phase 2.1. Segment-level emphasis/pause/energy belongs to Phase 2.2 and must never mutate this identity."
+  },
+  "narratorIdentity": {
+    "provider": "local-kokoro",
+    "model": "kokoro-v1",
+    "voiceId": "af_heart",
+    "speakingStyle": "measured explanatory narration; evidence-forward; never announcer-like",
+    "speedDefault": 1,
+    "energyDefault": "BALANCED",
+    "emotionalRange": [
+      "NEUTRAL",
+      "FRIENDLY",
+      "CURIOSITY",
+      "CONFIDENT",
+      "INSTRUCTIVE"
+    ],
+    "prohibitedTraits": [
+      "UNNATURALLY_SLOW_CINEMATIC",
+      "CONSTANT_DRAGMATIC_EMPHASIS",
+      "MONOTONE_CADENCE",
+      "OVERACTING",
+      "ROBOTIC_CLAUSE_RHYTHM",
+      "EXCESSIVE_PAUSES",
+      "ANNOUNCER_BOMBAST"
+    ]
+  },
+  "prosodyDefaults": {
+    "paceIntent": "MODERATE",
+    "energy": "BALANCED",
+    "pauseStyle": "NATURAL",
+    "sentenceFlow": "MEASURED",
+    "emphasisStyle": "SELECTIVE",
+    "emotionalBaseline": "WARM"
+  },
+  "contractMinimumCoverage": {
+    "personaId": "per-explanatory-narrator-en",
+    "role": "GUIDE",
+    "audience": true,
+    "tone": "EXPLAINING",
+    "energy": "BALANCED",
+    "paceIntent": "MODERATE",
+    "warmth": "WARM",
+    "directness": "BALANCED",
+    "formality": "CONVERSATIONAL",
+    "storytellingStyle": "EVIDENCE_WALKTHROUGH",
+    "emotionalRange": [
+      "NEUTRAL",
+      "FRIENDLY",
+      "CURIOSITY",
+      "CONFIDENT",
+      "INSTRUCTIVE"
+    ],
+    "prohibitedDeliveryPatterns": [
+      "UNNATURALLY_SLOW_CINEMATIC",
+      "CONSTANT_DRAGMATIC_EMPHASIS",
+      "MONOTONE_CADENCE",
+      "OVERACTING",
+      "ROBOTIC_CLAUSE_RHYTHM",
+      "EXCESSIVE_PAUSES",
+      "ANNOUNCER_BOMBAST"
+    ],
+    "language": "en-us"
+  },
+  "voiceIdentityVsPerformanceDirection": {
+    "ownedBy21": [
+      "provider",
+      "model",
+      "voiceId",
+      "timbre",
+      "persona",
+      "speed default",
+      "bounded prosody/style defaults",
+      "emotional range"
+    ],
+    "ownedBy22": [
+      "per-segment emphasis",
+      "per-segment pause",
+      "per-segment energy",
+      "per-segment emotion",
+      "per-segment pace"
+    ],
+    "separationProof": "no segment, scene, paragraph or sentence field exists anywhere in schemas/voice-bible.schema.json (additionalProperties:false at every level); persona.emotionalRange is additionally constrained to be a subset of narrator.emotionalRange so segment direction cannot widen identity"
+  },
+  "speedSemantics": {
+    "stored": "narrator.speedDefault",
+    "meaning": "provider synthesis rate factor in [0.5,2.0] (synthesis intent only)",
+    "isMeasuredWordsPerMinute": false,
+    "measuredSpeechRateOwner": "Phase 2.4 speech-rate QA",
+    "structuralProof": "the [0.5,2.0] bound makes a wpm magnitude unrepresentable; V11 asserts 145/0/2.5/-1 are all refused"
+  },
+  "emotionalRange": {
+    "allowed": [
+      "NEUTRAL",
+      "FRIENDLY",
+      "CURIOSITY",
+      "CONFIDENT",
+      "INSTRUCTIVE"
+    ],
+    "extremeStylesDisallowedByDefault": [
+      "UNNATURALLY_SLOW_CINEMATIC",
+      "CONSTANT_DRAGMATIC_EMPHASIS",
+      "MONOTONE_CADENCE",
+      "OVERACTING",
+      "ROBOTIC_CLAUSE_RHYTHM",
+      "EXCESSIVE_PAUSES",
+      "ANNOUNCER_BOMBAST"
+    ],
+    "note": "extreme/deliberately unpleasant styles are enumerated as prohibited traits, not merely absent"
+  },
+  "pronunciationProfile": {
+    "pronunciationProfileRef": "pron-en-us-reference",
+    "contractOnly": true,
+    "runtimeValidationOwner": "Phase 2.3",
+    "futureCoverage": [
+      "names",
+      "foreign terms",
+      "acronyms",
+      "place names",
+      "domain terms",
+      "phonetic overrides"
+    ]
+  },
+  "characterVoices": {
+    "declared": [],
+    "count": 0,
+    "emptyIsValid": true,
+    "rationale": "FACTUAL project with no dialogue; unused dialogue voices are never created",
+    "mappingContractFields": [
+      "speakerId",
+      "personaId?",
+      "provider",
+      "model",
+      "voiceId",
+      "styleDefaults?",
+      "language?"
+    ]
+  }
+}

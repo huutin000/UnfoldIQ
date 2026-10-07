@@ -1,0 +1,68 @@
+{
+  "caseResult": {
+    "version": "1.0.0",
+    "caseId": "B",
+    "status": "FAIL",
+    "projectId": "phase1g12-case-a",
+    "providerProjectRef": "8221824c-a1a6-4aa9-8d6b-fac24860d49e",
+    "shotIds": [
+      "B-SH01"
+    ],
+    "generationUnitIds": [
+      "gu-0ada6dc4cccc"
+    ],
+    "attemptIds": [
+      "b1-attempt-01"
+    ],
+    "productionDecisionRefs": [
+      "scene/validation-scene-b.json"
+    ],
+    "modelResolutionRefs": [
+      "mr-f43a8953897b"
+    ],
+    "budgetPlanRef": "budget-plans/1g12-bcd.json (bp-9b02221225dd)",
+    "providerResultRefs": [
+      "case/case-b-attempt-01-correlation.json"
+    ],
+    "assetIds": [
+      "as-d235316b9af5"
+    ],
+    "qaResultIds": [
+      "qa-a28bffe727e1"
+    ],
+    "timelineEligibility": [
+      "as-d235316b9af5=REJECTED"
+    ],
+    "repairHistory": [],
+    "credits": {
+      "estimated": 7,
+      "reserved": 7,
+      "reconciled": 0,
+      "state": "UNRECONCILED"
+    },
+    "evidenceRefs": [
+      "qa/case-b-attempt-01-qa-summary.json",
+      "downloads/Guide_gesturing_in_educational_s…_20261005092031.mp4"
+    ],
+    "caseResultId": "case-b-6f23fc566d25",
+    "completedAt": null
+  },
+  "matrix": [
+    "B1=PASS",
+    "B2=PASS",
+    "B3=FAIL",
+    "B4=PASS",
+    "B5=PASS",
+    "B6=PASS",
+    "B7=PASS",
+    "B8=PASS",
+    "B9=FAIL",
+    "B10=FAIL",
+    "B11=PASS",
+    "B12=PASS",
+    "B13=FAIL",
+    "B14=FAIL",
+    "B15=PENDING"
+  ],
+  "matrixStatus": "FAIL"
+}

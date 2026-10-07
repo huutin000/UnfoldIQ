@@ -1,0 +1,160 @@
+# UNFOLDIQ Platform Target Policy (1G.7) — version 1.0.0, verified 2026-10-03
+#
+# Canonical 1G.7 targets. This file owns UNFOLDIQ *production policy*
+# (preferred defaults, accepted forms, safe-zone composition guidance).
+# External platform truth is cited per field via sourceRefs — never invented.
+# Base technical profiles stay canonical in platforms/<platform>/PROFILE.yaml
+# and are REFERENCED here (baseProfile), never duplicated/shadowed.
+
+version: 1.0.0
+policyVersion: platform-policy-1.0.0
+verifiedAt: "2026-10-03T00:00:00.000Z"
+
+sources:
+  - sourceId: yt-player-6375112
+    publisher: YouTube Help
+    url: https://support.google.com/youtube/answer/6375112
+    scope: desktop 16:9 standard; player adapts to other uploaded aspects
+    retrievedAt: "2026-10-03T00:00:00.000Z"
+    fieldAuthority: [aspect, orientation]
+  - sourceId: yt-shorts-12779649
+    publisher: YouTube Help
+    url: https://support.google.com/youtube/answer/12779649
+    scope: Shorts upload — square or vertical aspect, up to 3 minutes
+    retrievedAt: "2026-10-03T00:00:00.000Z"
+    fieldAuthority: [aspect, duration]
+  - sourceId: repo-youtube-profile
+    publisher: UNFOLDIQ repository
+    url: platforms/youtube/PROFILE.yaml
+    scope: repo-owned YouTube technical defaults (16:9, 1920x1080, captions)
+    retrievedAt: "2026-10-03T00:00:00.000Z"
+    fieldAuthority: [composition-default]
+  - sourceId: repo-tiktok-profile
+    publisher: UNFOLDIQ repository
+    url: platforms/tiktok/PROFILE.yaml
+    scope: repo-owned TikTok technical defaults (9:16 portrait, caption bottom-20% rule)
+    retrievedAt: "2026-10-03T00:00:00.000Z"
+    fieldAuthority: [composition-default, caption-placement]
+  - sourceId: tiktok-ads-creative-codes
+    publisher: TikTok Business Help Center
+    url: https://ads.tiktok.com/business/library/Creative_Codes_ENG.pdf
+    scope: Ads/business creative guidance — vertical 9:16 preferred, safe-zone-aware placement
+    retrievedAt: "2026-10-03T00:00:00.000Z"
+    fieldAuthority: [composition-guidance]
+    notes: Ads/business scope only — never promoted to universal organic truth.
+
+targets:
+  YOUTUBE_LONG:
+    displayName: YouTube long-form
+    baseProfile: platforms/youtube/PROFILE.yaml
+    preferredAspectRatio: "16:9"
+    acceptedAspectRatios: null
+    acceptanceNote: "External acceptance is non-exhaustive and therefore UNKNOWN as a list: the YouTube player automatically adapts to uploaded aspect ratios (yt-player-6375112); only 16:9 is documented as the standard. Never read this as 16:9-only support."
+    requiredAspectRatio: null
+    orientation: LANDSCAPE
+    compositionPolicy:
+      masterUsage: reuse-master-intent
+      notes: 16:9 master is usually native; adaptation is defensive (safe zones, text legibility).
+    safeZonePolicy:
+      status: UNKNOWN
+      coordinateSpace: normalized-0-1
+      zones:
+        - zoneId: player-chrome
+          description: adaptive player chrome / padding on non-16:9 uploads
+          region: null
+          overlays: [player-chrome, padding]
+          status: UNKNOWN
+          notes: player adapts per upload; no fixed geometry published
+      sourceRefs: [yt-player-6375112]
+      verifiedAt: "2026-10-03T00:00:00.000Z"
+      freshness: FRESH
+    cropPolicy: { default: never-crop-native-master, anchor: center, notes: no crop without declared cause }
+    textPolicy: { reflowBeforeRegenerate: true, minLegibility: keep-declared-size, notes: never scale text unreadable }
+    captionPolicy: { regionPreference: bottom-outside-chrome, maxOccupancy: 0.2, placement: landscape-lower-third, notes: timing owned later }
+    graphicPolicy: { preferVectorRelayout: true, notes: deterministic graphics relayout before regenerate }
+    pacingPolicy: { hookUrgency: MEDIUM, breathingRoom: HIGH, transitionRestraint: HIGH }
+    shotDensityPolicy: { default: LOW, notes: long-form explanatory holding allowed }
+
+  YOUTUBE_SHORTS:
+    displayName: YouTube Shorts
+    baseProfile: platforms/youtube/PROFILE.yaml
+    preferredAspectRatio: "9:16"
+    acceptedAspectRatios: ["9:16", "1:1"]
+    acceptanceNote: "Source-backed and scoped: square OR vertical qualifies as Shorts, up to 3 minutes (yt-shorts-12779649). 9:16 is UNFOLDIQ production preference, not exclusive platform support."
+    requiredAspectRatio: null
+    orientation: PORTRAIT
+    compositionPolicy:
+      masterUsage: adapt-from-16-9-master
+      notes: 9:16 is UNFOLDIQ production preference; square/vertical both qualify as Shorts per official rules.
+    safeZonePolicy:
+      status: UNKNOWN
+      coordinateSpace: normalized-0-1
+      zones:
+        - zoneId: shorts-right-rail
+          description: Shorts action rail (variant-dependent)
+          region: null
+          overlays: [action-rail]
+          status: UNKNOWN
+          notes: UI variant-dependent; no official geometry
+        - zoneId: shorts-bottom-metadata
+          description: title/metadata overlay band (variant-dependent)
+          region: null
+          overlays: [metadata, caption-area]
+          status: UNKNOWN
+          notes: UI variant-dependent; no official geometry
+      sourceRefs: [yt-shorts-12779649]
+      verifiedAt: "2026-10-03T00:00:00.000Z"
+      freshness: FRESH
+    cropPolicy: { default: subject-anchored-reframe, anchor: subject-or-center, notes: preserve subject/action first }
+    textPolicy: { reflowBeforeRegenerate: true, minLegibility: keep-declared-size, notes: relocate out of overlays }
+    captionPolicy: { regionPreference: above-bottom-metadata, maxOccupancy: 0.25, placement: portrait-safe-band, notes: timing owned later }
+    graphicPolicy: { preferVectorRelayout: true, notes: stacked/segmented portrait relayouts }
+    pacingPolicy: { hookUrgency: HIGH, breathingRoom: LOW, transitionRestraint: MEDIUM }
+    shotDensityPolicy: { default: MEDIUM, notes: short-form density without pseudo-universal cut rules }
+
+  TIKTOK:
+    displayName: TikTok
+    baseProfile: platforms/tiktok/PROFILE.yaml
+    preferredAspectRatio: "9:16"
+    acceptedAspectRatios: null
+    acceptanceNote: "General organic acceptance is UNKNOWN, not 9:16-only. 9:16 is the recommended creative format (ads-scope business guidance); non-9:16 formats exist on supported product surfaces but are not exhaustively evidenced here. No Ads-scoped fact is promoted to universal organic truth."
+    requiredAspectRatio: null
+    orientation: PORTRAIT
+    compositionPolicy:
+      masterUsage: adapt-from-16-9-master
+      notes: vertical full-screen preferred per creative guidance (ads-scope); organic acceptance is broader.
+    safeZonePolicy:
+      status: PARTIAL
+      coordinateSpace: normalized-0-1
+      zones:
+        - zoneId: tiktok-bottom-ui
+          description: caption stack / username / music ticker / CTA band
+          region: { x: 0, y: 0.8, w: 1.0, h: 0.2 }
+          geometryOrigin: INTERNAL_POLICY
+          geometryBasis: conservative heuristic derived from the repo-owned 20% caption rule (repo-tiktok-profile), consistent with ads-scope creative guidance; NOT an official universal TikTok organic measurement
+          overlays: [caption-stack, username, music-ticker, cta]
+          status: PARTIAL
+          sourceRefs: [repo-tiktok-profile, tiktok-ads-creative-codes]
+          fieldAuthority: [composition-guidance]
+          notes: bottom-20% rule is repo-owned default + ads guidance scope; exact organic geometry varies by caption length and UI variant
+        - zoneId: tiktok-right-rail
+          description: avatar / like / comment / share rail
+          region: null
+          overlays: [engagement-rail]
+          status: UNKNOWN
+          notes: no official pixel geometry; overlay files vary by placement
+        - zoneId: tiktok-top-nav
+          description: status bar / Following-ForYou tabs / search
+          region: null
+          overlays: [top-nav]
+          status: UNKNOWN
+          notes: no official pixel geometry
+      sourceRefs: [repo-tiktok-profile, tiktok-ads-creative-codes]
+      verifiedAt: "2026-10-03T00:00:00.000Z"
+      freshness: FRESH
+    cropPolicy: { default: subject-anchored-reframe, anchor: subject-or-center, notes: preserve subject/action first }
+    textPolicy: { reflowBeforeRegenerate: true, minLegibility: keep-declared-size, notes: keep text clear of bottom band }
+    captionPolicy: { regionPreference: center-safe-above-bottom-band, maxOccupancy: 0.25, placement: portrait-safe-band, notes: timing owned later }
+    graphicPolicy: { preferVectorRelayout: true, notes: stacked/segmented portrait relayouts }
+    pacingPolicy: { hookUrgency: HIGH, breathingRoom: LOW, transitionRestraint: MEDIUM }
+    shotDensityPolicy: { default: MEDIUM, notes: short-form density without pseudo-universal cut rules }

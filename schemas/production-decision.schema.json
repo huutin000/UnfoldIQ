@@ -1,0 +1,122 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "production-decision.schema.json",
+  "title": "UNFOLDIQ Production Decision (1G.5)",
+  "description": "Versioned, provider-neutral visual/motion production decision per Shot. Recommends the cheapest adequate strategy; never selects models, prices, or variant counts.",
+  "type": "object",
+  "required": ["version", "decisionId", "projectId", "sceneId", "shotId", "visualType", "recommendedOutputType", "motionNeed", "referenceStrategy", "requiredCapabilities", "requiredAssetRoles", "decisionReasons", "sourceRefs", "sourceFingerprints", "fingerprint", "status"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "const": "1.0.0" },
+    "decisionId": { "type": "string", "pattern": "^pd-[0-9a-f]{12}$" },
+    "projectId": { "type": "string", "minLength": 1 },
+    "sceneId": { "type": "string", "pattern": "^sc-[0-9a-f]{12}$" },
+    "shotId": { "type": "string", "pattern": "^sh-[0-9a-f]{12}$" },
+    "visualType": {
+      "type": ["string", "null"],
+      "enum": ["CHARACTER_SCENE", "ENVIRONMENT", "EVIDENCE", "DIAGRAM", "MAP", "OBJECT", "COMPARISON", "TIMELINE", null]
+    },
+    "visualModality": {
+      "type": ["string", "null"],
+      "enum": ["MAP", "TIMELINE", "CHART", "DIAGRAM", "TYPOGRAPHY", "COMPARISON", "RECONSTRUCTION", "CHARACTER_MOMENT", "ATMOSPHERE", "METAPHOR", "ANNOTATION", "SPLIT_SCREEN", "MOTION_GRAPHIC", null]
+    },
+    "modalityReasons": { "type": "array", "items": { "type": "string" } },
+    "modalityConfidence": { "type": ["string", "null"], "enum": ["HIGH", "MEDIUM", "LOW", null] },
+    "alternativeModalities": {
+      "type": "array",
+      "items": { "enum": ["MAP", "TIMELINE", "CHART", "DIAGRAM", "TYPOGRAPHY", "COMPARISON", "RECONSTRUCTION", "CHARACTER_MOMENT", "ATMOSPHERE", "METAPHOR", "ANNOTATION", "SPLIT_SCREEN", "MOTION_GRAPHIC"] }
+    },
+    "beatLineage": {
+      "type": ["object", "null"],
+      "properties": {
+        "beatIds": { "type": "array", "items": { "type": "string" } },
+        "narrativeRoles": { "type": "array", "items": { "type": "string" } },
+        "narrativePurpose": { "type": ["string", "null"] },
+        "visualObjective": { "type": ["string", "null"] },
+        "shotPurpose": { "type": ["string", "null"] }
+      }
+    },
+    "beatFingerprints": { "type": "object" },
+    "referenceAssetIds": { "type": "array", "items": { "type": "string" } },
+    "referenceVersions": { "type": "object" },
+    "recommendedOutputType": {
+      "type": ["string", "null"],
+      "enum": ["STATIC_IMAGE", "EDITOR_MOTION", "GENERATED_MOTION_CANDIDATE", "GENERATED_MOTION_RECOMMENDED", null]
+    },
+    "selectedOutputType": {
+      "type": ["string", "null"],
+      "enum": ["STATIC_IMAGE", "EDITOR_MOTION", "GENERATED_MOTION_CANDIDATE", "GENERATED_MOTION_RECOMMENDED", null]
+    },
+    "effectiveOutputType": {
+      "type": ["string", "null"],
+      "enum": ["STATIC_IMAGE", "EDITOR_MOTION", "GENERATED_MOTION_CANDIDATE", "GENERATED_MOTION_RECOMMENDED", null]
+    },
+    "renderMode": {
+      "type": ["string", "null"],
+      "enum": ["STATIC_IMAGE", "REMOTION_MOTION", "VEO_FIRST_FRAME", "VEO_FIRST_LAST", "VEO_REFERENCE", null]
+    },
+    "renderModeReasons": { "type": "array", "items": { "type": "string" } },
+    "motionNeed": { "type": ["string", "null"], "enum": ["NONE", "LOW", "MEDIUM", "HIGH", null] },
+    "motionScore": { "type": ["number", "null"], "minimum": 0 },
+    "editorMotionViability": {
+      "type": ["object", "null"],
+      "properties": {
+        "viable": { "type": "boolean" },
+        "techniques": { "type": "array", "items": { "type": "string" } },
+        "editorAlternativeQuality": { "enum": ["GOOD", "ADEQUATE", "POOR", null] }
+      }
+    },
+    "generatedMotionValue": { "type": ["string", "null"], "enum": ["NONE", "LOW", "MEDIUM", "HIGH", null] },
+    "referenceStrategy": {
+      "type": ["string", "null"],
+      "enum": ["NONE", "START_FRAME_REQUIRED", "END_FRAME_INCLUDED", "REFERENCE_GUIDED", "TEXT_BASED", null]
+    },
+    "requiredCapabilities": {
+      "type": "array",
+      "items": { "enum": ["IMAGE_GENERATION", "IMAGE_REFERENCE", "IMAGE_EDITING", "VIDEO_GENERATION", "IMAGE_TO_VIDEO", "FIRST_LAST_FRAME_VIDEO", "REFERENCE_GUIDED_VIDEO", "PORTRAIT_OUTPUT", "LANDSCAPE_OUTPUT"] }
+    },
+    "requiredAssetRoles": {
+      "type": "array",
+      "items": { "enum": ["PRIMARY_IMAGE", "START_FRAME", "END_FRAME", "CHARACTER_REFERENCE", "ENVIRONMENT_REFERENCE", "OBJECT_REFERENCE", "BACKGROUND_LAYER", "FOREGROUND_LAYER", "MAP_BASE", "DIAGRAM_BASE", "TEXTURE_LAYER"] }
+    },
+    "editorMotionPlan": { "type": ["object", "null"] },
+    "decisionReasons": { "type": "array", "items": { "type": "string" } },
+    "warnings": { "type": "array", "items": { "type": "string" } },
+    "blockers": { "type": "array", "items": { "type": "string" } },
+    "framing": {
+      "type": ["string", "null"],
+      "enum": ["EVIDENCE_VISUAL", "RECONSTRUCTION", "ILLUSTRATIVE", "FICTIONAL_STAGING", null]
+    },
+    "generationRisk": { "type": ["string", "null"], "enum": ["NONE", "GENERATION_RISK", null] },
+    "costClass": { "type": ["string", "null"], "enum": ["LOW", "MEDIUM", "HIGH", null] },
+    "externalCostEstimate": { "type": ["string", "null"] },
+    "claimRefs": { "type": "array", "items": { "type": "string" } },
+    "classificationRefs": { "type": "array" },
+    "sourceRefs": {
+      "type": "object",
+      "required": ["shotId", "sceneId", "beatIds"],
+      "properties": {
+        "shotId": { "type": "string" },
+        "sceneId": { "type": "string" },
+        "beatIds": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "sourceFingerprints": {
+      "type": "object",
+      "properties": {
+        "shot": { "type": ["string", "null"] },
+        "scene": { "type": ["string", "null"] },
+        "policyVersion": { "type": ["string", "null"] }
+      }
+    },
+    "platform": { "type": ["string", "null"], "enum": ["youtube", "tiktok", null] },
+    "contentClass": { "type": ["string", "null"], "enum": ["FACTUAL", "FICTION", "HYBRID", null] },
+    "policyRef": { "type": ["string", "null"] },
+    "selectedReason": { "type": ["string", "null"] },
+    "overrideState": { "type": ["string", "null"], "enum": ["NONE", "ACCEPTED", "ACCEPTED_WITH_WARNING", "BLOCKED", null] },
+    "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" },
+    "status": { "enum": ["DECISION_READY", "DECISION_REVIEW_REQUIRED", "BLOCKED_MISSING_REFERENCE", "BLOCKED_STALE_INPUT", "BLOCKED_INVALID_OVERRIDE", "STALE"] },
+    "createdAt": { "type": "string" },
+    "updatedAt": { "type": "string" }
+  }
+}

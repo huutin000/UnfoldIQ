@@ -1,0 +1,940 @@
+{
+  "schemaVersion": "1.0.0",
+  "revision": 15,
+  "createdAt": "2026-10-05T07:46:12.024Z",
+  "updatedAt": "2026-10-06T08:18:34.091Z",
+  "fingerprint": "0890194f5a463cfd",
+  "comparisons": {
+    "cmp-d2643029ac54": {
+      "comparisonId": "cmp-d2643029ac54",
+      "goldenProjectId": "gold-factual-explainer",
+      "baselineVersion": 2,
+      "candidateLabel": "live-identical-proof",
+      "metricResults": [
+        {
+          "metric": "aspectCorrectness",
+          "baseline": "16:9",
+          "candidate": "16:9",
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "cost",
+          "baseline": "NOT_MEASURED",
+          "candidate": "NOT_MEASURED",
+          "verdict": "SKIP",
+          "reason": "needs MEASURED on both sides"
+        },
+        {
+          "metric": "evidenceFidelity",
+          "baseline": "NOT_MEASURED",
+          "candidate": "NOT_MEASURED",
+          "verdict": "SKIP",
+          "reason": "needs MEASURED on both sides"
+        },
+        {
+          "metric": "failureRate",
+          "baseline": "NOT_MEASURED",
+          "candidate": "NOT_MEASURED",
+          "verdict": "SKIP",
+          "reason": "needs MEASURED on both sides"
+        },
+        {
+          "metric": "promptAdherence",
+          "baseline": "NOT_MEASURED",
+          "candidate": "NOT_MEASURED",
+          "verdict": "SKIP",
+          "reason": "needs MEASURED on both sides"
+        },
+        {
+          "metric": "scriptNaturalness",
+          "baseline": "NOT_MEASURED",
+          "candidate": "NOT_MEASURED",
+          "verdict": "SKIP",
+          "reason": "needs MEASURED on both sides"
+        },
+        {
+          "metric": "sourceCoverage",
+          "baseline": 1,
+          "candidate": 1,
+          "verdict": "PASS",
+          "delta": 0,
+          "reason": "identical"
+        },
+        {
+          "metric": "unsupportedFactualClaims",
+          "baseline": 0,
+          "candidate": 0,
+          "verdict": "PASS",
+          "delta": 0,
+          "reason": "identical"
+        },
+        {
+          "metric": "visualFactuality",
+          "baseline": "NOT_MEASURED",
+          "candidate": "NOT_MEASURED",
+          "verdict": "SKIP",
+          "reason": "needs MEASURED on both sides"
+        }
+      ],
+      "regressions": [],
+      "improvements": [],
+      "verdict": "PASS",
+      "comparedAt": "2026-10-05T07:46:12.026Z",
+      "canaryId": null
+    },
+    "cmp-133ef971b17e": {
+      "comparisonId": "cmp-133ef971b17e",
+      "goldenProjectId": "gold-fiction-continuity",
+      "baselineVersion": 2,
+      "candidateLabel": "live-identical-proof",
+      "metricResults": [
+        {
+          "metric": "aspectCorrectness",
+          "baseline": "16:9",
+          "candidate": "16:9",
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "continuity",
+          "baseline": "PASS",
+          "candidate": "PASS",
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "cost",
+          "baseline": 50,
+          "candidate": 50,
+          "verdict": "PASS",
+          "delta": 0,
+          "reason": "identical"
+        },
+        {
+          "metric": "failureRate",
+          "baseline": 0.167,
+          "candidate": 0.167,
+          "verdict": "PASS",
+          "delta": 0,
+          "reason": "identical"
+        },
+        {
+          "metric": "generationTime",
+          "baseline": "NOT_MEASURED",
+          "candidate": "NOT_MEASURED",
+          "verdict": "SKIP",
+          "reason": "needs MEASURED on both sides"
+        },
+        {
+          "metric": "promptAdherence",
+          "baseline": "PASS",
+          "candidate": "PASS",
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "unsupportedFactualClaims",
+          "baseline": "NOT_APPLICABLE",
+          "candidate": "NOT_APPLICABLE",
+          "verdict": "SKIP",
+          "reason": "needs MEASURED on both sides"
+        }
+      ],
+      "regressions": [],
+      "improvements": [],
+      "verdict": "PASS",
+      "comparedAt": "2026-10-05T07:46:12.049Z",
+      "canaryId": null
+    },
+    "cmp-99764ee12a36": {
+      "comparisonId": "cmp-99764ee12a36",
+      "goldenProjectId": "gold-originality-study",
+      "baselineVersion": 2,
+      "candidateLabel": "live-identical-proof",
+      "metricResults": [
+        {
+          "metric": "aspectCorrectness",
+          "baseline": "16:9",
+          "candidate": "16:9",
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "originality",
+          "baseline": 0.2,
+          "candidate": 0.2,
+          "verdict": "PASS",
+          "delta": 0,
+          "reason": "identical"
+        }
+      ],
+      "regressions": [],
+      "improvements": [],
+      "verdict": "PASS",
+      "comparedAt": "2026-10-05T07:46:12.058Z",
+      "canaryId": null
+    },
+    "cmp-56b76a5b7605": {
+      "comparisonId": "cmp-56b76a5b7605",
+      "goldenProjectId": "gold-voice-caption",
+      "baselineVersion": 2,
+      "candidateLabel": "live-identical-proof",
+      "metricResults": [
+        {
+          "metric": "captionFlicker",
+          "baseline": "NOT_MEASURED",
+          "candidate": "NOT_MEASURED",
+          "verdict": "SKIP",
+          "reason": "needs MEASURED on both sides"
+        },
+        {
+          "metric": "captionSync",
+          "baseline": "PASS",
+          "candidate": "PASS",
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "pronunciation",
+          "baseline": "NOT_MEASURED",
+          "candidate": "NOT_MEASURED",
+          "verdict": "SKIP",
+          "reason": "needs MEASURED on both sides"
+        },
+        {
+          "metric": "speechRate",
+          "baseline": 141.4,
+          "candidate": 141.4,
+          "verdict": "PASS",
+          "delta": 0,
+          "reason": "in range [120,180]"
+        }
+      ],
+      "regressions": [],
+      "improvements": [],
+      "verdict": "PASS",
+      "comparedAt": "2026-10-05T07:46:12.066Z",
+      "canaryId": null
+    },
+    "cmp-d93f50260c0a": {
+      "comparisonId": "cmp-d93f50260c0a",
+      "goldenProjectId": "gold-image-only",
+      "baselineVersion": 2,
+      "candidateLabel": "live-identical-proof",
+      "metricResults": [
+        {
+          "metric": "aspectCorrectness",
+          "baseline": "16:9",
+          "candidate": "16:9",
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "cost",
+          "baseline": 0,
+          "candidate": 0,
+          "verdict": "PASS",
+          "delta": 0,
+          "reason": "identical"
+        },
+        {
+          "metric": "failureRate",
+          "baseline": "NOT_MEASURED",
+          "candidate": "NOT_MEASURED",
+          "verdict": "SKIP",
+          "reason": "needs MEASURED on both sides"
+        },
+        {
+          "metric": "generationTime",
+          "baseline": "NOT_MEASURED",
+          "candidate": "NOT_MEASURED",
+          "verdict": "SKIP",
+          "reason": "needs MEASURED on both sides"
+        },
+        {
+          "metric": "promptAdherence",
+          "baseline": "NOT_APPLICABLE",
+          "candidate": "NOT_APPLICABLE",
+          "verdict": "SKIP",
+          "reason": "needs MEASURED on both sides"
+        }
+      ],
+      "regressions": [],
+      "improvements": [],
+      "verdict": "PASS",
+      "comparedAt": "2026-10-05T07:46:12.073Z",
+      "canaryId": null
+    },
+    "cmp-2261f85e44b9": {
+      "comparisonId": "cmp-2261f85e44b9",
+      "goldenProjectId": "gold-fiction-continuity",
+      "baselineVersion": 2,
+      "candidateLabel": "mock-wrong-aspect",
+      "metricResults": [
+        {
+          "metric": "aspectCorrectness",
+          "baseline": "16:9",
+          "candidate": "9:16",
+          "verdict": "FAIL",
+          "delta": null,
+          "reason": "changed \"16:9\" → \"9:16\""
+        },
+        {
+          "metric": "continuity",
+          "baseline": "PASS",
+          "candidate": "PASS",
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "cost",
+          "baseline": 50,
+          "candidate": 50,
+          "verdict": "PASS",
+          "delta": 0,
+          "reason": "identical"
+        },
+        {
+          "metric": "failureRate",
+          "baseline": 0.167,
+          "candidate": 0.167,
+          "verdict": "PASS",
+          "delta": 0,
+          "reason": "identical"
+        },
+        {
+          "metric": "generationTime",
+          "baseline": "NOT_MEASURED",
+          "candidate": "NOT_MEASURED",
+          "verdict": "SKIP",
+          "reason": "needs MEASURED on both sides"
+        },
+        {
+          "metric": "promptAdherence",
+          "baseline": "PASS",
+          "candidate": "PASS",
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "unsupportedFactualClaims",
+          "baseline": "NOT_APPLICABLE",
+          "candidate": "NOT_APPLICABLE",
+          "verdict": "SKIP",
+          "reason": "needs MEASURED on both sides"
+        }
+      ],
+      "regressions": [
+        {
+          "metric": "aspectCorrectness",
+          "baseline": "16:9",
+          "candidate": "9:16",
+          "reason": "changed \"16:9\" → \"9:16\""
+        }
+      ],
+      "improvements": [],
+      "verdict": "FAIL",
+      "comparedAt": "2026-10-05T07:46:12.081Z",
+      "canaryId": null
+    },
+    "cmp-bef01a032c57": {
+      "comparisonId": "cmp-bef01a032c57",
+      "goldenProjectId": "gold-factual-explainer",
+      "baselineVersion": 2,
+      "candidateLabel": "mock-identical",
+      "metricResults": [
+        {
+          "metric": "aspectCorrectness",
+          "baseline": "16:9",
+          "candidate": "16:9",
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "cost",
+          "baseline": "NOT_MEASURED",
+          "candidate": "NOT_MEASURED",
+          "verdict": "SKIP",
+          "reason": "needs MEASURED on both sides"
+        },
+        {
+          "metric": "evidenceFidelity",
+          "baseline": "NOT_MEASURED",
+          "candidate": "NOT_MEASURED",
+          "verdict": "SKIP",
+          "reason": "needs MEASURED on both sides"
+        },
+        {
+          "metric": "failureRate",
+          "baseline": "NOT_MEASURED",
+          "candidate": "NOT_MEASURED",
+          "verdict": "SKIP",
+          "reason": "needs MEASURED on both sides"
+        },
+        {
+          "metric": "promptAdherence",
+          "baseline": "NOT_MEASURED",
+          "candidate": "NOT_MEASURED",
+          "verdict": "SKIP",
+          "reason": "needs MEASURED on both sides"
+        },
+        {
+          "metric": "scriptNaturalness",
+          "baseline": "NOT_MEASURED",
+          "candidate": "NOT_MEASURED",
+          "verdict": "SKIP",
+          "reason": "needs MEASURED on both sides"
+        },
+        {
+          "metric": "sourceCoverage",
+          "baseline": 1,
+          "candidate": 1,
+          "verdict": "PASS",
+          "delta": 0,
+          "reason": "identical"
+        },
+        {
+          "metric": "unsupportedFactualClaims",
+          "baseline": 0,
+          "candidate": 0,
+          "verdict": "PASS",
+          "delta": 0,
+          "reason": "identical"
+        },
+        {
+          "metric": "visualFactuality",
+          "baseline": "NOT_MEASURED",
+          "candidate": "NOT_MEASURED",
+          "verdict": "SKIP",
+          "reason": "needs MEASURED on both sides"
+        }
+      ],
+      "regressions": [],
+      "improvements": [],
+      "verdict": "PASS",
+      "comparedAt": "2026-10-05T07:46:12.124Z",
+      "canaryId": null
+    },
+    "cmp-801a7e07bf69": {
+      "comparisonId": "cmp-801a7e07bf69",
+      "goldenProjectId": "gold-fiction-continuity",
+      "baselineVersion": 2,
+      "candidateLabel": "mock-identical",
+      "metricResults": [
+        {
+          "metric": "aspectCorrectness",
+          "baseline": "16:9",
+          "candidate": "16:9",
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "continuity",
+          "baseline": "PASS",
+          "candidate": "PASS",
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "cost",
+          "baseline": 50,
+          "candidate": 50,
+          "verdict": "PASS",
+          "delta": 0,
+          "reason": "identical"
+        },
+        {
+          "metric": "failureRate",
+          "baseline": 0.167,
+          "candidate": 0.167,
+          "verdict": "PASS",
+          "delta": 0,
+          "reason": "identical"
+        },
+        {
+          "metric": "generationTime",
+          "baseline": "NOT_MEASURED",
+          "candidate": "NOT_MEASURED",
+          "verdict": "SKIP",
+          "reason": "needs MEASURED on both sides"
+        },
+        {
+          "metric": "promptAdherence",
+          "baseline": "PASS",
+          "candidate": "PASS",
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "unsupportedFactualClaims",
+          "baseline": "NOT_APPLICABLE",
+          "candidate": "NOT_APPLICABLE",
+          "verdict": "SKIP",
+          "reason": "needs MEASURED on both sides"
+        }
+      ],
+      "regressions": [],
+      "improvements": [],
+      "verdict": "PASS",
+      "comparedAt": "2026-10-05T07:46:12.143Z",
+      "canaryId": null
+    },
+    "cmp-93ba88778734": {
+      "comparisonId": "cmp-93ba88778734",
+      "goldenProjectId": "gold-image-only",
+      "baselineVersion": 2,
+      "candidateLabel": "mock-identical",
+      "metricResults": [
+        {
+          "metric": "aspectCorrectness",
+          "baseline": "16:9",
+          "candidate": "16:9",
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "cost",
+          "baseline": 0,
+          "candidate": 0,
+          "verdict": "PASS",
+          "delta": 0,
+          "reason": "identical"
+        },
+        {
+          "metric": "failureRate",
+          "baseline": "NOT_MEASURED",
+          "candidate": "NOT_MEASURED",
+          "verdict": "SKIP",
+          "reason": "needs MEASURED on both sides"
+        },
+        {
+          "metric": "generationTime",
+          "baseline": "NOT_MEASURED",
+          "candidate": "NOT_MEASURED",
+          "verdict": "SKIP",
+          "reason": "needs MEASURED on both sides"
+        },
+        {
+          "metric": "promptAdherence",
+          "baseline": "NOT_APPLICABLE",
+          "candidate": "NOT_APPLICABLE",
+          "verdict": "SKIP",
+          "reason": "needs MEASURED on both sides"
+        }
+      ],
+      "regressions": [],
+      "improvements": [],
+      "verdict": "PASS",
+      "comparedAt": "2026-10-05T07:46:12.162Z",
+      "canaryId": null
+    },
+    "cmp-4ad22562104e": {
+      "comparisonId": "cmp-4ad22562104e",
+      "goldenProjectId": "gold-originality-study",
+      "baselineVersion": 2,
+      "candidateLabel": "mock-identical",
+      "metricResults": [
+        {
+          "metric": "aspectCorrectness",
+          "baseline": "16:9",
+          "candidate": "16:9",
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "originality",
+          "baseline": 0.2,
+          "candidate": 0.2,
+          "verdict": "PASS",
+          "delta": 0,
+          "reason": "identical"
+        }
+      ],
+      "regressions": [],
+      "improvements": [],
+      "verdict": "PASS",
+      "comparedAt": "2026-10-05T07:46:12.180Z",
+      "canaryId": null
+    },
+    "cmp-0fcbf17fd1d6": {
+      "comparisonId": "cmp-0fcbf17fd1d6",
+      "goldenProjectId": "gold-narration-pronunciation",
+      "baselineVersion": 1,
+      "candidateLabel": "candidate",
+      "metricResults": [
+        {
+          "metric": "dagInvalidation",
+          "baseline": "SCOPE_CORRECT",
+          "candidate": "SCOPE_CORRECT",
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "directionSparsity",
+          "baseline": true,
+          "candidate": true,
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "pronunciation",
+          "baseline": "NOT_MEASURED",
+          "candidate": "NOT_MEASURED",
+          "verdict": "SKIP",
+          "reason": "needs MEASURED on both sides"
+        },
+        {
+          "metric": "pronunciationRuntime",
+          "baseline": "REAL_RUNTIME_PROVEN",
+          "candidate": "REAL_RUNTIME_PROVEN",
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "schemaStability",
+          "baseline": true,
+          "candidate": true,
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "speechRate",
+          "baseline": "NOT_MEASURED",
+          "candidate": "NOT_MEASURED",
+          "verdict": "SKIP",
+          "reason": "needs MEASURED on both sides"
+        },
+        {
+          "metric": "unsupportedFactualClaims",
+          "baseline": "NOT_APPLICABLE",
+          "candidate": "NOT_APPLICABLE",
+          "verdict": "SKIP",
+          "reason": "needs MEASURED on both sides"
+        },
+        {
+          "metric": "versionImmutability",
+          "baseline": true,
+          "candidate": true,
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        }
+      ],
+      "regressions": [],
+      "improvements": [],
+      "verdict": "PASS",
+      "comparedAt": "2026-10-06T02:33:23.042Z",
+      "canaryId": null
+    },
+    "cmp-62e4cce3dcb3": {
+      "comparisonId": "cmp-62e4cce3dcb3",
+      "goldenProjectId": "gold-spoken-script",
+      "baselineVersion": 1,
+      "candidateLabel": "candidate",
+      "metricResults": [
+        {
+          "metric": "dagInvalidation",
+          "baseline": "SCOPE_CORRECT",
+          "candidate": "SCOPE_CORRECT",
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "directionSparsity",
+          "baseline": true,
+          "candidate": true,
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "pronunciation",
+          "baseline": "NOT_MEASURED",
+          "candidate": "NOT_MEASURED",
+          "verdict": "SKIP",
+          "reason": "needs MEASURED on both sides"
+        },
+        {
+          "metric": "pronunciationRuntime",
+          "baseline": "REAL_RUNTIME_PROVEN",
+          "candidate": "REAL_RUNTIME_PROVEN",
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "schemaStability",
+          "baseline": true,
+          "candidate": true,
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "speechRate",
+          "baseline": "NOT_MEASURED",
+          "candidate": "NOT_MEASURED",
+          "verdict": "SKIP",
+          "reason": "needs MEASURED on both sides"
+        },
+        {
+          "metric": "unsupportedFactualClaims",
+          "baseline": 0,
+          "candidate": 0,
+          "verdict": "PASS",
+          "delta": 0,
+          "reason": "identical"
+        },
+        {
+          "metric": "versionImmutability",
+          "baseline": true,
+          "candidate": true,
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        }
+      ],
+      "regressions": [],
+      "improvements": [],
+      "verdict": "PASS",
+      "comparedAt": "2026-10-06T05:02:09.909Z",
+      "canaryId": null
+    },
+    "cmp-bca64585b1d6": {
+      "comparisonId": "cmp-bca64585b1d6",
+      "goldenProjectId": "gold-tts-behavior",
+      "baselineVersion": 1,
+      "candidateLabel": "candidate",
+      "metricResults": [
+        {
+          "metric": "cost",
+          "baseline": "ZERO_LOCAL",
+          "candidate": "ZERO_LOCAL",
+          "verdict": "REVIEW_REQUIRED",
+          "delta": null,
+          "reason": "non-numeric values need human comparison"
+        },
+        {
+          "metric": "credentialSafety",
+          "baseline": "ZERO_EXTERNAL",
+          "candidate": "ZERO_EXTERNAL",
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "dagInvalidation",
+          "baseline": "SCOPE_CORRECT",
+          "candidate": "SCOPE_CORRECT",
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "failureRate",
+          "baseline": "FAIL_CLOSED_CODES",
+          "candidate": "FAIL_CLOSED_CODES",
+          "verdict": "REVIEW_REQUIRED",
+          "delta": null,
+          "reason": "non-numeric values need human comparison"
+        },
+        {
+          "metric": "languageCompatibility",
+          "baseline": "FAIL_CLOSED",
+          "candidate": "FAIL_CLOSED",
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "pronunciation",
+          "baseline": "WER_CONTRACT_STABLE",
+          "candidate": "WER_CONTRACT_STABLE",
+          "verdict": "REVIEW_REQUIRED",
+          "delta": null,
+          "reason": "non-numeric values need human comparison"
+        },
+        {
+          "metric": "schemaStability",
+          "baseline": true,
+          "candidate": true,
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "speechRate",
+          "baseline": "REAL_AUDIO_MEASURED",
+          "candidate": "REAL_AUDIO_MEASURED",
+          "verdict": "REVIEW_REQUIRED",
+          "delta": null,
+          "reason": "outside range [120,180]"
+        },
+        {
+          "metric": "versionImmutability",
+          "baseline": true,
+          "candidate": true,
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "voiceIdentity",
+          "baseline": "am_michael_LOCKED",
+          "candidate": "am_michael_LOCKED",
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        }
+      ],
+      "regressions": [
+        {
+          "metric": "cost",
+          "baseline": "ZERO_LOCAL",
+          "candidate": "ZERO_LOCAL",
+          "reason": "non-numeric values need human comparison",
+          "review": true
+        },
+        {
+          "metric": "failureRate",
+          "baseline": "FAIL_CLOSED_CODES",
+          "candidate": "FAIL_CLOSED_CODES",
+          "reason": "non-numeric values need human comparison",
+          "review": true
+        },
+        {
+          "metric": "pronunciation",
+          "baseline": "WER_CONTRACT_STABLE",
+          "candidate": "WER_CONTRACT_STABLE",
+          "reason": "non-numeric values need human comparison",
+          "review": true
+        },
+        {
+          "metric": "speechRate",
+          "baseline": "REAL_AUDIO_MEASURED",
+          "candidate": "REAL_AUDIO_MEASURED",
+          "reason": "outside range [120,180]",
+          "review": true
+        }
+      ],
+      "improvements": [],
+      "verdict": "REVIEW_REQUIRED",
+      "comparedAt": "2026-10-06T08:17:59.311Z",
+      "canaryId": null
+    },
+    "cmp-e6f9ea5db4a5": {
+      "comparisonId": "cmp-e6f9ea5db4a5",
+      "goldenProjectId": "gold-tts-behavior",
+      "baselineVersion": 2,
+      "candidateLabel": "candidate",
+      "metricResults": [
+        {
+          "metric": "cost",
+          "baseline": 0,
+          "candidate": 0,
+          "verdict": "PASS",
+          "delta": 0,
+          "reason": "identical"
+        },
+        {
+          "metric": "credentialSafety",
+          "baseline": true,
+          "candidate": true,
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "dagInvalidation",
+          "baseline": "SCOPE_CORRECT",
+          "candidate": "SCOPE_CORRECT",
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "failureRate",
+          "baseline": 0,
+          "candidate": 0,
+          "verdict": "PASS",
+          "delta": 0,
+          "reason": "identical"
+        },
+        {
+          "metric": "languageCompatibility",
+          "baseline": "FAIL_CLOSED",
+          "candidate": "FAIL_CLOSED",
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "pronunciation",
+          "baseline": 1,
+          "candidate": 1,
+          "verdict": "PASS",
+          "delta": 0,
+          "reason": "identical"
+        },
+        {
+          "metric": "schemaStability",
+          "baseline": true,
+          "candidate": true,
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "speechRate",
+          "baseline": 150.72,
+          "candidate": 150.72,
+          "verdict": "PASS",
+          "delta": 0,
+          "reason": "in range [120,180]"
+        },
+        {
+          "metric": "versionImmutability",
+          "baseline": true,
+          "candidate": true,
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        },
+        {
+          "metric": "voiceIdentity",
+          "baseline": "am_michael_LOCKED",
+          "candidate": "am_michael_LOCKED",
+          "verdict": "PASS",
+          "delta": null,
+          "reason": "unchanged"
+        }
+      ],
+      "regressions": [],
+      "improvements": [],
+      "verdict": "PASS",
+      "comparedAt": "2026-10-06T08:18:34.091Z",
+      "canaryId": null
+    }
+  }
+}

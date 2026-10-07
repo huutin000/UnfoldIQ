@@ -1,0 +1,29 @@
+{
+  "$id": "https://unfoldiq.io/schemas/audio-qa-result.schema.json",
+  "title": "UNFOLDIQ Audio QA Result Contract (Phase 2.8)",
+  "description": "Actionable per-finding audio QA result with affected range, corrective action and attempt lineage",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["status", "code", "reason", "attempt"],
+  "properties": {
+    "status": { "enum": ["PASS", "FAIL", "REVIEW_REQUIRED"] },
+    "code": { "type": "string", "minLength": 1 },
+    "affectedStartMs": { "type": "integer", "minimum": 0 },
+    "affectedEndMs": { "type": "integer", "minimum": 0 },
+    "cueId": { "type": "string" },
+    "assetId": { "type": "string" },
+    "reason": { "type": "string", "minLength": 1 },
+    "correctiveAction": {
+      "type": ["string", "null"],
+      "enum": [
+        "ADJUST_MUSIC_GAIN", "NORMALIZE_NARRATION", "ADJUST_DUCKING",
+        "ADJUST_ATTACK_RELEASE", "REPAIR_CROSSFADE", "REPAIR_FADE",
+        "TRY_ALTERNATE_LOOP", "RETURN_2_7", "ADJUST_SFX_GAIN",
+        "ADJUST_AMBIENCE_GAIN", "GAIN_CORRECTION", "LIMIT", "REMASTER",
+        "REPAIR_TIMING", "REPLACE_TRACK", "REPLACE_ASSET", null
+      ]
+    },
+    "attempt": { "type": "integer", "minimum": 0 },
+    "deficitDb": { "type": "number" }
+  }
+}

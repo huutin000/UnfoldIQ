@@ -1,0 +1,133 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "telemetry.schema.json",
+  "title": "UNFOLDIQ Structured Telemetry (1H.4)",
+  "description": "Append-only Core telemetry: events, spans, and a canonical evidence index. Refs/hashes/ids only — never raw artifact bodies or secrets. Vendor-neutral and future-exportable.",
+  "definitions": {
+    "eventsDoc": {
+      "type": "object",
+      "required": ["schemaVersion", "projectId", "revision", "createdAt", "updatedAt", "events", "fingerprint"],
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": { "const": "1.0.0" },
+        "projectId": { "type": "string", "minLength": 1 },
+        "revision": { "type": "integer", "minimum": 1 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "events": { "type": "object", "additionalProperties": { "$ref": "#/definitions/event" } },
+        "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" }
+      }
+    },
+    "event": {
+      "type": "object",
+      "required": ["eventId", "eventName", "timestamp", "severity", "projectId", "retention"],
+      "additionalProperties": false,
+      "properties": {
+        "eventId": { "type": "string", "pattern": "^eve-[0-9a-f]{12}$" },
+        "eventName": { "type": "string", "minLength": 1 },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "severity": { "enum": ["DEBUG", "INFO", "WARN", "ERROR", "FATAL"] },
+        "projectId": { "type": "string", "minLength": 1 },
+        "runId": { "type": ["string", "null"] },
+        "jobId": { "type": ["string", "null"] },
+        "attemptId": { "type": ["string", "null"] },
+        "operationId": { "type": ["string", "null"] },
+        "correlationId": { "type": ["string", "null"] },
+        "generationUnitId": { "type": ["string", "null"] },
+        "assetId": { "type": ["string", "null"] },
+        "stage": { "type": ["string", "null"] },
+        "component": { "type": ["string", "null"] },
+        "provider": { "type": ["string", "null"] },
+        "model": { "type": ["string", "null"] },
+        "modelResolutionRef": { "type": ["string", "null"] },
+        "stateFrom": { "type": ["string", "null"] },
+        "stateTo": { "type": ["string", "null"] },
+        "durationMs": { "type": ["number", "null"], "minimum": 0 },
+        "cost": { "type": ["object", "null"], "additionalProperties": false, "properties": {
+          "planned": { "type": ["number", "null"] },
+          "authorized": { "type": ["number", "null"] },
+          "observed": { "type": ["number", "null"] },
+          "reconciled": { "type": ["number", "null"] },
+          "strength": { "type": ["string", "null"] }
+        } },
+        "outputCount": { "type": ["integer", "null"], "minimum": 0 },
+        "resultRef": { "type": ["string", "null"] },
+        "evidenceRefs": { "type": "array", "items": { "type": "string" } },
+        "errorCode": { "type": ["string", "null"] },
+        "errorClass": { "type": ["string", "null"] },
+        "retryable": { "type": ["boolean", "null"] },
+        "attributes": { "type": ["object", "null"] },
+        "retention": { "enum": ["CANONICAL_DURABLE", "DERIVED_REGENERABLE", "DEBUG_EPHEMERAL"] },
+        "provenance": { "type": ["string", "null"], "enum": ["LIVE", "MIGRATED", null] }
+      }
+    },
+    "spansDoc": {
+      "type": "object",
+      "required": ["schemaVersion", "projectId", "revision", "createdAt", "updatedAt", "spans", "fingerprint"],
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": { "const": "1.0.0" },
+        "projectId": { "type": "string", "minLength": 1 },
+        "revision": { "type": "integer", "minimum": 1 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "spans": { "type": "object", "additionalProperties": { "$ref": "#/definitions/span" } },
+        "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" }
+      }
+    },
+    "span": {
+      "type": "object",
+      "required": ["spanId", "traceId", "name", "startedAt", "status", "projectId"],
+      "additionalProperties": false,
+      "properties": {
+        "spanId": { "type": "string", "pattern": "^spi-[0-9a-f]{12}$" },
+        "traceId": { "type": "string", "pattern": "^trs-[0-9a-f]{12}$" },
+        "parentSpanId": { "type": ["string", "null"] },
+        "name": { "type": "string", "minLength": 1 },
+        "startedAt": { "type": "string", "format": "date-time" },
+        "endedAt": { "type": ["string", "null"], "format": "date-time" },
+        "status": { "enum": ["OPEN", "OK", "ERROR"] },
+        "projectId": { "type": "string", "minLength": 1 },
+        "jobId": { "type": ["string", "null"] },
+        "operationId": { "type": ["string", "null"] },
+        "correlationId": { "type": ["string", "null"] },
+        "attributes": { "type": ["object", "null"] },
+        "evidenceRefs": { "type": "array", "items": { "type": "string" } },
+        "errorCode": { "type": ["string", "null"] }
+      }
+    },
+    "evidenceDoc": {
+      "type": "object",
+      "required": ["schemaVersion", "projectId", "revision", "createdAt", "updatedAt", "items", "fingerprint"],
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": { "const": "1.0.0" },
+        "projectId": { "type": "string", "minLength": 1 },
+        "revision": { "type": "integer", "minimum": 1 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "items": { "type": "object", "additionalProperties": { "$ref": "#/definitions/evidence" } },
+        "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["evidenceId", "kind", "source", "createdAt", "projectId"],
+      "additionalProperties": false,
+      "properties": {
+        "evidenceId": { "type": "string", "pattern": "^evi-[0-9a-f]{12}$" },
+        "kind": { "type": "string", "minLength": 1 },
+        "source": { "type": "string", "minLength": 1 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "projectId": { "type": "string", "minLength": 1 },
+        "jobId": { "type": ["string", "null"] },
+        "attemptId": { "type": ["string", "null"] },
+        "artifactRef": { "type": ["string", "null"] },
+        "hash": { "type": ["string", "null"] },
+        "path": { "type": ["string", "null"] },
+        "immutable": { "type": "boolean" },
+        "provenance": { "type": ["string", "null"], "enum": ["LIVE", "MIGRATED", null] }
+      }
+    }
+  }
+}

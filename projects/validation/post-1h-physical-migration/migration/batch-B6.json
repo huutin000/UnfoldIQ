@@ -1,0 +1,97 @@
+{
+  "moves": [
+    {
+      "itemId": "mkdir:out/final",
+      "action": "mkdir",
+      "to": "out/final",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "mkdir:out/preview",
+      "action": "mkdir",
+      "to": "out/preview",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "mkdir:out/test",
+      "action": "mkdir",
+      "to": "out/test",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "mkdir:out/debug",
+      "action": "mkdir",
+      "to": "out/debug",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "mkdir:out/temp",
+      "action": "mkdir",
+      "to": "out/temp",
+      "reason": "target hierarchy per FIX POST-1H 01 sections 3/4/8"
+    },
+    {
+      "itemId": "move:out/bridge-2g-live.log",
+      "action": "move",
+      "from": "out/bridge-2g-live.log",
+      "to": "out/temp/bridge-2g-live.log",
+      "reason": "B6 playwright/bridge scratch, no refs (EPHEMERAL)"
+    },
+    {
+      "itemId": "move:out/_cdp2g.js",
+      "action": "move",
+      "from": "out/_cdp2g.js",
+      "to": "out/temp/_cdp2g.js",
+      "reason": "B6 playwright/bridge scratch, no refs (EPHEMERAL)"
+    },
+    {
+      "itemId": "move:out/_e_logincheck.txt",
+      "action": "move",
+      "from": "out/_e_logincheck.txt",
+      "to": "out/temp/_e_logincheck.txt",
+      "reason": "B6 playwright/bridge scratch, no refs (EPHEMERAL)"
+    },
+    {
+      "itemId": "move:out/_launch2g.js",
+      "action": "move",
+      "from": "out/_launch2g.js",
+      "to": "out/temp/_launch2g.js",
+      "reason": "B6 playwright/bridge scratch, no refs (EPHEMERAL)"
+    },
+    {
+      "itemId": "move:out/_pw.err",
+      "action": "move",
+      "from": "out/_pw.err",
+      "to": "out/temp/_pw.err",
+      "reason": "B6 playwright/bridge scratch, no refs (EPHEMERAL)"
+    },
+    {
+      "itemId": "move:out/_pw.log",
+      "action": "move",
+      "from": "out/_pw.log",
+      "to": "out/temp/_pw.log",
+      "reason": "B6 playwright/bridge scratch, no refs (EPHEMERAL)"
+    },
+    {
+      "itemId": "move:out/_pw.ps1",
+      "action": "move",
+      "from": "out/_pw.ps1",
+      "to": "out/temp/_pw.ps1",
+      "reason": "B6 playwright/bridge scratch, no refs (EPHEMERAL)"
+    },
+    {
+      "itemId": "move:out/pilot-sky-blue",
+      "action": "move",
+      "from": "out/pilot-sky-blue",
+      "to": "out/final/pilot-sky-blue",
+      "reason": "B6 final deliverable set (DURABLE)"
+    },
+    {
+      "itemId": "move:out/postv1-flow-live-validation",
+      "action": "move",
+      "from": "out/postv1-flow-live-validation",
+      "to": "out/final/postv1-flow-live-validation",
+      "reason": "B6 validation deliverable (DURABLE)"
+    }
+  ]
+}

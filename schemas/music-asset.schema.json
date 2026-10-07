@@ -1,0 +1,70 @@
+{
+  "$id": "https://unfoldiq.io/schemas/music-asset.schema.json",
+  "title": "UNFOLDIQ Music Asset + Rights Contract (Phase 2.7)",
+  "description": "Approved Local Music Library record: provenance, analysis ref, embedded fail-closed rights, project usage decision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["assetId", "title", "sourceType", "durationMs", "vocalType", "audioRef", "audioHash", "rights", "createdAt"],
+  "properties": {
+    "assetId": { "type": "string", "minLength": 1 },
+    "title": { "type": "string", "minLength": 1 },
+    "artist": { "type": "string" },
+    "sourceType": { "type": "string", "minLength": 1 },
+    "provider": { "type": "string" },
+    "providerTrackId": { "type": "string" },
+    "durationMs": { "type": "integer", "minimum": 1 },
+    "genre": { "type": "array", "items": { "type": "string" } },
+    "mood": { "type": "array", "items": { "type": "string" } },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "bpm": { "type": "number" },
+    "energyProfile": { "type": "string" },
+    "instrumentation": { "type": "array", "items": { "type": "string" } },
+    "vocalType": { "enum": ["INSTRUMENTAL", "WORDLESS_VOCAL", "LYRICAL_VOCAL", "UNKNOWN"] },
+    "audioRef": { "type": "string", "minLength": 1 },
+    "audioHash": { "type": "string", "minLength": 8 },
+    "analysisRef": { "type": "string" },
+    "rights": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provider", "licenseType", "attributionRequired", "reuseScope", "licenseEvidenceRef", "verifiedAt", "policyVersion", "status"],
+      "properties": {
+        "provider": { "type": "string", "minLength": 1 },
+        "licenseType": { "type": "string", "minLength": 1 },
+        "commercialUse": { "type": "boolean" },
+        "monetization": { "type": "boolean" },
+        "allowedPlatforms": { "type": "array", "items": { "type": "string" } },
+        "allowedRegions": { "type": "array", "items": { "type": "string" } },
+        "clientWork": { "type": "boolean" },
+        "paidAds": { "type": "boolean" },
+        "derivativesAllowed": { "type": "boolean" },
+        "attributionRequired": { "type": "boolean" },
+        "attributionText": { "type": "string" },
+        "reuseScope": { "enum": ["MULTI_PROJECT", "SINGLE_PROJECT", "CHANNEL_BOUND", "SUBSCRIPTION_BOUND", "UNKNOWN"] },
+        "validForNewProjectsUntil": { "type": "string" },
+        "licenseEvidenceRef": { "type": "string" },
+        "sourceUrl": { "type": "string" },
+        "verifiedAt": { "type": "string" },
+        "policyVersion": { "type": "string" },
+        "status": { "enum": ["APPROVED", "REVIEW_REQUIRED", "REJECTED"] }
+      }
+    },
+    "usageDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assetId", "projectId", "targetPlatforms", "commercialContext", "decision", "reason", "rightsPolicyVersion", "checkedAt"],
+      "properties": {
+        "assetId": { "type": "string" },
+        "projectId": { "type": "string" },
+        "targetPlatforms": { "type": "array", "items": { "type": "string" } },
+        "commercialContext": { "type": "string" },
+        "decision": { "enum": ["APPROVED_FOR_PROJECT", "REVIEW_REQUIRED", "REJECTED"] },
+        "reason": { "type": "string" },
+        "rightsPolicyVersion": { "type": "string" },
+        "checkedAt": { "type": "string" }
+      }
+    },
+    "reuseCount": { "type": "integer", "minimum": 0 },
+    "lastUsedAt": { "type": "string" },
+    "createdAt": { "type": "string" }
+  }
+}

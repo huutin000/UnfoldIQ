@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "attemptId": "d3-attempt-01",
+  "unitId": "gu-223a6fbe0e28",
+  "shotId": "D-SH03",
+  "providerProjectRef": "8221824c-a1a6-4aa9-8d6b-fac24860d49e",
+  "jobId": "d31",
+  "correlationMethod": "SINGLE_GENERATION_ATTRIBUTION",
+  "evidence": [
+    "operator affirmed exactly ONE generation submitted for D3 (ceremony log D_D3_SUBMIT_EVIDENCE)",
+    "character reference as-a7801df9bf0f (mascot-guide) used as first frame, per case/case-d-character.json",
+    "download bytes sha256=0625f69f986751809600e51bb1628e0fef6b717fdda5048cdd4ad96576901f9c, 526697 bytes, 1280x720@4.0s"
+  ],
+  "file": "downloads/Character_turning_to_hips_stance_20261005112125.mp4",
+  "sha256": "0625f69f986751809600e51bb1628e0fef6b717fdda5048cdd4ad96576901f9c",
+  "downloadedAt": "2026-10-05T04:22:12.253Z"
+}

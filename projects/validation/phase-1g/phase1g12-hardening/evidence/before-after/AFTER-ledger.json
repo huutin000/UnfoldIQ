@@ -1,0 +1,96 @@
+{
+  "creditsObserved": 50,
+  "committed": 0,
+  "entries": [
+    {
+      "attemptId": "b1-attempt-01",
+      "unitId": "gu-0ada6dc4cccc",
+      "reservedCredits": 15,
+      "observedCredits": 15,
+      "state": "RECONCILED",
+      "note": "actual credit cost of the 10s generation awaits operator reconciliation",
+      "previousState": "UNRECONCILED",
+      "reconciledAt": "2026-10-05T03:02:36.124Z",
+      "reconciliationSource": "1G.6 canonical cost observation: Omni Flash 1.1, 10s tier = 15 credits/generation (flow-credits-16526234, FRESH 2026-10-03); executed duration 10005ms measured by ffprobe on downloaded bytes; Flow UI cost display unavailable for the historical generation",
+      "evidenceStrength": "CANONICAL_COST_TABLE_RECONCILED",
+      "kind": "reconciliation",
+      "creditsObserved": 15,
+      "status": "RECONCILED"
+    },
+    {
+      "attemptId": "b1-attempt-02",
+      "unitId": "gu-0ada6dc4cccc",
+      "reservedCredits": 0,
+      "observedCredits": 7,
+      "state": "RECONCILED",
+      "reconciledAt": "2026-10-05T03:19:44.211Z",
+      "reconciliationSource": "operator-reported Flow UI: cost shown 7 credits, credits deducted 7 (B_ATTEMPT2_SUBMIT_EVIDENCE)",
+      "evidenceStrength": "LIVE_UI_OBSERVED",
+      "kind": "reconciliation",
+      "creditsObserved": 7,
+      "status": "RECONCILED"
+    },
+    {
+      "attemptId": "c1-attempt-01",
+      "unitId": "gu-3ff6b479331a",
+      "reservedCredits": 0,
+      "observedCredits": 7,
+      "state": "RECONCILED",
+      "reconciledAt": "2026-10-05T03:31:26.270Z",
+      "reconciliationSource": "operator-reported Flow UI cost + credits deduction (C_ATTEMPT1_SUBMIT_EVIDENCE)",
+      "evidenceStrength": "LIVE_UI_OBSERVED",
+      "kind": "reconciliation",
+      "creditsObserved": 7,
+      "status": "RECONCILED"
+    },
+    {
+      "attemptId": "d1-attempt-01",
+      "unitId": "gu-bde822cbe1dd",
+      "reservedCredits": 0,
+      "observedCredits": 7,
+      "state": "RECONCILED",
+      "reconciledAt": "2026-10-05T04:05:07.874Z",
+      "reconciliationSource": "operator-reported Flow UI cost + credits deduction (D_SUBMIT_EVIDENCE events)",
+      "evidenceStrength": "LIVE_UI_OBSERVED",
+      "kind": "reconciliation",
+      "creditsObserved": 7,
+      "status": "RECONCILED"
+    },
+    {
+      "attemptId": "d2-attempt-01",
+      "unitId": "gu-1b8dbfa2ee4a",
+      "reservedCredits": 0,
+      "observedCredits": 7,
+      "state": "RECONCILED",
+      "reconciledAt": "2026-10-05T04:15:50.428Z",
+      "reconciliationSource": "operator-reported Flow UI cost + credits deduction (D_SUBMIT_EVIDENCE events)",
+      "evidenceStrength": "LIVE_UI_OBSERVED",
+      "kind": "reconciliation",
+      "creditsObserved": 7,
+      "status": "RECONCILED"
+    },
+    {
+      "attemptId": "d3-attempt-01",
+      "unitId": "gu-223a6fbe0e28",
+      "reservedCredits": 0,
+      "observedCredits": 7,
+      "state": "RECONCILED",
+      "reconciledAt": "2026-10-05T04:22:12.540Z",
+      "reconciliationSource": "operator-reported Flow UI cost + credits deduction (D_SUBMIT_EVIDENCE events)",
+      "evidenceStrength": "LIVE_UI_OBSERVED",
+      "kind": "reconciliation",
+      "creditsObserved": 7,
+      "status": "RECONCILED"
+    }
+  ],
+  "totals": {
+    "creditsObserved": 50,
+    "committed": 0
+  },
+  "previousHeader": {
+    "creditsObserved": 43,
+    "committed": 0,
+    "supersededAt": "2026-10-05T05:35:40.315Z",
+    "reason": "Task-02 hardening (A-2 + S5.6): header recomputed from entries; evidence strengths classified from Task-01 ceremony evidence"
+  }
+}

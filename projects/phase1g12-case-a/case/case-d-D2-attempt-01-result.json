@@ -1,0 +1,74 @@
+{
+  "caseResult": {
+    "version": "1.0.0",
+    "caseId": "D",
+    "status": "PASS",
+    "projectId": "phase1g12-case-a",
+    "providerProjectRef": "8221824c-a1a6-4aa9-8d6b-fac24860d49e",
+    "shotIds": [
+      "D-SH02"
+    ],
+    "generationUnitIds": [
+      "gu-1b8dbfa2ee4a"
+    ],
+    "attemptIds": [
+      "d2-attempt-01"
+    ],
+    "productionDecisionRefs": [
+      "scene/validation-scene-d.json"
+    ],
+    "modelResolutionRefs": [
+      "mr-530bec09f9f1"
+    ],
+    "budgetPlanRef": "budget-plans/1g12-d-amendment.json (bp-1e463dea1689)",
+    "providerResultRefs": [
+      "case/case-d-D2-attempt-01-correlation.json"
+    ],
+    "assetIds": [
+      "as-a7801df9bf0f",
+      "as-c9f0fdc1d1e4"
+    ],
+    "qaResultIds": [
+      "qa-5e0a58b7ef46"
+    ],
+    "timelineEligibility": [
+      "as-c9f0fdc1d1e4=READY_FOR_TIMELINE"
+    ],
+    "repairHistory": [],
+    "credits": {
+      "estimated": 7,
+      "reserved": 0,
+      "reconciled": 36,
+      "state": "RECONCILED"
+    },
+    "evidenceRefs": [
+      "qa/case-d-D2-attempt-01-qa-summary.json",
+      "downloads/Character_presenting_palm-up_ges…_20261005111411.mp4",
+      "case/case-d-character.json"
+    ],
+    "caseResultId": "case-d-ae60ac733f41",
+    "completedAt": "2026-10-05T04:15:50.428Z"
+  },
+  "matrix": [
+    "D1=PASS",
+    "D2=PASS",
+    "D3=PASS",
+    "D4=PASS",
+    "D5=PASS",
+    "D6=PASS",
+    "D7=PASS",
+    "D8=PASS",
+    "D9=PASS",
+    "D10=PASS",
+    "D11=PENDING",
+    "D12=PENDING",
+    "D13=PENDING",
+    "D14=PENDING",
+    "D15=PASS",
+    "D16=PASS",
+    "D17=PASS",
+    "D18=PASS"
+  ],
+  "matrixStatus": "PENDING",
+  "shotKey": "D2"
+}
