@@ -1,0 +1,27 @@
+{
+  "platform": "youtube",
+  "scenes": [
+    {
+      "sceneId": "S1",
+      "order": 1,
+      "narration": "Scene one",
+      "onScreenText": "Scene one",
+      "timing": {
+        "startMs": 0,
+        "endMs": 2000
+      },
+      "purpose": "bench"
+    },
+    {
+      "sceneId": "S2",
+      "order": 2,
+      "narration": "Scene two",
+      "onScreenText": "Scene two",
+      "timing": {
+        "startMs": 2000,
+        "endMs": 4000
+      },
+      "purpose": "bench"
+    }
+  ]
+}

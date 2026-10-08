@@ -1,0 +1,55 @@
+{
+ "decode": {
+  "ok": true,
+  "decodeErrors": [],
+  "exitStatus": 0
+ },
+ "black": [],
+ "freeze": [],
+ "silence": [
+  {
+   "start": 19.735375,
+   "end": 30.346833
+  },
+  {
+   "start": 52.323021,
+   "end": 60.34175
+  },
+  {
+   "start": 79.433312,
+   "end": 90.338708
+  },
+  {
+   "start": 109.522896,
+   "end": 120.323313
+  },
+  {
+   "start": 137.301687,
+   "end": 150.058667
+  }
+ ],
+ "volume": {
+  "ok": true,
+  "maxVolumeDb": -3.9,
+  "meanVolumeDb": -24.6,
+  "noAudio": false
+ },
+ "luma": {
+  "frames": 300,
+  "meanDelta": 0.004075722633906775,
+  "maxDelta": 0.389093137254902,
+  "bigCount": 2,
+  "maxInWindow": 1
+ },
+ "frames": [
+  "D:\\Project\\UNFOLDIQ\\Report\\evidence\\pilot-4b\\frames\\sample-1.jpg",
+  "D:\\Project\\UNFOLDIQ\\Report\\evidence\\pilot-4b\\frames\\sample-45.jpg",
+  "D:\\Project\\UNFOLDIQ\\Report\\evidence\\pilot-4b\\frames\\sample-75.jpg",
+  "D:\\Project\\UNFOLDIQ\\Report\\evidence\\pilot-4b\\frames\\sample-105.jpg",
+  "D:\\Project\\UNFOLDIQ\\Report\\evidence\\pilot-4b\\frames\\sample-148.jpg"
+ ],
+ "renderMs": 0,
+ "conformMs": 0,
+ "conformRecord": null,
+ "fps": "reused"
+}

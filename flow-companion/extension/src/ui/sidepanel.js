@@ -166,6 +166,16 @@
           applyContentScriptStatus();
         }
         resolve(resp.result);
+        // Phase 5C §22 (GAP-030): forward worker trace spans to the bridge
+        // ingestor. Best-effort only — failures never break panel UX.
+        try {
+          if (resp && Array.isArray(resp.trace) && resp.trace.length > 0) {
+            const traceJobId = (msg && ((msg.cmd && msg.cmd.jobId) || (msg.approval && msg.approval.jobId))) || null;
+            if (traceJobId && typeof bridgeCall === "function") {
+              bridgeCall("POST", `/jobs/${encodeURIComponent(traceJobId)}/trace`, { spans: resp.trace }, { timeoutMs: 8000 }).catch(() => {});
+            }
+          }
+        } catch (e) { void e; }
       });
     });
   }

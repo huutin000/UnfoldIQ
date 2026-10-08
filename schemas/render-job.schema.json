@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://unfoldiq.local/schemas/render-job.schema.json",
+  "title": "UNFOLDIQ RenderJob (Phase 4B)",
+  "type": "object",
+  "required": ["renderJobId", "version", "projectId", "timelineId", "timelineRevision", "exportProfileRef", "renderer", "resolvedOptions", "inputHashes", "status", "createdAt", "updatedAt"],
+  "properties": {
+    "renderJobId": { "type": "string" },
+    "version": { "type": "string" },
+    "projectId": { "type": "string" },
+    "exportProfileRef": { "type": "string" },
+    "renderer": {
+      "type": "object",
+      "required": ["engine", "entryPoint", "compositionId"],
+      "properties": { "engine": { "enum": ["REMOTION"] } }
+    },
+    "status": { "enum": ["PENDING", "PREFLIGHT_FAILED", "RENDERING", "RENDERED", "QC_FAILED", "APPROVED"] }
+  }
+}

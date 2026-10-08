@@ -1,0 +1,24 @@
+{
+  "version": "1.0.0",
+  "benchmarkId": "bench5a-2026-10-07-83b0e0",
+  "status": "NOT_MEASURED",
+  "evidenceOrder": [
+    "recent real E2E traces: none (pilot synthetic)",
+    "provider telemetry: none paid",
+    "generation history: no paid calls",
+    "bounded live sample: NOT authorized in 5A"
+  ],
+  "costPolicy": {
+    "evidence": "MEASURED_REAL",
+    "allowPaidCloud": false
+  },
+  "wait": {
+    "evidence": "NOT_MEASURED",
+    "reason": "pilot used synthetic visuals + local TTS; cost policy blocks paid calls; no representative live sample authorized in 5A"
+  },
+  "cost": {
+    "evidence": "NOT_MEASURED",
+    "reason": "LLM 0, image/video 0, music 0 in pilot (local/synthetic); paid dims never exercised"
+  },
+  "plan": "Phase 5C (operator-authorized): 1 image + 1 video via flow-web, submit/result/download/import latencies + credit cost; UNFOLDIQ overhead separated from provider wait."
+}

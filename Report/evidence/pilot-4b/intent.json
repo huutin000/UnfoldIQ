@@ -1,0 +1,33 @@
+{
+ "expectedBlackRanges": [],
+ "staticRanges": [
+  {
+   "start": 30,
+   "end": 60
+  }
+ ],
+ "expectedSilenceRanges": [
+  {
+   "start": 20.175,
+   "end": 30
+  },
+  {
+   "start": 52.775,
+   "end": 60
+  },
+  {
+   "start": 79.875,
+   "end": 90
+  },
+  {
+   "start": 109.975,
+   "end": 120
+  },
+  {
+   "start": 137.75,
+   "end": 150
+  }
+ ],
+ "expectedAudioDurationSec": 150,
+ "lastSpeechEndSec": 137.75
+}

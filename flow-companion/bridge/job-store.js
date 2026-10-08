@@ -10,6 +10,9 @@ const fs = require("fs");
 const path = require("path");
 const { transition } = require("./state-machine");
 const { resolveProjectPath } = require("./path-policy");
+const traceContract = require("../extension/src/contracts/trace-contract.js");
+
+const TRACE_CAP = 200;
 
 function jobsDir(projectRoot, projectId) {
   return path.join(path.resolve(projectRoot), "projects", projectId, "flow-jobs");
@@ -151,5 +154,28 @@ module.exports = {
   updateJob,
   recordApproval,
   markSubmitIssued,
+  appendTraceSpans,
+  TRACE_CAP,
   resolveProjectPath,
 };
+
+/**
+ * Phase 5C §22 (GAP-030): append Extension-side trace spans to the job.
+ * Bounded (TRACE_CAP); validated; jobId-bound; never overwrites history.
+ */
+function appendTraceSpans(projectRoot, projectId, jobId, spans) {
+  const job = getJob(projectRoot, projectId, jobId);
+  if (!job) throw new Error(`JOB_NOT_FOUND: ${jobId}`);
+  if (!Array.isArray(spans) || spans.length === 0) throw new Error("SCHEMA_INVALID: spans must be a non-empty array");
+  if (spans.length > 20) throw new Error("SCHEMA_INVALID: at most 20 spans per request");
+  const existing = Array.isArray(job.trace) ? job.trace : [];
+  if (existing.length + spans.length > TRACE_CAP) throw new Error("TRACE_CAP_EXCEEDED: job trace full");
+  const clean = spans.map((s) => {
+    const bad = traceContract.validateTraceSpan(s);
+    if (bad) throw new Error(bad);
+    if (s.jobId !== jobId) throw new Error("SCHEMA_INVALID: span jobId must match path jobId");
+    return { ...s, ingestedAt: new Date().toISOString() };
+  });
+  job.trace = existing.concat(clean);
+  return writeJob(projectRoot, projectId, job);
+}

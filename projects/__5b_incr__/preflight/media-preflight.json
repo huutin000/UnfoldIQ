@@ -1,0 +1,22 @@
+{
+  "status": "READY",
+  "version": "1.0.0",
+  "blockingIssues": [],
+  "warnings": [],
+  "assets": [
+    {
+      "assetId": "as-s1",
+      "type": "video",
+      "sceneId": "S1",
+      "rightsStatus": "CLEAR",
+      "required": true
+    },
+    {
+      "assetId": "as-s2",
+      "type": "image",
+      "sceneId": "S2",
+      "rightsStatus": "CLEAR",
+      "required": true
+    }
+  ]
+}

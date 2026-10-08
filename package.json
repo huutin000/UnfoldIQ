@@ -41,7 +41,12 @@
     "test:captions": "node scripts/run-tests.js captions",
     "test:pairing": "node scripts/run-tests.js pairing",
     "test:storage": "node scripts/run-tests.js storage",
-    "test:timeline": "node scripts/run-tests.js timeline"
+    "test:timeline": "node scripts/run-tests.js timeline",
+    "test:motion": "node scripts/run-tests.js motion",
+    "test:override": "node scripts/run-tests.js override",
+    "test:responsive": "node scripts/run-tests.js responsive",
+    "test:packaging": "node scripts/run-tests.js packaging",
+    "test:render": "node scripts/run-tests.js render"
   },
   "keywords": [],
   "author": "",

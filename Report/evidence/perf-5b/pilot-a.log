@@ -1,0 +1,13 @@
+[13:22:55] START A1 setup + bundle + full reference render
+[PASS] A1 setup + bundle + full reference render
+[13:26:52] START A2 chunked v1 render (5 ranges) + CAS publish
+[13:26:54] A2 resume: chunk 0-900 valid, ensuring record
+[13:26:54] A2 resume: chunk 900-1800 valid, ensuring record
+[13:26:54] A2 rendering range 1800-2700...
+[13:29:34] A2 rendering range 2700-3600...
+[13:32:18] A2 rendering range 3600-4500...
+[PASS] A2 chunked v1 render (5 ranges) + CAS publish
+[13:34:55] START A3 no-change reassembly from cache (zero renders)
+[PASS] A3 no-change reassembly from cache (zero renders)
+
+=== pilot-repair-a: 3 passed, 0 failed ===

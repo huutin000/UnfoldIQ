@@ -1,6 +1,6 @@
 {
   "artifact": "perf-baseline",
-  "capturedAt": "2026-10-07T06:39:57.135Z",
+  "capturedAt": "2026-10-08T02:29:19.339Z",
   "method": "process.hrtime.bigint micro-benchmarks inside tests/history/test-history.js",
   "sampleCounts": {
     "validate": 50,
@@ -15,48 +15,48 @@
   "metrics": {
     "validate": {
       "samples": 50,
-      "minMs": 0.02,
-      "p50Ms": 0.031,
-      "maxMs": 0.17
+      "minMs": 0.015,
+      "p50Ms": 0.018,
+      "maxMs": 0.05
     },
     "load": {
       "samples": 20,
-      "minMs": 0.198,
-      "p50Ms": 0.302,
-      "maxMs": 0.594
+      "minMs": 0.187,
+      "p50Ms": 0.215,
+      "maxMs": 0.491
     },
     "projection": {
       "samples": 20,
-      "minMs": 0.289,
-      "p50Ms": 0.319,
-      "maxMs": 0.429
+      "minMs": 0.182,
+      "p50Ms": 0.196,
+      "maxMs": 0.277
     },
     "lockCheck": {
       "samples": 50,
-      "minMs": 0.179,
-      "p50Ms": 0.301,
-      "maxMs": 0.991
+      "minMs": 0.177,
+      "p50Ms": 0.192,
+      "maxMs": 0.837
     },
     "append": {
       "samples": 10,
-      "minMs": 1.554,
-      "p50Ms": 8.247,
-      "maxMs": 8.812
+      "minMs": 1.538,
+      "p50Ms": 7.313,
+      "maxMs": 8.149
     },
     "lockMutation": {
       "samples": 10,
-      "minMs": 7.621,
-      "p50Ms": 8.83,
-      "maxMs": 9.873
+      "minMs": 7.427,
+      "p50Ms": 7.949,
+      "maxMs": 10.531
     },
     "variantSelect": {
       "samples": 5,
-      "minMs": 24.292,
-      "p50Ms": 25.302,
-      "maxMs": 27.148
+      "minMs": 26.777,
+      "p50Ms": 27.826,
+      "maxMs": 30.158
     },
     "sizeBytes": 18346,
-    "migrationMs": 222.62,
+    "migrationMs": 202.15,
     "eventsPerGeneration": 4.5,
     "unnecessaryRewriteCount": 0
   },

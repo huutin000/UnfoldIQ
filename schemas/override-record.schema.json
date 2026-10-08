@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://unfoldiq.local/schemas/override-record.schema.json",
+  "title": "UNFOLDIQ ManualOverrideRecord (Phase 3C)",
+  "type": "object",
+  "required": ["overrideId", "version", "projectId", "target", "operation", "payload", "scope", "source", "priority", "createdAt", "updatedAt", "baseRevision", "dependencyHashes", "status"],
+  "properties": {
+    "overrideId": { "type": "string" },
+    "version": { "type": "string" },
+    "projectId": { "type": "string" },
+    "target": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": { "enum": ["TIMELINE_ITEM", "SCENE", "MOTION", "TRANSITION", "CAPTION_STYLE", "RESPONSIVE_VARIANT"] }
+      }
+    },
+    "operation": { "type": "string" },
+    "payload": { "type": "object" },
+    "scope": { "enum": ["GLOBAL", "BASE_TIMELINE", "VARIANT_ONLY"] },
+    "source": { "enum": ["OPERATOR", "AGENT", "SYSTEM_REPAIR"] },
+    "priority": { "type": "integer" },
+    "baseRevision": { "type": "integer" },
+    "dependencyHashes": { "type": "object" },
+    "status": { "enum": ["ACTIVE", "SUPERSEDED", "RESET", "CONFLICT"] }
+  }
+}

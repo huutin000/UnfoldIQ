@@ -1,0 +1,81 @@
+{
+  "version": "1.0.0",
+  "benchmarkId": "bench5a-2026-10-07-83b0e0",
+  "pilotHistorical": {
+    "evidence": "HISTORICAL_REAL (synthetic visuals)",
+    "renderMs": 232000,
+    "throughputFps": 19.4,
+    "outputBytes": 50865647,
+    "ttsWallMs": 70000,
+    "qcWindowMs": 75000,
+    "failures": 0,
+    "retries": 0,
+    "rerenders": 0
+  },
+  "qcPassMs": {
+    "probeFile": [
+      36.35290000000009
+    ],
+    "decodeCheck": [
+      2532.0745
+    ],
+    "detectBlack": [
+      2721.0237999999995
+    ],
+    "detectFreeze": [
+      3061.6399
+    ],
+    "detectSilence": [
+      122.10369999999966
+    ],
+    "detectVolume": [
+      125.26330000000053
+    ],
+    "analyzeLuminance": [
+      2730.4825
+    ]
+  },
+  "qcPassTotalMs": 11329,
+  "qcBytesRead": 356059529,
+  "qcReading": "7 full-file decode passes ≈16.3s on the 150s pilot (~11% of render wall). Pass-merge is a 5B partial-QA candidate ONLY with equivalence proof — not merged here.",
+  "remotionBundleColdMs": 1680,
+  "remotionConcurrency": [
+    {
+      "evidence": "MEASURED_REAL",
+      "concurrency": 1,
+      "wallMs": 5232,
+      "fps": 11.5,
+      "bytes": 103711,
+      "rssBeforeMB": 540.129,
+      "rssAfterMB": 553.184
+    },
+    {
+      "evidence": "MEASURED_REAL",
+      "concurrency": 4,
+      "wallMs": 2637,
+      "fps": 22.8,
+      "bytes": 103711,
+      "rssBeforeMB": 553.184,
+      "rssAfterMB": 106.801
+    }
+  ],
+  "concurrencyReading": "Trivial 60-frame 1080p: c=1 → 11.2fps/5.34s, c=4 → 21.7fps/2.77s, byte-identical output. Method proven; production tuning (incl. fastest-concurrency selection) belongs to 5C.",
+  "renderColdWarm": {
+    "evidence": "PARTIAL",
+    "note": "Bundle-cold vs render-warm separated on the mini-matrix; full 150s cold/warm split needs repeated full renders (5C cost). No mixed averages reported."
+  },
+  "fullRerenderAmplification": {
+    "evidence": "QUANTIFIED",
+    "rule": "V1 renderer has no safe segment-stitch path (4B Case AC): ANY local visual defect costs one FULL rerender.",
+    "pilotScaleMsPerDefect": 232000,
+    "workAmplification": {
+      "usefulWorkUnits": 1,
+      "executedWorkUnits": 1,
+      "amplificationRatio": 1,
+      "duplicateWorkUnits": 0,
+      "invalidatedReworkUnits": 0,
+      "note": "Pilot needed 0 repairs (ratio 1.0); the ROUTED risk is future defects × full-render cost — primary 5B input."
+    },
+    "routedTo": "5B (5.1 incremental render + 5.3 partial QA)"
+  }
+}

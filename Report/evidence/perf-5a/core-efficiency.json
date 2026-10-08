@@ -1,0 +1,122 @@
+{
+  "version": "1.0.0",
+  "benchmarkId": "bench5a-2026-10-07-83b0e0",
+  "eventLoop": {
+    "utilization": 1,
+    "delay": {
+      "resolutionMs": 10,
+      "count": 0,
+      "meanMs": null,
+      "p95Ms": null,
+      "maxMs": null,
+      "belowResolution": true
+    },
+    "note": "ELU=1 over the saturated micro-window (100k conversions/tick); delay below 10ms resolution — Core is compute-trivial at this scale, never event-loop-bound."
+  },
+  "timebaseConversionsMs": {
+    "count": 21,
+    "min": 0.5564999999999998,
+    "max": 2.3027999999999906,
+    "mean": 0.741,
+    "median": 0.571,
+    "p50": 0.571,
+    "p75": 0.585,
+    "p95": 1.368,
+    "p99": null,
+    "stddev": 0.421
+  },
+  "timebaseChecksumDeterministic": {
+    "evidence": "MEASURED_REAL",
+    "allEqual": true,
+    "checksum": 587742
+  },
+  "processMemoryMB": {
+    "rss": 43.828,
+    "heapUsed": 5.623
+  },
+  "promptCorpus": {
+    "evidence": "HISTORICAL_REAL",
+    "files": 6,
+    "bytes": 23088,
+    "uniqueHashes": 6,
+    "duplicateUnits": 0
+  },
+  "promptCorpusReading": "6 files / 23kB / 0 duplicates in the sampled case — no same-run evidence duplication THERE; fleet-wide dedupe stays a 5B-cache input, not a 5A fix.",
+  "telemetryOverheadMs": {
+    "firstWriteCold": 37.01170000000002,
+    "warm": {
+      "count": 50,
+      "min": 6.668200000000013,
+      "max": 12.248000000000047,
+      "mean": 8.413,
+      "median": 8.154,
+      "p50": 8.154,
+      "p75": 8.985,
+      "p95": 9.763,
+      "p99": null,
+      "stddev": 0.975
+    },
+    "spanEnd": {
+      "count": 21,
+      "min": 6.172500000000014,
+      "max": 10.545599999999922,
+      "mean": 7.435,
+      "median": 7.096,
+      "p50": 7.096,
+      "p75": 8.058,
+      "p95": 8.676,
+      "p99": null,
+      "stddev": 1.06
+    },
+    "getTrace": 5.44380000000001
+  },
+  "telemetryOverheadReading": "First write pays JIT+file-init (~70ms cold in this run); warm writes ~8ms — negligible per-event, but high-frequency DEBUG emission would dominate; sampling stays restricted to DEBUG_EPHEMERAL per lib/telemetry.",
+  "modelRouting": {
+    "evidence": "NOT_MEASURED",
+    "reason": "No multi-model task executed in 5A; V1 default local-kokoro declared in providers/CONFIG.yaml. No routing change adopted without quality regression proof."
+  },
+  "retryWaste": {
+    "evidence": "MEASURED_REAL",
+    "observations": [
+      "Bridge duplicate submit-issued (same nonce): HTTP 200 idempotent, 0 duplicate actions.",
+      "Bridge wrong-nonce submit while unresolved: HTTP 400 APPROVAL_NONCE_MISMATCH-class rejection (no second credit action armed).",
+      "Telemetry same-id same-bytes replay: noop; same-id different-bytes: TELEMETRY_CONFLICT (unit-proven in tests/telemetry)."
+    ],
+    "taxonomy": [
+      "TRANSIENT",
+      "RATE_LIMIT",
+      "PROVIDER_BUSY",
+      "AUTH",
+      "STALE_STATE",
+      "INVALID_INPUT",
+      "NON_RETRYABLE"
+    ],
+    "taxonomyStatus": "ADOPTED as classification vocabulary; per-cause latency/cost attribution requires live provider incidents (none in pilot: retries 0)."
+  },
+  "timeToSufficiency": {
+    "evidence": "NOT_MEASURED",
+    "reason": "No research run executed in 5A; sufficiency gate lives in lib/research-evidence. Plan: instrument time-to-sufficiency on the next real research task."
+  },
+  "timeToApprovedArtifact": {
+    "evidence": "PARTIAL",
+    "valueMs": 377000,
+    "note": "Pilot request→approved-final for the RENDER path only; research/approval-loop latency not exercised."
+  },
+  "costPerFinalMinute": {
+    "evidence": "NOT_MEASURED",
+    "paidDims": [
+      "LLM",
+      "image/video provider",
+      "music provider",
+      "cloud render"
+    ],
+    "reason": "Pilot spend 0 on all paid dims (local TTS + synthetic visuals + local render); cost policy allowPaidCloud=false. Zero is spend, NOT a price baseline."
+  },
+  "motionBlurGap014": {
+    "status": "MEASURED_ROUTED_5C",
+    "evidence": "MEASURED_REAL",
+    "registry": "lib/motion/primitives.js",
+    "highCostRefs": 1,
+    "blurOffByDefaultSignal": true
+  }
+}

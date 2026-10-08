@@ -1,0 +1,15 @@
+[13:36:00] START B0 requires part-A outputs
+[PASS] B0 requires part-A outputs
+[13:36:00] START B1 S03 visual swap -> dirty range [1800,2700) only
+[PASS] B1 S03 visual swap -> dirty range [1800,2700) only
+[13:36:21] START B2 dirty render + cache reuse + assembly + conform
+[13:36:25] B2 rendering dirty range [1800,2700)...
+[PASS] B2 dirty render + cache reuse + assembly + conform
+[13:39:39] START B3 oracle full render + equivalence + partial QA
+[13:39:39] B3 rendering full oracle (V2 timeline)...
+[13:43:45] B3 equivalence compare...
+[13:45:22] B3 partial QA...
+[PASS] B3 oracle full render + equivalence + partial QA
+[13:45:27] metrics persisted
+
+=== pilot-repair-b: 4 passed, 0 failed ===

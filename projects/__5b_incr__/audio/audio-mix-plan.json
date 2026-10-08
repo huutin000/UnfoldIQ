@@ -1,0 +1,31 @@
+{
+  "tracks": {
+    "voice": [
+      {
+        "clipId": "clip_S1",
+        "path": "assets/s1-voice.wav",
+        "fromMs": 0,
+        "trimStartMs": 0,
+        "trimEndMs": 1500,
+        "timingStatus": "MEASURED",
+        "gainDb": 0,
+        "fadeInMs": 50,
+        "fadeOutMs": 150,
+        "loop": false
+      },
+      {
+        "clipId": "clip_S2",
+        "path": "assets/s2-voice.wav",
+        "fromMs": 2000,
+        "trimStartMs": 0,
+        "trimEndMs": 1500,
+        "timingStatus": "MEASURED",
+        "gainDb": 0,
+        "fadeInMs": 50,
+        "fadeOutMs": 150,
+        "loop": false
+      }
+    ]
+  },
+  "generatedClipAudioPolicy": "MUTE_GENERATED_CLIP_AUDIO"
+}

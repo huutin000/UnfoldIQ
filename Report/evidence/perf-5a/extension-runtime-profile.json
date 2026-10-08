@@ -1,0 +1,131 @@
+{
+  "version": "1.0.0",
+  "benchmarkId": "bench5a-2026-10-07-83b0e0",
+  "validateSenderMs": {
+    "count": 51,
+    "min": 0.0001999999999497959,
+    "max": 0.05150000000003274,
+    "mean": 0.001,
+    "median": 0,
+    "p50": 0,
+    "p75": 0,
+    "p95": 0.002,
+    "p99": null,
+    "stddev": 0.007
+  },
+  "validateSenderRejectMs": {
+    "count": 51,
+    "min": 0.005599999999958527,
+    "max": 0.057299999999941065,
+    "mean": 0.007,
+    "median": 0.006,
+    "p50": 0.006,
+    "p75": 0.006,
+    "p95": 0.008,
+    "p99": null,
+    "stddev": 0.007
+  },
+  "validateMessageMs": {
+    "count": 51,
+    "min": 0.0003999999998995918,
+    "max": 0.04610000000002401,
+    "mean": 0.002,
+    "median": 0,
+    "p50": 0,
+    "p75": 0.001,
+    "p95": 0.006,
+    "p99": null,
+    "stddev": 0.007
+  },
+  "pollJobStateSuccessCalls": {
+    "evidence": "MEASURED_REAL",
+    "transitionsAtT": 2000,
+    "note": "Pure-function poll resolves on observed RESULT_DETECTED; timeout path returns a marker, never a new submit."
+  },
+  "correlateDownloadMs": {
+    "count": 51,
+    "min": 0.0018999999999778083,
+    "max": 0.17249999999989996,
+    "mean": 0.007,
+    "median": 0.002,
+    "p50": 0.002,
+    "p75": 0.003,
+    "p95": 0.015,
+    "p99": null,
+    "stddev": 0.024
+  },
+  "classifyErrorMs": {
+    "count": 51,
+    "min": 0.0001999999999497959,
+    "max": 0.03040000000009968,
+    "mean": 0.001,
+    "median": 0,
+    "p50": 0,
+    "p75": 0,
+    "p95": 0.005,
+    "p99": null,
+    "stddev": 0.004
+  },
+  "domScanWorstMs": {
+    "count": 21,
+    "min": 0.0004999999998744897,
+    "max": 0.03170000000000073,
+    "mean": 0.002,
+    "median": 0.001,
+    "p50": 0.001,
+    "p75": 0.001,
+    "p95": 0.004,
+    "p99": null,
+    "stddev": 0.007
+  },
+  "domScanHitMs": {
+    "count": 21,
+    "min": 0.0005999999998493877,
+    "max": 0.014000000000123691,
+    "mean": 0.001,
+    "median": 0.001,
+    "p50": 0.001,
+    "p75": 0.001,
+    "p95": 0.003,
+    "p99": null,
+    "stddev": 0.003
+  },
+  "domScanMeta": {
+    "evidence": "MEASURED_REAL",
+    "selectorCandidates": 5,
+    "nodes": 200
+  },
+  "domScanReading": "Worst-case full fallback scan over 200 nodes is sub-0.05ms in the mock harness — DOM scan width is NOT a local bottleneck; live-page cost (layout/style recalc) is the unmeasured part (plan below).",
+  "payloadBytes": {
+    "evidence": "MEASURED_REAL",
+    "jobCreateBytes": 100,
+    "relayCmdBytes": 85
+  },
+  "keepaliveAudit": {
+    "evidence": "MEASURED_REAL",
+    "permanentKeepalive": false,
+    "note": "service-worker.js uses only bounded per-request setTimeout (relay reply timeout); approvals survive termination via chrome.storage.session mirror (fail-safe: missing approval BLOCKS submit). No indefinite keepalive introduced."
+  },
+  "notMeasured": [
+    {
+      "metric": "sidePanelOpenToUsable",
+      "plan": "Playwright side-panel timing on the built extension (Phase 5B)."
+    },
+    {
+      "metric": "serviceWorkerColdWake/serviceWorkerWarmPath",
+      "plan": "MV3 terminate→event-wake harness in real Chrome; measure wake + state-restore + lost/duplicate messages."
+    },
+    {
+      "metric": "MutationObserver callback rate + work time",
+      "plan": "Instrumented Flow-page session: count callbacks and observer work ms per generation."
+    },
+    {
+      "metric": "poll count/interval/terminal stop",
+      "plan": "Same session: assert polling stops at terminal state (RESULT_DETECTED/FAILED)."
+    },
+    {
+      "metric": "idle/active CPU, memory growth, storage read/write, reconnect latency",
+      "plan": "Repeated representative cycles + chrome.storage accounting; leak = non-reclaimed growth across equivalent cycles."
+    }
+  ]
+}

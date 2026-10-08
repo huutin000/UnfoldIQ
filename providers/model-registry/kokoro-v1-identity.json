@@ -9,7 +9,7 @@
   "officialExpectedSha256": "496dba118d1a58f5f3db2efc88dbdc216e0483fc89fe6e47ee1f2c53f18ad1e4",
   "officialSizeBytes": 327212226,
   "match": true,
-  "verifiedAt": "2026-10-07T06:43:05.351Z",
+  "verifiedAt": "2026-10-07T14:03:19.336Z",
   "sourceRef": "https://huggingface.co/api/models/hexgrad/Kokoro-82M/paths-info/main (lfs.oid, retrieved 2026-10-06)",
   "note": "Production segment artifacts keep their recorded runtime identity; this file is the separate immutable provenance artifact (FIX 01 Gap C). Wiring per-synthesis modelHash is deferred — see report."
 }

@@ -1,0 +1,41 @@
+{
+  "assets": [
+    {
+      "assetId": "as-s1",
+      "type": "video",
+      "path": "assets/s1.mp4",
+      "status": "READY",
+      "sceneIds": [
+        "S1"
+      ],
+      "width": 1280,
+      "height": 720,
+      "durationMs": 2000
+    },
+    {
+      "assetId": "as-s2",
+      "type": "image",
+      "path": "assets/still.png",
+      "status": "READY",
+      "sceneIds": [
+        "S2"
+      ],
+      "width": 1280,
+      "height": 720
+    },
+    {
+      "assetId": "AUD_S1",
+      "type": "voice",
+      "path": "assets/s1-voice.wav",
+      "status": "READY",
+      "durationMs": 1500
+    },
+    {
+      "assetId": "AUD_S2",
+      "type": "voice",
+      "path": "assets/s2-voice.wav",
+      "status": "READY",
+      "durationMs": 1500
+    }
+  ]
+}

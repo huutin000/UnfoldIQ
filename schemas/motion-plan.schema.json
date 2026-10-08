@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://unfoldiq.local/schemas/motion-plan.schema.json",
+  "title": "UNFOLDIQ MotionPlan (Phase 3B)",
+  "type": "object",
+  "required": ["version", "projectId", "timelineId", "timelineRevision", "timebasePolicyRef", "revision", "items", "transitions", "coverage", "qaStatus", "inputHashes"],
+  "properties": {
+    "version": { "type": "string" },
+    "projectId": { "type": "string" },
+    "timelineId": { "type": "string" },
+    "timelineRevision": { "type": "integer" },
+    "timebasePolicyRef": { "type": "string" },
+    "revision": { "type": "integer" },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["motionItemId", "timelineItemId", "presence", "frameRange", "locked", "reason", "dependencyHashes"],
+        "properties": {
+          "motionItemId": { "type": "string" },
+          "timelineItemId": { "type": "string" },
+          "presence": { "enum": ["STATIC", "SUBTLE", "ACTIVE", "FEATURED"] },
+          "purpose": { "type": ["string", "null"] },
+          "primitiveRef": { "type": ["string", "null"] },
+          "timingPresetRef": { "type": ["string", "null"] },
+          "frameRange": {
+            "type": "object",
+            "required": ["startFrame", "endFrameExclusive"],
+            "properties": {
+              "startFrame": { "type": "integer" },
+              "endFrameExclusive": { "type": "integer" }
+            }
+          },
+          "locked": { "type": "boolean" }
+        }
+      }
+    },
+    "transitions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["transitionId", "fromTimelineItemId", "toTimelineItemId", "primitiveRef", "timingPresetRef", "alignment", "durationFrames", "cutFrame", "fallback", "reason", "locked"],
+        "properties": {
+          "transitionId": { "type": "string" },
+          "alignment": { "enum": ["CENTER_AT_CUT", "START_AT_CUT", "END_AT_CUT", "CUSTOM"] },
+          "durationFrames": { "type": "integer" },
+          "cutFrame": { "type": "integer" }
+        }
+      }
+    },
+    "coverage": { "type": "object" },
+    "qaStatus": { "enum": ["PASS", "FAIL", "REVIEW_REQUIRED"] },
+    "inputHashes": { "type": "object" }
+  }
+}

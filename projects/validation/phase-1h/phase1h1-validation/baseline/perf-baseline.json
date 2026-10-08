@@ -1,6 +1,6 @@
 {
   "artifact": "perf-baseline",
-  "capturedAt": "2026-10-07T06:41:27.590Z",
+  "capturedAt": "2026-10-07T14:01:38.254Z",
   "method": "process.hrtime.bigint micro-benchmarks inside tests/project-manifest/test-manifest.js",
   "sampleCounts": {
     "validate": 50,
@@ -12,30 +12,30 @@
   "metrics": {
     "load": {
       "samples": 20,
-      "minMs": 0.397,
-      "p50Ms": 0.618,
-      "maxMs": 7.316
+      "minMs": 0.359,
+      "p50Ms": 0.502,
+      "maxMs": 7.526
     },
     "validate": {
       "samples": 50,
-      "minMs": 0.109,
-      "p50Ms": 0.115,
-      "maxMs": 0.789
+      "minMs": 0.112,
+      "p50Ms": 0.127,
+      "maxMs": 0.974
     },
     "write": {
       "samples": 10,
-      "minMs": 2.206,
-      "p50Ms": 7.607,
-      "maxMs": 8.468
+      "minMs": 3.595,
+      "p50Ms": 9.176,
+      "maxMs": 10.364
     },
     "conflictCheck": {
       "samples": 20,
-      "minMs": 0.316,
-      "p50Ms": 0.339,
-      "maxMs": 0.622
+      "minMs": 0.319,
+      "p50Ms": 0.358,
+      "maxMs": 0.758
     },
-    "sizeBytes": 4014,
-    "migrationMs": 28.11,
+    "sizeBytes": 4013,
+    "migrationMs": 31.62,
     "readCount": "1 file per load (single JSON)",
     "writeCount": "1 atomic replace per effective mutation; 0 on no-op",
     "unnecessaryRewriteCount": 0

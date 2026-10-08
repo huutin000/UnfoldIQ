@@ -1,0 +1,28 @@
+{
+ "version": "1.0.0",
+ "phase": "5C-04",
+ "scale": "small (120 frames, 1280x720-class)",
+ "flag": "UNFOLDIQ_BROWSER_REUSE=1",
+ "rangeRenders": 4,
+ "browserStarts": 1,
+ "reusedLeases": 3,
+ "browserStartupMs": 138,
+ "startupAvoidedMs": [
+  138,
+  138,
+  138
+ ],
+ "startupAvoidedTotalMs": 414,
+ "benchmark5b": {
+  "fullReferenceMs": 13574,
+  "incrementalRenderMs": 5529
+ },
+ "policy": {
+  "version": "1.0.0",
+  "maxBrowsers": 2,
+  "idleTtlMs": 300000,
+  "maxJobsPerBrowser": 25,
+  "maxAgeMs": 1800000,
+  "maxRssBytes": 2147483648
+ }
+}

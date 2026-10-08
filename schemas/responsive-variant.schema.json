@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://unfoldiq.local/schemas/responsive-variant.schema.json",
+  "title": "UNFOLDIQ ResponsiveTimelineVariant (Phase 3C)",
+  "type": "object",
+  "required": ["version", "variantId", "projectId", "sourceTimelineId", "sourceTimelineRevision", "sourceMotionPlanRevision", "responsiveProfileRef", "layoutItems", "reframePlans", "revision", "qaStatus", "dependencyHashes", "createdAt", "updatedAt"],
+  "properties": {
+    "version": { "type": "string" },
+    "variantId": { "type": "string" },
+    "projectId": { "type": "string" },
+    "sourceTimelineId": { "type": "string" },
+    "sourceTimelineRevision": { "type": "integer" },
+    "sourceMotionPlanRevision": { "type": "integer" },
+    "responsiveProfileRef": { "type": "string" },
+    "revision": { "type": "integer" },
+    "layoutItems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["timelineItemId", "role", "fitPolicy", "cropWindow", "frameRange", "framingSource"],
+        "properties": {
+          "timelineItemId": { "type": "string" },
+          "role": { "type": "string" },
+          "fitPolicy": { "enum": ["CONTAIN", "COVER", "SMART_CROP"] }
+        }
+      }
+    },
+    "reframePlans": { "type": "array" },
+    "qaStatus": { "enum": ["PASS", "FAIL", "REVIEW_REQUIRED"] },
+    "dependencyHashes": { "type": "object" }
+  }
+}

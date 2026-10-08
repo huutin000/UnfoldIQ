@@ -1,6 +1,6 @@
 {
   "artifact": "perf-baseline-governance",
-  "capturedAt": "2026-10-07T06:42:34.837Z",
+  "capturedAt": "2026-10-07T14:02:47.340Z",
   "method": "process.hrtime.bigint micro-benchmarks inside tests/provenance/test-provenance.js",
   "sampleCounts": {
     "record": 10,
@@ -11,21 +11,21 @@
   "metrics": {
     "record": {
       "samples": 10,
-      "minMs": 6.445,
-      "p50Ms": 7.647,
-      "maxMs": 9.359
+      "minMs": 6.127,
+      "p50Ms": 8.16,
+      "maxMs": 8.841
     },
     "load": {
       "samples": 20,
-      "minMs": 0.602,
-      "p50Ms": 0.7,
-      "maxMs": 6.576
+      "minMs": 0.539,
+      "p50Ms": 0.745,
+      "maxMs": 6.502
     },
     "trace": {
       "samples": 20,
-      "minMs": 0.478,
-      "p50Ms": 0.526,
-      "maxMs": 0.756
+      "minMs": 0.488,
+      "p50Ms": 0.548,
+      "maxMs": 0.752
     },
     "sizeBytes": 13744
   },

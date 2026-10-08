@@ -1,0 +1,86 @@
+{
+ "version": "1.0.0",
+ "scale": "pilot (4500 frames, 1920x1080@30)",
+ "ranges": [
+  {
+   "startFrame": 0,
+   "endFrameExclusive": 900
+  },
+  {
+   "startFrame": 900,
+   "endFrameExclusive": 1800
+  },
+  {
+   "startFrame": 1800,
+   "endFrameExclusive": 2700
+  },
+  {
+   "startFrame": 2700,
+   "endFrameExclusive": 3600
+  },
+  {
+   "startFrame": 3600,
+   "endFrameExclusive": 4500
+  }
+ ],
+ "fullReferenceMs": null,
+ "fullReferenceNote": "resumed existing ref-v1.mp4 (4500 frames verified)",
+ "bundleMs": 0,
+ "chunkedV1Ms": 0,
+ "chunksV1": [
+  {
+   "range": {
+    "startFrame": 0,
+    "endFrameExclusive": 900
+   },
+   "actionKey": "62f441172c66e36b9eb05f3f746fa99f3d0f0136e3c92eab95b36cd24a04d9fb",
+   "renderMs": 0,
+   "bytes": 30798520
+  },
+  {
+   "range": {
+    "startFrame": 900,
+    "endFrameExclusive": 1800
+   },
+   "actionKey": "6e5355b26aacb699aa79da3c26aa5c3a7ce2058537517f65dac548b02d632c5c",
+   "renderMs": 0,
+   "bytes": 98452
+  },
+  {
+   "range": {
+    "startFrame": 1800,
+    "endFrameExclusive": 2700
+   },
+   "actionKey": "5415342461a08e73782e93a6b59d43f8facfe3a665053fa1838bc2e25b784d1b",
+   "renderMs": 0,
+   "bytes": 157352
+  },
+  {
+   "range": {
+    "startFrame": 2700,
+    "endFrameExclusive": 3600
+   },
+   "actionKey": "a9775be59623374d743839505b24bdf8f56f6cc3ae1a617d2cceed522f3937b9",
+   "renderMs": 0,
+   "bytes": 1378779
+  },
+  {
+   "range": {
+    "startFrame": 3600,
+    "endFrameExclusive": 4500
+   },
+   "actionKey": "7b1c50b3fd900a0ed1c199426e2e5f78b7446e345df85aac9ae0617c7765ac69",
+   "renderMs": 0,
+   "bytes": 222836
+  }
+ ],
+ "reassemblyMs": 393,
+ "cache": {
+  "lookups": 6,
+  "validHits": 5,
+  "misses": 1,
+  "bytesReused": 32655939,
+  "bytesWritten": 32655939,
+  "hashingMs": 38
+ }
+}

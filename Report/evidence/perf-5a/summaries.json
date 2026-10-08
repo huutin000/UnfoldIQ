@@ -1,0 +1,483 @@
+{
+  "core": {
+    "timebase500x5PoliciesMs": {
+      "count": 21,
+      "min": 0.5564999999999998,
+      "max": 2.3027999999999906,
+      "mean": 0.741,
+      "median": 0.571,
+      "p50": 0.571,
+      "p75": 0.585,
+      "p95": 1.368,
+      "p99": null,
+      "stddev": 0.421
+    },
+    "timebaseChecksumDeterministic": [
+      {
+        "evidence": "MEASURED_REAL",
+        "allEqual": true,
+        "checksum": 587742
+      }
+    ],
+    "eventLoopUtilization": {
+      "count": 1,
+      "min": 1,
+      "max": 1,
+      "mean": 1,
+      "median": 1,
+      "p50": 1,
+      "p75": null,
+      "p95": null,
+      "p99": null,
+      "stddev": 0
+    },
+    "eventLoopDelayMs": [
+      {
+        "resolutionMs": 10,
+        "count": 0,
+        "meanMs": null,
+        "p95Ms": null,
+        "maxMs": null,
+        "belowResolution": true
+      }
+    ],
+    "processMemoryMB": [
+      {
+        "rss": 43.828,
+        "heapUsed": 5.623
+      }
+    ],
+    "promptCorpus": [
+      {
+        "evidence": "HISTORICAL_REAL",
+        "files": 6,
+        "bytes": 23088,
+        "uniqueHashes": 6,
+        "duplicateUnits": 0
+      }
+    ],
+    "telemetryRecordEventMs": {
+      "count": 51,
+      "min": 6.668200000000013,
+      "max": 37.01170000000002,
+      "mean": 8.974,
+      "median": 8.164,
+      "p50": 8.164,
+      "p75": 9.027,
+      "p95": 10,
+      "p99": null,
+      "stddev": 4.081
+    },
+    "telemetrySpanEndMs": {
+      "count": 21,
+      "min": 6.172500000000014,
+      "max": 10.545599999999922,
+      "mean": 7.435,
+      "median": 7.096,
+      "p50": 7.096,
+      "p75": 8.058,
+      "p95": 8.676,
+      "p99": null,
+      "stddev": 1.06
+    },
+    "telemetryGetTraceMs": {
+      "count": 1,
+      "min": 5.44380000000001,
+      "max": 5.44380000000001,
+      "mean": 5.444,
+      "median": 5.444,
+      "p50": 5.444,
+      "p75": null,
+      "p95": null,
+      "p99": null,
+      "stddev": 0
+    },
+    "motionBlurCost": [
+      {
+        "evidence": "MEASURED_REAL",
+        "registry": "lib/motion/primitives.js",
+        "highCostRefs": 1,
+        "blurOffByDefaultSignal": true
+      }
+    ],
+    "notes": [
+      "eventLoopUtilization delta over 5x timebase workload: {\"idle\":0,\"active\":6.307900000014342,\"utilization\":1}"
+    ]
+  },
+  "extension": {
+    "validateSenderValidMs": {
+      "count": 51,
+      "min": 0.0001999999999497959,
+      "max": 0.05150000000003274,
+      "mean": 0.001,
+      "median": 0,
+      "p50": 0,
+      "p75": 0,
+      "p95": 0.002,
+      "p99": null,
+      "stddev": 0.007
+    },
+    "validateSenderRejectMs": {
+      "count": 51,
+      "min": 0.005599999999958527,
+      "max": 0.057299999999941065,
+      "mean": 0.007,
+      "median": 0.006,
+      "p50": 0.006,
+      "p75": 0.006,
+      "p95": 0.008,
+      "p99": null,
+      "stddev": 0.007
+    },
+    "validateMessageMs": {
+      "count": 51,
+      "min": 0.0003999999998995918,
+      "max": 0.04610000000002401,
+      "mean": 0.002,
+      "median": 0,
+      "p50": 0,
+      "p75": 0.001,
+      "p95": 0.006,
+      "p99": null,
+      "stddev": 0.007
+    },
+    "pollSuccessMs": {
+      "count": 21,
+      "min": 0.0001999999999497959,
+      "max": 0.06989999999996144,
+      "mean": 0.006,
+      "median": 0.001,
+      "p50": 0.001,
+      "p75": 0.003,
+      "p95": 0.025,
+      "p99": null,
+      "stddev": 0.015
+    },
+    "pollTimeoutMs": {
+      "count": 11,
+      "min": 0.0004999999998744897,
+      "max": 0.022400000000061482,
+      "mean": 0.003,
+      "median": 0.001,
+      "p50": 0.001,
+      "p75": 0.002,
+      "p95": 0.022,
+      "p99": null,
+      "stddev": 0.006
+    },
+    "correlateDownloadMs": {
+      "count": 51,
+      "min": 0.0018999999999778083,
+      "max": 0.17249999999989996,
+      "mean": 0.007,
+      "median": 0.002,
+      "p50": 0.002,
+      "p75": 0.003,
+      "p95": 0.015,
+      "p99": null,
+      "stddev": 0.024
+    },
+    "classifyErrorMs": {
+      "count": 51,
+      "min": 0.0001999999999497959,
+      "max": 0.03040000000009968,
+      "mean": 0.001,
+      "median": 0,
+      "p50": 0,
+      "p75": 0,
+      "p95": 0.005,
+      "p99": null,
+      "stddev": 0.004
+    },
+    "domScanWorstMs": {
+      "count": 21,
+      "min": 0.0004999999998744897,
+      "max": 0.03170000000000073,
+      "mean": 0.002,
+      "median": 0.001,
+      "p50": 0.001,
+      "p75": 0.001,
+      "p95": 0.004,
+      "p99": null,
+      "stddev": 0.007
+    },
+    "domScanHitMs": {
+      "count": 21,
+      "min": 0.0005999999998493877,
+      "max": 0.014000000000123691,
+      "mean": 0.001,
+      "median": 0.001,
+      "p50": 0.001,
+      "p75": 0.001,
+      "p95": 0.003,
+      "p99": null,
+      "stddev": 0.003
+    },
+    "domScanMeta": [
+      {
+        "evidence": "MEASURED_REAL",
+        "selectorCandidates": 5,
+        "nodes": 200
+      }
+    ],
+    "payloadBytes": [
+      {
+        "evidence": "MEASURED_REAL",
+        "jobCreateBytes": 100,
+        "relayCmdBytes": 85
+      }
+    ],
+    "notes": [
+      "sidePanelOpenToUsable NOT_MEASURED: no real browser in this env (plan: Playwright side-panel timing, Phase 5B).",
+      "serviceWorkerColdWake/serviceWorkerWarmPath NOT_MEASURED live (plan: MV3 terminate→wake harness in real Chrome).",
+      "MutationObserver callback rate NOT_MEASURED under Node (plan: instrumented Flow-page session, count callbacks/work ms).",
+      "idle/active CPU + memory growth + storage I/O NOT_MEASURED live (plan: repeated-cycle harness with chrome.system.memory when available)."
+    ]
+  },
+  "integration": {
+    "bridgePostJobsMs": {
+      "count": 11,
+      "min": 1.8713999999999942,
+      "max": 14.29950000000008,
+      "mean": 3.492,
+      "median": 2.332,
+      "p50": 2.332,
+      "p75": 2.921,
+      "p95": 14.3,
+      "p99": null,
+      "stddev": 3.44
+    },
+    "bridgeGetJobMs": {
+      "count": 11,
+      "min": 0.45280000000002474,
+      "max": 1.1272000000001299,
+      "mean": 0.595,
+      "median": 0.556,
+      "p50": 0.556,
+      "p75": 0.585,
+      "p95": 1.127,
+      "p99": null,
+      "stddev": 0.18
+    },
+    "lifecycleHopsMs": [
+      {
+        "submit": 1.587400000000116,
+        "prepareLocal": 13.016599999999926,
+        "awaitApproval": 6.674499999999853,
+        "approve": 8.68119999999999,
+        "approveReqBytes": 157,
+        "approveResBytes": 109,
+        "submitIssued1": 7.79060000000004,
+        "submitIssuedDuplicate": 8.22810000000004,
+        "duplicateSubmitStatus": 200,
+        "wrongNonceStatus": 400,
+        "generate": 2.004799999999932,
+        "resultCandidates": 13.540199999999913,
+        "resultCandidatesReqBytes": 208
+      }
+    ],
+    "reconnectResyncMs": {
+      "count": 1,
+      "min": 6.6503999999999905,
+      "max": 6.6503999999999905,
+      "mean": 6.65,
+      "median": 6.65,
+      "p50": 6.65,
+      "p75": null,
+      "p95": null,
+      "p99": null,
+      "stddev": 0
+    },
+    "reconnectMeta": [
+      {
+        "evidence": "MEASURED_REAL",
+        "statusAfterRestart": "RESULT_DETECTED",
+        "duplicateExpensiveActions": 0,
+        "stateDivergence": 0,
+        "retryCount": 0
+      }
+    ],
+    "notes": [
+      "Core serialize/send vs Bridge validation split NOT_MEASURED separately (single-process HTTP RTT only); provider wait excluded by design."
+    ]
+  },
+  "render": {
+    "pilotFile": [
+      {
+        "evidence": "MEASURED_REAL",
+        "bytes": 50865647
+      }
+    ],
+    "pilotEvidence": [
+      {
+        "evidence": "HISTORICAL_REAL",
+        "probeKeys": [
+          "path",
+          "fileSizeBytes",
+          "format",
+          "video",
+          "audio",
+          "streamCount",
+          "raw"
+        ],
+        "qcKeys": [
+          "decode",
+          "black",
+          "freeze",
+          "silence",
+          "volume",
+          "luma",
+          "frames",
+          "renderMs",
+          "conformMs",
+          "conformRecord",
+          "fps"
+        ]
+      }
+    ],
+    "qcPassMs": {
+      "probeFile": {
+        "count": 1,
+        "min": 36.35290000000009,
+        "max": 36.35290000000009,
+        "mean": 36.353,
+        "median": 36.353,
+        "p50": 36.353,
+        "p75": null,
+        "p95": null,
+        "p99": null,
+        "stddev": 0
+      },
+      "decodeCheck": {
+        "count": 1,
+        "min": 2532.0745,
+        "max": 2532.0745,
+        "mean": 2532.075,
+        "median": 2532.075,
+        "p50": 2532.075,
+        "p75": null,
+        "p95": null,
+        "p99": null,
+        "stddev": 0
+      },
+      "detectBlack": {
+        "count": 1,
+        "min": 2721.0237999999995,
+        "max": 2721.0237999999995,
+        "mean": 2721.024,
+        "median": 2721.024,
+        "p50": 2721.024,
+        "p75": null,
+        "p95": null,
+        "p99": null,
+        "stddev": 0
+      },
+      "detectFreeze": {
+        "count": 1,
+        "min": 3061.6399,
+        "max": 3061.6399,
+        "mean": 3061.64,
+        "median": 3061.64,
+        "p50": 3061.64,
+        "p75": null,
+        "p95": null,
+        "p99": null,
+        "stddev": 0
+      },
+      "detectSilence": {
+        "count": 1,
+        "min": 122.10369999999966,
+        "max": 122.10369999999966,
+        "mean": 122.104,
+        "median": 122.104,
+        "p50": 122.104,
+        "p75": null,
+        "p95": null,
+        "p99": null,
+        "stddev": 0
+      },
+      "detectVolume": {
+        "count": 1,
+        "min": 125.26330000000053,
+        "max": 125.26330000000053,
+        "mean": 125.263,
+        "median": 125.263,
+        "p50": 125.263,
+        "p75": null,
+        "p95": null,
+        "p99": null,
+        "stddev": 0
+      },
+      "analyzeLuminance": {
+        "count": 1,
+        "min": 2730.4825,
+        "max": 2730.4825,
+        "mean": 2730.483,
+        "median": 2730.483,
+        "p50": 2730.483,
+        "p75": null,
+        "p95": null,
+        "p99": null,
+        "stddev": 0
+      }
+    },
+    "remotionConcurrency": [
+      {
+        "evidence": "MEASURED_REAL",
+        "concurrency": 1,
+        "wallMs": 5232,
+        "fps": 11.5,
+        "bytes": 103711,
+        "rssBeforeMB": 540.129,
+        "rssAfterMB": 553.184
+      },
+      {
+        "evidence": "MEASURED_REAL",
+        "concurrency": 4,
+        "wallMs": 2637,
+        "fps": 22.8,
+        "bytes": 103711,
+        "rssBeforeMB": 553.184,
+        "rssAfterMB": 106.801
+      }
+    ],
+    "remotionBundleColdMs": {
+      "count": 1,
+      "min": 1680,
+      "max": 1680,
+      "mean": 1680,
+      "median": 1680,
+      "p50": 1680,
+      "p75": null,
+      "p95": null,
+      "p99": null,
+      "stddev": 0
+    },
+    "notes": [
+      "Full 150s render cold/warm split: single HISTORICAL sample (232s @~19fps, synthetic visuals) — repeated full renders deferred to 5C (cost), mini-matrix above proves the method."
+    ]
+  },
+  "provider": {
+    "providerPolicy": [
+      {
+        "evidence": "MEASURED_REAL",
+        "allowPaidCloud": false
+      }
+    ],
+    "providerWait": [
+      {
+        "evidence": "NOT_MEASURED",
+        "reason": "pilot used synthetic visuals + local TTS; cost policy blocks paid calls; no representative live sample authorized in 5A"
+      }
+    ],
+    "providerCost": [
+      {
+        "evidence": "NOT_MEASURED",
+        "reason": "LLM 0, image/video 0, music 0 in pilot (local/synthetic); paid dims never exercised"
+      }
+    ],
+    "notes": [
+      "Bounded live provider sample: NOT authorized in 5A (plan registered: 1 image + 1 video via flow-web, operator-approved, Phase 5C)."
+    ]
+  }
+}

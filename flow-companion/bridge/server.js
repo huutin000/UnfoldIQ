@@ -25,7 +25,7 @@ const store = require("./job-store");
 const jobContract = require("../extension/src/contracts/job-contract.js");
 const { checkGeneratedImage, checkCorrelation } = require("./media-quality");
 
-const ALLOWED_ROUTES = ["GET /health", "GET /capabilities", "POST /jobs", "GET /jobs/:jobId", "POST /jobs/:jobId/await-approval", "POST /jobs/:jobId/approve", "POST /jobs/:jobId/submit-issued", "POST /jobs/:jobId/generate", "POST /jobs/:jobId/cancel", "POST /jobs/:jobId/result", "POST /jobs/:jobId/result-candidates", "POST /jobs/:jobId/artifact", "POST /instruction/apply", "POST /instruction/evidence", "GET /pairing/status", "POST /pairing/approve", "POST /pairing/challenge", "POST /pairing/verify", "POST /pairing/disconnect", "POST /pairing/revoke", "POST /pairing/rotate"];
+const ALLOWED_ROUTES = ["GET /health", "GET /capabilities", "POST /jobs", "GET /jobs/:jobId", "POST /jobs/:jobId/await-approval", "POST /jobs/:jobId/approve", "POST /jobs/:jobId/submit-issued", "POST /jobs/:jobId/generate", "POST /jobs/:jobId/cancel", "POST /jobs/:jobId/result", "POST /jobs/:jobId/result-candidates", "POST /jobs/:jobId/trace", "POST /jobs/:jobId/artifact", "POST /instruction/apply", "POST /instruction/evidence", "GET /pairing/status", "POST /pairing/approve", "POST /pairing/challenge", "POST /pairing/verify", "POST /pairing/disconnect", "POST /pairing/revoke", "POST /pairing/rotate"];
 
 // POST-v1B live-run completion: narrow artifact-receive endpoint.
 // The extension content script fetches the generated media in-page context
@@ -445,6 +445,25 @@ function createBridgeServer({ projectRoot, token, host = "127.0.0.1", allowedOri
           });
           if (job.status === "GENERATING") job = store.transitionJob(projectRoot, projectId, jobId, "RESULT_DETECTED", { actor: "extension" });
           return send(res, 200, { jobId, status: job.status, detectedAt, persisted: candidates.length });
+        }
+        // Phase 5C §22 (GAP-030): cross-boundary trace ingest. Extension-side
+        // spans (emitted by the service worker, forwarded by the side panel)
+        // land on the job so one operation reconstructs Core → Bridge →
+        // Extension → provider action → result → import → ACK → convergence.
+        // Token-gated, job-bound, validated, bounded. Never a state transition.
+        if (req.method === "POST" && parts.length === 3 && parts[2] === "trace") {
+          const body = stripSecrets(await readBody(req));
+          requireFields(body, ["spans"]);
+          let job = store.getJob(projectRoot, projectId, jobId);
+          if (!job) return send(res, 404, { error: "JOB_NOT_FOUND" });
+          if (job.projectId !== projectId) return send(res, 400, { error: "JOB_PROJECT_MISMATCH" });
+          try {
+            job = store.appendTraceSpans(projectRoot, projectId, jobId, body.spans);
+          } catch (e) {
+            const code = /JOB_NOT_FOUND/.test(e.message) ? 404 : 400;
+            return send(res, code, { error: e.message });
+          }
+          return send(res, 200, { jobId, persisted: body.spans.length, total: (job.trace || []).length });
         }
         if (req.method === "POST" && parts.length === 3 && parts[2] === "artifact") {
           const body = stripSecrets(await readBody(req, { maxBytes: ARTIFACT_BODY_MAX_BYTES }));

@@ -1,0 +1,101 @@
+{
+  "version": "1.0.0",
+  "benchmarkId": "bench5a-2026-10-07-83b0e0",
+  "policy": "5A adopts only measured + owned-by-5.7/5.8/5.9 + low-risk + independently verifiable improvements. Neither candidate cleared the bar; production code is UNCHANGED.",
+  "experiments": [
+    {
+      "experimentId": "EXP-01",
+      "hypothesis": "Trimming PROMPT_INPUT fallback selectors cuts worst-case DOM scan cost.",
+      "targetMetric": "extension.domScanWorstMs",
+      "baselineSamples": [
+        0.03170000000000073,
+        0.004400000000032378,
+        0.002499999999827196,
+        0.0032999999998537533,
+        0.0007999999997991836,
+        0.0005999999998493877,
+        0.0006000000000767614,
+        0.0006000000000767614,
+        0.0006000000000767614,
+        0.0006000000000767614,
+        0.0005999999998493877,
+        0.0006000000000767614,
+        0.0006000000000767614,
+        0.0006000000000767614,
+        0.0004999999998744897,
+        0.0005999999998493877,
+        0.0006000000000767614,
+        0.0005000000001018634,
+        0.0004999999998744897,
+        0.0004999999998744897,
+        0.0005000000001018634
+      ],
+      "baselineSummary": {
+        "count": 21,
+        "min": 0.0004999999998744897,
+        "max": 0.03170000000000073,
+        "mean": 0.002,
+        "median": 0.001,
+        "p50": 0.001,
+        "p75": 0.001,
+        "p95": 0.004,
+        "p99": null,
+        "stddev": 0.007
+      },
+      "candidateSamples": [],
+      "environmentRef": "bench5a-2026-10-07-83b0e0",
+      "qualityRegression": {
+        "risk": "Removing fallbacks on NOT_VERIFIED selectors risks MANUAL_ASSIST_REQUIRED on live Flow UI drift."
+      },
+      "decision": "REJECT",
+      "reason": "Worst-case scan already sub-0.05ms (mock, 200 nodes, 5 candidates) — no measurable win; quality risk real. Revisit only if live-page profiling proves scan pressure."
+    },
+    {
+      "experimentId": "EXP-02",
+      "hypothesis": "Caching getTimebasePolicy per run cuts timeline planning latency.",
+      "targetMetric": "core.timebase500x5PoliciesMs",
+      "baselineSamples": [
+        2.3027999999999906,
+        1.3324999999999818,
+        1.3680999999999983,
+        0.9009000000000071,
+        0.5852999999999895,
+        0.5765999999999849,
+        0.5711000000000013,
+        0.5707999999999913,
+        0.5711000000000013,
+        0.5743999999999971,
+        0.5746000000000038,
+        0.5714000000000112,
+        0.6006000000000142,
+        0.5581999999999994,
+        0.556999999999988,
+        0.559899999999999,
+        0.5568999999999846,
+        0.5568999999999846,
+        0.5567000000000064,
+        0.5604000000000156,
+        0.5564999999999998
+      ],
+      "baselineSummary": {
+        "count": 21,
+        "min": 0.5564999999999998,
+        "max": 2.3027999999999906,
+        "mean": 0.741,
+        "median": 0.571,
+        "p50": 0.571,
+        "p75": 0.585,
+        "p95": 1.368,
+        "p99": null,
+        "stddev": 0.421
+      },
+      "candidateSamples": [],
+      "environmentRef": "bench5a-2026-10-07-83b0e0",
+      "qualityRegression": {
+        "risk": "None (pure lookup); rejected on zero-win, not on risk."
+      },
+      "decision": "REJECT",
+      "reason": "100k conversions p50 0.59ms — policy lookup is unmeasurable inside it. No win to adopt. Revisit if a profile ever shows it hot."
+    }
+  ]
+}

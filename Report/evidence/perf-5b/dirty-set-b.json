@@ -1,0 +1,48 @@
+{
+ "version": "1.0.0",
+ "global": false,
+ "dirtyArtifacts": [
+  "MASTER_TIMELINE",
+  "SCENE_TIMING",
+  "RENDER"
+ ],
+ "dirtyTimelineItems": [
+  "S03"
+ ],
+ "dirtyMotionItems": [],
+ "dirtyCaptionEvents": [],
+ "dirtyAudioRegions": [],
+ "dirtyFrameRanges": [
+  {
+   "startFrame": 1800,
+   "endFrameExclusive": 2700
+  }
+ ],
+ "ranges": [
+  {
+   "raw": {
+    "startFrame": 1800,
+    "endFrameExclusive": 2700
+   },
+   "expanded": {
+    "startFrame": 1800,
+    "endFrameExclusive": 2700
+   },
+   "reasons": [
+    {
+     "rule": "SCENE_CONTENT_CHANGED",
+     "detail": "S03"
+    },
+    {
+     "rule": "TRANSITION_OVERLAP",
+     "detail": "boundary @1800 ±0"
+    },
+    {
+     "rule": "TRANSITION_OVERLAP",
+     "detail": "boundary @2700 ±0"
+    }
+   ]
+  }
+ ],
+ "findings": []
+}

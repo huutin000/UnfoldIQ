@@ -154,6 +154,10 @@ async function doRenderTest(projectId, outRel) {
     });
     await renderer.renderMedia({
       codec: "h264",
+      // Phase 4B: explicit SDR broadcast-safe pixel format. Without this,
+      // RGB lavfi/image sources can propagate full-range yuvj420p into the
+      // H.264 output (caught by encoded-output QC, not assumed from config).
+      pixelFormat: "yuv420p",
       composition: composition,
       serveUrl: serveUrl,
       inputProps: input,

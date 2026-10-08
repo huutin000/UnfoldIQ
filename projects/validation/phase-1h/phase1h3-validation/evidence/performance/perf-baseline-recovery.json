@@ -1,6 +1,6 @@
 {
   "artifact": "perf-baseline-recovery",
-  "capturedAt": "2026-10-07T06:44:12.281Z",
+  "capturedAt": "2026-10-07T14:04:27.188Z",
   "method": "process.hrtime.bigint micro-benchmarks inside tests/recovery/test-recovery.js",
   "sampleCounts": {
     "lookup": 50,
@@ -11,23 +11,23 @@
   "metrics": {
     "lookup": {
       "samples": 50,
-      "minMs": 0.215,
-      "p50Ms": 0.276,
-      "maxMs": 5.761
+      "minMs": 0.214,
+      "p50Ms": 0.272,
+      "maxMs": 5.565
     },
     "checkpointWrite": {
       "samples": 10,
-      "minMs": 9.316,
-      "p50Ms": 11.386,
-      "maxMs": 12.275
+      "minMs": 10.51,
+      "p50Ms": 13.087,
+      "maxMs": 14.928
     },
     "resumePlan": {
       "samples": 50,
-      "minMs": 0.679,
-      "p50Ms": 0.77,
-      "maxMs": 6.07
+      "minMs": 0.659,
+      "p50Ms": 0.724,
+      "maxMs": 5.35
     },
-    "sizeBytes": 9718,
+    "sizeBytes": 9719,
     "writeAmplification": "1 atomic replace per effective mutation; 0 on replay dedupe"
   },
   "budgets": {

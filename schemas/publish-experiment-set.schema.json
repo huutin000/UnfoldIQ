@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://unfoldiq.local/schemas/publish-experiment-set.schema.json",
+  "title": "UNFOLDIQ PublishExperimentSet (Phase 4A)",
+  "type": "object",
+  "required": ["experimentSetId", "version", "projectId", "platform", "profileRef", "variants", "experimentModesSupported", "selectionPolicy", "hypothesisSummary", "createdAt", "updatedAt"],
+  "properties": {
+    "experimentSetId": { "type": "string" },
+    "version": { "type": "string" },
+    "projectId": { "type": "string" },
+    "platform": { "type": "string" },
+    "profileRef": { "type": "string" },
+    "variants": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["variantId", "concept", "audience", "hypothesis", "title", "thumbnail", "status"],
+        "properties": {
+          "variantId": { "type": "string" },
+          "title": {
+            "type": "object",
+            "required": ["text", "characterCount"],
+            "properties": { "text": { "type": "string" }, "characterCount": { "type": "integer" } }
+          },
+          "thumbnail": {
+            "type": "object",
+            "required": ["assetId", "width", "height", "format"],
+            "properties": { "assetId": { "type": "string" } }
+          },
+          "status": { "enum": ["CANDIDATE", "SELECTED", "REJECTED"] }
+        }
+      }
+    },
+    "selectedVariantId": { "type": ["string", "null"] }
+  }
+}

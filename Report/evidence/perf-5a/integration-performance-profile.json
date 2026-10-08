@@ -1,0 +1,65 @@
+{
+  "version": "1.0.0",
+  "benchmarkId": "bench5a-2026-10-07-83b0e0",
+  "bridgePostJobsMs": {
+    "count": 11,
+    "min": 1.8713999999999942,
+    "max": 14.29950000000008,
+    "mean": 3.492,
+    "median": 2.332,
+    "p50": 2.332,
+    "p75": 2.921,
+    "p95": 14.3,
+    "p99": null,
+    "stddev": 3.44
+  },
+  "bridgeGetJobMs": {
+    "count": 11,
+    "min": 0.45280000000002474,
+    "max": 1.1272000000001299,
+    "mean": 0.595,
+    "median": 0.556,
+    "p50": 0.556,
+    "p75": 0.585,
+    "p95": 1.127,
+    "p99": null,
+    "stddev": 0.18
+  },
+  "lifecycleHopsMs": {
+    "submit": 1.587400000000116,
+    "prepareLocal": 13.016599999999926,
+    "awaitApproval": 6.674499999999853,
+    "approve": 8.68119999999999,
+    "approveReqBytes": 157,
+    "approveResBytes": 109,
+    "submitIssued1": 7.79060000000004,
+    "submitIssuedDuplicate": 8.22810000000004,
+    "duplicateSubmitStatus": 200,
+    "wrongNonceStatus": 400,
+    "generate": 2.004799999999932,
+    "resultCandidates": 13.540199999999913,
+    "resultCandidatesReqBytes": 208
+  },
+  "endToEndCommandMs": 25.151099999999815,
+  "queueWaitMs": 0,
+  "retryRate": 0,
+  "duplicateExecutionRate": 0,
+  "payloadBytes": {
+    "approveReq": 157,
+    "approveRes": 109,
+    "resultCandidatesReq": 208
+  },
+  "reconnectResyncMs": 6.6503999999999905,
+  "reconnectMeta": {
+    "evidence": "MEASURED_REAL",
+    "statusAfterRestart": "RESULT_DETECTED",
+    "duplicateExpensiveActions": 0,
+    "stateDivergence": 0,
+    "retryCount": 0
+  },
+  "traceCausality": {
+    "status": "PARTIAL",
+    "proven": "Core↔Bridge hop timing + per-hop status via HTTP RTT; job history chain (PENDING→…→RESULT_DETECTED) persists across restart; telemetry getTrace reconstructs Core-side causal chain by correlationId.",
+    "missing": "Extension actions do not emit telemetry spans — cross-boundary causal completeness (Core→Bridge→Extension→provider action→result→import→ACK) is NOT yet reconstructable end-to-end. Registered as measurement gap (ADD_NOW owner 5A-follow-up, no prod rewrite)."
+  }
+}

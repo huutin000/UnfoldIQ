@@ -1,0 +1,27 @@
+{
+ "version": "1.0.0",
+ "projectId": "__4b_pilot__",
+ "correlationId": "corr-x",
+ "wallClockMs": 0,
+ "activeComputeMs": 0,
+ "providerWaitMs": 0,
+ "humanWaitMs": 0,
+ "llmUsage": {
+  "tokens": 0,
+  "cost": 0
+ },
+ "imageCost": 0,
+ "videoCost": 0,
+ "ttsCost": 0,
+ "musicCost": 0,
+ "renderMs": 0,
+ "qcMs": 0,
+ "repairCount": 0,
+ "rerenderCount": 0,
+ "failureCount": 0,
+ "retries": 0,
+ "renderFps": "reused",
+ "outputBytes": 50865647,
+ "interventions": [],
+ "createdAt": "2026-10-08T02:30:13.861Z"
+}

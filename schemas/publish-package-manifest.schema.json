@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://unfoldiq.local/schemas/publish-package-manifest.schema.json",
+  "title": "UNFOLDIQ PublishPackageManifest (Phase 4A)",
+  "type": "object",
+  "required": ["version", "projectId", "sourceTimelineRevision", "finalVideoRef", "experimentSetRef", "descriptionRef", "metadataRef", "rightsProvenanceRef", "platformComplianceRef", "uploadChecklistRef", "dependencyHashes", "qaStatus", "createdAt", "updatedAt"],
+  "properties": {
+    "version": { "type": "string" },
+    "projectId": { "type": "string" },
+    "sourceTimelineRevision": { "type": "integer" },
+    "finalVideoRef": { "type": "string" },
+    "experimentSetRef": { "type": "string" },
+    "qaStatus": { "enum": ["PASS", "FAIL", "REVIEW_REQUIRED"] }
+  }
+}

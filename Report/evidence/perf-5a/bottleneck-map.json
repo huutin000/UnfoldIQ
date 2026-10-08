@@ -1,0 +1,122 @@
+{
+  "version": "1.0.0",
+  "benchmarkId": "bench5a-2026-10-07-83b0e0",
+  "rankFormula": "impact* frequency* cost* fixability v1",
+  "entries": [
+    {
+      "bottleneckId": "B-01",
+      "category": "RENDER",
+      "stage": "RENDER",
+      "measuredImpactMs": 232000,
+      "wallClockShare": 0.6153846153846154,
+      "frequency": 1,
+      "costImpact": 1,
+      "resourceImpact": "peak RSS + CPU during render",
+      "fixability": "MEDIUM",
+      "confidence": "MEDIUM",
+      "evidenceRefs": [
+        "4B §8/§29 HISTORICAL_REAL (n=1, synthetic visuals)"
+      ],
+      "recommendedOwner": "5B",
+      "rankScore": 464000,
+      "rankFormula": "impact* frequency* cost* fixability v1"
+    },
+    {
+      "bottleneckId": "B-03",
+      "category": "PROVIDER_LOCAL",
+      "stage": "MODEL_CALL",
+      "measuredImpactMs": 70000,
+      "wallClockShare": 0.1856763925729443,
+      "frequency": 1,
+      "costImpact": 1,
+      "resourceImpact": "local CPU (Kokoro)",
+      "fixability": "LOW",
+      "confidence": "MEDIUM",
+      "evidenceRefs": [
+        "4B §8/§29 HISTORICAL_REAL"
+      ],
+      "recommendedOwner": "5C",
+      "rankScore": 70000,
+      "rankFormula": "impact* frequency* cost* fixability v1"
+    },
+    {
+      "bottleneckId": "B-02",
+      "category": "RENDER",
+      "stage": "TECHNICAL_QC",
+      "measuredImpactMs": 11329,
+      "wallClockShare": 0.030050240318302387,
+      "frequency": 1,
+      "costImpact": 1,
+      "resourceImpact": "7 full-file decodes, ~357MB read",
+      "fixability": "MEDIUM",
+      "confidence": "HIGH",
+      "evidenceRefs": [
+        "perf-5a raw-performance-samples.json:render.qcPassMs (MEASURED_REAL, K=1/pass)"
+      ],
+      "recommendedOwner": "5B",
+      "rankScore": 22658,
+      "rankFormula": "impact* frequency* cost* fixability v1"
+    },
+    {
+      "bottleneckId": "B-04",
+      "category": "RENDER",
+      "stage": "RENDER_PREFLIGHT",
+      "measuredImpactMs": 1680,
+      "wallClockShare": null,
+      "frequency": 1,
+      "costImpact": 1,
+      "resourceImpact": "bundle CPU/RSS spike (534MB pre-render)",
+      "fixability": "MEDIUM",
+      "confidence": "MEDIUM",
+      "evidenceRefs": [
+        "perf-5a MEASURED_REAL (mini-matrix, n=1)"
+      ],
+      "recommendedOwner": "5C",
+      "rankScore": 3360,
+      "rankFormula": "impact* frequency* cost* fixability v1"
+    },
+    {
+      "bottleneckId": "B-06",
+      "category": "INTEGRATION",
+      "stage": "CORE_TO_BRIDGE",
+      "measuredImpactMs": 14,
+      "wallClockShare": null,
+      "frequency": 1,
+      "costImpact": 1,
+      "resourceImpact": "none material",
+      "fixability": "HIGH",
+      "confidence": "HIGH",
+      "evidenceRefs": [
+        "perf-5a MEASURED_REAL (n=11)"
+      ],
+      "recommendedOwner": "5A",
+      "note": "Non-bottleneck at loopback scale; re-measure under real Extension round-trips.",
+      "rankScore": 42,
+      "rankFormula": "impact* frequency* cost* fixability v1"
+    },
+    {
+      "bottleneckId": "B-05",
+      "category": "CORE",
+      "stage": "TOOL_CALL",
+      "measuredImpactMs": 8,
+      "wallClockShare": null,
+      "frequency": 1,
+      "costImpact": 1,
+      "resourceImpact": "none material",
+      "fixability": "HIGH",
+      "confidence": "HIGH",
+      "evidenceRefs": [
+        "perf-5a MEASURED_REAL (n=50 warm)"
+      ],
+      "recommendedOwner": "5A",
+      "note": "Non-bottleneck: kept to prove telemetry overhead was measured and dismissed.",
+      "rankScore": 24,
+      "rankFormula": "impact* frequency* cost* fixability v1"
+    }
+  ],
+  "unranked": [
+    {
+      "reason": "Provider wait/cost NOT_MEASURED — cannot rank what was not measured; see provider-baseline.json plan."
+    }
+  ]
+}

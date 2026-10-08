@@ -1,0 +1,19 @@
+{
+  "benchmarkId": "bench5a-2026-10-07-83b0e0",
+  "date": "2026-10-07T11:56:52.897Z",
+  "gitCommit": "981dea2",
+  "os": "win32-10.0.26300",
+  "arch": "x64",
+  "cpuModel": "11th Gen Intel(R) Core(TM) i5-11400H @ 2.70GHz",
+  "cpuLogicalCount": 12,
+  "memoryBytes": 16948453376,
+  "nodeVersion": "v24.16.0",
+  "chromeVersion": "NOT_MEASURED",
+  "extensionVersion": "0.5.3",
+  "remotionVersion": "4.0.529",
+  "ffmpegVersion": "ffmpeg version 8.1.1-essentials_build-www.gyan.dev Copyright (c)",
+  "powerMode": "NOT_MEASURED",
+  "networkClass": "NOT_MEASURED",
+  "providerRegion": "NOT_MEASURED",
+  "benchmarkMode": "WARM"
+}

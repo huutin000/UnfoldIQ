@@ -1,0 +1,144 @@
+{
+  "profileId": "perf-budget-5a",
+  "version": "1.0.0",
+  "environmentClass": "win32-x64-node24-local",
+  "benchmarkId": "bench5a-2026-10-07-83b0e0",
+  "budgets": [
+    {
+      "metric": "bridge.postJobs.rtt",
+      "direction": "lower",
+      "percentile": "p95",
+      "target": 5,
+      "warning": 14.3,
+      "hardLimit": 50,
+      "unit": "ms",
+      "rationale": "Loopback baseline: median 2.4ms, p95 13.9ms (n=11, cold-first sample included).",
+      "source": "MEASURED_BASELINE",
+      "baselineRef": "bench5a-2026-10-07-83b0e0"
+    },
+    {
+      "metric": "bridge.getJob.rtt",
+      "direction": "lower",
+      "percentile": "p95",
+      "target": 1,
+      "warning": 1.127,
+      "hardLimit": 20,
+      "unit": "ms",
+      "rationale": "Loopback baseline p95 1.2ms (n=11).",
+      "source": "MEASURED_BASELINE",
+      "baselineRef": "bench5a-2026-10-07-83b0e0"
+    },
+    {
+      "metric": "bridge.reconnectResync",
+      "direction": "lower",
+      "percentile": null,
+      "target": 20,
+      "warning": 100,
+      "hardLimit": 1000,
+      "unit": "ms",
+      "rationale": "Measured 6.7ms restart+GET (n=1); wide band until repeated.",
+      "source": "MEASURED_BASELINE",
+      "baselineRef": "bench5a-2026-10-07-83b0e0"
+    },
+    {
+      "metric": "integration.duplicateExpensiveAction",
+      "direction": "lower",
+      "percentile": null,
+      "target": 0,
+      "warning": 1,
+      "hardLimit": 1,
+      "unit": "count",
+      "rationale": "Deterministic invariant: second submit while unresolved must never arm a new credit action.",
+      "source": "PLATFORM_CONSTRAINT",
+      "baselineRef": null
+    },
+    {
+      "metric": "integration.stateDivergence",
+      "direction": "lower",
+      "percentile": null,
+      "target": 0,
+      "warning": 1,
+      "hardLimit": 1,
+      "unit": "count",
+      "rationale": "Deterministic invariant: restart must restore identical job state.",
+      "source": "PLATFORM_CONSTRAINT",
+      "baselineRef": null
+    },
+    {
+      "metric": "extension.validateSender.rtt",
+      "direction": "lower",
+      "percentile": "p95",
+      "target": 0.05,
+      "warning": 0.5,
+      "hardLimit": 5,
+      "unit": "ms",
+      "rationale": "Pure-function guard, p95 ~0.005ms (n=51); order-of-magnitude headroom.",
+      "source": "MEASURED_BASELINE",
+      "baselineRef": "bench5a-2026-10-07-83b0e0"
+    },
+    {
+      "metric": "telemetry.recordEvent.warm",
+      "direction": "lower",
+      "percentile": "p95",
+      "target": 12,
+      "warning": 25,
+      "hardLimit": 100,
+      "unit": "ms",
+      "rationale": "Warm-write p95 ~10ms incl. atomic file persist (n=50); first-write cold excluded (JIT/init).",
+      "source": "MEASURED_BASELINE",
+      "baselineRef": "bench5a-2026-10-07-83b0e0"
+    },
+    {
+      "metric": "render.pilot150s.wall",
+      "direction": "lower",
+      "percentile": null,
+      "target": 232000,
+      "warning": 290000,
+      "hardLimit": 464000,
+      "unit": "ms",
+      "rationale": "Single historical sample, synthetic visuals — PROVISIONAL until 5C repeated full renders; exists only to block >25% regressions.",
+      "source": "MEASURED_BASELINE",
+      "baselineRef": "PHASE_4B_PILOT_FINAL_QA_RENDER_QC_REPORT §29"
+    },
+    {
+      "metric": "qc.passes.total.150s",
+      "direction": "lower",
+      "percentile": null,
+      "target": 20000,
+      "warning": 35000,
+      "hardLimit": 70000,
+      "unit": "ms",
+      "rationale": "Measured 16.3s across 7 passes (K=1/pass); wide band until repeated.",
+      "source": "MEASURED_BASELINE",
+      "baselineRef": "bench5a-2026-10-07-83b0e0"
+    },
+    {
+      "metric": "render.minibench.blank60f.c1.fps",
+      "direction": "higher",
+      "percentile": null,
+      "target": 8,
+      "warning": 6,
+      "hardLimit": 4,
+      "unit": "fps",
+      "rationale": "Method-regression tripwire for the mini-matrix (measured 11.2fps), NOT a product throughput claim.",
+      "source": "MEASURED_BASELINE",
+      "baselineRef": "bench5a-2026-10-07-83b0e0"
+    }
+  ],
+  "omittedForNotMeasured": [
+    "provider wait/cost",
+    "sidePanelOpenToUsable",
+    "serviceWorkerColdWake",
+    "MutationObserver load",
+    "long-form render",
+    "time-to-sufficiency"
+  ],
+  "qualityGuardRef": "No budget may be met by reducing required quality/correctness (5A RULE 10); QA-gate skips are REJECTED as optimizations.",
+  "regressionPolicy": {
+    "sampleFloor": "Percentile budgets require n>=5 fresh samples in the same environment class; n<5 compares medians only.",
+    "warningBand": "target..warning = investigate; >warning..hardLimit = WARN verdict, no merge block for noisy metrics.",
+    "hardBand": ">hardLimit = BLOCK; deterministic 0-count budgets fail on ANY violation.",
+    "comparison": "Same input, same output quality, same environment class, recorded dependency versions; cold/warm never mixed.",
+    "noiseRule": "Single-sample excursions never fail a noisy metric; 3 consecutive warnings escalate to BLOCK pending investigation."
+  }
+}
