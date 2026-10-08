@@ -1,0 +1,10 @@
+{
+  "version": "1.0.0",
+  "phase": "5C-O",
+  "gap": "GAP-014",
+  "decision": "DEFERRED_WITH_EVIDENCE",
+  "finding": "No motion-blur renderer feature exists to benchmark. Codebase search (2026-10-08) finds exactly one blur usage: a static CSS background-fill treatment (blur(24px) brightness(0.6)) in remotion/src/layers/ImageLayer.tsx — an aesthetic contain-fill, not temporal motion blur. There is no global enable/disable switch, so an OFF-vs-ON render comparison would fabricate a feature that does not exist.",
+  "defaultPreserved": "blur OFF default (per 5A) remains in force — nothing to change",
+  "revisitTrigger": "When a real motion-blur effect (temporal sampling, frame blending, or CSS motion path) is proposed for a composition, benchmark it on the 120-frame small fixture (Task E harness pattern) before enabling: render wall + RSS + frame count + quality reason. Do not enable globally without that evidence.",
+  "files": ["remotion/src/layers/ImageLayer.tsx:102"]
+}

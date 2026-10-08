@@ -1,8 +1,8 @@
 {
  "version": "1.0.0",
  "scale": "small (120 frames, 1280x720-class)",
- "fullReferenceMs": 13574,
- "incrementalRenderMs": 5529,
+ "fullReferenceMs": 12290,
+ "incrementalRenderMs": 5242,
  "framesTotal": 120,
  "framesRendered": 60,
  "framesReused": 60,

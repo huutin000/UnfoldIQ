@@ -29,6 +29,7 @@ const REQUIRED_FILES = [
   "src/security/sender-check.js",
   "src/contracts/job-contract.js",
   "src/contracts/approval-snapshot.js",
+  "src/contracts/trace-contract.js",
   "src/ui/sidepanel.html",
   "src/ui/sidepanel.js",
   "src/ui/styles/tokens.css",

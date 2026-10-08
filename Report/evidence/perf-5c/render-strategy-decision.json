@@ -1,0 +1,45 @@
+{
+  "version": "1.0.0",
+  "phase": "5C-N",
+  "v1RenderStrategy": "LOCAL",
+  "candidates": {
+    "LOCAL": {
+      "wallClock": "MEASURED — 150s:214s / 600s:1216s / 1200s:2198s (1080p30, c=4, this host); 1800s: ~3200s ESTIMATED from scaling (1.43–2.03x)",
+      "cost": "MEASURED — sunk host, ~0 marginal",
+      "memory": "MEASURED — RSS peak 398–449MB in-process, 16GB host unconstrained",
+      "reliability": "MEASURED — pilot equivalence structural PASS, byte-identical chunks, no leaks, retry+classify loop proven",
+      "setupComplexity": "MEASURED — works today (render doctor READY)",
+      "privacySecurity": "best — fully local",
+      "scalability": "single machine, CPU-bound ~15fps; concurrent renders capped at 2 by budget gate"
+    },
+    "SERVER": {
+      "wallClock": "MODELED — same engine as LOCAL, no render-speed gain expected; availability gain only",
+      "cost": "sunk host + ops time",
+      "memory": "same as LOCAL per worker",
+      "reliability": "same engine; adds service/daemon failure modes",
+      "setupComplexity": "service management + job API + auth — unjustified at current volume",
+      "privacySecurity": "same as LOCAL if self-hosted",
+      "scalability": "same single-machine ceiling unless multi-worker added"
+    },
+    "DISTRIBUTED_CLOUD": {
+      "wallClock": "ESTIMATED (vendor claim, unmeasured for our workload)",
+      "cost": "UNKNOWN per-render — needs metered pilot",
+      "memory": "n/a (managed)",
+      "reliability": "UNKNOWN for our workload (chunk-failure handling unproven here)",
+      "setupComplexity": "high (AWS, IAM, pipeline, cost monitoring)",
+      "privacySecurity": "footage leaves machine; new credential surface",
+      "scalability": "best ceiling (scale-out), single-machine alternatives (Cloud Run) excluded — Alpha, no distribution benefit"
+    }
+  },
+  "measuredVsEstimated": "LOCAL fully measured; SERVER modeled from LOCAL; DISTRIBUTED vendor-claimed/estimated",
+  "migrationTriggers": [
+    "single 30min+ render wall exceeds delivery SLO twice in a row (measure, then re-evaluate)",
+    "sustained queue depth > cap with WAITING_CAPACITY blocking paid-deadline work (scheduler evidence required)",
+    "metered Lambda pilot beats LOCAL wall by >2x at acceptable per-render cost (needs authorized spend)",
+    "24/7 unattended availability becomes a requirement (server-first, not cloud-first)"
+  ],
+  "explicitNonReasons": [
+    "NOT migrating because 'cloud is more scalable' — ceiling is not the bottleneck (CPU wall is)",
+    "NOT migrating for browser-startup removal — measured ~0.1s/start, immaterial (Task A correction)"
+  ]
+}

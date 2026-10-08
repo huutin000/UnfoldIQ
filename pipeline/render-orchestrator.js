@@ -38,6 +38,12 @@ var PlanCLI = tryRequire(path.join(__dirname, "..", "scripts/cli/render-plan-cli
 var Time = tryRequire(path.join(__dirname, "..", "lib/render-time.js"));
 var Classifier = tryRequire(path.join(__dirname, "render-error-classifier.js"));
 var Runner = tryRequire(path.join(__dirname, "remotion-render-runner.js"));
+// Phase 5C (5.5): ResourceBudget admission (optional, guarded). Reuses
+// lib/resource-budget instead of a new concurrency integer.
+var Budget = tryRequire(path.join(__dirname, "..", "lib/resource-budget/index.js"));
+// Phase 5C (Tasks B/C/D): bounded scheduler on the real attempt path.
+// Reuses lib/scheduler — no second scheduler exists in this repo.
+var SchedulerLib = tryRequire(path.join(__dirname, "..", "lib/scheduler/index.js"));
 
 // Branch A contract modules (exact exports per STEP-13 brief).
 var RealStore = tryRequire(path.join(__dirname, "state-store.js"));
@@ -599,6 +605,243 @@ function diskPrecheck(projectRoot, projectId) {
   }
 }
 
+// Phase 5C (5.5): render-concurrency budget precheck. Cross-process safe:
+// counts other projects currently RENDERING from disk state (in-memory
+// counters cannot see sibling CLI processes) and admits one more slot via
+// lib/resource-budget. Cap: UNFOLDIQ_MAX_CONCURRENT_RENDERS (default 2).
+function maxConcurrentRenders() {
+  var n = Number(process.env.UNFOLDIQ_MAX_CONCURRENT_RENDERS);
+  if (Number.isFinite(n) && n > 0) return Math.floor(n);
+  return 2;
+}
+
+function countActiveRenders(projectRoot, excludeProjectId) {
+  var found = { count: 0, active: [] };
+  var projectsDir = path.join(projectRoot, "projects");
+  var entries = [];
+  try {
+    entries = fs.readdirSync(projectsDir, { withFileTypes: true });
+  } catch (e) {
+    return found;
+  }
+  entries.forEach(function (ent) {
+    if (!ent.isDirectory || !ent.isDirectory()) return;
+    if (ent.name === excludeProjectId) return; // own slot never blocks self
+    var st = null;
+    try {
+      st = Store.loadState(projectRoot, ent.name);
+    } catch (e) {
+      st = null;
+    }
+    if (st && st.status === "RENDERING") {
+      found.count++;
+      found.active.push(ent.name);
+    }
+  });
+  return found;
+}
+
+function renderBudgetPrecheck(projectRoot, projectId) {
+  var cap = maxConcurrentRenders();
+  var found = countActiveRenders(projectRoot, projectId);
+  if (Budget) {
+    var mgr = Budget.createBudgetManager({ maxConcurrentRenders: cap });
+    for (var i = 0; i < found.count; i++) {
+      mgr.reserve({ requiredResources: [{ type: "RENDER_CONCURRENT" }] });
+    }
+    var adm = mgr.admit({ requiredResources: [{ type: "RENDER_CONCURRENT" }] });
+    if (!adm.ok) {
+      return { ok: false, code: "RENDER_CAPACITY_EXHAUSTED", reason: adm.reason,
+        cap: cap, active: found.active, backpressure: mgr.backpressureState() };
+    }
+    return { ok: true, cap: cap, active: found.active, backpressure: mgr.backpressureState() };
+  }
+  if (found.count >= cap) {
+    return { ok: false, code: "RENDER_CAPACITY_EXHAUSTED", reason: "RENDER_CONCURRENT_EXHAUSTED",
+      cap: cap, active: found.active };
+  }
+  return { ok: true, cap: cap, active: found.active };
+}
+
+/* ------------------------------------------------------------------ */
+/* Phase 5C Tasks B/C/D: scheduler-backed attempt queue                */
+/*                                                                     */
+/* Every render attempt flows: enqueue -> budget admission -> RUNNING   */
+/* -> COMPLETED/FAILED/CANCELLED -> release. Queue state persists to   */
+/* render/scheduler-queue.json; stale items from dead processes are    */
+/* reconciled (cancelled, counted) and NEVER resubmitted. Duplicate    */
+/* submission of the same idempotencyKey while another owner runs it   */
+/* is blocked (DUPLICATE_EXPENSIVE_ACTION). Historical completions do  */
+/* not block explicit retries (pipeline retry semantics preserved).    */
+/* ------------------------------------------------------------------ */
+
+function queueFileFor(projectRoot, projectId) {
+  return path.join(renderDirFor(projectRoot, projectId), "scheduler-queue.json");
+}
+
+// Spec §6 vocabulary from budget/admission reasons.
+function queueWaitState(reason) {
+  reason = String(reason || "");
+  if (!reason) return "QUEUED";
+  if (/MEMORY/.test(reason)) return "WAITING_MEMORY";
+  if (/EXTENSION/.test(reason)) return "WAITING_EXTENSION";
+  if (/PROVIDER_SLOT|provider.*concurr/i.test(reason)) return "WAITING_PROVIDER";
+  if (/CREDIT/.test(reason)) return "WAITING_CREDIT";
+  if (/RATE_LIMIT|429|RETRY_AFTER/i.test(reason)) return "RATE_LIMITED";
+  if (/QUEUE_CAPACITY|QUEUE_COST/.test(reason)) return "QUEUED";
+  return "WAITING_CAPACITY";
+}
+
+function readQueueFile(projectRoot, projectId) {
+  try {
+    return readJson(queueFileFor(projectRoot, projectId));
+  } catch (e) {
+    return null;
+  }
+}
+
+function openRenderQueue(projectRoot, projectId) {
+  if (!SchedulerLib || !Budget) return null;
+  var budgetMgr = Budget.createBudgetManager({ maxConcurrentRenders: maxConcurrentRenders() });
+  var ctx = { budgetMgr: budgetMgr, sched: null, listeners: [], reconciled: 0, currentRunner: null };
+  ctx.sched = SchedulerLib.createScheduler({
+    budget: budgetMgr,
+    idleWorkers: 1,
+    maxQueueSize: 50,
+    execute: async function (item, ac) {
+      if ((ac && ac.aborted) || !ctx.currentRunner) {
+        var abortErr = new Error("aborted");
+        abortErr.name = "AbortError";
+        throw abortErr;
+      }
+      try {
+        var res = await ctx.currentRunner(item, ac);
+        ctx.lastResult = res;
+        ctx.lastAttemptError = null;
+        return res;
+      } catch (e) {
+        ctx.lastResult = null;
+        ctx.lastAttemptError = e;
+        throw e;
+      }
+    },
+    onStateChange: function (workId, st, detail) {
+      persistRenderQueue(projectRoot, projectId, ctx.sched);
+      ctx.listeners.slice().forEach(function (fn) {
+        try { fn(workId, st, detail); } catch (e) {}
+      });
+    },
+  });
+  // Restart recovery: stale items belong to a dead process (pipeline-state
+  // already marked its attempts INTERRUPTED). Reconcile, never resubmit:
+  // restore for dedupe memory, then cancel every revived item. The revived
+  // background dispatch sees currentRunner=null and aborts (CANCELLED).
+  var prev = readQueueFile(projectRoot, projectId);
+  if (prev) {
+    ctx.sched.restore(prev);
+    var snap = ctx.sched.snapshot();
+    snap.queue.concat(snap.running).forEach(function (q) {
+      try { ctx.sched.cancel(q.workId, "STALE_RECONCILED"); } catch (e) {}
+      ctx.reconciled++;
+    });
+    persistRenderQueue(projectRoot, projectId, ctx.sched);
+  }
+  return ctx;
+}
+
+function persistRenderQueue(projectRoot, projectId, sched) {
+  try {
+    writeJson(queueFileFor(projectRoot, projectId), sched.persist());
+  } catch (e) {}
+}
+
+function queueSnapshot(projectRoot, projectId) {
+  var persisted = readQueueFile(projectRoot, projectId);
+  return {
+    cap: maxConcurrentRenders(),
+    persisted: persisted ? { queued: (persisted.queued || []).length,
+      running: (persisted.running || []).length,
+      completedKeys: (persisted.completedKeys || []).length } : null,
+  };
+}
+
+// Run one attempt through the scheduler. Returns the same shape as
+// runOneAttempt's {ok, result|error} plus queue metadata. Falls back to a
+// direct run when the scheduler lib is absent. runnerOverride is test-only
+// (lets regression tests drive the queue path without a real render).
+async function runAttemptViaQueue(qctx, runArgs, attempt, attemptDir, input, renderConfig, idempotencyKey, runnerOverride) {
+  if (!qctx) {
+    var direct = await runOneAttempt(runArgs, attempt, attemptDir, input, renderConfig);
+    return { ok: direct.ok, result: direct.result, error: direct.error, queued: false };
+  }
+  var projectRoot = runArgs.projectRoot;
+  var projectId = runArgs.projectId;
+  // In-process duplicate guard: the same key already queued/running.
+  // (Cross-process same-project renders are serialized by pipeline-lock;
+  // stale items from dead processes are reconciled at openRenderQueue.)
+  var dup = qctx.sched.checkDedupe(idempotencyKey);
+  if (dup.isDuplicate) {
+    return { ok: false, queued: true, duplicate: true, reason: dup.reason || "DUPLICATE_EXPENSIVE_ACTION" };
+  }
+  var abortRef = { current: null };
+  var token = {};
+  Object.defineProperty(token, "cancelled", { get: function () {
+    return !!(abortRef.current && abortRef.current.aborted);
+  } });
+  var resolveGate = null;
+  var gate = new Promise(function (resolve) { resolveGate = resolve; });
+  var onDone = function (workId, st) {
+    if (workId !== attempt.attemptId) return;
+    if (st === "COMPLETED" || st === "FAILED" || st === "CANCELLED") {
+      var ix = qctx.listeners.indexOf(onDone);
+      if (ix !== -1) qctx.listeners.splice(ix, 1);
+      clearTimeout(watchdog);
+      qctx.currentRunner = null;
+      resolveGate(st);
+    }
+  };
+  qctx.listeners.push(onDone);
+  var watchdog = setTimeout(function () {
+    try { qctx.sched.cancel(attempt.attemptId, "QUEUE_WATCHDOG_TIMEOUT"); } catch (e) {}
+  }, 30 * 60 * 1000);
+  qctx.currentRunner = runnerOverride || async function (item, ac) {
+    abortRef.current = ac;
+    var r = await runOneAttempt(
+      { projectRoot: runArgs.projectRoot, projectId: runArgs.projectId,
+        opts: Object.assign({}, runArgs.opts, { cancelToken: token }), state: runArgs.state },
+      attempt, attemptDir, input, renderConfig);
+    qctx.lastResult = r.ok ? r.result : null;
+    qctx.lastAttemptError = r.ok ? null : r.error;
+    if (!r.ok) {
+      var err = r.error instanceof Error ? r.error : new Error(String((r.error && r.error.message) || r.error || "attempt failed"));
+      if (ac && ac.aborted) err.name = "AbortError";
+      throw err;
+    }
+    return r.result;
+  };
+  qctx.sched.enqueue({
+    workId: attempt.attemptId,
+    jobId: attempt.attemptId,
+    projectId: projectId,
+    type: "RENDER_ATTEMPT",
+    priority: "NORMAL",
+    requiredResources: [{ type: "RENDER_CONCURRENT" }],
+    idempotencyKey: idempotencyKey,
+  });
+  var endState = await gate;
+  persistRenderQueue(projectRoot, projectId, qctx.sched);
+  if (endState === "COMPLETED") {
+    return { ok: true, queued: true, result: qctx.lastResult, waitState: "QUEUED" };
+  }
+  if (endState === "CANCELLED") {
+    var canc = new Error("attempt cancelled via scheduler");
+    canc.renderErrorClass = "CANCELLED";
+    return { ok: false, queued: true, error: canc, waitState: "QUEUED" };
+  }
+  // FAILED: runOneAttempt's error was stashed by the runner closure.
+  return { ok: false, queued: true, error: qctx.lastAttemptError || new Error("attempt failed"), waitState: "QUEUED" };
+}
+
 /* ------------------------------------------------------------------ */
 /* prepareOp                                                           */
 /* ------------------------------------------------------------------ */
@@ -987,6 +1230,16 @@ async function renderOp(args) {
     return { ok: false, projectId: projectId, status: "BLOCKED", reason: "DISK_SPACE_LOW" };
   }
 
+  var budget = renderBudgetPrecheck(projectRoot, projectId);
+  if (!budget.ok) {
+    Store.addBlocker(state, { code: "RENDER_CAPACITY_EXHAUSTED",
+      message: "concurrent renders at cap=" + budget.cap + " active=[" + (budget.active || []).join(",") + "]" });
+    Store.transition(projectRoot, projectId, state, "BLOCKED", "render capacity exhausted");
+    Store.saveState(projectRoot, projectId, state);
+    return { ok: false, projectId: projectId, status: "BLOCKED", reason: "RENDER_CAPACITY_EXHAUSTED",
+      cap: budget.cap, activeRenders: budget.active, backpressure: budget.backpressure };
+  }
+
   var maxTotalAttempts = (typeof opts.maxTotalAttempts === "number" && opts.maxTotalAttempts > 0)
     ? Math.floor(opts.maxTotalAttempts) : (Cfg.RENDER_RETRY_POLICY.maxTotalAttempts || 3);
   var maxRetries = (typeof opts.maxRetries === "number" && opts.maxRetries >= 0)
@@ -1011,6 +1264,13 @@ async function renderOp(args) {
     logLevel: opts.logLevel
   });
   baseConfig = applyKnobIntents(projectRoot, projectId, baseConfig);
+
+  // Phase 5C Tasks B/C/D: attempts run through the bounded scheduler.
+  var qctx = openRenderQueue(projectRoot, projectId);
+  if (qctx && qctx.reconciled > 0) {
+    Store.appendHistory(state, "QUEUE_RECONCILED", { staleItems: qctx.reconciled });
+    Store.saveState(projectRoot, projectId, state);
+  }
 
   var retriesUsed = 0;
   var outcome = null;
@@ -1063,8 +1323,21 @@ async function renderOp(args) {
     Store.updateAttempt(state, attemptId, { status: "RUNNING" });
     Store.saveState(projectRoot, projectId, state);
 
-    var run = await runOneAttempt({ projectRoot: projectRoot, projectId: projectId, opts: opts, state: state },
-      attempt, attemptDir, input, baseConfig);
+    // Phase 5C Tasks B/C/D: scheduler-backed admission + execution.
+    // idempotencyKey binds project + attempt + inputs: concurrent duplicate
+    // submission of the same attempt is blocked; explicit retries (new
+    // attemptId) are never blocked.
+    var run = await runAttemptViaQueue(qctx,
+      { projectRoot: projectRoot, projectId: projectId, opts: opts, state: state },
+      attempt, attemptDir, input, baseConfig,
+      "render:" + projectId + ":" + attemptId + ":" + Fp.id(fpNow));
+    if (run.duplicate) {
+      Store.addBlocker(state, { code: "DUPLICATE_EXPENSIVE_ACTION",
+        message: "identical attempt already running (key=" + attemptId + ")" });
+      Store.transition(projectRoot, projectId, state, "BLOCKED", attemptId + " duplicate blocked");
+      Store.saveState(projectRoot, projectId, state);
+      return { ok: false, projectId: projectId, status: "BLOCKED", reason: "DUPLICATE_EXPENSIVE_ACTION", attemptId: attemptId };
+    }
 
     if (run.ok) {
       Store.updateAttempt(state, attemptId, { status: "RENDERED", endedAt: nowIso(),
@@ -1594,5 +1867,15 @@ module.exports = {
   PRESSURE_ERROR_CLASSES: Cfg.PRESSURE_CLASSES,
   STATUSES: Store.STATUSES,
   STAGES: Store.STAGES,
-  OPS: OPS
+  OPS: OPS,
+  // Phase 5C (5.5) budget surface (pure precheck, no render side effects).
+  renderBudgetPrecheck: function (root, id) { return renderBudgetPrecheck(root || defaultRoot(), id); },
+  maxConcurrentRenders: function () { return maxConcurrentRenders(); },
+  // Phase 5C Tasks B/C/D scheduler surface (test + diagnostics).
+  queueWaitState: function (reason) { return queueWaitState(reason); },
+  queueSnapshot: function (root, id) { return queueSnapshot(root || defaultRoot(), id); },
+  openRenderQueue: function (root, id) { return openRenderQueue(root || defaultRoot(), id); },
+  runAttemptViaQueue: function (qctx, runArgs, attempt, attemptDir, input, renderConfig, key, runnerOverride) {
+    return runAttemptViaQueue(qctx, runArgs, attempt, attemptDir, input, renderConfig, key, runnerOverride);
+  }
 };

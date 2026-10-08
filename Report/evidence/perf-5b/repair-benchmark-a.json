@@ -74,13 +74,13 @@
    "bytes": 222836
   }
  ],
- "reassemblyMs": 393,
+ "reassemblyMs": 319,
  "cache": {
   "lookups": 6,
   "validHits": 5,
   "misses": 1,
   "bytesReused": 32655939,
   "bytesWritten": 32655939,
-  "hashingMs": 38
+  "hashingMs": 51
  }
 }

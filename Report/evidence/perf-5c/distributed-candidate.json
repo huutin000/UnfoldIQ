@@ -1,0 +1,19 @@
+{
+  "version": "1.0.0",
+  "phase": "5C-M",
+  "candidate": "DISTRIBUTED_CLOUD (Remotion Lambda — evaluated from official constraints, NO deployment)",
+  "sources": [
+    "https://www.remotion.dev/docs/compare-ssr (fetched 2026-10-08)",
+    "https://www.remotion.dev/docs/lambda"
+  ],
+  "distributedBehavior": "video split into chunks rendered in parallel across Lambda functions; fastest option per Remotion",
+  "expectedSpeedAdvantage": "ESTIMATED only — parallelism factor unknown for UNFOLDIQ compositions; local 20min wall 2197s is the baseline to beat; no UNFOLDIQ workload has run on Lambda",
+  "runtimeConstraints": "function timeouts; AV1 output NOT available on Lambda (essential codecs only); CPU-only (no GPU); Linux x86_64 GNU",
+  "concurrencyConstraints": "managed by Lambda (scale-out), but UNFOLDIQ-side queueing/rate-limiting still owned by app for submit path",
+  "storageModel": "S3-backed inputs/outputs — 313MB+/20min artifact must upload/download per render (vs zero-transfer local)",
+  "credentialModel": "AWS credentials + IAM; new secret surface (repo rule: never commit secrets; env-only)",
+  "regionDataImplications": "footage + prompts leave the local machine; data-residency depends on region choice",
+  "estimatedCost": "compute more expensive than server; pay-per-render (no idle cost). No UNFOLDIQ-specific estimate — needs a metered pilot render first",
+  "operationalComplexity": "high relative to now: AWS setup, permissions, deployment pipeline, cost monitoring, dir of failed distributed chunks; Cloud Run alternative is Alpha and also single-machine (no distribution benefit)",
+  "verdict": "NOT SELECTED for V1 — speed advantage is vendor-claimed, unmeasured for our workload; cost/storage/ops unknowns dominate. Re-evaluate on measured trigger (see render-strategy-decision.json). No infrastructure deployed."
+}

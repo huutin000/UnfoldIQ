@@ -1,0 +1,12 @@
+{
+ "version": "1.0.0",
+ "phase": "5C-F",
+ "case": "N+O",
+ "coldWakeMs": 255,
+ "firstSeenWaitMs": 254,
+ "warmActionMs1": 8,
+ "warmActionMs2": 1,
+ "terminateVariant": "process-exit-on-persistent-profile (CDP-attached idle timeout not observable; see note)",
+ "wakeMs": 390,
+ "restoreOk": true
+}

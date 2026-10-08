@@ -499,6 +499,10 @@ function validateTrustedInputSpec(spec, sender) {
       // side panel to forward to the bridge /trace ingestor.
       const swSpanT0 = Date.now();
       const swSpanJobId = (msg && ((msg.cmd && msg.cmd.jobId) || (msg.approval && msg.approval.jobId))) || null;
+      // GAP-030 causal linkage: a caller may attach {trace:{traceId, parentSpanId}}
+      // so the emitted span joins an existing cross-boundary chain. Absent →
+      // standalone root span (backward compatible).
+      const swTraceCtx = (msg && msg.trace) || {};
       const swSpanKind = !msg || msg.kind === "TAB_RELAY"
         ? (msg && msg.cmd && msg.cmd.type === "SUBMIT_GENERATE" ? "SUBMIT_RELAYED" : "TAB_RELAY")
         : msg.kind === "APPROVE_RECORD" ? "APPROVAL_RECORDED"
@@ -551,6 +555,8 @@ function validateTrustedInputSpec(spec, sender) {
             resp.trace = [TC.buildTraceSpan({
               source: "extension", kind: swSpanKind, jobId: swSpanJobId,
               tStart: swSpanT0, tEnd: Date.now(),
+              traceId: swTraceCtx.traceId || undefined,
+              parentSpanId: swTraceCtx.parentSpanId || null,
             })];
           }
         } catch (e) { void e; }

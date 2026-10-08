@@ -1,0 +1,51 @@
+{
+ "version": "1.0.0",
+ "phase": "5C-E",
+ "fixture": "120 frames, 1280x720-class, 2 scenes (video+still)",
+ "candidates": [
+  {
+   "concurrency": 1,
+   "wallsMs": [
+    11519,
+    11467
+   ],
+   "bestMs": 11467,
+   "rssPeakMB": 536,
+   "crashes": 0,
+   "failures": 0
+  },
+  {
+   "concurrency": 2,
+   "wallsMs": [
+    7106,
+    7408
+   ],
+   "bestMs": 7106,
+   "rssPeakMB": 302,
+   "crashes": 0,
+   "failures": 0
+  },
+  {
+   "concurrency": 4,
+   "wallsMs": [
+    5857,
+    5569
+   ],
+   "bestMs": 5569,
+   "rssPeakMB": 305,
+   "crashes": 0,
+   "failures": 0
+  }
+ ],
+ "determinism": {
+  "assertion": "media-equivalence",
+  "equivalentVariants": 1,
+  "wholeFileVariants": 1,
+  "note": "whole-file bytes may differ only in the MP4 compressorname metadata string; not asserted"
+ },
+ "selectedDefault": {
+  "concurrency": 4,
+  "bestMs": 5569,
+  "rationale": "fastest zero-crash candidate at small scale; pilot-scale re-check open"
+ }
+}

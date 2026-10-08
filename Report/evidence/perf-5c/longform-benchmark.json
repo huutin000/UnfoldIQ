@@ -1,0 +1,39 @@
+{
+ "version": "1.0.0",
+ "phase": "5C-JK",
+ "fixture": "mixed video/still/grid-chart scenes + sine voice stubs, 1920x1080@30",
+ "concurrency": 4,
+ "reference150s": {
+  "source": "5B pilot (test-pilot-repair + Task A)",
+  "fullReferenceMs": 213800,
+  "note": "5B-measured V1 oracle wall; same 150s/4500f scale"
+ },
+ "measured": [
+  {
+   "label": "10min",
+   "scenes": 20,
+   "totalFrames": 18000,
+   "wallMs": 1215845,
+   "fps": 14.804518668086804,
+   "rssPeakMB": 398,
+   "outputBytes": 176128999,
+   "outputDurationS": 600,
+   "concurrency": 4,
+   "width": 1920,
+   "height": 1080
+  },
+  {
+   "label": "20min",
+   "scenes": 40,
+   "totalFrames": 36000,
+   "wallMs": 2197056,
+   "fps": 16.385563226426637,
+   "rssPeakMB": 449,
+   "outputBytes": 313181184,
+   "outputDurationS": 1200,
+   "concurrency": 4,
+   "width": 1920,
+   "height": 1080
+  }
+ ]
+}

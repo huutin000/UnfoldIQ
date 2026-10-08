@@ -1,0 +1,18 @@
+{
+ "version": "1.0.0",
+ "phase": "5C-G",
+ "jobId": "E2E-MV3-01",
+ "traceId": "tr-e2e-mv3-01",
+ "chain": [
+  "core:EXTENSION_WAKE",
+  "extension:APPROVAL_RECORDED",
+  "bridge:BRIDGE_INGEST"
+ ],
+ "complete": true,
+ "boundaryLatency": {
+  "coreToExtensionMs": 660,
+  "extensionActionMs": 1,
+  "extensionToAckMs": 14
+ },
+ "sendMessageMs": 2
+}

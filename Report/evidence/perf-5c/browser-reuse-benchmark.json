@@ -6,16 +6,16 @@
  "rangeRenders": 4,
  "browserStarts": 1,
  "reusedLeases": 3,
- "browserStartupMs": 138,
+ "browserStartupMs": 86,
  "startupAvoidedMs": [
-  138,
-  138,
-  138
+  86,
+  86,
+  86
  ],
- "startupAvoidedTotalMs": 414,
+ "startupAvoidedTotalMs": 258,
  "benchmark5b": {
-  "fullReferenceMs": 13574,
-  "incrementalRenderMs": 5529
+  "fullReferenceMs": 12290,
+  "incrementalRenderMs": 5242
  },
  "policy": {
   "version": "1.0.0",

@@ -149,6 +149,15 @@ function classifyError(code, detail = null) {
 
 if (typeof module !== "undefined" && module.exports) {
   module.exports = { validateSender, validateMessage, pollJobState, handleMessage, JOB_MESSAGE_TYPES, correlateDownload, classifyError, ERROR_CODES, FLOW_ORIGIN_PREFIXES, createRelayHub, recordLocalApproval, consumeLocalApproval, validateTrustedInputSpec };
+  var TraceContractMod = null;
+  try { TraceContractMod = require("../contracts/trace-contract.js"); } catch (e) { TraceContractMod = null; }
+  module.exports.TraceContract = TraceContractMod;
+  module.exports.buildSwSpan = function (kind, jobId, tStart, tEnd) {
+    if (!TraceContractMod) return null;
+    try {
+      return TraceContractMod.buildTraceSpan({ source: "extension", kind, jobId, tStart, tEnd });
+    } catch (e) { return null; }
+  };
 }
 
 /**
@@ -261,6 +270,13 @@ function validateTrustedInputSpec(spec, sender) {
   if (typeof importScripts === "function") {
     try {
       importScripts("tab-resolver.js");
+    } catch (e) {
+      void e;
+    }
+    try {
+      // Phase 5C §22 (GAP-030): cross-boundary trace spans. Best-effort load;
+      // span emission is skipped (never fatal) when the contract is absent.
+      importScripts("../contracts/trace-contract.js");
     } catch (e) {
       void e;
     }
@@ -478,6 +494,19 @@ function validateTrustedInputSpec(spec, sender) {
   }
   if (chrome.runtime.onMessage) {
     chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+      // Phase 5C §22: cross-boundary trace span (best-effort, never fatal).
+      // tStart at receipt; kind from message; attached to the response for the
+      // side panel to forward to the bridge /trace ingestor.
+      const swSpanT0 = Date.now();
+      const swSpanJobId = (msg && ((msg.cmd && msg.cmd.jobId) || (msg.approval && msg.approval.jobId))) || null;
+      // GAP-030 causal linkage: a caller may attach {trace:{traceId, parentSpanId}}
+      // so the emitted span joins an existing cross-boundary chain. Absent →
+      // standalone root span (backward compatible).
+      const swTraceCtx = (msg && msg.trace) || {};
+      const swSpanKind = !msg || msg.kind === "TAB_RELAY"
+        ? (msg && msg.cmd && msg.cmd.type === "SUBMIT_GENERATE" ? "SUBMIT_RELAYED" : "TAB_RELAY")
+        : msg.kind === "APPROVE_RECORD" ? "APPROVAL_RECORDED"
+        : msg.kind === "FLOW_TABS" ? "EXTENSION_WAKE" : null;
       (async () => {
         try {
           validateSender(sender);
@@ -519,7 +548,20 @@ function validateTrustedInputSpec(spec, sender) {
         } catch (e) {
           return { ok: false, error: String((e && e.message) || e) };
         }
-      })().then(sendResponse);
+      })().then((resp) => {
+        try {
+          const TC = (typeof TraceContract !== "undefined" && TraceContract) || null;
+          if (TC && resp && resp.ok === true && swSpanKind && swSpanJobId) {
+            resp.trace = [TC.buildTraceSpan({
+              source: "extension", kind: swSpanKind, jobId: swSpanJobId,
+              tStart: swSpanT0, tEnd: Date.now(),
+              traceId: swTraceCtx.traceId || undefined,
+              parentSpanId: swTraceCtx.parentSpanId || null,
+            })];
+          }
+        } catch (e) { void e; }
+        sendResponse(resp);
+      });
       return true;
     });
   }

@@ -1,6 +1,6 @@
 {
   "artifact": "perf-baseline-dag",
-  "capturedAt": "2026-10-08T02:26:45.490Z",
+  "capturedAt": "2026-10-08T02:41:42.696Z",
   "method": "process.hrtime.bigint micro-benchmarks inside tests/dag/test-dag.js",
   "sampleCounts": {
     "smallMutation": 5,
@@ -14,42 +14,42 @@
   "metrics": {
     "smallMutation": {
       "samples": 5,
-      "minMs": 7.926,
-      "p50Ms": 9.353,
-      "maxMs": 10.307
+      "minMs": 7.58,
+      "p50Ms": 8.562,
+      "maxMs": 9.911
     },
     "smallDirty": {
       "samples": 5,
-      "minMs": 14.781,
-      "p50Ms": 18.016,
-      "maxMs": 21.195
+      "minMs": 15.12,
+      "p50Ms": 15.911,
+      "maxMs": 17.358
     },
     "smallPlan": {
       "samples": 20,
-      "minMs": 0.339,
-      "p50Ms": 0.379,
-      "maxMs": 6.88
+      "minMs": 0.306,
+      "p50Ms": 0.332,
+      "maxMs": 6.552
     },
     "smallLoad": {
       "samples": 20,
-      "minMs": 0.288,
-      "p50Ms": 0.308,
-      "maxMs": 0.672
+      "minMs": 0.27,
+      "p50Ms": 0.284,
+      "maxMs": 0.429
     },
     "mediumDirty": {
       "samples": 3,
-      "minMs": 16.857,
-      "p50Ms": 26.425,
-      "maxMs": 35.235
+      "minMs": 16.617,
+      "p50Ms": 24.264,
+      "maxMs": 32.72
     },
     "mediumPlan": {
       "samples": 5,
-      "minMs": 17.351,
-      "p50Ms": 17.7,
-      "maxMs": 17.899
+      "minMs": 17.434,
+      "p50Ms": 18.444,
+      "maxMs": 22.698
     },
     "mediumSizeBytes": 129062,
-    "smallSizeBytes": 4552,
+    "smallSizeBytes": 4551,
     "writeAmplification": "1 atomic replace per effective mutation; 0 on dedupe"
   },
   "budgets": {

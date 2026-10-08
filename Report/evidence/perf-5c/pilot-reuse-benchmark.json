@@ -1,0 +1,186 @@
+{
+ "version": "1.0.0",
+ "phase": "5C-A",
+ "scale": "pilot (4500 frames, 1920x1080@30)",
+ "ranges": [
+  {
+   "startFrame": 0,
+   "endFrameExclusive": 900
+  },
+  {
+   "startFrame": 900,
+   "endFrameExclusive": 1800
+  },
+  {
+   "startFrame": 1800,
+   "endFrameExclusive": 2700
+  },
+  {
+   "startFrame": 2700,
+   "endFrameExclusive": 3600
+  },
+  {
+   "startFrame": 3600,
+   "endFrameExclusive": 4500
+  }
+ ],
+ "bundleMs": 2067,
+ "baseline": {
+  "browserStarts": 5,
+  "rangeWallsMs": [
+   {
+    "range": {
+     "startFrame": 0,
+     "endFrameExclusive": 900
+    },
+    "wallMs": 162811
+   },
+   {
+    "range": {
+     "startFrame": 900,
+     "endFrameExclusive": 1800
+    },
+    "wallMs": 69247
+   },
+   {
+    "range": {
+     "startFrame": 1800,
+     "endFrameExclusive": 2700
+    },
+    "wallMs": 148737
+   },
+   {
+    "range": {
+     "startFrame": 2700,
+     "endFrameExclusive": 3600
+    },
+    "wallMs": 148915
+   },
+   {
+    "range": {
+     "startFrame": 3600,
+     "endFrameExclusive": 4500
+    },
+    "wallMs": 150090
+   }
+  ],
+  "totalMs": 679800,
+  "rssPeakMB": 527
+ },
+ "candidate": {
+  "browserStarts": 1,
+  "reusedLeases": 4,
+  "rangeWallsMs": [
+   {
+    "range": {
+     "startFrame": 0,
+     "endFrameExclusive": 900
+    },
+    "wallMs": 159913
+   },
+   {
+    "range": {
+     "startFrame": 900,
+     "endFrameExclusive": 1800
+    },
+    "wallMs": 68789
+   },
+   {
+    "range": {
+     "startFrame": 1800,
+     "endFrameExclusive": 2700
+    },
+    "wallMs": 148820
+   },
+   {
+    "range": {
+     "startFrame": 2700,
+     "endFrameExclusive": 3600
+    },
+    "wallMs": 148429
+   },
+   {
+    "range": {
+     "startFrame": 3600,
+     "endFrameExclusive": 4500
+    },
+    "wallMs": 148062
+   }
+  ],
+  "totalMs": 674013,
+  "rssPeakMB": 343,
+  "pool": {
+   "created": 1,
+   "reused": 4,
+   "retired": 0,
+   "live": 1,
+   "startupAvoidedMs": [
+    101,
+    101,
+    101,
+    101
+   ],
+   "policy": {
+    "version": "1.0.0",
+    "maxBrowsers": 2,
+    "idleTtlMs": 300000,
+    "maxJobsPerBrowser": 25,
+    "maxAgeMs": 1800000,
+    "maxRssBytes": 2147483648
+   },
+   "browsers": [
+    {
+     "jobsCompleted": 5,
+     "startupMs": 101,
+     "ageMs": 673914
+    }
+   ]
+  }
+ },
+ "startupAvoidedTotalMs": 404,
+ "startsAvoided": 4,
+ "conformMs": 46766,
+ "equivalence": {
+  "status": "FAIL",
+  "findings": [
+   {
+    "check": "container",
+    "ok": true,
+    "detail": "mov,mp4,m4a,3gp,3g2,mj2 vs mov,mp4,m4a,3gp,3g2,mj2"
+   },
+   {
+    "check": "resolution",
+    "ok": true,
+    "detail": "[1920,1080] vs [1920,1080]"
+   },
+   {
+    "check": "fps",
+    "ok": true,
+    "detail": "30/1 vs 30/1"
+   },
+   {
+    "check": "pixfmt",
+    "ok": true,
+    "detail": "yuv420p vs yuv420p"
+   },
+   {
+    "check": "duration",
+    "ok": true,
+    "detail": "150 vs 150"
+   },
+   {
+    "check": "decodedFramesExact",
+    "ok": false,
+    "detail": "framemd5 differs (expected for segmented encodes: GOP boundaries reset prediction; see frameStats)"
+   },
+   {
+    "check": "audioStream",
+    "ok": true,
+    "detail": "none vs none"
+   }
+  ]
+ },
+ "leakCheck": {
+  "liveBrowsersAfterShutdown": 0
+ }
+}

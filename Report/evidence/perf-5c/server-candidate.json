@@ -1,0 +1,26 @@
+{
+  "version": "1.0.0",
+  "phase": "5C-L",
+  "candidate": "SERVER (Node self-hosted, local/container modeling — no deployment)",
+  "machine": {
+    "cpu": "11th Gen Intel i5-11400H, 6 cores / 12 threads",
+    "ramGB": 15.8,
+    "diskFreeGB": 151.7,
+    "os": "Windows 11",
+    "note": "measured host for all 5C local benchmarks"
+  },
+  "warmWorkerBenefit": {
+    "bundleOnce": "MEASURED — bundleMs recorded per run; serveUrl reused across ranges",
+    "browserReuse": "MEASURED — 5 starts to 1 at pilot scale (pilot-reuse-benchmark.json); startup itself ~0.1s, immaterial vs render wall",
+    "conclusion": "warm-worker benefit on this stack is bundle amortization, not browser-startup removal"
+  },
+  "queueing": "READY in-repo — lib/scheduler (bounded, persistent, dedupe) + renderOp integration (Tasks B/C/D); no external queue needed at current volume",
+  "hardwareNeeds": "current host renders 20min/1080p30 in ~37min at c=4 with RSS peak <0.5GB; 16GB RAM is not the constraint; CPU-bound (~15fps)",
+  "storage": "313MB per 20min output; 2GB/30d render-cache lifecycle budget (5B); 151GB free — storage is not the constraint",
+  "networkTransfer": "zero for local renders (all assets local/lavfi); uploads only at publish (out of 5C scope)",
+  "progressErrorHandling": "READY — remotion-render-runner progress/log/cancel-signal + orchestrator retry with classified errors",
+  "opsBurden": "low: single Windows host, SAC toggle ritual for native render, no daemon yet — a server would add service management + auth + job API for no measured gain at current volume",
+  "privacySecurity": "best — nothing leaves the machine; no credentials, no third-party processors",
+  "estimatedCost": "sunk host cost; marginal ~0 per render",
+  "verdict": "VIABLE but UNJUSTIFIED now — all server benefits except 24/7 availability are already realized locally; migrate only on volume/availability triggers (see render-strategy-decision.json)"
+}

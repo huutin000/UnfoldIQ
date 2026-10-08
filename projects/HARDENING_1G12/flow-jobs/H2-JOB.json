@@ -7,38 +7,38 @@
     {
       "from": null,
       "to": "PENDING",
-      "at": "2026-10-08T02:26:47.188Z",
+      "at": "2026-10-08T02:41:44.904Z",
       "actor": "system"
     },
     {
       "from": "PENDING",
       "to": "VALIDATED",
-      "at": "2026-10-08T02:26:47.197Z",
+      "at": "2026-10-08T02:41:44.914Z",
       "actor": "test"
     },
     {
       "from": "VALIDATED",
       "to": "PREPARED",
-      "at": "2026-10-08T02:26:47.204Z",
+      "at": "2026-10-08T02:41:44.922Z",
       "actor": "test"
     },
     {
       "from": "PREPARED",
       "to": "AWAITING_USER_APPROVAL",
-      "at": "2026-10-08T02:26:47.214Z",
+      "at": "2026-10-08T02:41:44.931Z",
       "actor": "test"
     },
     {
       "from": "AWAITING_USER_APPROVAL",
       "to": "AWAITING_USER_APPROVAL",
-      "at": "2026-10-08T02:26:47.223Z",
+      "at": "2026-10-08T02:41:44.941Z",
       "actor": "user",
       "note": "approval-recorded"
     },
     {
       "from": "AWAITING_USER_APPROVAL",
       "to": "AWAITING_PROVIDER_ACCEPTANCE",
-      "at": "2026-10-08T02:26:47.232Z",
+      "at": "2026-10-08T02:41:44.951Z",
       "actor": "extension"
     }
   ],
@@ -64,9 +64,9 @@
     "approvedBy": "user",
     "nonce": "nonce-H2-a",
     "fingerprint": "fp-nonce-H2-a",
-    "approvedAt": "2026-10-08T02:26:47.223Z",
+    "approvedAt": "2026-10-08T02:41:44.941Z",
     "used": false
   },
-  "submitIssuedAt": "2026-10-08T02:26:47.232Z",
+  "submitIssuedAt": "2026-10-08T02:41:44.951Z",
   "submitNonce": "nonce-H2-a"
 }

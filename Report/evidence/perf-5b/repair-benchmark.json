@@ -74,18 +74,18 @@
    "bytes": 222836
   }
  ],
- "reassemblyMs": 393,
+ "reassemblyMs": 319,
  "cache": {
   "lookups": 6,
   "validHits": 5,
   "misses": 1,
   "bytesReused": 32655939,
   "bytesWritten": 32655939,
-  "hashingMs": 38
+  "hashingMs": 51
  },
  "incrementalDirtyMs": 0,
- "assemblyMs": 273,
- "conformMs": 31811,
+ "assemblyMs": 256,
+ "conformMs": 26078,
  "oracleMs": null,
  "equivalence": {
   "status": "FAIL",
@@ -4684,7 +4684,7 @@
    "sampleMaxDiff": 43
   }
  },
- "partialQaMs": 4510,
+ "partialQaMs": 3835,
  "partialQa": {
   "localDetectors": {
    "black": 0,
@@ -4700,7 +4700,7 @@
   "lumaFrames": 300,
   "globalDecode": true,
   "fullQaWindowMs": 75000,
-  "avoidedMs": 70490
+  "avoidedMs": 71165
  },
  "qaCoverage": {
   "complete": true,

@@ -1,0 +1,51 @@
+{
+  "version": "1.0.0",
+  "phase": "5C-H",
+  "status": "RECORDED_FROM_EXISTING_TRACES",
+  "jobId": "FLOW-COMPANION-LIVE-GEN-01",
+  "source": "Report/evidence/post-v1f-real-execution/ (operator-driven live session, 2026-10-01, human-in-the-loop)",
+  "model": "Nano Banana 2",
+  "capability": "image",
+  "aspect": "1:1",
+  "session": {
+    "restore": "SESSION_REVALIDATED",
+    "tabPingMs": 9,
+    "note": "warm reused session; single tab owner throughout (tabId 47261522)"
+  },
+  "approval": {
+    "snapshotFrozen": "2026-10-01T09:07:01.300Z",
+    "explicitApprove": "2026-10-01T09:07:34.053Z",
+    "humanDeliberationMs": 32747,
+    "note": "human wait separated from system wall, not counted as UNFOLDIQ overhead"
+  },
+  "submit": {
+    "syntheticSubmit": "REFUSED (SUBMIT_NOT_ACCEPTED, read-only poll until user gesture)",
+    "userGestureAccept": "2026-10-01T09:12:40.096Z",
+    "humanWaitMs": 288621,
+    "note": "no bypass: automation never clicked Start; human wait excluded from system baseline"
+  },
+  "providerWait": {
+    "generatingAt": "2026-10-01T09:12:40.096Z",
+    "resultDetectedAt": "2026-10-01T09:12:45.119Z",
+    "providerWaitMs": 5023,
+    "resultUrls": 2,
+    "note": "single historical sample (n=1); not a distribution"
+  },
+  "restartReconcile": {
+    "observed": true,
+    "at": "2026-10-01T09:17:24.592Z",
+    "behavior": "resume adopted already-counted GENERATING results without resubmitting",
+    "source": "2026-10-01T09-17-08-955Z-21-panel-log-resume.txt"
+  },
+  "credit": {
+    "visibleCost": "UNKNOWN",
+    "note": "Cost metadata UNKNOWN until verified in Flow UI — never treated as 0. No new credits spent for 5C."
+  },
+  "measurementTrigger": "Repeat with n>=5 + verified credit readout when operator authorizes a bounded live sample (1 image + 1 video via flow-web).",
+  "sessionSafety": {
+    "exclusiveLease": "unit-proven (7/7); live: single owner observed, no double-lease attempted (session risk)",
+    "staleAuth": "unit-proven; live session stayed warm (SESSION_REVALIDATED), stale path not triggered",
+    "noBypass": "PROVEN live — synthetic submit refused, read-only poll until user gesture",
+    "noBlindResubmit": "PROVEN live — resume reconciled without resubmitting"
+  }
+}

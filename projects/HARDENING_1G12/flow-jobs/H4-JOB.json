@@ -7,38 +7,38 @@
     {
       "from": null,
       "to": "PENDING",
-      "at": "2026-10-08T02:26:47.311Z",
+      "at": "2026-10-08T02:41:45.028Z",
       "actor": "system"
     },
     {
       "from": "PENDING",
       "to": "VALIDATED",
-      "at": "2026-10-08T02:26:47.321Z",
+      "at": "2026-10-08T02:41:45.038Z",
       "actor": "test"
     },
     {
       "from": "VALIDATED",
       "to": "PREPARED",
-      "at": "2026-10-08T02:26:47.328Z",
+      "at": "2026-10-08T02:41:45.046Z",
       "actor": "test"
     },
     {
       "from": "PREPARED",
       "to": "AWAITING_USER_APPROVAL",
-      "at": "2026-10-08T02:26:47.338Z",
+      "at": "2026-10-08T02:41:45.056Z",
       "actor": "test"
     },
     {
       "from": "AWAITING_USER_APPROVAL",
       "to": "AWAITING_USER_APPROVAL",
-      "at": "2026-10-08T02:26:47.347Z",
+      "at": "2026-10-08T02:41:45.064Z",
       "actor": "user",
       "note": "approval-recorded"
     },
     {
       "from": "AWAITING_USER_APPROVAL",
       "to": "AWAITING_USER_APPROVAL",
-      "at": "2026-10-08T02:26:47.358Z",
+      "at": "2026-10-08T02:41:45.077Z",
       "actor": "user",
       "note": "approval-superseded"
     }
@@ -66,7 +66,7 @@
     "nonce": "nonce-H4-b",
     "fingerprint": "fp-b",
     "supersedesNonce": "nonce-H4-a",
-    "approvedAt": "2026-10-08T02:26:47.358Z",
+    "approvedAt": "2026-10-08T02:41:45.077Z",
     "used": false
   }
 }
