@@ -46,7 +46,8 @@
     "test:override": "node scripts/run-tests.js override",
     "test:responsive": "node scripts/run-tests.js responsive",
     "test:packaging": "node scripts/run-tests.js packaging",
-    "test:render": "node scripts/run-tests.js render"
+    "test:render": "node scripts/run-tests.js render",
+    "test:creative": "node scripts/run-tests.js creative"
   },
   "keywords": [],
   "author": "",

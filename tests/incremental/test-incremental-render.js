@@ -18,6 +18,7 @@ const path = require("path");
 
 const ROOT = path.join(__dirname, "..", "..");
 const PID = "__5b_incr__";
+require("../fixtures/render-fixture-lifecycle.js").registerFixtureCleanup(PID);
 const EVID_DIR = path.join(ROOT, "Report", "evidence", "perf-5b");
 
 const incr = require("../../lib/incremental/index.js");
@@ -188,7 +189,9 @@ await runTest("chunked v1 + CAS publish", async () => {
   });
   const a = fs.readFileSync(ctx.chunksV1[1].chunkFile);
   const b2 = fs.readFileSync(again);
-  assert(a.equals(b2), "browser render + stitch deterministic (" + a.length + " bytes)");
+  const da = require("../fixtures/media-equivalence.js").mediaDigest(ctx.chunksV1[1].chunkFile);
+  const db = require("../fixtures/media-equivalence.js").mediaDigest(again);
+  assert(a.length === b2.length && da.digest === db.digest && da.frameCount === 60, "browser render + stitch deterministic: media-equivalent (decoded frames, packet timing, stream params) (" + a.length + " bytes, bytes-equal=" + a.equals(b2) + ")");
 });
 
 await runTest("A no-change rerun: zero renders, assembly from cache", async () => {

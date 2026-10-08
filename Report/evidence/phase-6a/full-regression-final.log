@@ -1,0 +1,202 @@
+
+> unfoldiq@1.0.0 test
+> node scripts/run-tests.js
+
+PASS alignment/test-alignment.js  === alignment: 12 passed, 0 failed ===
+PASS captions/test-captions.js  === captions: 13 passed, 0 failed ===
+PASS captions/test-validation-cases.js  === validation-cases A-L: 12 passed, 0 failed ===
+PASS compliance/test-compliance.js  === DONE: 38 passed, 0 failed ===
+PASS cost/test-hardening-budget-gates.js  === DONE: 11 passed, 0 failed ===
+PASS cost/test-output-cost-credit.js  === 1G.8 output-cost-credit: 161 passed, 0 failed ===
+PASS creative/test-creative-contract.js  === creative/contract: 0 failed, 6 passed ===
+PASS creative/test-creative-golden.js  === creative/golden: 0 failed, 14 passed ===
+PASS creative/test-creative-pilot.js  === creative/pilot: 0 failed, 2 passed ===
+PASS creative/test-creative-repair.js  === creative/repair: 0 failed, 8 passed ===
+PASS creative/test-hook-system.js  === creative/hook: 0 failed, 8 passed ===
+PASS creative/test-multimodal-watch.js  === creative/watch: 0 failed, 10 passed ===
+PASS creative/test-narrative-beats.js  === creative/beats: 0 failed, 8 passed ===
+PASS creative/test-visual-rhythm.js  === creative/rhythm: 0 failed, 10 passed ===
+PASS dag/test-dag.js  === DONE: 156 passed, 0 failed ===
+PASS flow/test-agent-instructions.js  === 1G.9 agent-instructions: 73 passed, 0 failed ===
+PASS flow/test-asset-library.js  === 1G.10 asset-library: 41 passed, 0 failed ===
+PASS flow/test-canonical-source-gate.js  === DONE: 5 passed, 0 failed ===
+PASS flow/test-flow-bridge-remember.js  === 30 passed, 0 failed ===
+PASS flow/test-flow-bridge-token.js  === 47 passed, 0 failed ===
+PASS flow/test-flow-bridge.js  RESULT: ALL TESTS PASSED
+PASS flow/test-flow-download-import.js  RESULT: ALL TESTS PASSED
+PASS flow/test-flow-hardening.js  RESULT: ALL TESTS PASSED
+PASS flow/test-flow-jobs.js  RESULT: ALL TESTS PASSED
+PASS flow/test-flow-manual-assist.js  RESULT: ALL TESTS PASSED
+PASS flow/test-flow-origin.js  RESULT: ALL TESTS PASSED
+PASS flow/test-flow-page-adapter.js  RESULT: ALL TESTS PASSED
+PASS flow/test-flow-postv1b.js  RESULT: ALL TESTS PASSED
+PASS flow/test-flow-postv1c.js  RESULT: ALL TESTS PASSED
+PASS flow/test-flow-postv1d.js  RESULT: ALL TESTS PASSED
+PASS flow/test-flow-postv1e.js  RESULT: ALL TESTS PASSED
+PASS flow/test-flow-safety-retry.js  RESULT: ALL TESTS PASSED
+PASS flow/test-flow-state-machine.js  RESULT: ALL TESTS PASSED
+PASS flow/test-instruction-bridge.js  === FIX 02 instruction-bridge: 19 passed, 0 failed ===
+PASS flow/test-instruction-write-persistence.js  === FIX 03 write-persistence: 94 passed, 0 failed ===
+PASS flow/test-live-instruction-plumbing.js  === FIX 02 live-instruction-plumbing: 76 passed, 0 failed ===
+PASS golden/test-golden.js  === DONE: 63 passed, 0 failed ===
+PASS golden/test-governance-regression.js  === DONE: 30 passed, 0 failed ===
+PASS golden/test-narration-pronunciation-golden.js  === DONE: 19 passed, 0 failed ===
+PASS golden/test-spoken-script-golden.js  === DONE: 21 passed, 0 failed ===
+PASS golden/test-tts-behavior-golden.js  === DONE: 21 passed, 0 failed ===
+PASS history/test-history.js  === DONE: 109 passed, 0 failed ===
+PASS incremental/test-incremental-plan.js  === incremental-plan: 19 passed, 0 failed ===
+PASS incremental/test-incremental-render.js  === incremental-render: 11 passed, 0 failed ===
+PASS incremental/test-partial-qa.js  === partial-qa: 8 passed, 0 failed ===
+PASS incremental/test-pilot-repair-a.js  === pilot-repair-a: 3 passed, 0 failed ===
+PASS incremental/test-pilot-repair-b.js  === pilot-repair-b: 4 passed, 0 failed ===
+PASS incremental/test-pilot-reuse-5c.js  === pilot-reuse-5c: 6 passed, 0 failed ===
+PASS incremental/test-render-cache.js  === render-cache: 12 passed, 0 failed ===
+PASS media/test-media-mcp.js  RESULT: ALL TESTS PASSED
+PASS media/test-media-preflight.js  RESULT: ALL TESTS PASSED
+PASS mix/test-audio-mix.js  === audio-mix: 9 passed, 0 failed ===
+PASS mix/test-loudness.js  === audio-loudness: 6 passed, 0 failed ===
+PASS mix/test-validation-cases.js  === validation-cases A-I: 9 passed, 0 failed ===
+PASS motion/test-motion-system.js  === motion: 0 failed, 23 passed ===
+PASS music/test-music-analysis.js  === music-analysis: 8 passed, 0 failed ===
+PASS music/test-music-intent.js  === music-intent: 11 passed, 0 failed ===
+PASS music/test-music-library.js  === music-library: 13 passed, 0 failed ===
+PASS music/test-music-plan.js  === music-plan: 12 passed, 0 failed ===
+PASS narration/test-e2e-phase223.js  PHASE_2_2_2_3_E2E: PASS
+PASS narration/test-narration-direction.js  === DONE: 17 passed, 0 failed ===
+PASS narration/test-narration-integration.js  === DONE: 8 passed, 0 failed ===
+PASS override/test-override.js  === override: 0 failed, 10 passed ===
+PASS packaging/test-packaging.js  === packaging: 0 failed, 24 passed ===
+PASS pairing/test-device-pairing.js  === device-pairing: 11 passed, 0 failed ===
+PASS pairing/test-pairing-http.js  [PASS] Legacy token still works as developer/recovery fallback
+PASS perf/test-concurrency-matrix-5c.js  === concurrency-matrix-5c: 5 passed, 0 failed ===
+PASS perf/test-longform-5c.js  === longform-5c: 2 passed, 0 failed ===
+PASS perf/test-phase-5a.js  === phase-5a: 18 passed, 0 failed ===
+PASS pipeline/test-asset-stager.js  RESULT: PASS
+PASS pipeline/test-auto-fix.js  RESULT: PASS
+PASS pipeline/test-content-class-router.js  RESULT: ALL TESTS PASSED
+PASS pipeline/test-context-routing.js  RESULT: ALL TESTS PASSED
+PASS pipeline/test-continuity.js  RESULT: ALL TESTS PASSED
+PASS pipeline/test-creative-memory.js  RESULT: ALL TESTS PASSED
+PASS pipeline/test-duration-planning.js  RESULT: ALL TESTS PASSED
+PASS pipeline/test-editorial-quality.js  RESULT: ALL TESTS PASSED
+PASS pipeline/test-finalize-output.js  RESULT: PASS
+PASS pipeline/test-phase1g1-e2e.js  RESULT: ALL TESTS PASSED
+PASS pipeline/test-pipeline-lock.js  RESULT: PASS
+PASS pipeline/test-pipeline-resume.js  RESULT: PASS
+PASS pipeline/test-pipeline-state.js  RESULT: PASS
+PASS pipeline/test-research-planning.js  RESULT: ALL TESTS PASSED
+PASS pipeline/test-step11-contracts.js  RESULT: ALL TESTS PASSED
+PASS pipeline/test-step13-pipeline-e2e.js  RESULT: PASS
+PASS pipeline/test-v5-preflight.js  RESULT: ALL TESTS PASSED
+PASS platform/test-platform-policy.js  === 1G.7 platform-policy: 171 passed, 0 failed ===
+PASS policy/test-policy-refresh.js  RESULT: ALL TESTS PASSED
+PASS policy/test-policy-rights.js  RESULT: ALL TESTS PASSED
+PASS project-manifest/test-manifest.js  === DONE: 69 passed, 0 failed ===
+PASS pronunciation/test-pronunciation-invalidation.js  === DONE: 4 passed, 0 failed ===
+PASS pronunciation/test-pronunciation-profile.js  === DONE: 15 passed, 0 failed ===
+PASS pronunciation/test-pronunciation-runtime.js  === DONE: 13 passed, 0 failed ===
+PASS provenance/test-provenance.js  === DONE: 30 passed, 0 failed ===
+PASS providers/test-agent-native-bridge.js  RESULT: ALL TESTS PASSED
+PASS providers/test-cloud-providers.js  RESULT: ALL TESTS PASSED
+PASS providers/test-comfyui-provider.js  RESULT: ALL TESTS PASSED
+PASS providers/test-kokoro-local-benchmark.js  === DONE: 0 failed ===
+PASS providers/test-kokoro-model-identity.js  === DONE: 0 failed ===
+PASS providers/test-kokoro-provider.js  RESULT: ALL TESTS PASSED
+PASS providers/test-model-capability-registry.js  === 1G.6 model-capability-registry: 152 passed, 0 failed ===
+PASS providers/test-provider-core.js  RESULT: ALL TESTS PASSED
+PASS providers/test-provider-resolution-e2e.js  RESULT: ALL TESTS PASSED
+PASS providers/test-safety-provider-integration.js  RESULT: ALL TESTS PASSED
+PASS providers/test-whisper-provider.js  RESULT: ALL TESTS PASSED
+PASS qa/test-asset-qa-aggregate.js  === DONE: 55 passed, 0 failed ===
+PASS qa/test-asset-qa-continuity.js  === DONE: 25 passed, 0 failed ===
+PASS qa/test-asset-qa-factuality.js  === DONE: 33 passed, 0 failed ===
+PASS qa/test-asset-qa-real.js  === DONE: 13 passed, 0 failed ===
+PASS qa/test-asset-qa-semantic.js  === DONE: 24 passed, 0 failed ===
+PASS qa/test-asset-qa-structural.js  === DONE: 20 passed, 0 failed ===
+PASS qa/test-qa-diff.js  RESULT: PASS
+PASS qa/test-visual-qa-evidence.js  RESULT: PASS
+PASS real-e2e/test-case-result.js  === DONE: 13 passed, 0 failed ===
+PASS real-e2e/test-correlation-gate.js  === DONE: 6 passed, 0 failed ===
+PASS real-e2e/test-repair-scope.js  === DONE: 21 passed, 0 failed ===
+PASS real-e2e/test-tts-targeted-regen.js  === DONE: targeted-regen fixture PASS ===
+PASS recovery/test-recovery.js  === DONE: 75 passed, 0 failed ===
+PASS remotion/test-audio-mix.js  RESULT: ALL TESTS PASSED
+PASS remotion/test-captions.js  RESULT: ALL TESTS PASSED
+PASS remotion/test-measured-timeline.js  RESULT: ALL TESTS PASSED
+PASS remotion/test-remotion-audio.js  RESULT: PASS
+PASS remotion/test-remotion-captions.js  RESULT: PASS
+PASS remotion/test-remotion-composition.js  RESULT: PASS
+PASS remotion/test-remotion-handoff.js  RESULT: ALL TESTS PASSED
+PASS remotion/test-remotion-layers.js  RESULT: PASS
+PASS remotion/test-remotion-render-smoke.js  RESULT: PASS
+PASS remotion/test-remotion-timing.js  RESULT: PASS
+PASS remotion/test-render-control.js  RESULT: PASS
+PASS remotion/test-render-coverage.js  RESULT: PASS
+PASS remotion/test-render-input.js  RESULT: PASS
+PASS remotion/test-render-media-qa.js  RESULT: PASS
+PASS remotion/test-render-plan.js  RESULT: PASS
+PASS remotion/test-render-qa.js  RESULT: PASS
+PASS remotion/test-render-retry.js  RESULT: PASS
+PASS remotion/test-voice-timing.js  RESULT: ALL TESTS PASSED
+PASS render/test-pilot-4b.js  === pilot-4b: 0 failed, 31 passed ===
+PASS research/test-auth-extract.js  RESULT: ALL TESTS PASSED
+PASS research/test-browser-extract.js  RESULT: ALL TESTS PASSED
+PASS research/test-claim-ledger.js  RESULT: ALL TESTS PASSED
+PASS research/test-contradictions.js  RESULT: ALL TESTS PASSED
+PASS research/test-crawl4ai-bridge.js  RESULT: ALL TESTS PASSED
+PASS research/test-creative-brief.js  RESULT: ALL TESTS PASSED
+PASS research/test-evidence-e2e.js  RESULT: ALL TESTS PASSED
+PASS research/test-independence.js  RESULT: ALL TESTS PASSED
+PASS research/test-research-modes.js  RESULT: ALL TESTS PASSED
+PASS research/test-robots-ratelimit.js  RESULT: ALL TESTS PASSED
+PASS research/test-search-provider.js  RESULT: ALL TESTS PASSED
+PASS research/test-source-registry.js  RESULT: ALL TESTS PASSED
+PASS research/test-sufficiency.js  RESULT: ALL TESTS PASSED
+PASS research/test-url-safety.js  RESULT: ALL TESTS PASSED
+PASS research-deep/test-acceptance-profile.js  RESULT: ALL TESTS PASSED (6 assertions)
+PASS research-deep/test-attempt-bounds.js  RESULT: ALL TESTS PASSED
+PASS research-deep/test-deep-e2e-fixtures.js  RESULT: ALL TESTS PASSED
+PASS research-deep/test-doctor-detection.js  RESULT: ALL TESTS PASSED
+PASS research-deep/test-embedding-config.js  ALL PASS - test-embedding-config.js (33 assertions)
+PASS research-deep/test-env-bootstrap.js  RESULT: ALL TESTS PASSED (17 assertions)
+PASS research-deep/test-escalation-policy.js  RESULT: ALL TESTS PASSED
+PASS research-deep/test-evidence-bypass.js  RESULT: ALL TESTS PASSED
+PASS research-deep/test-provider-adapter.js  RESULT: ALL TESTS PASSED
+PASS research-deep/test-quota-fastfail.js  RESULT: ALL TESTS PASSED (6 assertions)
+PASS responsive/test-responsive.js  === responsive: 0 failed, 15 passed ===
+PASS runtime/test-browser-pool.js  === browser-pool: 8 passed, 0 failed ===
+PASS runtime/test-orchestrator-budget.js  === orchestrator-budget: 5 passed, 0 failed ===
+PASS runtime/test-orchestrator-queue.js  === orchestrator-queue: 6 passed, 0 failed ===
+PASS runtime/test-provider-session.js  === provider-session: 7 passed, 0 failed ===
+PASS runtime/test-resource-budget.js  === resource-budget: 8 passed, 0 failed ===
+PASS runtime/test-scheduler.js  === scheduler: 9 passed, 0 failed ===
+PASS spoken-script/test-canonicalization.js  === DONE: 11 passed, 0 failed ===
+PASS spoken-script/test-e2e-fss-backfill.js  FIX_PRE_2_4_E2E: PASS
+PASS spoken-script/test-fidelity.js  === DONE: 10 passed, 0 failed ===
+PASS spoken-script/test-humanization.js  === DONE: 5 passed, 0 failed ===
+PASS spoken-script/test-naturalness.js  === DONE: 7 passed, 0 failed ===
+PASS storage/test-runtime-storage.js  === runtime-storage: 5 passed, 0 failed ===
+PASS storage/test-storage.js  === DONE: 46 passed, 0 failed ===
+PASS story/test-evidence-gate.js  RESULT: ALL TESTS PASSED
+PASS story/test-narrative-brief.js  RESULT: ALL TESTS PASSED
+PASS story/test-prompt-compiler.js  RESULT: ALL TESTS PASSED
+PASS story/test-research-pack.js  RESULT: ALL TESTS PASSED
+PASS story/test-story-audit.js  RESULT: ALL TESTS PASSED
+PASS story/test-story-draft.js  RESULT: ALL TESTS PASSED
+PASS story/test-story-e2e.js  RESULT: ALL TESTS PASSED
+PASS story/test-story-fiction.js  RESULT: ALL TESTS PASSED
+PASS story/test-story-hybrid.js  RESULT: ALL TESTS PASSED
+PASS story/test-story-structure.js  RESULT: ALL TESTS PASSED
+PASS story/test-visual-motion-decision.js  === 1G.5 visual-motion: 150 passed, 0 failed ===
+PASS story/test-visual-story-grammar.js  === FIX 1 visual-story-grammar: 158 passed, 0 failed ===
+PASS telemetry/test-telemetry.js  === DONE: 54 passed, 0 failed ===
+PASS timeline/test-master-timeline.js  === master-timeline cases A-P: 18 passed, 0 failed ===
+PASS timeline/test-timebase.js  === timeline-timebase: 6 passed, 0 failed ===
+PASS topic/test-topic-registry.js  ✓ ALL TESTS PASSED
+PASS voice-bible/test-fix01-license-voice-selection.js  === DONE: 145 passed, 0 failed ===
+PASS voice-bible/test-rights-decision-phase21.js  === DONE: 93 passed, 0 failed ===
+PASS voice-bible/test-voice-bible.js  === DONE: 187 passed, 0 failed ===
+PASS workspace/test-workspace.js  === DONE: 53 passed, 0 failed ===
+
+=== alignment, captions, compliance, cost, creative, dag, flow, golden, history, incremental, media, mix, motion, music, narration, override, packaging, pairing, perf, pipeline, platform, policy, project-manifest, pronunciation, provenance, providers, qa, real-e2e, recovery, remotion, render, research, research-deep, responsive, runtime, spoken-script, storage, story, telemetry, timeline, topic, voice-bible, workspace: 0 failed suite(s) in 1252.1s ===
+EXIT=0

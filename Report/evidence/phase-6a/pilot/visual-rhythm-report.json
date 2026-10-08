@@ -1,0 +1,380 @@
+{
+  "kind": "VISUAL_RHYTHM",
+  "version": "1.0.0",
+  "policyVersion": "1.0.0",
+  "projectId": "pilot-sky-blue",
+  "inputFingerprint": "b657bebe1035d74d",
+  "metrics": {
+    "shotCount": 6,
+    "medianMs": 9083,
+    "meanMs": 10916,
+    "minMs": 7466,
+    "maxMs": 15900,
+    "p90Ms": 15900,
+    "durationCv": 0.306,
+    "identicalStreakMax": 1,
+    "longHolds": 0,
+    "rapidCutBursts": 0,
+    "staticShare": 1,
+    "zoomFamilyShare": 0,
+    "primitiveEntropy": 0,
+    "modalityEntropy": 0,
+    "maxModalityStreak": 6,
+    "maxSamePrimitiveStreak": 0,
+    "directionAlternationMax": 1,
+    "veoDurationRatio": 0,
+    "veoBeatRatio": 0,
+    "maxConsecutiveVeo": 0,
+    "captionCpsMean": 12.82,
+    "captionCpsP90": 14.28,
+    "visualRestRatio": 1
+  },
+  "visualRestRanges": [
+    {
+      "shotId": "S01-card",
+      "startMs": 0,
+      "endMs": 9400,
+      "declared": false
+    },
+    {
+      "shotId": "S02-card",
+      "startMs": 9367,
+      "endMs": 18133,
+      "declared": false
+    },
+    {
+      "shotId": "S03-card",
+      "startMs": 18100,
+      "endMs": 34000,
+      "declared": false
+    },
+    {
+      "shotId": "S04-card",
+      "startMs": 33967,
+      "endMs": 41433,
+      "declared": false
+    },
+    {
+      "shotId": "S05-card",
+      "startMs": 41400,
+      "endMs": 50133,
+      "declared": false
+    },
+    {
+      "shotId": "S06-card",
+      "startMs": 50100,
+      "endMs": 65333,
+      "declared": false
+    }
+  ],
+  "audioContext": {
+    "narrativeEnergyTimeline": [
+      {
+        "beatId": "S01",
+        "startMs": 0,
+        "endMs": 9394,
+        "energy": 0.25
+      },
+      {
+        "beatId": "S02",
+        "startMs": 9394,
+        "endMs": 18127,
+        "energy": 0.25
+      },
+      {
+        "beatId": "S03",
+        "startMs": 18127,
+        "endMs": 33979,
+        "energy": 0
+      },
+      {
+        "beatId": "S04",
+        "startMs": 33979,
+        "endMs": 41402,
+        "energy": 0.15
+      },
+      {
+        "beatId": "S05",
+        "startMs": 41402,
+        "endMs": 50110,
+        "energy": 0
+      },
+      {
+        "beatId": "S06",
+        "startMs": 50110,
+        "endMs": 65332,
+        "energy": 0.15
+      }
+    ],
+    "musicEnergyTimeline": []
+  },
+  "fingerprint": {
+    "kind": "CREATIVE_FINGERPRINT",
+    "version": "1.0.0",
+    "policyVersion": "1.0.0",
+    "projectId": "pilot-sky-blue",
+    "inputFingerprint": "b657bebe1035d74d",
+    "shotDurationsMs": [
+      9400,
+      8766,
+      15900,
+      7466,
+      8733,
+      15233
+    ],
+    "modalitySequence": [
+      "TITLE",
+      "TITLE",
+      "TITLE",
+      "TITLE",
+      "TITLE",
+      "TITLE"
+    ],
+    "framingSequence": [
+      "CENTERED_TITLE_CARD",
+      "CENTERED_TITLE_CARD",
+      "CENTERED_TITLE_CARD",
+      "CENTERED_TITLE_CARD",
+      "CENTERED_TITLE_CARD",
+      "CENTERED_TITLE_CARD"
+    ],
+    "motionPrimitiveSequence": [
+      "STATIC",
+      "STATIC",
+      "STATIC",
+      "STATIC",
+      "STATIC",
+      "STATIC"
+    ],
+    "transitionSequence": [
+      "CUT",
+      "CUT",
+      "CUT",
+      "CUT",
+      "CUT",
+      "CUT"
+    ],
+    "motionIntensityTimeline": [
+      {
+        "shotId": "S01-card",
+        "startMs": 0,
+        "endMs": 9400,
+        "intensity": 0
+      },
+      {
+        "shotId": "S02-card",
+        "startMs": 9367,
+        "endMs": 18133,
+        "intensity": 0
+      },
+      {
+        "shotId": "S03-card",
+        "startMs": 18100,
+        "endMs": 34000,
+        "intensity": 0
+      },
+      {
+        "shotId": "S04-card",
+        "startMs": 33967,
+        "endMs": 41433,
+        "intensity": 0
+      },
+      {
+        "shotId": "S05-card",
+        "startMs": 41400,
+        "endMs": 50133,
+        "intensity": 0
+      },
+      {
+        "shotId": "S06-card",
+        "startMs": 50100,
+        "endMs": 65333,
+        "intensity": 0
+      }
+    ],
+    "narrativeEnergyTimeline": [
+      {
+        "beatId": "S01",
+        "startMs": 0,
+        "endMs": 9394,
+        "energy": 0.25
+      },
+      {
+        "beatId": "S02",
+        "startMs": 9394,
+        "endMs": 18127,
+        "energy": 0.25
+      },
+      {
+        "beatId": "S03",
+        "startMs": 18127,
+        "endMs": 33979,
+        "energy": 0
+      },
+      {
+        "beatId": "S04",
+        "startMs": 33979,
+        "endMs": 41402,
+        "energy": 0.15
+      },
+      {
+        "beatId": "S05",
+        "startMs": 41402,
+        "endMs": 50110,
+        "energy": 0
+      },
+      {
+        "beatId": "S06",
+        "startMs": 50110,
+        "endMs": 65332,
+        "energy": 0.15
+      }
+    ],
+    "visualRestRanges": [
+      {
+        "shotId": "S01-card",
+        "startMs": 0,
+        "endMs": 9400,
+        "declared": false
+      },
+      {
+        "shotId": "S02-card",
+        "startMs": 9367,
+        "endMs": 18133,
+        "declared": false
+      },
+      {
+        "shotId": "S03-card",
+        "startMs": 18100,
+        "endMs": 34000,
+        "declared": false
+      },
+      {
+        "shotId": "S04-card",
+        "startMs": 33967,
+        "endMs": 41433,
+        "declared": false
+      },
+      {
+        "shotId": "S05-card",
+        "startMs": 41400,
+        "endMs": 50133,
+        "declared": false
+      },
+      {
+        "shotId": "S06-card",
+        "startMs": 50100,
+        "endMs": 65333,
+        "declared": false
+      }
+    ],
+    "metrics": {
+      "shotCount": 6,
+      "medianMs": 9083,
+      "meanMs": 10916,
+      "minMs": 7466,
+      "maxMs": 15900,
+      "p90Ms": 15900,
+      "durationCv": 0.306,
+      "identicalStreakMax": 1,
+      "longHolds": 0,
+      "rapidCutBursts": 0,
+      "staticShare": 1,
+      "zoomFamilyShare": 0,
+      "primitiveEntropy": 0,
+      "modalityEntropy": 0,
+      "maxModalityStreak": 6,
+      "maxSamePrimitiveStreak": 0,
+      "directionAlternationMax": 1,
+      "veoDurationRatio": 0,
+      "veoBeatRatio": 0,
+      "maxConsecutiveVeo": 0,
+      "captionCpsMean": 12.82,
+      "captionCpsP90": 14.28,
+      "visualRestRatio": 1
+    },
+    "anchors": {
+      "hookCheckpointIds": [
+        "pilot-sky-blue:HOOK_5S",
+        "pilot-sky-blue:HOOK_15S",
+        "pilot-sky-blue:HOOK_30S"
+      ],
+      "beatIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06"
+      ],
+      "sceneIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06"
+      ],
+      "shotIds": [
+        "S01-card",
+        "S02-card",
+        "S03-card",
+        "S04-card",
+        "S05-card",
+        "S06-card"
+      ]
+    },
+    "fingerprintHash": "c14ba6664cb48495"
+  },
+  "findings": [
+    {
+      "findingId": "cf-39a441c4ac0f736c",
+      "code": "FRAMING_REPETITION",
+      "severity": "P3",
+      "scope": "SHOT",
+      "startMs": 0,
+      "endMs": 65333,
+      "shotId": "S01-card",
+      "reason": "6 consecutive shots use the same framing \"CENTERED_TITLE_CARD\"",
+      "reasonClass": "SAME_FRAMING",
+      "evidenceRefs": [
+        "shot:S01-card",
+        "shot:S02-card",
+        "shot:S03-card",
+        "shot:S04-card",
+        "shot:S05-card",
+        "shot:S06-card",
+        "framing:CENTERED_TITLE_CARD"
+      ],
+      "correctiveAction": "FRAMING_LAYOUT_PATCH:vary crop/subject scale/composition",
+      "repairClass": "FRAMING_LAYOUT_PATCH",
+      "confidence": "MEDIUM",
+      "status": "OPEN",
+      "source": "DETERMINISTIC"
+    },
+    {
+      "findingId": "cf-116b5ed6aa48611c",
+      "code": "MODALITY_MONOTONY",
+      "severity": "P3",
+      "scope": "GLOBAL",
+      "startMs": 0,
+      "endMs": 65333,
+      "reason": "6 consecutive shots stay TITLE while the beat role changes across HOOK/SETUP/EXPLANATION/CONTRAST/EVIDENCE",
+      "reasonClass": "MODALITY_PATTERN",
+      "evidenceRefs": [
+        "shot:S01-card",
+        "shot:S02-card",
+        "shot:S03-card",
+        "shot:S04-card",
+        "shot:S05-card",
+        "shot:S06-card",
+        "modality:TITLE"
+      ],
+      "correctiveAction": "ASSET_MODALITY_REPLACE:match modality to beat role (chart/diagram/map/still)",
+      "repairClass": "ASSET_MODALITY_REPLACE",
+      "confidence": "MEDIUM",
+      "status": "OPEN",
+      "source": "DETERMINISTIC"
+    }
+  ]
+}

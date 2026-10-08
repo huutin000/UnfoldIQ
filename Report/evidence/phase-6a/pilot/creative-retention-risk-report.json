@@ -1,0 +1,119 @@
+{
+  "kind": "CREATIVE_RETENTION_RISK",
+  "version": "1.0.0",
+  "policyVersion": "1.0.0",
+  "projectId": "pilot-sky-blue",
+  "inputFingerprint": "b657bebe1035d74d",
+  "assessmentKind": "PRE_PUBLISH_CREATIVE_RETENTION_RISK",
+  "actualRetentionStatus": "NOT_AVAILABLE_PRE_PUBLISH",
+  "actualRetention": null,
+  "terminology": {
+    "ACTUAL_RETENTION": "post-publish viewer data",
+    "CREATIVE_RETENTION_RISK": "pre-publish structured assessment",
+    "HOOK_QUALITY": "opening creative assessment",
+    "BEAT_QUALITY": "narrative progress/payoff assessment",
+    "VISUAL_RHYTHM": "purposeful temporal variation assessment"
+  },
+  "riskLevel": "LOW",
+  "openFindingCounts": {
+    "P0": 0,
+    "P1": 0,
+    "P2": 0,
+    "P3": 5
+  },
+  "dimensions": {
+    "hook": {
+      "checkpointVerdicts": {
+        "HOOK_5S": "PASS",
+        "HOOK_15S": "PASS",
+        "HOOK_30S": "PASS_WITH_NOTES"
+      },
+      "open": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 1
+      }
+    },
+    "narrativeBeats": {
+      "open": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 0
+      },
+      "loops": {
+        "opened": 1,
+        "resolved": 1,
+        "deferred": 0,
+        "dropped": 0
+      }
+    },
+    "visualRhythm": {
+      "open": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 2
+      },
+      "metrics": {
+        "shotCount": 6,
+        "medianMs": 9083,
+        "staticShare": 1
+      }
+    },
+    "multimodal": {
+      "open": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0,
+        "P3": 2
+      }
+    }
+  },
+  "drivers": [],
+  "futureAnalyticsVocabulary": [
+    "INTRO",
+    "TOP_MOMENTS",
+    "SPIKES",
+    "DIPS"
+  ],
+  "analyticsAnchors": {
+    "hookCheckpointIds": [
+      "pilot-sky-blue:HOOK_5S",
+      "pilot-sky-blue:HOOK_15S",
+      "pilot-sky-blue:HOOK_30S"
+    ],
+    "beatIds": [
+      "S01",
+      "S02",
+      "S03",
+      "S04",
+      "S05",
+      "S06"
+    ],
+    "sceneIds": [
+      "S01",
+      "S02",
+      "S03",
+      "S04",
+      "S05",
+      "S06"
+    ],
+    "shotIds": [
+      "S01-card",
+      "S02-card",
+      "S03-card",
+      "S04-card",
+      "S05-card",
+      "S06-card"
+    ],
+    "fingerprintHash": "c14ba6664cb48495"
+  },
+  "reportRefs": {
+    "hook": "HOOK_QUALITY",
+    "beats": "NARRATIVE_BEAT_QUALITY",
+    "rhythm": "VISUAL_RHYTHM",
+    "watch": "wp-5bca6f4624277448"
+  }
+}

@@ -1,0 +1,117 @@
+{
+  "profileId": "perf-budget-6a",
+  "version": "1.0.0",
+  "extends": "perf-budget-5c (unchanged)",
+  "environmentClass": "win32-x64-node24-local",
+  "budgets": [
+    {
+      "metric": "creative.analysis90s.wall",
+      "direction": "lower",
+      "percentile": null,
+      "target": 25,
+      "warning": 100,
+      "hardLimit": 500,
+      "unit": "ms",
+      "rationale": "Deterministic Hook+Beat+Rhythm over a 90s/9-beat/17-shot video",
+      "source": "MEASURED_BASELINE",
+      "baselineRef": "Report/evidence/phase-6a/phase-6a-summary.json#performance"
+    },
+    {
+      "metric": "creative.analysis30min.wall",
+      "direction": "lower",
+      "percentile": null,
+      "target": 500,
+      "warning": 2000,
+      "hardLimit": 4000,
+      "unit": "ms",
+      "rationale": "180 beats / 340 shots (30-minute-class)",
+      "source": "MEASURED_BASELINE",
+      "baselineRef": "Report/evidence/phase-6a/phase-6a-summary.json#performance"
+    },
+    {
+      "metric": "creative.fullWatch90s.wall",
+      "direction": "lower",
+      "percentile": null,
+      "target": 25,
+      "warning": 100,
+      "hardLimit": 500,
+      "unit": "ms",
+      "rationale": "Deterministic watch pass incl. segmentation + channel checks",
+      "source": "MEASURED_BASELINE",
+      "baselineRef": "Report/evidence/phase-6a/phase-6a-summary.json#performance"
+    },
+    {
+      "metric": "creative.modelCallsPerDeterministicAnalysis",
+      "direction": "lower",
+      "percentile": null,
+      "target": 0,
+      "warning": 1,
+      "hardLimit": 60,
+      "unit": "count",
+      "rationale": "Deterministic layer never calls a model (structured state is measured, not estimated); reviewer calls are budgeted by maxModelCalls=60",
+      "source": "USER_REQUIREMENT",
+      "baselineRef": null
+    },
+    {
+      "metric": "creative.repair.maxAttempts",
+      "direction": "lower",
+      "percentile": null,
+      "target": 1,
+      "warning": 2,
+      "hardLimit": 3,
+      "unit": "count",
+      "rationale": "Bounded repair loop (spec RULE 19); exhaustion => REVIEW_REQUIRED",
+      "source": "USER_REQUIREMENT",
+      "baselineRef": null
+    }
+  ],
+  "measured": {
+    "creative.analysis90s.wall": 0.62,
+    "creative.analysis30min.wall": 11.55,
+    "creative.fullWatch90s.wall": 0.56,
+    "creative.modelCallsPerDeterministicAnalysis": 0,
+    "creative.repair.maxAttempts": 1
+  },
+  "verdicts": [
+    {
+      "metric": "creative.analysis90s.wall",
+      "measured": 0.62,
+      "target": 25,
+      "warning": 100,
+      "hardLimit": 500,
+      "status": "WITHIN_TARGET"
+    },
+    {
+      "metric": "creative.analysis30min.wall",
+      "measured": 11.55,
+      "target": 500,
+      "warning": 2000,
+      "hardLimit": 4000,
+      "status": "WITHIN_TARGET"
+    },
+    {
+      "metric": "creative.fullWatch90s.wall",
+      "measured": 0.56,
+      "target": 25,
+      "warning": 100,
+      "hardLimit": 500,
+      "status": "WITHIN_TARGET"
+    },
+    {
+      "metric": "creative.modelCallsPerDeterministicAnalysis",
+      "measured": 0,
+      "target": 0,
+      "warning": 1,
+      "hardLimit": 60,
+      "status": "WITHIN_TARGET"
+    },
+    {
+      "metric": "creative.repair.maxAttempts",
+      "measured": 1,
+      "target": 1,
+      "warning": 2,
+      "hardLimit": 3,
+      "status": "WITHIN_TARGET"
+    }
+  ]
+}

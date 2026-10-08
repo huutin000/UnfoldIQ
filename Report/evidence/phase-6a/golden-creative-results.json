@@ -1,0 +1,286 @@
+{
+  "summary": {
+    "count": 12,
+    "passed": 12,
+    "assertion": "finding code + scope + reason class + corrective-action class (not model prose)"
+  },
+  "fixtures": [
+    {
+      "fixture": "good-hook",
+      "pass": true,
+      "present": [],
+      "absent": [
+        {
+          "code": "HOOK_NO_CLEAR_VALUE",
+          "clean": true
+        },
+        {
+          "code": "HOOK_SETUP_TOO_LONG",
+          "clean": true
+        },
+        {
+          "code": "HOOK_REPEATS_PACKAGING",
+          "clean": true
+        },
+        {
+          "code": "HOOK_PROMISE_DELAYED",
+          "clean": true
+        },
+        {
+          "code": "HOOK_PROMISE_MISMATCH",
+          "clean": true
+        },
+        {
+          "code": "HOOK_OVERLOADED",
+          "clean": true
+        },
+        {
+          "code": "HOOK_CONFUSING",
+          "clean": true
+        },
+        {
+          "code": "PACKAGING_PROMISE_DELAYED",
+          "clean": true
+        },
+        {
+          "code": "DROPPED_PAYOFF",
+          "clean": true
+        },
+        {
+          "code": "BEAT_NO_PROGRESS",
+          "clean": true
+        },
+        {
+          "code": "DEAD_TIME_RISK",
+          "clean": true
+        }
+      ],
+      "actualCodes": []
+    },
+    {
+      "fixture": "delayed-hook",
+      "pass": true,
+      "present": [
+        {
+          "code": "HOOK_SETUP_TOO_LONG",
+          "scope": "HOOK",
+          "reasonClass": "BRAND_PREAMBLE",
+          "repairClass": "OPENING_EDIT",
+          "found": true
+        },
+        {
+          "code": "PACKAGING_PROMISE_DELAYED",
+          "scope": "PACKAGING",
+          "reasonClass": "PROMISE_LATE",
+          "repairClass": "OPENING_EDIT",
+          "found": true
+        }
+      ],
+      "absent": [],
+      "actualCodes": [
+        "HOOK_SETUP_TOO_LONG/BRAND_PREAMBLE",
+        "PACKAGING_PROMISE_DELAYED/PROMISE_LATE",
+        "HOOK_NO_FORWARD_QUESTION/NO_ANTICIPATION"
+      ]
+    },
+    {
+      "fixture": "packaging-promise-mismatch",
+      "pass": true,
+      "present": [
+        {
+          "code": "HOOK_PROMISE_MISMATCH",
+          "scope": "PACKAGING",
+          "reasonClass": "PROMISE_NOT_DELIVERED",
+          "repairClass": "PACKAGING_REVISION",
+          "found": true
+        }
+      ],
+      "absent": [
+        {
+          "code": "PACKAGING_PROMISE_DELAYED",
+          "clean": true
+        }
+      ],
+      "actualCodes": [
+        "HOOK_PROMISE_MISMATCH/PROMISE_NOT_DELIVERED"
+      ]
+    },
+    {
+      "fixture": "redundant-beats",
+      "pass": true,
+      "present": [
+        {
+          "code": "NARRATIVE_REDUNDANCY",
+          "scope": "BEAT",
+          "reasonClass": "SEMANTIC_REPEAT",
+          "repairClass": "SCRIPT_TRIM",
+          "found": true
+        }
+      ],
+      "absent": [],
+      "actualCodes": [
+        "NARRATIVE_REDUNDANCY/SEMANTIC_REPEAT"
+      ]
+    },
+    {
+      "fixture": "dropped-payoff",
+      "pass": true,
+      "present": [
+        {
+          "code": "DROPPED_PAYOFF",
+          "scope": "BEAT",
+          "reasonClass": "LOOP_NEVER_RESOLVED",
+          "repairClass": "SCRIPT_REWRITE",
+          "found": true
+        }
+      ],
+      "absent": [],
+      "actualCodes": [
+        "DROPPED_PAYOFF/LOOP_NEVER_RESOLVED"
+      ]
+    },
+    {
+      "fixture": "intentional-slow-beat",
+      "pass": true,
+      "present": [],
+      "absent": [
+        {
+          "code": "DEAD_TIME_RISK",
+          "clean": true
+        },
+        {
+          "code": "BEAT_NO_PROGRESS",
+          "clean": true
+        },
+        {
+          "code": "BEAT_TOO_LONG",
+          "clean": true
+        },
+        {
+          "code": "NARRATIVE_REDUNDANCY",
+          "clean": true
+        }
+      ],
+      "actualCodes": []
+    },
+    {
+      "fixture": "true-dead-time",
+      "pass": true,
+      "present": [
+        {
+          "code": "DEAD_TIME_RISK",
+          "scope": "BEAT",
+          "reasonClass": "NO_USEFUL_CONTENT",
+          "repairClass": "BEAT_RETIME_OR_SPLIT",
+          "found": true
+        }
+      ],
+      "absent": [],
+      "actualCodes": [
+        "DEAD_TIME_RISK/NO_USEFUL_CONTENT"
+      ]
+    },
+    {
+      "fixture": "repetitive-zoom",
+      "pass": true,
+      "present": [
+        {
+          "code": "REPETITIVE_MOTION_RHYTHM",
+          "scope": "SHOT",
+          "reasonClass": "CONSTANT_ZOOM",
+          "repairClass": "MOTION_PATCH",
+          "found": true
+        }
+      ],
+      "absent": [],
+      "actualCodes": [
+        "REPETITIVE_MOTION_RHYTHM/CONSTANT_ZOOM",
+        "MODALITY_MONOTONY/MODALITY_PATTERN"
+      ]
+    },
+    {
+      "fixture": "purposeful-static-rest",
+      "pass": true,
+      "present": [],
+      "absent": [
+        {
+          "code": "REPETITIVE_MOTION_RHYTHM",
+          "clean": true
+        },
+        {
+          "code": "MOTION_TOO_REPETITIVE",
+          "clean": true
+        },
+        {
+          "code": "VISUAL_TOO_REPETITIVE",
+          "clean": true
+        },
+        {
+          "code": "MOTION_WITHOUT_EDITORIAL_VALUE",
+          "clean": true
+        },
+        {
+          "code": "DEAD_TIME_RISK",
+          "clean": true
+        },
+        {
+          "code": "FRAMING_REPETITION",
+          "clean": true
+        }
+      ],
+      "actualCodes": []
+    },
+    {
+      "fixture": "modality-monotony",
+      "pass": true,
+      "present": [
+        {
+          "code": "MODALITY_MONOTONY",
+          "scope": "GLOBAL",
+          "reasonClass": "MODALITY_PATTERN",
+          "repairClass": "ASSET_MODALITY_REPLACE",
+          "found": true
+        }
+      ],
+      "absent": [],
+      "actualCodes": [
+        "MODALITY_MONOTONY/MODALITY_PATTERN"
+      ]
+    },
+    {
+      "fixture": "caption-motion-overload",
+      "pass": true,
+      "present": [
+        {
+          "code": "CAPTION_MOTION_OVERLOAD",
+          "scope": "CAPTION",
+          "reasonClass": "READING_LOAD",
+          "repairClass": "CAPTION_MOTION_REDUCTION",
+          "found": true
+        }
+      ],
+      "absent": [],
+      "actualCodes": [
+        "CAPTION_MOTION_OVERLOAD/READING_LOAD"
+      ]
+    },
+    {
+      "fixture": "music-energy-mismatch",
+      "pass": true,
+      "present": [
+        {
+          "code": "MUSIC_ENERGY_MISMATCH",
+          "scope": "AUDIO",
+          "reasonClass": "ENERGY_MISMATCH",
+          "repairClass": "MUSIC_MIX_PATCH",
+          "found": true
+        }
+      ],
+      "absent": [],
+      "actualCodes": [
+        "MUSIC_ENERGY_MISMATCH/ENERGY_MISMATCH",
+        "MUSIC_ENERGY_MISMATCH/ENERGY_MISMATCH"
+      ]
+    }
+  ]
+}

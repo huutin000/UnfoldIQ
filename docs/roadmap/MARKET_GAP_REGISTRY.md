@@ -82,7 +82,8 @@ Decision rule: `ADD_NOW` (P0/P1 or security/data-loss/rights/duplicate-spend ris
 - **Owner capability:** QA (Track B/C)
 - **Severity:** P2
 - **Decision:** **MERGE_FUTURE_PACKAGE → Phase 6A**
-- **Status:** PLANNED
+- **Update 08/10/2026 (Phase 6A):** **FIXED** — `lib/creative-retention/watch.js`: FULL_WATCH / SEGMENT_REWATCH over synchronized video/audio/narration/music/SFX/captions/on-screen text/story/packaging promise; semantic segmentation (hook windows, beats, scenes, transitions, payoff, outro; equal windows only fill gaps); redundancy / contradiction (routed to Phase 4 taxonomy) / cognitive-overload / payoff-emphasis / transition / outro checks; injectable reviewer with persisted trace and REVIEW_REQUIRED on disagreement. Real pilot FULL_WATCH consumed `final.mp4` (sha256 == accepted artifact). Residual: no autonomous multimodal-model provider is integrated (GAP-046).
+- **Status:** FIXED
 
 ## GAP-009 — Alignment Provider Real-Production Quality
 
@@ -341,9 +342,10 @@ Decision rule: `ADD_NOW` (P0/P1 or security/data-loss/rights/duplicate-spend ris
 
 - **Update 07/10/2026 (Phase 4B):** encoded-output profile complete — FinalExportProfile enforced + verified on file; 4A packaging profile linked. **Status: FIXED.**
 
-## GAP-014 — Motion Blur Cost Awareness (MEASURED → ROUTED 5C)
+## GAP-014 — Motion Blur Cost Awareness (MEASURED → ROUTED 5C → DEFERRED_WITH_EVIDENCE)
 
 - **Update 07/10/2026 (Phase 5A):** runtime cost measured at registry level — `lib/motion/primitives.js` carries 1 HIGH `renderCostClass` reference; blur remains OFF by default with reason/samples/shutterAngle persisted when enabled (evidence: `Report/evidence/perf-5a/core-efficiency.json` → `motionBlurGap014`). Optimization stays deferred to Phase 5C per plan. **Status: PARTIALLY_FIXED / OPTIMIZATION_5C.**
+- **Update 08/10/2026 (Phase 5C Task O):** no motion-blur renderer feature exists to benchmark — sole blur in codebase is a static CSS background-fill (`ImageLayer.tsx:102`), not temporal motion blur; no global toggle exists. Blur-OFF default preserved (nothing to change). Revisit trigger registered: benchmark on the 120-frame fixture before enabling any future motion-blur effect. Evidence: `Report/evidence/perf-5c/gap-014-motion-blur.json`. **Status: DEFERRED_WITH_EVIDENCE.**
 
 ## GAP-028 — Reproducible Performance Benchmark Protocol
 
@@ -365,6 +367,7 @@ Decision rule: `ADD_NOW` (P0/P1 or security/data-loss/rights/duplicate-spend ris
 - **Severity:** P1 (measurement integrity)
 - **Decision:** **ADD_NOW — recorded as NOT_MEASURED with explicit plan** (2026-10-07): `provider-baseline.json` (status NOT_MEASURED, evidence order followed, paid dims never zero-filled); bounded live sample plan registered for Phase 5C (operator-authorized: 1 image + 1 video via flow-web, UNFOLDIQ overhead separated from provider wait)
 - **Status:** OPEN (measurement-planned, not blocking: no Phase-5B work depends on paid-provider numbers)
+- **Update 08/10/2026 (Phase 5C Task H):** baseline RECORDED from existing real traces — no new credits spent (evidence priority 1): live session FLOW-COMPANION-LIVE-GEN-01 (2026-10-01, Nano Banana 2, image 1:1): warm SESSION_REVALIDATED restore (~9ms tab ping), provider wait 5023ms (n=1, single sample — not a distribution), human waits separated (deliberation 33s, gesture 289s excluded from system wall), cost UNKNOWN (never zero-filled), restart reconciled without resubmit. Repeat trigger: n≥5 + verified credit readout on operator-authorized bounded sample. Evidence: `Report/evidence/perf-5c/provider-baseline.json`. **Status: FIXED (historical-sample grade).**
 
 ## GAP-030 — Cross-Boundary Causal Trace Completeness
 
@@ -377,6 +380,7 @@ Decision rule: `ADD_NOW` (P0/P1 or security/data-loss/rights/duplicate-spend ris
 - **Decision:** **ADD_NOW — PARTIALLY_FIXED in Phase 5A** (2026-10-07): no telemetry rewrite for standards parity (current IDs suffice where emitted); follow-up registered (Extension span emission: submit/result/ACK events with traceId/parentSpanId into the existing store). Full OTel migration explicitly REJECTED without evidence
 - **Evidence:** `Report/evidence/perf-5a/integration-performance-profile.json` → `traceCausality: PARTIAL`
 - **Status:** PARTIALLY_FIXED
+- **Update 08/10/2026 (Phase 5C Task G):** FIXED with live-browser proof. Root-caused why emission never fired in production: `trace-contract.js` was missing from the extension build manifest (`build.js` REQUIRED_FILES) so `importScripts` failed silently and spans were never attached — fixed (1 line + rebuild, build 31 files, extension unit 533/533). Added backward-compatible `msg.trace.{traceId,parentSpanId}` passthrough (no OTel rewrite). Proven end-to-end in real Chromium: Core span → sidepanel-origin APPROVE_RECORD → real SW span (APPROVAL_RECORDED, joined chain) → bridge `/trace` ingest → `reconstructTrace` yields one complete ordered chain (core→extension→bridge, latencies 560/1/13ms). Evidence: `Report/evidence/perf-5c/trace-chain.json` + `tests/e2e/mv3-lifecycle.spec.js` (Q). **Status: FIXED.**
 
 ## GAP-031 — Extension MV3 Lifecycle Performance
 
@@ -388,6 +392,7 @@ Decision rule: `ADD_NOW` (P0/P1 or security/data-loss/rights/duplicate-spend ris
 - **Decision:** **ADD_NOW — PARTIALLY_FIXED in Phase 5A** (2026-10-07): Node-measurable subset measured (sender/message validation p95 ~µs, poll success/timeout paths, correlateDownload, DOM-scan worst-case sub-0.05ms over 200 nodes, payload bytes); keepalive audit PASS (bounded per-request timeouts only, approvals survive termination via storage.session mirror, fail-safe BLOCK); live-browser subset registered with plan (Playwright side-panel timing, MV3 terminate→wake harness, observer/polling/CPU/memory/storage harness). No indefinite keepalive adopted without evidence (RULE 12)
 - **Evidence:** `Report/evidence/perf-5a/extension-runtime-profile.json`
 - **Status:** PARTIALLY_FIXED
+- **Update 08/10/2026 (Phase 5C Task F):** FIXED with live-browser proof (real Chromium, unpacked extension, no mocks): cold wake 4ms (fresh profile) / restart wake 375–408ms, warm storage round-trip 1–10ms, terminate (process-exit on persistent profile) → wake → storage restore OK, no keepalive added. Documented environment limit: natural ~30s idle termination is unobservable under Playwright (CDP attachment keeps the worker alive) — termination variant is process-exit, honestly labeled. Bridge reconnect/state-restore ownership stays with `flow-companion.spec.js` (still green). Evidence: `Report/evidence/perf-5c/mv3-lifecycle.json` + `tests/e2e/mv3-lifecycle.spec.js` (N,O,P). **Status: FIXED.**
 
 ## GAP-032 — Full Rerender on Local Visual Repair
 
@@ -442,7 +447,111 @@ Decision rule: `ADD_NOW` (P0/P1 or security/data-loss/rights/duplicate-spend ris
 - **Evidence:** `lib/render-cache/index.js` (scan/gc) + Cases M/N/P/Q/AJ + pilot storage economics
 - **Status:** FIXED
 
+## GAP-037 — Extension Build Excluded the Trace Contract (FOUND + FIXED in 5C)
+
+- **Owner capability:** Observability packaging (Phase 5C Task G)
+- **Discovered:** 08/10/2026 (live MV3 trace E2E: SW returned ok:true with no span attached)
+- **Gap:** `trace-contract.js` missing from `build.js` REQUIRED_FILES → shipped extension lacked the file → `importScripts` failed silently → span emission dead in production builds while unit tests (which load from src) stayed green
+- **Severity:** P1 (silent observability loss; same class of bug can silence any SW-side contract)
+- **Decision:** **FIXED in Phase 5C**: 1-line build fix + rebuild (31 files) + live E2E proving real span emission. Structural lesson recorded: build output must contain every file the SW `importScripts`-loads; the MV3 spec now guards the behavior, not just the module.
+- **Evidence:** `flow-companion/extension/build.js` + `tests/e2e/mv3-lifecycle.spec.js` (Q) + `Report/evidence/perf-5c/trace-chain.json`
+- **Status:** FIXED
+
+## GAP-038 — Renderer Browser-Startup Bottleneck Attribution (CORRECTED in 5C)
+
+- **Owner capability:** Render efficiency (Phase 5B estimate → Phase 5C measurement)
+- **Discovered:** 08/10/2026 (Phase 5C Task A pilot-scale experiment)
+- **Gap:** 5B attributed ~100s+/range pilot cost to per-call browser startup; pilot-scale measurement shows browser open costs 95–108ms — the range-wall variance (68–200s) is machine/render noise, not startup. Reuse still reduces starts 5→1 with byte-identical output, but the wall saving is ~0.4s, immaterial at pilot scale
+- **Severity:** P2 (planning accuracy; no product defect)
+- **Decision:** **CORRECTED with evidence**: PerformanceBudgetProfile v2 carries the measured 95–108ms/start budget; render-strategy decision explicitly excludes startup-removal as a migration reason. No code change (pool direction kept: starts bounded, no leaks).
+- **Evidence:** `Report/evidence/perf-5c/pilot-reuse-benchmark.json` + `tests/incremental/test-pilot-reuse-5c.js` 6/6
+- **Status:** FIXED
+
+## GAP-039 — Unbounded Render Concurrency / No Production Queue (FIXED in 5C)
+
+- **Owner capability:** Runtime scale (Phase 5C Tasks B/C/D)
+- **Discovered:** 08/10/2026 (Phase 5C completion pass)
+- **Gap:** scheduler existed standalone; the real render path had no admission, no queue bound, no persist/restore, no duplicate protection
+- **Severity:** P1 (oversubscribe + duplicate expensive work risk)
+- **Decision:** **FIXED in Phase 5C**: every `renderOp` attempt flows through `lib/scheduler` (enqueue → budget admit → RUNNING → COMPLETED/FAILED/CANCELLED → release) with `render/scheduler-queue.json` persistence, stale-reconcile-never-resubmit, in-process duplicate guard (DUPLICATE_EXPENSIVE_ACTION), 30-min watchdog, cross-process entry via `renderBudgetPrecheck` (default cap 2). e2e render path green through the queue.
+- **Evidence:** `pipeline/render-orchestrator.js` (queue section) + `tests/runtime/test-orchestrator-queue.js` 6/6 + `tests/pipeline/test-step13-pipeline-e2e.js` PASS
+- **Status:** FIXED
+
+## GAP-040 — Provider Session Production Safety (FIXED in 5C)
+
+- **Owner capability:** Provider safety (Phase 5C Task I)
+- **Discovered:** 08/10/2026 (Phase 5C completion pass)
+- **Gap:** ProviderSession contract was logic-only with no production-behavior proof
+- **Severity:** P1 (session/auth risk)
+- **Decision:** **FIXED in Phase 5C**: contract 7/7 unit + live-trace production proof — single-owner session throughout (one tabId), warm SESSION_REVALIDATED restore, synthetic submit REFUSED with read-only poll until human gesture (no bypass), restart adopted already-counted results without resubmitting (no blind retry). Live double-lease/stale-auth paths not exercised (session risk) — recorded as the explicit residual.
+- **Evidence:** `Report/evidence/perf-5c/provider-baseline.json` (sessionSafety) + `tests/runtime/test-provider-session.js` 7/7
+- **Status:** FIXED
+
+## GAP-041 — Long-form Render Strategy Undecided (FIXED in 5C)
+
+- **Owner capability:** Strategic scaling (Phase 5C Tasks J–N)
+- **Discovered:** 08/10/2026 (Phase 5C completion pass)
+- **Gap:** no representative long-form evidence; cloud migration pressure without numbers
+- **Severity:** P1 (strategy)
+- **Decision:** **FIXED in Phase 5C**: deterministic mixed fixture (video/still/grid-chart + voice stubs + captions + audio-mix) measured at 10min (1216s wall, 14.8fps) and 20min (2198s, 16.4fps), 1080p30 c=4, RSS <0.5GB; 30min estimated ~3200s from validated 1.43–2.03x scaling; server candidate viable-but-unjustified; Lambda not selected (unmeasured, unknowns dominate); **V1 = LOCAL** with 4 evidence-driven migration triggers.
+- **Evidence:** `tests/perf/test-longform-5c.js` + `Report/evidence/perf-5c/longform-benchmark.json` + `server-candidate.json` + `distributed-candidate.json` + `render-strategy-decision.json`
+- **Status:** FIXED
+
+## GAP-042 — Retention Proxy vs Actual Analytics (FIXED in 6A)
+
+- **Owner capability:** Creative Retention (Phase 6A)
+- **Discovered:** 08/10/2026 (fresh review; YouTube retention report re-fetched: intro = share still watching after 30s, plus top moments / spikes / dips — all post-publish viewer data)
+- **Gap:** a pre-publish assessment could be mistaken for, or fabricated as, audience retention
+- **Severity:** P1 (product semantics)
+- **Decision:** **ADD_NOW — FIXED in 6A**: `CREATIVE_RETENTION_RISK` (categorical LOW/MEDIUM/HIGH/REVIEW_REQUIRED, finding-driven) with `actualRetention: null`, `NOT_AVAILABLE_PRE_PUBLISH`; `assertNoFabricatedRetention` guards every persisted artifact; analytics vocabulary kept as future-only; stable anchors for Phase 10.
+- **Evidence:** `lib/creative-retention/contract.js`, `tests/creative/test-creative-contract.js` (Case AD)
+- **Status:** FIXED
+
+## GAP-043 — Packaging Promise → Opening Delivery (FIXED in 6A)
+
+- **Owner capability:** Hook System (Phase 6A)
+- **Gap:** Phase 4 proves package truthfulness; nothing proved the opening delivers the promised subject/value in time
+- **Severity:** P1 (creative quality)
+- **Decision:** **ADD_NOW — FIXED in 6A**: PackagingPromise (reuses Phase 4 claim refs, no second fidelity engine); 5s/15s/30s checkpoints; PACKAGING_PROMISE_DELAYED / HOOK_PROMISE_MISMATCH / HOOK_PROMISE_DELAYED; content-class-aware policy.
+- **Evidence:** `lib/creative-retention/hook.js`, `tests/creative/test-hook-system.js`, golden `delayed-hook` / `packaging-promise-mismatch`
+- **Status:** FIXED
+
+## GAP-044 — Actionable Creative QA (FIXED in 6A)
+
+- **Owner capability:** Creative QA / Repair router (Phase 6A)
+- **Gap:** score-only creative verdicts cannot drive an agent
+- **Severity:** P1 (agent usability)
+- **Decision:** **ADD_NOW — FIXED in 6A**: every CreativeFinding has where/why/reasonClass/evidence/repairClass/confidence/status; router maps to owning subsystem, DAG invalidation, bounded loop, local-first with script-root-cause override.
+- **Evidence:** `lib/creative-retention/{contract,repair}.js`, `tests/creative/test-creative-repair.js`, `test-creative-golden.js`
+- **Status:** FIXED
+
+## GAP-045 — Cross-video Rhythm Fingerprint Foundation (FOUNDATION FIXED in 6A)
+
+- **Owner capability:** Visual Rhythm (6A collects) / Originality Gate (6B consumes)
+- **Benchmark:** YouTube inauthentic-content policy (re-fetched 08/10/2026): mass-produced / template-like / minimally varied content is a monetization risk; shared intro/outro/series format is allowed when each video has distinct substance
+- **Severity:** P2
+- **Decision:** **ADD_NOW (collection only)**: `CreativeFingerprint` persisted with durations, modality/framing/motion/transition sequences, energy timelines, rest ranges, metrics, stable anchors. No originality verdict in 6A (RULE 12).
+- **Status:** PARTIALLY_FIXED / CONSUMER_6B
+
+## GAP-046 — Autonomous Multimodal Reviewer Not Integrated
+
+- **Owner capability:** Final Multimodal Watch Pass (6A contract) → 6B/Quality Scoring
+- **Discovered:** 08/10/2026 (Phase 6A)
+- **Gap:** the reviewer interface, trace, cost and disagreement handling exist and are tested, but no real multimodal provider is wired; the pilot review was a recorded session-agent review of 5 viewed frames (3 extracted frames not viewed, not claimed). Subjective codes (curiosity, payoff strength, semantic redundancy) therefore rely on text heuristics unless a reviewer is supplied.
+- **Severity:** P2
+- **Decision:** **MERGE_FUTURE_PACKAGE → Phase 6B (Quality Scoring)**; trigger: first run needing unattended subjective review.
+- **Status:** DEFERRED
+
+## GAP-047 — Creative Analysis Lexical Layer Is English-Tuned
+
+- **Owner capability:** Creative Retention text helpers (`lib/creative-retention/text.js`)
+- **Discovered:** 08/10/2026 (Phase 6A)
+- **Gap:** stop-words and stemming are English; promise coverage, redundancy and loop resolution degrade for other languages (e.g. Vietnamese). Structural/timing checks are language-independent.
+- **Severity:** P2
+- **Decision:** **MERGE_FUTURE_PACKAGE** — before any non-English production; replace `text.js` tokenization behind the same functions.
+- **Status:** PLANNED
+
 ---
 
-**Counts:** 36 gaps — FIXED 25 (001, 002, 004, 005, 012, 013, 015, 016, 017, 018, 019, 020, 021, 022, 023, 024, 025, 026, 027, 028, 032, 033, 034, 035, 036) · PARTIALLY_FIXED 3 (014 → 5C, 030, 031) · PLANNED 2 (006, 008) · DEFERRED 2 (007, 009) · REJECTED 2 (010, 011) · OPEN 2 (003 live-gated, 029 measurement-planned).
-**Unresolved P0 = 0. Unresolved Phase-5C-blocking P1 = 0.**
+**Counts (after Phase 6A):** 47 gaps — FIXED 37 (the 33 above + 008, 042, 043, 044) · PARTIALLY_FIXED 1 (045) · PLANNED 2 (006, 047) · DEFERRED 4 (007, 009, 014, 046) · REJECTED 2 (010, 011) · OPEN 1 (003 live-gated).
+**Unresolved P0 = 0. Unresolved Phase-6B-blocking P0/P1 = 0.**

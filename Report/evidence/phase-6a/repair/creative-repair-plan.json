@@ -1,0 +1,74 @@
+{
+  "kind": "CREATIVE_REPAIR_PLAN",
+  "version": "1.0.0",
+  "planId": "crp-70cef895179b9fb9",
+  "forInputFingerprint": "89a43119a9e9f013",
+  "budgets": {
+    "maxAttempts": 3,
+    "timeBudgetMs": 120000,
+    "maxLocalRenders": 4,
+    "maxFullRenders": 1,
+    "maxModelCalls": 60,
+    "providerCredits": 0,
+    "maxVariantsPerFinding": 2
+  },
+  "steps": [
+    {
+      "stepId": "rs-355058d6f8fdfe68",
+      "findingIds": [
+        "cf-2086a2fbd63e7de1"
+      ],
+      "findingCodes": [
+        "REPETITIVE_MOTION_RHYTHM"
+      ],
+      "repairClass": "MOTION_PATCH",
+      "owner": "MOTION_PLAN",
+      "op": "patchMotion",
+      "alternatives": [
+        "MOTION_PATCH"
+      ],
+      "chosenBecause": "ONLY_CANDIDATE",
+      "target": {
+        "startMs": 0,
+        "endMs": 60000,
+        "beatIds": [],
+        "sceneIds": [],
+        "shotIds": [
+          "sh1"
+        ]
+      },
+      "local": true,
+      "speechTiming": "PRESERVED",
+      "dag": {
+        "mode": "FORWARD",
+        "fromType": "ANIMATION_TIMING"
+      },
+      "needsRender": true,
+      "mayConsumeCredits": false,
+      "expectedResolvedCodes": [
+        "REPETITIVE_MOTION_RHYTHM"
+      ],
+      "correctiveActions": [
+        "MOTION_PATCH:keep movement only where it directs attention; SET_STATIC or REPLACE_PRIMITIVE on alternate shots"
+      ]
+    }
+  ],
+  "routedTechnical": [],
+  "manualReview": [],
+  "blocked": [],
+  "costEstimate": {
+    "localRenders": 1,
+    "fullRenders": 0,
+    "modelCalls": 0,
+    "providerCredits": 0
+  },
+  "variantPolicy": {
+    "fullVideoVariants": 0,
+    "maxVariantsPerFinding": 2
+  },
+  "summary": {
+    "stepCount": 1,
+    "localSteps": 1,
+    "scriptSteps": 0
+  }
+}

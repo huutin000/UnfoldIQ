@@ -1,0 +1,245 @@
+{
+  "suites": [
+    {
+      "file": "tests/creative/test-creative-contract.js",
+      "command": "node tests/creative/test-creative-contract.js",
+      "exit": 0,
+      "failed": 0,
+      "passed": 6,
+      "wallMs": 260,
+      "skipped": false
+    },
+    {
+      "file": "tests/creative/test-creative-golden.js",
+      "command": "node tests/creative/test-creative-golden.js",
+      "exit": 0,
+      "failed": 0,
+      "passed": 14,
+      "wallMs": 197,
+      "skipped": false
+    },
+    {
+      "file": "tests/creative/test-creative-pilot.js",
+      "command": "node tests/creative/test-creative-pilot.js",
+      "exit": 0,
+      "failed": 0,
+      "passed": 2,
+      "wallMs": 154,
+      "skipped": false
+    },
+    {
+      "file": "tests/creative/test-creative-repair.js",
+      "command": "node tests/creative/test-creative-repair.js",
+      "exit": 0,
+      "failed": 0,
+      "passed": 8,
+      "wallMs": 769,
+      "skipped": false
+    },
+    {
+      "file": "tests/creative/test-hook-system.js",
+      "command": "node tests/creative/test-hook-system.js",
+      "exit": 0,
+      "failed": 0,
+      "passed": 8,
+      "wallMs": 113,
+      "skipped": false
+    },
+    {
+      "file": "tests/creative/test-multimodal-watch.js",
+      "command": "node tests/creative/test-multimodal-watch.js",
+      "exit": 0,
+      "failed": 0,
+      "passed": 10,
+      "wallMs": 170,
+      "skipped": false
+    },
+    {
+      "file": "tests/creative/test-narrative-beats.js",
+      "command": "node tests/creative/test-narrative-beats.js",
+      "exit": 0,
+      "failed": 0,
+      "passed": 8,
+      "wallMs": 113,
+      "skipped": false
+    },
+    {
+      "file": "tests/creative/test-visual-rhythm.js",
+      "command": "node tests/creative/test-visual-rhythm.js",
+      "exit": 0,
+      "failed": 0,
+      "passed": 10,
+      "wallMs": 178,
+      "skipped": false
+    }
+  ],
+  "regression": {
+    "command": "npm test",
+    "suitesPassed": 195,
+    "suitesFailed": 0,
+    "exit": 0,
+    "summaryLine": "=== alignment, captions, compliance, cost, creative, dag, flow, golden, history, incremental, media, mix, motion, music, narration, override, packaging, pairing, perf, pipeline, platform, policy, project-manifest, pronunciation, provenance, providers, qa, real-e2e, recovery, remotion, render, research, research-deep, responsive, runtime, spoken-script, storage, story, telemetry, timeline, topic, voice-bible, workspace: 0 failed suite(s) in 1252.1s ==="
+  },
+  "cases": {
+    "AD": {
+      "status": "PASS",
+      "test": "Case AD",
+      "file": "tests/creative/test-creative-contract.js"
+    },
+    "AB": {
+      "status": "PASS",
+      "test": "Case AB",
+      "file": "tests/creative/test-creative-golden.js"
+    },
+    "V": {
+      "status": "PASS",
+      "test": "Case V",
+      "file": "tests/creative/test-creative-repair.js"
+    },
+    "Z": {
+      "status": "PASS",
+      "test": "Case Z",
+      "file": "tests/creative/test-creative-repair.js"
+    },
+    "X": {
+      "status": "PASS",
+      "test": "Case X + W",
+      "file": "tests/creative/test-creative-repair.js"
+    },
+    "Y": {
+      "status": "PASS",
+      "test": "Case Y",
+      "file": "tests/creative/test-creative-repair.js"
+    },
+    "AA": {
+      "status": "PASS",
+      "test": "Case AA",
+      "file": "tests/creative/test-creative-repair.js"
+    },
+    "AC": {
+      "status": "PASS",
+      "test": "Case AC",
+      "file": "tests/creative/test-creative-repair.js"
+    },
+    "A": {
+      "status": "PASS",
+      "test": "Case A",
+      "file": "tests/creative/test-hook-system.js"
+    },
+    "B": {
+      "status": "PASS",
+      "test": "Case B",
+      "file": "tests/creative/test-hook-system.js"
+    },
+    "C": {
+      "status": "PASS",
+      "test": "Case C",
+      "file": "tests/creative/test-hook-system.js"
+    },
+    "D": {
+      "status": "PASS",
+      "test": "Case D",
+      "file": "tests/creative/test-hook-system.js"
+    },
+    "E": {
+      "status": "PASS",
+      "test": "Case E",
+      "file": "tests/creative/test-hook-system.js"
+    },
+    "S": {
+      "status": "PASS",
+      "test": "Case S",
+      "file": "tests/creative/test-multimodal-watch.js"
+    },
+    "T": {
+      "status": "PASS",
+      "test": "Case T",
+      "file": "tests/creative/test-multimodal-watch.js"
+    },
+    "U": {
+      "status": "PASS",
+      "test": "Case U",
+      "file": "tests/creative/test-multimodal-watch.js"
+    },
+    "W": {
+      "status": "PASS",
+      "test": "Case W",
+      "file": "tests/creative/test-multimodal-watch.js"
+    },
+    "F": {
+      "status": "PASS",
+      "test": "Case F",
+      "file": "tests/creative/test-narrative-beats.js"
+    },
+    "G": {
+      "status": "PASS",
+      "test": "Case G",
+      "file": "tests/creative/test-narrative-beats.js"
+    },
+    "H": {
+      "status": "PASS",
+      "test": "Case H",
+      "file": "tests/creative/test-narrative-beats.js"
+    },
+    "I": {
+      "status": "PASS",
+      "test": "Case I",
+      "file": "tests/creative/test-narrative-beats.js"
+    },
+    "J": {
+      "status": "PASS",
+      "test": "Case J",
+      "file": "tests/creative/test-narrative-beats.js"
+    },
+    "K": {
+      "status": "PASS",
+      "test": "Case K",
+      "file": "tests/creative/test-narrative-beats.js"
+    },
+    "L": {
+      "status": "PASS",
+      "test": "Case L",
+      "file": "tests/creative/test-visual-rhythm.js"
+    },
+    "M": {
+      "status": "PASS",
+      "test": "Case M",
+      "file": "tests/creative/test-visual-rhythm.js"
+    },
+    "N": {
+      "status": "PASS",
+      "test": "Case N",
+      "file": "tests/creative/test-visual-rhythm.js"
+    },
+    "O": {
+      "status": "PASS",
+      "test": "Case O",
+      "file": "tests/creative/test-visual-rhythm.js"
+    },
+    "P": {
+      "status": "PASS",
+      "test": "Case P",
+      "file": "tests/creative/test-visual-rhythm.js"
+    },
+    "Q": {
+      "status": "PASS",
+      "test": "Case Q",
+      "file": "tests/creative/test-visual-rhythm.js"
+    },
+    "R": {
+      "status": "PASS",
+      "test": "Case R",
+      "file": "tests/creative/test-visual-rhythm.js"
+    },
+    "AE": {
+      "status": "PASS",
+      "test": "Case AE",
+      "file": "tests/creative/test-visual-rhythm.js"
+    },
+    "AF": {
+      "status": "PASS",
+      "test": "npm test (full Phase 0–5 + 6A regression)",
+      "file": "regression log"
+    }
+  }
+}

@@ -1,0 +1,187 @@
+{
+  "kind": "NARRATIVE_BEAT_QUALITY",
+  "version": "1.0.0",
+  "policyVersion": "1.0.0",
+  "projectId": "pilot-sky-blue",
+  "inputFingerprint": "b657bebe1035d74d",
+  "beats": [
+    {
+      "beatId": "S01",
+      "role": "HOOK",
+      "startMs": 0,
+      "endMs": 9394,
+      "durationMs": 9394,
+      "wordCount": 23,
+      "newInfoCount": 9,
+      "progress": [
+        "ADD_INFORMATION",
+        "RAISE_QUESTION"
+      ],
+      "status": "PROGRESS",
+      "tension": 0.25,
+      "tensionMovement": "RISING",
+      "outstandingLoops": 1,
+      "musicEnergy": null,
+      "visualMeaning": false
+    },
+    {
+      "beatId": "S02",
+      "role": "SETUP",
+      "startMs": 9394,
+      "endMs": 18127,
+      "durationMs": 8733,
+      "wordCount": 21,
+      "newInfoCount": 11,
+      "progress": [
+        "ADD_INFORMATION"
+      ],
+      "status": "PROGRESS",
+      "tension": 0.25,
+      "tensionMovement": "FLAT",
+      "outstandingLoops": 1,
+      "musicEnergy": null,
+      "visualMeaning": false
+    },
+    {
+      "beatId": "S03",
+      "role": "EXPLANATION",
+      "startMs": 18127,
+      "endMs": 33979,
+      "durationMs": 15852,
+      "wordCount": 36,
+      "newInfoCount": 15,
+      "progress": [
+        "ADD_INFORMATION",
+        "ANSWER_QUESTION"
+      ],
+      "status": "PROGRESS",
+      "tension": 0,
+      "tensionMovement": "FALLING",
+      "outstandingLoops": 0,
+      "musicEnergy": null,
+      "visualMeaning": false
+    },
+    {
+      "beatId": "S04",
+      "role": "CONTRAST",
+      "startMs": 33979,
+      "endMs": 41402,
+      "durationMs": 7423,
+      "wordCount": 21,
+      "newInfoCount": 3,
+      "progress": [
+        "ADD_INFORMATION",
+        "CONTRAST"
+      ],
+      "status": "PROGRESS",
+      "tension": 0.15,
+      "tensionMovement": "RISING",
+      "outstandingLoops": 0,
+      "musicEnergy": null,
+      "visualMeaning": false
+    },
+    {
+      "beatId": "S05",
+      "role": "EVIDENCE",
+      "startMs": 41402,
+      "endMs": 50110,
+      "durationMs": 8708,
+      "wordCount": 18,
+      "newInfoCount": 6,
+      "progress": [
+        "ADD_INFORMATION",
+        "SHOW_EVIDENCE"
+      ],
+      "status": "PROGRESS",
+      "tension": 0,
+      "tensionMovement": "FALLING",
+      "outstandingLoops": 0,
+      "musicEnergy": null,
+      "visualMeaning": false
+    },
+    {
+      "beatId": "S06",
+      "role": "CONTRAST",
+      "startMs": 50110,
+      "endMs": 65332,
+      "durationMs": 15222,
+      "wordCount": 35,
+      "newInfoCount": 10,
+      "progress": [
+        "ADD_INFORMATION",
+        "CONTRAST"
+      ],
+      "status": "PROGRESS",
+      "tension": 0.15,
+      "tensionMovement": "RISING",
+      "outstandingLoops": 0,
+      "musicEnergy": null,
+      "visualMeaning": false
+    }
+  ],
+  "openLoops": [
+    {
+      "loopId": "auto:S01",
+      "openedBeatId": "S01",
+      "openedAtMs": 0,
+      "question": "So where does the blue come from?",
+      "status": "RESOLVED",
+      "statusReason": null,
+      "resolvedBeatId": "S03",
+      "resolvedAtMs": 18127,
+      "tiesToPackaging": true,
+      "source": "DETECTED"
+    }
+  ],
+  "tensionTimeline": [
+    {
+      "beatId": "S01",
+      "startMs": 0,
+      "tension": 0.25,
+      "movement": "RISING"
+    },
+    {
+      "beatId": "S02",
+      "startMs": 9394,
+      "tension": 0.25,
+      "movement": "FLAT"
+    },
+    {
+      "beatId": "S03",
+      "startMs": 18127,
+      "tension": 0,
+      "movement": "FALLING"
+    },
+    {
+      "beatId": "S04",
+      "startMs": 33979,
+      "tension": 0.15,
+      "movement": "RISING"
+    },
+    {
+      "beatId": "S05",
+      "startMs": 41402,
+      "tension": 0,
+      "movement": "FALLING"
+    },
+    {
+      "beatId": "S06",
+      "startMs": 50110,
+      "tension": 0.15,
+      "movement": "RISING"
+    }
+  ],
+  "metrics": {
+    "beatCount": 6,
+    "noProgressBeats": 0,
+    "deliberateRestBeats": 0,
+    "intentionalRecapBeats": 0,
+    "loopsOpened": 1,
+    "loopsResolved": 1,
+    "loopsDeferred": 0,
+    "loopsDropped": 0,
+    "deadTimeRiskMs": 0,
+    "openFindings": 0
+  },
+  "findings": []
+}

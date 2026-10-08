@@ -1,0 +1,200 @@
+{
+  "fixture": "REAL Phase 3 Master Timeline + MotionPlan (8 beats / 8 shots / 60s); executor = real MotionPlan.patchMotion",
+  "before": {
+    "hook": {
+      "total": 0,
+      "P1": 0,
+      "P2": 0,
+      "P3": 0
+    },
+    "beats": {
+      "total": 0,
+      "P1": 0,
+      "P2": 0,
+      "P3": 0
+    },
+    "rhythm": {
+      "total": 1,
+      "P1": 0,
+      "P2": 1,
+      "P3": 0
+    },
+    "multimodal": {
+      "total": 1,
+      "P1": 0,
+      "P2": 1,
+      "P3": 0
+    },
+    "P0P1": 0,
+    "P1P2": 2,
+    "openCodes": [
+      "REPETITIVE_MOTION_RHYTHM",
+      "AUDIO_VISUAL_ENERGY_MISMATCH"
+    ],
+    "analysisCost": {
+      "modelCalls": 0,
+      "tokens": 0,
+      "costUsd": 0
+    }
+  },
+  "after": {
+    "hook": {
+      "total": 0,
+      "P1": 0,
+      "P2": 0,
+      "P3": 0
+    },
+    "beats": {
+      "total": 0,
+      "P1": 0,
+      "P2": 0,
+      "P3": 0
+    },
+    "rhythm": {
+      "total": 0,
+      "P1": 0,
+      "P2": 0,
+      "P3": 0
+    },
+    "multimodal": {
+      "total": 1,
+      "P1": 0,
+      "P2": 1,
+      "P3": 0
+    },
+    "P0P1": 0,
+    "P1P2": 1,
+    "openCodes": [
+      "AUDIO_VISUAL_ENERGY_MISMATCH"
+    ],
+    "analysisCost": {
+      "modelCalls": 0,
+      "tokens": 0,
+      "costUsd": 0
+    }
+  },
+  "change": {
+    "stepsApplied": [
+      [
+        {
+          "stepId": "rs-355058d6f8fdfe68",
+          "repairClass": "MOTION_PATCH",
+          "local": true,
+          "codes": [
+            "REPETITIVE_MOTION_RHYTHM"
+          ]
+        }
+      ]
+    ],
+    "patchedShots": 2,
+    "motionPlanRevision": "1 -> 3",
+    "timelineRevisionUnchanged": true
+  },
+  "regression": {
+    "newFindingCodesAfter": [],
+    "p0p1After": 0
+  },
+  "boundedLoop": {
+    "status": "CONVERGED",
+    "stopReason": "CONVERGED",
+    "attempts": 1,
+    "budgetUse": {
+      "attempts": 1,
+      "maxAttempts": 3,
+      "elapsedMs": 3,
+      "renders": 1,
+      "modelCalls": 0,
+      "providerCredits": 0
+    },
+    "loopWallMs": 3.09
+  },
+  "segmentRewatch": [
+    {
+      "affected": {
+        "startMs": 15000,
+        "endMs": 22000,
+        "contextStartMs": 6000,
+        "contextEndMs": 30000
+      },
+      "segments": 5,
+      "beats": [
+        "bt2",
+        "bt3",
+        "bt4"
+      ]
+    },
+    {
+      "affected": {
+        "startMs": 35500,
+        "endMs": 45000,
+        "contextStartMs": 30000,
+        "contextEndMs": 52500
+      },
+      "segments": 3,
+      "beats": [
+        "bt5",
+        "bt6",
+        "bt7"
+      ]
+    }
+  ],
+  "finalFullWatch": {
+    "mode": "FULL_WATCH",
+    "verdict": "PASS",
+    "blockers": [],
+    "note": "structural watch (requireVideo:false): no re-render performed for the fixture"
+  },
+  "repairedFindingStatus": [
+    "REPAIRED"
+  ],
+  "motionOnlyDag": {
+    "origin": "ANIM_T",
+    "dirtied": [
+      "RENDER",
+      "TIMELINE"
+    ],
+    "states": {
+      "SCRIPT": "CLEAN",
+      "AUDIO": "CLEAN",
+      "ALIGN": "CLEAN",
+      "CAPTIONS": "CLEAN",
+      "SCENE_T": "CLEAN",
+      "VIS_T": "CLEAN",
+      "ANIM_T": "CLEAN",
+      "TIMELINE": "DIRTY",
+      "RENDER": "DIRTY"
+    }
+  },
+  "incrementalRerenderPlan": {
+    "totalFrames": 1800,
+    "dirtyFrames": 495,
+    "renderedFrameRatio": 0.275,
+    "fullRenderFallback": false,
+    "renderRegions": 2,
+    "reusableRegions": 3,
+    "partialQALocalChecks": 14,
+    "note": "PLAN-LEVEL: cache lookup stubbed; render execution is the Phase 5B/5C proven capability and was NOT re-run"
+  },
+  "scriptRootCauseDag": {
+    "repairClass": "SCRIPT_TRIM",
+    "chosenBecause": "SCRIPT_IS_ROOT_CAUSE",
+    "origin": "SCRIPT",
+    "dirtied": [
+      "ALIGN",
+      "ANIM_T",
+      "AUDIO",
+      "CAPTIONS",
+      "RENDER",
+      "SCENE_T",
+      "TIMELINE",
+      "VIS_T"
+    ]
+  },
+  "musicOnlyDag": {
+    "repairClass": "MUSIC_MIX_PATCH",
+    "speechTiming": "PRESERVED",
+    "dirtied": [
+      "RENDER"
+    ]
+  }
+}

@@ -1,0 +1,657 @@
+{
+  "kind": "MULTIMODAL_WATCH",
+  "version": "1.0.0",
+  "policyVersion": "1.0.0",
+  "watchId": "wp-5bca6f4624277448",
+  "projectId": "pilot-sky-blue",
+  "mode": "FULL_WATCH",
+  "inputFingerprint": "b657bebe1035d74d",
+  "channelsEvaluated": [
+    "VIDEO",
+    "AUDIO",
+    "NARRATION",
+    "MUSIC",
+    "SFX",
+    "CAPTIONS",
+    "ON_SCREEN_TEXT",
+    "NARRATIVE_CONTEXT",
+    "PACKAGING_PROMISE"
+  ],
+  "video": {
+    "consumed": true,
+    "path": "D:\\Project\\UNFOLDIQ\\out\\final\\pilot-sky-blue\\final.mp4",
+    "sha256": "3f684657a9ed34f10f3845ef5bc36a4e6c599a851be09bc9d48d08ebaacc94b3",
+    "sizeBytes": 3289216,
+    "probedDurationMs": 65387,
+    "timelineDurationMs": 65332,
+    "durationMatchesTimeline": true
+  },
+  "reviewer": {
+    "mode": "MODEL_ASSISTED",
+    "trace": {
+      "provider": "claude-code-session-agent",
+      "model": "claude-sonnet-5-5",
+      "modelVersion": "session 2026-10-08",
+      "rubricVersion": "creative-watch-rubric@1.0.0 (Phase 6A §32–§37)",
+      "samplingStrategy": "SEMANTIC_BOUNDARY_FRAMES: 8 frames extracted (2.5s, 7s, 14s, 26s, 38s, 46s, 58s, 64.5s); 5 viewed by the agent (2.5s, 14s, 26s, 38s, 58s). Frames not viewed (7s, 46s, 64.5s) are NOT claimed as reviewed.",
+      "videoSha256": "3f684657a9ed34f10f3845ef5bc36a4e6c599a851be09bc9d48d08ebaacc94b3",
+      "segmentHashes": [
+        "f424fac77bd84b0a",
+        "70a415bcd29a21c8",
+        "a6235bf2172eaef5",
+        "2556a04b9322b7da",
+        "674ff7de4db9fa61",
+        "439ded127533c252",
+        "5b211abab0d3acd4",
+        "30d245874d8b0b6c",
+        "626f9d8465af9d79",
+        "7874a4ed61d6674e",
+        "d98527f18be2ec42",
+        "08b9a31d3f65a091",
+        "56dc257e5737d81a",
+        "95e7074c4953dd9a",
+        "3c642c68061160cd",
+        "9a92ded9a9eb5cd3"
+      ],
+      "costUsd": 0,
+      "latencyMs": 0,
+      "calls": 16,
+      "tokens": 0
+    },
+    "rejectedModelFindings": []
+  },
+  "segments": [
+    {
+      "segmentId": "pilot-sky-blue:HOOK_WINDOW:0-5000",
+      "kind": "HOOK_WINDOW",
+      "startMs": 0,
+      "endMs": 5000,
+      "tags": [],
+      "beatIds": [],
+      "contextBefore": {
+        "startMs": 0,
+        "endMs": 0
+      },
+      "contextAfter": {
+        "startMs": 5000,
+        "endMs": 7000
+      },
+      "segmentHash": "f424fac77bd84b0a",
+      "channelSummary": {
+        "wps": 2.6,
+        "cps": 11.39,
+        "motion": 0,
+        "music": null,
+        "sfx": 0,
+        "modalities": [
+          "TITLE"
+        ]
+      }
+    },
+    {
+      "segmentId": "pilot-sky-blue:HOOK_WINDOW:5000-15000",
+      "kind": "HOOK_WINDOW",
+      "startMs": 5000,
+      "endMs": 15000,
+      "tags": [],
+      "beatIds": [],
+      "contextBefore": {
+        "startMs": 3000,
+        "endMs": 5000
+      },
+      "contextAfter": {
+        "startMs": 15000,
+        "endMs": 17000
+      },
+      "segmentHash": "70a415bcd29a21c8",
+      "channelSummary": {
+        "wps": 2.4,
+        "cps": 12.19,
+        "motion": 0,
+        "music": null,
+        "sfx": 0,
+        "modalities": [
+          "TITLE"
+        ]
+      }
+    },
+    {
+      "segmentId": "pilot-sky-blue:HOOK_WINDOW:15000-30000",
+      "kind": "HOOK_WINDOW",
+      "startMs": 15000,
+      "endMs": 30000,
+      "tags": [],
+      "beatIds": [],
+      "contextBefore": {
+        "startMs": 13000,
+        "endMs": 15000
+      },
+      "contextAfter": {
+        "startMs": 30000,
+        "endMs": 32000
+      },
+      "segmentHash": "a6235bf2172eaef5",
+      "channelSummary": {
+        "wps": 2.33,
+        "cps": 13.79,
+        "motion": 0,
+        "music": null,
+        "sfx": 0,
+        "modalities": [
+          "TITLE"
+        ]
+      }
+    },
+    {
+      "segmentId": "pilot-sky-blue:BEAT:0-9394",
+      "kind": "BEAT",
+      "startMs": 0,
+      "endMs": 9394,
+      "tags": [],
+      "beatIds": [
+        "S01"
+      ],
+      "contextBefore": {
+        "startMs": 0,
+        "endMs": 0
+      },
+      "contextAfter": {
+        "startMs": 9394,
+        "endMs": 11394
+      },
+      "segmentHash": "2556a04b9322b7da",
+      "channelSummary": {
+        "wps": 2.45,
+        "cps": 11.39,
+        "motion": 0,
+        "music": null,
+        "sfx": 0,
+        "modalities": [
+          "TITLE"
+        ]
+      }
+    },
+    {
+      "segmentId": "pilot-sky-blue:BEAT:9394-18127",
+      "kind": "BEAT",
+      "startMs": 9394,
+      "endMs": 18127,
+      "tags": [],
+      "beatIds": [
+        "S02"
+      ],
+      "contextBefore": {
+        "startMs": 7394,
+        "endMs": 9394
+      },
+      "contextAfter": {
+        "startMs": 18127,
+        "endMs": 20127
+      },
+      "segmentHash": "674ff7de4db9fa61",
+      "channelSummary": {
+        "wps": 2.4,
+        "cps": 12.82,
+        "motion": 0,
+        "music": null,
+        "sfx": 0,
+        "modalities": [
+          "TITLE"
+        ]
+      }
+    },
+    {
+      "segmentId": "pilot-sky-blue:BEAT:18127-33979",
+      "kind": "BEAT",
+      "startMs": 18127,
+      "endMs": 33979,
+      "tags": [],
+      "beatIds": [
+        "S03"
+      ],
+      "contextBefore": {
+        "startMs": 16127,
+        "endMs": 18127
+      },
+      "contextAfter": {
+        "startMs": 33979,
+        "endMs": 35979
+      },
+      "segmentHash": "439ded127533c252",
+      "channelSummary": {
+        "wps": 2.27,
+        "cps": 14.07,
+        "motion": 0,
+        "music": null,
+        "sfx": 0,
+        "modalities": [
+          "TITLE"
+        ]
+      }
+    },
+    {
+      "segmentId": "pilot-sky-blue:BEAT:33979-41402",
+      "kind": "BEAT",
+      "startMs": 33979,
+      "endMs": 41402,
+      "tags": [],
+      "beatIds": [
+        "S04"
+      ],
+      "contextBefore": {
+        "startMs": 31979,
+        "endMs": 33979
+      },
+      "contextAfter": {
+        "startMs": 41402,
+        "endMs": 43402
+      },
+      "segmentHash": "5b211abab0d3acd4",
+      "channelSummary": {
+        "wps": 2.83,
+        "cps": 14.28,
+        "motion": 0,
+        "music": null,
+        "sfx": 0,
+        "modalities": [
+          "TITLE"
+        ]
+      }
+    },
+    {
+      "segmentId": "pilot-sky-blue:BEAT:41402-50110",
+      "kind": "BEAT",
+      "startMs": 41402,
+      "endMs": 50110,
+      "tags": [],
+      "beatIds": [
+        "S05"
+      ],
+      "contextBefore": {
+        "startMs": 39402,
+        "endMs": 41402
+      },
+      "contextAfter": {
+        "startMs": 50110,
+        "endMs": 52110
+      },
+      "segmentHash": "30d245874d8b0b6c",
+      "channelSummary": {
+        "wps": 2.07,
+        "cps": 11.71,
+        "motion": 0,
+        "music": null,
+        "sfx": 0,
+        "modalities": [
+          "TITLE"
+        ]
+      }
+    },
+    {
+      "segmentId": "pilot-sky-blue:BEAT:50110-65332",
+      "kind": "BEAT",
+      "startMs": 50110,
+      "endMs": 65332,
+      "tags": [],
+      "beatIds": [
+        "S06"
+      ],
+      "contextBefore": {
+        "startMs": 48110,
+        "endMs": 50110
+      },
+      "contextAfter": {
+        "startMs": 65332,
+        "endMs": 65332
+      },
+      "segmentHash": "626f9d8465af9d79",
+      "channelSummary": {
+        "wps": 2.3,
+        "cps": 11.89,
+        "motion": 0,
+        "music": null,
+        "sfx": 0,
+        "modalities": [
+          "TITLE"
+        ]
+      }
+    },
+    {
+      "segmentId": "pilot-sky-blue:SCENE:0-9394",
+      "kind": "SCENE",
+      "startMs": 0,
+      "endMs": 9394,
+      "tags": [],
+      "beatIds": [
+        "S01"
+      ],
+      "contextBefore": {
+        "startMs": 0,
+        "endMs": 0
+      },
+      "contextAfter": {
+        "startMs": 9394,
+        "endMs": 11394
+      },
+      "segmentHash": "7874a4ed61d6674e",
+      "channelSummary": {
+        "wps": 2.45,
+        "cps": 11.39,
+        "motion": 0,
+        "music": null,
+        "sfx": 0,
+        "modalities": [
+          "TITLE"
+        ]
+      }
+    },
+    {
+      "segmentId": "pilot-sky-blue:SCENE:9394-18127",
+      "kind": "SCENE",
+      "startMs": 9394,
+      "endMs": 18127,
+      "tags": [],
+      "beatIds": [
+        "S02"
+      ],
+      "contextBefore": {
+        "startMs": 7394,
+        "endMs": 9394
+      },
+      "contextAfter": {
+        "startMs": 18127,
+        "endMs": 20127
+      },
+      "segmentHash": "d98527f18be2ec42",
+      "channelSummary": {
+        "wps": 2.4,
+        "cps": 12.82,
+        "motion": 0,
+        "music": null,
+        "sfx": 0,
+        "modalities": [
+          "TITLE"
+        ]
+      }
+    },
+    {
+      "segmentId": "pilot-sky-blue:SCENE:18127-33979",
+      "kind": "SCENE",
+      "startMs": 18127,
+      "endMs": 33979,
+      "tags": [],
+      "beatIds": [
+        "S03"
+      ],
+      "contextBefore": {
+        "startMs": 16127,
+        "endMs": 18127
+      },
+      "contextAfter": {
+        "startMs": 33979,
+        "endMs": 35979
+      },
+      "segmentHash": "08b9a31d3f65a091",
+      "channelSummary": {
+        "wps": 2.27,
+        "cps": 14.07,
+        "motion": 0,
+        "music": null,
+        "sfx": 0,
+        "modalities": [
+          "TITLE"
+        ]
+      }
+    },
+    {
+      "segmentId": "pilot-sky-blue:SCENE:33979-41402",
+      "kind": "SCENE",
+      "startMs": 33979,
+      "endMs": 41402,
+      "tags": [],
+      "beatIds": [
+        "S04"
+      ],
+      "contextBefore": {
+        "startMs": 31979,
+        "endMs": 33979
+      },
+      "contextAfter": {
+        "startMs": 41402,
+        "endMs": 43402
+      },
+      "segmentHash": "56dc257e5737d81a",
+      "channelSummary": {
+        "wps": 2.83,
+        "cps": 14.28,
+        "motion": 0,
+        "music": null,
+        "sfx": 0,
+        "modalities": [
+          "TITLE"
+        ]
+      }
+    },
+    {
+      "segmentId": "pilot-sky-blue:SCENE:41402-50110",
+      "kind": "SCENE",
+      "startMs": 41402,
+      "endMs": 50110,
+      "tags": [],
+      "beatIds": [
+        "S05"
+      ],
+      "contextBefore": {
+        "startMs": 39402,
+        "endMs": 41402
+      },
+      "contextAfter": {
+        "startMs": 50110,
+        "endMs": 52110
+      },
+      "segmentHash": "95e7074c4953dd9a",
+      "channelSummary": {
+        "wps": 2.07,
+        "cps": 11.71,
+        "motion": 0,
+        "music": null,
+        "sfx": 0,
+        "modalities": [
+          "TITLE"
+        ]
+      }
+    },
+    {
+      "segmentId": "pilot-sky-blue:SCENE:50110-65332",
+      "kind": "SCENE",
+      "startMs": 50110,
+      "endMs": 65332,
+      "tags": [],
+      "beatIds": [
+        "S06"
+      ],
+      "contextBefore": {
+        "startMs": 48110,
+        "endMs": 50110
+      },
+      "contextAfter": {
+        "startMs": 65332,
+        "endMs": 65332
+      },
+      "segmentHash": "3c642c68061160cd",
+      "channelSummary": {
+        "wps": 2.3,
+        "cps": 11.89,
+        "motion": 0,
+        "music": null,
+        "sfx": 0,
+        "modalities": [
+          "TITLE"
+        ]
+      }
+    },
+    {
+      "segmentId": "pilot-sky-blue:OUTRO:50110-65332",
+      "kind": "OUTRO",
+      "startMs": 50110,
+      "endMs": 65332,
+      "tags": [
+        "OUTRO"
+      ],
+      "beatIds": [
+        "S06"
+      ],
+      "contextBefore": {
+        "startMs": 48110,
+        "endMs": 50110
+      },
+      "contextAfter": {
+        "startMs": 65332,
+        "endMs": 65332
+      },
+      "segmentHash": "9a92ded9a9eb5cd3",
+      "channelSummary": {
+        "wps": 2.3,
+        "cps": 11.89,
+        "motion": 0,
+        "music": null,
+        "sfx": 0,
+        "modalities": [
+          "TITLE"
+        ]
+      }
+    }
+  ],
+  "coverage": {
+    "coveredMs": 65332,
+    "targetMs": 65332,
+    "share": 1
+  },
+  "blockers": [],
+  "verdict": "PASS",
+  "counts": {
+    "open": {
+      "P0": 0,
+      "P1": 0,
+      "P2": 0,
+      "P3": 5
+    },
+    "total": 5
+  },
+  "findings": [
+    {
+      "findingId": "cf-526359177fe05ed9",
+      "code": "HOOK_NO_FORWARD_QUESTION",
+      "severity": "P3",
+      "scope": "HOOK",
+      "startMs": 0,
+      "endMs": 30000,
+      "reason": "no open question/anticipation is carried past 30s (class EXPLAINER usually expects one; not required for every video)",
+      "reasonClass": "NO_ANTICIPATION",
+      "evidenceRefs": [
+        "window:0-30000",
+        "hookClass:EXPLAINER"
+      ],
+      "correctiveAction": "OPENING_EDIT:NO_ANTICIPATION",
+      "repairClass": "OPENING_EDIT",
+      "confidence": "LOW",
+      "status": "OPEN",
+      "checkpoints": [
+        "HOOK_30S"
+      ],
+      "source": "DETERMINISTIC"
+    },
+    {
+      "findingId": "cf-39a441c4ac0f736c",
+      "code": "FRAMING_REPETITION",
+      "severity": "P3",
+      "scope": "SHOT",
+      "startMs": 0,
+      "endMs": 65333,
+      "shotId": "S01-card",
+      "reason": "6 consecutive shots use the same framing \"CENTERED_TITLE_CARD\"",
+      "reasonClass": "SAME_FRAMING",
+      "evidenceRefs": [
+        "shot:S01-card",
+        "shot:S02-card",
+        "shot:S03-card",
+        "shot:S04-card",
+        "shot:S05-card",
+        "shot:S06-card",
+        "framing:CENTERED_TITLE_CARD"
+      ],
+      "correctiveAction": "FRAMING_LAYOUT_PATCH:vary crop/subject scale/composition",
+      "repairClass": "FRAMING_LAYOUT_PATCH",
+      "confidence": "MEDIUM",
+      "status": "OPEN",
+      "source": "DETERMINISTIC"
+    },
+    {
+      "findingId": "cf-116b5ed6aa48611c",
+      "code": "MODALITY_MONOTONY",
+      "severity": "P3",
+      "scope": "GLOBAL",
+      "startMs": 0,
+      "endMs": 65333,
+      "reason": "6 consecutive shots stay TITLE while the beat role changes across HOOK/SETUP/EXPLANATION/CONTRAST/EVIDENCE",
+      "reasonClass": "MODALITY_PATTERN",
+      "evidenceRefs": [
+        "shot:S01-card",
+        "shot:S02-card",
+        "shot:S03-card",
+        "shot:S04-card",
+        "shot:S05-card",
+        "shot:S06-card",
+        "modality:TITLE"
+      ],
+      "correctiveAction": "ASSET_MODALITY_REPLACE:match modality to beat role (chart/diagram/map/still)",
+      "repairClass": "ASSET_MODALITY_REPLACE",
+      "confidence": "MEDIUM",
+      "status": "OPEN",
+      "source": "DETERMINISTIC"
+    },
+    {
+      "findingId": "cf-12cf576a435895de",
+      "code": "PAYOFF_UNDER_EMPHASIZED",
+      "severity": "P3",
+      "scope": "BEAT",
+      "startMs": 50110,
+      "endMs": 65332,
+      "beatId": "S06",
+      "reason": "The payoff ('the blue sky is not a thing — it is sunlight, rearranged by the air') lands on the same solid-blue card and caption style as every earlier beat; nothing visual or audible marks it as the answer.",
+      "reasonClass": "EMPHASIS_DEFICIT",
+      "evidenceRefs": [
+        "frame:frames/t58s.jpg",
+        "observation:atMs=58000"
+      ],
+      "correctiveAction": "PAYOFF_EMPHASIS_PATCH:add a reveal move or diagram step on the payoff line",
+      "repairClass": "PAYOFF_EMPHASIS_PATCH",
+      "confidence": "MEDIUM",
+      "status": "OPEN",
+      "source": "MODEL"
+    },
+    {
+      "findingId": "cf-826978d83965e8f1",
+      "code": "MULTIMODAL_REDUNDANCY",
+      "severity": "P3",
+      "scope": "SCENE",
+      "startMs": 50110,
+      "endMs": 65332,
+      "beatId": "S06",
+      "reason": "On-screen 'SUNLIGHT, REARRANGED', the caption and the narration state the same phrase with no distinct visual, so the picture adds nothing beyond the text channels.",
+      "reasonClass": "CHANNEL_REPEAT",
+      "evidenceRefs": [
+        "frame:frames/t58s.jpg",
+        "channel:ON_SCREEN_TEXT",
+        "channel:CAPTIONS",
+        "channel:NARRATION"
+      ],
+      "correctiveAction": "CHANNEL_DEDUP:replace the repeated title with a visual that shows the idea",
+      "repairClass": "CHANNEL_DEDUP",
+      "confidence": "LOW",
+      "status": "OPEN",
+      "source": "MODEL"
+    }
+  ],
+  "latencyMs": 46
+}

@@ -16,6 +16,7 @@ const path = require("path");
 
 const ROOT = path.join(__dirname, "..", "..");
 const PID = "__5b_pilot__";
+require("../fixtures/render-fixture-lifecycle.js").registerFixtureCleanup(PID);
 const EVID_DIR = path.join(ROOT, "Report", "evidence", "perf-5b");
 const OUT_DIR = path.join(ROOT, "out", "incremental-5b");
 

@@ -1,0 +1,479 @@
+{
+ "investigation": "perf/test-concurrency-matrix-5c byte-identity flake",
+ "date": "2026-10-08",
+ "renders": 36,
+ "concurrencies": [
+  1,
+  2,
+  4
+ ],
+ "distinct": {
+  "wholeFileSha256": 2,
+  "fileSize": [
+   16480
+  ],
+  "decodedVideoFramemd5": 1,
+  "packetPtsDts": 1,
+  "packetSizesFlags": 1,
+  "audio": [
+   "NO_AUDIO_STREAM"
+  ],
+  "streamParams": [
+   "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+  ],
+  "duration": [
+   "4.000000"
+  ]
+ },
+ "wholeFileVariants": {
+  "5f4a4659fa43": 26,
+  "512315e70a86": 10
+ },
+ "variantAppearsWithinSameConcurrency": true,
+ "rootCause": "22-byte MP4 stsd/avc1 compressorname string at offset ~508 (\"Lavc61.19.100 libx264\" present vs zero-filled); container metadata only, independent of concurrency",
+ "decision": "encoded bytes differ, decoded frames/packet timing/sizes/stream params/duration/audio identical => byte-identity assertion too strict; replaced by deterministic media-equivalence assertion (frame md5 + packet timing/size/flags + stream params + duration + audio). Quality requirement NOT relaxed: any decoded-frame/timing difference still fails.",
+ "runs": {
+  "baseline_4reps": [
+   {
+    "run": "c1r0",
+    "fileSha": "5f4a4659fa43",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   },
+   {
+    "run": "c1r1",
+    "fileSha": "5f4a4659fa43",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   },
+   {
+    "run": "c1r2",
+    "fileSha": "5f4a4659fa43",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   },
+   {
+    "run": "c1r3",
+    "fileSha": "5f4a4659fa43",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   },
+   {
+    "run": "c2r0",
+    "fileSha": "5f4a4659fa43",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   },
+   {
+    "run": "c2r1",
+    "fileSha": "5f4a4659fa43",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   },
+   {
+    "run": "c2r2",
+    "fileSha": "5f4a4659fa43",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   },
+   {
+    "run": "c2r3",
+    "fileSha": "5f4a4659fa43",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   },
+   {
+    "run": "c4r0",
+    "fileSha": "5f4a4659fa43",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   },
+   {
+    "run": "c4r1",
+    "fileSha": "5f4a4659fa43",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   },
+   {
+    "run": "c4r2",
+    "fileSha": "5f4a4659fa43",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   },
+   {
+    "run": "c4r3",
+    "fileSha": "5f4a4659fa43",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   }
+  ],
+  "repeat1_2reps": [
+   {
+    "run": "c1r0",
+    "fileSha": "512315e70a86",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   },
+   {
+    "run": "c1r1",
+    "fileSha": "512315e70a86",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   },
+   {
+    "run": "c2r0",
+    "fileSha": "5f4a4659fa43",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   },
+   {
+    "run": "c2r1",
+    "fileSha": "5f4a4659fa43",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   },
+   {
+    "run": "c4r0",
+    "fileSha": "5f4a4659fa43",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   },
+   {
+    "run": "c4r1",
+    "fileSha": "5f4a4659fa43",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   }
+  ],
+  "repeat2_2reps": [
+   {
+    "run": "c1r0",
+    "fileSha": "512315e70a86",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   },
+   {
+    "run": "c1r1",
+    "fileSha": "5f4a4659fa43",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   },
+   {
+    "run": "c2r0",
+    "fileSha": "512315e70a86",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   },
+   {
+    "run": "c2r1",
+    "fileSha": "512315e70a86",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   },
+   {
+    "run": "c4r0",
+    "fileSha": "512315e70a86",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   },
+   {
+    "run": "c4r1",
+    "fileSha": "512315e70a86",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   }
+  ],
+  "repeat3_2reps": [
+   {
+    "run": "c1r0",
+    "fileSha": "512315e70a86",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   },
+   {
+    "run": "c1r1",
+    "fileSha": "5f4a4659fa43",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   },
+   {
+    "run": "c2r0",
+    "fileSha": "5f4a4659fa43",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   },
+   {
+    "run": "c2r1",
+    "fileSha": "5f4a4659fa43",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   },
+   {
+    "run": "c4r0",
+    "fileSha": "5f4a4659fa43",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   },
+   {
+    "run": "c4r1",
+    "fileSha": "5f4a4659fa43",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   }
+  ],
+  "repeat4_2reps": [
+   {
+    "run": "c1r0",
+    "fileSha": "512315e70a86",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   },
+   {
+    "run": "c1r1",
+    "fileSha": "512315e70a86",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   },
+   {
+    "run": "c2r0",
+    "fileSha": "5f4a4659fa43",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   },
+   {
+    "run": "c2r1",
+    "fileSha": "5f4a4659fa43",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   },
+   {
+    "run": "c4r0",
+    "fileSha": "5f4a4659fa43",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   },
+   {
+    "run": "c4r1",
+    "fileSha": "5f4a4659fa43",
+    "size": 16480,
+    "frameCount": 120,
+    "decodedVideoSha": "23dfc2263ffc",
+    "audio": "NO_AUDIO_STREAM",
+    "duration": "4.000000",
+    "packetTimingSha": "d14c9d095205",
+    "packetSizesSha": "3505464eed51",
+    "vstream": "h264/High/yuvj420p/30/1/120/0.000000/4.000000"
+   }
+  ]
+ }
+}

@@ -1,0 +1,197 @@
+{
+  "kind": "HOOK_QUALITY",
+  "version": "1.0.0",
+  "policyVersion": "1.0.0",
+  "projectId": "pilot-sky-blue",
+  "inputFingerprint": "b657bebe1035d74d",
+  "hookClass": "EXPLAINER",
+  "classExpectations": [
+    "PROBLEM",
+    "PREMISE",
+    "PROMISED_UNDERSTANDING"
+  ],
+  "packagingPromise": {
+    "titleText": "Why Is the Sky Blue?",
+    "titleClaimRefs": [],
+    "thumbnailClaimRefs": [],
+    "expectedViewerPromise": [
+      "why the sky is blue"
+    ],
+    "openingMustEstablish": [
+      "sky blue",
+      "why"
+    ],
+    "mustNotImply": [
+      "ocean reflection"
+    ]
+  },
+  "checkpoints": [
+    {
+      "checkpointId": "pilot-sky-blue:HOOK_5S",
+      "checkpoint": "HOOK_5S",
+      "startMs": 0,
+      "endMs": 5000,
+      "subject": {
+        "established": true,
+        "via": "PACKAGING_TERMS"
+      },
+      "valueDelivered": true,
+      "curiosity": {
+        "questionPresent": false,
+        "openLoopsOpened": 1,
+        "openLoopsUnresolved": 1
+      },
+      "setupOnlyMs": 0,
+      "informationProgress": {
+        "newInfoCount": 4,
+        "expectedMin": 3,
+        "wordsPerSecond": 2.6
+      },
+      "promiseDelivery": {
+        "terms": [
+          {
+            "term": "sky blue",
+            "establishedInWindow": true,
+            "firstMentionMs": 4467
+          }
+        ],
+        "untestableTerms": [
+          "why"
+        ],
+        "mustNotImply": [
+          "ocean reflection"
+        ]
+      },
+      "deadTimeRiskMs": 0,
+      "evidenceRefs": [
+        "window:0-5000",
+        "hookClass:EXPLAINER"
+      ],
+      "findingIds": [],
+      "verdict": "PASS",
+      "reason": "HOOK_5S: subject/value/promise checks passed for class EXPLAINER"
+    },
+    {
+      "checkpointId": "pilot-sky-blue:HOOK_15S",
+      "checkpoint": "HOOK_15S",
+      "startMs": 0,
+      "endMs": 15000,
+      "subject": {
+        "established": true,
+        "via": "PACKAGING_TERMS"
+      },
+      "valueDelivered": true,
+      "curiosity": {
+        "questionPresent": true,
+        "openLoopsOpened": 1,
+        "openLoopsUnresolved": 1
+      },
+      "setupOnlyMs": 0,
+      "informationProgress": {
+        "newInfoCount": 13,
+        "expectedMin": 8,
+        "wordsPerSecond": 2.4
+      },
+      "promiseDelivery": {
+        "terms": [
+          {
+            "term": "sky blue",
+            "establishedInWindow": true,
+            "firstMentionMs": 4467
+          }
+        ],
+        "untestableTerms": [
+          "why"
+        ],
+        "mustNotImply": [
+          "ocean reflection"
+        ]
+      },
+      "deadTimeRiskMs": 0,
+      "evidenceRefs": [
+        "window:0-15000",
+        "hookClass:EXPLAINER"
+      ],
+      "findingIds": [],
+      "verdict": "PASS",
+      "reason": "HOOK_15S: subject/value/promise checks passed for class EXPLAINER"
+    },
+    {
+      "checkpointId": "pilot-sky-blue:HOOK_30S",
+      "checkpoint": "HOOK_30S",
+      "startMs": 0,
+      "endMs": 30000,
+      "subject": {
+        "established": true,
+        "via": "PACKAGING_TERMS"
+      },
+      "valueDelivered": true,
+      "curiosity": {
+        "questionPresent": true,
+        "openLoopsOpened": 1,
+        "openLoopsUnresolved": 0
+      },
+      "setupOnlyMs": 0,
+      "informationProgress": {
+        "newInfoCount": 29,
+        "expectedMin": 14,
+        "wordsPerSecond": 2.33
+      },
+      "promiseDelivery": {
+        "terms": [
+          {
+            "term": "sky blue",
+            "establishedInWindow": true,
+            "firstMentionMs": 4467
+          }
+        ],
+        "untestableTerms": [
+          "why"
+        ],
+        "mustNotImply": [
+          "ocean reflection"
+        ]
+      },
+      "deadTimeRiskMs": 0,
+      "evidenceRefs": [
+        "window:0-30000",
+        "hookClass:EXPLAINER"
+      ],
+      "findingIds": [
+        "cf-526359177fe05ed9"
+      ],
+      "verdict": "PASS_WITH_NOTES",
+      "reason": "HOOK_NO_FORWARD_QUESTION: no open question/anticipation is carried past 30s (class EXPLAINER usually expects one; not required for every video)"
+    }
+  ],
+  "metrics": {
+    "openFindings": 1,
+    "groundedExternally": {
+      "HOOK_30S": "YouTube intro-retention semantics (first 30s)"
+    }
+  },
+  "findings": [
+    {
+      "findingId": "cf-526359177fe05ed9",
+      "code": "HOOK_NO_FORWARD_QUESTION",
+      "severity": "P3",
+      "scope": "HOOK",
+      "startMs": 0,
+      "endMs": 30000,
+      "reason": "no open question/anticipation is carried past 30s (class EXPLAINER usually expects one; not required for every video)",
+      "reasonClass": "NO_ANTICIPATION",
+      "evidenceRefs": [
+        "window:0-30000",
+        "hookClass:EXPLAINER"
+      ],
+      "correctiveAction": "OPENING_EDIT:NO_ANTICIPATION",
+      "repairClass": "OPENING_EDIT",
+      "confidence": "LOW",
+      "status": "OPEN",
+      "checkpoints": [
+        "HOOK_30S"
+      ],
+      "source": "DETERMINISTIC"
+    }
+  ]
+}
