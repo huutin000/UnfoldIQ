@@ -1,0 +1,5 @@
+﻿
+> unfoldiq@1.0.0 check:repo-structure
+> node scripts/checks/repository-structure-check.js
+
+REPOSITORY_STRUCTURE_OK: root clean, no temporary artifacts in source trees.

@@ -1,0 +1,68 @@
+{
+  "version": "1.0.0",
+  "phase": "6A-closure",
+  "kind": "DETERMINISTIC_STRUCTURAL_SEGMENT_REWATCH_ON_REAL_FILE",
+  "generatedAt": "2026-10-08T13:21:51.324Z",
+  "disclosure": "Deterministic analysis bound to the actual repaired video (hash + probed duration vs timeline). This is NOT an autonomous audiovisual model review and NOT a human review.",
+  "video": {
+    "path": "out/creative-repair-6a/repaired-v2.mp4",
+    "sha256": "ab1484341b61c0eaefc72dbf19b2735460f94f6e4371395d8e3021657f401a7e",
+    "probedDurationMs": 60000,
+    "timelineDurationMs": 60000
+  },
+  "segmentRewatches": [
+    {
+      "sceneId": "sc3",
+      "affected": {
+        "startMs": 15000,
+        "endMs": 22000,
+        "contextStartMs": 6000,
+        "contextEndMs": 30000
+      },
+      "verdict": "PASS",
+      "videoConsumed": true,
+      "videoSha256": "ab1484341b61c0eaefc72dbf19b2735460f94f6e4371395d8e3021657f401a7e",
+      "segments": 5,
+      "blockers": [],
+      "reviewerMode": "DETERMINISTIC_ONLY"
+    },
+    {
+      "sceneId": "sc6",
+      "affected": {
+        "startMs": 35500,
+        "endMs": 45000,
+        "contextStartMs": 30000,
+        "contextEndMs": 52500
+      },
+      "verdict": "PASS",
+      "videoConsumed": true,
+      "videoSha256": "ab1484341b61c0eaefc72dbf19b2735460f94f6e4371395d8e3021657f401a7e",
+      "segments": 3,
+      "blockers": [],
+      "reviewerMode": "DETERMINISTIC_ONLY"
+    }
+  ],
+  "repetitiveMotionStatusAfter": [
+    "REPAIRED"
+  ],
+  "finalFullWatch": {
+    "mode": "FULL_WATCH",
+    "verdict": "PASS",
+    "blockers": [],
+    "coverage": {
+      "coveredMs": 60000,
+      "targetMs": 60000,
+      "share": 1
+    },
+    "openSeverityCounts": {
+      "P0": 0,
+      "P1": 0,
+      "P2": 1,
+      "P3": 0
+    },
+    "openCodes": [
+      "AUDIO_VISUAL_ENERGY_MISMATCH/P2"
+    ]
+  },
+  "agentFrameReview": null
+}

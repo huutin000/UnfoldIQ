@@ -1,0 +1,47 @@
+{
+  "phase": "6A",
+  "generatedAt": "2026-10-09",
+  "regressionMethod": "PER_SUITE_EVIDENCE (runner timeout not raised; heavy render suites run directly via node, not through scripts/run-tests.js)",
+  "gates": {
+    "CANONICAL_PILOT_LINEAGE": "NOT_PROVEN",
+    "PACKAGING_PROMISE_SOURCE": "NOT_VERIFIED (fixture exception)",
+    "FULL_AV_WATCH_ACTUAL_FILE": "HUMAN_SIGNED_PARTIAL (pilot-4b.mp4 sha256 d3e71094..., full 00:00-02:30 at 1.0x, signed 'Tin' 2026-10-09; narration/audio only, visual is an ffmpeg test pattern; items 1,2,6,7,8,9 N/A; 5 silent gaps 8-13 s reported, severity not classified)",
+    "FULL_AV_WATCH_AUDIO_AND_VISUAL": "NOT_PROVEN (no real visual content reviewed)",
+    "AUTONOMOUS_MULTIMODAL_WATCH": "NOT_PROVEN",
+    "PAID_EXTERNAL_COST_VND": 0,
+    "REAL_CREATIVE_PATCH": "PROVEN (fixture)",
+    "REAL_INCREMENTAL_RENDER_EXECUTION": "PROVEN (fixture)",
+    "PARTIAL_QA_AFTER_REPAIR": "REVIEW_REQUIRED",
+    "SEGMENT_REWATCH": "DETERMINISTIC_PASS / AV NOT_PROVEN",
+    "CREATIVE_GOLDENS": "PASS (66/66, 12/12)",
+    "FULL_REGRESSION": "NOT_PROVEN (no single npm test run exited 0; see perSuiteEvidence)",
+    "HYGIENE": "PASS (check:workspace ok, check:repo-structure ok)",
+    "PHASE_6A": "NOT_COMPLETE",
+    "PHASE_6B_READY": "NO"
+  },
+  "perSuiteEvidence": {
+    "tests/incremental/test-pilot-repair-a.js": "PASS 3/0 (run directly)",
+    "tests/incremental/test-pilot-repair-b.js": "PASS 4/0 (run directly)",
+    "tests/incremental/test-pilot-reuse-5c.js": "PASS 6/0 (run directly)",
+    "longform-5c": "PASS 2/0 (run alone)",
+    "npm run test:creative": "PASS 66/66",
+    "npm run test:story": "PASS",
+    "research + research-deep": "PASS 0 failed (after venv junction in worktree)",
+    "tests/workspace/test-workspace.js": "PASS 53 (after fixture cleanup)",
+    "npm run check:workspace": "PASS (ok true, 20 projects)",
+    "npm run check:repo-structure": "PASS"
+  },
+  "caveats": [
+    "Per-suite evidence is not a substitute for one full npm test exit 0; the only full run failed 15 suites, all attributed to environment (missing research venv, runner 10-minute kill, leftover fixtures), not code changes.",
+    "Remaining suites outside the list above were not re-run individually in this closure; they are neither claimed PASS nor FAIL here."
+  ],
+  "ownerDecisionsRecommended": {
+    "pilotVideoTarget": "pilot-4b.mp4 (150.058s, sha256 d3e71094...) for narration/AV-sync watch only; visual is an ffmpeg test pattern so it is NOT a canonical creative pilot",
+    "avWatchMethod": "Human reviewer signs phase-6a-full-av-watch-evidence.md (0 VND, no upload, no new adapter); Gemini adapter deferred",
+    "status": "RECOMMENDED_BY_AGENT_NOT_CONFIRMED_BY_OWNER; no gate raised by this decision"
+  },
+  "blockingOwnerActions": [
+    "Choose canonical pilot video (pilot-4b.mp4 for narration/AV-sync only, pilot-sky-blue as secondary fixture, or supply a real video)",
+    "Human audio+visual watch signed in phase-6a-full-av-watch-evidence.md, or approve a Gemini video-review adapter"
+  ]
+}

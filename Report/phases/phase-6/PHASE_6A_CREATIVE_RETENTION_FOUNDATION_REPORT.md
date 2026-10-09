@@ -1,9 +1,55 @@
-# PHASE 6A — CREATIVE RETENTION FOUNDATION — REPORT
+﻿# PHASE 6A — CREATIVE RETENTION FOUNDATION — REPORT
 
 Date 2026-10-08 · Package: Hook System + Narrative Beat Quality + Visual Rhythm + Final Multimodal Watch Pass
 Evidence: `Report/evidence/phase-6a/` (summary: `phase-6a-summary.json`) · Code: `lib/creative-retention/` · Tests: `tests/creative/`
 
-## Final verdict (read this first)
+## CLOSURE REVISION (2026-10-08) — supersedes the verdict block below
+
+The earlier verdict (`PHASE_6A = COMPLETE`, `FINAL_MULTIMODAL_WATCH_PASS = PASS`, `LOCAL_CREATIVE_REPAIR = PROVEN`) over-claimed. Re-assessed against the agreed gate (`UNFOLDIQ_PHASE_6A_FINAL_EVIDENCE_CLOSURE.md`). Evidence: `Report/evidence/phase-6a/phase-6a-completion-gate.json`.
+
+```text
+CANONICAL_PILOT_LINEAGE              = NOT_PROVEN   (no approved/representative Phase 4 pilot with persisted packaging; see lineage JSON)
+PACKAGING_PROMISE_SOURCE             = NOT_VERIFIED (pilot-sky-blue promise derived from its title card: deliberate fixture exception)
+FULL_AV_WATCH_ACTUAL_FILE            = HUMAN_SIGNED_PARTIAL (pilot-4b.mp4, full 00:00-02:30, narration/audio only; see "Human watch" below)
+FULL_AV_WATCH_AUDIO_AND_VISUAL       = NOT_PROVEN   (visual of pilot-4b is an ffmpeg test pattern)
+FINAL_MULTIMODAL_WATCH_PASS          = NOT_PROVEN   (was "PASS": reviewer saw 5 frames; 16 calls were replay, not 16 real reviews)
+AUTONOMOUS_MULTIMODAL_WATCH          = NOT_PROVEN   (GAP-046 stays DEFERRED)
+PAID_EXTERNAL_COST_VND               = 0
+
+REAL_CREATIVE_PATCH                  = PROVEN  (FIXTURE: real MotionPlan.patchMotion on sc3/sc6; motion SLOW_ZOOM_IN -> NONE in render input)
+REAL_INCREMENTAL_RENDER_EXECUTION    = PROVEN  (FIXTURE: 495/1800 frames rendered by real Remotion, 1305 reused from CAS, no full-render fallback)
+PARTIAL_QA_AFTER_REPAIR              = REVIEW_REQUIRED (0 BLOCK; 1 non-blocking FLASH_SAFETY_REVIEW; fixture's pre-existing P2 AUDIO_VISUAL_ENERGY_MISMATCH still open)
+SEGMENT_REWATCH                      = DETERMINISTIC_PASS / AV_NOT_PROVEN
+FULL_FINAL_WATCH_IF_REQUIRED         = NOT_PROVEN
+
+PILOT_INCREMENTAL_SUITES             = PASS         (pilot-repair-a 3/0, pilot-repair-b 4/0, pilot-reuse-5c 6/0; run directly via node)
+HOOK_5S_15S_30S / BEAT_QUALITY / VISUAL_RHYTHM = PASS per creative suites (test:creative 66/66); not re-run individually in this closure
+CREATIVE_GOLDENS                     = PASS (12/12; test:creative 66/66)
+FULL_REGRESSION                      = NOT_PROVEN   (no single `npm test` exit 0; per-suite evidence below)
+HYGIENE                              = PASS         (check:workspace ok, 20 projects; check:repo-structure ok)
+P0 = 0 · P1_CRITICAL = 0
+
+PHASE_6A                             = NOT_COMPLETE
+PHASE_6B_READY                       = NO
+```
+
+What changed since the first revision: real incremental repair execution was run (section "Real repair execution" below), the lineage of both candidate videos was documented, the stray debug `console.error` in `lib/story-structure/shot-plan.js` was removed, and the audiovisual watch was left NOT_PROVEN with a blank operator checklist. Items described as PROVEN in the original text below are fixture-scoped unless stated.
+
+### Real repair execution (FIXTURE, `scripts/diagnostics/creative-repair-execution.js`)
+Isolated TEST-ONLY project `__6a_repair__` (removed after run; registry untouched), real Phase 3 Master Timeline + MotionPlan (8 beats / 60 s / 1800 frames @1920x1080x30), local ffmpeg stand-in stills and a synthetic two-tone audio track (no speech, no provider call). Chain executed: finding `REPETITIVE_MOTION_RHYTHM` (P2) -> `patchMotion SET_STATIC` on sc3 + sc6 (motion plan rev 1 -> 3, timeline unchanged) -> DependencyDiff (`renderInput`) + DirtySet (frames 450-660, 1065-1350) -> IncrementalRenderPlan with real CAS lookups -> real Remotion dirty-range render (210 + 285 frames, 39.3 s render vs 123-166 s full-render oracle) -> concat + single FinalAudio mux -> `out/creative-repair-6a/repaired-v2.mp4`.
+Proofs (`phase-6a-creative-repair-execution.json`): changed frames exactly sc3 (210/210) and sc6 (285/285), 0 frames changed elsewhere; audio md5 identical before/after; per-scene PSNR vs a fresh full-render oracle 43.5-51.7 dB with repaired scenes (51.4/51.3 dB) no worse than untouched ones; decode clean; 0 black/freeze/silence candidates. Equivalence note: `decodedFramesExact` is false (segmented vs monolithic lossy encodes), the established Phase 5B behaviour; structural + audio identity and PSNR are the gates. Harness lesson: Remotion `selectComposition` must receive the same `inputProps` as `renderMedia` — reusing the V1 composition silently re-rendered the old motion; the script now selects per version and asserts the render-input motion change.
+Limits: fixture visuals are generic test patterns, audio is synthetic tone, so this proves the execution chain, not creative quality. Retry/cancellation behaviour was not re-exercised here (covered by existing Phase 5 suites in the regression).
+### Human watch (2026-10-09)
+Target `out/final/pilot-4b.mp4` (sha256 d3e71094f3c6a1919a6ad9f854d70878aa67f29a435f443034cd618590974a12, 150.058 s). Reviewer (project owner, signed "Tin") played it 00:00-02:30 at 1.0x. Narration: female voice, clear voice/pacing/pronunciation (PASS). No music/SFX; no narration-synced captions, only title cards. Five silent gaps reported (00:20-00:30, 00:52-01:00, 01:20-01:30, 01:50-02:00, 02:17-02:30); `tests/render/test-pilot-4b.js` declares tail gaps as intentional (`expectedSilenceRanges`, Case K), severity not classified by the reviewer. Checklist items 1, 2, 6-9 = N/A. Visual is an ffmpeg test pattern, so this covers narration/audio only. Source: `Report/evidence/phase-6a/phase-6a-full-av-watch-evidence.md`. Self-attested in chat, not independently verified.
+
+### Commands executed and results (per-suite regression evidence)
+- `node tests\incremental\test-pilot-repair-a.js` PASS 3/0; `...repair-b.js` PASS 4/0; `...reuse-5c.js` PASS 6/0 (run directly, not via runner)
+- longform-5c PASS 2/0; `npm run test:creative` PASS 66/66; `npm run test:story` PASS; research + research-deep PASS; `tests/workspace/test-workspace.js` PASS 53
+- `npm run check:workspace` PASS; `npm run check:repo-structure` PASS
+- Full `npm test`: FAIL 15 suites (environment: missing research venv in worktree, runner 10-minute kill on heavy render suites, leftover fixtures); not re-run to exit 0.
+- Not done: gate items needing the owner (canonical pilot video, real-visual AV watch).
+
+## ORIGINAL verdict — SUPERSEDED by the closure revision above (kept for history; do not rely on it)
 
 ```text
 PHASE_6A_FUNCTIONAL                    = PASS   (creative suites 66/66; real-lib repair loop; real pilot watch)
@@ -105,3 +151,5 @@ New: `lib/creative-retention/{contract,policy,text,input,beats,hook,rhythm,watch
 
 ## Context Loaded
 `AGENTS.md`, user global rules, phase spec, Phase 5C/4B reports, Market Gap Registry, story-structure/packaging/motion/timeline/DAG/incremental/partial-QA/artifact-store sources, `pilot-sky-blue` project + final.mp4, YouTube Help (2 pages fetched).
+
+

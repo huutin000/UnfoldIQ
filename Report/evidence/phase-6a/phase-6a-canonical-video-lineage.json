@@ -1,0 +1,90 @@
+{
+  "version": "1.0.0",
+  "phase": "6A-closure",
+  "slice": "A",
+  "generatedAt": "2026-10-08T12:56:09.367Z",
+  "candidates": {
+    "pilot-sky-blue": {
+      "role": "Phase 6A reviewed pilot (supplementary fixture)",
+      "projectId": "pilot-sky-blue",
+      "file": "out/final/pilot-sky-blue/final.mp4",
+      "sha256": "3f684657a9ed34f10f3845ef5bc36a4e6c599a851be09bc9d48d08ebaacc94b3",
+      "acceptedArtifactSha256": "3f684657a9ed34f10f3845ef5bc36a4e6c599a851be09bc9d48d08ebaacc94b3",
+      "hashMatchesAcceptedArtifact": true,
+      "attempt": "attempt-005",
+      "renderCreatedAt": "2026-09-26T07:43:18.151Z",
+      "durationSec": 65.386667,
+      "timelineDurationMs": 65332,
+      "frames": 1960,
+      "resolution": "1920x1080@30",
+      "streams": [
+        "video",
+        "audio"
+      ],
+      "narration": "windows-sapi 'Microsoft Zira Desktop' (local, zero cost); 8 utterances",
+      "visuals": "remotion-native solid-colour title cards (no diagrams) — Phase 4B known WARNING VR-LAYOUT-001",
+      "originPhase": "pre-Phase-4A pipeline step (created 2026-09-26; Phase 4A/4B are 2026-10-07)",
+      "packaging": {
+        "selectedPhase4AVariant": null,
+        "sourceOfPromise": "DERIVED from the pilot's own title card by scripts/diagnostics/creative-retention-evidence.js (PACKAGING const)",
+        "verified": false
+      },
+      "projectFilesHashes": {
+        "render/final-artifact.json": "599f1cbf01bd29d36d26d131725cb7312fce455902e85163164ddc0914634151",
+        "render/render-manifest.json": "b96035c8e48376d1126c7d7dcaa1758d18fc64aa1735d8b88dfc9c1508e542eb",
+        "script.json": "ef66e5c91a65d2a871a9ca3131052d89daa9be0a8aeef548c7ac99bd4cbfb5e5",
+        "audio-manifest.json": "db818e5a7c96a5da6e3c177e5e39bbb9e2a69955509c34fa819342a24dc200de"
+      },
+      "approvalStatus": "No Phase 4 approval/finalization record exists for this artifact (it predates Phase 4B QC and FinalPublishPackage).",
+      "sourceRefs": [
+        "projects/pilot-sky-blue/render/final-artifact.json",
+        "projects/pilot-sky-blue/render/render-manifest.json",
+        "projects/pilot-sky-blue/audio-manifest.json",
+        "projects/pilot-sky-blue/cost-summary.json"
+      ]
+    },
+    "pilot-4b": {
+      "role": "Phase 4B publishable-pilot baseline (TEST-ONLY synthetic rig)",
+      "projectId": "__4b_pilot__",
+      "file": "out/final/pilot-4b.mp4",
+      "sha256": "d3e71094f3c6a1919a6ad9f854d70878aa67f29a435f443034cd618590974a12",
+      "reportedSha256Prefix": "d3e71094f3c6a1919a6ad9f854d70878",
+      "hashMatchesReport": true,
+      "durationSec": 150.058,
+      "sizeBytes": 50865647,
+      "evidenceBytes": 50865647,
+      "streams": [
+        "video",
+        "audio"
+      ],
+      "narration": "Kokoro TTS 'af_heart' (local, real speech, ~100.6 s over 150 s)",
+      "visuals": "ffmpeg lavfi test patterns (testsrc2/still PNG/yuvtestsrc/testsrc/rgbtestsrc) — provenance-recorded stand-ins; NOT creative content",
+      "originPhase": "Phase 4B (2026-10-07)",
+      "packaging": {
+        "selectedPhase4AVariant": "pkv-1 'How Early Humans Kept Babies Safe' exists only as literal test data in tests/render/test-pilot-4b.js (Cases V/W); no persisted FinalPublishPackage/experiment-set artifact is retained after the TEST-ONLY project cleanup",
+        "verified": false
+      },
+      "projectState": "projects/__4b_pilot__ removed by design (TEST-ONLY convention); not in projects/registry.json",
+      "approvalStatus": "Phase 4B technical/semantic QA PASS and registered as asset as-final-pilot-4b per report; no human publish approval exists.",
+      "sourceRefs": [
+        "Report/phases/phase-4/PHASE_4B_PILOT_FINAL_QA_RENDER_QC_REPORT.md",
+        "Report/evidence/pilot-4b/probe.json",
+        "Report/evidence/pilot-4b/e2e-baseline.json",
+        "tests/render/test-pilot-4b.js"
+      ]
+    }
+  },
+  "durationExplanation": "The ~65 s and ~150 s videos are two different artifacts of two different pipelines/phases, not two versions of one project: pilot-sky-blue is a 2026-09-26 Step-13 render (8 SAPI utterances, solid-colour title cards, 65.4 s); the 150 s Phase 4B pilot is a 2026-10-07 synthetic rig (5x30 s scenes) built to exercise render QC. The 6A report's final watch used the former.",
+  "findings": [
+    "Neither candidate is an approved, publishable, representative production video: pilot-4b has test-pattern visuals; pilot-sky-blue predates packaging and Phase 4 QC.",
+    "No persisted Phase 4A selected packaging variant exists for either candidate; the 6A pilot packaging promise was derived from the title card (deliberate non-production fixture exception, now disclosed here).",
+    "The 6A report's 'real pilot watch' therefore proves the watch machinery against a real file hash, not a representative creative review."
+  ],
+  "gates": {
+    "CANONICAL_PILOT_LINEAGE": "NOT_PROVEN",
+    "PILOT_LINEAGE_DOCUMENTED": "PROVEN",
+    "PACKAGING_PROMISE_SOURCE": "NOT_VERIFIED_FIXTURE_EXCEPTION",
+    "blocker": "No approved, representative, publishable Phase 4 pilot with a persisted selected packaging variant exists in the repository. Owner must designate the watch target (e.g. pilot-4b.mp4 for narration/AV-sync only, pilot-sky-blue as supplementary fixture) or supply the real approved video + selected packaging."
+  },
+  "ownerDecisionNeeded": "Which file is the Phase 6A final-watch target, and does the owner accept pilot-sky-blue's derived packaging as a deliberate fixture exception?"
+}

@@ -1,0 +1,90 @@
+{
+  "version": "1.0.0",
+  "phase": "6A-closure",
+  "slice": "B",
+  "generatedAt": "2026-10-08T12:56:41.121Z",
+  "verdict": {
+    "FINAL_MULTIMODAL_WATCH_PASS": "NOT_PROVEN",
+    "FULL_AV_WATCH_ACTUAL_FILE": "NOT_PROVEN",
+    "FULL_AV_WATCH_AUDIO_AND_VISUAL": "NOT_PROVEN",
+    "FULL_AV_WATCH_EVIDENCE": "NOT_PERSISTED_NO_LEGITIMATE_PATHWAY_EXECUTED",
+    "AUTONOMOUS_MULTIMODAL_WATCH": "NOT_PROVEN",
+    "PAID_EXTERNAL_COST_VND": 0
+  },
+  "callsMade": {
+    "geminiCalls": 0,
+    "paidProviderCalls": 0,
+    "localModelCalls": 0,
+    "tokens": 0,
+    "reportedChargeVnd": 0
+  },
+  "pathways": [
+    {
+      "pathway": "Gemini video understanding on Google AI Studio Free tier",
+      "status": "BLOCKED_NOT_CALLED",
+      "reasons": [
+        "The spec forbids any Gemini call until the Google AI Studio PROJECT (not the key/model) is verified on the Free billing tier and the exact model/operation is available without billing. That is a console-side fact (AI Studio project billing page) this session cannot observe; no check was possible, so no call was made.",
+        "No provider-neutral Gemini video-understanding adapter exists in the repo (only providers/runtime/adapters/cloud-google-veo.js for generation and lib/research-deep/provider-interface.js for research). Building one is new provider work outside this closure and could not be exercised without the tier proof.",
+        "Free-tier privacy: uploading the file to the Free tier needs separate authorization; the pilot content is the project's own test/fixture media, but that authorization was not given in this session.",
+        "No GEMINI/GOOGLE API key is present in this session's process environment; the repo .env was deliberately not read."
+      ],
+      "unblockBy": "Owner confirms in AI Studio that the project is on the Free tier and the configured model supports video input without billing, authorizes the upload, and approves adding a video-review adapter (new code) or supplies the existing one."
+    },
+    {
+      "pathway": "Local multimodal reviewer over the actual video + audio",
+      "status": "UNAVAILABLE",
+      "reasons": [
+        "No local audio+video model stack is installed or wired; the spec says no new heavyweight model stack is required in this pass."
+      ]
+    },
+    {
+      "pathway": "Genuine operator full watch of the actual file",
+      "status": "PENDING_OPERATOR",
+      "reasons": [
+        "Requires a human to actually watch and listen; the agent cannot perform or attest it and has not auto-filled any checklist."
+      ],
+      "template": "Report/evidence/phase-6a/phase-6a-full-av-watch-evidence.md"
+    }
+  ],
+  "sessionAgentFrameReview": {
+    "status": "NOT_RELABELLED",
+    "note": "The earlier 5-frame session review remains visual-only and partial; it is not a full audiovisual watch and is not counted."
+  },
+  "targetFileSelection": {
+    "status": "OWNER_DECISION_REQUIRED",
+    "candidates": [
+      "pilot-sky-blue",
+      "pilot-4b"
+    ],
+    "lineageRef": "Report/evidence/phase-6a/phase-6a-canonical-video-lineage.json#gates"
+  },
+  "preconditionsMeasured": {
+    "pilot-sky-blue": {
+      "sha256": "3f684657a9ed34f10f3845ef5bc36a4e6c599a851be09bc9d48d08ebaacc94b3",
+      "hasAudioStream": true,
+      "hasVideoStream": true,
+      "durationSec": 65.386667,
+      "audioLevel": {
+        "maxDb": -5.5,
+        "meanDb": -23.6
+      }
+    },
+    "pilot-4b": {
+      "sha256": "d3e71094f3c6a1919a6ad9f854d70878aa67f29a435f443034cd618590974a12",
+      "hasAudioStream": true,
+      "hasVideoStream": true,
+      "durationSec": 150.058,
+      "audioLevel": {
+        "maxDb": -3.9,
+        "meanDb": -24.6
+      }
+    }
+  },
+  "note": "Preconditions only (audio stream present, level measured by ffmpeg volumedetect). They do not constitute a watch.",
+  "cleanBudget": {
+    "maxInitialCompleteWatch": 1,
+    "maxLocalSegmentRewatches": 2,
+    "maxExtraCompleteWatch": 1,
+    "used": 0
+  }
+}

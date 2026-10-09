@@ -1,0 +1,5 @@
+﻿
+> unfoldiq@1.0.0 check:workspace
+> node scripts/checks/workspace-check.js
+
+{"ok":true,"violations":[],"warnings":[],"projects":20}

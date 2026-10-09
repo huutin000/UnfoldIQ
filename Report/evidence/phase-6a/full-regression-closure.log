@@ -1,0 +1,466 @@
+﻿
+> unfoldiq@1.0.0 test
+> node scripts/run-tests.js
+
+PASS alignment/test-alignment.js  === alignment: 12 passed, 0 failed ===
+PASS captions/test-captions.js  === captions: 13 passed, 0 failed ===
+PASS captions/test-validation-cases.js  === validation-cases A-L: 12 passed, 0 failed ===
+PASS compliance/test-compliance.js  === DONE: 38 passed, 0 failed ===
+PASS cost/test-hardening-budget-gates.js  === DONE: 11 passed, 0 failed ===
+PASS cost/test-output-cost-credit.js  === 1G.8 output-cost-credit: 161 passed, 0 failed ===
+PASS creative/test-creative-contract.js  === creative/contract: 0 failed, 6 passed ===
+PASS creative/test-creative-golden.js  === creative/golden: 0 failed, 14 passed ===
+PASS creative/test-creative-pilot.js  [SKIP] pilot-sky-blue final.mp4 / final-artifact.json not present on this machine — real-video watch
+PASS creative/test-creative-repair.js  === creative/repair: 0 failed, 8 passed ===
+PASS creative/test-hook-system.js  === creative/hook: 0 failed, 8 passed ===
+PASS creative/test-multimodal-watch.js  === creative/watch: 0 failed, 10 passed ===
+PASS creative/test-narrative-beats.js  === creative/beats: 0 failed, 8 passed ===
+PASS creative/test-visual-rhythm.js  === creative/rhythm: 0 failed, 10 passed ===
+PASS dag/test-dag.js  === DONE: 156 passed, 0 failed ===
+PASS flow/test-agent-instructions.js  === 1G.9 agent-instructions: 73 passed, 0 failed ===
+PASS flow/test-asset-library.js  === 1G.10 asset-library: 41 passed, 0 failed ===
+PASS flow/test-canonical-source-gate.js  === DONE: 5 passed, 0 failed ===
+PASS flow/test-flow-bridge-remember.js  === 30 passed, 0 failed ===
+PASS flow/test-flow-bridge-token.js  === 47 passed, 0 failed ===
+PASS flow/test-flow-bridge.js  RESULT: ALL TESTS PASSED
+PASS flow/test-flow-download-import.js  RESULT: ALL TESTS PASSED
+PASS flow/test-flow-hardening.js  RESULT: ALL TESTS PASSED
+PASS flow/test-flow-jobs.js  RESULT: ALL TESTS PASSED
+PASS flow/test-flow-manual-assist.js  RESULT: ALL TESTS PASSED
+PASS flow/test-flow-origin.js  RESULT: ALL TESTS PASSED
+PASS flow/test-flow-page-adapter.js  RESULT: ALL TESTS PASSED
+PASS flow/test-flow-postv1b.js  RESULT: ALL TESTS PASSED
+PASS flow/test-flow-postv1c.js  RESULT: ALL TESTS PASSED
+PASS flow/test-flow-postv1d.js  RESULT: ALL TESTS PASSED
+PASS flow/test-flow-postv1e.js  RESULT: ALL TESTS PASSED
+PASS flow/test-flow-safety-retry.js  RESULT: ALL TESTS PASSED
+PASS flow/test-flow-state-machine.js  RESULT: ALL TESTS PASSED
+PASS flow/test-instruction-bridge.js  === FIX 02 instruction-bridge: 19 passed, 0 failed ===
+PASS flow/test-instruction-write-persistence.js  === FIX 03 write-persistence: 94 passed, 0 failed ===
+PASS flow/test-live-instruction-plumbing.js  === FIX 02 live-instruction-plumbing: 76 passed, 0 failed ===
+PASS golden/test-golden.js  === DONE: 63 passed, 0 failed ===
+PASS golden/test-governance-regression.js  === DONE: 30 passed, 0 failed ===
+PASS golden/test-narration-pronunciation-golden.js  === DONE: 19 passed, 0 failed ===
+PASS golden/test-spoken-script-golden.js  === DONE: 21 passed, 0 failed ===
+PASS golden/test-tts-behavior-golden.js  === DONE: 21 passed, 0 failed ===
+PASS history/test-history.js  === DONE: 109 passed, 0 failed ===
+PASS incremental/test-incremental-plan.js  === incremental-plan: 19 passed, 0 failed ===
+PASS incremental/test-incremental-render.js  === incremental-render: 11 passed, 0 failed ===
+PASS incremental/test-partial-qa.js  === partial-qa: 8 passed, 0 failed ===
+FAIL incremental/test-pilot-repair-a.js (exit=null)
+[13:26:25] START A1 setup + bundle + full reference render
+[PASS] A1 setup + bundle + full reference render
+[13:30:30] START A2 chunked v1 render (5 ranges) + CAS publish
+[13:30:32] A2 rendering range 0-900...
+[13:33:23] A2 rendering range 900-1800...
+[13:34:33] A2 rendering range 1800-2700...
+
+FAIL incremental/test-pilot-repair-b.js (exit=1)
+[13:36:25] START B0 requires part-A outputs
+[FAIL] B0 requires part-A outputs: ASSERT: part A output missing: chunks-v1.json (run test-pilot-repair-a first)
+[13:36:25] START B1 S03 visual swap -> dirty range [1800,2700) only
+[PASS] B1 S03 visual swap -> dirty range [1800,2700) only
+[13:36:44] START B2 dirty render + cache reuse + assembly + conform
+[FAIL] B2 dirty render + cache reuse + assembly + conform: ENOENT: no such file or directory, open 'D:\Project\UNFOLDIQ\.claude\worktrees\unfoldiq-phase-6a-closure-de7296\out\incremental-5b\chunks-v1.json'
+[13:36:44] START B3 oracle full render + equivalence + partial QA
+[13:36:44] B3 rendering full oracle (V2 timeline)...
+[13:40:34] B3 equivalence compare...
+[FAIL] B3 oracle full render + equivalence + partial QA: probeChunk failed: D:\Project\UNFOLDIQ\.claude\worktrees\unfoldiq-phase-6a-closure-de7296\out\incremental-5b\inc-v2-c.mp4
+[13:40:34] metrics persisted
+
+=== pilot-repair-b: 1 passed, 3 failed ===
+
+FAIL incremental/test-pilot-reuse-5c.js (exit=null)
+[13:40:34] START SETUP bundle + composition from existing pilot project
+[13:40:34] SETUP rebuilding pilot fixture (repair-b cleanup removed it)...
+[13:40:56] bundle 2446ms, RSS 518MB
+[PASS] SETUP bundle + composition from existing pilot project
+[13:40:56] START BASELINE 5 ranges, browser per range (reuse=0)
+[13:40:56] base rendering range 0-900 (reuse=0)...
+[13:43:45] base range done in 168763ms, RSS 321MB
+[13:43:45] base rendering range 900-1800 (reuse=0)...
+[13:44:54] base range done in 69176ms, RSS 302MB
+[13:44:54] base rendering range 1800-2700 (reuse=0)...
+[13:47:23] base range done in 149093ms, RSS 308MB
+[13:47:23] base rendering range 2700-3600 (reuse=0)...
+[13:49:52] base range done in 149363ms, RSS 309MB
+[13:49:52] base rendering range 3600-4500 (reuse=0)...
+
+PASS incremental/test-render-cache.js  === render-cache: 12 passed, 0 failed ===
+PASS media/test-media-mcp.js  RESULT: ALL TESTS PASSED
+PASS media/test-media-preflight.js  RESULT: ALL TESTS PASSED
+PASS mix/test-audio-mix.js  === audio-mix: 9 passed, 0 failed ===
+PASS mix/test-loudness.js  === audio-loudness: 6 passed, 0 failed ===
+PASS mix/test-validation-cases.js  === validation-cases A-I: 9 passed, 0 failed ===
+PASS motion/test-motion-system.js  === motion: 0 failed, 23 passed ===
+PASS music/test-music-analysis.js  === music-analysis: 8 passed, 0 failed ===
+PASS music/test-music-intent.js  === music-intent: 11 passed, 0 failed ===
+PASS music/test-music-library.js  === music-library: 13 passed, 0 failed ===
+PASS music/test-music-plan.js  === music-plan: 12 passed, 0 failed ===
+PASS narration/test-e2e-phase223.js  PHASE_2_2_2_3_E2E: PASS
+PASS narration/test-narration-direction.js  === DONE: 17 passed, 0 failed ===
+PASS narration/test-narration-integration.js  === DONE: 8 passed, 0 failed ===
+PASS override/test-override.js  === override: 0 failed, 10 passed ===
+PASS packaging/test-packaging.js  === packaging: 0 failed, 24 passed ===
+PASS pairing/test-device-pairing.js  === device-pairing: 11 passed, 0 failed ===
+PASS pairing/test-pairing-http.js  [PASS] Legacy token still works as developer/recovery fallback
+PASS perf/test-concurrency-matrix-5c.js  === concurrency-matrix-5c: 5 passed, 0 failed ===
+FAIL perf/test-longform-5c.js (exit=null)
+[13:52:50] START 10-min representative render (20x30s)
+
+PASS perf/test-phase-5a.js  === phase-5a: 18 passed, 0 failed ===
+PASS pipeline/test-asset-stager.js  RESULT: PASS
+PASS pipeline/test-auto-fix.js  RESULT: PASS
+PASS pipeline/test-content-class-router.js  RESULT: ALL TESTS PASSED
+PASS pipeline/test-context-routing.js  RESULT: ALL TESTS PASSED
+PASS pipeline/test-continuity.js  RESULT: ALL TESTS PASSED
+PASS pipeline/test-creative-memory.js  RESULT: ALL TESTS PASSED
+PASS pipeline/test-duration-planning.js  RESULT: ALL TESTS PASSED
+PASS pipeline/test-editorial-quality.js  RESULT: ALL TESTS PASSED
+PASS pipeline/test-finalize-output.js  RESULT: PASS
+PASS pipeline/test-phase1g1-e2e.js  RESULT: ALL TESTS PASSED
+PASS pipeline/test-pipeline-lock.js  RESULT: PASS
+PASS pipeline/test-pipeline-resume.js  RESULT: PASS
+PASS pipeline/test-pipeline-state.js  RESULT: PASS
+PASS pipeline/test-research-planning.js  RESULT: ALL TESTS PASSED
+PASS pipeline/test-step11-contracts.js  RESULT: ALL TESTS PASSED
+PASS pipeline/test-step13-pipeline-e2e.js  RESULT: PASS
+PASS pipeline/test-v5-preflight.js  RESULT: ALL TESTS PASSED
+PASS platform/test-platform-policy.js  === 1G.7 platform-policy: 171 passed, 0 failed ===
+PASS policy/test-policy-refresh.js  RESULT: ALL TESTS PASSED
+PASS policy/test-policy-rights.js  RESULT: ALL TESTS PASSED
+PASS project-manifest/test-manifest.js  === DONE: 69 passed, 0 failed ===
+PASS pronunciation/test-pronunciation-invalidation.js  === DONE: 4 passed, 0 failed ===
+PASS pronunciation/test-pronunciation-profile.js  === DONE: 15 passed, 0 failed ===
+PASS pronunciation/test-pronunciation-runtime.js  === DONE: 13 passed, 0 failed ===
+PASS provenance/test-provenance.js  === DONE: 30 passed, 0 failed ===
+PASS providers/test-agent-native-bridge.js  RESULT: ALL TESTS PASSED
+PASS providers/test-cloud-providers.js  RESULT: ALL TESTS PASSED
+PASS providers/test-comfyui-provider.js  RESULT: ALL TESTS PASSED
+PASS providers/test-kokoro-local-benchmark.js  === DONE: 0 failed ===
+PASS providers/test-kokoro-model-identity.js  === DONE: 0 failed ===
+PASS providers/test-kokoro-provider.js  RESULT: ALL TESTS PASSED
+PASS providers/test-model-capability-registry.js  === 1G.6 model-capability-registry: 152 passed, 0 failed ===
+PASS providers/test-provider-core.js  RESULT: ALL TESTS PASSED
+PASS providers/test-provider-resolution-e2e.js  RESULT: ALL TESTS PASSED
+PASS providers/test-safety-provider-integration.js  RESULT: ALL TESTS PASSED
+PASS providers/test-whisper-provider.js  RESULT: ALL TESTS PASSED
+PASS qa/test-asset-qa-aggregate.js  === DONE: 55 passed, 0 failed ===
+PASS qa/test-asset-qa-continuity.js  === DONE: 25 passed, 0 failed ===
+PASS qa/test-asset-qa-factuality.js  === DONE: 33 passed, 0 failed ===
+PASS qa/test-asset-qa-real.js  === DONE: 13 passed, 0 failed ===
+PASS qa/test-asset-qa-semantic.js  === DONE: 24 passed, 0 failed ===
+PASS qa/test-asset-qa-structural.js  === DONE: 20 passed, 0 failed ===
+PASS qa/test-qa-diff.js  RESULT: PASS
+PASS qa/test-visual-qa-evidence.js  RESULT: PASS
+PASS real-e2e/test-case-result.js  === DONE: 13 passed, 0 failed ===
+PASS real-e2e/test-correlation-gate.js  === DONE: 6 passed, 0 failed ===
+PASS real-e2e/test-repair-scope.js  === DONE: 21 passed, 0 failed ===
+PASS real-e2e/test-tts-targeted-regen.js  === DONE: targeted-regen fixture PASS ===
+PASS recovery/test-recovery.js  === DONE: 75 passed, 0 failed ===
+PASS remotion/test-audio-mix.js  RESULT: ALL TESTS PASSED
+PASS remotion/test-captions.js  RESULT: ALL TESTS PASSED
+PASS remotion/test-measured-timeline.js  RESULT: ALL TESTS PASSED
+PASS remotion/test-remotion-audio.js  RESULT: PASS
+PASS remotion/test-remotion-captions.js  RESULT: PASS
+PASS remotion/test-remotion-composition.js  RESULT: PASS
+PASS remotion/test-remotion-handoff.js  RESULT: ALL TESTS PASSED
+PASS remotion/test-remotion-layers.js  RESULT: PASS
+PASS remotion/test-remotion-render-smoke.js  RESULT: PASS
+PASS remotion/test-remotion-timing.js  RESULT: PASS
+PASS remotion/test-render-control.js  RESULT: PASS
+PASS remotion/test-render-coverage.js  RESULT: PASS
+PASS remotion/test-render-input.js  RESULT: PASS
+PASS remotion/test-render-media-qa.js  RESULT: PASS
+PASS remotion/test-render-plan.js  RESULT: PASS
+PASS remotion/test-render-qa.js  RESULT: PASS
+PASS remotion/test-render-retry.js  RESULT: PASS
+PASS remotion/test-voice-timing.js  RESULT: ALL TESTS PASSED
+PASS render/test-pilot-4b.js  === pilot-4b: 0 failed, 31 passed ===
+FAIL research/test-auth-extract.js (exit=1)
+
+[TEST] A1 unauthenticated protected page is denied
+  ✓ denied with AUTH_REQUIRED (AUTH_REQUIRED)
+[PASS] A1 unauthenticated protected page is denied
+
+[TEST] A2 authorized fixture session acquires the article
+  ✓ test session state saved locally
+[FAIL] A2 authorized fixture session acquires the article: ASSERTION FAILED: authorized acquisition ok (WORKER_SPAWN_FAILED)
+
+[TEST] A3 auth state is not in the report/result surface
+[FAIL] A3 auth state is not in the report/result surface: surface.includes is not a function
+
+[TEST] A4 auth state lives outside source control
+  ✓ fixture state path is outside the repo
+  ✓ in-repo auth state rejected
+  ✓ default auth dir resolves outside the repo
+[PASS] A4 auth state lives outside source control
+
+[TEST] A5 no credential logging
+[FAIL] A5 no credential logging: Cannot read properties of undefined (reading 'includes')
+
+=== SUMMARY ===
+Passed assertions: 5, Failed tests: 3
+RESULT: SOME TESTS FAILED
+
+FAIL research/test-browser-extract.js (exit=1)
+
+[TEST] B1 JS click-to-reveal is acquired
+[FAIL] B1 JS click-to-reveal is acquired: ASSERTION FAILED: browser acquisition ok (WORKER_SPAWN_FAILED)
+
+[TEST] B2 final URL preserved
+[FAIL] B2 final URL preserved: ASSERTION FAILED: ok
+
+[TEST] B3 relative link base preserved
+[FAIL] B3 relative link base preserved: ASSERTION FAILED: ok
+
+[TEST] B4 shared normalization format
+[FAIL] B4 shared normalization format: Cannot read properties of undefined (reading 'route')
+
+[TEST] B5 browser errors are structured
+  ✓ unsupported action is structured
+  ✓ navigation failure structured (EXTRACTION_FAILED)
+[PASS] B5 browser errors are structured
+
+[TEST] B6 injection page stays data (no execution)
+[FAIL] B6 injection page stays data (no execution): ASSERTION FAILED: page acquired
+
+=== SUMMARY ===
+Passed assertions: 2, Failed tests: 5
+RESULT: SOME TESTS FAILED
+
+PASS research/test-claim-ledger.js  RESULT: ALL TESTS PASSED
+PASS research/test-contradictions.js  RESULT: ALL TESTS PASSED
+FAIL research/test-crawl4ai-bridge.js (exit=1)
+[FAIL] C1 raw HTML normalization + UTF-8 + base URL: ASSERTION FAILED: bridge ok
+
+[TEST] C2 fit markdown from deterministic query
+[FAIL] C2 fit markdown from deterministic query: Cannot read properties of undefined (reading 'success')
+
+[TEST] C3 invalid URL becomes precise error
+[FAIL] C3 invalid URL becomes precise error: ASSERTION FAILED: protocol ok
+
+[TEST] C4 timeout is bounded
+[FAIL] C4 timeout is bounded: Cannot read properties of undefined (reading '0')
+
+[TEST] C5 protocol errors never crash Node
+[FAIL] C5 protocol errors never crash Node: ASSERTION FAILED: worker envelope still parses
+
+[TEST] C6 worker processes exit (no orphans)
+  ✓ no lingering worker processes (found=0)
+[PASS] C6 worker processes exit (no orphans)
+
+[TEST] C7 content hash stable
+[FAIL] C7 content hash stable: Cannot read properties of undefined (reading 'contentHash')
+
+=== SUMMARY ===
+Passed assertions: 1, Failed tests: 7
+RESULT: SOME TESTS FAILED
+
+PASS research/test-creative-brief.js  RESULT: ALL TESTS PASSED
+PASS research/test-evidence-e2e.js  RESULT: ALL TESTS PASSED
+PASS research/test-independence.js  RESULT: ALL TESTS PASSED
+PASS research/test-research-modes.js  RESULT: ALL TESTS PASSED
+FAIL research/test-robots-ratelimit.js (exit=1)
+[PASS] unreachable robots.txt fails open (logged)
+
+[TEST] 429 triggers bounded retry then success
+[FAIL] 429 triggers bounded retry then success: ASSERTION FAILED: recovered after 429s
+
+[TEST] public redirect records requested vs final URL
+[FAIL] public redirect records requested vs final URL: ASSERTION FAILED: redirect followed within limit
+
+[TEST] production defaults block localhost at acquisition level
+  ✓ no bypass in production path
+[PASS] production defaults block localhost at acquisition level
+
+[TEST] binary extensions rejected without crawl
+  ✓ pdf rejected pre-crawl
+[PASS] binary extensions rejected without crawl
+
+[TEST] freshness propagates to cache mode
+  ✓ evergreen reuses cache
+  ✓ current-state bypasses stale cache
+[PASS] freshness propagates to cache mode
+
+=== SUMMARY ===
+Passed assertions: 9, Failed tests: 2
+RESULT: SOME TESTS FAILED
+
+PASS research/test-search-provider.js  RESULT: ALL TESTS PASSED
+PASS research/test-source-registry.js  RESULT: ALL TESTS PASSED
+PASS research/test-sufficiency.js  RESULT: ALL TESTS PASSED
+PASS research/test-url-safety.js  RESULT: ALL TESTS PASSED
+FAIL research-deep/test-acceptance-profile.js (exit=1)
+node.exe : FAIL: no JSON result; stderr tail: 
+At line:1 char:1
++ & "D:\Downloads\NodeJS/node.exe" "D:\Downloads\NodeJS/node_modules/np ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (FAIL: no JSON result; stderr tail: :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+PASS research-deep/test-attempt-bounds.js  RESULT: ALL TESTS PASSED
+PASS research-deep/test-deep-e2e-fixtures.js  RESULT: ALL TESTS PASSED
+FAIL research-deep/test-doctor-detection.js (exit=1)
+  ✓ Gemini credential requirement satisfied by GOOGLE_API_KEY
+  ✓ no secret value survives redaction
+
+[TEST] D2 google_genai + no key -> llmConfigured no
+  ✓ missing GOOGLE_API_KEY detected
+
+[TEST] D3 RETRIEVER=duckduckgo -> searchConfigured yes without search key
+  ✓ retriever selection detected
+  ✓ no Tavily/Serper key demanded for DuckDuckGo
+
+[TEST] D4 RETRIEVER=tavily + no key -> searchConfigured no
+  ✓ missing TAVILY_API_KEY detected for tavily
+
+[TEST] D5 live opt-in -> liveApproved yes (names only, no spend)
+  ✓ explicit opt-in recognized
+  ✓ absent opt-in is not approval
+
+[TEST] D6 legacy behaviour preserved when nothing selected
+  ✓ empty env configures nothing
+  ✓ legacy OpenAI+Tavily keys still recognized
+  ✓ local ollama needs no key by design
+
+[TEST] D7 real worker config op distinguishes CONFIGURED vs SUPPORTED
+[FAIL] harness: ASSERTION FAILED: worker config op executes (no spend)
+
+FAIL research-deep/test-embedding-config.js (exit=1)
+ok 1 - E1: llmConfigured via GOOGLE_API_KEY
+ok 2 - E1: llm provider google_genai
+ok 3 - E1: embedding provider derived google_genai (not openai)
+ok 4 - E1: derived embedding model gemini-embedding-001
+ok 5 - E1: embeddingConfigured via GOOGLE_API_KEY
+ok 6 - E1: no OPENAI_API_KEY in embedding key list
+ok 7 - E2: explicit EMBEDDING parsed google_genai
+ok 8 - E2: explicit gemini embedding READY with GOOGLE_API_KEY only
+ok 9 - E3: implicit embedding provider is openai (library default surfaced)
+ok 10 - E3: implicit openai embedding + missing key = NOT configured
+ok 11 - E3: implicit default itself parses cleanly
+ok 12 - E3: malformed EMBEDDING produces explicit diagnostic
+ok 13 - E4: duckduckgo keyless = searchConfigured
+ok 14 - E4: no search keys required for duckduckgo
+
+FAIL: E5: worker config op responds
+
+FAIL research-deep/test-env-bootstrap.js (exit=1)
+ok 1 - T1: bootstrap child exits clean
+ok 2 - T1: .env loaded
+ok 3 - T1: all DEEP variable names reported as loaded
+ok 4 - T1: fresh process sees GOOGLE_API_KEY + FAST/SMART/STRATEGIC + EMBEDDING + RETRIEVER from .env
+ok 5 - T1: dummy secret value never printed to stdout
+ok 6 - T2: override child exits clean
+ok 7 - T2: shell GOOGLE_API_KEY wins over .env and is not reported as .env-loaded
+ok 8 - T3: doctor child exits clean
+
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.16.0
+
+PASS research-deep/test-escalation-policy.js  RESULT: ALL TESTS PASSED
+PASS research-deep/test-evidence-bypass.js  RESULT: ALL TESTS PASSED
+FAIL research-deep/test-provider-adapter.js (exit=1)
+
+[TEST] DP1 valid provider request passes validation
+  ✓ valid request has no errors
+  ✓ empty request rejected (gap mapping required)
+
+[TEST] DP2 valid result normalizes to lead-safe shape
+  ✓ provider id stamped
+  ✓ one candidate kept
+  ✓ learnings carry no claim verdicts
+
+[TEST] DP3 invalid/mixed stdout surfaces bridge-protocol error
+  ✓ mixed stdout fails JSON parse (bridge maps to BRIDGE_PROTOCOL_ERROR)
+  ✓ taxonomy covers protocol errors
+
+[TEST] DP4/DP5 timeout + cancellation are bounded and kill only the owned child
+  ✓ bridge exposes runWorker
+
+  code: 'ENOENT',
+  syscall: 'spawn D:\\Project\\UNFOLDIQ\\.claude\\worktrees\\unfoldiq-phase-6a-closure-de7296\\research\\.venv-deep\\Sc
+ripts\\python.exe',
+  path: 'D:\\Project\\UNFOLDIQ\\.claude\\worktrees\\unfoldiq-phase-6a-closure-de7296\\research\\.venv-deep\\Scripts\\py
+thon.exe',
+  spawnargs: [
+    'D:\\Project\\UNFOLDIQ\\.claude\\worktrees\\unfoldiq-phase-6a-closure-de7296\\research\\deep-worker.py'
+  ]
+}
+
+Node.js v24.16.0
+
+FAIL research-deep/test-quota-fastfail.js (exit=1)
+FAIL: no JSON result from worker module check
+
+
+PASS responsive/test-responsive.js  === responsive: 0 failed, 15 passed ===
+PASS runtime/test-browser-pool.js  === browser-pool: 8 passed, 0 failed ===
+PASS runtime/test-orchestrator-budget.js  === orchestrator-budget: 5 passed, 0 failed ===
+PASS runtime/test-orchestrator-queue.js  === orchestrator-queue: 6 passed, 0 failed ===
+PASS runtime/test-provider-session.js  === provider-session: 7 passed, 0 failed ===
+PASS runtime/test-resource-budget.js  === resource-budget: 8 passed, 0 failed ===
+PASS runtime/test-scheduler.js  === scheduler: 9 passed, 0 failed ===
+PASS spoken-script/test-canonicalization.js  === DONE: 11 passed, 0 failed ===
+PASS spoken-script/test-e2e-fss-backfill.js  FIX_PRE_2_4_E2E: PASS
+PASS spoken-script/test-fidelity.js  === DONE: 10 passed, 0 failed ===
+PASS spoken-script/test-humanization.js  === DONE: 5 passed, 0 failed ===
+PASS spoken-script/test-naturalness.js  === DONE: 7 passed, 0 failed ===
+PASS storage/test-runtime-storage.js  === runtime-storage: 5 passed, 0 failed ===
+PASS storage/test-storage.js  === DONE: 46 passed, 0 failed ===
+PASS story/test-evidence-gate.js  RESULT: ALL TESTS PASSED
+PASS story/test-narrative-brief.js  RESULT: ALL TESTS PASSED
+PASS story/test-prompt-compiler.js  RESULT: ALL TESTS PASSED
+PASS story/test-research-pack.js  RESULT: ALL TESTS PASSED
+PASS story/test-story-audit.js  RESULT: ALL TESTS PASSED
+PASS story/test-story-draft.js  RESULT: ALL TESTS PASSED
+PASS story/test-story-e2e.js  RESULT: ALL TESTS PASSED
+PASS story/test-story-fiction.js  RESULT: ALL TESTS PASSED
+PASS story/test-story-hybrid.js  RESULT: ALL TESTS PASSED
+PASS story/test-story-structure.js  RESULT: ALL TESTS PASSED
+PASS story/test-visual-motion-decision.js  === 1G.5 visual-motion: 150 passed, 0 failed ===
+PASS story/test-visual-story-grammar.js  === FIX 1 visual-story-grammar: 158 passed, 0 failed ===
+PASS telemetry/test-telemetry.js  === DONE: 54 passed, 0 failed ===
+PASS timeline/test-master-timeline.js  === master-timeline cases A-P: 18 passed, 0 failed ===
+PASS timeline/test-timebase.js  === timeline-timebase: 6 passed, 0 failed ===
+PASS topic/test-topic-registry.js  ✓ ALL TESTS PASSED
+PASS voice-bible/test-fix01-license-voice-selection.js  === DONE: 145 passed, 0 failed ===
+PASS voice-bible/test-rights-decision-phase21.js  === DONE: 93 passed, 0 failed ===
+PASS voice-bible/test-voice-bible.js  === DONE: 187 passed, 0 failed ===
+FAIL workspace/test-workspace.js (exit=1)
+  ✓ detected, file untouched
+[PASS] W19 orphan detection: detect only, no blind delete
+
+[TEST] W20 missing durable detection: blocking
+  ✓ durable miss blocks
+[PASS] W20 missing durable detection: blocking
+
+[TEST] W21 stale plan execution refused
+  ✓ drifted plan refused
+[PASS] W21 stale plan execution refused
+
+[TEST] W22 fresh-process registry: same paths/resolution
+  ✓ fresh process resolves identically
+[PASS] W22 fresh-process registry: same paths/resolution
+
+[TEST] W23 check:workspace blocking violation exits non-zero
+[FAIL] W23 check:workspace blocking violation exits non-zero: ASSERTION FAILED: clean tree passes
+
+[TEST] W24 new Phase-2 fixture project in correct structure, no root clutter
+  ✓ Phase-2 work resolves under the governed tree
+  ✓ root clutter refused at creation time
+[PASS] W24 new Phase-2 fixture project in correct structure, no root clutter
+
+=== DONE: 52 passed, 1 failed ===
+
+
+=== alignment, captions, compliance, cost, creative, dag, flow, golden, history, incremental, media, mix, motion, music, narration, override, packaging, pairing, perf, pipeline, platform, policy, project-manifest, pronunciation, provenance, providers, qa, real-e2e, recovery, remotion, render, research, research-deep, responsive, runtime, spoken-script, storage, story, telemetry, timeline, topic, voice-bible, workspace: 15 failed suite(s) in 3345.7s ===
+EXIT=1
