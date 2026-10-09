@@ -46,3 +46,8 @@ test-results/
 
 # SAC-blocked Remotion binaries runtime dir (non-committed, Fix 6)
 remotion/.render-binaries/
+
+# Extension build output and signing keys (never commit private keys)
+flow-companion/extension/.output/
+*.pem
+*.crx
