@@ -8,11 +8,20 @@
 
 ## Current state
 
+> Status below is copied from the cited canonical reports, not decided in this index.
+> Retention/cleanup rules: `Report/REPORT_EVIDENCE_POLICY.md`. Evidence map: `Report/evidence/INDEX.md`.
+
 - **Roadmap:** V6.2 — Continuous Optimization, Workspace Governance, Agent-Ready
-- **Current phase:** FIX_PRE_2_4_FINAL_SPOKEN_SCRIPT_PIPELINE COMPLETE (previous: Phase 2.2+2.3 COMPLETE)
-- **Next:** Phase 2.4 + 2.5 + 2.6 (final narration/TTS audio, speech-rate QA, captions) — production-TTS block CLEARED via canonical FSS `fss-pilot-sky-blue@v2`
-- **Latest Quality Gate:** `Report/fixes/phase-2/FIX_PRE_2_4_FINAL_SPOKEN_SCRIPT_PIPELINE_REPORT.md`
-  (`FIX_PRE_2_4 = COMPLETE`, FSS = CANONICAL, PRODUCTION_TTS_BLOCKED = false, P0/P1 = 0)
+- **Current phase:** Phase 6A `COMPLETE` and `PHASE_6B_READY = YES` per the final verdict (2026-10-10) in `Report/evidence/phase-6a/final-reconciliation/PHASE_6A_FINAL_GATE_RECONCILIATION.md`; Phase 6B is **not started** (no 6B report). Phase index: `Report/phases/phase-6/INDEX.md`
+- **Latest canonical gate report:** `Report/evidence/phase-6a/final-reconciliation/PHASE_6A_FINAL_GATE_RECONCILIATION.md` (section `FINAL (2026-10-10)`; supersedes the verdict blocks in the Phase 6A reports below)
+- **Canonical pilot:** `Report/phases/phase-6/PHASE_6A_CANONICAL_PILOT_REPORT.md` (project `pilot-sky-blue-canonical`, attempt-006)
+- **Repo cleanup audit (2026-10-10):** `Report/audit/repo-cleanup-2026-10-10/` (execution result: `CLEANUP_EXECUTION_RESULT.md`)
+
+## Phase 6 (CANONICAL)
+
+- `Report/phases/phase-6/PHASE_6A_FINAL_CLOSURE_REPORT.md` — CANONICAL for steps/evidence; its `CLOSED_BY_OWNER_DECISION` / `PHASE_6B_READY = NO` verdict is SUPERSEDED by the final reconciliation
+- `Report/phases/phase-6/PHASE_6A_CANONICAL_PILOT_REPORT.md` — CANONICAL (pilot lineage)
+- `Report/phases/phase-6/PHASE_6A_CREATIVE_RETENTION_FOUNDATION_REPORT.md` — CANONICAL with closure revision (its original verdict block is SUPERSEDED inside the file)
 
 ## Final report per major phase (KEEP — canonical)
 
@@ -32,8 +41,12 @@
   (`PHASE_2_2_2_3 = COMPLETE`; narration direction + pronunciation runtime pass; TTS-ready plan READY_FOR_TTS)
 - FIX PRE-2.4: `Report/fixes/phase-2/FIX_PRE_2_4_FINAL_SPOKEN_SCRIPT_PIPELINE_REPORT.md`
   (`FIX_PRE_2_4 = COMPLETE`; humanizer → fidelity → naturalness → canonical FSS `fss-pilot-sky-blue@v2`; productionTtsBlocked=false)
+- Phase 2.4–2.11: `Report/phases/phase-2/` (4 reports)
+- Phase 3A–3C: `Report/phases/phase-3/`
+- Phase 4A–4B: `Report/phases/phase-4/`
+- Phase 5A–5C: `Report/phases/phase-5/`
 - POST-1H physical reorganization: `Report/current/POST_1H_PHYSICAL_REORGANIZATION_REPORT.md`
-  (this FIX; `FIX_POST_1H_01 = COMPLETE`)
+  (`FIX_POST_1H_01 = COMPLETE`)
 
 ## 1G stage reports (KEEP — entry gates for 1G.12)
 
@@ -65,6 +78,8 @@
   `projects/phase1hyg-validation/inventory/classification.json` review notes)
 
 ## Canonical evidence locations (do not move without ref updates)
+
+- Evidence map by phase/owner: `Report/evidence/INDEX.md`
 
 - Playwright/browser evidence: `Report/evidence/playwright/`
 - Phase validation evidence: `projects/validation/phase-1g/phase1g12-hardening/`,
