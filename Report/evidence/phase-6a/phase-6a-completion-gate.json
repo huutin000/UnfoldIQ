@@ -14,10 +14,10 @@
     "PARTIAL_QA_AFTER_REPAIR": "REVIEW_REQUIRED",
     "SEGMENT_REWATCH": "DETERMINISTIC_PASS / AV NOT_PROVEN",
     "CREATIVE_GOLDENS": "PASS (66/66, 12/12)",
-    "FULL_REGRESSION": "PASS (node scripts/run-tests.js exit 0, 0 failed suites, 1051.7s; Report/evidence/phase-6a/full-regression-final-6a-close.log). Supersedes older NOT_PROVEN notes in this file.",
+    "FULL_REGRESSION": "PASS (node scripts/run-tests.js on revision 5dec82a: 195/195 suites PASS, 0 failed suites, 1293.8 s; Report/evidence/phase-6a/full-regression-6a-canonical-final-run2.log). A first run on the same revision showed 4 research suites failing only because the agent session had PLAYWRIGHT_BROWSERS_PATH=0 (research venv Playwright looked for its browser in .local-browsers); logged in full-regression-6a-canonical-final.log; the 4 suites passed when re-run with the variable unset, and the whole suite then passed.",
     "CANONICAL_PILOT_ROUND2": "SUPERSEDED by round 3: input unblocked by owner (budget 0 VND; free local visuals). Owner approval recorded; FinalPublishPackage persisted with finalVideoRef + sha256 (qaStatus REVIEW_REQUIRED, open items listed).",
     "HYGIENE": "PASS (check:workspace ok, check:repo-structure ok)",
-    "PHASE_6A": "CLOSED_BY_OWNER_DECISION (2026-10-10, owner message: chot va commit). Evidence gates have real evidence (see canonicalPilotRound3). Caveat: FULL_REGRESSION was last run on revision 4a57790 and NOT re-run after the remotion caption/diagram changes; only npm run test:remotion (0 failed suites), check:repo-structure and check:workspace were re-run.",
+    "PHASE_6A": "CLOSED_BY_OWNER_DECISION (2026-10-10, owner message: chot va commit). Evidence gates have real evidence (see canonicalPilotRound3); full regression re-run PASS on the new revision.",
     "PHASE_6B_READY": "NO (not decided in this round; separate owner decision)",
     "PHASE_4B_FINAL_QC_DETERMINISTIC": "PASS (final.mp4: decode ok, 0 black, 0 freeze, 0 silence, flash screen 0 large luminance transitions at 2 fps and at all 1713 frames; maxVolume -4.2 dB; Report/evidence/phase-6a/canonical-pilot/phase4b-final-qc.json). Deterministic ffmpeg only; not a photosensitivity certification.",
     "FLASH_SAFETY_REVIEW": "RECHECKED: deterministic PASS (0 large luminance transitions, all 1713 frames) + model watch reports no flash/strobe",
@@ -46,8 +46,7 @@
   },
   "blockingOwnerActions": [
     "Decide Phase 6B readiness",
-    "Optionally run full regression (node scripts/run-tests.js, ~17.5 min) on the new revision",
-    "Revert or commit the ~18 regression-generated tracked files under projects/ and providers/ (not included in this commit)"
+    "Revert or commit the regression-generated tracked files under projects/ and providers/ (not included in the commits)"
   ],
   "canonicalPilotRound3": {
     "projectId": "pilot-sky-blue-canonical",
@@ -85,5 +84,20 @@
       "diagram visuals redesigned"
     ],
     "externalCostVnd": 0
+  },
+  "finalReconciliation": {
+    "date": "2026-10-10",
+    "report": "Report/evidence/phase-6a/final-reconciliation/PHASE_6A_FINAL_GATE_RECONCILIATION.md",
+    "FULL_REGRESSION_CURRENT_SNAPSHOT": "FAIL (final run HEAD 5dec82a + 3 packaging wording edits: 194 PASS / 1 FAIL dag/test-dag.js perf timing flake under load; isolated 3/3 PASS; research env suites fixed 4/4; first run 195/4 env)",
+    "PACKAGING_QA": "REVIEW_REQUIRED (description wording fixed; variant re-confirmation PENDING_OWNER_CONFIRMATION)",
+    "PACKAGING_CLAIM_FIDELITY": "PASS after wording fix, pending owner re-confirmation",
+    "CANONICAL_PILOT_LINEAGE": "PARTIAL (watch artifacts lack sha256)",
+    "GIT_STATUS": "EXPECTED_DIRTY",
+    "PHASE_6A_ENGINEERING_GATE": "FAIL",
+    "PHASE_6A": "NOT_COMPLETE (owner closure noted, evidence gate not met)",
+    "PHASE_6B_READY": "NO",
+    "EXTERNAL_PAID_COST_VND": 0,
+    "REPRESENTATIVE_PILOT_SCOPE": "ACCEPTED_REPRESENTATIVE_PILOT (owner 2026-10-10)",
+    "ownerDecisions": "projects/pilot-sky-blue-canonical/approval/owner-decisions-6a-reconciliation.json"
   }
 }

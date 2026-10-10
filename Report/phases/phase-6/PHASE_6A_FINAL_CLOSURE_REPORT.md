@@ -83,7 +83,7 @@ Per-scene Gemini watch (owner-authorised re-run): `node scripts/diagnostics/gemi
 Not done / open:
 - The owner viewed the video and gave feedback over several rounds, then approved; no signed `phase-6a-full-av-watch-evidence.md` checklist exists, so this is not recorded as a formal human watch.
 - `AUDIO_VISUAL_ENERGY_MISMATCH`: model reports no mismatch; `FLASH_SAFETY_REVIEW`: deterministic 0 transitions plus model reports no flash.
-- **Caveat for the owner closure decision:** the full regression (`node scripts/run-tests.js`) was last run on revision 4a57790 and was not re-run after the Remotion caption/diagram changes. Re-run since: `npm run test:remotion` (0 failed suites), `check:repo-structure`, `check:workspace`.
+- Full regression re-run on revision 5dec82a: `node scripts/run-tests.js` = 195/195 suites PASS, 0 failed, 1293.8 s (`Report/evidence/phase-6a/full-regression-6a-canonical-final-run2.log`). A first run showed 4 research suites failing only because the agent session had `PLAYWRIGHT_BROWSERS_PATH=0` (the research venv looked for Chromium in `.local-browsers`; logged in `full-regression-6a-canonical-final.log`); they passed with the variable unset and the full suite then passed.
 - New file: `scripts/diagnostics/gemini-video-watch.js` (reusable one-shot watch tool; never logs the key).
 - Typecheck not run (no local TypeScript); Remotion bundling compiled the sources.
 - Source changes not committed: `remotion/src/compositions/SkyDiagram.tsx`, `remotion/src/Root.tsx`, `remotion/src/captions/CaptionTrack.tsx`, `tests/remotion/test-remotion-captions.js`.
@@ -92,7 +92,7 @@ Not done / open:
 ## Final Verdict
 
 ```text
-FULL_REGRESSION                = PASS (exit 0, 1051.7 s, revision 4a57790; not re-run)
+FULL_REGRESSION                = PASS (195/195 suites, 0 failed, 1293.8 s, revision 5dec82a)
 HYGIENE                        = PASS
 REAL_INCREMENTAL_RENDER        = PROVEN (fixture, unchanged)
 CANONICAL_PILOT_LINEAGE        = PROVEN_PARTIAL (pilot-sky-blue-canonical, owner-approved final.mp4)
@@ -101,6 +101,6 @@ FLASH_SAFETY_REVIEW            = RECHECKED (deterministic PASS + model reports n
 FULL_AV_WATCH_AUDIO_AND_VISUAL = PROVEN_BY_MODEL_WATCH (single low-granularity pass) + owner viewed, unsigned
 AUTONOMOUS_MULTIMODAL_WATCH    = PASS_MEDIUM_GRANULARITY (whole-video + per-scene; Free Tier owner-attested)
 PAID_EXTERNAL_COST_VND         = 0
-PHASE_6A                       = CLOSED_BY_OWNER_DECISION (2026-10-10; full regression not re-run on the new revision, see caveat above)
+PHASE_6A                       = CLOSED_BY_OWNER_DECISION (2026-10-10; full regression re-run PASS on the new revision)
 PHASE_6B_READY                 = NO (separate owner decision)
 ```
