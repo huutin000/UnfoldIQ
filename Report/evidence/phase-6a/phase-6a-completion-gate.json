@@ -88,16 +88,18 @@
   "finalReconciliation": {
     "date": "2026-10-10",
     "report": "Report/evidence/phase-6a/final-reconciliation/PHASE_6A_FINAL_GATE_RECONCILIATION.md",
-    "FULL_REGRESSION_CURRENT_SNAPSHOT": "FAIL (final run HEAD 5dec82a + 3 packaging wording edits: 194 PASS / 1 FAIL dag/test-dag.js perf timing flake under load; isolated 3/3 PASS; research env suites fixed 4/4; first run 195/4 env)",
-    "PACKAGING_QA": "REVIEW_REQUIRED (description wording fixed; variant re-confirmation PENDING_OWNER_CONFIRMATION)",
+    "FULL_REGRESSION_CURRENT_SNAPSHOT": "PASS (HEAD caf23cc, clean tree, 195 PASS / 0 failed suites, 1008.4s; log final-reconciliation/full-regression-final-run2.log; exit code not captured, runner summary 0 failed). Earlier runs: 195/4 env, 194/1 dag perf flake.",
+    "PACKAGING_QA": "ACCEPTED_NON_BLOCKING (variant pkv-202fd90e1b72 re-confirmed by owner 2026-10-10 after description wording fix; stale packaging-qa.json/platform-compliance.json not regenerated, no blocking finding)",
     "PACKAGING_CLAIM_FIDELITY": "PASS after wording fix, pending owner re-confirmation",
     "CANONICAL_PILOT_LINEAGE": "PARTIAL (watch artifacts lack sha256)",
-    "GIT_STATUS": "EXPECTED_DIRTY",
-    "PHASE_6A_ENGINEERING_GATE": "FAIL",
-    "PHASE_6A": "NOT_COMPLETE (owner closure noted, evidence gate not met)",
-    "PHASE_6B_READY": "NO",
+    "GIT_STATUS": "EXPECTED_DIRTY (tracked tree clean; untracked canonical artifacts remain)",
+    "PHASE_6A_ENGINEERING_GATE": "PASS",
+    "PHASE_6A": "COMPLETE",
+    "PHASE_6B_READY": "YES (not started)",
     "EXTERNAL_PAID_COST_VND": 0,
     "REPRESENTATIVE_PILOT_SCOPE": "ACCEPTED_REPRESENTATIVE_PILOT (owner 2026-10-10)",
-    "ownerDecisions": "projects/pilot-sky-blue-canonical/approval/owner-decisions-6a-reconciliation.json"
+    "ownerDecisions": "projects/pilot-sky-blue-canonical/approval/owner-decisions-6a-reconciliation.json",
+    "HYGIENE": "PASS (check:workspace ok 21 projects, check:repo-structure ok; run 2026-10-10 after final regression)",
+    "PHASE_6A_PRODUCT_ACCEPTANCE": "PASS"
   }
 }

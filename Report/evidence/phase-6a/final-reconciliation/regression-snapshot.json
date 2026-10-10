@@ -1,0 +1,72 @@
+{
+  "head": "5dec82a42e07aaf928343809b9f5bb10abc2f3b6",
+  "branch": "main",
+  "headCommitDate": "2026-10-10T10:40:38+07:00",
+  "regressionCmd": "node scripts/run-tests.js",
+  "regressionPid": 1620,
+  "regressionStart": "2026-10-10T10:49:00+07:00",
+  "regressionEnd": "2026-10-10T11:06:50+07:00",
+  "reportedDuration": "1070.4s",
+  "reportedResult": "4 failed suite(s)",
+  "processExitCodeCaptured": false,
+  "passSuites": 195,
+  "failSuites": 4,
+  "failedSuites": [
+    "research/test-auth-extract.js",
+    "research/test-browser-extract.js",
+    "research/test-crawl4ai-bridge.js",
+    "research/test-robots-ratelimit.js"
+  ],
+  "failClass": "ENVIRONMENT (missing Playwright browser binaries)",
+  "logSha256": "13c18615c1d43107f2ed2454366be77b34ed26df2c3c688a54ce85e5fc7c79fe",
+  "stagedChanges": 0,
+  "unstagedSourceConfigChangesVsHead": 0,
+  "unstagedTrackedChangesAtEnd": 30,
+  "unstagedTrackedChangesKind": "test-generated timestamps/perf/telemetry only (patch saved)",
+  "generatedPatchSha256": "d0f8ed19cd859b8d9160a8436109df6808bdd7a4c56e3c8abd75c50789acd300",
+  "sourceFileSha256": {
+    "remotion/src/captions/CaptionTrack.tsx": "6e46b9a558d7e29e1a354a6fe8bc864a7df3daeba318daa549d1a689c913d157",
+    "scripts/diagnostics/gemini-video-watch.js": "bb0404d2e1088a6e11c801ce9d02602dd5e1618c9307612e5aad5ddcea0d162d",
+    "tests/remotion/test-remotion-captions.js": "71aacd4f285e3b986c394ec1d6d6879710c190d057e631f00a1aa52f685c984e",
+    "remotion/src/compositions/SkyDiagram.tsx": "fce30b341244c5ca0acb13e4daad5f28497c7bf5cfc2aca692755abe8e0f1e1e",
+    "remotion/src/Root.tsx": "e53ef5adfb5723c7e7f26339b65a04223d3df23c63b814eadc71044435b768f1"
+  },
+  "node": "v24.16.0",
+  "os": "Windows 11 10.0.26300",
+  "supersededBy": "final run below (first run kept as full-regression-6a-canonical-final.log)",
+  "finalRun": {
+    "head": "5dec82a42e07aaf928343809b9f5bb10abc2f3b6",
+    "start": "2026-10-10T11:15 +07:00 (approx, see final-run-start.txt)",
+    "end": "2026-10-10T11:45 +07:00",
+    "runnerDuration": "1146.3s",
+    "exitCodeCaptured": false,
+    "passSuites": 194,
+    "failSuites": 1,
+    "failedSuite": "dag/test-dag.js",
+    "failDetail": "PERF baseline: smallDirty p50 45.337ms < 25ms (internal retry 20.9ms); isolated 3/3 runs 156 passed 0 failed, p50 ~15ms",
+    "failClass": "PERF_TIMING_FLAKE_UNDER_FULL_SUITE_LOAD (not product defect)",
+    "envFix": "Playwright chromium installed (Node + research/.venv); research 4 suites PASS 4/4 (13/16/25/15 assertions)",
+    "workingChangesVsHead": [
+      "projects/pilot-sky-blue-canonical/packaging/description.md",
+      "projects/pilot-sky-blue-canonical/packaging/metadata.json",
+      "projects/pilot-sky-blue-canonical/policy-refresh.json"
+    ],
+    "descriptionSha256": "3d75085fcfbfbcd8a198e1c6fb3e78684fcbf74628e8baf360c2a9afcac26cd6",
+    "logSha256": "9de8aff2df637f3684a4142b2cefa500d25a23c321ebcbe80fad641938d56d50",
+    "verdict": "FAIL (1 flaky perf suite); not upgraded to PASS"
+  },
+  "finalRun2": {
+    "head": "caf23cc65c425bfff97d499f38326df2fa3d8ab8",
+    "tree": "clean tracked tree at start (owner committed packaging wording fix)",
+    "start": "2026-10-10T11:59 +07:00 (final-run2-start.txt)",
+    "end": "2026-10-10T12:16 +07:00",
+    "runnerDuration": "1008.4s",
+    "passSuites": 195,
+    "failSuites": 0,
+    "runnerSummary": "0 failed suite(s)",
+    "exitCodeCaptured": false,
+    "stderrLines": 0,
+    "logSha256": "aba02c8cf5c2efea118d06e76b131292a0848e54926e1f9d02ca643d452335e2",
+    "verdict": "PASS (supersedes first and second runs)"
+  }
+}
