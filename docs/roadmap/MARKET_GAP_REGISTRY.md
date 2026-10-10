@@ -531,7 +531,7 @@ Decision rule: `ADD_NOW` (P0/P1 or security/data-loss/rights/duplicate-spend ris
 - **Benchmark:** YouTube inauthentic-content policy (re-fetched 08/10/2026): mass-produced / template-like / minimally varied content is a monetization risk; shared intro/outro/series format is allowed when each video has distinct substance
 - **Severity:** P2
 - **Decision:** **ADD_NOW (collection only)**: `CreativeFingerprint` persisted with durations, modality/framing/motion/transition sequences, energy timelines, rest ranges, metrics, stable anchors. No originality verdict in 6A (RULE 12).
-- **Status:** PARTIALLY_FIXED / CONSUMER_6B
+- **Status:** CONSUMED_BY_6B (see GAP-049)
 
 ## GAP-046 — Autonomous Multimodal Reviewer Not Integrated
 
@@ -555,3 +555,37 @@ Decision rule: `ADD_NOW` (P0/P1 or security/data-loss/rights/duplicate-spend ris
 
 **Counts (after Phase 6A):** 47 gaps — FIXED 37 (the 33 above + 008, 042, 043, 044) · PARTIALLY_FIXED 1 (045) · PLANNED 2 (006, 047) · DEFERRED 4 (007, 009, 014, 046) · REJECTED 2 (010, 011) · OPEN 1 (003 live-gated).
 **Unresolved P0 = 0. Unresolved Phase-6B-blocking P0/P1 = 0.**
+
+## GAP-048 — Bounded Style Bake-off (FIXED in 6B)
+
+- **Owner capability:** Style Bake-off (Phase 6B / 6.4)
+- **Discovered:** 10/10/2026 (YouTube 3-variant Studio test is post-publish viewer data, not pre-publish)
+- **Severity:** P2
+- **Decision:** **ADD_NOW — FIXED in 6B**: default NO_BAKE_OFF; max 2 candidates (hard 3, justified); distinctness check; shared facts/audio/evidence hashes; rubric+evidence comparison, no viewer metrics; NO_WINNER/REVIEW_REQUIRED never forced; cached ≤35% segment preview, 1 render cap; candidate cannot overwrite the locked final. Actual A/B publishing → POST_V1.
+- **Evidence:** `lib/creative-differentiation/bakeoff.js`, `tests/creative/test-style-bakeoff.js` (S01–S08), `Report/evidence/phase-6b/style-bakeoff-decisions.json`
+- **Status:** FIXED
+
+## GAP-049 — Originality / Anti-template Gate (MECHANICS FIXED in 6B; channel level NOT_PROVEN)
+
+- **Owner capability:** Originality Gate (Phase 6B / 6.5), consumes GAP-045
+- **Benchmark:** YouTube inauthentic-content policy (fetched 10/10/2026)
+- **Severity:** P1 (monetization risk)
+- **Decision:** **ADD_NOW — FIXED (mechanics)**: fingerprint v2 (hashed shingles, scoped by owner/channel), exact/structural/substance comparison, identity≠repetition, recap/serial/stock protections, version- and corpus-keyed cache. Proven on a SYNTHETIC golden corpus only; one real episode exists, so `CROSS_VIDEO_REAL_CORPUS = INSUFFICIENT`, `CHANNEL_LEVEL_ORIGINALITY = NOT_PROVEN`. Revisit at ≥5 real episodes.
+- **Evidence:** `lib/creative-differentiation/originality.js`, `tests/creative/test-originality-gate.js` (O01–O12), `Report/evidence/phase-6b/originality-*.json`
+- **Status:** FIXED (channel-level validation PLANNED)
+
+## GAP-050 — Explainable Quality Scoring (FIXED in 6B)
+
+- **Owner capability:** Quality Scoring (Phase 6B / 6.6); MERGES the evidence side of GAP-046
+- **Severity:** P1
+- **Decision:** **ADD_NOW — FIXED in 6B**: 13-dimension versioned rubric, anchored 0–4, N/A vs NOT_MEASURED, assessor type, confidence, coverage; gate stored apart from preference score; hard blockers cannot be waived; model cannot override deterministic QA; rubric/policy/evidence change invalidates cache. GAP-046 (unattended multimodal reviewer) stays DEFERRED: no new model call was made.
+- **Evidence:** `lib/creative-differentiation/quality.js`, `tests/creative/test-quality-scoring.js`, `Report/evidence/phase-6b/quality-*.json`
+- **Status:** FIXED
+
+## GAP-051 — Optional Creator Controls (PARTIAL in 6B)
+
+- **Owner capability:** Creator Controls (Phase 6B / 6.7, non-blocking)
+- **Severity:** P3
+- **Decision:** Director Prompt + hash-chained override ledger IMPLEMENTED (P2/P3 only, scoped to video hash + rubric version). Performance Reference DEFERRED (needs rights capture); Representative Preview merged into bake-off preview cache; richer Channel Editorial Identity DEFERRED.
+- **Evidence:** `lib/creative-differentiation/controls.js`, `tests/creative/test-creator-controls.js`
+- **Status:** PARTIALLY_FIXED / DEFERRED_WITH_EVIDENCE

@@ -1,0 +1,311 @@
+{
+  "phase": "6B",
+  "slice": "B",
+  "corpus": "SYNTHETIC golden fixtures (origin GOLDEN_FIXTURE; never counted as real episodes)",
+  "fingerprintVersion": "2.0.0",
+  "comparatorVersion": "1.0.0",
+  "total": 8,
+  "passed": 8,
+  "falsePositiveGuard": "PROVEN",
+  "templatedDetected": true,
+  "rows": [
+    {
+      "fixture": "same-channel-identity-different-substance",
+      "expectedRisk": "LOW",
+      "actualRisk": "LOW",
+      "pass": true,
+      "present": [
+        {
+          "code": "CHANNEL_IDENTITY_INTENTIONAL",
+          "found": true
+        }
+      ],
+      "absent": [
+        {
+          "code": "EXACT_EPISODE_DUPLICATE",
+          "clean": true
+        },
+        {
+          "code": "SEMANTIC_NEAR_DUPLICATE",
+          "clean": true
+        },
+        {
+          "code": "REPEATED_STORY_ARC_WITHOUT_NEW_SUBSTANCE",
+          "clean": true
+        }
+      ],
+      "findings": [
+        "THUMBNAIL_FORMULA_REPETITION",
+        "REPETITIVE_CTA_PATTERN",
+        "SHOT_MOTION_TEMPLATE_RISK",
+        "CHANNEL_IDENTITY_INTENTIONAL"
+      ],
+      "metrics": {
+        "jShingle": 0.035,
+        "jSemantic": 0.07,
+        "jClaims": 0,
+        "jThesis": 0,
+        "newSubstanceShare": 1,
+        "seq": {
+          "roles": 1,
+          "shotRhythm": 1,
+          "motion": 1,
+          "music": 0,
+          "transitions": 0.077
+        }
+      }
+    },
+    {
+      "fixture": "same-subject-different-evidence",
+      "expectedRisk": "LOW",
+      "actualRisk": "LOW",
+      "pass": true,
+      "present": [],
+      "absent": [
+        {
+          "code": "SEMANTIC_NEAR_DUPLICATE",
+          "clean": true
+        },
+        {
+          "code": "EXACT_EPISODE_DUPLICATE",
+          "clean": true
+        }
+      ],
+      "findings": [
+        "THUMBNAIL_FORMULA_REPETITION",
+        "REPETITIVE_CTA_PATTERN",
+        "SHOT_MOTION_TEMPLATE_RISK",
+        "CHANNEL_IDENTITY_INTENTIONAL"
+      ],
+      "metrics": {
+        "jShingle": 0.043,
+        "jSemantic": 0.126,
+        "jClaims": 0,
+        "jThesis": 0.5,
+        "newSubstanceShare": 1,
+        "seq": {
+          "roles": 1,
+          "shotRhythm": 1,
+          "motion": 1,
+          "music": 0,
+          "transitions": 0.077
+        }
+      }
+    },
+    {
+      "fixture": "near-duplicate-script-new-package",
+      "expectedRisk": "HIGH",
+      "actualRisk": "HIGH",
+      "pass": true,
+      "present": [
+        {
+          "code": "SEMANTIC_NEAR_DUPLICATE",
+          "found": true
+        }
+      ],
+      "absent": [],
+      "findings": [
+        "SEMANTIC_NEAR_DUPLICATE",
+        "REPETITIVE_CTA_PATTERN",
+        "SHOT_MOTION_TEMPLATE_RISK",
+        "CHANNEL_IDENTITY_INTENTIONAL"
+      ],
+      "metrics": {
+        "jShingle": 0.678,
+        "jSemantic": 0.825,
+        "jClaims": 1,
+        "jThesis": 1,
+        "newSubstanceShare": 0,
+        "seq": {
+          "roles": 1,
+          "shotRhythm": 1,
+          "motion": 1,
+          "music": 0,
+          "transitions": 0.556
+        }
+      }
+    },
+    {
+      "fixture": "exact-duplicate-republished",
+      "expectedRisk": "HIGH",
+      "actualRisk": "HIGH",
+      "pass": true,
+      "present": [
+        {
+          "code": "EXACT_EPISODE_DUPLICATE",
+          "found": true
+        }
+      ],
+      "absent": [],
+      "findings": [
+        "EXACT_EPISODE_DUPLICATE",
+        "THUMBNAIL_FORMULA_REPETITION",
+        "REPETITIVE_CTA_PATTERN",
+        "TRANSITION_PHRASE_OVERUSE",
+        "SHOT_MOTION_TEMPLATE_RISK",
+        "CHANNEL_IDENTITY_INTENTIONAL"
+      ],
+      "metrics": {
+        "jShingle": 1,
+        "jSemantic": 1,
+        "jClaims": 1,
+        "jThesis": 1,
+        "newSubstanceShare": 0,
+        "seq": {
+          "roles": 1,
+          "shotRhythm": 1,
+          "motion": 1,
+          "music": 0,
+          "transitions": 1
+        }
+      }
+    },
+    {
+      "fixture": "same-presentation-new-substance",
+      "expectedRisk": "LOW",
+      "actualRisk": "LOW",
+      "pass": true,
+      "present": [
+        {
+          "code": "TITLE_FORMULA_REPETITION",
+          "found": true
+        },
+        {
+          "code": "SHOT_MOTION_TEMPLATE_RISK",
+          "found": true
+        }
+      ],
+      "absent": [
+        {
+          "code": "SEMANTIC_NEAR_DUPLICATE",
+          "clean": true
+        }
+      ],
+      "findings": [
+        "TITLE_FORMULA_REPETITION",
+        "THUMBNAIL_FORMULA_REPETITION",
+        "REPETITIVE_CTA_PATTERN",
+        "SHOT_MOTION_TEMPLATE_RISK",
+        "CHANNEL_IDENTITY_INTENTIONAL"
+      ],
+      "metrics": {
+        "jShingle": 0.04,
+        "jSemantic": 0.073,
+        "jClaims": 0,
+        "jThesis": 0,
+        "newSubstanceShare": 1,
+        "seq": {
+          "roles": 1,
+          "shotRhythm": 1,
+          "motion": 1,
+          "music": 0,
+          "transitions": 0.077
+        }
+      }
+    },
+    {
+      "fixture": "serial-shared-characters",
+      "expectedRisk": "LOW",
+      "actualRisk": "LOW",
+      "pass": true,
+      "present": [],
+      "absent": [
+        {
+          "code": "SEMANTIC_NEAR_DUPLICATE",
+          "clean": true
+        },
+        {
+          "code": "EXACT_EPISODE_DUPLICATE",
+          "clean": true
+        }
+      ],
+      "findings": [
+        "TITLE_FORMULA_REPETITION",
+        "THUMBNAIL_FORMULA_REPETITION",
+        "REPETITIVE_CTA_PATTERN",
+        "SHOT_MOTION_TEMPLATE_RISK",
+        "CHANNEL_IDENTITY_INTENTIONAL"
+      ],
+      "metrics": {
+        "jShingle": 0.047,
+        "jSemantic": 0.115,
+        "jClaims": 0,
+        "jThesis": 0.6,
+        "newSubstanceShare": 1,
+        "seq": {
+          "roles": 1,
+          "shotRhythm": 1,
+          "motion": 1,
+          "music": 0,
+          "transitions": 0.077
+        }
+      }
+    },
+    {
+      "fixture": "intentional-recap",
+      "expectedRisk": "LOW",
+      "actualRisk": "LOW",
+      "pass": true,
+      "present": [],
+      "absent": [
+        {
+          "code": "SEMANTIC_NEAR_DUPLICATE",
+          "clean": true
+        }
+      ],
+      "findings": [
+        "THUMBNAIL_FORMULA_REPETITION",
+        "REPETITIVE_CTA_PATTERN",
+        "SHOT_MOTION_TEMPLATE_RISK",
+        "CHANNEL_IDENTITY_INTENTIONAL"
+      ],
+      "metrics": {
+        "jShingle": 0.047,
+        "jSemantic": 0.133,
+        "jClaims": 0,
+        "jThesis": 0.5,
+        "newSubstanceShare": 1,
+        "seq": {
+          "roles": 1,
+          "shotRhythm": 1,
+          "motion": 1,
+          "music": 0,
+          "transitions": 0.167
+        }
+      }
+    },
+    {
+      "fixture": "stock-reuse-with-new-narration",
+      "expectedRisk": "LOW",
+      "actualRisk": "LOW",
+      "pass": true,
+      "present": [],
+      "absent": [
+        {
+          "code": "SEMANTIC_NEAR_DUPLICATE",
+          "clean": true
+        }
+      ],
+      "findings": [
+        "THUMBNAIL_FORMULA_REPETITION",
+        "REPETITIVE_CTA_PATTERN",
+        "SHOT_MOTION_TEMPLATE_RISK",
+        "CHANNEL_IDENTITY_INTENTIONAL"
+      ],
+      "metrics": {
+        "jShingle": 0.038,
+        "jSemantic": 0.062,
+        "jClaims": 0,
+        "jThesis": 0,
+        "newSubstanceShare": 1,
+        "seq": {
+          "roles": 1,
+          "shotRhythm": 1,
+          "motion": 1,
+          "music": 0,
+          "transitions": 0.077
+        }
+      }
+    }
+  ]
+}

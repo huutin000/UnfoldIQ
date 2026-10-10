@@ -1,0 +1,246 @@
+{
+  "phase": "6B",
+  "slice": "C",
+  "rubricVersion": "1.0.0",
+  "total": 12,
+  "passed": 12,
+  "hardBlockerFixturesAllFail": true,
+  "rows": [
+    {
+      "fixture": "clear-good",
+      "expectedDecision": "PASS",
+      "actualDecision": "PASS",
+      "score": 3.08,
+      "expectedBand": [
+        3,
+        3.2
+      ],
+      "coverage": {
+        "applicable": 13,
+        "assessed": 13,
+        "missing": 0,
+        "missingDimensions": [],
+        "notApplicable": []
+      },
+      "pass": true,
+      "blocking": []
+    },
+    {
+      "fixture": "clear-bad",
+      "expectedDecision": "FAIL",
+      "actualDecision": "FAIL",
+      "score": 2.54,
+      "expectedBand": [
+        2.5,
+        3
+      ],
+      "coverage": {
+        "applicable": 13,
+        "assessed": 13,
+        "missing": 0,
+        "missingDimensions": [],
+        "notApplicable": []
+      },
+      "pass": true,
+      "blocking": [
+        "DIMENSION_FAIL:sound",
+        "DIMENSION_FAIL:captions"
+      ]
+    },
+    {
+      "fixture": "borderline-subjective",
+      "expectedDecision": "REVIEW_REQUIRED",
+      "actualDecision": "REVIEW_REQUIRED",
+      "score": 1.92,
+      "expectedBand": [
+        1.8,
+        2
+      ],
+      "coverage": {
+        "applicable": 13,
+        "assessed": 13,
+        "missing": 0,
+        "missingDimensions": [],
+        "notApplicable": []
+      },
+      "pass": true,
+      "blocking": []
+    },
+    {
+      "fixture": "intentional-silence-and-static",
+      "expectedDecision": "PASS",
+      "actualDecision": "PASS",
+      "score": 2.92,
+      "expectedBand": null,
+      "coverage": {
+        "applicable": 12,
+        "assessed": 12,
+        "missing": 0,
+        "missingDimensions": [],
+        "notApplicable": [
+          "sound"
+        ]
+      },
+      "pass": true,
+      "blocking": []
+    },
+    {
+      "fixture": "missing-evidence",
+      "expectedDecision": "REVIEW_REQUIRED",
+      "actualDecision": "REVIEW_REQUIRED",
+      "score": 3,
+      "expectedBand": null,
+      "coverage": {
+        "applicable": 13,
+        "assessed": 11,
+        "missing": 2,
+        "missingDimensions": [
+          "imagery",
+          "continuity"
+        ],
+        "notApplicable": []
+      },
+      "pass": true,
+      "blocking": []
+    },
+    {
+      "fixture": "model-only-on-deterministic-dimension",
+      "expectedDecision": "REVIEW_REQUIRED",
+      "actualDecision": "REVIEW_REQUIRED",
+      "score": 3.08,
+      "expectedBand": null,
+      "coverage": {
+        "applicable": 13,
+        "assessed": 13,
+        "missing": 0,
+        "missingDimensions": [],
+        "notApplicable": []
+      },
+      "pass": true,
+      "blocking": []
+    },
+    {
+      "fixture": "model-disagrees-with-deterministic-fail",
+      "expectedDecision": "FAIL",
+      "actualDecision": "FAIL",
+      "score": 2.77,
+      "expectedBand": null,
+      "coverage": {
+        "applicable": 13,
+        "assessed": 13,
+        "missing": 0,
+        "missingDimensions": [],
+        "notApplicable": []
+      },
+      "pass": true,
+      "blocking": [
+        "DIMENSION_FAIL:captions"
+      ]
+    },
+    {
+      "fixture": "high-score-but-factual-blocker",
+      "expectedDecision": "FAIL",
+      "actualDecision": "FAIL",
+      "score": 4,
+      "expectedBand": [
+        4,
+        4
+      ],
+      "coverage": {
+        "applicable": 13,
+        "assessed": 13,
+        "missing": 0,
+        "missingDimensions": [],
+        "notApplicable": []
+      },
+      "pass": true,
+      "blocking": [
+        "FACTUAL:UNSUPPORTED_CLAIM"
+      ]
+    },
+    {
+      "fixture": "high-score-but-rights-blocker",
+      "expectedDecision": "FAIL",
+      "actualDecision": "FAIL",
+      "score": 4,
+      "expectedBand": [
+        4,
+        4
+      ],
+      "coverage": {
+        "applicable": 13,
+        "assessed": 13,
+        "missing": 0,
+        "missingDimensions": [],
+        "notApplicable": []
+      },
+      "pass": true,
+      "blocking": [
+        "RIGHTS:UNCLEARED_ASSET"
+      ]
+    },
+    {
+      "fixture": "high-score-but-security-blocker",
+      "expectedDecision": "FAIL",
+      "actualDecision": "FAIL",
+      "score": 4,
+      "expectedBand": [
+        4,
+        4
+      ],
+      "coverage": {
+        "applicable": 13,
+        "assessed": 13,
+        "missing": 0,
+        "missingDimensions": [],
+        "notApplicable": []
+      },
+      "pass": true,
+      "blocking": [
+        "SECURITY:SECRET_IN_DOM"
+      ]
+    },
+    {
+      "fixture": "high-score-but-technical-p1",
+      "expectedDecision": "FAIL",
+      "actualDecision": "FAIL",
+      "score": 4,
+      "expectedBand": [
+        4,
+        4
+      ],
+      "coverage": {
+        "applicable": 13,
+        "assessed": 13,
+        "missing": 0,
+        "missingDimensions": [],
+        "notApplicable": []
+      },
+      "pass": true,
+      "blocking": [
+        "TECHNICAL_QA:FROZEN_FRAMES"
+      ]
+    },
+    {
+      "fixture": "high-score-but-owner-approval-missing",
+      "expectedDecision": "FAIL",
+      "actualDecision": "FAIL",
+      "score": 4,
+      "expectedBand": [
+        4,
+        4
+      ],
+      "coverage": {
+        "applicable": 13,
+        "assessed": 13,
+        "missing": 0,
+        "missingDimensions": [],
+        "notApplicable": []
+      },
+      "pass": true,
+      "blocking": [
+        "OWNER_APPROVAL:NO_APPROVAL"
+      ]
+    }
+  ]
+}

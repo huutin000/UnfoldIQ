@@ -1,0 +1,286 @@
+{
+  "kind": "QUALITY_RUBRIC",
+  "rubricVersion": "1.0.0",
+  "policyVersion": "1.0.0",
+  "scale": {
+    "type": "ORDINAL_0_4",
+    "anchors": {
+      "0": "critical weakness",
+      "1": "weak",
+      "2": "adequate",
+      "3": "good",
+      "4": "strong"
+    },
+    "statusFromOrdinal": {
+      "0": "FAIL",
+      "1": "REVIEW_REQUIRED",
+      "2-4": "PASS"
+    },
+    "note": "No aggregate cutoff is used for any decision; calibrated bands live in the golden set."
+  },
+  "statuses": {
+    "NOT_APPLICABLE": "feature absent by design (never scored)",
+    "NOT_MEASURED": "no evidence available (never 0, never PASS)",
+    "REVIEW_REQUIRED": "ambiguous/insufficient/weak evidence",
+    "FAIL": "demonstrated requirement failure",
+    "PASS": "sufficient relevant evidence"
+  },
+  "assessors": {
+    "DETERMINISTIC": "rule/measurement",
+    "MODEL": "model judgment (cannot override deterministic or human failures)",
+    "HUMAN": "explicit reviewer/owner judgment"
+  },
+  "hardBlockerCategories": [
+    "FACTUAL",
+    "RIGHTS",
+    "SECURITY",
+    "TECHNICAL_QA",
+    "MISSING_ARTIFACT",
+    "OWNER_APPROVAL"
+  ],
+  "hardBlockerRule": "Any P0/P1 hard blocker forces finalDecision=FAIL regardless of any score; owner overrides apply to P2/P3 subjective warnings only.",
+  "dimensions": {
+    "narration": {
+      "applicability": "ALL",
+      "owner": "NARRATION_TTS",
+      "anchors": {
+        "0": "unintelligible/clipped/wrong text spoken",
+        "2": "intelligible, text matches script, no defects",
+        "4": "natural, expressive, exact"
+      },
+      "requiresNonModelEvidenceForPass": true,
+      "requiredFields": [
+        "rubricVersion",
+        "evidenceRefs",
+        "confidence",
+        "assessor",
+        "findings",
+        "actionableImprovement"
+      ]
+    },
+    "scriptNaturalness": {
+      "applicability": "ALL",
+      "owner": "STORY_SCRIPT",
+      "anchors": {
+        "0": "robotic, repeated openers/patterns",
+        "2": "readable, minor repetition",
+        "4": "spoken-natural, varied rhythm"
+      },
+      "requiresNonModelEvidenceForPass": false,
+      "requiredFields": [
+        "rubricVersion",
+        "evidenceRefs",
+        "confidence",
+        "assessor",
+        "findings",
+        "actionableImprovement"
+      ]
+    },
+    "evidenceFidelity": {
+      "applicability": "ALL",
+      "owner": "RESEARCH_EVIDENCE",
+      "anchors": {
+        "0": "unsupported/contradicted claims",
+        "2": "claims traceable to approved script/evidence",
+        "4": "every claim traced and calibrated"
+      },
+      "requiresNonModelEvidenceForPass": true,
+      "requiredFields": [
+        "rubricVersion",
+        "evidenceRefs",
+        "confidence",
+        "assessor",
+        "findings",
+        "actionableImprovement"
+      ]
+    },
+    "imagery": {
+      "applicability": "ALL",
+      "owner": "ASSET_GENERATION",
+      "anchors": {
+        "0": "irrelevant/placeholder visuals",
+        "2": "relevant, readable visuals",
+        "4": "distinctive, purposeful visuals"
+      },
+      "requiresNonModelEvidenceForPass": false,
+      "requiredFields": [
+        "rubricVersion",
+        "evidenceRefs",
+        "confidence",
+        "assessor",
+        "findings",
+        "actionableImprovement"
+      ]
+    },
+    "visualFactuality": {
+      "applicability": "ALL",
+      "owner": "ASSET_QA",
+      "anchors": {
+        "0": "visuals misstate facts",
+        "2": "accurate, illustration labelled where simplified",
+        "4": "accurate and instructive"
+      },
+      "requiresNonModelEvidenceForPass": false,
+      "requiredFields": [
+        "rubricVersion",
+        "evidenceRefs",
+        "confidence",
+        "assessor",
+        "findings",
+        "actionableImprovement"
+      ]
+    },
+    "continuity": {
+      "applicability": "ALL",
+      "owner": "CONTINUITY",
+      "anchors": {
+        "0": "style/identity breaks between scenes",
+        "2": "consistent style",
+        "4": "consistent identity and style"
+      },
+      "requiresNonModelEvidenceForPass": false,
+      "requiredFields": [
+        "rubricVersion",
+        "evidenceRefs",
+        "confidence",
+        "assessor",
+        "findings",
+        "actionableImprovement"
+      ]
+    },
+    "motion": {
+      "applicability": "ALL",
+      "owner": "MOTION_PLAN",
+      "anchors": {
+        "0": "unsafe/flashing/frozen motion",
+        "2": "safe, purposeful motion",
+        "4": "motion reinforces meaning"
+      },
+      "requiresNonModelEvidenceForPass": false,
+      "requiredFields": [
+        "rubricVersion",
+        "evidenceRefs",
+        "confidence",
+        "assessor",
+        "findings",
+        "actionableImprovement"
+      ]
+    },
+    "sound": {
+      "applicability": "ALL",
+      "owner": "AUDIO_MIX",
+      "anchors": {
+        "0": "silence gaps/clipping/distortion",
+        "2": "clean mix, no defects",
+        "4": "balanced mix with purposeful design"
+      },
+      "requiresNonModelEvidenceForPass": true,
+      "requiredFields": [
+        "rubricVersion",
+        "evidenceRefs",
+        "confidence",
+        "assessor",
+        "findings",
+        "actionableImprovement"
+      ]
+    },
+    "captions": {
+      "applicability": "ALL",
+      "owner": "CAPTIONS",
+      "anchors": {
+        "0": "wrong text or badly out of sync",
+        "2": "accurate, readable, in sync",
+        "4": "accurate, well-phrased, comfortable CPS"
+      },
+      "requiresNonModelEvidenceForPass": true,
+      "requiredFields": [
+        "rubricVersion",
+        "evidenceRefs",
+        "confidence",
+        "assessor",
+        "findings",
+        "actionableImprovement"
+      ]
+    },
+    "pacing": {
+      "applicability": "ALL",
+      "owner": "MASTER_TIMELINE",
+      "anchors": {
+        "0": "dead time / overload",
+        "2": "steady progress, no dead time",
+        "4": "purposeful variation"
+      },
+      "requiresNonModelEvidenceForPass": false,
+      "requiredFields": [
+        "rubricVersion",
+        "evidenceRefs",
+        "confidence",
+        "assessor",
+        "findings",
+        "actionableImprovement"
+      ]
+    },
+    "semanticAlignment": {
+      "applicability": "ALL",
+      "owner": "STORY_SCRIPT",
+      "anchors": {
+        "0": "visuals/audio contradict narration",
+        "2": "visuals support narration",
+        "4": "visuals sharpen the explanation"
+      },
+      "requiresNonModelEvidenceForPass": false,
+      "requiredFields": [
+        "rubricVersion",
+        "evidenceRefs",
+        "confidence",
+        "assessor",
+        "findings",
+        "actionableImprovement"
+      ]
+    },
+    "originality": {
+      "applicability": "ALL",
+      "owner": "CREATIVE_ORIGINALITY",
+      "anchors": {
+        "0": "duplicate / templated substance",
+        "2": "distinct substance for its evidenced scope",
+        "4": "distinct substance and treatment"
+      },
+      "requiresNonModelEvidenceForPass": false,
+      "requiredFields": [
+        "rubricVersion",
+        "evidenceRefs",
+        "confidence",
+        "assessor",
+        "findings",
+        "actionableImprovement"
+      ]
+    },
+    "packaging": {
+      "applicability": "ALL",
+      "owner": "PUBLISH_PACKAGE",
+      "anchors": {
+        "0": "misleading title/thumbnail",
+        "2": "truthful, delivered promise",
+        "4": "truthful and compelling"
+      },
+      "requiresNonModelEvidenceForPass": false,
+      "requiredFields": [
+        "rubricVersion",
+        "evidenceRefs",
+        "confidence",
+        "assessor",
+        "findings",
+        "actionableImprovement"
+      ]
+    }
+  },
+  "evidencePriority": [
+    "canonical deterministic QA",
+    "validated Phase 6A reports",
+    "script/research/claim evidence",
+    "approved storyboard + CreativeFingerprint",
+    "cached model watch evidence (with limitations)",
+    "explicit human approvals"
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "phase": "6B",
+  "slice": "B",
+  "pilot": {
+    "projectId": "pilot-sky-blue-canonical",
+    "singleVideoAssessment": {
+      "kind": "ORIGINALITY_ASSESSMENT",
+      "version": "1.0.0",
+      "fingerprintVersion": "2.0.0",
+      "comparatorVersion": "1.0.0",
+      "policyVersion": "1.0.0",
+      "assessedArtifactHash": "7954a86a793ccbe5e153be30875b832ef813f3e23021e0f571a9da5e823dfcdf",
+      "assessedFingerprintHash": "2fa94d7ba7af62d5",
+      "corpusScope": "ONE_VIDEO",
+      "corpusCount": 0,
+      "realEpisodeCount": 0,
+      "excludedForScope": 0,
+      "coverage": "SUFFICIENT_FOR_SCOPE",
+      "channelLevelOriginality": "NOT_PROVEN",
+      "comparisons": [],
+      "risk": "LOW",
+      "findings": [
+        "INSUFFICIENT_COMPARISON_CORPUS"
+      ],
+      "findingDetails": [
+        {
+          "code": "INSUFFICIENT_COMPARISON_CORPUS",
+          "severity": "INFO",
+          "matches": [],
+          "where": [],
+          "confidence": "HIGH",
+          "falsePositiveConsiderations": [],
+          "suggestedRepair": "Re-assess once more real episodes exist.",
+          "evidenceRefs": [
+            "corpus"
+          ],
+          "whyItMatters": "Only 0 comparable real episode(s) (need >= 5 for channel-level assessment)."
+        }
+      ],
+      "evidenceRefs": [
+        "fingerprint v2 (hashed shingles)",
+        "Phase6A CreativeFingerprint v1"
+      ],
+      "limits": "Decision aid only: not a copyright clearance, YouTube eligibility or monetization verdict. Rights/provenance checks remain separate gates.",
+      "cache": {
+        "key": "87ec104bbea175e4",
+        "parts": {
+          "subjectFingerprintHash": "2fa94d7ba7af62d5",
+          "fingerprintVersion": "2.0.0",
+          "comparatorVersion": "1.0.0",
+          "policyVersion": "1.0.0",
+          "contentClass": "FACTUAL",
+          "channelIdentityHash": "5e4da860f96e71c7",
+          "corpusFingerprint": "4f53cda18c2baa0c"
+        }
+      }
+    },
+    "realChannelCorpusAttempt": {
+      "corpusScope": "REAL_CHANNEL_CORPUS",
+      "realEpisodeCount": 0,
+      "coverage": "INSUFFICIENT",
+      "risk": "NOT_ASSESSED",
+      "channelLevelOriginality": "NOT_PROVEN"
+    }
+  },
+  "gates": {
+    "SINGLE_VIDEO_ORIGINALITY": "PASS",
+    "CROSS_VIDEO_REAL_CORPUS": "INSUFFICIENT",
+    "CHANNEL_LEVEL_ORIGINALITY": "NOT_PROVEN"
+  },
+  "note": "ONE real episode exists; channel-level originality is NOT proven and is not renamed PROVEN."
+}

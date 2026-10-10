@@ -1,0 +1,301 @@
+{
+  "phase": "6B",
+  "slice": "C",
+  "assessment": {
+    "kind": "QUALITY_ASSESSMENT",
+    "version": "1.0.0",
+    "rubricVersion": "1.0.0",
+    "policyVersion": "1.0.0",
+    "projectId": "pilot-sky-blue-canonical",
+    "videoSha256": "7954a86a793ccbe5e153be30875b832ef813f3e23021e0f571a9da5e823dfcdf",
+    "contentClass": "FACTUAL",
+    "dimensions": [
+      {
+        "key": "narration",
+        "applicability": "APPLICABLE",
+        "rubricVersion": "1.0.0",
+        "owner": "NARRATION_TTS",
+        "status": "PASS",
+        "rationale": "[DETERMINISTIC/PASS] local transcript WER max 0 over 6/6 scenes | [DETERMINISTIC/PASS] final QC: audio present, 0 silence gaps, maxVolume -4.2 dB | [MODEL/PASS] model: voiceover clean/intelligible (gemini-3.5-flash, single whole-video pass; Free Tier owner-attested; video hash not bound in the artifact)",
+        "evidenceRefs": [
+          "Report/evidence/phase-6a/canonical-pilot/gemini-watch-per-scene.json",
+          "Report/evidence/phase-6a/canonical-pilot/phase4b-final-qc.json",
+          "Report/evidence/phase-6a/canonical-pilot/gemini-watch.json"
+        ],
+        "confidence": "MEDIUM",
+        "assessor": "DETERMINISTIC",
+        "findings": [],
+        "actionableImprovement": "none required"
+      },
+      {
+        "key": "scriptNaturalness",
+        "applicability": "APPLICABLE",
+        "rubricVersion": "1.0.0",
+        "owner": "STORY_SCRIPT",
+        "status": "PASS",
+        "rationale": "[DETERMINISTIC/PASS] lineage: final scene narration adds 0 content tokens beyond the QA-approved spoken script (condensation only; 7 filler tokens dropped) | [DETERMINISTIC/PASS] naturalness QA nqa-5c77553ddd03: PASS, 0 issues (upstream spoken script) | [DETERMINISTIC/PASS] Phase 6A beat report: 0 open P0-P2 findings (1 loops opened, 1 resolved)",
+        "evidenceRefs": [
+          "projects/pilot-sky-blue-canonical/input/final-spoken-script + scene-script.json",
+          "projects/pilot-sky-blue-canonical/voice/naturalness-qa/nqa-5c77553ddd03.json",
+          "Report/evidence/phase-6b/(recomputed) NarrativeBeatQualityReport"
+        ],
+        "confidence": "MEDIUM",
+        "assessor": "DETERMINISTIC",
+        "findings": [],
+        "actionableImprovement": "none required"
+      },
+      {
+        "key": "evidenceFidelity",
+        "applicability": "APPLICABLE",
+        "rubricVersion": "1.0.0",
+        "owner": "RESEARCH_EVIDENCE",
+        "status": "PASS",
+        "rationale": "[MODEL/PASS] model: diagrams scientifically accurate (gemini-3.5-flash, single whole-video pass; Free Tier owner-attested; video hash not bound in the artifact) | [DETERMINISTIC/PASS] final scene narration adds 0 content tokens beyond the QA-approved spoken script (condensation only; 7 filler tokens dropped) | [DETERMINISTIC/PASS] evidence-fidelity fid-18bda8f67bfa: PASS, 68 protected-item checks, 0 issues (bound to the 8-segment spoken script, not the condensed scene text)",
+        "evidenceRefs": [
+          "Report/evidence/phase-6a/canonical-pilot/gemini-watch.json",
+          "projects/pilot-sky-blue-canonical/input/final-spoken-script + scene-script.json",
+          "projects/pilot-sky-blue-canonical/voice/evidence-fidelity/fid-18bda8f67bfa.json"
+        ],
+        "confidence": "MEDIUM",
+        "assessor": "DETERMINISTIC",
+        "findings": [],
+        "actionableImprovement": "none required"
+      },
+      {
+        "key": "imagery",
+        "applicability": "APPLICABLE",
+        "rubricVersion": "1.0.0",
+        "owner": "ASSET_GENERATION",
+        "status": "PASS",
+        "rationale": "[MODEL/PASS] model per-scene: relevant visual described on 6/6 scenes | [DETERMINISTIC/PASS] render plan: 6/6 scenes carry a visual asset (0 placeholders per coverage matrix) | [HUMAN/PASS] owner visual review APPROVE of the exact attempt bytes (explicit message; unsigned full watch accepted by owner)",
+        "evidenceRefs": [
+          "Report/evidence/phase-6a/canonical-pilot/gemini-watch-per-scene.json",
+          "projects/pilot-sky-blue-canonical/render/render-plan.json",
+          "projects/pilot-sky-blue-canonical/render/attempts/attempt-006/qa/visual-review.json"
+        ],
+        "confidence": "MEDIUM",
+        "assessor": "DETERMINISTIC",
+        "findings": [],
+        "actionableImprovement": "none required"
+      },
+      {
+        "key": "visualFactuality",
+        "applicability": "APPLICABLE",
+        "rubricVersion": "1.0.0",
+        "owner": "ASSET_QA",
+        "status": "PASS",
+        "rationale": "[MODEL/PASS] model: diagrams clear and accurate (gemini-3.5-flash, single whole-video pass; Free Tier owner-attested; video hash not bound in the artifact) | [MODEL/PASS] model per-scene: scientifically_accurate on 6/6 scenes (flash-lite fallback pass); in-frame ILLUSTRATION badge per coverage matrix | [HUMAN/PASS] owner visual review APPROVE of the exact attempt bytes (explicit message; unsigned full watch accepted by owner)",
+        "evidenceRefs": [
+          "Report/evidence/phase-6a/canonical-pilot/gemini-watch.json",
+          "Report/evidence/phase-6a/canonical-pilot/gemini-watch-per-scene.json",
+          "projects/pilot-sky-blue-canonical/render/attempts/attempt-006/qa/visual-review.json"
+        ],
+        "confidence": "MEDIUM",
+        "assessor": "HUMAN",
+        "findings": [],
+        "actionableImprovement": "none required"
+      },
+      {
+        "key": "continuity",
+        "applicability": "NOT_APPLICABLE",
+        "rubricVersion": "1.0.0",
+        "owner": "CONTINUITY",
+        "status": "NOT_MEASURED",
+        "rationale": "Not applicable by design: continuity registry declares strictness NOT_APPLICABLE (no recurring characters/entities; single locked STYLE anchor)",
+        "evidenceRefs": [
+          "projects/pilot-sky-blue-canonical/continuity-registry.json"
+        ],
+        "confidence": "HIGH",
+        "assessor": "DETERMINISTIC",
+        "findings": [],
+        "actionableImprovement": "none"
+      },
+      {
+        "key": "motion",
+        "applicability": "APPLICABLE",
+        "rubricVersion": "1.0.0",
+        "owner": "MOTION_PLAN",
+        "status": "PASS",
+        "rationale": "[DETERMINISTIC/PASS] final QC: 0 freeze, 0 black, 0 large luminance transitions over 1713 frames (not a photosensitivity certification) | [MODEL/PASS] model: no flash/strobe (gemini-3.5-flash, single whole-video pass; Free Tier owner-attested; video hash not bound in the artifact) | [DETERMINISTIC/PASS] Phase 6A visual rhythm: 0 open P0-P2 findings, 2 open P3 polish",
+        "evidenceRefs": [
+          "Report/evidence/phase-6a/canonical-pilot/phase4b-final-qc.json",
+          "Report/evidence/phase-6a/canonical-pilot/gemini-watch.json",
+          "(recomputed) VisualRhythmReport"
+        ],
+        "confidence": "MEDIUM",
+        "assessor": "DETERMINISTIC",
+        "findings": [],
+        "actionableImprovement": "none required"
+      },
+      {
+        "key": "sound",
+        "applicability": "APPLICABLE",
+        "rubricVersion": "1.0.0",
+        "owner": "AUDIO_MIX",
+        "status": "PASS",
+        "rationale": "[DETERMINISTIC/PASS] final QC: no silence gaps, volume ok (mean -21.8 dB, max -4.2 dB); speech-only mix, no music by design | [MODEL/PASS] model: audio clean, no music/SFX (gemini-3.5-flash, single whole-video pass; Free Tier owner-attested; video hash not bound in the artifact)",
+        "evidenceRefs": [
+          "Report/evidence/phase-6a/canonical-pilot/phase4b-final-qc.json",
+          "Report/evidence/phase-6a/canonical-pilot/gemini-watch.json"
+        ],
+        "confidence": "MEDIUM",
+        "assessor": "DETERMINISTIC",
+        "findings": [],
+        "actionableImprovement": "none required"
+      },
+      {
+        "key": "captions",
+        "applicability": "APPLICABLE",
+        "rubricVersion": "1.0.0",
+        "owner": "CAPTIONS",
+        "status": "PASS",
+        "rationale": "[MODEL/PASS] model: captions accurate and in sync (gemini-3.5-flash, single whole-video pass; Free Tier owner-attested; video hash not bound in the artifact) | [DETERMINISTIC/PASS] local check: 16/16 burned-in caption cues match script text exactly (timing NOT proven by the model) | [DETERMINISTIC/PASS] caption reading speed p90 15.09 cps (policy overload at 17)",
+        "evidenceRefs": [
+          "Report/evidence/phase-6a/canonical-pilot/gemini-watch.json",
+          "Report/evidence/phase-6a/canonical-pilot/gemini-watch-per-scene.json",
+          "(recomputed) VisualRhythmReport"
+        ],
+        "confidence": "MEDIUM",
+        "assessor": "DETERMINISTIC",
+        "findings": [],
+        "actionableImprovement": "none required"
+      },
+      {
+        "key": "pacing",
+        "applicability": "APPLICABLE",
+        "rubricVersion": "1.0.0",
+        "owner": "MASTER_TIMELINE",
+        "status": "PASS",
+        "rationale": "[MODEL/PASS] model: visuals in step with narration (gemini-3.5-flash, single whole-video pass; Free Tier owner-attested; video hash not bound in the artifact) | [HUMAN/PASS] owner visual review APPROVE of the exact attempt bytes (explicit message; unsigned full watch accepted by owner) | [DETERMINISTIC/PASS] Phase 6A hook/beat/rhythm: 0 open P0-P2 findings; hook checkpoints PASS/PASS/PASS",
+        "evidenceRefs": [
+          "Report/evidence/phase-6a/canonical-pilot/gemini-watch.json",
+          "projects/pilot-sky-blue-canonical/render/attempts/attempt-006/qa/visual-review.json",
+          "(recomputed) HookQualityReport"
+        ],
+        "confidence": "MEDIUM",
+        "assessor": "DETERMINISTIC",
+        "findings": [],
+        "actionableImprovement": "none required"
+      },
+      {
+        "key": "semanticAlignment",
+        "applicability": "APPLICABLE",
+        "rubricVersion": "1.0.0",
+        "owner": "STORY_SCRIPT",
+        "status": "PASS",
+        "rationale": "[MODEL/PASS] model: visuals support narration (gemini-3.5-flash, single whole-video pass; Free Tier owner-attested; video hash not bound in the artifact) | [MODEL/PASS] model: delivers title/thumbnail promise (gemini-3.5-flash, single whole-video pass; Free Tier owner-attested; video hash not bound in the artifact) | [HUMAN/PASS] owner visual review APPROVE of the exact attempt bytes (explicit message; unsigned full watch accepted by owner) | [DETERMINISTIC/PASS] hook promise coverage: no HOOK_PROMISE_MISMATCH; checkpoints PASS/PASS/PASS | [DETERMINISTIC/PASS] Phase 6A structural watch: verdict PASS, coverage 1, no cross-channel contradiction",
+        "evidenceRefs": [
+          "Report/evidence/phase-6a/canonical-pilot/gemini-watch.json",
+          "projects/pilot-sky-blue-canonical/render/attempts/attempt-006/qa/visual-review.json",
+          "(recomputed) HookQualityReport",
+          "(recomputed) MultimodalWatchReport (structural)"
+        ],
+        "confidence": "MEDIUM",
+        "assessor": "DETERMINISTIC",
+        "findings": [],
+        "actionableImprovement": "none required"
+      },
+      {
+        "key": "originality",
+        "applicability": "APPLICABLE",
+        "rubricVersion": "1.0.0",
+        "owner": "CREATIVE_ORIGINALITY",
+        "status": "PASS",
+        "rationale": "[DETERMINISTIC/PASS] OriginalityAssessment risk LOW for scope ONE_VIDEO (corpus 0); channel-level NOT_PROVEN",
+        "evidenceRefs": [
+          "Report/evidence/phase-6b/originality-comparison-evidence.json"
+        ],
+        "confidence": "MEDIUM",
+        "assessor": "DETERMINISTIC",
+        "findings": [],
+        "actionableImprovement": "none required"
+      },
+      {
+        "key": "packaging",
+        "applicability": "APPLICABLE",
+        "rubricVersion": "1.0.0",
+        "owner": "PUBLISH_PACKAGE",
+        "status": "REVIEW_REQUIRED",
+        "rationale": "[MODEL/PASS] model: delivers title/thumbnail promise (gemini-3.5-flash, single whole-video pass; Free Tier owner-attested; video hash not bound in the artifact) | [DETERMINISTIC/REVIEW_REQUIRED] persisted packaging QA REVIEW_REQUIRED: MISSING_AUDIENCE_DECISION; owner approval records audience {\"madeForKids\":false,\"ageRestriction\":false} and variant pkv-202fd90e1b72",
+        "evidenceRefs": [
+          "Report/evidence/phase-6a/canonical-pilot/gemini-watch.json",
+          "projects/pilot-sky-blue-canonical/packaging/packaging-qa.json"
+        ],
+        "confidence": "MEDIUM",
+        "assessor": "DETERMINISTIC",
+        "findings": [],
+        "actionableImprovement": "Route to PUBLISH_PACKAGE: persisted packaging QA REVIEW_REQUIRED: MISSING_AUDIENCE_DECISION; owner approval records audience {\"madeForKids\":false,\"ageRestriction\":false} and variant pkv-202fd90e1b72",
+        "acceptedByOwner": {
+          "ownerRef": "owner (carried from UNFOLDIQ_PHASE_6B handoff section 1)",
+          "reason": "Owner-accepted non-blocking in the Phase 6A handoff (PACKAGING_QA = ACCEPTED_NON_BLOCKING); audience decision exists in owner-approval.json; persisted packaging-qa.json stays REVIEW_REQUIRED and is not forged to PASS",
+          "ledgerEntryId": "ovr-a4ef55367b2dd1cb"
+        }
+      }
+    ],
+    "coverage": {
+      "applicable": 12,
+      "assessed": 12,
+      "missing": 0,
+      "missingDimensions": [],
+      "notApplicable": [
+        "continuity"
+      ]
+    },
+    "summary": {
+      "scoreMeaning": "NOT_COMPUTED (no ordinal evidence)"
+    },
+    "blockingFindings": [],
+    "hardBlockers": [],
+    "recommendedRepairs": [],
+    "acceptedByOwner": [
+      {
+        "dimension": "packaging",
+        "ownerRef": "owner (carried from UNFOLDIQ_PHASE_6B handoff section 1)",
+        "reason": "Owner-accepted non-blocking in the Phase 6A handoff (PACKAGING_QA = ACCEPTED_NON_BLOCKING); audience decision exists in owner-approval.json; persisted packaging-qa.json stays REVIEW_REQUIRED and is not forged to PASS",
+        "ledgerEntryId": "ovr-a4ef55367b2dd1cb"
+      }
+    ],
+    "limitations": [
+      "CANONICAL_PILOT_LINEAGE = PARTIAL (Gemini watch artifacts lack exact video sha256)",
+      "FINAL_MULTIMODAL_WATCH = PASS_WITH_LIMITATIONS (model judgment, not a human-signed full watch)",
+      "AUDIO_VISUAL_QA = REVIEW_REQUIRED (accepted by owner; model-only quality judgment)",
+      "PACKAGING_QA = ACCEPTED_NON_BLOCKING (persisted schema remains REVIEW_REQUIRED; not forged to PASS)",
+      "57s representative pilot does NOT prove the Phase 4 2-3 min goal or Phase 7 8-12+ min long-form readiness",
+      "Quality scores are decision aids: no retention, watch-time, copyright or monetization certification"
+    ],
+    "finalDecision": "PASS",
+    "decisionReasons": [],
+    "gateVsPreference": "finalDecision (gate) and summary.score (preference) are stored separately; the gate never reads the score.",
+    "ownerApprovalRef": "projects/pilot-sky-blue-canonical/approval/owner-approval.json",
+    "cache": {
+      "key": "8f45fc84f6b8bd7d",
+      "parts": {
+        "rubricVersion": "1.0.0",
+        "policyVersion": "1.0.0",
+        "videoSha256": "7954a86a793ccbe5e153be30875b832ef813f3e23021e0f571a9da5e823dfcdf",
+        "contentClass": "FACTUAL",
+        "evidenceHash": "209d05a2855dbe61"
+      }
+    }
+  },
+  "unresolvedWithoutOwnerAcceptance": [
+    {
+      "key": "packaging",
+      "status": "REVIEW_REQUIRED",
+      "rationale": "[MODEL/PASS] model: delivers title/thumbnail promise (gemini-3.5-flash, single whole-video pass; Free Tier owner-attested; video hash not bound in the artifact) | [DETERMINISTIC/REVIEW_REQUIRED] persisted packaging QA REVIEW_REQUIRED: MISSING_AUDIENCE_DECISION; owner approval records audience {\"madeForKids\":false,\"ageRestriction\":false} and variant pkv-202fd90e1b72"
+    }
+  ],
+  "cacheFresh": true,
+  "routedRepairs": [
+    {
+      "source": "finding:FRAMING_REPETITION",
+      "owner": "LAYOUT_RESPONSIVE",
+      "action": "FRAMING_LAYOUT_PATCH:vary crop/subject scale/composition"
+    },
+    {
+      "source": "finding:MODALITY_MONOTONY",
+      "owner": "MASTER_TIMELINE",
+      "action": "ASSET_MODALITY_REPLACE:match modality to beat role (chart/diagram/map/still)"
+    }
+  ]
+}

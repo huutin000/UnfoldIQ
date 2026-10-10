@@ -1,0 +1,69 @@
+{
+  "phase": "6B",
+  "slice": "A",
+  "comparisonBasis": "RUBRIC_AND_EVIDENCE_ONLY (no viewer metrics, no actual retention)",
+  "criteria": [
+    "factualFidelity",
+    "clarity",
+    "storyPurpose",
+    "visualReadability",
+    "pacing",
+    "styleConsistency",
+    "originalityContribution",
+    "costLatency",
+    "accessibility"
+  ],
+  "sharedInputHashes": {
+    "narrativeClaim": "710cdabb4f217594",
+    "evidence": "2bc298660a7dc626",
+    "audioTiming": "4ea8c52e44075212",
+    "outputProfile": "bdf38a47619ae1dc"
+  },
+  "evaluation": [
+    {
+      "candidateId": "cand-daa809485de4b09c",
+      "ratings": {
+        "factualFidelity": 4,
+        "clarity": 3,
+        "storyPurpose": 3,
+        "visualReadability": 3,
+        "pacing": 3,
+        "styleConsistency": 3,
+        "originalityContribution": 3,
+        "costLatency": 4,
+        "accessibility": 3
+      },
+      "rationale": "Cheaper to produce; reveal timing matches narration",
+      "evidenceRefs": [
+        "storyboard:S05"
+      ]
+    },
+    {
+      "candidateId": "cand-d13101f5866adbfc",
+      "ratings": {
+        "factualFidelity": 4,
+        "clarity": 4,
+        "storyPurpose": 4,
+        "visualReadability": 3,
+        "pacing": 3,
+        "styleConsistency": 3,
+        "originalityContribution": 3,
+        "costLatency": 2,
+        "accessibility": 3
+      },
+      "rationale": "Animated path shows why blue is removed over distance",
+      "evidenceRefs": [
+        "storyboard:S05"
+      ]
+    }
+  ],
+  "decision": "NO_WINNER",
+  "selectedCandidateId": null,
+  "approvalStatus": "UNAPPROVED_CANDIDATE",
+  "previewCache": {
+    "cacheHits": 0,
+    "segmentPreviewsRendered": 0,
+    "fullSecondRenders": 0
+  },
+  "lockedFinalUnchanged": true
+}

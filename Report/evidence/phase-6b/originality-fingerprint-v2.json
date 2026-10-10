@@ -1,0 +1,447 @@
+{
+  "kind": "ORIGINALITY_FINGERPRINT",
+  "version": "2.0.0",
+  "projectId": "pilot-sky-blue-canonical",
+  "episodeId": "pilot-sky-blue-canonical",
+  "origin": "REAL_EPISODE",
+  "scope": {
+    "ownerId": "owner-unfoldiq",
+    "channelId": "unfoldiq-main"
+  },
+  "contentClass": "FACTUAL",
+  "inputFingerprint": "4f89c9529e877c7f",
+  "videoSha256": "7954a86a793ccbe5e153be30875b832ef813f3e23021e0f571a9da5e823dfcdf",
+  "identity": {
+    "editorialBibleVersion": "visual-bible bcdfe87f4c29c995",
+    "channelIdentityHash": "5e4da860f96e71c7"
+  },
+  "substance": {
+    "thesisTokens": [
+      "9bb63e54",
+      "3aae004f",
+      "a3aad335",
+      "4bc9274d",
+      "0195475c",
+      "cabd3d7c",
+      "48507f72"
+    ],
+    "keyQuestionCount": 0,
+    "claimRefs": [
+      "C1",
+      "C2",
+      "C3",
+      "C4",
+      "C5",
+      "C6",
+      "C7"
+    ],
+    "scriptHash": "8ac29b0afb0daf84",
+    "units": [
+      {
+        "beatId": "S01",
+        "role": "HOOK",
+        "isIdentity": false,
+        "isRecap": false,
+        "shingleHashes": [
+          "f866813d",
+          "2458fd96",
+          "93699c14",
+          "ea0d5290",
+          "d265b39f",
+          "ab609e43",
+          "3646288f",
+          "227c88f2",
+          "b7920560",
+          "758d3cd1",
+          "87266241",
+          "e6020e86",
+          "e5bb2e53",
+          "c3726dad",
+          "976f3295",
+          "e33bb309",
+          "5d2499d4",
+          "87cf772b",
+          "d43b9c6d",
+          "2b245574"
+        ],
+        "tokenHashes": [
+          "b3f95c30",
+          "0cd2ab38",
+          "051a9620",
+          "9bb63e54",
+          "3aae004f",
+          "48507f72",
+          "639c4bc1",
+          "864fc1ca",
+          "04e4ead5"
+        ]
+      },
+      {
+        "beatId": "S02",
+        "role": "SETUP",
+        "isIdentity": false,
+        "isRecap": false,
+        "shingleHashes": [
+          "29deead0",
+          "0d6aaecc",
+          "a75ce54e",
+          "80016296",
+          "d3b72c9d",
+          "7a855471",
+          "5b00c207",
+          "ba444e33",
+          "812fda58",
+          "34c7d6f8",
+          "74f840df",
+          "41c4875e",
+          "34139077",
+          "a4885367",
+          "49adeba8",
+          "ec89dbc0",
+          "c1b5aa0f",
+          "faecdb87"
+        ],
+        "tokenHashes": [
+          "b2437a6a",
+          "105e9895",
+          "79f6fbbf",
+          "639c4bc1",
+          "be726b61",
+          "b462732d",
+          "2d9f479d",
+          "eee858e0",
+          "2f6d9708",
+          "90c16dda",
+          "13ab6928",
+          "f5d81609"
+        ]
+      },
+      {
+        "beatId": "S03",
+        "role": "EXPLANATION",
+        "isIdentity": false,
+        "isRecap": false,
+        "shingleHashes": [
+          "aa4cf615",
+          "662a44de",
+          "8950d19f",
+          "d5ebab37",
+          "c4bb45f1",
+          "0c52d96d",
+          "ceeb1bcf",
+          "16282c84",
+          "465876c9",
+          "18fa14c2",
+          "42631f1d",
+          "20a556c8",
+          "a6f35c1b",
+          "5a749b2f",
+          "fdf8550c",
+          "7ed52564",
+          "c4f0e001",
+          "6a142597",
+          "d55006f6",
+          "17ba0323",
+          "5ebfd285",
+          "58d636d8",
+          "7bdc2c73",
+          "4dda70e7",
+          "07772484",
+          "73c250de",
+          "286b6150",
+          "55704f6e",
+          "98b4ee07",
+          "270b6d5e",
+          "4044e838",
+          "8cb1fc53",
+          "8a059cfc"
+        ],
+        "tokenHashes": [
+          "48507f72",
+          "c8b044f9",
+          "0195475c",
+          "45c64a70",
+          "3aae004f",
+          "3ca2aa8a",
+          "9b45d840",
+          "a6048843",
+          "4dfd792a",
+          "c99bba2d",
+          "4bc9274d",
+          "f5d81609",
+          "dea94346",
+          "7de04c24",
+          "f876e106",
+          "14b7faff",
+          "8900583a",
+          "9bb63e54",
+          "39a21abe"
+        ]
+      },
+      {
+        "beatId": "S04",
+        "role": "CONTRAST",
+        "isIdentity": false,
+        "isRecap": false,
+        "shingleHashes": [
+          "befc8081",
+          "8accaa67",
+          "c77a6ae9",
+          "a27c7c22",
+          "4f9037b8",
+          "f9b4ff01",
+          "aee6b3a8",
+          "18b1e2ff",
+          "f564277c",
+          "37f8d879",
+          "78f8cbb2",
+          "bd321963",
+          "0e5accad",
+          "05842251",
+          "0110c18a",
+          "3cc04cd4",
+          "d347d1f1",
+          "2c0fbeec"
+        ],
+        "tokenHashes": [
+          "d7cfd2d9",
+          "0195475c",
+          "3bd4bf83",
+          "48507f72",
+          "7de04c24",
+          "294c1d09"
+        ]
+      },
+      {
+        "beatId": "S05",
+        "role": "EVIDENCE",
+        "isIdentity": false,
+        "isRecap": false,
+        "shingleHashes": [
+          "5ef4978a",
+          "0127fc53",
+          "7aa42410",
+          "8111b724",
+          "834e3e24",
+          "0e1bd6fa",
+          "e309b842",
+          "dc32b660",
+          "f71f6325",
+          "c60972c3",
+          "01c3878e",
+          "70af8590",
+          "6f7e8f8f",
+          "8a4af622",
+          "8d579ed6"
+        ],
+        "tokenHashes": [
+          "a3aad335",
+          "48507f72",
+          "41409234",
+          "3878aa64",
+          "79f6fbbf",
+          "3aae004f",
+          "0195475c",
+          "62f65213",
+          "4bc9274d",
+          "991359cc",
+          "9a43802d"
+        ]
+      },
+      {
+        "beatId": "S06",
+        "role": "CONTRAST",
+        "isIdentity": false,
+        "isRecap": false,
+        "shingleHashes": [
+          "d8dd47ed",
+          "70c478e6",
+          "fc3317be",
+          "52f29254",
+          "5c4452fc",
+          "608701b5",
+          "0153793f",
+          "6f8361cf",
+          "36f10198",
+          "1f920131",
+          "deacfc21",
+          "587aa6d2",
+          "f0a2397d",
+          "86a4149e",
+          "0c58d104",
+          "97cd2b9b",
+          "52ce554b",
+          "d1c37d96",
+          "79700fdd",
+          "c0201ad8",
+          "1a9b0c37",
+          "33705bfe",
+          "ec548455",
+          "8f5163cd",
+          "bb4ee451",
+          "4d19e5d9",
+          "66393f96",
+          "5f099cea",
+          "464a83cf",
+          "e843a4e6",
+          "5955386f",
+          "cbdfdb44"
+        ],
+        "tokenHashes": [
+          "09a8878b",
+          "a7876a0c",
+          "0195475c",
+          "eda122f3",
+          "e8cf7448",
+          "b2283776",
+          "9bb63e54",
+          "b3f95c30",
+          "f7780eda",
+          "864fc1ca",
+          "3aae004f",
+          "0b1ba612",
+          "48507f72",
+          "cabd3d7c",
+          "79f6fbbf",
+          "2f29500e",
+          "73da76bf"
+        ]
+      }
+    ],
+    "wordingStorage": "HASHED_SHINGLES_ONLY"
+  },
+  "structure": {
+    "roleSequence": [
+      "HOOK",
+      "SETUP",
+      "EXPLANATION",
+      "CONTRAST",
+      "EVIDENCE",
+      "CONTRAST"
+    ],
+    "hookRoles": [
+      "HOOK"
+    ],
+    "revealPosition": null,
+    "payoffPosition": null,
+    "cta": null
+  },
+  "transitions": {
+    "openers": [
+      "look up",
+      "the answer",
+      "when sunlight",
+      "violet is",
+      "at sunset",
+      "dust and"
+    ],
+    "perBeat": [
+      [
+        "S01",
+        "look up"
+      ],
+      [
+        "S02",
+        "the answer"
+      ],
+      [
+        "S03",
+        "when sunlight"
+      ],
+      [
+        "S04",
+        "violet is"
+      ],
+      [
+        "S05",
+        "at sunset"
+      ],
+      [
+        "S06",
+        "dust and"
+      ]
+    ]
+  },
+  "presentation": {
+    "durationBuckets": [
+      7,
+      8,
+      15,
+      7,
+      7,
+      13
+    ],
+    "modalitySequence": [
+      "DIAGRAM",
+      "DIAGRAM",
+      "DIAGRAM",
+      "DIAGRAM",
+      "DIAGRAM",
+      "DIAGRAM"
+    ],
+    "framingSequence": [
+      "DIAGRAM_FULL",
+      "DIAGRAM_FULL",
+      "DIAGRAM_FULL",
+      "DIAGRAM_FULL",
+      "DIAGRAM_FULL",
+      "DIAGRAM_FULL"
+    ],
+    "motionSequence": [
+      "STATIC",
+      "STATIC",
+      "STATIC",
+      "STATIC",
+      "STATIC",
+      "STATIC"
+    ],
+    "transitionSequence": [
+      "CUT",
+      "CUT",
+      "CUT",
+      "CUT",
+      "CUT",
+      "CUT"
+    ],
+    "staticShare": 1,
+    "musicCueRoles": [],
+    "titleTemplate": "why x x x while the x x x",
+    "thumbnailLayout": "ILLUSTRATION_ONLY"
+  },
+  "provenance": {
+    "assets": [
+      {
+        "assetId": "VISUAL_S01",
+        "sha256": null,
+        "source": "ORIGINAL"
+      },
+      {
+        "assetId": "VISUAL_S02",
+        "sha256": null,
+        "source": "ORIGINAL"
+      },
+      {
+        "assetId": "VISUAL_S03",
+        "sha256": null,
+        "source": "ORIGINAL"
+      },
+      {
+        "assetId": "VISUAL_S04",
+        "sha256": null,
+        "source": "ORIGINAL"
+      },
+      {
+        "assetId": "VISUAL_S05",
+        "sha256": null,
+        "source": "ORIGINAL"
+      },
+      {
+        "assetId": "VISUAL_S06",
+        "sha256": null,
+        "source": "ORIGINAL"
+      }
+    ]
+  },
+  "v1FingerprintHash": "3e2061fe3c81b4ad",
+  "fingerprintHash": "2fa94d7ba7af62d5"
+}

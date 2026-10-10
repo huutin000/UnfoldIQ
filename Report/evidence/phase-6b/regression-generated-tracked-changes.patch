@@ -1,0 +1,1335 @@
+diff --git a/Report/evidence/perf-5b/repair-benchmark-a.json b/Report/evidence/perf-5b/repair-benchmark-a.json
+index 4ca1f04..7eba5c1 100644
+--- a/Report/evidence/perf-5b/repair-benchmark-a.json
++++ b/Report/evidence/perf-5b/repair-benchmark-a.json
+@@ -74,13 +74,13 @@
+    "bytes": 222836
+   }
+  ],
+- "reassemblyMs": 319,
++ "reassemblyMs": 321,
+  "cache": {
+   "lookups": 6,
+   "validHits": 5,
+   "misses": 1,
+   "bytesReused": 32655939,
+   "bytesWritten": 32655939,
+-  "hashingMs": 51
++  "hashingMs": 48
+  }
+ }
+\ No newline at end of file
+diff --git a/Report/evidence/perf-5b/repair-benchmark-small.json b/Report/evidence/perf-5b/repair-benchmark-small.json
+index f2c9c46..f35df39 100644
+--- a/Report/evidence/perf-5b/repair-benchmark-small.json
++++ b/Report/evidence/perf-5b/repair-benchmark-small.json
+@@ -1,8 +1,8 @@
+ {
+  "version": "1.0.0",
+  "scale": "small (120 frames, 1280x720-class)",
+- "fullReferenceMs": 12290,
+- "incrementalRenderMs": 5242,
++ "fullReferenceMs": 12020,
++ "incrementalRenderMs": 5211,
+  "framesTotal": 120,
+  "framesRendered": 60,
+  "framesReused": 60,
+diff --git a/Report/evidence/perf-5b/repair-benchmark.json b/Report/evidence/perf-5b/repair-benchmark.json
+index 4679c96..ed0a722 100644
+--- a/Report/evidence/perf-5b/repair-benchmark.json
++++ b/Report/evidence/perf-5b/repair-benchmark.json
+@@ -74,18 +74,18 @@
+    "bytes": 222836
+   }
+  ],
+- "reassemblyMs": 319,
++ "reassemblyMs": 321,
+  "cache": {
+   "lookups": 6,
+   "validHits": 5,
+   "misses": 1,
+   "bytesReused": 32655939,
+   "bytesWritten": 32655939,
+-  "hashingMs": 51
++  "hashingMs": 48
+  },
+  "incrementalDirtyMs": 0,
+- "assemblyMs": 256,
+- "conformMs": 26078,
++ "assemblyMs": 286,
++ "conformMs": 26403,
+  "oracleMs": null,
+  "equivalence": {
+   "status": "FAIL",
+@@ -4684,7 +4684,7 @@
+    "sampleMaxDiff": 43
+   }
+  },
+- "partialQaMs": 3835,
++ "partialQaMs": 4125,
+  "partialQa": {
+   "localDetectors": {
+    "black": 0,
+@@ -4700,7 +4700,7 @@
+   "lumaFrames": 300,
+   "globalDecode": true,
+   "fullQaWindowMs": 75000,
+-  "avoidedMs": 71165
++  "avoidedMs": 70875
+  },
+  "qaCoverage": {
+   "complete": true,
+diff --git a/Report/evidence/perf-5c/browser-reuse-benchmark.json b/Report/evidence/perf-5c/browser-reuse-benchmark.json
+index 43d3ae8..34e0959 100644
+--- a/Report/evidence/perf-5c/browser-reuse-benchmark.json
++++ b/Report/evidence/perf-5c/browser-reuse-benchmark.json
+@@ -6,16 +6,16 @@
+  "rangeRenders": 4,
+  "browserStarts": 1,
+  "reusedLeases": 3,
+- "browserStartupMs": 86,
++ "browserStartupMs": 79,
+  "startupAvoidedMs": [
+-  86,
+-  86,
+-  86
++  79,
++  79,
++  79
+  ],
+- "startupAvoidedTotalMs": 258,
++ "startupAvoidedTotalMs": 237,
+  "benchmark5b": {
+-  "fullReferenceMs": 12290,
+-  "incrementalRenderMs": 5242
++  "fullReferenceMs": 12020,
++  "incrementalRenderMs": 5211
+  },
+  "policy": {
+   "version": "1.0.0",
+diff --git a/Report/evidence/perf-5c/concurrency-matrix.json b/Report/evidence/perf-5c/concurrency-matrix.json
+index 4562a30..e536064 100644
+--- a/Report/evidence/perf-5c/concurrency-matrix.json
++++ b/Report/evidence/perf-5c/concurrency-matrix.json
+@@ -6,33 +6,33 @@
+   {
+    "concurrency": 1,
+    "wallsMs": [
+-    11519,
+-    11467
++    10972,
++    11635
+    ],
+-   "bestMs": 11467,
+-   "rssPeakMB": 536,
++   "bestMs": 10972,
++   "rssPeakMB": 539,
+    "crashes": 0,
+    "failures": 0
+   },
+   {
+    "concurrency": 2,
+    "wallsMs": [
+-    7106,
+-    7408
++    6645,
++    6696
+    ],
+-   "bestMs": 7106,
+-   "rssPeakMB": 302,
++   "bestMs": 6645,
++   "rssPeakMB": 321,
+    "crashes": 0,
+    "failures": 0
+   },
+   {
+    "concurrency": 4,
+    "wallsMs": [
+-    5857,
+-    5569
++    4999,
++    5212
+    ],
+-   "bestMs": 5569,
+-   "rssPeakMB": 305,
++   "bestMs": 4999,
++   "rssPeakMB": 321,
+    "crashes": 0,
+    "failures": 0
+   }
+@@ -45,7 +45,7 @@
+  },
+  "selectedDefault": {
+   "concurrency": 4,
+-  "bestMs": 5569,
++  "bestMs": 4999,
+   "rationale": "fastest zero-crash candidate at small scale; pilot-scale re-check open"
+  }
+ }
+\ No newline at end of file
+diff --git a/Report/evidence/pilot-4b/e2e-baseline.json b/Report/evidence/pilot-4b/e2e-baseline.json
+index 9f17513..77c747c 100644
+--- a/Report/evidence/pilot-4b/e2e-baseline.json
++++ b/Report/evidence/pilot-4b/e2e-baseline.json
+@@ -23,5 +23,5 @@
+  "renderFps": "reused",
+  "outputBytes": 50865647,
+  "interventions": [],
+- "createdAt": "2026-10-08T02:30:13.861Z"
++ "createdAt": "2026-10-10T09:09:09.471Z"
+ }
+\ No newline at end of file
+diff --git a/projects/HARDENING_1G12/flow-jobs/H1-JOB.json b/projects/HARDENING_1G12/flow-jobs/H1-JOB.json
+index 4b5904d..9fdc9d8 100644
+--- a/projects/HARDENING_1G12/flow-jobs/H1-JOB.json
++++ b/projects/HARDENING_1G12/flow-jobs/H1-JOB.json
+@@ -7,38 +7,38 @@
+     {
+       "from": null,
+       "to": "PENDING",
+-      "at": "2026-10-08T02:41:44.848Z",
++      "at": "2026-10-10T08:55:28.146Z",
+       "actor": "system"
+     },
+     {
+       "from": "PENDING",
+       "to": "VALIDATED",
+-      "at": "2026-10-08T02:41:44.857Z",
++      "at": "2026-10-10T08:55:28.154Z",
+       "actor": "test"
+     },
+     {
+       "from": "VALIDATED",
+       "to": "PREPARED",
+-      "at": "2026-10-08T02:41:44.865Z",
++      "at": "2026-10-10T08:55:28.160Z",
+       "actor": "test"
+     },
+     {
+       "from": "PREPARED",
+       "to": "AWAITING_USER_APPROVAL",
+-      "at": "2026-10-08T02:41:44.874Z",
++      "at": "2026-10-10T08:55:28.166Z",
+       "actor": "test"
+     },
+     {
+       "from": "AWAITING_USER_APPROVAL",
+       "to": "AWAITING_USER_APPROVAL",
+-      "at": "2026-10-08T02:41:44.883Z",
++      "at": "2026-10-10T08:55:28.172Z",
+       "actor": "user",
+       "note": "approval-recorded"
+     },
+     {
+       "from": "AWAITING_USER_APPROVAL",
+       "to": "AWAITING_PROVIDER_ACCEPTANCE",
+-      "at": "2026-10-08T02:41:44.891Z",
++      "at": "2026-10-10T08:55:28.179Z",
+       "actor": "extension"
+     }
+   ],
+@@ -64,9 +64,9 @@
+     "approvedBy": "user",
+     "nonce": "nonce-H1-a",
+     "fingerprint": "fp-nonce-H1-a",
+-    "approvedAt": "2026-10-08T02:41:44.883Z",
++    "approvedAt": "2026-10-10T08:55:28.172Z",
+     "used": false
+   },
+-  "submitIssuedAt": "2026-10-08T02:41:44.892Z",
++  "submitIssuedAt": "2026-10-10T08:55:28.179Z",
+   "submitNonce": "nonce-H1-a"
+ }
+\ No newline at end of file
+diff --git a/projects/HARDENING_1G12/flow-jobs/H2-JOB.json b/projects/HARDENING_1G12/flow-jobs/H2-JOB.json
+index c875b32..875f086 100644
+--- a/projects/HARDENING_1G12/flow-jobs/H2-JOB.json
++++ b/projects/HARDENING_1G12/flow-jobs/H2-JOB.json
+@@ -7,38 +7,38 @@
+     {
+       "from": null,
+       "to": "PENDING",
+-      "at": "2026-10-08T02:41:44.904Z",
++      "at": "2026-10-10T08:55:28.186Z",
+       "actor": "system"
+     },
+     {
+       "from": "PENDING",
+       "to": "VALIDATED",
+-      "at": "2026-10-08T02:41:44.914Z",
++      "at": "2026-10-10T08:55:28.192Z",
+       "actor": "test"
+     },
+     {
+       "from": "VALIDATED",
+       "to": "PREPARED",
+-      "at": "2026-10-08T02:41:44.922Z",
++      "at": "2026-10-10T08:55:28.197Z",
+       "actor": "test"
+     },
+     {
+       "from": "PREPARED",
+       "to": "AWAITING_USER_APPROVAL",
+-      "at": "2026-10-08T02:41:44.931Z",
++      "at": "2026-10-10T08:55:28.203Z",
+       "actor": "test"
+     },
+     {
+       "from": "AWAITING_USER_APPROVAL",
+       "to": "AWAITING_USER_APPROVAL",
+-      "at": "2026-10-08T02:41:44.941Z",
++      "at": "2026-10-10T08:55:28.209Z",
+       "actor": "user",
+       "note": "approval-recorded"
+     },
+     {
+       "from": "AWAITING_USER_APPROVAL",
+       "to": "AWAITING_PROVIDER_ACCEPTANCE",
+-      "at": "2026-10-08T02:41:44.951Z",
++      "at": "2026-10-10T08:55:28.216Z",
+       "actor": "extension"
+     }
+   ],
+@@ -64,9 +64,9 @@
+     "approvedBy": "user",
+     "nonce": "nonce-H2-a",
+     "fingerprint": "fp-nonce-H2-a",
+-    "approvedAt": "2026-10-08T02:41:44.941Z",
++    "approvedAt": "2026-10-10T08:55:28.209Z",
+     "used": false
+   },
+-  "submitIssuedAt": "2026-10-08T02:41:44.951Z",
++  "submitIssuedAt": "2026-10-10T08:55:28.216Z",
+   "submitNonce": "nonce-H2-a"
+ }
+\ No newline at end of file
+diff --git a/projects/HARDENING_1G12/flow-jobs/H3-JOB.json b/projects/HARDENING_1G12/flow-jobs/H3-JOB.json
+index 3e8f691..421b74d 100644
+--- a/projects/HARDENING_1G12/flow-jobs/H3-JOB.json
++++ b/projects/HARDENING_1G12/flow-jobs/H3-JOB.json
+@@ -7,44 +7,44 @@
+     {
+       "from": null,
+       "to": "PENDING",
+-      "at": "2026-10-08T02:41:44.963Z",
++      "at": "2026-10-10T08:55:28.223Z",
+       "actor": "system"
+     },
+     {
+       "from": "PENDING",
+       "to": "VALIDATED",
+-      "at": "2026-10-08T02:41:44.972Z",
++      "at": "2026-10-10T08:55:28.229Z",
+       "actor": "test"
+     },
+     {
+       "from": "VALIDATED",
+       "to": "PREPARED",
+-      "at": "2026-10-08T02:41:44.980Z",
++      "at": "2026-10-10T08:55:28.235Z",
+       "actor": "test"
+     },
+     {
+       "from": "PREPARED",
+       "to": "AWAITING_USER_APPROVAL",
+-      "at": "2026-10-08T02:41:44.988Z",
++      "at": "2026-10-10T08:55:28.241Z",
+       "actor": "test"
+     },
+     {
+       "from": "AWAITING_USER_APPROVAL",
+       "to": "AWAITING_USER_APPROVAL",
+-      "at": "2026-10-08T02:41:44.998Z",
++      "at": "2026-10-10T08:55:28.248Z",
+       "actor": "user",
+       "note": "approval-recorded"
+     },
+     {
+       "from": "AWAITING_USER_APPROVAL",
+       "to": "AWAITING_PROVIDER_ACCEPTANCE",
+-      "at": "2026-10-08T02:41:45.007Z",
++      "at": "2026-10-10T08:55:28.254Z",
+       "actor": "extension"
+     },
+     {
+       "from": "AWAITING_PROVIDER_ACCEPTANCE",
+       "to": "GENERATING",
+-      "at": "2026-10-08T02:41:45.017Z",
++      "at": "2026-10-10T08:55:28.261Z",
+       "actor": "extension"
+     }
+   ],
+@@ -70,9 +70,9 @@
+     "approvedBy": "user",
+     "nonce": "nonce-H3-a",
+     "fingerprint": "fp-nonce-H3-a",
+-    "approvedAt": "2026-10-08T02:41:44.998Z",
++    "approvedAt": "2026-10-10T08:55:28.248Z",
+     "used": true
+   },
+-  "submitIssuedAt": "2026-10-08T02:41:45.007Z",
++  "submitIssuedAt": "2026-10-10T08:55:28.254Z",
+   "submitNonce": "nonce-H3-a"
+ }
+\ No newline at end of file
+diff --git a/projects/HARDENING_1G12/flow-jobs/H4-JOB.json b/projects/HARDENING_1G12/flow-jobs/H4-JOB.json
+index ae2989e..6a15578 100644
+--- a/projects/HARDENING_1G12/flow-jobs/H4-JOB.json
++++ b/projects/HARDENING_1G12/flow-jobs/H4-JOB.json
+@@ -7,38 +7,38 @@
+     {
+       "from": null,
+       "to": "PENDING",
+-      "at": "2026-10-08T02:41:45.028Z",
++      "at": "2026-10-10T08:55:28.269Z",
+       "actor": "system"
+     },
+     {
+       "from": "PENDING",
+       "to": "VALIDATED",
+-      "at": "2026-10-08T02:41:45.038Z",
++      "at": "2026-10-10T08:55:28.275Z",
+       "actor": "test"
+     },
+     {
+       "from": "VALIDATED",
+       "to": "PREPARED",
+-      "at": "2026-10-08T02:41:45.046Z",
++      "at": "2026-10-10T08:55:28.280Z",
+       "actor": "test"
+     },
+     {
+       "from": "PREPARED",
+       "to": "AWAITING_USER_APPROVAL",
+-      "at": "2026-10-08T02:41:45.056Z",
++      "at": "2026-10-10T08:55:28.286Z",
+       "actor": "test"
+     },
+     {
+       "from": "AWAITING_USER_APPROVAL",
+       "to": "AWAITING_USER_APPROVAL",
+-      "at": "2026-10-08T02:41:45.064Z",
++      "at": "2026-10-10T08:55:28.291Z",
+       "actor": "user",
+       "note": "approval-recorded"
+     },
+     {
+       "from": "AWAITING_USER_APPROVAL",
+       "to": "AWAITING_USER_APPROVAL",
+-      "at": "2026-10-08T02:41:45.077Z",
++      "at": "2026-10-10T08:55:28.300Z",
+       "actor": "user",
+       "note": "approval-superseded"
+     }
+@@ -66,7 +66,7 @@
+     "nonce": "nonce-H4-b",
+     "fingerprint": "fp-b",
+     "supersedesNonce": "nonce-H4-a",
+-    "approvedAt": "2026-10-08T02:41:45.077Z",
++    "approvedAt": "2026-10-10T08:55:28.300Z",
+     "used": false
+   }
+ }
+\ No newline at end of file
+diff --git a/projects/HARDENING_1G12/flow-jobs/H6-JOB.json b/projects/HARDENING_1G12/flow-jobs/H6-JOB.json
+index 041c4ca..0c594c4 100644
+--- a/projects/HARDENING_1G12/flow-jobs/H6-JOB.json
++++ b/projects/HARDENING_1G12/flow-jobs/H6-JOB.json
+@@ -7,25 +7,25 @@
+     {
+       "from": null,
+       "to": "PENDING",
+-      "at": "2026-10-08T02:41:45.096Z",
++      "at": "2026-10-10T08:55:28.303Z",
+       "actor": "system"
+     },
+     {
+       "from": "PENDING",
+       "to": "VALIDATED",
+-      "at": "2026-10-08T02:41:45.103Z",
++      "at": "2026-10-10T08:55:28.309Z",
+       "actor": "test"
+     },
+     {
+       "from": "VALIDATED",
+       "to": "PREPARED",
+-      "at": "2026-10-08T02:41:45.111Z",
++      "at": "2026-10-10T08:55:28.315Z",
+       "actor": "test"
+     },
+     {
+       "from": "PREPARED",
+       "to": "MANUAL_ASSIST_REQUIRED",
+-      "at": "2026-10-08T02:41:45.118Z",
++      "at": "2026-10-10T08:55:28.321Z",
+       "actor": "test"
+     }
+   ],
+diff --git a/projects/HARDENING_1G12/flow-jobs/H8-JOB.json b/projects/HARDENING_1G12/flow-jobs/H8-JOB.json
+index 78578ab..8fa3316 100644
+--- a/projects/HARDENING_1G12/flow-jobs/H8-JOB.json
++++ b/projects/HARDENING_1G12/flow-jobs/H8-JOB.json
+@@ -7,44 +7,44 @@
+     {
+       "from": null,
+       "to": "PENDING",
+-      "at": "2026-10-08T02:41:45.128Z",
++      "at": "2026-10-10T08:55:28.330Z",
+       "actor": "system"
+     },
+     {
+       "from": "PENDING",
+       "to": "VALIDATED",
+-      "at": "2026-10-08T02:41:45.134Z",
++      "at": "2026-10-10T08:55:28.336Z",
+       "actor": "test"
+     },
+     {
+       "from": "VALIDATED",
+       "to": "PREPARED",
+-      "at": "2026-10-08T02:41:45.143Z",
++      "at": "2026-10-10T08:55:28.342Z",
+       "actor": "test"
+     },
+     {
+       "from": "PREPARED",
+       "to": "AWAITING_USER_APPROVAL",
+-      "at": "2026-10-08T02:41:45.149Z",
++      "at": "2026-10-10T08:55:28.347Z",
+       "actor": "test"
+     },
+     {
+       "from": "AWAITING_USER_APPROVAL",
+       "to": "AWAITING_USER_APPROVAL",
+-      "at": "2026-10-08T02:41:45.156Z",
++      "at": "2026-10-10T08:55:28.354Z",
+       "actor": "user",
+       "note": "approval-recorded"
+     },
+     {
+       "from": "AWAITING_USER_APPROVAL",
+       "to": "AWAITING_PROVIDER_ACCEPTANCE",
+-      "at": "2026-10-08T02:41:45.164Z",
++      "at": "2026-10-10T08:55:28.360Z",
+       "actor": "extension"
+     },
+     {
+       "from": "AWAITING_PROVIDER_ACCEPTANCE",
+       "to": "CANCELLED",
+-      "at": "2026-10-08T02:41:45.172Z",
++      "at": "2026-10-10T08:55:28.366Z",
+       "actor": "user"
+     }
+   ],
+@@ -70,9 +70,9 @@
+     "approvedBy": "user",
+     "nonce": "nonce-H8-a",
+     "fingerprint": "fp-nonce-H8-a",
+-    "approvedAt": "2026-10-08T02:41:45.156Z",
++    "approvedAt": "2026-10-10T08:55:28.353Z",
+     "used": false
+   },
+-  "submitIssuedAt": "2026-10-08T02:41:45.164Z",
++  "submitIssuedAt": "2026-10-10T08:55:28.360Z",
+   "submitNonce": "nonce-H8-a"
+ }
+\ No newline at end of file
+diff --git a/projects/TOPIC_REGISTRY.json b/projects/TOPIC_REGISTRY.json
+index b84a1d7..88e0223 100644
+--- a/projects/TOPIC_REGISTRY.json
++++ b/projects/TOPIC_REGISTRY.json
+@@ -15,7 +15,7 @@
+         }
+       },
+       "createdAt": "2025-01-01T10:00:00Z",
+-      "updatedAt": "2026-10-07T14:07:28.281Z"
++      "updatedAt": "2026-10-10T09:11:17.085Z"
+     }
+   ]
+ }
+\ No newline at end of file
+diff --git a/projects/phase223-narration-pronunciation/dependency-dag.json b/projects/phase223-narration-pronunciation/dependency-dag.json
+index d5614d4..56ef415 100644
+--- a/projects/phase223-narration-pronunciation/dependency-dag.json
++++ b/projects/phase223-narration-pronunciation/dependency-dag.json
+@@ -1,9 +1,9 @@
+ {
+   "schemaVersion": "1.0.0",
+   "projectId": "phase223-narration-pronunciation",
+-  "revision": 106,
++  "revision": 114,
+   "createdAt": "2026-10-06T02:13:50.020Z",
+-  "updatedAt": "2026-10-07T14:01:01.190Z",
++  "updatedAt": "2026-10-10T09:04:16.336Z",
+   "nodes": {
+     "FINAL_SPOKEN_SCRIPT": {
+       "artifactKey": "FINAL_SPOKEN_SCRIPT",
+@@ -105,5 +105,5 @@
+       "provenance": "LIVE"
+     }
+   },
+-  "fingerprint": "82552f593c4742b7"
++  "fingerprint": "c1728632b49e4105"
+ }
+diff --git a/projects/phase223-narration-pronunciation/evidence/phase-2/2.2-2.3/performance/performance-baseline.json b/projects/phase223-narration-pronunciation/evidence/phase-2/2.2-2.3/performance/performance-baseline.json
+index 2e131e2..777110e 100644
+--- a/projects/phase223-narration-pronunciation/evidence/phase-2/2.2-2.3/performance/performance-baseline.json
++++ b/projects/phase223-narration-pronunciation/evidence/phase-2/2.2-2.3/performance/performance-baseline.json
+@@ -1,14 +1,14 @@
+ {
+   "phase": "2.2-2.3",
+-  "measuredAt": "2026-10-07T14:00:52.216Z",
++  "measuredAt": "2026-10-10T09:04:08.329Z",
+   "unit": "ms unless noted",
+-  "narrationDirectionResolveLatencyMs": 37,
++  "narrationDirectionResolveLatencyMs": 34,
+   "narrationDirectionValidateLatencyMs": 0,
+-  "pronunciationProfileResolveLatencyMs": 19,
+-  "pronunciationRuntimePhonemizeLatencyMs": 8565,
++  "pronunciationProfileResolveLatencyMs": 17,
++  "pronunciationRuntimePhonemizeLatencyMs": 8423,
+   "ttsReadyPlanLatencyMs": 1,
+   "pronunciationCompileLatencyMs": 0,
+-  "localizedInvalidationPlanLatencyMs": 20,
++  "localizedInvalidationPlanLatencyMs": 22,
+   "segmentCount": 6,
+   "candidateTermCount": 7,
+   "overrideCount": 7,
+diff --git a/projects/phase223-narration-pronunciation/evidence/phase-2/2.2-2.3/runtime/quiet-phonemization-evidence.json b/projects/phase223-narration-pronunciation/evidence/phase-2/2.2-2.3/runtime/quiet-phonemization-evidence.json
+index 5a6b89d..ef9b4b1 100644
+--- a/projects/phase223-narration-pronunciation/evidence/phase-2/2.2-2.3/runtime/quiet-phonemization-evidence.json
++++ b/projects/phase223-narration-pronunciation/evidence/phase-2/2.2-2.3/runtime/quiet-phonemization-evidence.json
+@@ -1,5 +1,5 @@
+ {
+-  "capturedAt": "2026-10-07T14:01:00.651Z",
++  "capturedAt": "2026-10-10T09:04:15.884Z",
+   "runtimeMode": "QUIET_PHONEMIZATION",
+   "modelLoaded": false,
+   "audioGenerated": false,
+diff --git a/projects/phase223-narration-pronunciation/telemetry/events.json b/projects/phase223-narration-pronunciation/telemetry/events.json
+index 4221834..52722b2 100644
+--- a/projects/phase223-narration-pronunciation/telemetry/events.json
++++ b/projects/phase223-narration-pronunciation/telemetry/events.json
+@@ -1,10 +1,10 @@
+ {
+   "schemaVersion": "1.0.0",
+   "projectId": "phase223-narration-pronunciation",
+-  "revision": 32,
++  "revision": 34,
+   "createdAt": "2026-10-06T02:35:50.281Z",
+-  "updatedAt": "2026-10-07T14:00:52.213Z",
+-  "fingerprint": "f39cd02994fdb749",
++  "updatedAt": "2026-10-10T09:04:08.324Z",
++  "fingerprint": "4da0b39f669cd644",
+   "events": {
+     "eve-f74bac74a280": {
+       "eventId": "eve-f74bac74a280",
+@@ -1147,6 +1147,80 @@
+       },
+       "retention": "CANONICAL_DURABLE",
+       "provenance": "LIVE"
++    },
++    "eve-88206f3343e1": {
++      "eventId": "eve-88206f3343e1",
++      "eventName": "PRONUNCIATION_INVALIDATION_PLANNED",
++      "timestamp": "2026-10-10T08:41:52.759Z",
++      "severity": "INFO",
++      "projectId": "phase223-narration-pronunciation",
++      "runId": null,
++      "jobId": null,
++      "attemptId": null,
++      "operationId": null,
++      "correlationId": "pinv-99bdab610eed",
++      "generationUnitId": null,
++      "assetId": null,
++      "stage": "phase-2.3",
++      "component": "pronunciation",
++      "provider": null,
++      "model": null,
++      "modelResolutionRef": null,
++      "stateFrom": null,
++      "stateTo": "PLANNED",
++      "durationMs": null,
++      "cost": null,
++      "outputCount": null,
++      "resultRef": null,
++      "evidenceRefs": [],
++      "errorCode": null,
++      "errorClass": null,
++      "retryable": null,
++      "attributes": {
++        "changedEntryId": "pe-2991e56e8144",
++        "affectedCount": 1,
++        "unaffectedCount": 5,
++        "passId": "prp-8b1d3436ff29"
++      },
++      "retention": "CANONICAL_DURABLE",
++      "provenance": "LIVE"
++    },
++    "eve-bc3e24f39dff": {
++      "eventId": "eve-bc3e24f39dff",
++      "eventName": "PRONUNCIATION_INVALIDATION_PLANNED",
++      "timestamp": "2026-10-10T09:04:08.324Z",
++      "severity": "INFO",
++      "projectId": "phase223-narration-pronunciation",
++      "runId": null,
++      "jobId": null,
++      "attemptId": null,
++      "operationId": null,
++      "correlationId": "pinv-99bdab610eed",
++      "generationUnitId": null,
++      "assetId": null,
++      "stage": "phase-2.3",
++      "component": "pronunciation",
++      "provider": null,
++      "model": null,
++      "modelResolutionRef": null,
++      "stateFrom": null,
++      "stateTo": "PLANNED",
++      "durationMs": null,
++      "cost": null,
++      "outputCount": null,
++      "resultRef": null,
++      "evidenceRefs": [],
++      "errorCode": null,
++      "errorClass": null,
++      "retryable": null,
++      "attributes": {
++        "changedEntryId": "pe-2991e56e8144",
++        "affectedCount": 1,
++        "unaffectedCount": 5,
++        "passId": "prp-8b1d3436ff29"
++      },
++      "retention": "CANONICAL_DURABLE",
++      "provenance": "LIVE"
+     }
+   }
+ }
+diff --git a/projects/pilot-sky-blue/evidence/fix-pre-2.4/performance-baseline.json b/projects/pilot-sky-blue/evidence/fix-pre-2.4/performance-baseline.json
+index 1d097b5..31d95d4 100644
+--- a/projects/pilot-sky-blue/evidence/fix-pre-2.4/performance-baseline.json
++++ b/projects/pilot-sky-blue/evidence/fix-pre-2.4/performance-baseline.json
+@@ -1,13 +1,13 @@
+ {
+   "fix": "FIX_PRE_2_4_FINAL_SPOKEN_SCRIPT_PIPELINE",
+-  "measuredAt": "2026-10-07T14:07:12.329Z",
++  "measuredAt": "2026-10-10T09:11:01.292Z",
+   "unit": "ms unless noted",
+-  "humanizationLatencyMs": 40,
+-  "fidelityGateLatencyMs": 6,
++  "humanizationLatencyMs": 34,
++  "fidelityGateLatencyMs": 5,
+   "naturalnessQaLatencyMs": 2,
+   "canonicalizationLatencyMs": 1,
+-  "phase22RefreshLatencyMs": 16,
+-  "phase23RefreshLatencyMs": 8475,
++  "phase22RefreshLatencyMs": 14,
++  "phase23RefreshLatencyMs": 8145,
+   "sourceWordCount": 154,
+   "finalWordCount": 172,
+   "protectedItemCount": 68,
+diff --git a/projects/pilot-sky-blue/evidence/fix-pre-2.4/runtime/quiet-phonemization-evidence.json b/projects/pilot-sky-blue/evidence/fix-pre-2.4/runtime/quiet-phonemization-evidence.json
+index 9609531..3219e93 100644
+--- a/projects/pilot-sky-blue/evidence/fix-pre-2.4/runtime/quiet-phonemization-evidence.json
++++ b/projects/pilot-sky-blue/evidence/fix-pre-2.4/runtime/quiet-phonemization-evidence.json
+@@ -1,5 +1,5 @@
+ {
+-  "capturedAt": "2026-10-07T14:07:20.803Z",
++  "capturedAt": "2026-10-10T09:11:09.696Z",
+   "runtimeMode": "QUIET_PHONEMIZATION",
+   "modelLoaded": false,
+   "audioGenerated": false,
+diff --git a/projects/pilot-sky-blue/telemetry/events.json b/projects/pilot-sky-blue/telemetry/events.json
+index aecd446..b61d221 100644
+--- a/projects/pilot-sky-blue/telemetry/events.json
++++ b/projects/pilot-sky-blue/telemetry/events.json
+@@ -1,10 +1,10 @@
+ {
+   "schemaVersion": "1.0.0",
+   "projectId": "pilot-sky-blue",
+-  "revision": 65,
++  "revision": 67,
+   "createdAt": "2026-10-06T04:49:11.707Z",
+-  "updatedAt": "2026-10-07T14:07:12.324Z",
+-  "fingerprint": "f81af785115ba26b",
++  "updatedAt": "2026-10-10T09:11:01.285Z",
++  "fingerprint": "ca37d2ce74b6c6a8",
+   "events": {
+     "eve-905169f145ad": {
+       "eventId": "eve-905169f145ad",
+@@ -2276,6 +2276,76 @@
+       },
+       "retention": "CANONICAL_DURABLE",
+       "provenance": "LIVE"
++    },
++    "eve-f8aba4942f95": {
++      "eventId": "eve-f8aba4942f95",
++      "eventName": "TTS_PRODUCTION_BLOCK_CLEARED",
++      "timestamp": "2026-10-10T08:48:13.346Z",
++      "severity": "INFO",
++      "projectId": "pilot-sky-blue",
++      "runId": null,
++      "jobId": null,
++      "attemptId": null,
++      "operationId": null,
++      "correlationId": "ttp-88f0ed96a524",
++      "generationUnitId": null,
++      "assetId": null,
++      "stage": "fix-pre-2.4",
++      "component": "spoken-script",
++      "provider": null,
++      "model": null,
++      "modelResolutionRef": null,
++      "stateFrom": null,
++      "stateTo": "READY_FOR_TTS",
++      "durationMs": null,
++      "cost": null,
++      "outputCount": null,
++      "resultRef": null,
++      "evidenceRefs": [],
++      "errorCode": null,
++      "errorClass": null,
++      "retryable": null,
++      "attributes": {
++        "scriptArtifactId": "fss-pilot-sky-blue",
++        "scriptVersion": 2
++      },
++      "retention": "CANONICAL_DURABLE",
++      "provenance": "LIVE"
++    },
++    "eve-ded00c865968": {
++      "eventId": "eve-ded00c865968",
++      "eventName": "TTS_PRODUCTION_BLOCK_CLEARED",
++      "timestamp": "2026-10-10T09:11:01.285Z",
++      "severity": "INFO",
++      "projectId": "pilot-sky-blue",
++      "runId": null,
++      "jobId": null,
++      "attemptId": null,
++      "operationId": null,
++      "correlationId": "ttp-88f0ed96a524",
++      "generationUnitId": null,
++      "assetId": null,
++      "stage": "fix-pre-2.4",
++      "component": "spoken-script",
++      "provider": null,
++      "model": null,
++      "modelResolutionRef": null,
++      "stateFrom": null,
++      "stateTo": "READY_FOR_TTS",
++      "durationMs": null,
++      "cost": null,
++      "outputCount": null,
++      "resultRef": null,
++      "evidenceRefs": [],
++      "errorCode": null,
++      "errorClass": null,
++      "retryable": null,
++      "attributes": {
++        "scriptArtifactId": "fss-pilot-sky-blue",
++        "scriptVersion": 2
++      },
++      "retention": "CANONICAL_DURABLE",
++      "provenance": "LIVE"
+     }
+   }
+ }
+diff --git a/projects/validation/phase-1h/phase1h1-validation/baseline/perf-baseline.json b/projects/validation/phase-1h/phase1h1-validation/baseline/perf-baseline.json
+index dd2a0aa..83caaa7 100644
+--- a/projects/validation/phase-1h/phase1h1-validation/baseline/perf-baseline.json
++++ b/projects/validation/phase-1h/phase1h1-validation/baseline/perf-baseline.json
+@@ -1,6 +1,6 @@
+ {
+   "artifact": "perf-baseline",
+-  "capturedAt": "2026-10-07T14:01:38.254Z",
++  "capturedAt": "2026-10-10T09:05:44.438Z",
+   "method": "process.hrtime.bigint micro-benchmarks inside tests/project-manifest/test-manifest.js",
+   "sampleCounts": {
+     "validate": 50,
+@@ -12,30 +12,30 @@
+   "metrics": {
+     "load": {
+       "samples": 20,
+-      "minMs": 0.359,
+-      "p50Ms": 0.502,
+-      "maxMs": 7.526
++      "minMs": 0.331,
++      "p50Ms": 0.431,
++      "maxMs": 6.515
+     },
+     "validate": {
+       "samples": 50,
+-      "minMs": 0.112,
+-      "p50Ms": 0.127,
+-      "maxMs": 0.974
++      "minMs": 0.106,
++      "p50Ms": 0.111,
++      "maxMs": 1.062
+     },
+     "write": {
+       "samples": 10,
+-      "minMs": 3.595,
+-      "p50Ms": 9.176,
+-      "maxMs": 10.364
++      "minMs": 3.262,
++      "p50Ms": 7.906,
++      "maxMs": 8.481
+     },
+     "conflictCheck": {
+       "samples": 20,
+-      "minMs": 0.319,
+-      "p50Ms": 0.358,
+-      "maxMs": 0.758
++      "minMs": 0.311,
++      "p50Ms": 0.338,
++      "maxMs": 0.65
+     },
+     "sizeBytes": 4013,
+-    "migrationMs": 31.62,
++    "migrationMs": 30.31,
+     "readCount": "1 file per load (single JSON)",
+     "writeCount": "1 atomic replace per effective mutation; 0 on no-op",
+     "unnecessaryRewriteCount": 0
+diff --git a/projects/validation/phase-1h/phase1h2-validation/evidence/performance/perf-baseline.json b/projects/validation/phase-1h/phase1h2-validation/evidence/performance/perf-baseline.json
+index 6c66283..183f8bd 100644
+--- a/projects/validation/phase-1h/phase1h2-validation/evidence/performance/perf-baseline.json
++++ b/projects/validation/phase-1h/phase1h2-validation/evidence/performance/perf-baseline.json
+@@ -1,6 +1,6 @@
+ {
+   "artifact": "perf-baseline",
+-  "capturedAt": "2026-10-08T02:44:15.227Z",
++  "capturedAt": "2026-10-10T08:57:35.576Z",
+   "method": "process.hrtime.bigint micro-benchmarks inside tests/history/test-history.js",
+   "sampleCounts": {
+     "validate": 50,
+@@ -15,48 +15,48 @@
+   "metrics": {
+     "validate": {
+       "samples": 50,
+-      "minMs": 0.016,
+-      "p50Ms": 0.021,
+-      "maxMs": 0.061
++      "minMs": 0.014,
++      "p50Ms": 0.018,
++      "maxMs": 0.049
+     },
+     "load": {
+       "samples": 20,
+-      "minMs": 0.191,
+-      "p50Ms": 0.236,
+-      "maxMs": 0.868
++      "minMs": 0.187,
++      "p50Ms": 0.255,
++      "maxMs": 0.438
+     },
+     "projection": {
+       "samples": 20,
+-      "minMs": 0.186,
++      "minMs": 0.178,
+       "p50Ms": 0.207,
+-      "maxMs": 0.29
++      "maxMs": 0.355
+     },
+     "lockCheck": {
+       "samples": 50,
+-      "minMs": 0.183,
+-      "p50Ms": 0.205,
+-      "maxMs": 0.983
++      "minMs": 0.175,
++      "p50Ms": 0.19,
++      "maxMs": 0.739
+     },
+     "append": {
+       "samples": 10,
+-      "minMs": 1.711,
+-      "p50Ms": 8.522,
+-      "maxMs": 10.259
++      "minMs": 1.651,
++      "p50Ms": 7.401,
++      "maxMs": 8.814
+     },
+     "lockMutation": {
+       "samples": 10,
+-      "minMs": 8.314,
+-      "p50Ms": 9.237,
+-      "maxMs": 11.285
++      "minMs": 6.568,
++      "p50Ms": 7.914,
++      "maxMs": 8.768
+     },
+     "variantSelect": {
+       "samples": 5,
+-      "minMs": 29.056,
+-      "p50Ms": 31.51,
+-      "maxMs": 33.49
++      "minMs": 24.497,
++      "p50Ms": 24.909,
++      "maxMs": 27.066
+     },
+     "sizeBytes": 18346,
+-    "migrationMs": 226.92,
++    "migrationMs": 205.37,
+     "eventsPerGeneration": 4.5,
+     "unnecessaryRewriteCount": 0
+   },
+diff --git a/projects/validation/phase-1h/phase1h3-validation/evidence/performance/perf-baseline-dag.json b/projects/validation/phase-1h/phase1h3-validation/evidence/performance/perf-baseline-dag.json
+index aba38f8..7c4ce1a 100644
+--- a/projects/validation/phase-1h/phase1h3-validation/evidence/performance/perf-baseline-dag.json
++++ b/projects/validation/phase-1h/phase1h3-validation/evidence/performance/perf-baseline-dag.json
+@@ -1,6 +1,6 @@
+ {
+   "artifact": "perf-baseline-dag",
+-  "capturedAt": "2026-10-08T02:41:42.696Z",
++  "capturedAt": "2026-10-10T08:55:26.866Z",
+   "method": "process.hrtime.bigint micro-benchmarks inside tests/dag/test-dag.js",
+   "sampleCounts": {
+     "smallMutation": 5,
+@@ -14,39 +14,39 @@
+   "metrics": {
+     "smallMutation": {
+       "samples": 5,
+-      "minMs": 7.58,
+-      "p50Ms": 8.562,
+-      "maxMs": 9.911
++      "minMs": 6.923,
++      "p50Ms": 7.458,
++      "maxMs": 8.745
+     },
+     "smallDirty": {
+       "samples": 5,
+-      "minMs": 15.12,
+-      "p50Ms": 15.911,
+-      "maxMs": 17.358
++      "minMs": 15.004,
++      "p50Ms": 15.788,
++      "maxMs": 18.194
+     },
+     "smallPlan": {
+       "samples": 20,
+-      "minMs": 0.306,
+-      "p50Ms": 0.332,
+-      "maxMs": 6.552
++      "minMs": 0.333,
++      "p50Ms": 0.369,
++      "maxMs": 6.656
+     },
+     "smallLoad": {
+       "samples": 20,
+-      "minMs": 0.27,
+-      "p50Ms": 0.284,
+-      "maxMs": 0.429
++      "minMs": 0.295,
++      "p50Ms": 0.343,
++      "maxMs": 0.441
+     },
+     "mediumDirty": {
+       "samples": 3,
+-      "minMs": 16.617,
+-      "p50Ms": 24.264,
+-      "maxMs": 32.72
++      "minMs": 15.125,
++      "p50Ms": 22.713,
++      "maxMs": 29.281
+     },
+     "mediumPlan": {
+       "samples": 5,
+-      "minMs": 17.434,
+-      "p50Ms": 18.444,
+-      "maxMs": 22.698
++      "minMs": 16.276,
++      "p50Ms": 16.359,
++      "maxMs": 16.745
+     },
+     "mediumSizeBytes": 129062,
+     "smallSizeBytes": 4551,
+diff --git a/projects/validation/phase-1h/phase1h3-validation/evidence/performance/perf-baseline-recovery.json b/projects/validation/phase-1h/phase1h3-validation/evidence/performance/perf-baseline-recovery.json
+index a7f58df..f55321b 100644
+--- a/projects/validation/phase-1h/phase1h3-validation/evidence/performance/perf-baseline-recovery.json
++++ b/projects/validation/phase-1h/phase1h3-validation/evidence/performance/perf-baseline-recovery.json
+@@ -1,6 +1,6 @@
+ {
+   "artifact": "perf-baseline-recovery",
+-  "capturedAt": "2026-10-07T14:04:27.188Z",
++  "capturedAt": "2026-10-10T09:08:22.830Z",
+   "method": "process.hrtime.bigint micro-benchmarks inside tests/recovery/test-recovery.js",
+   "sampleCounts": {
+     "lookup": 50,
+@@ -11,23 +11,23 @@
+   "metrics": {
+     "lookup": {
+       "samples": 50,
+-      "minMs": 0.214,
++      "minMs": 0.223,
+       "p50Ms": 0.272,
+-      "maxMs": 5.565
++      "maxMs": 6.524
+     },
+     "checkpointWrite": {
+       "samples": 10,
+-      "minMs": 10.51,
+-      "p50Ms": 13.087,
+-      "maxMs": 14.928
++      "minMs": 9.666,
++      "p50Ms": 11.159,
++      "maxMs": 12.03
+     },
+     "resumePlan": {
+       "samples": 50,
+-      "minMs": 0.659,
+-      "p50Ms": 0.724,
+-      "maxMs": 5.35
++      "minMs": 0.68,
++      "p50Ms": 0.771,
++      "maxMs": 5.699
+     },
+-    "sizeBytes": 9719,
++    "sizeBytes": 9723,
+     "writeAmplification": "1 atomic replace per effective mutation; 0 on replay dedupe"
+   },
+   "budgets": {
+diff --git a/projects/validation/phase-1h/phase1h45-validation/evidence/performance/perf-baseline-golden.json b/projects/validation/phase-1h/phase1h45-validation/evidence/performance/perf-baseline-golden.json
+index 23c913a..8b825ca 100644
+--- a/projects/validation/phase-1h/phase1h45-validation/evidence/performance/perf-baseline-golden.json
++++ b/projects/validation/phase-1h/phase1h45-validation/evidence/performance/perf-baseline-golden.json
+@@ -1,6 +1,6 @@
+ {
+   "artifact": "perf-baseline-golden",
+-  "capturedAt": "2026-10-08T02:43:42.067Z",
++  "capturedAt": "2026-10-10T08:57:24.028Z",
+   "method": "process.hrtime.bigint micro-benchmarks inside tests/golden/test-golden.js",
+   "sampleCounts": {
+     "goldenLoad": 20,
+@@ -11,21 +11,21 @@
+   "metrics": {
+     "goldenLoad": {
+       "samples": 20,
+-      "minMs": 0.254,
+-      "p50Ms": 0.52,
+-      "maxMs": 1.188
++      "minMs": 0.26,
++      "p50Ms": 0.31,
++      "maxMs": 0.536
+     },
+     "baselineLoad": {
+       "samples": 20,
+-      "minMs": 0.839,
+-      "p50Ms": 1.292,
+-      "maxMs": 1.829
++      "minMs": 0.745,
++      "p50Ms": 0.884,
++      "maxMs": 1.159
+     },
+     "compare": {
+       "samples": 10,
+-      "minMs": 0.324,
+-      "p50Ms": 0.356,
+-      "maxMs": 10.441
++      "minMs": 0.306,
++      "p50Ms": 0.344,
++      "maxMs": 7.83
+     },
+     "metadataBytes": 35325,
+     "providerTimeMs": 0
+diff --git a/projects/validation/phase-1h/phase1h45-validation/evidence/performance/perf-baseline-telemetry.json b/projects/validation/phase-1h/phase1h45-validation/evidence/performance/perf-baseline-telemetry.json
+index f22747b..32a3cd3 100644
+--- a/projects/validation/phase-1h/phase1h45-validation/evidence/performance/perf-baseline-telemetry.json
++++ b/projects/validation/phase-1h/phase1h45-validation/evidence/performance/perf-baseline-telemetry.json
+@@ -1,6 +1,6 @@
+ {
+   "artifact": "perf-baseline-telemetry",
+-  "capturedAt": "2026-10-07T14:07:27.952Z",
++  "capturedAt": "2026-10-10T09:11:16.800Z",
+   "method": "process.hrtime.bigint micro-benchmarks inside tests/telemetry/test-telemetry.js",
+   "sampleCounts": {
+     "append": 20,
+@@ -12,27 +12,27 @@
+   "metrics": {
+     "append": {
+       "samples": 20,
+-      "minMs": 8.721,
+-      "p50Ms": 10.557,
+-      "maxMs": 15.098
++      "minMs": 9.291,
++      "p50Ms": 10.3,
++      "maxMs": 12.277
+     },
+     "query": {
+       "samples": 20,
+-      "minMs": 1.294,
+-      "p50Ms": 1.681,
+-      "maxMs": 8.754
++      "minMs": 1.149,
++      "p50Ms": 1.39,
++      "maxMs": 6.755
+     },
+     "trace": {
+       "samples": 20,
+-      "minMs": 1.327,
+-      "p50Ms": 1.414,
+-      "maxMs": 2.404
++      "minMs": 1.272,
++      "p50Ms": 1.491,
++      "maxMs": 2.177
+     },
+     "costQuery": {
+       "samples": 20,
+-      "minMs": 1.284,
+-      "p50Ms": 1.357,
+-      "maxMs": 1.859
++      "minMs": 1.116,
++      "p50Ms": 1.261,
++      "maxMs": 1.568
+     },
+     "sizeBytes": 42572,
+     "writeAmplification": "1 atomic replace per effective append; 0 on dedupe"
+diff --git a/projects/validation/phase-1h/phase1h67-validation/evidence/performance/perf-baseline-compliance.json b/projects/validation/phase-1h/phase1h67-validation/evidence/performance/perf-baseline-compliance.json
+index 7d4def1..3972f89 100644
+--- a/projects/validation/phase-1h/phase1h67-validation/evidence/performance/perf-baseline-compliance.json
++++ b/projects/validation/phase-1h/phase1h67-validation/evidence/performance/perf-baseline-compliance.json
+@@ -1,6 +1,6 @@
+ {
+   "artifact": "perf-baseline-compliance",
+-  "capturedAt": "2026-10-08T02:41:27.281Z",
++  "capturedAt": "2026-10-10T08:55:11.135Z",
+   "method": "process.hrtime.bigint micro-benchmarks inside tests/compliance/test-compliance.js",
+   "sampleCounts": {
+     "snapshotLoad": 20,
+@@ -11,21 +11,21 @@
+   "metrics": {
+     "snapshotLoad": {
+       "samples": 20,
+-      "minMs": 0.243,
+-      "p50Ms": 0.292,
+-      "maxMs": 6.991
++      "minMs": 0.227,
++      "p50Ms": 0.255,
++      "maxMs": 5.585
+     },
+     "evaluate": {
+       "samples": 10,
+-      "minMs": 2.057,
+-      "p50Ms": 9.237,
+-      "maxMs": 11.817
++      "minMs": 1.842,
++      "p50Ms": 7.435,
++      "maxMs": 8.548
+     },
+     "freshness": {
+       "samples": 50,
+-      "minMs": 0.388,
+-      "p50Ms": 0.505,
+-      "maxMs": 6.557
++      "minMs": 0.372,
++      "p50Ms": 0.435,
++      "maxMs": 6.304
+     },
+     "sizeBytes": 8155
+   },
+diff --git a/projects/validation/phase-1h/phase1h67-validation/evidence/performance/perf-baseline-governance.json b/projects/validation/phase-1h/phase1h67-validation/evidence/performance/perf-baseline-governance.json
+index 1858cb8..d2cdaa8 100644
+--- a/projects/validation/phase-1h/phase1h67-validation/evidence/performance/perf-baseline-governance.json
++++ b/projects/validation/phase-1h/phase1h67-validation/evidence/performance/perf-baseline-governance.json
+@@ -1,6 +1,6 @@
+ {
+   "artifact": "perf-baseline-governance",
+-  "capturedAt": "2026-10-07T14:02:47.340Z",
++  "capturedAt": "2026-10-10T09:06:51.754Z",
+   "method": "process.hrtime.bigint micro-benchmarks inside tests/provenance/test-provenance.js",
+   "sampleCounts": {
+     "record": 10,
+@@ -11,21 +11,21 @@
+   "metrics": {
+     "record": {
+       "samples": 10,
+-      "minMs": 6.127,
+-      "p50Ms": 8.16,
+-      "maxMs": 8.841
++      "minMs": 6.338,
++      "p50Ms": 7.815,
++      "maxMs": 8.393
+     },
+     "load": {
+       "samples": 20,
+-      "minMs": 0.539,
+-      "p50Ms": 0.745,
+-      "maxMs": 6.502
++      "minMs": 0.524,
++      "p50Ms": 0.69,
++      "maxMs": 7.127
+     },
+     "trace": {
+       "samples": 20,
+-      "minMs": 0.488,
+-      "p50Ms": 0.548,
+-      "maxMs": 0.752
++      "minMs": 0.472,
++      "p50Ms": 0.525,
++      "maxMs": 0.7
+     },
+     "sizeBytes": 13744
+   },
+diff --git a/projects/validation/phase-1h/phase1h67-validation/evidence/performance/perf-baseline-storage.json b/projects/validation/phase-1h/phase1h67-validation/evidence/performance/perf-baseline-storage.json
+index 32ffeec..558df60 100644
+--- a/projects/validation/phase-1h/phase1h67-validation/evidence/performance/perf-baseline-storage.json
++++ b/projects/validation/phase-1h/phase1h67-validation/evidence/performance/perf-baseline-storage.json
+@@ -1,6 +1,6 @@
+ {
+   "artifact": "perf-baseline-storage",
+-  "capturedAt": "2026-10-07T14:07:23.015Z",
++  "capturedAt": "2026-10-10T09:11:11.965Z",
+   "method": "process.hrtime.bigint micro-benchmarks inside tests/storage/test-storage.js (80 files)",
+   "sampleCounts": {
+     "inventory": 5,
+@@ -12,27 +12,27 @@
+   "metrics": {
+     "inventory": {
+       "samples": 5,
+-      "minMs": 20.395,
+-      "p50Ms": 21.189,
+-      "maxMs": 22.14
++      "minMs": 21.544,
++      "p50Ms": 23.93,
++      "maxMs": 27.748
+     },
+     "plan": {
+       "samples": 10,
+-      "minMs": 13.799,
+-      "p50Ms": 27.904,
+-      "maxMs": 33.509
++      "minMs": 15.775,
++      "p50Ms": 24.987,
++      "maxMs": 32.017
+     },
+     "orphanScan": {
+       "samples": 10,
+-      "minMs": 0.808,
+-      "p50Ms": 0.896,
+-      "maxMs": 1.364
++      "minMs": 0.742,
++      "p50Ms": 0.81,
++      "maxMs": 1.224
+     },
+     "missingScan": {
+       "samples": 20,
+-      "minMs": 0.053,
+-      "p50Ms": 0.061,
+-      "maxMs": 0.447
++      "minMs": 0.051,
++      "p50Ms": 0.054,
++      "maxMs": 0.141
+     },
+     "projectBytes": 34189,
+     "entries": 81
+diff --git a/providers/model-registry/kokoro-v1-identity.json b/providers/model-registry/kokoro-v1-identity.json
+index f41409c..76f534d 100644
+--- a/providers/model-registry/kokoro-v1-identity.json
++++ b/providers/model-registry/kokoro-v1-identity.json
+@@ -9,7 +9,7 @@
+   "officialExpectedSha256": "496dba118d1a58f5f3db2efc88dbdc216e0483fc89fe6e47ee1f2c53f18ad1e4",
+   "officialSizeBytes": 327212226,
+   "match": true,
+-  "verifiedAt": "2026-10-07T14:03:19.336Z",
++  "verifiedAt": "2026-10-10T09:07:20.483Z",
+   "sourceRef": "https://huggingface.co/api/models/hexgrad/Kokoro-82M/paths-info/main (lfs.oid, retrieved 2026-10-06)",
+   "note": "Production segment artifacts keep their recorded runtime identity; this file is the separate immutable provenance artifact (FIX 01 Gap C). Wiring per-synthesis modelHash is deferred — see report."
+ }

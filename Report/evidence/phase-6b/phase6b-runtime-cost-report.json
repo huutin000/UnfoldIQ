@@ -1,0 +1,71 @@
+{
+  "phase": "6B",
+  "generatedAt": "2026-10-10T08:31:55.835Z",
+  "steps": [
+    {
+      "step": "phase6a-analysis",
+      "wallMs": 6.95
+    },
+    {
+      "step": "phase6a-structural-watch",
+      "wallMs": 61.88
+    },
+    {
+      "step": "bakeoff-demo",
+      "wallMs": 2.39
+    },
+    {
+      "step": "fingerprint-v2",
+      "wallMs": 2.23
+    },
+    {
+      "step": "originality-one-video",
+      "wallMs": 0.9
+    },
+    {
+      "step": "originality-real-corpus-attempt",
+      "wallMs": 0.25
+    },
+    {
+      "step": "originality-golden",
+      "wallMs": 27.91
+    },
+    {
+      "step": "quality-assessment",
+      "wallMs": 0.54
+    }
+  ],
+  "totalWallMs": 103.05,
+  "modelCalls": 0,
+  "geminiCalls": 0,
+  "tokens": 0,
+  "paidProviderCalls": 0,
+  "externalPaidCostVnd": 0,
+  "publishOrUpload": false,
+  "variantsRendered": 0,
+  "segmentPreviewsRendered": 0,
+  "renderedFrames": 0,
+  "fullVideoRenders": 0,
+  "cacheHits": 0,
+  "cacheMisses": 0,
+  "qaRules": {
+    "executed": "13 rubric dimensions + 3 originality levels + Phase 6A analysis recomputed (deterministic)",
+    "reusedEvidence": [
+      "phase4b-final-qc.json",
+      "gemini-watch.json",
+      "gemini-watch-per-scene.json",
+      "naturalness/fidelity QA artifacts",
+      "packaging-qa.json"
+    ],
+    "geminiReuploaded": false
+  },
+  "newBytesOnDisk": "see evidence files (JSON only); no media written",
+  "manualDecisions": [
+    "carried owner acceptance PACKAGING_QA=ACCEPTED_NON_BLOCKING (handoff §1)"
+  ],
+  "phase5Regression": {
+    "touchedPhase5Modules": false,
+    "note": "6B adds lib/creative-differentiation + tests + one diagnostics script; lib/render, lib/incremental, pipeline, scheduler are untouched"
+  },
+  "fullRegressionWallMs": 1037300
+}

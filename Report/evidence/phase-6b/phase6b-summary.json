@@ -1,0 +1,170 @@
+{
+  "phase": "6B",
+  "generatedAt": "2026-10-10T08:31:55.835Z",
+  "policyVersion": "1.0.0",
+  "host": {
+    "node": "v24.16.0",
+    "platform": "win32"
+  },
+  "lockedCanonical": {
+    "lockedFinalSha256": "7954a86a793ccbe5e153be30875b832ef813f3e23021e0f571a9da5e823dfcdf",
+    "finalMp4BytesNow": "7954a86a793ccbe5e153be30875b832ef813f3e23021e0f571a9da5e823dfcdf",
+    "unchanged": true,
+    "ownerApprovalSha256": "7954a86a793ccbe5e153be30875b832ef813f3e23021e0f571a9da5e823dfcdf",
+    "approvalMatchesFinal": true,
+    "selectedVariantId": "pkv-202fd90e1b72"
+  },
+  "pilot": {
+    "project": "pilot-sky-blue-canonical",
+    "durationMs": 57075,
+    "openCreativeFindings": [
+      "FRAMING_REPETITION/P3",
+      "MODALITY_MONOTONY/P3"
+    ],
+    "watchVerdict": "PASS",
+    "originalityRisk": "LOW",
+    "qualityDecision": "PASS",
+    "qualityCoverage": {
+      "applicable": 12,
+      "assessed": 12,
+      "missing": 0,
+      "missingDimensions": [],
+      "notApplicable": [
+        "continuity"
+      ]
+    },
+    "qualityScore": {
+      "scoreMeaning": "NOT_COMPUTED (no ordinal evidence)"
+    },
+    "dimensions": [
+      {
+        "key": "narration",
+        "applicability": "APPLICABLE",
+        "status": "PASS",
+        "ordinal": null,
+        "assessor": "DETERMINISTIC",
+        "confidence": "MEDIUM",
+        "acceptedByOwner": false
+      },
+      {
+        "key": "scriptNaturalness",
+        "applicability": "APPLICABLE",
+        "status": "PASS",
+        "ordinal": null,
+        "assessor": "DETERMINISTIC",
+        "confidence": "MEDIUM",
+        "acceptedByOwner": false
+      },
+      {
+        "key": "evidenceFidelity",
+        "applicability": "APPLICABLE",
+        "status": "PASS",
+        "ordinal": null,
+        "assessor": "DETERMINISTIC",
+        "confidence": "MEDIUM",
+        "acceptedByOwner": false
+      },
+      {
+        "key": "imagery",
+        "applicability": "APPLICABLE",
+        "status": "PASS",
+        "ordinal": null,
+        "assessor": "DETERMINISTIC",
+        "confidence": "MEDIUM",
+        "acceptedByOwner": false
+      },
+      {
+        "key": "visualFactuality",
+        "applicability": "APPLICABLE",
+        "status": "PASS",
+        "ordinal": null,
+        "assessor": "HUMAN",
+        "confidence": "MEDIUM",
+        "acceptedByOwner": false
+      },
+      {
+        "key": "continuity",
+        "applicability": "NOT_APPLICABLE",
+        "status": "NOT_MEASURED",
+        "ordinal": null,
+        "assessor": "DETERMINISTIC",
+        "confidence": "HIGH",
+        "acceptedByOwner": false
+      },
+      {
+        "key": "motion",
+        "applicability": "APPLICABLE",
+        "status": "PASS",
+        "ordinal": null,
+        "assessor": "DETERMINISTIC",
+        "confidence": "MEDIUM",
+        "acceptedByOwner": false
+      },
+      {
+        "key": "sound",
+        "applicability": "APPLICABLE",
+        "status": "PASS",
+        "ordinal": null,
+        "assessor": "DETERMINISTIC",
+        "confidence": "MEDIUM",
+        "acceptedByOwner": false
+      },
+      {
+        "key": "captions",
+        "applicability": "APPLICABLE",
+        "status": "PASS",
+        "ordinal": null,
+        "assessor": "DETERMINISTIC",
+        "confidence": "MEDIUM",
+        "acceptedByOwner": false
+      },
+      {
+        "key": "pacing",
+        "applicability": "APPLICABLE",
+        "status": "PASS",
+        "ordinal": null,
+        "assessor": "DETERMINISTIC",
+        "confidence": "MEDIUM",
+        "acceptedByOwner": false
+      },
+      {
+        "key": "semanticAlignment",
+        "applicability": "APPLICABLE",
+        "status": "PASS",
+        "ordinal": null,
+        "assessor": "DETERMINISTIC",
+        "confidence": "MEDIUM",
+        "acceptedByOwner": false
+      },
+      {
+        "key": "originality",
+        "applicability": "APPLICABLE",
+        "status": "PASS",
+        "ordinal": null,
+        "assessor": "DETERMINISTIC",
+        "confidence": "MEDIUM",
+        "acceptedByOwner": false
+      },
+      {
+        "key": "packaging",
+        "applicability": "APPLICABLE",
+        "status": "REVIEW_REQUIRED",
+        "ordinal": null,
+        "assessor": "DETERMINISTIC",
+        "confidence": "MEDIUM",
+        "acceptedByOwner": true
+      }
+    ],
+    "blockingFindings": []
+  },
+  "golden": {
+    "originality": "8/8",
+    "quality": "12/12"
+  },
+  "gates": {
+    "SINGLE_VIDEO_ORIGINALITY": "PASS",
+    "CROSS_VIDEO_REAL_CORPUS": "INSUFFICIENT",
+    "CHANNEL_LEVEL_ORIGINALITY": "NOT_PROVEN",
+    "CANONICAL_PILOT_QA_FOR_EVIDENCED_SCOPE": "PASS"
+  }
+}

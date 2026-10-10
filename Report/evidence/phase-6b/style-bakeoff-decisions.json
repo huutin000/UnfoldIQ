@@ -1,0 +1,161 @@
+{
+  "phase": "6B",
+  "slice": "A",
+  "policy": {
+    "maxCandidateVariantsPerDecision": 2,
+    "maxCandidateVariantsHard": 3,
+    "maxActiveDecisionsPerPilot": 1,
+    "maxSegmentPreviewRenders": 1,
+    "maxPreviewShareOfVideo": 0.35,
+    "paidMediaCalls": 0,
+    "distinctnessJaccardMax": 0.8,
+    "materialKinds": [
+      "HOOK_VISUAL_SEQUENCE",
+      "DENSE_DIAGRAM",
+      "PAYOFF_DELIVERY",
+      "OPENING_STRUCTURE",
+      "REVEAL_TREATMENT"
+    ]
+  },
+  "pilot": {
+    "projectId": "pilot-sky-blue-canonical",
+    "evaluatedDecisions": [
+      {
+        "decision": "hook visual sequence (S01 sun/white-ray diagram)",
+        "kind": "HOOK_VISUAL_SEQUENCE",
+        "impact": "HIGH",
+        "outcome": "NO_BAKE_OFF",
+        "variants": 0,
+        "reason": "STRONG_PASS_WITHOUT_KNOWN_ISSUE"
+      },
+      {
+        "decision": "S04 violet-vs-blue bar diagram density",
+        "kind": "DENSE_DIAGRAM",
+        "impact": "MEDIUM",
+        "outcome": "NO_BAKE_OFF",
+        "variants": 0,
+        "reason": "IMPACT_NOT_HIGH"
+      },
+      {
+        "decision": "caption font micro-adjustment",
+        "kind": "FONT_MICRO_ADJUSTMENT",
+        "impact": "LOW",
+        "outcome": "NO_BAKE_OFF",
+        "variants": 0,
+        "reason": "NON_MATERIAL_DECISION:FONT_MICRO_ADJUSTMENT"
+      }
+    ],
+    "activeBakeoffs": 0,
+    "variantsCreated": 0,
+    "previewsRendered": 0,
+    "paidMediaCalls": 0,
+    "note": "The owner-approved pilot has only P3 polish findings and no known high-impact issue, so the default NO_BAKE_OFF applies (zero variants, zero renders). The locked final.mp4 is untouched."
+  },
+  "syntheticDemonstration": {
+    "label": "SYNTHETIC (metadata only; no render, no provider call)",
+    "selection": {
+      "run": true,
+      "outcome": "BAKE_OFF",
+      "variants": 2,
+      "reason": "HIGH_IMPACT_DECISION_WITH_DISTINCT_ALTERNATIVES"
+    },
+    "bakeoff": {
+      "kind": "STYLE_BAKEOFF",
+      "bakeoffId": "bo-d27bce825d3471ad",
+      "version": "1.0.0",
+      "projectId": "synthetic-bakeoff-demo",
+      "decisionScope": {
+        "beatId": "S05"
+      },
+      "reasonToRun": "Sunset payoff can be delivered as still+reveal or animated path (synthetic demonstration)",
+      "sharedInputHashes": {
+        "narrativeClaim": "710cdabb4f217594",
+        "evidence": "2bc298660a7dc626",
+        "audioTiming": "4ea8c52e44075212",
+        "outputProfile": "bdf38a47619ae1dc"
+      },
+      "rubricVersion": "1.0.0",
+      "criteria": [
+        "factualFidelity",
+        "clarity",
+        "storyPurpose",
+        "visualReadability",
+        "pacing",
+        "styleConsistency",
+        "originalityContribution",
+        "costLatency",
+        "accessibility"
+      ],
+      "candidates": [
+        {
+          "candidateId": "cand-daa809485de4b09c",
+          "creativeDecision": "still image with slow reveal of the sunset path",
+          "findings": [],
+          "estimatedCostVnd": 0
+        },
+        {
+          "candidateId": "cand-d13101f5866adbfc",
+          "creativeDecision": "animated sequence tracing the light path through the atmosphere",
+          "findings": [],
+          "estimatedCostVnd": 0,
+          "renderWallMs": 0
+        }
+      ],
+      "evaluation": [
+        {
+          "candidateId": "cand-daa809485de4b09c",
+          "ratings": {
+            "factualFidelity": 4,
+            "clarity": 3,
+            "storyPurpose": 3,
+            "visualReadability": 3,
+            "pacing": 3,
+            "styleConsistency": 3,
+            "originalityContribution": 3,
+            "costLatency": 4,
+            "accessibility": 3
+          },
+          "rationale": "Cheaper to produce; reveal timing matches narration",
+          "evidenceRefs": [
+            "storyboard:S05"
+          ]
+        },
+        {
+          "candidateId": "cand-d13101f5866adbfc",
+          "ratings": {
+            "factualFidelity": 4,
+            "clarity": 4,
+            "storyPurpose": 4,
+            "visualReadability": 3,
+            "pacing": 3,
+            "styleConsistency": 3,
+            "originalityContribution": 3,
+            "costLatency": 2,
+            "accessibility": 3
+          },
+          "rationale": "Animated path shows why blue is removed over distance",
+          "evidenceRefs": [
+            "storyboard:S05"
+          ]
+        }
+      ],
+      "decision": "NO_WINNER",
+      "approvalStatus": "UNAPPROVED_CANDIDATE",
+      "lockedArtifact": {
+        "path": "D:\\Project\\UNFOLDIQ\\out\\pilot-sky-blue-canonical\\final.mp4",
+        "sha256": "7954a86a793ccbe5e153be30875b832ef813f3e23021e0f571a9da5e823dfcdf"
+      },
+      "comparisonBasis": "RUBRIC_AND_EVIDENCE_ONLY (no viewer metrics, no actual retention)",
+      "policy": {
+        "maxCandidateVariantsPerDecision": 2,
+        "maxCandidateVariantsHard": 3,
+        "paidMediaCalls": 0
+      },
+      "decisionReason": "TRADE_OFFS_NO_DOMINANT_CANDIDATE"
+    },
+    "previewStats": {
+      "hits": 0,
+      "renders": 0
+    }
+  }
+}

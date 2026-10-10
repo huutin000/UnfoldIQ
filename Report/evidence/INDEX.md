@@ -9,6 +9,7 @@ Map only. Files stay at their physical paths; do not move them (reports, JSON an
 | `post-v1e2g-live/`, `post-v1f-real-execution/` | Post-V1 | Live Flow/real execution proofs | HISTORICAL_ARCHIVE |
 | `pilot-4b/` | 4B | Pilot final QA / render QC | REQUIRED_TEST_EVIDENCE |
 | `perf-5a/`, `perf-5b/`, `perf-5c/` | 5A–5C | Profiling, incremental, runtime scale (cited by tests/reports) | REQUIRED_TEST_EVIDENCE |
+| `phase-6b/` | 6B | Bake-off/originality/quality evidence, gate, regression logs + generated-changes patch | PINNED_CANONICAL: `phase6-major-gate.json`, `full-regression-6b-final-run2.log` (199/199), `regression-generated-tracked-changes.patch`; run-1 log (191/195, env failure) kept as history |
 | `phase-6a/` | 6A | Gates, regression logs, repair, watch, canonical pilot | see below |
 
 ## `phase-6a/`

@@ -1,0 +1,57 @@
+{
+  "kind": "CREATOR_CONTROL_OVERRIDE_LEDGER",
+  "version": "1.0.0",
+  "projectId": "pilot-sky-blue-canonical",
+  "entries": [
+    {
+      "op": "ACCEPT",
+      "findingRef": "packaging-qa:MISSING_AUDIENCE_DECISION",
+      "dimension": "packaging",
+      "severity": "P2",
+      "category": "PACKAGING_REVIEW_RECORD",
+      "ownerId": "owner (carried from UNFOLDIQ_PHASE_6B handoff section 1)",
+      "reason": "Owner-accepted non-blocking in the Phase 6A handoff (PACKAGING_QA = ACCEPTED_NON_BLOCKING); audience decision exists in owner-approval.json; persisted packaging-qa.json stays REVIEW_REQUIRED and is not forged to PASS",
+      "evidenceRefs": [
+        "projects/pilot-sky-blue-canonical/approval/owner-decisions-6a-reconciliation.json#decision-5",
+        "projects/pilot-sky-blue-canonical/approval/owner-approval.json",
+        "projects/pilot-sky-blue-canonical/packaging/packaging-qa.json"
+      ],
+      "scope": {
+        "videoSha256": "7954a86a793ccbe5e153be30875b832ef813f3e23021e0f571a9da5e823dfcdf",
+        "rubricVersion": "1.0.0"
+      },
+      "at": "2026-10-10T08:31:55.824Z",
+      "seq": 1,
+      "prevHash": null,
+      "entryHash": "a4ef55367b2dd1cb",
+      "entryId": "ovr-a4ef55367b2dd1cb"
+    }
+  ],
+  "creatorControls": {
+    "directorPrompt": {
+      "status": "IMPLEMENTED",
+      "where": "lib/creative-differentiation/controls.js"
+    },
+    "overrideLedger": {
+      "status": "IMPLEMENTED",
+      "where": "lib/creative-differentiation/controls.js"
+    },
+    "performanceReference": {
+      "status": "DEFERRED_WITH_EVIDENCE",
+      "reason": "Needs explicit per-reference rights/provenance capture and an ingestion path that does not exist yet; building it without them would risk unlicensed-reference use. Trigger: first owner request with a licensed reference."
+    },
+    "representativePreview": {
+      "status": "MERGED_INTO_BAKEOFF",
+      "reason": "Short local segment preview + content-addressed cache already provided by bakeoff.getOrCreatePreview (<=35% of video, 1 render cap); no separate entity needed."
+    },
+    "channelEditorialIdentity": {
+      "status": "PARTIAL",
+      "reason": "Identity enters the originality fingerprint (channelIdentityHash/editorialBibleVersion) so repeatable identity is recognised as intentional; richer authoring controls are deferred until a multi-episode channel exists."
+    }
+  },
+  "ledgerIntegrity": {
+    "ok": true
+  },
+  "activeForLockedFinal": 1,
+  "note": "Only owner-accepted P2/P3 subjective items can appear here; P0/P1 factual/rights/security/technical blockers are refused by construction."
+}

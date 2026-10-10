@@ -12,13 +12,16 @@
 > Retention/cleanup rules: `Report/REPORT_EVIDENCE_POLICY.md`. Evidence map: `Report/evidence/INDEX.md`.
 
 - **Roadmap:** V6.2 — Continuous Optimization, Workspace Governance, Agent-Ready
-- **Current phase:** Phase 6A `COMPLETE` and `PHASE_6B_READY = YES` per the final verdict (2026-10-10) in `Report/evidence/phase-6a/final-reconciliation/PHASE_6A_FINAL_GATE_RECONCILIATION.md`; Phase 6B is **not started** (no 6B report). Phase index: `Report/phases/phase-6/INDEX.md`
-- **Latest canonical gate report:** `Report/evidence/phase-6a/final-reconciliation/PHASE_6A_FINAL_GATE_RECONCILIATION.md` (section `FINAL (2026-10-10)`; supersedes the verdict blocks in the Phase 6A reports below)
+- **Current phase:** Phase 6 `COMPLETE` (6A + 6B), `PHASE_7_READY = YES` per `Report/phases/phase-6/PHASE_6B_CREATIVE_DIFFERENTIATION_FINAL_QUALITY_REPORT.md` and `Report/evidence/phase-6b/phase6-major-gate.json` (full regression 199/199). Phase 7 is **not started**. Phase index: `Report/phases/phase-6/INDEX.md`
+- **Latest canonical gate report:** `Report/phases/phase-6/PHASE_6B_CREATIVE_DIFFERENTIATION_FINAL_QUALITY_REPORT.md` (6A gate: `Report/evidence/phase-6a/final-reconciliation/PHASE_6A_FINAL_GATE_RECONCILIATION.md`)
+- **Open limitations handed to Phase 7:** `CHANNEL_LEVEL_ORIGINALITY = NOT_PROVEN` (1 real episode, need >=5); pilot QA PASS relies on the owner-accepted packaging REVIEW_REQUIRED exception; 57 s pilot does not prove 8-12+ min production; Gemini watch lineage PARTIAL; AUDIO_VISUAL_QA REVIEW_REQUIRED (owner-accepted); English-tuned lexical layer (GAP-047)
+- **Technical debt — Regression Output Isolation:** `node scripts/run-tests.js` rewrites ~30 tracked baseline/telemetry/registry files (timestamps, telemetry events, DAG revision counters); patch kept at `Report/evidence/phase-6b/regression-generated-tracked-changes.patch`; fix = run tests against a temp copy or untrack generated output
 - **Canonical pilot:** `Report/phases/phase-6/PHASE_6A_CANONICAL_PILOT_REPORT.md` (project `pilot-sky-blue-canonical`, attempt-006)
 - **Repo cleanup audit (2026-10-10):** `Report/audit/repo-cleanup-2026-10-10/` (execution result: `CLEANUP_EXECUTION_RESULT.md`)
 
 ## Phase 6 (CANONICAL)
 
+- `Report/phases/phase-6/PHASE_6B_CREATIVE_DIFFERENTIATION_FINAL_QUALITY_REPORT.md` — CANONICAL (6B final gate; Phase 6 COMPLETE)
 - `Report/phases/phase-6/PHASE_6A_FINAL_CLOSURE_REPORT.md` — CANONICAL for steps/evidence; its `CLOSED_BY_OWNER_DECISION` / `PHASE_6B_READY = NO` verdict is SUPERSEDED by the final reconciliation
 - `Report/phases/phase-6/PHASE_6A_CANONICAL_PILOT_REPORT.md` — CANONICAL (pilot lineage)
 - `Report/phases/phase-6/PHASE_6A_CREATIVE_RETENTION_FOUNDATION_REPORT.md` — CANONICAL with closure revision (its original verdict block is SUPERSEDED inside the file)

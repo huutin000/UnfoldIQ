@@ -1,9 +1,10 @@
 # Phase 6 Index
 
-Status: `PHASE_6A = COMPLETE`, `PHASE_6B_READY = YES` (final verdict, 2026-10-10: `Report/evidence/phase-6a/final-reconciliation/PHASE_6A_FINAL_GATE_RECONCILIATION.md`, section `FINAL`). Phase 6B has no report and is not started.
+Status: `PHASE_6A = COMPLETE`, `PHASE_6B_READY = YES` (final verdict, 2026-10-10: `Report/evidence/phase-6a/final-reconciliation/PHASE_6A_FINAL_GATE_RECONCILIATION.md`, section `FINAL`). Phase 6B: implemented; report `PHASE_6B_CREATIVE_DIFFERENTIATION_FINAL_QUALITY_REPORT.md`; COMPLETE (199/199 regression), PHASE_7_READY = YES.
 
 | Report | Class | Notes |
 |---|---|---|
+| `PHASE_6B_CREATIVE_DIFFERENTIATION_FINAL_QUALITY_REPORT.md` | CANONICAL (6B final gate) | Phase 6 COMPLETE, PHASE_7_READY = YES |
 | `../../evidence/phase-6a/final-reconciliation/PHASE_6A_FINAL_GATE_RECONCILIATION.md` | CANONICAL (final gate) | Latest verdict; supersedes the verdict blocks of the reports below |
 | `PHASE_6A_FINAL_CLOSURE_REPORT.md` | CANONICAL (steps/evidence) | Its `CLOSED_BY_OWNER_DECISION` / `PHASE_6B_READY = NO` verdict is SUPERSEDED |
 | `PHASE_6A_CANONICAL_PILOT_REPORT.md` | CANONICAL | Pilot `pilot-sky-blue-canonical`, owner-approved attempt-006; 195/195 regression on `5dec82a`; verdict block superseded by the final reconciliation |

@@ -1,0 +1,47 @@
+{
+  "phase": "6B",
+  "generatedAt": "2026-10-10T08:53:00.258Z",
+  "headAtTest": "b40b84f",
+  "sourceState": "uncommitted worktree on top of HEAD (new files under lib/creative-differentiation, tests/creative, tests/fixtures, scripts/diagnostics; registry doc edit)",
+  "gates": {
+    "STYLE_BAKEOFF": "READY",
+    "LIMITED_VARIANTS": "PROVEN",
+    "NO_UNCONTROLLED_PAID_VARIANTS": "PROVEN",
+    "ORIGINALITY_GATE": "READY",
+    "ORIGINALITY_FALSE_POSITIVE_GUARD": "PROVEN (synthetic golden corpus)",
+    "SINGLE_VIDEO_ORIGINALITY": "PASS",
+    "CROSS_VIDEO_REAL_CORPUS": "INSUFFICIENT",
+    "CHANNEL_LEVEL_ORIGINALITY": "NOT_PROVEN",
+    "EXPLAINABLE_QUALITY_SCORING": "READY",
+    "RUBRIC_VERSIONING": "PROVEN",
+    "SCORING_GOLDEN_REGRESSION": "PASS",
+    "NO_SCORE_OVERRIDES_HARD_BLOCKERS": "PROVEN",
+    "CREATOR_CONTROLS_6_7": "PARTIAL",
+    "CREATOR_OVERRIDE_TRACEABILITY": "PROVEN",
+    "CANONICAL_PILOT_QA_FOR_EVIDENCED_SCOPE": "PASS (packaging dimension relies on the owner acceptance carried from the 6A handoff; REVIEW_REQUIRED without it)",
+    "PHASE_6A_ACCEPTED_LIMITATIONS": "CARRIED",
+    "COST_LATENCY_REGRESSION": "ACCEPTABLE",
+    "EXTERNAL_PAID_COST_VND": 0,
+    "P0": 0,
+    "P1_CRITICAL": 0,
+    "FULL_REGRESSION": "PASS (199/199 suites, 0 failed, 1033.3s; Report/evidence/phase-6b/full-regression-6b-final-run2.log)",
+    "HYGIENE": "PASS (check:workspace ok, check:repo-structure ok)",
+    "PHASE_6B": "COMPLETE",
+    "PHASE_6_MAJOR_GATE": "PASS",
+    "PHASE_6": "COMPLETE",
+    "PHASE_7_READY": "YES"
+  },
+  "blocker": {
+    "resolved": "Playwright chromium installed with owner approval (npx playwright install chromium); 4 research suites pass; run1 log kept as full-regression-6b-final.log (191/195)"
+  },
+  "evidence": {
+    "log": "Report/evidence/phase-6b/full-regression-6b-final.log",
+    "targetedCreative": "npm run test:creative = 12 suites 0 failed (new: style-bakeoff 8, originality 13, quality-scoring 10, creator-controls 8)"
+  },
+  "limitationsStillOpen": [
+    "CHANNEL_LEVEL_ORIGINALITY=NOT_PROVEN (1 real episode)",
+    "pilot QA PASS relies on carried owner acceptance of packaging REVIEW_REQUIRED",
+    "Phase 7 long-form NOT pre-proven"
+  ],
+  "generatedTrackedChanges": "Report/evidence/phase-6b/regression-generated-tracked-changes.patch (test side effects on tracked baselines, not committed, not reverted)"
+}
