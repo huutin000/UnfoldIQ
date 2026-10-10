@@ -1,0 +1,133 @@
+{
+  "version": "1.0.0",
+  "projectId": "pilot-sky-blue-canonical",
+  "generatedAt": "2026-10-10T02:48:12.164Z",
+  "entries": [
+    {
+      "assetId": "VISUAL_S01",
+      "sourcePath": "assets/visual/S01.mp4",
+      "stagedPath": "unfoldiq/pilot-sky-blue-canonical/5a8f389b/S01.mp4",
+      "staticFilePath": "unfoldiq/pilot-sky-blue-canonical/5a8f389b/S01.mp4",
+      "contentHash": "5a8f389b5b18af8ea5013049e7542961edad851beba7cf7265b98a17a3a490b7",
+      "size": 1117907,
+      "type": "video"
+    },
+    {
+      "assetId": "VISUAL_S02",
+      "sourcePath": "assets/visual/S02.mp4",
+      "stagedPath": "unfoldiq/pilot-sky-blue-canonical/00a6b265/S02.mp4",
+      "staticFilePath": "unfoldiq/pilot-sky-blue-canonical/00a6b265/S02.mp4",
+      "contentHash": "00a6b2651adc7d2c09995350d72d632257852b109aca065818e338023cab80fc",
+      "size": 1710724,
+      "type": "video"
+    },
+    {
+      "assetId": "VISUAL_S03",
+      "sourcePath": "assets/visual/S03.mp4",
+      "stagedPath": "unfoldiq/pilot-sky-blue-canonical/422fdcd8/S03.mp4",
+      "staticFilePath": "unfoldiq/pilot-sky-blue-canonical/422fdcd8/S03.mp4",
+      "contentHash": "422fdcd833dd744cc5ddd6659a4761049e8bef773f1e00483cdc8eb9699c1c5d",
+      "size": 2596998,
+      "type": "video"
+    },
+    {
+      "assetId": "VISUAL_S04",
+      "sourcePath": "assets/visual/S04.mp4",
+      "stagedPath": "unfoldiq/pilot-sky-blue-canonical/6399ccfd/S04.mp4",
+      "staticFilePath": "unfoldiq/pilot-sky-blue-canonical/6399ccfd/S04.mp4",
+      "contentHash": "6399ccfd3cb207c677e0d62ea63a04ca41443899e47ec9c629577977310c7fcd",
+      "size": 1028008,
+      "type": "video"
+    },
+    {
+      "assetId": "VISUAL_S05",
+      "sourcePath": "assets/visual/S05.mp4",
+      "stagedPath": "unfoldiq/pilot-sky-blue-canonical/95c48914/S05.mp4",
+      "staticFilePath": "unfoldiq/pilot-sky-blue-canonical/95c48914/S05.mp4",
+      "contentHash": "95c4891460de263cf9ea361dbba3414e4e84fce863d39d7d6c4e32333a9d24a7",
+      "size": 797265,
+      "type": "video"
+    },
+    {
+      "assetId": "VISUAL_S06",
+      "sourcePath": "assets/visual/S06.mp4",
+      "stagedPath": "unfoldiq/pilot-sky-blue-canonical/375be377/S06.mp4",
+      "staticFilePath": "unfoldiq/pilot-sky-blue-canonical/375be377/S06.mp4",
+      "contentHash": "375be377881d673293ec8265b051bee120edd1b2f4b4dd3f33410a86c3f2940c",
+      "size": 2639333,
+      "type": "video"
+    },
+    {
+      "assetId": "VOICE_B1",
+      "sourcePath": "assets/voice/B1.wav",
+      "stagedPath": "unfoldiq/pilot-sky-blue-canonical/5f211064/B1.wav",
+      "staticFilePath": "unfoldiq/pilot-sky-blue-canonical/5f211064/B1.wav",
+      "contentHash": "5f211064a550ec5c8ca70cedd6442e4ce38e3a93c45dd196ba730e19491b7988",
+      "size": 340878,
+      "type": "audio"
+    },
+    {
+      "assetId": "VOICE_B2",
+      "sourcePath": "assets/voice/B2.wav",
+      "stagedPath": "unfoldiq/pilot-sky-blue-canonical/bceca616/B2.wav",
+      "staticFilePath": "unfoldiq/pilot-sky-blue-canonical/bceca616/B2.wav",
+      "contentHash": "bceca61606377d8afbeb0878f05f08814e7a47517f711c7510a2641cff0e6a88",
+      "size": 393678,
+      "type": "audio"
+    },
+    {
+      "assetId": "VOICE_B3",
+      "sourcePath": "assets/voice/B3.wav",
+      "stagedPath": "unfoldiq/pilot-sky-blue-canonical/5ed6c569/B3.wav",
+      "staticFilePath": "unfoldiq/pilot-sky-blue-canonical/5ed6c569/B3.wav",
+      "contentHash": "5ed6c5691d859798a1ccc89e49d78b3bc502d23da66a30f12eb97bf1d709d26c",
+      "size": 380478,
+      "type": "audio"
+    },
+    {
+      "assetId": "VOICE_B4",
+      "sourcePath": "assets/voice/B4.wav",
+      "stagedPath": "unfoldiq/pilot-sky-blue-canonical/cdf548d9/B4.wav",
+      "staticFilePath": "unfoldiq/pilot-sky-blue-canonical/cdf548d9/B4.wav",
+      "contentHash": "cdf548d9a702f90acfabf24034a58ed57270b003bdefcf522ae0ae282933a9e5",
+      "size": 337278,
+      "type": "audio"
+    },
+    {
+      "assetId": "VOICE_B5",
+      "sourcePath": "assets/voice/B5.wav",
+      "stagedPath": "unfoldiq/pilot-sky-blue-canonical/69109304/B5.wav",
+      "staticFilePath": "unfoldiq/pilot-sky-blue-canonical/69109304/B5.wav",
+      "contentHash": "691093048fddefd058a92825472d0c8ed582db9e287a971a07695460630fb604",
+      "size": 340878,
+      "type": "audio"
+    },
+    {
+      "assetId": "VOICE_B6",
+      "sourcePath": "assets/voice/B6.wav",
+      "stagedPath": "unfoldiq/pilot-sky-blue-canonical/7f2621c0/B6.wav",
+      "staticFilePath": "unfoldiq/pilot-sky-blue-canonical/7f2621c0/B6.wav",
+      "contentHash": "7f2621c06e5920867a926106660fb44dbac49a20e34a0174233114337d89abae",
+      "size": 342078,
+      "type": "audio"
+    },
+    {
+      "assetId": "VOICE_B7",
+      "sourcePath": "assets/voice/B7.wav",
+      "stagedPath": "unfoldiq/pilot-sky-blue-canonical/9ecd0203/B7.wav",
+      "staticFilePath": "unfoldiq/pilot-sky-blue-canonical/9ecd0203/B7.wav",
+      "contentHash": "9ecd020394a87100c3c968bccb05d388917ae12f1444b4fed62c05d4a6ba85fd",
+      "size": 314478,
+      "type": "audio"
+    },
+    {
+      "assetId": "VOICE_B8",
+      "sourcePath": "assets/voice/B8.wav",
+      "stagedPath": "unfoldiq/pilot-sky-blue-canonical/b4f18951/B8.wav",
+      "staticFilePath": "unfoldiq/pilot-sky-blue-canonical/b4f18951/B8.wav",
+      "contentHash": "b4f1895121f5056df6c5fb35d763135ecf7c0e2ff9473b7ba809c9b76ee8a8f9",
+      "size": 290478,
+      "type": "audio"
+    }
+  ]
+}

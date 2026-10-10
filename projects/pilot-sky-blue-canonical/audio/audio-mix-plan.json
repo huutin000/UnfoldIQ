@@ -1,0 +1,116 @@
+{
+  "version": "1.0.0",
+  "projectId": "pilot-sky-blue-canonical",
+  "generatedClipAudioPolicy": "MUTE_GENERATED_CLIP_AUDIO",
+  "tracks": {
+    "voice": [
+      {
+        "clipId": "VO_B1",
+        "path": "assets/voice/B1.wav",
+        "fromMs": 0,
+        "gainDb": 0,
+        "loop": false,
+        "language": "en",
+        "voiceId": "am_michael",
+        "providerId": "local-kokoro",
+        "timingStatus": "MEASURED",
+        "timingSource": "WAV header duration plus ffprobe; per-beat Kokoro synthesis",
+        "durationMs": 7100
+      },
+      {
+        "clipId": "VO_B2",
+        "path": "assets/voice/B2.wav",
+        "fromMs": 7100,
+        "gainDb": 0,
+        "loop": false,
+        "language": "en",
+        "voiceId": "am_michael",
+        "providerId": "local-kokoro",
+        "timingStatus": "MEASURED",
+        "timingSource": "WAV header duration plus ffprobe; per-beat Kokoro synthesis",
+        "durationMs": 8200
+      },
+      {
+        "clipId": "VO_B3",
+        "path": "assets/voice/B3.wav",
+        "fromMs": 15300,
+        "gainDb": 0,
+        "loop": false,
+        "language": "en",
+        "voiceId": "am_michael",
+        "providerId": "local-kokoro",
+        "timingStatus": "MEASURED",
+        "timingSource": "WAV header duration plus ffprobe; per-beat Kokoro synthesis",
+        "durationMs": 7925
+      },
+      {
+        "clipId": "VO_B4",
+        "path": "assets/voice/B4.wav",
+        "fromMs": 23225,
+        "gainDb": 0,
+        "loop": false,
+        "language": "en",
+        "voiceId": "am_michael",
+        "providerId": "local-kokoro",
+        "timingStatus": "MEASURED",
+        "timingSource": "WAV header duration plus ffprobe; per-beat Kokoro synthesis",
+        "durationMs": 7025
+      },
+      {
+        "clipId": "VO_B5",
+        "path": "assets/voice/B5.wav",
+        "fromMs": 30250,
+        "gainDb": 0,
+        "loop": false,
+        "language": "en",
+        "voiceId": "am_michael",
+        "providerId": "local-kokoro",
+        "timingStatus": "MEASURED",
+        "timingSource": "WAV header duration plus ffprobe; per-beat Kokoro synthesis",
+        "durationMs": 7100
+      },
+      {
+        "clipId": "VO_B6",
+        "path": "assets/voice/B6.wav",
+        "fromMs": 37350,
+        "gainDb": 0,
+        "loop": false,
+        "language": "en",
+        "voiceId": "am_michael",
+        "providerId": "local-kokoro",
+        "timingStatus": "MEASURED",
+        "timingSource": "WAV header duration plus ffprobe; per-beat Kokoro synthesis",
+        "durationMs": 7125
+      },
+      {
+        "clipId": "VO_B7",
+        "path": "assets/voice/B7.wav",
+        "fromMs": 44475,
+        "gainDb": 0,
+        "loop": false,
+        "language": "en",
+        "voiceId": "am_michael",
+        "providerId": "local-kokoro",
+        "timingStatus": "MEASURED",
+        "timingSource": "WAV header duration plus ffprobe; per-beat Kokoro synthesis",
+        "durationMs": 6550
+      },
+      {
+        "clipId": "VO_B8",
+        "path": "assets/voice/B8.wav",
+        "fromMs": 51025,
+        "gainDb": 0,
+        "loop": false,
+        "language": "en",
+        "voiceId": "am_michael",
+        "providerId": "local-kokoro",
+        "timingStatus": "MEASURED",
+        "timingSource": "WAV header duration plus ffprobe; per-beat Kokoro synthesis",
+        "durationMs": 6050
+      }
+    ],
+    "music": [],
+    "sfx": []
+  },
+  "status": "READY"
+}

@@ -1,0 +1,107 @@
+{
+  "schemaVersion": "1.0.0",
+  "finalNarrationTrackId": "fnt-cfd231152fcd",
+  "version": 1,
+  "projectId": "pilot-sky-blue-canonical",
+  "scriptRef": {
+    "scriptArtifactId": "fss-pilot-sky-blue-canonical",
+    "scriptVersion": 2
+  },
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "speechRateQaRef": "srq-dc6c4308edad",
+  "performanceQaRef": "pfq-af33fbfcf5c0",
+  "joinPolicy": {
+    "version": "narration-join-1.0.0",
+    "interSegmentSilenceMs": 250
+  },
+  "segments": [
+    {
+      "segmentId": "S1",
+      "segmentOrdinal": 0,
+      "ttsSegmentAudioId": "tsa-f261243a0659",
+      "audioRef": "assets/voice/narration-segments/tsa-f261243a0659.wav",
+      "audioContentHash": "9638fec5ca8ff080db361ccc4e157a3e11c83b7e5082a22886deaf57ff5f9da6",
+      "durationMs": 8025,
+      "joinStartMs": 0
+    },
+    {
+      "segmentId": "S2",
+      "segmentOrdinal": 1,
+      "ttsSegmentAudioId": "tsa-37d1548b9837",
+      "audioRef": "assets/voice/narration-segments/tsa-37d1548b9837.wav",
+      "audioContentHash": "fcbe7e3c3e85f22c1bc6a309f86ad4d3d54e653caaf40758a58a5d8b2f5bb116",
+      "durationMs": 9425,
+      "joinStartMs": 8275
+    },
+    {
+      "segmentId": "S3",
+      "segmentOrdinal": 2,
+      "ttsSegmentAudioId": "tsa-c641a1f74291",
+      "audioRef": "assets/voice/narration-segments/tsa-c641a1f74291.wav",
+      "audioContentHash": "ea5d5366233eb128865569d027d51a53ab03a8ccc2fe70f58db7a50b58488e6b",
+      "durationMs": 9950,
+      "joinStartMs": 17950
+    },
+    {
+      "segmentId": "S4",
+      "segmentOrdinal": 3,
+      "ttsSegmentAudioId": "tsa-62fbaa6f262f",
+      "audioRef": "assets/voice/narration-segments/tsa-62fbaa6f262f.wav",
+      "audioContentHash": "20c53f23978ab85595ef3fc19e44a83da9537bcd705a5fee85904c797d6a659b",
+      "durationMs": 7825,
+      "joinStartMs": 28150
+    },
+    {
+      "segmentId": "S5",
+      "segmentOrdinal": 4,
+      "ttsSegmentAudioId": "tsa-87c0ecaa1fb8",
+      "audioRef": "assets/voice/narration-segments/tsa-87c0ecaa1fb8.wav",
+      "audioContentHash": "c5950053f2b1f20fc39a077bfdcb3a13e68a6e70ab9a5bc96bcd5766833e21f3",
+      "durationMs": 8300,
+      "joinStartMs": 36225
+    },
+    {
+      "segmentId": "S6",
+      "segmentOrdinal": 5,
+      "ttsSegmentAudioId": "tsa-645341b83207",
+      "audioRef": "assets/voice/narration-segments/tsa-645341b83207.wav",
+      "audioContentHash": "a33e9200bd68f332ce63a10f787c17ad3ac729cef5a82b901fcd7863614a7ef1",
+      "durationMs": 9450,
+      "joinStartMs": 44775
+    },
+    {
+      "segmentId": "S7",
+      "segmentOrdinal": 6,
+      "ttsSegmentAudioId": "tsa-ab10e5de009a",
+      "audioRef": "assets/voice/narration-segments/tsa-ab10e5de009a.wav",
+      "audioContentHash": "85dd26a3ec48b957480d0a52228c14cfc29c4b3f0011684a253d5a074f52a6c5",
+      "durationMs": 8150,
+      "joinStartMs": 54475
+    },
+    {
+      "segmentId": "S8",
+      "segmentOrdinal": 7,
+      "ttsSegmentAudioId": "tsa-cf2ac9efc5ca",
+      "audioRef": "assets/voice/narration-segments/tsa-cf2ac9efc5ca.wav",
+      "audioContentHash": "7f851136c5fe0bd8572c125efcb42eae5e8595a1f98df2141dbe300cd6630ba8",
+      "durationMs": 6550,
+      "joinStartMs": 62875
+    }
+  ],
+  "audioRef": "assets/voice/narration-track/fnt-cfd231152fcd.wav",
+  "audioContentHash": "6be6d491d7541faace7ebc214f8da63acc54704aa4d630f5080fe324fdb87239",
+  "durationMs": 69675,
+  "sampleRate": 24000,
+  "channels": 1,
+  "joinQa": {
+    "joinCount": 7,
+    "maxDiscontinuity": 0,
+    "status": "PASS"
+  },
+  "status": "ASSEMBLED",
+  "provenance": {
+    "createdAt": "2026-10-06T06:52:49.162Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "67e25349d3672292"
+}

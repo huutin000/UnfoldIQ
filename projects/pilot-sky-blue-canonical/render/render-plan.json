@@ -1,0 +1,408 @@
+{
+  "version": "1.0.0",
+  "projectId": "pilot-sky-blue-canonical",
+  "platform": "youtube",
+  "generatedAt": "2026-10-10T02:48:12.173Z",
+  "composition": {
+    "id": "UNFOLDIQVideo",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "durationMs": 57075,
+    "durationInFrames": 1713,
+    "background": "#1c5fa8",
+    "outputName": "pilot-sky-blue-canonical"
+  },
+  "scenes": [
+    {
+      "sceneId": "S01",
+      "startFrame": 0,
+      "endFrame": 213,
+      "layers": [
+        {
+          "layerId": "S01_bg",
+          "kind": "BACKGROUND",
+          "startFrame": 0,
+          "endFrame": 213
+        },
+        {
+          "layerId": "S01_visual",
+          "kind": "VIDEO",
+          "startFrame": 0,
+          "endFrame": 213,
+          "assetStaticPath": "unfoldiq/pilot-sky-blue-canonical/5a8f389b/S01.mp4"
+        }
+      ]
+    },
+    {
+      "sceneId": "S02",
+      "startFrame": 213,
+      "endFrame": 459,
+      "layers": [
+        {
+          "layerId": "S02_bg",
+          "kind": "BACKGROUND",
+          "startFrame": 213,
+          "endFrame": 459
+        },
+        {
+          "layerId": "S02_visual",
+          "kind": "VIDEO",
+          "startFrame": 213,
+          "endFrame": 459,
+          "assetStaticPath": "unfoldiq/pilot-sky-blue-canonical/00a6b265/S02.mp4"
+        }
+      ]
+    },
+    {
+      "sceneId": "S03",
+      "startFrame": 459,
+      "endFrame": 908,
+      "layers": [
+        {
+          "layerId": "S03_bg",
+          "kind": "BACKGROUND",
+          "startFrame": 459,
+          "endFrame": 908
+        },
+        {
+          "layerId": "S03_visual",
+          "kind": "VIDEO",
+          "startFrame": 459,
+          "endFrame": 908,
+          "assetStaticPath": "unfoldiq/pilot-sky-blue-canonical/422fdcd8/S03.mp4"
+        }
+      ]
+    },
+    {
+      "sceneId": "S04",
+      "startFrame": 907,
+      "endFrame": 1121,
+      "layers": [
+        {
+          "layerId": "S04_bg",
+          "kind": "BACKGROUND",
+          "startFrame": 907,
+          "endFrame": 1121
+        },
+        {
+          "layerId": "S04_visual",
+          "kind": "VIDEO",
+          "startFrame": 907,
+          "endFrame": 1121,
+          "assetStaticPath": "unfoldiq/pilot-sky-blue-canonical/6399ccfd/S04.mp4"
+        }
+      ]
+    },
+    {
+      "sceneId": "S05",
+      "startFrame": 1120,
+      "endFrame": 1335,
+      "layers": [
+        {
+          "layerId": "S05_bg",
+          "kind": "BACKGROUND",
+          "startFrame": 1120,
+          "endFrame": 1335
+        },
+        {
+          "layerId": "S05_visual",
+          "kind": "VIDEO",
+          "startFrame": 1120,
+          "endFrame": 1335,
+          "assetStaticPath": "unfoldiq/pilot-sky-blue-canonical/95c48914/S05.mp4"
+        }
+      ]
+    },
+    {
+      "sceneId": "S06",
+      "startFrame": 1334,
+      "endFrame": 1713,
+      "layers": [
+        {
+          "layerId": "S06_bg",
+          "kind": "BACKGROUND",
+          "startFrame": 1334,
+          "endFrame": 1713
+        },
+        {
+          "layerId": "S06_visual",
+          "kind": "VIDEO",
+          "startFrame": 1334,
+          "endFrame": 1713,
+          "assetStaticPath": "unfoldiq/pilot-sky-blue-canonical/375be377/S06.mp4"
+        }
+      ]
+    }
+  ],
+  "audioTracks": {
+    "voice": [
+      {
+        "clipId": "VO_B1",
+        "startFrame": 0,
+        "endFrame": 1713,
+        "path": "unfoldiq/pilot-sky-blue-canonical/5f211064/B1.wav"
+      },
+      {
+        "clipId": "VO_B2",
+        "startFrame": 213,
+        "endFrame": 1713,
+        "path": "unfoldiq/pilot-sky-blue-canonical/bceca616/B2.wav"
+      },
+      {
+        "clipId": "VO_B3",
+        "startFrame": 459,
+        "endFrame": 1713,
+        "path": "unfoldiq/pilot-sky-blue-canonical/5ed6c569/B3.wav"
+      },
+      {
+        "clipId": "VO_B4",
+        "startFrame": 696,
+        "endFrame": 1713,
+        "path": "unfoldiq/pilot-sky-blue-canonical/cdf548d9/B4.wav"
+      },
+      {
+        "clipId": "VO_B5",
+        "startFrame": 907,
+        "endFrame": 1713,
+        "path": "unfoldiq/pilot-sky-blue-canonical/69109304/B5.wav"
+      },
+      {
+        "clipId": "VO_B6",
+        "startFrame": 1120,
+        "endFrame": 1713,
+        "path": "unfoldiq/pilot-sky-blue-canonical/7f2621c0/B6.wav"
+      },
+      {
+        "clipId": "VO_B7",
+        "startFrame": 1334,
+        "endFrame": 1713,
+        "path": "unfoldiq/pilot-sky-blue-canonical/9ecd0203/B7.wav"
+      },
+      {
+        "clipId": "VO_B8",
+        "startFrame": 1530,
+        "endFrame": 1713,
+        "path": "unfoldiq/pilot-sky-blue-canonical/b4f18951/B8.wav"
+      }
+    ],
+    "music": [],
+    "sfx": []
+  },
+  "captionTrack": {
+    "mode": "BOTH",
+    "frames": [
+      {
+        "captionId": "cap-1",
+        "startFrame": 0,
+        "endFrame": 148
+      },
+      {
+        "captionId": "cap-2",
+        "startFrame": 147,
+        "endFrame": 213
+      },
+      {
+        "captionId": "cap-3",
+        "startFrame": 213,
+        "endFrame": 387
+      },
+      {
+        "captionId": "cap-4",
+        "startFrame": 386,
+        "endFrame": 459
+      },
+      {
+        "captionId": "cap-5",
+        "startFrame": 459,
+        "endFrame": 622
+      },
+      {
+        "captionId": "cap-6",
+        "startFrame": 621,
+        "endFrame": 697
+      },
+      {
+        "captionId": "cap-7",
+        "startFrame": 696,
+        "endFrame": 834
+      },
+      {
+        "captionId": "cap-8",
+        "startFrame": 833,
+        "endFrame": 908
+      },
+      {
+        "captionId": "cap-9",
+        "startFrame": 907,
+        "endFrame": 1043
+      },
+      {
+        "captionId": "cap-10",
+        "startFrame": 1042,
+        "endFrame": 1121
+      },
+      {
+        "captionId": "cap-11",
+        "startFrame": 1120,
+        "endFrame": 1268
+      },
+      {
+        "captionId": "cap-12",
+        "startFrame": 1267,
+        "endFrame": 1335
+      },
+      {
+        "captionId": "cap-13",
+        "startFrame": 1334,
+        "endFrame": 1434
+      },
+      {
+        "captionId": "cap-14",
+        "startFrame": 1433,
+        "endFrame": 1531
+      },
+      {
+        "captionId": "cap-15",
+        "startFrame": 1530,
+        "endFrame": 1672
+      },
+      {
+        "captionId": "cap-16",
+        "startFrame": 1671,
+        "endFrame": 1713
+      }
+    ]
+  },
+  "assetMap": {
+    "VOICE_B1": {
+      "assetId": "VOICE_B1",
+      "type": "audio",
+      "stagedPath": "unfoldiq/pilot-sky-blue-canonical/5f211064/B1.wav",
+      "staticFilePath": "unfoldiq/pilot-sky-blue-canonical/5f211064/B1.wav",
+      "sourcePath": "assets/voice/B1.wav"
+    },
+    "VOICE_B2": {
+      "assetId": "VOICE_B2",
+      "type": "audio",
+      "stagedPath": "unfoldiq/pilot-sky-blue-canonical/bceca616/B2.wav",
+      "staticFilePath": "unfoldiq/pilot-sky-blue-canonical/bceca616/B2.wav",
+      "sourcePath": "assets/voice/B2.wav"
+    },
+    "VOICE_B3": {
+      "assetId": "VOICE_B3",
+      "type": "audio",
+      "stagedPath": "unfoldiq/pilot-sky-blue-canonical/5ed6c569/B3.wav",
+      "staticFilePath": "unfoldiq/pilot-sky-blue-canonical/5ed6c569/B3.wav",
+      "sourcePath": "assets/voice/B3.wav"
+    },
+    "VOICE_B4": {
+      "assetId": "VOICE_B4",
+      "type": "audio",
+      "stagedPath": "unfoldiq/pilot-sky-blue-canonical/cdf548d9/B4.wav",
+      "staticFilePath": "unfoldiq/pilot-sky-blue-canonical/cdf548d9/B4.wav",
+      "sourcePath": "assets/voice/B4.wav"
+    },
+    "VOICE_B5": {
+      "assetId": "VOICE_B5",
+      "type": "audio",
+      "stagedPath": "unfoldiq/pilot-sky-blue-canonical/69109304/B5.wav",
+      "staticFilePath": "unfoldiq/pilot-sky-blue-canonical/69109304/B5.wav",
+      "sourcePath": "assets/voice/B5.wav"
+    },
+    "VOICE_B6": {
+      "assetId": "VOICE_B6",
+      "type": "audio",
+      "stagedPath": "unfoldiq/pilot-sky-blue-canonical/7f2621c0/B6.wav",
+      "staticFilePath": "unfoldiq/pilot-sky-blue-canonical/7f2621c0/B6.wav",
+      "sourcePath": "assets/voice/B6.wav"
+    },
+    "VOICE_B7": {
+      "assetId": "VOICE_B7",
+      "type": "audio",
+      "stagedPath": "unfoldiq/pilot-sky-blue-canonical/9ecd0203/B7.wav",
+      "staticFilePath": "unfoldiq/pilot-sky-blue-canonical/9ecd0203/B7.wav",
+      "sourcePath": "assets/voice/B7.wav"
+    },
+    "VOICE_B8": {
+      "assetId": "VOICE_B8",
+      "type": "audio",
+      "stagedPath": "unfoldiq/pilot-sky-blue-canonical/b4f18951/B8.wav",
+      "staticFilePath": "unfoldiq/pilot-sky-blue-canonical/b4f18951/B8.wav",
+      "sourcePath": "assets/voice/B8.wav"
+    },
+    "VISUAL_S01": {
+      "assetId": "VISUAL_S01",
+      "type": "video",
+      "stagedPath": "unfoldiq/pilot-sky-blue-canonical/5a8f389b/S01.mp4",
+      "staticFilePath": "unfoldiq/pilot-sky-blue-canonical/5a8f389b/S01.mp4",
+      "sourcePath": "assets/visual/S01.mp4"
+    },
+    "VISUAL_S02": {
+      "assetId": "VISUAL_S02",
+      "type": "video",
+      "stagedPath": "unfoldiq/pilot-sky-blue-canonical/00a6b265/S02.mp4",
+      "staticFilePath": "unfoldiq/pilot-sky-blue-canonical/00a6b265/S02.mp4",
+      "sourcePath": "assets/visual/S02.mp4"
+    },
+    "VISUAL_S03": {
+      "assetId": "VISUAL_S03",
+      "type": "video",
+      "stagedPath": "unfoldiq/pilot-sky-blue-canonical/422fdcd8/S03.mp4",
+      "staticFilePath": "unfoldiq/pilot-sky-blue-canonical/422fdcd8/S03.mp4",
+      "sourcePath": "assets/visual/S03.mp4"
+    },
+    "VISUAL_S04": {
+      "assetId": "VISUAL_S04",
+      "type": "video",
+      "stagedPath": "unfoldiq/pilot-sky-blue-canonical/6399ccfd/S04.mp4",
+      "staticFilePath": "unfoldiq/pilot-sky-blue-canonical/6399ccfd/S04.mp4",
+      "sourcePath": "assets/visual/S04.mp4"
+    },
+    "VISUAL_S05": {
+      "assetId": "VISUAL_S05",
+      "type": "video",
+      "stagedPath": "unfoldiq/pilot-sky-blue-canonical/95c48914/S05.mp4",
+      "staticFilePath": "unfoldiq/pilot-sky-blue-canonical/95c48914/S05.mp4",
+      "sourcePath": "assets/visual/S05.mp4"
+    },
+    "VISUAL_S06": {
+      "assetId": "VISUAL_S06",
+      "type": "video",
+      "stagedPath": "unfoldiq/pilot-sky-blue-canonical/375be377/S06.mp4",
+      "staticFilePath": "unfoldiq/pilot-sky-blue-canonical/375be377/S06.mp4",
+      "sourcePath": "assets/visual/S06.mp4"
+    }
+  },
+  "styleTokens": {
+    "background": "#1c5fa8",
+    "foreground": "#f5f7fa",
+    "muted": "#cfe0f2",
+    "accent": "#ffd23f",
+    "fontFamily": "system-ui, sans-serif",
+    "titleSize": 72,
+    "bodySize": 36,
+    "captionSize": 34,
+    "cornerRadius": 12,
+    "spacing": 24,
+    "overlayOpacity": 0.55
+  },
+  "validation": {
+    "preflightStatus": "READY",
+    "timelineStatus": "MEASURED",
+    "checks": [
+      {
+        "name": "render-input-check",
+        "status": "READY",
+        "detail": "0 issue(s)"
+      },
+      {
+        "name": "render-gap-check",
+        "status": "CLEAN",
+        "detail": "0 gap(s)"
+      }
+    ]
+  },
+  "planHash": "716bc44cb3f8ac4a",
+  "status": "READY"
+}

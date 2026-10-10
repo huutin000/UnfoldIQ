@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "1.0.0",
+  "dialogueRoutingDecisionId": "dlr-d7b183beca2b",
+  "version": 1,
+  "projectId": "pilot-sky-blue-canonical",
+  "contentClass": "FACTUAL",
+  "speakerMode": "SINGLE_NARRATOR",
+  "narratorVoiceId": "am_michael",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "multiVoiceRequired": false,
+  "decision": "NOT_APPLICABLE",
+  "routingChecks": [
+    {
+      "checkId": "narrator-route",
+      "fixture": "Voice Bible narrator resolution",
+      "expected": "voiceId=am_michael",
+      "status": "VERIFIED"
+    },
+    {
+      "checkId": "unknown-speaker-fail-closed",
+      "fixture": "synthetic unknown speakerId",
+      "expected": "DIALOGUE_SPEAKER_NOT_FOUND",
+      "status": "VERIFIED"
+    },
+    {
+      "checkId": "missing-voice-fail-closed",
+      "fixture": "synthetic character without voiceId",
+      "expected": "DIALOGUE_VOICE_NOT_ASSIGNED",
+      "status": "VERIFIED"
+    },
+    {
+      "checkId": "language-mismatch-fail-closed",
+      "fixture": "synthetic character with ja voice on en script",
+      "expected": "DIALOGUE_VOICE_LANGUAGE_MISMATCH",
+      "status": "VERIFIED"
+    }
+  ],
+  "provenance": {
+    "createdAt": "2026-10-06T06:52:49.169Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "2a4aaaeeaaaab8bc"
+}

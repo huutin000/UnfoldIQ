@@ -1,0 +1,25 @@
+{
+  "version": "1.0.0",
+  "projectId": "pilot-sky-blue-canonical",
+  "voiceEndMs": 57075,
+  "visualPlannedEndMs": 57075,
+  "captionEndMs": 57075,
+  "musicEndMs": 0,
+  "sfxEndMs": 0,
+  "intentionalOutroEndMs": 0,
+  "actualTimelineEndMs": 57075,
+  "sources": [
+    "local-kokoro WAV header durations (8 clips)",
+    "ffprobe voice probes",
+    "scene-script PLANNED scene spans",
+    "caption-builder measured segments",
+    "audio-mix-plan voice clips"
+  ],
+  "status": "MEASURED",
+  "generatedAt": "2026-10-10T01:52:54.491Z",
+  "targetMsReference": 60000,
+  "note": "target never pads timeline",
+  "notes": [
+    "target never pads timeline"
+  ]
+}

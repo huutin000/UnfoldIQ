@@ -1,0 +1,23 @@
+{
+  "version": "1.0.0",
+  "projectId": "pilot-sky-blue-canonical",
+  "attemptId": "attempt-006",
+  "createdAt": "2026-10-10T03:02:15.422Z",
+  "outputPath": "out/pilot-sky-blue-canonical/final.mp4",
+  "inputFingerprint": {
+    "renderInput": "0ff531243e1a68fd",
+    "renderPlan": "eea96667bf3baab8",
+    "stagingManifest": "b16e76077d7a5eef",
+    "timeline": null,
+    "captions": null,
+    "audioMix": null,
+    "visualBible": "bcdfe87f4c29c995",
+    "continuity": "abfb34777edcb192",
+    "platformProfile": "1.0.0",
+    "remotion": "8a6168234b0f62eb",
+    "fingerprintId": "99572711696aeb39"
+  },
+  "renderPlanHash": "716bc44cb3f8ac4a",
+  "sha256": "7954a86a793ccbe5e153be30875b832ef813f3e23021e0f571a9da5e823dfcdf",
+  "sizeBytes": 18954217
+}

@@ -1,0 +1,7 @@
+{"t":"2026-10-10T02:48:12.792Z","event":"bundle-start","projectId":"pilot-sky-blue-canonical"}
+{"t":"2026-10-10T02:48:14.656Z","event":"bundle-done"}
+{"t":"2026-10-10T02:48:14.657Z","event":"select-start","compositionId":"UNFOLDIQVideo"}
+{"t":"2026-10-10T02:48:16.130Z","event":"select-done","durationInFrames":1713}
+{"t":"2026-10-10T02:48:16.130Z","event":"render-start-attempt","concurrency":2}
+{"t":"2026-10-10T02:48:16.325Z","event":"render-start","frameCount":1713,"parallelEncoding":true,"resolvedConcurrency":2}
+{"t":"2026-10-10T02:51:29.385Z","event":"render-done","outputPath":"D:\\Project\\UNFOLDIQ\\projects\\pilot-sky-blue-canonical\\render\\attempts\\attempt-006\\output.mp4","frameCount":1713}

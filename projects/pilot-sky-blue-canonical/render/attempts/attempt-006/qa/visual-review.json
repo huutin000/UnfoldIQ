@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "projectId": "pilot-sky-blue-canonical",
+  "attemptId": "attempt-006",
+  "reviewer": "human",
+  "reviewedAt": "2026-10-10T02:59:11.9840583Z",
+  "decision": "APPROVE",
+  "issues": [
+    {
+      "issueId": "V3",
+      "attemptId": "attempt-006",
+      "category": "OTHER",
+      "severity": "INFO",
+      "status": "OPEN",
+      "note": "Owner approved by explicit message (see approval/owner-approval.json, sha256 7954a86a...). Earlier findings V1 (S06 ghosting), caption flash, title text, badge were fixed in this attempt per owner feedback."
+    }
+  ]
+}

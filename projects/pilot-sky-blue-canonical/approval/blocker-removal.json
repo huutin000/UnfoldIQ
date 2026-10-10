@@ -1,0 +1,12 @@
+{
+  "at": "2026-10-10T03:02:15.253Z",
+  "authorizedBy": "owner message: cho phep xoa blocker MAX_ATTEMPTS",
+  "removed": [
+    {
+      "code": "MAX_ATTEMPTS",
+      "detail": "attempt count reached maxTotalAttempts=3"
+    }
+  ],
+  "reason": "stale: render of attempt-004..006 ran via CLI --max-attempts after the default cap of 3 had recorded this blocker",
+  "backup": "state.json copied before edit (scratchpad)"
+}

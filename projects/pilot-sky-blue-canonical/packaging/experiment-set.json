@@ -1,0 +1,234 @@
+{
+  "experimentSetId": "pxs-3b6db9620ead",
+  "version": "1.0.0",
+  "projectId": "pilot-sky-blue-canonical",
+  "platform": "youtube",
+  "profileRef": "youtube-long-form@1.0.0",
+  "variants": [
+    {
+      "variantId": "pkv-429f55548348",
+      "concept": "Open question hook",
+      "audience": "Curious general viewers (12+)",
+      "hypothesis": "A direct everyday question with a visible sun-and-question-mark thumbnail drives the broadest click-through.",
+      "title": {
+        "text": "Why Is the Sky Blue? The Answer Is in the Air",
+        "angle": "QUESTION",
+        "primaryClaim": "C1",
+        "claimRefs": [
+          "C1"
+        ],
+        "characterCount": 45,
+        "importantPrefix": "Why Is the",
+        "metrics": {
+          "characterCount": 45,
+          "wordCount": 11,
+          "importantPrefix": "Why Is the",
+          "allCapsRatio": 0.235,
+          "emojiCount": 0,
+          "punctuationDensity": 0.091,
+          "tokens": [
+            "why",
+            "is",
+            "the",
+            "sky",
+            "blue?",
+            "the",
+            "answer",
+            "is",
+            "in",
+            "the",
+            "air"
+          ]
+        },
+        "qaStatus": "REVIEW_REQUIRED"
+      },
+      "thumbnail": {
+        "assetId": "THUMB_S01",
+        "concept": "Illustration of white sunlight and a blue sky with a question mark",
+        "visualClaim": "Illustration of white sunlight and a blue sky with a question mark",
+        "subjectRefs": [],
+        "textOverlay": null,
+        "textLegibility": null,
+        "sourceType": "ILLUSTRATION",
+        "aspectRatio": "1920:1080",
+        "width": 1920,
+        "height": 1080,
+        "format": "JPG",
+        "fileSizeBytes": 124331,
+        "claimRefs": [
+          "C1"
+        ],
+        "provenanceRef": "provenance:THUMB_S01",
+        "generationRecord": null,
+        "qaStatus": "REVIEW_REQUIRED"
+      },
+      "semanticAngle": "QUESTION",
+      "claimRefs": [
+        "C1"
+      ],
+      "noveltyAxis": [
+        "question framing"
+      ],
+      "expectedTradeoff": "Generic; many similar explainers exist",
+      "generationRecord": null,
+      "status": "REJECTED"
+    },
+    {
+      "variantId": "pkv-2a0ededdb51f",
+      "concept": "Mechanism explainer",
+      "audience": "Learners who want the actual mechanism",
+      "hypothesis": "Naming the mechanism (tiny molecules scattering light) attracts viewers wanting a real explanation over a quick answer.",
+      "title": {
+        "text": "How Tiny Molecules Make the Daytime Sky Blue",
+        "angle": "EXPLANATION",
+        "primaryClaim": "C1",
+        "claimRefs": [
+          "C1",
+          "C2"
+        ],
+        "characterCount": 44,
+        "importantPrefix": "How Tiny Molecules",
+        "metrics": {
+          "characterCount": 44,
+          "wordCount": 8,
+          "importantPrefix": "How Tiny Molecules",
+          "allCapsRatio": 0.189,
+          "emojiCount": 0,
+          "punctuationDensity": 0,
+          "tokens": [
+            "how",
+            "tiny",
+            "molecules",
+            "make",
+            "the",
+            "daytime",
+            "sky",
+            "blue"
+          ]
+        },
+        "qaStatus": "REVIEW_REQUIRED"
+      },
+      "thumbnail": {
+        "assetId": "THUMB_S03",
+        "concept": "Illustration of air molecule scattering blue light more than red",
+        "visualClaim": "Illustration of air molecule scattering blue light more than red",
+        "subjectRefs": [],
+        "textOverlay": null,
+        "textLegibility": null,
+        "sourceType": "ILLUSTRATION",
+        "aspectRatio": "1920:1080",
+        "width": 1920,
+        "height": 1080,
+        "format": "JPG",
+        "fileSizeBytes": 141980,
+        "claimRefs": [
+          "C1",
+          "C2"
+        ],
+        "provenanceRef": "provenance:THUMB_S03",
+        "generationRecord": null,
+        "qaStatus": "REVIEW_REQUIRED"
+      },
+      "semanticAngle": "EXPLANATION",
+      "claimRefs": [
+        "C1",
+        "C2"
+      ],
+      "noveltyAxis": [
+        "mechanism framing"
+      ],
+      "expectedTradeoff": "Narrower appeal, higher retention",
+      "generationRecord": null,
+      "status": "REJECTED"
+    },
+    {
+      "variantId": "pkv-202fd90e1b72",
+      "concept": "Sunset contrast",
+      "audience": "Viewers who wonder about sunset colors",
+      "hypothesis": "Pairing blue sky with red sunsets promises a two-for-one explanation and a more colorful thumbnail.",
+      "title": {
+        "text": "Why Sunsets Turn Red While the Sky Stays Blue",
+        "angle": "CONTRAST",
+        "primaryClaim": "C4",
+        "claimRefs": [
+          "C4",
+          "C1"
+        ],
+        "characterCount": 45,
+        "importantPrefix": "Why Sunsets Turn",
+        "metrics": {
+          "characterCount": 45,
+          "wordCount": 9,
+          "importantPrefix": "Why Sunsets Turn",
+          "allCapsRatio": 0.216,
+          "emojiCount": 0,
+          "punctuationDensity": 0,
+          "tokens": [
+            "why",
+            "sunsets",
+            "turn",
+            "red",
+            "while",
+            "the",
+            "sky",
+            "stays",
+            "blue"
+          ]
+        },
+        "qaStatus": "REVIEW_REQUIRED"
+      },
+      "thumbnail": {
+        "assetId": "THUMB_S05",
+        "concept": "Illustration of long sunset light path through the atmosphere",
+        "visualClaim": "Illustration of long sunset light path through the atmosphere",
+        "subjectRefs": [],
+        "textOverlay": null,
+        "textLegibility": null,
+        "sourceType": "ILLUSTRATION",
+        "aspectRatio": "1920:1080",
+        "width": 1920,
+        "height": 1080,
+        "format": "JPG",
+        "fileSizeBytes": 103086,
+        "claimRefs": [
+          "C4"
+        ],
+        "provenanceRef": "provenance:THUMB_S05",
+        "generationRecord": null,
+        "qaStatus": "REVIEW_REQUIRED"
+      },
+      "semanticAngle": "CONTRAST",
+      "claimRefs": [
+        "C4",
+        "C1"
+      ],
+      "noveltyAxis": [
+        "sunset contrast"
+      ],
+      "expectedTradeoff": "Sunset is a secondary part of the video",
+      "generationRecord": null,
+      "status": "SELECTED"
+    }
+  ],
+  "experimentModesSupported": [
+    "TITLE_ONLY",
+    "THUMBNAIL_ONLY",
+    "TITLE_AND_THUMBNAIL"
+  ],
+  "selectionPolicy": "OPERATOR_SELECTS_OR_FIRST_PASSING",
+  "selectedVariantId": "pkv-202fd90e1b72",
+  "selectionReason": "operator: owner chose thumbnail 3 (sunset contrast)",
+  "hypothesisSummary": "pkv-429f55548348: A direct everyday question with a visible sun-and-question-mark thumbnail drives the broadest click-through. | pkv-2a0ededdb51f: Naming the mechanism (tiny molecules scattering light) attracts viewers wanting a real explanation over a quick answer. | pkv-202fd90e1b72: Pairing blue sky with red sunsets promises a two-for-one explanation and a more colorful thumbnail.",
+  "contentHashes": {
+    "script": "4150bc95a872b86abf337519bbdf849c43299c7c190dd28812021c069416a502",
+    "videoSpec": "fa5a44096c27f8f579d30b646e341e91b67fd5f0179cee17994ad7270c1a98f5"
+  },
+  "packagingPolicyVersion": "1.0.0",
+  "createdAt": "2026-10-10T02:47:34.382Z",
+  "updatedAt": "2026-10-10T02:47:34.457Z",
+  "qaStatus": "REVIEW_REQUIRED",
+  "appliedPatchIds": [
+    "owner-select-variant-3"
+  ],
+  "revision": 1
+}

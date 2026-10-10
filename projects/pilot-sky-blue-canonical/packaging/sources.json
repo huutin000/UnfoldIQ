@@ -1,0 +1,56 @@
+{
+  "sources": [
+    {
+      "claimId": "C1",
+      "text": "Daytime sky is blue because nitrogen/oxygen molecules (much smaller than visible wavelengths) Rayleigh-scatter short-wavelength blue light much more strongly than long-wavelength red light.",
+      "sources": [
+        "https://www.noaa.gov/jetstream/clouds/color-of-clouds",
+        "https://acd-ext.gsfc.nasa.gov/anonftp/acd/daac_ozone/Lecture4/Text/Lecture_4/rayleigh.html",
+        "http://hyperphysics.phy-astr.gsu.edu/hbase/atmos/blusky.html"
+      ]
+    },
+    {
+      "claimId": "C2",
+      "text": "Rayleigh scattering intensity scales approximately as 1/lambda^4, so blue (~400-450 nm) is scattered several times more efficiently than red (~650-700 nm).",
+      "sources": [
+        "https://www.britannica.com/science/Rayleigh-scattering",
+        "http://www.atmo.arizona.edu/students/courselinks/spring10/atmo551b/RayleighScattering_2010.pdf",
+        "https://www.pas.rochester.edu/~dmw/phy218/Lectures/Lect_64p.pdf"
+      ]
+    },
+    {
+      "claimId": "C3",
+      "text": "The sky looks blue rather than violet because sunlight contains less violet, upper-atmosphere absorption removes some violet, human eyes are less sensitive to violet than blue, and red+green cone responses blend scattered violet/indigo toward pale blue.",
+      "sources": [
+        "https://www.nesdis.noaa.gov/about/k-12-education/atmosphere/why-the-sky-blue",
+        "http://www.atmo.arizona.edu/students/courselinks/fall14/atmo170a1s2/lecture_notes/scattering/why_not_violet.html"
+      ]
+    },
+    {
+      "claimId": "C4",
+      "text": "Sunsets/sunrises look red/orange because the low sun's light takes a much longer path through the atmosphere, so most blue/violet has been scattered away and mainly longer red-yellow wavelengths reach the eye directly.",
+      "sources": [
+        "http://spaceplace.nasa.gov/blue-sky/en",
+        "http://ww2010.atmos.uiuc.edu/(Gh)/guides/mtr/opt/air/sun.rxml",
+        "https://gml.noaa.gov/grad/about/redsky"
+      ]
+    },
+    {
+      "claimId": "C5",
+      "text": "Gas molecules cause wavelength-selective Rayleigh scattering (blue sky), while larger dust, pollution, salt, smoke and cloud droplets cause weakly wavelength-dependent Mie scattering that whitens the sky/haze and can intensify red sunsets.",
+      "sources": [
+        "http://hyperphysics.phy-astr.gsu.edu/hbase/atmos/blusky.html",
+        "https://www.nesdis.noaa.gov/about/k-12-education/atmosphere/why-the-sky-blue",
+        "http://ww2010.atmos.uiuc.edu/(Gl)/guides/mtr/opt/mch/sct/mie.rxml"
+      ]
+    },
+    {
+      "claimId": "C6",
+      "text": "The scattering explanation is named for Lord Rayleigh (John William Strutt, 1842-1919), who published the theory in 1871 with elaborations through the 1880s-1890s.",
+      "sources": [
+        "https://www.britannica.com/science/Rayleigh-scattering",
+        "https://www.britannica.com/biography/John-William-Strutt-3rd-Baron-Rayleigh"
+      ]
+    }
+  ]
+}

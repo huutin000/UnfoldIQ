@@ -1,0 +1,46 @@
+{
+  "version": "1.0.0",
+  "profileRef": "youtube-long-form@1.0.0",
+  "checks": [
+    {
+      "name": "title limit",
+      "ok": true,
+      "detail": "0/100"
+    },
+    {
+      "name": "description limit",
+      "ok": true,
+      "detail": "631/5000"
+    },
+    {
+      "name": "thumbnail profile",
+      "ok": true,
+      "detail": "per-variant geometry validated in packaging QA"
+    },
+    {
+      "name": "metadata completeness",
+      "ok": false,
+      "detail": null
+    },
+    {
+      "name": "audience decision completeness",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "rights/attribution completeness",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "final render/output technical compliance",
+      "ok": false,
+      "detail": "PENDING_PHASE_4B"
+    },
+    {
+      "name": "final visual flash/safe-zone validation",
+      "ok": false,
+      "detail": "PENDING_PHASE_4B"
+    }
+  ]
+}

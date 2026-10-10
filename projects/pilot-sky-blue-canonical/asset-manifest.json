@@ -1,0 +1,342 @@
+{
+    "version":  "1.0.0",
+    "projectId":  "pilot-sky-blue-canonical",
+    "assets":  [
+                   {
+                       "assetId":  "VOICE_B1",
+                       "type":  "voice",
+                       "status":  "READY",
+                       "sourceType":  "generated",
+                       "path":  "assets/voice/B1.wav",
+                       "providerId":  "local-kokoro",
+                       "mimeType":  "audio/wav",
+                       "durationMs":  7100,
+                       "sceneIds":  [
+                                        "S01"
+                                    ],
+                       "provenance":  {
+                                          "providerId":  "local-kokoro",
+                                          "modelOrVersion":  "hexgrad/Kokoro-82M kokoro-v1, voice am_michael, speed 1.1",
+                                          "generationDate":  "2026-10-10T01:52:54.492Z",
+                                          "sha256":  "5f211064a550ec5c8ca70cedd6442e4ce38e3a93c45dd196ba730e19491b7988",
+                                          "notes":  "Local Kokoro synthesis of original script beat (Voice Bible vb-19f4fd6a4596 voice); zero network calls; Whisper base.en transcript WER 0; post-gain: compressor 3:1 + 13.5 dB + limiter (integrated approx -18 LUFS)"
+                                      },
+                       "rights":  {
+                                      "status":  "NOT_APPLICABLE",
+                                      "notes":  "Original script, local synthesis, no third-party media"
+                                  }
+                   },
+                   {
+                       "assetId":  "VOICE_B2",
+                       "type":  "voice",
+                       "status":  "READY",
+                       "sourceType":  "generated",
+                       "path":  "assets/voice/B2.wav",
+                       "providerId":  "local-kokoro",
+                       "mimeType":  "audio/wav",
+                       "durationMs":  8200,
+                       "sceneIds":  [
+                                        "S02"
+                                    ],
+                       "provenance":  {
+                                          "providerId":  "local-kokoro",
+                                          "modelOrVersion":  "hexgrad/Kokoro-82M kokoro-v1, voice am_michael, speed 1.1",
+                                          "generationDate":  "2026-10-10T01:52:54.492Z",
+                                          "sha256":  "bceca61606377d8afbeb0878f05f08814e7a47517f711c7510a2641cff0e6a88",
+                                          "notes":  "Local Kokoro synthesis of original script beat (Voice Bible vb-19f4fd6a4596 voice); zero network calls; Whisper base.en transcript WER 0; post-gain: compressor 3:1 + 13.5 dB + limiter (integrated approx -18 LUFS)"
+                                      },
+                       "rights":  {
+                                      "status":  "NOT_APPLICABLE",
+                                      "notes":  "Original script, local synthesis, no third-party media"
+                                  }
+                   },
+                   {
+                       "assetId":  "VOICE_B3",
+                       "type":  "voice",
+                       "status":  "READY",
+                       "sourceType":  "generated",
+                       "path":  "assets/voice/B3.wav",
+                       "providerId":  "local-kokoro",
+                       "mimeType":  "audio/wav",
+                       "durationMs":  7925,
+                       "sceneIds":  [
+                                        "S03"
+                                    ],
+                       "provenance":  {
+                                          "providerId":  "local-kokoro",
+                                          "modelOrVersion":  "hexgrad/Kokoro-82M kokoro-v1, voice am_michael, speed 1.1",
+                                          "generationDate":  "2026-10-10T01:52:54.492Z",
+                                          "sha256":  "5ed6c5691d859798a1ccc89e49d78b3bc502d23da66a30f12eb97bf1d709d26c",
+                                          "notes":  "Local Kokoro synthesis of original script beat (Voice Bible vb-19f4fd6a4596 voice); zero network calls; Whisper base.en transcript WER 0; post-gain: compressor 3:1 + 13.5 dB + limiter (integrated approx -18 LUFS)"
+                                      },
+                       "rights":  {
+                                      "status":  "NOT_APPLICABLE",
+                                      "notes":  "Original script, local synthesis, no third-party media"
+                                  }
+                   },
+                   {
+                       "assetId":  "VOICE_B4",
+                       "type":  "voice",
+                       "status":  "READY",
+                       "sourceType":  "generated",
+                       "path":  "assets/voice/B4.wav",
+                       "providerId":  "local-kokoro",
+                       "mimeType":  "audio/wav",
+                       "durationMs":  7025,
+                       "sceneIds":  [
+                                        "S03"
+                                    ],
+                       "provenance":  {
+                                          "providerId":  "local-kokoro",
+                                          "modelOrVersion":  "hexgrad/Kokoro-82M kokoro-v1, voice am_michael, speed 1.1",
+                                          "generationDate":  "2026-10-10T01:52:54.492Z",
+                                          "sha256":  "cdf548d9a702f90acfabf24034a58ed57270b003bdefcf522ae0ae282933a9e5",
+                                          "notes":  "Local Kokoro synthesis of original script beat (Voice Bible vb-19f4fd6a4596 voice); zero network calls; Whisper base.en transcript WER 0; post-gain: compressor 3:1 + 13.5 dB + limiter (integrated approx -18 LUFS)"
+                                      },
+                       "rights":  {
+                                      "status":  "NOT_APPLICABLE",
+                                      "notes":  "Original script, local synthesis, no third-party media"
+                                  }
+                   },
+                   {
+                       "assetId":  "VOICE_B5",
+                       "type":  "voice",
+                       "status":  "READY",
+                       "sourceType":  "generated",
+                       "path":  "assets/voice/B5.wav",
+                       "providerId":  "local-kokoro",
+                       "mimeType":  "audio/wav",
+                       "durationMs":  7100,
+                       "sceneIds":  [
+                                        "S04"
+                                    ],
+                       "provenance":  {
+                                          "providerId":  "local-kokoro",
+                                          "modelOrVersion":  "hexgrad/Kokoro-82M kokoro-v1, voice am_michael, speed 1.1",
+                                          "generationDate":  "2026-10-10T01:52:54.492Z",
+                                          "sha256":  "691093048fddefd058a92825472d0c8ed582db9e287a971a07695460630fb604",
+                                          "notes":  "Local Kokoro synthesis of original script beat (Voice Bible vb-19f4fd6a4596 voice); zero network calls; Whisper base.en transcript WER 0; post-gain: compressor 3:1 + 13.5 dB + limiter (integrated approx -18 LUFS)"
+                                      },
+                       "rights":  {
+                                      "status":  "NOT_APPLICABLE",
+                                      "notes":  "Original script, local synthesis, no third-party media"
+                                  }
+                   },
+                   {
+                       "assetId":  "VOICE_B6",
+                       "type":  "voice",
+                       "status":  "READY",
+                       "sourceType":  "generated",
+                       "path":  "assets/voice/B6.wav",
+                       "providerId":  "local-kokoro",
+                       "mimeType":  "audio/wav",
+                       "durationMs":  7125,
+                       "sceneIds":  [
+                                        "S05"
+                                    ],
+                       "provenance":  {
+                                          "providerId":  "local-kokoro",
+                                          "modelOrVersion":  "hexgrad/Kokoro-82M kokoro-v1, voice am_michael, speed 1.1",
+                                          "generationDate":  "2026-10-10T01:52:54.492Z",
+                                          "sha256":  "7f2621c06e5920867a926106660fb44dbac49a20e34a0174233114337d89abae",
+                                          "notes":  "Local Kokoro synthesis of original script beat (Voice Bible vb-19f4fd6a4596 voice); zero network calls; Whisper base.en transcript WER 0; post-gain: compressor 3:1 + 13.5 dB + limiter (integrated approx -18 LUFS)"
+                                      },
+                       "rights":  {
+                                      "status":  "NOT_APPLICABLE",
+                                      "notes":  "Original script, local synthesis, no third-party media"
+                                  }
+                   },
+                   {
+                       "assetId":  "VOICE_B7",
+                       "type":  "voice",
+                       "status":  "READY",
+                       "sourceType":  "generated",
+                       "path":  "assets/voice/B7.wav",
+                       "providerId":  "local-kokoro",
+                       "mimeType":  "audio/wav",
+                       "durationMs":  6550,
+                       "sceneIds":  [
+                                        "S06"
+                                    ],
+                       "provenance":  {
+                                          "providerId":  "local-kokoro",
+                                          "modelOrVersion":  "hexgrad/Kokoro-82M kokoro-v1, voice am_michael, speed 1.1",
+                                          "generationDate":  "2026-10-10T01:52:54.492Z",
+                                          "sha256":  "9ecd020394a87100c3c968bccb05d388917ae12f1444b4fed62c05d4a6ba85fd",
+                                          "notes":  "Local Kokoro synthesis of original script beat (Voice Bible vb-19f4fd6a4596 voice); zero network calls; Whisper base.en transcript WER 0; post-gain: compressor 3:1 + 13.5 dB + limiter (integrated approx -18 LUFS)"
+                                      },
+                       "rights":  {
+                                      "status":  "NOT_APPLICABLE",
+                                      "notes":  "Original script, local synthesis, no third-party media"
+                                  }
+                   },
+                   {
+                       "assetId":  "VOICE_B8",
+                       "type":  "voice",
+                       "status":  "READY",
+                       "sourceType":  "generated",
+                       "path":  "assets/voice/B8.wav",
+                       "providerId":  "local-kokoro",
+                       "mimeType":  "audio/wav",
+                       "durationMs":  6050,
+                       "sceneIds":  [
+                                        "S06"
+                                    ],
+                       "provenance":  {
+                                          "providerId":  "local-kokoro",
+                                          "modelOrVersion":  "hexgrad/Kokoro-82M kokoro-v1, voice am_michael, speed 1.1",
+                                          "generationDate":  "2026-10-10T01:52:54.492Z",
+                                          "sha256":  "b4f1895121f5056df6c5fb35d763135ecf7c0e2ff9473b7ba809c9b76ee8a8f9",
+                                          "notes":  "Local Kokoro synthesis of original script beat (Voice Bible vb-19f4fd6a4596 voice); zero network calls; Whisper base.en transcript WER 0; post-gain: compressor 3:1 + 13.5 dB + limiter (integrated approx -18 LUFS)"
+                                      },
+                       "rights":  {
+                                      "status":  "NOT_APPLICABLE",
+                                      "notes":  "Original script, local synthesis, no third-party media"
+                                  }
+                   },
+                   {
+                       "assetId":  "VISUAL_S01",
+                       "type":  "video",
+                       "status":  "READY",
+                       "sourceType":  "generated",
+                       "path":  "assets/visual/S01.mp4",
+                       "providerId":  "remotion-local",
+                       "mimeType":  "video/mp4",
+                       "durationMs":  7100,
+                       "sceneIds":  [
+                                        "S01"
+                                    ],
+                       "provenance":  {
+                                          "providerId":  "remotion-local",
+                                          "modelOrVersion":  "remotion 4.0.529, composition SkyDiagram (remotion/src/compositions/SkyDiagram.tsx)",
+                                          "generationDate":  "2026-10-10T02:47:18.7959238Z",
+                                          "sha256":  "5a8f389b5b18af8ea5013049e7542961edad851beba7cf7265b98a17a3a490b7",
+                                          "notes":  "Original SVG diagram animation authored in-repo for scene S01 (hook: white sunlight vs blue sky question). No third-party media, no network, no paid provider. Labeled ILLUSTRATION in-frame; not presented as evidence imagery."
+                                      },
+                       "rights":  {
+                                      "status":  "NOT_APPLICABLE",
+                                      "notes":  "Original work of the project owner/agent; no source URL, author or licence obligation. Attribution not required."
+                                  }
+                   },
+                   {
+                       "assetId":  "VISUAL_S02",
+                       "type":  "video",
+                       "status":  "READY",
+                       "sourceType":  "generated",
+                       "path":  "assets/visual/S02.mp4",
+                       "providerId":  "remotion-local",
+                       "mimeType":  "video/mp4",
+                       "durationMs":  8200,
+                       "sceneIds":  [
+                                        "S02"
+                                    ],
+                       "provenance":  {
+                                          "providerId":  "remotion-local",
+                                          "modelOrVersion":  "remotion 4.0.529, composition SkyDiagram (remotion/src/compositions/SkyDiagram.tsx)",
+                                          "generationDate":  "2026-10-10T02:47:18.8080331Z",
+                                          "sha256":  "00a6b2651adc7d2c09995350d72d632257852b109aca065818e338023cab80fc",
+                                          "notes":  "Original SVG diagram animation authored in-repo for scene S02 (air molecules N2/O2 smaller than a light wave). No third-party media, no network, no paid provider. Labeled ILLUSTRATION in-frame; not presented as evidence imagery."
+                                      },
+                       "rights":  {
+                                      "status":  "NOT_APPLICABLE",
+                                      "notes":  "Original work of the project owner/agent; no source URL, author or licence obligation. Attribution not required."
+                                  }
+                   },
+                   {
+                       "assetId":  "VISUAL_S03",
+                       "type":  "video",
+                       "status":  "READY",
+                       "sourceType":  "generated",
+                       "path":  "assets/visual/S03.mp4",
+                       "providerId":  "remotion-local",
+                       "mimeType":  "video/mp4",
+                       "durationMs":  14967,
+                       "sceneIds":  [
+                                        "S03"
+                                    ],
+                       "provenance":  {
+                                          "providerId":  "remotion-local",
+                                          "modelOrVersion":  "remotion 4.0.529, composition SkyDiagram (remotion/src/compositions/SkyDiagram.tsx)",
+                                          "generationDate":  "2026-10-10T02:47:18.8134725Z",
+                                          "sha256":  "422fdcd833dd744cc5ddd6659a4761049e8bef773f1e00483cdc8eb9699c1c5d",
+                                          "notes":  "Original SVG diagram animation authored in-repo for scene S03 (blue scattered in all directions; red passes; blue reaches the eye). No third-party media, no network, no paid provider. Labeled ILLUSTRATION in-frame; not presented as evidence imagery."
+                                      },
+                       "rights":  {
+                                      "status":  "NOT_APPLICABLE",
+                                      "notes":  "Original work of the project owner/agent; no source URL, author or licence obligation. Attribution not required."
+                                  }
+                   },
+                   {
+                       "assetId":  "VISUAL_S04",
+                       "type":  "video",
+                       "status":  "READY",
+                       "sourceType":  "generated",
+                       "path":  "assets/visual/S04.mp4",
+                       "providerId":  "remotion-local",
+                       "mimeType":  "video/mp4",
+                       "durationMs":  7100,
+                       "sceneIds":  [
+                                        "S04"
+                                    ],
+                       "provenance":  {
+                                          "providerId":  "remotion-local",
+                                          "modelOrVersion":  "remotion 4.0.529, composition SkyDiagram (remotion/src/compositions/SkyDiagram.tsx)",
+                                          "generationDate":  "2026-10-10T02:47:18.8155003Z",
+                                          "sha256":  "6399ccfd3cb207c677e0d62ea63a04ca41443899e47ec9c629577977310c7fcd",
+                                          "notes":  "Original SVG diagram animation authored in-repo for scene S04 (why not violet: less in sunlight, weaker eye response). No third-party media, no network, no paid provider. Labeled ILLUSTRATION in-frame; not presented as evidence imagery."
+                                      },
+                       "rights":  {
+                                      "status":  "NOT_APPLICABLE",
+                                      "notes":  "Original work of the project owner/agent; no source URL, author or licence obligation. Attribution not required."
+                                  }
+                   },
+                   {
+                       "assetId":  "VISUAL_S05",
+                       "type":  "video",
+                       "status":  "READY",
+                       "sourceType":  "generated",
+                       "path":  "assets/visual/S05.mp4",
+                       "providerId":  "remotion-local",
+                       "mimeType":  "video/mp4",
+                       "durationMs":  7133,
+                       "sceneIds":  [
+                                        "S05"
+                                    ],
+                       "provenance":  {
+                                          "providerId":  "remotion-local",
+                                          "modelOrVersion":  "remotion 4.0.529, composition SkyDiagram (remotion/src/compositions/SkyDiagram.tsx)",
+                                          "generationDate":  "2026-10-10T02:47:18.8184934Z",
+                                          "sha256":  "95c4891460de263cf9ea361dbba3414e4e84fce863d39d7d6c4e32333a9d24a7",
+                                          "notes":  "Original SVG diagram animation authored in-repo for scene S05 (sunset: long path through atmosphere, blue scattered away). No third-party media, no network, no paid provider. Labeled ILLUSTRATION in-frame; not presented as evidence imagery."
+                                      },
+                       "rights":  {
+                                      "status":  "NOT_APPLICABLE",
+                                      "notes":  "Original work of the project owner/agent; no source URL, author or licence obligation. Attribution not required."
+                                  }
+                   },
+                   {
+                       "assetId":  "VISUAL_S06",
+                       "type":  "video",
+                       "status":  "READY",
+                       "sourceType":  "generated",
+                       "path":  "assets/visual/S06.mp4",
+                       "providerId":  "remotion-local",
+                       "mimeType":  "video/mp4",
+                       "durationMs":  12600,
+                       "sceneIds":  [
+                                        "S06"
+                                    ],
+                       "provenance":  {
+                                          "providerId":  "remotion-local",
+                                          "modelOrVersion":  "remotion 4.0.529, composition SkyDiagram (remotion/src/compositions/SkyDiagram.tsx)",
+                                          "generationDate":  "2026-10-10T02:47:18.8234954Z",
+                                          "sha256":  "375be377881d673293ec8265b051bee120edd1b2f4b4dd3f33410a86c3f2940c",
+                                          "notes":  "Original SVG diagram animation authored in-repo for scene S06 (haze scatters all colours equally; closing sunlight rearranged). No third-party media, no network, no paid provider. Labeled ILLUSTRATION in-frame; not presented as evidence imagery."
+                                      },
+                       "rights":  {
+                                      "status":  "NOT_APPLICABLE",
+                                      "notes":  "Original work of the project owner/agent; no source URL, author or licence obligation. Attribution not required."
+                                  }
+                   }
+               ]
+}

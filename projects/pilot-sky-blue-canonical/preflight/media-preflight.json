@@ -1,0 +1,501 @@
+{
+  "version": "1.0.0",
+  "projectId": "pilot-sky-blue-canonical",
+  "platform": "youtube",
+  "generatedAt": "2026-10-10T01:53:00.065Z",
+  "status": "READY",
+  "generatedClipAudioPolicy": "MUTE_GENERATED_CLIP_AUDIO",
+  "assets": [
+    {
+      "assetId": "VOICE_B1",
+      "sceneId": "S01",
+      "type": "voice",
+      "path": "assets/voice/B1.wav",
+      "exists": true,
+      "required": false,
+      "sourceProvider": "local-kokoro",
+      "provenanceStatus": "VERIFIED",
+      "rightsStatus": "NOT_APPLICABLE",
+      "continuityStatus": "NOT_APPLICABLE",
+      "structuralStatus": "VALID",
+      "metadataStatus": "MEASURED",
+      "issues": [],
+      "timingEvidence": {
+        "source": "FFPROBE",
+        "measuredAt": "2026-10-10T01:52:59.486Z",
+        "toolVersion": "ffprobe version 8.1.1-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers"
+      },
+      "metadata": {
+        "durationMs": 7100,
+        "codec": "pcm_s16le",
+        "container": "wav",
+        "sampleRate": 24000,
+        "channels": 1,
+        "fileSize": 340844,
+        "loudnessStatus": "NOT_MEASURED"
+      }
+    },
+    {
+      "assetId": "VOICE_B2",
+      "sceneId": "S02",
+      "type": "voice",
+      "path": "assets/voice/B2.wav",
+      "exists": true,
+      "required": false,
+      "sourceProvider": "local-kokoro",
+      "provenanceStatus": "VERIFIED",
+      "rightsStatus": "NOT_APPLICABLE",
+      "continuityStatus": "NOT_APPLICABLE",
+      "structuralStatus": "VALID",
+      "metadataStatus": "MEASURED",
+      "issues": [],
+      "timingEvidence": {
+        "source": "FFPROBE",
+        "measuredAt": "2026-10-10T01:52:59.530Z",
+        "toolVersion": "ffprobe version 8.1.1-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers"
+      },
+      "metadata": {
+        "durationMs": 8200,
+        "codec": "pcm_s16le",
+        "container": "wav",
+        "sampleRate": 24000,
+        "channels": 1,
+        "fileSize": 393644,
+        "loudnessStatus": "NOT_MEASURED"
+      }
+    },
+    {
+      "assetId": "VOICE_B3",
+      "sceneId": "S03",
+      "type": "voice",
+      "path": "assets/voice/B3.wav",
+      "exists": true,
+      "required": false,
+      "sourceProvider": "local-kokoro",
+      "provenanceStatus": "VERIFIED",
+      "rightsStatus": "NOT_APPLICABLE",
+      "continuityStatus": "NOT_APPLICABLE",
+      "structuralStatus": "VALID",
+      "metadataStatus": "MEASURED",
+      "issues": [],
+      "timingEvidence": {
+        "source": "FFPROBE",
+        "measuredAt": "2026-10-10T01:52:59.576Z",
+        "toolVersion": "ffprobe version 8.1.1-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers"
+      },
+      "metadata": {
+        "durationMs": 7925,
+        "codec": "pcm_s16le",
+        "container": "wav",
+        "sampleRate": 24000,
+        "channels": 1,
+        "fileSize": 380444,
+        "loudnessStatus": "NOT_MEASURED"
+      }
+    },
+    {
+      "assetId": "VOICE_B4",
+      "sceneId": "S03",
+      "type": "voice",
+      "path": "assets/voice/B4.wav",
+      "exists": true,
+      "required": false,
+      "sourceProvider": "local-kokoro",
+      "provenanceStatus": "VERIFIED",
+      "rightsStatus": "NOT_APPLICABLE",
+      "continuityStatus": "NOT_APPLICABLE",
+      "structuralStatus": "VALID",
+      "metadataStatus": "MEASURED",
+      "issues": [],
+      "timingEvidence": {
+        "source": "FFPROBE",
+        "measuredAt": "2026-10-10T01:52:59.618Z",
+        "toolVersion": "ffprobe version 8.1.1-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers"
+      },
+      "metadata": {
+        "durationMs": 7025,
+        "codec": "pcm_s16le",
+        "container": "wav",
+        "sampleRate": 24000,
+        "channels": 1,
+        "fileSize": 337244,
+        "loudnessStatus": "NOT_MEASURED"
+      }
+    },
+    {
+      "assetId": "VOICE_B5",
+      "sceneId": "S04",
+      "type": "voice",
+      "path": "assets/voice/B5.wav",
+      "exists": true,
+      "required": false,
+      "sourceProvider": "local-kokoro",
+      "provenanceStatus": "VERIFIED",
+      "rightsStatus": "NOT_APPLICABLE",
+      "continuityStatus": "NOT_APPLICABLE",
+      "structuralStatus": "VALID",
+      "metadataStatus": "MEASURED",
+      "issues": [],
+      "timingEvidence": {
+        "source": "FFPROBE",
+        "measuredAt": "2026-10-10T01:52:59.662Z",
+        "toolVersion": "ffprobe version 8.1.1-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers"
+      },
+      "metadata": {
+        "durationMs": 7100,
+        "codec": "pcm_s16le",
+        "container": "wav",
+        "sampleRate": 24000,
+        "channels": 1,
+        "fileSize": 340844,
+        "loudnessStatus": "NOT_MEASURED"
+      }
+    },
+    {
+      "assetId": "VOICE_B6",
+      "sceneId": "S05",
+      "type": "voice",
+      "path": "assets/voice/B6.wav",
+      "exists": true,
+      "required": false,
+      "sourceProvider": "local-kokoro",
+      "provenanceStatus": "VERIFIED",
+      "rightsStatus": "NOT_APPLICABLE",
+      "continuityStatus": "NOT_APPLICABLE",
+      "structuralStatus": "VALID",
+      "metadataStatus": "MEASURED",
+      "issues": [],
+      "timingEvidence": {
+        "source": "FFPROBE",
+        "measuredAt": "2026-10-10T01:52:59.705Z",
+        "toolVersion": "ffprobe version 8.1.1-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers"
+      },
+      "metadata": {
+        "durationMs": 7125,
+        "codec": "pcm_s16le",
+        "container": "wav",
+        "sampleRate": 24000,
+        "channels": 1,
+        "fileSize": 342044,
+        "loudnessStatus": "NOT_MEASURED"
+      }
+    },
+    {
+      "assetId": "VOICE_B7",
+      "sceneId": "S06",
+      "type": "voice",
+      "path": "assets/voice/B7.wav",
+      "exists": true,
+      "required": false,
+      "sourceProvider": "local-kokoro",
+      "provenanceStatus": "VERIFIED",
+      "rightsStatus": "NOT_APPLICABLE",
+      "continuityStatus": "NOT_APPLICABLE",
+      "structuralStatus": "VALID",
+      "metadataStatus": "MEASURED",
+      "issues": [],
+      "timingEvidence": {
+        "source": "FFPROBE",
+        "measuredAt": "2026-10-10T01:52:59.747Z",
+        "toolVersion": "ffprobe version 8.1.1-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers"
+      },
+      "metadata": {
+        "durationMs": 6550,
+        "codec": "pcm_s16le",
+        "container": "wav",
+        "sampleRate": 24000,
+        "channels": 1,
+        "fileSize": 314444,
+        "loudnessStatus": "NOT_MEASURED"
+      }
+    },
+    {
+      "assetId": "VOICE_B8",
+      "sceneId": "S06",
+      "type": "voice",
+      "path": "assets/voice/B8.wav",
+      "exists": true,
+      "required": false,
+      "sourceProvider": "local-kokoro",
+      "provenanceStatus": "VERIFIED",
+      "rightsStatus": "NOT_APPLICABLE",
+      "continuityStatus": "NOT_APPLICABLE",
+      "structuralStatus": "VALID",
+      "metadataStatus": "MEASURED",
+      "issues": [],
+      "timingEvidence": {
+        "source": "FFPROBE",
+        "measuredAt": "2026-10-10T01:52:59.790Z",
+        "toolVersion": "ffprobe version 8.1.1-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers"
+      },
+      "metadata": {
+        "durationMs": 6050,
+        "codec": "pcm_s16le",
+        "container": "wav",
+        "sampleRate": 24000,
+        "channels": 1,
+        "fileSize": 290444,
+        "loudnessStatus": "NOT_MEASURED"
+      }
+    },
+    {
+      "assetId": "VISUAL_S01",
+      "sceneId": "S01",
+      "type": "video",
+      "path": "assets/visual/S01.mp4",
+      "exists": true,
+      "required": false,
+      "sourceProvider": "remotion-local",
+      "provenanceStatus": "VERIFIED",
+      "rightsStatus": "NOT_APPLICABLE",
+      "continuityStatus": "NOT_APPLICABLE",
+      "structuralStatus": "VALID",
+      "metadataStatus": "MEASURED",
+      "issues": [],
+      "timingEvidence": {
+        "source": "FFPROBE",
+        "measuredAt": "2026-10-10T01:52:59.844Z",
+        "toolVersion": "ffprobe version 8.1.1-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers"
+      },
+      "metadata": {
+        "width": 1920,
+        "height": 1080,
+        "aspectRatio": "16:9",
+        "durationMs": 7100,
+        "fps": 30,
+        "codec": "h264",
+        "container": "mov",
+        "fileSize": 967968,
+        "hasAudioStream": false,
+        "sampleRate": null,
+        "channels": null,
+        "loudnessStatus": "NOT_MEASURED"
+      },
+      "aspectTreatment": {
+        "sourceAspect": 1.7778,
+        "targetAspect": 1.7778,
+        "treatment": "exact"
+      },
+      "embeddedAudio": "ABSENT",
+      "clipAudioPolicy": "MUTE_GENERATED_CLIP_AUDIO"
+    },
+    {
+      "assetId": "VISUAL_S02",
+      "sceneId": "S02",
+      "type": "video",
+      "path": "assets/visual/S02.mp4",
+      "exists": true,
+      "required": false,
+      "sourceProvider": "remotion-local",
+      "provenanceStatus": "VERIFIED",
+      "rightsStatus": "NOT_APPLICABLE",
+      "continuityStatus": "NOT_APPLICABLE",
+      "structuralStatus": "VALID",
+      "metadataStatus": "MEASURED",
+      "issues": [],
+      "timingEvidence": {
+        "source": "FFPROBE",
+        "measuredAt": "2026-10-10T01:52:59.886Z",
+        "toolVersion": "ffprobe version 8.1.1-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers"
+      },
+      "metadata": {
+        "width": 1920,
+        "height": 1080,
+        "aspectRatio": "16:9",
+        "durationMs": 8200,
+        "fps": 30,
+        "codec": "h264",
+        "container": "mov",
+        "fileSize": 941085,
+        "hasAudioStream": false,
+        "sampleRate": null,
+        "channels": null,
+        "loudnessStatus": "NOT_MEASURED"
+      },
+      "aspectTreatment": {
+        "sourceAspect": 1.7778,
+        "targetAspect": 1.7778,
+        "treatment": "exact"
+      },
+      "embeddedAudio": "ABSENT",
+      "clipAudioPolicy": "MUTE_GENERATED_CLIP_AUDIO"
+    },
+    {
+      "assetId": "VISUAL_S03",
+      "sceneId": "S03",
+      "type": "video",
+      "path": "assets/visual/S03.mp4",
+      "exists": true,
+      "required": false,
+      "sourceProvider": "remotion-local",
+      "provenanceStatus": "VERIFIED",
+      "rightsStatus": "NOT_APPLICABLE",
+      "continuityStatus": "NOT_APPLICABLE",
+      "structuralStatus": "VALID",
+      "metadataStatus": "MEASURED",
+      "issues": [],
+      "timingEvidence": {
+        "source": "FFPROBE",
+        "measuredAt": "2026-10-10T01:52:59.926Z",
+        "toolVersion": "ffprobe version 8.1.1-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers"
+      },
+      "metadata": {
+        "width": 1920,
+        "height": 1080,
+        "aspectRatio": "16:9",
+        "durationMs": 14967,
+        "fps": 30,
+        "codec": "h264",
+        "container": "mov",
+        "fileSize": 1732888,
+        "hasAudioStream": false,
+        "sampleRate": null,
+        "channels": null,
+        "loudnessStatus": "NOT_MEASURED"
+      },
+      "aspectTreatment": {
+        "sourceAspect": 1.7778,
+        "targetAspect": 1.7778,
+        "treatment": "exact"
+      },
+      "embeddedAudio": "ABSENT",
+      "clipAudioPolicy": "MUTE_GENERATED_CLIP_AUDIO"
+    },
+    {
+      "assetId": "VISUAL_S04",
+      "sceneId": "S04",
+      "type": "video",
+      "path": "assets/visual/S04.mp4",
+      "exists": true,
+      "required": false,
+      "sourceProvider": "remotion-local",
+      "provenanceStatus": "VERIFIED",
+      "rightsStatus": "NOT_APPLICABLE",
+      "continuityStatus": "NOT_APPLICABLE",
+      "structuralStatus": "VALID",
+      "metadataStatus": "MEASURED",
+      "issues": [],
+      "timingEvidence": {
+        "source": "FFPROBE",
+        "measuredAt": "2026-10-10T01:52:59.970Z",
+        "toolVersion": "ffprobe version 8.1.1-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers"
+      },
+      "metadata": {
+        "width": 1920,
+        "height": 1080,
+        "aspectRatio": "16:9",
+        "durationMs": 7100,
+        "fps": 30,
+        "codec": "h264",
+        "container": "mov",
+        "fileSize": 521949,
+        "hasAudioStream": false,
+        "sampleRate": null,
+        "channels": null,
+        "loudnessStatus": "NOT_MEASURED"
+      },
+      "aspectTreatment": {
+        "sourceAspect": 1.7778,
+        "targetAspect": 1.7778,
+        "treatment": "exact"
+      },
+      "embeddedAudio": "ABSENT",
+      "clipAudioPolicy": "MUTE_GENERATED_CLIP_AUDIO"
+    },
+    {
+      "assetId": "VISUAL_S05",
+      "sceneId": "S05",
+      "type": "video",
+      "path": "assets/visual/S05.mp4",
+      "exists": true,
+      "required": false,
+      "sourceProvider": "remotion-local",
+      "provenanceStatus": "VERIFIED",
+      "rightsStatus": "NOT_APPLICABLE",
+      "continuityStatus": "NOT_APPLICABLE",
+      "structuralStatus": "VALID",
+      "metadataStatus": "MEASURED",
+      "issues": [],
+      "timingEvidence": {
+        "source": "FFPROBE",
+        "measuredAt": "2026-10-10T01:53:00.020Z",
+        "toolVersion": "ffprobe version 8.1.1-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers"
+      },
+      "metadata": {
+        "width": 1920,
+        "height": 1080,
+        "aspectRatio": "16:9",
+        "durationMs": 7133,
+        "fps": 30,
+        "codec": "h264",
+        "container": "mov",
+        "fileSize": 643875,
+        "hasAudioStream": false,
+        "sampleRate": null,
+        "channels": null,
+        "loudnessStatus": "NOT_MEASURED"
+      },
+      "aspectTreatment": {
+        "sourceAspect": 1.7778,
+        "targetAspect": 1.7778,
+        "treatment": "exact"
+      },
+      "embeddedAudio": "ABSENT",
+      "clipAudioPolicy": "MUTE_GENERATED_CLIP_AUDIO"
+    },
+    {
+      "assetId": "VISUAL_S06",
+      "sceneId": "S06",
+      "type": "video",
+      "path": "assets/visual/S06.mp4",
+      "exists": true,
+      "required": false,
+      "sourceProvider": "remotion-local",
+      "provenanceStatus": "VERIFIED",
+      "rightsStatus": "NOT_APPLICABLE",
+      "continuityStatus": "NOT_APPLICABLE",
+      "structuralStatus": "VALID",
+      "metadataStatus": "MEASURED",
+      "issues": [],
+      "timingEvidence": {
+        "source": "FFPROBE",
+        "measuredAt": "2026-10-10T01:53:00.065Z",
+        "toolVersion": "ffprobe version 8.1.1-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers"
+      },
+      "metadata": {
+        "width": 1920,
+        "height": 1080,
+        "aspectRatio": "16:9",
+        "durationMs": 12600,
+        "fps": 30,
+        "codec": "h264",
+        "container": "mov",
+        "fileSize": 1644417,
+        "hasAudioStream": false,
+        "sampleRate": null,
+        "channels": null,
+        "loudnessStatus": "NOT_MEASURED"
+      },
+      "aspectTreatment": {
+        "sourceAspect": 1.7778,
+        "targetAspect": 1.7778,
+        "treatment": "exact"
+      },
+      "embeddedAudio": "ABSENT",
+      "clipAudioPolicy": "MUTE_GENERATED_CLIP_AUDIO"
+    }
+  ],
+  "timelineSummary": {
+    "assetCount": 14,
+    "readyCount": 14,
+    "requiredCount": 0,
+    "missingRequired": 0,
+    "voiceMeasured": true,
+    "notes": [
+      "14 assets checked",
+      "generatedClipAudioPolicy=MUTE_GENERATED_CLIP_AUDIO"
+    ]
+  },
+  "blockingIssues": [],
+  "warnings": []
+}

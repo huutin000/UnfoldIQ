@@ -1,0 +1,19 @@
+{
+  "version": "1.0.0",
+  "queued": [],
+  "running": [],
+  "completedKeys": [
+    "render:pilot-sky-blue-canonical:attempt-001:99c86743f0965339",
+    "render:pilot-sky-blue-canonical:attempt-003:bb4e5e756d927ddb",
+    "render:pilot-sky-blue-canonical:attempt-004:a43d9522d3fad08c",
+    "render:pilot-sky-blue-canonical:attempt-005:fe52e206caeea56f",
+    "render:pilot-sky-blue-canonical:attempt-006:99572711696aeb39"
+  ],
+  "completedWorkIds": [
+    "attempt-001",
+    "attempt-003",
+    "attempt-004",
+    "attempt-005",
+    "attempt-006"
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "schemaVersion": "1.0.0",
+  "pronunciationPassId": "prp-4d05ec4a2989",
+  "version": 1,
+  "projectId": "pilot-sky-blue-canonical",
+  "scriptRef": {
+    "scriptArtifactId": "fss-pilot-sky-blue-canonical",
+    "scriptVersion": 1
+  },
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "profileRef": "pron-b739edf0b550",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "providerLanguageCode": "a",
+  "runtimeMode": "QUIET_PHONEMIZATION",
+  "language": "en-us",
+  "segments": [
+    {
+      "segmentId": "S1",
+      "sourceTextHash": "21bba832a39f9337",
+      "matchedEntries": [],
+      "compiledInputHash": "21bba832a39f9337",
+      "runtimeGraphemeHash": "21bba832a39f9337",
+      "runtimePhonemeHash": "2cbb021985bfa20d",
+      "issues": [],
+      "status": "CLEAN"
+    },
+    {
+      "segmentId": "S2",
+      "sourceTextHash": "2e8bd1824b557bca",
+      "matchedEntries": [],
+      "compiledInputHash": "2e8bd1824b557bca",
+      "runtimeGraphemeHash": "2e8bd1824b557bca",
+      "runtimePhonemeHash": "1fa89f1a51f9b5a3",
+      "issues": [],
+      "status": "CLEAN"
+    },
+    {
+      "segmentId": "S3",
+      "sourceTextHash": "b3276fa2365a91cd",
+      "matchedEntries": [],
+      "compiledInputHash": "b3276fa2365a91cd",
+      "runtimeGraphemeHash": "b3276fa2365a91cd",
+      "runtimePhonemeHash": "13bd18426e359059",
+      "issues": [],
+      "status": "CLEAN"
+    },
+    {
+      "segmentId": "S4",
+      "sourceTextHash": "2d9816e454e015e5",
+      "matchedEntries": [],
+      "compiledInputHash": "2d9816e454e015e5",
+      "runtimeGraphemeHash": "2d9816e454e015e5",
+      "runtimePhonemeHash": "d4281f206008cb66",
+      "issues": [],
+      "status": "CLEAN"
+    },
+    {
+      "segmentId": "S5",
+      "sourceTextHash": "f476e57583e6a499",
+      "matchedEntries": [],
+      "compiledInputHash": "f476e57583e6a499",
+      "runtimeGraphemeHash": "f476e57583e6a499",
+      "runtimePhonemeHash": "dc57c50b4c2f2e73",
+      "issues": [],
+      "status": "CLEAN"
+    },
+    {
+      "segmentId": "S6",
+      "sourceTextHash": "86080df78f870926",
+      "matchedEntries": [],
+      "compiledInputHash": "86080df78f870926",
+      "runtimeGraphemeHash": "86080df78f870926",
+      "runtimePhonemeHash": "e3006786b28c0c56",
+      "issues": [],
+      "status": "CLEAN"
+    },
+    {
+      "segmentId": "S7",
+      "sourceTextHash": "602025e78e434deb",
+      "matchedEntries": [],
+      "compiledInputHash": "602025e78e434deb",
+      "runtimeGraphemeHash": "602025e78e434deb",
+      "runtimePhonemeHash": "da4dde4450e6609e",
+      "issues": [],
+      "status": "CLEAN"
+    },
+    {
+      "segmentId": "S8",
+      "sourceTextHash": "96b056ec77dae7cb",
+      "matchedEntries": [],
+      "compiledInputHash": "96b056ec77dae7cb",
+      "runtimeGraphemeHash": "96b056ec77dae7cb",
+      "runtimePhonemeHash": "35ab7a3c7f9512a9",
+      "issues": [],
+      "status": "CLEAN"
+    }
+  ],
+  "provenance": {
+    "source": "phase-2.3-runtime-pass",
+    "createdAt": "2026-10-06T04:49:21.290Z",
+    "runtimeEvidenceRef": "evidence/fix-pre-2.4/runtime/quiet-phonemization-evidence.json",
+    "evidenceRefs": []
+  },
+  "fingerprint": "95422296adf672f5"
+}

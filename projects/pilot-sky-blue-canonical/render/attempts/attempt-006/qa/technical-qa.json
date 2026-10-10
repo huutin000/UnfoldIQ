@@ -1,0 +1,70 @@
+{
+  "version": "1.0.0",
+  "projectId": "pilot-sky-blue-canonical",
+  "attemptId": "attempt-006",
+  "generatedAt": "2026-10-10T02:51:37.070Z",
+  "checks": [
+    {
+      "check": "file-exists",
+      "result": "PASS",
+      "detail": "output present: D:\\Project\\UNFOLDIQ\\projects\\pilot-sky-blue-canonical\\render\\attempts\\attempt-006\\output.mp4"
+    },
+    {
+      "check": "non-zero-size",
+      "result": "PASS",
+      "detail": "sizeBytes=18954217"
+    },
+    {
+      "check": "readable-container",
+      "result": "PASS",
+      "detail": "ffprobe parsed streams+format"
+    },
+    {
+      "check": "video-stream",
+      "result": "PASS",
+      "detail": "codec=h264"
+    },
+    {
+      "check": "dims-match",
+      "result": "PASS",
+      "detail": "expected=1920x1080 actual=1920x1080"
+    },
+    {
+      "check": "fps-match",
+      "result": "PASS",
+      "detail": "expected=30 actual=30.000"
+    },
+    {
+      "check": "audio-expected",
+      "result": "PASS",
+      "detail": "audio stream present as expected"
+    },
+    {
+      "check": "output-correlation",
+      "result": "PASS",
+      "detail": "inside attempt dir; sizeBytes=18954217 matches probe"
+    },
+    {
+      "check": "truncation",
+      "result": "PASS",
+      "detail": "actualMs=57152 expectedMs=57075 floor50%=28538"
+    }
+  ],
+  "summary": {
+    "pass": 9,
+    "fail": 0,
+    "review": 0,
+    "unknown": 0
+  },
+  "duration": {
+    "expectedMs": 57075,
+    "actualMs": 57152,
+    "deltaMs": 77,
+    "toleranceMs": 1142,
+    "result": "PASS"
+  },
+  "status": "PASS",
+  "reviewState": "MACHINE_CHECKED",
+  "outputPath": "D:\\Project\\UNFOLDIQ\\projects\\pilot-sky-blue-canonical\\render\\attempts\\attempt-006\\output.mp4",
+  "sizeBytes": 18954217
+}

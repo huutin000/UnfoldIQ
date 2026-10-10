@@ -1,0 +1,29 @@
+{
+    "version":  "1.0.0",
+    "projectId":  "pilot-sky-blue-canonical",
+    "kind":  "OWNER_APPROVAL",
+    "approvedAt":  "2026-10-10T02:59:11.9840583Z",
+    "approvedBy":  "owner (explicit chat message)",
+    "ownerStatement":  "DUYỆT attempt-006 7954a86a, cho phép finalize",
+    "attemptId":  "attempt-006",
+    "outputPath":  "render/attempts/attempt-006/output.mp4",
+    "outputSha256":  "7954a86a793ccbe5e153be30875b832ef813f3e23021e0f571a9da5e823dfcdf",
+    "sizeBytes":  18954217,
+    "selectedVariantId":  "pkv-202fd90e1b72",
+    "selectedTitle":  "Why Sunsets Turn Red While the Sky Stays Blue",
+    "selectedThumbnail":  "THUMB_S05",
+    "audience":  {
+                     "madeForKids":  false,
+                     "ageRestriction":  false
+                 },
+    "scope":  [
+                  "video attempt-006",
+                  "packaging selection",
+                  "finalizeOp permission (copy output to out/final)"
+              ],
+    "notCovered":  [
+                       "upload/publish",
+                       "Gemini watch results",
+                       "Phase 6A completion"
+                   ]
+}

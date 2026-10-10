@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "1.0.0",
+  "ttsSegmentAudioId": "tsa-c641a1f74291",
+  "version": 1,
+  "projectId": "pilot-sky-blue-canonical",
+  "scriptRef": {
+    "scriptArtifactId": "fss-pilot-sky-blue-canonical",
+    "scriptVersion": 2
+  },
+  "segmentId": "S3",
+  "segmentOrdinal": 2,
+  "sourceTextHash": "b3276fa2365a91cd",
+  "compiledInputHash": "b3276fa2365a91cd",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "narrationDirectionRef": "nd-ba9e14b889f3",
+  "pronunciationPassRef": "prp-ef2591fc81ec",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "runtimeIdentity": {
+    "runtimeMode": "LOCAL_SYNTHESIS",
+    "modelRepo": "hexgrad/Kokoro-82M",
+    "modelHash": "UNKNOWN_NOT_AVAILABLE",
+    "languageCode": "a"
+  },
+  "voiceId": "am_michael",
+  "effectiveSpeed": 1,
+  "pacePolicyVersion": "pace-speed-1.0.0",
+  "audioRef": "assets/voice/narration-segments/tsa-c641a1f74291.wav",
+  "audioContentHash": "ea5d5366233eb128865569d027d51a53ab03a8ccc2fe70f58db7a50b58488e6b",
+  "durationMs": 9950,
+  "sampleRate": 24000,
+  "channels": 1,
+  "technicalQa": {
+    "decodePass": true,
+    "nonSilent": true,
+    "finiteSamples": true,
+    "peak": 16516,
+    "rms": 1339.98,
+    "clippingSamples": 0,
+    "transcript": "When sunlight hits those molecules, they scatter short blue wavelengths in every direction, several times more strongly than they scatter red.",
+    "wer": 0,
+    "missingWords": 0,
+    "substitutedWords": 0,
+    "repeatedWords": 0,
+    "hallucinatedWords": 0,
+    "criticalMismatch": false
+  },
+  "attempt": {
+    "number": 1,
+    "parentAttemptId": null,
+    "reason": "initial synthesis",
+    "selected": null
+  },
+  "issues": [],
+  "status": "READY",
+  "provenance": {
+    "createdAt": "2026-10-06T06:51:28.928Z",
+    "evidenceRefs": [
+      "scripts/cli/pilot-narration.js"
+    ]
+  },
+  "fingerprint": "a2fc7fc5eac83336"
+}

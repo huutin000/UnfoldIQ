@@ -1,0 +1,26 @@
+{
+  "version": "1.0.0",
+  "platformProfileRef": "youtube-long-form@1.0.0",
+  "title": "Why Sunsets Turn Red While the Sky Stays Blue",
+  "description": "Sunlight looks white, so why is the sky blue? A one-minute explainer on Rayleigh scattering, why the sky is not violet, why sunsets are red, and why haze looks pale.\n\nIn this video:\n• Why nitrogen and oxygen molecules scatter blue light more than red\n• Why the sky is not violet\n• Why sunsets turn red and orange\n• Why a hazy sky looks pale and white\n\nSources: NOAA JetStream, NASA Goddard, NOAA NESDIS, NASA Space Place, HyperPhysics, Britannica. Visuals are original illustrations, not to scale. Narration is synthetic (Microsoft SAPI).\n\nChapters:\n0:00 Why is the sky blue?\n0:15 Scattering\n0:30 Violet and sunsets\n0:44 Hazy skies",
+  "language": "en",
+  "tags": [
+    "why is the sky blue",
+    "rayleigh scattering",
+    "sunset colors",
+    "science explained"
+  ],
+  "audience": {
+    "madeForKids": false,
+    "ageRestriction": false
+  },
+  "category": null,
+  "playlistIntent": null,
+  "visibilityIntent": "PRIVATE",
+  "licenseDistribution": null,
+  "selectedPackagingVariantId": "pkv-202fd90e1b72",
+  "sourceHashes": {
+    "script": "4150bc95a872b86abf337519bbdf849c43299c7c190dd28812021c069416a502",
+    "videoSpec": "fa5a44096c27f8f579d30b646e341e91b67fd5f0179cee17994ad7270c1a98f5"
+  }
+}

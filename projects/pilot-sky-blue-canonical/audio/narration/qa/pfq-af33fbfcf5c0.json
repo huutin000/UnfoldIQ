@@ -1,0 +1,214 @@
+{
+  "schemaVersion": "1.0.0",
+  "performanceQaId": "pfq-af33fbfcf5c0",
+  "version": 1,
+  "projectId": "pilot-sky-blue-canonical",
+  "scriptRef": {
+    "scriptArtifactId": "fss-pilot-sky-blue-canonical",
+    "scriptVersion": 2
+  },
+  "speechRateQaRef": "srq-dc6c4308edad",
+  "segments": [
+    {
+      "segmentId": "S1",
+      "signals": {
+        "rateWpm": 164.49,
+        "energyStd": 1003.7,
+        "pauseCount": 5,
+        "pauseVariation": 0.2623,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "REVIEW_REQUIRED",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [
+        {
+          "code": "PERFORMANCE_EMPHASIS_MISSED",
+          "detail": "directed emphasis on \"blue\" cannot be word-verified without Phase 2.9 alignment; evidence limited",
+          "blocking": false
+        }
+      ],
+      "status": "REVIEW_REQUIRED"
+    },
+    {
+      "segmentId": "S2",
+      "signals": {
+        "rateWpm": 146.42,
+        "energyStd": 897.3,
+        "pauseCount": 4,
+        "pauseVariation": 0.2191,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "S3",
+      "signals": {
+        "rateWpm": 126.63,
+        "energyStd": 925.6,
+        "pauseCount": 4,
+        "pauseVariation": 0.192,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "S4",
+      "signals": {
+        "rateWpm": 145.69,
+        "energyStd": 819.2,
+        "pauseCount": 4,
+        "pauseVariation": 0.2204,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "S5",
+      "signals": {
+        "rateWpm": 173.49,
+        "energyStd": 903.1,
+        "pauseCount": 4,
+        "pauseVariation": 0.2289,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "S6",
+      "signals": {
+        "rateWpm": 139.68,
+        "energyStd": 847,
+        "pauseCount": 5,
+        "pauseVariation": 0.236,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "S7",
+      "signals": {
+        "rateWpm": 154.6,
+        "energyStd": 946.6,
+        "pauseCount": 4,
+        "pauseVariation": 0.2319,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "S8",
+      "signals": {
+        "rateWpm": 164.89,
+        "energyStd": 952.3,
+        "pauseCount": 4,
+        "pauseVariation": 0.2763,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    }
+  ],
+  "fatigue": {
+    "shortFormPerformance": "MEASURED",
+    "longFormFatigue": "BOUNDED_PROXY_NOT_FULLY_MEASURED",
+    "note": "pilot script is short; sustained-narration fatigue proof belongs to Phase 7 long-form E2E"
+  },
+  "decision": "REVIEW_REQUIRED",
+  "provenance": {
+    "createdAt": "2026-10-06T06:52:49.120Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "8184bc6df433dc71"
+}

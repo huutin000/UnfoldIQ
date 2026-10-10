@@ -1,0 +1,145 @@
+{
+  "schemaVersion": "1.0.0",
+  "humanizationId": "hum-0bace554a609",
+  "version": 1,
+  "projectId": "pilot-sky-blue-canonical",
+  "contentMode": "everyday-physics-explainer",
+  "contentClass": "FACTUAL",
+  "sourceScriptRef": {
+    "artifact": "script.json",
+    "version": "1.0.0"
+  },
+  "sourceTextHash": "9256d2faa4b02986",
+  "instructionVersion": "spoken-humanizer-1.0.0",
+  "segments": [
+    {
+      "segmentId": "S1",
+      "sourceSegmentIds": [
+        "B1"
+      ],
+      "sourceTextHash": "97b6987ecdd15a5b",
+      "sourceText": "Look up on a clear day, and the sky is blue. But sunlight itself is white. So where does the blue come from?",
+      "candidateSpokenText": "Look up on a clear day. The sky is blue. But sunlight itself? White. So where does the blue actually come from?",
+      "candidateTextHash": "21bba832a39f9337",
+      "changeTypes": [
+        "SENTENCE_SPLIT",
+        "CADENCE",
+        "CONVERSATIONAL_WORDING"
+      ],
+      "changeNotes": "hook tightened into short spoken breath groups; question kept as the hook"
+    },
+    {
+      "segmentId": "S2",
+      "sourceSegmentIds": [
+        "B2"
+      ],
+      "sourceTextHash": "fdc3834f94590f1a",
+      "sourceText": "The answer is written in the air itself. Tiny molecules of nitrogen and oxygen, far smaller than a wave of light.",
+      "candidateSpokenText": "The answer is written into the air itself — tiny molecules of nitrogen and oxygen, each one far smaller than a wave of light.",
+      "candidateTextHash": "2e8bd1824b557bca",
+      "changeTypes": [
+        "RHYTHM",
+        "CONVERSATIONAL_WORDING"
+      ],
+      "changeNotes": "dash cadence; 'each one' clarifies the antecedent without changing the comparison"
+    },
+    {
+      "segmentId": "S3",
+      "sourceSegmentIds": [
+        "B3"
+      ],
+      "sourceTextHash": "97a88eded98ead5a",
+      "sourceText": "When sunlight hits them, they scatter short blue wavelengths in every direction, several times more strongly than red.",
+      "candidateSpokenText": "When sunlight hits those molecules, they scatter short blue wavelengths in every direction — several times more strongly than they scatter red.",
+      "candidateTextHash": "b3276fa2365a91cd",
+      "changeTypes": [
+        "RHYTHM"
+      ],
+      "changeNotes": "comparison phrase 'several times more strongly than' preserved verbatim"
+    },
+    {
+      "segmentId": "S4",
+      "sourceSegmentIds": [
+        "B4"
+      ],
+      "sourceTextHash": "33baa22a4d4197a8",
+      "sourceText": "That scattered blue light reaches your eyes from everywhere overhead. That is why the whole sky glows blue.",
+      "candidateSpokenText": "That scattered blue light reaches your eyes from everywhere overhead. And that is why the whole sky glows blue.",
+      "candidateTextHash": "2d9816e454e015e5",
+      "changeTypes": [
+        "TRANSITION"
+      ],
+      "changeNotes": "natural spoken transition added"
+    },
+    {
+      "segmentId": "S5",
+      "sourceSegmentIds": [
+        "B5"
+      ],
+      "sourceTextHash": "091b44dfacdb0351",
+      "sourceText": "Violet is scattered even more, but there is less of it in sunlight, and your eyes are less sensitive to it.",
+      "candidateSpokenText": "Violet gets scattered even more. But there is less of it in sunlight to begin with, and your eyes are less sensitive to it.",
+      "candidateTextHash": "f476e57583e6a499",
+      "changeTypes": [
+        "SENTENCE_SPLIT",
+        "RHYTHM"
+      ],
+      "changeNotes": "split into two breath groups; both qualifiers preserved"
+    },
+    {
+      "segmentId": "S6",
+      "sourceSegmentIds": [
+        "B6"
+      ],
+      "sourceTextHash": "f145d871f9885779",
+      "sourceText": "At sunset, sunlight crosses much more air. The blue is scattered away, and the reds and oranges remain.",
+      "candidateSpokenText": "At sunset, that sunlight crosses much more air. The blue gets scattered away along the way, and the reds and oranges remain.",
+      "candidateTextHash": "86080df78f870926",
+      "changeTypes": [
+        "RHYTHM",
+        "TRANSITION"
+      ],
+      "changeNotes": "'much more air' preserved; added journey phrasing for spoken flow"
+    },
+    {
+      "segmentId": "S7",
+      "sourceSegmentIds": [
+        "B7"
+      ],
+      "sourceTextHash": "ef5383959a2e9b80",
+      "sourceText": "Dust and pollution scatter all colors equally, which is why a hazy sky looks pale and white.",
+      "candidateSpokenText": "Dust and pollution, on the other hand, scatter all colors equally. That is why a hazy sky looks pale and white.",
+      "candidateTextHash": "602025e78e434deb",
+      "changeTypes": [
+        "SENTENCE_SPLIT",
+        "TRANSITION"
+      ],
+      "changeNotes": "'equally' preserved; contrast transition made explicit"
+    },
+    {
+      "segmentId": "S8",
+      "sourceSegmentIds": [
+        "B8"
+      ],
+      "sourceTextHash": "96b056ec77dae7cb",
+      "sourceText": "So the blue sky is not a thing. It is sunlight, rearranged by the air. Thanks for watching.",
+      "candidateSpokenText": "So the blue sky is not a thing. It is sunlight, rearranged by the air. Thanks for watching.",
+      "candidateTextHash": "96b056ec77dae7cb",
+      "changeTypes": [],
+      "changeNotes": "closing already natural; left unchanged"
+    }
+  ],
+  "changeSummary": "Bounded spoken-cadence rewrite: sentence splits, spoken transitions, rhythm; all facts/qualifiers/comparisons preserved; closing beat unchanged.",
+  "provenance": {
+    "actorType": "AGENT",
+    "provider": "zcode",
+    "model": "GLM-5.3-Flash",
+    "attempt": 1,
+    "createdAt": "2026-10-06T04:49:11.667Z",
+    "evidenceRefs": [
+      "scripts/cli/fss-backfill.js",
+      "projects/pilot-sky-blue-canonical/editorial-strategy.json"
+    ]
+  },
+  "fingerprint": "b706af64fe93a23a"
+}

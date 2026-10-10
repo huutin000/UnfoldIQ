@@ -1,0 +1,16 @@
+{
+  "status": "REVIEW_REQUIRED",
+  "findings": [
+    {
+      "code": "MISSING_AUDIENCE_DECISION",
+      "severity": "REVIEW",
+      "variantId": null,
+      "field": null,
+      "reason": "no variant selected — REVIEW_REQUIRED before publish-ready finalize",
+      "correctiveAction": "SELECT_VARIANT"
+    }
+  ],
+  "rightsFindings": [],
+  "audienceUnknowns": [],
+  "complianceBlocking": 1
+}

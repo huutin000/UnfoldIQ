@@ -1,0 +1,132 @@
+{
+  "version": "1.0.0",
+  "project": "pilot-sky-blue-canonical",
+  "platform": "youtube",
+  "composition": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "aspectRatio": "16:9",
+    "durationMode": "measured",
+    "durationMs": 57075
+  },
+  "scenes": [
+    {
+      "sceneId": "S01",
+      "order": 0,
+      "timing": {
+        "startMs": 0,
+        "endMs": 7100,
+        "durationMs": 7100,
+        "status": "MEASURED",
+        "evidence": "Kokoro am_michael x1.1 measured WAV header durations"
+      },
+      "assetIds": [
+        "VOICE_B1"
+      ],
+      "audioIds": [
+        "VO_B1"
+      ]
+    },
+    {
+      "sceneId": "S02",
+      "order": 1,
+      "timing": {
+        "startMs": 7100,
+        "endMs": 15300,
+        "durationMs": 8200,
+        "status": "MEASURED",
+        "evidence": "Kokoro am_michael x1.1 measured WAV header durations"
+      },
+      "assetIds": [
+        "VOICE_B2"
+      ],
+      "audioIds": [
+        "VO_B2"
+      ]
+    },
+    {
+      "sceneId": "S03",
+      "order": 2,
+      "timing": {
+        "startMs": 15300,
+        "endMs": 30250,
+        "durationMs": 14950,
+        "status": "MEASURED",
+        "evidence": "Kokoro am_michael x1.1 measured WAV header durations"
+      },
+      "assetIds": [
+        "VOICE_B3",
+        "VOICE_B4"
+      ],
+      "audioIds": [
+        "VO_B3",
+        "VO_B4"
+      ]
+    },
+    {
+      "sceneId": "S04",
+      "order": 3,
+      "timing": {
+        "startMs": 30250,
+        "endMs": 37350,
+        "durationMs": 7100,
+        "status": "MEASURED",
+        "evidence": "Kokoro am_michael x1.1 measured WAV header durations"
+      },
+      "assetIds": [
+        "VOICE_B5"
+      ],
+      "audioIds": [
+        "VO_B5"
+      ]
+    },
+    {
+      "sceneId": "S05",
+      "order": 4,
+      "timing": {
+        "startMs": 37350,
+        "endMs": 44475,
+        "durationMs": 7125,
+        "status": "MEASURED",
+        "evidence": "Kokoro am_michael x1.1 measured WAV header durations"
+      },
+      "assetIds": [
+        "VOICE_B6"
+      ],
+      "audioIds": [
+        "VO_B6"
+      ]
+    },
+    {
+      "sceneId": "S06",
+      "order": 5,
+      "timing": {
+        "startMs": 44475,
+        "endMs": 57075,
+        "durationMs": 12600,
+        "status": "MEASURED",
+        "evidence": "Kokoro am_michael x1.1 measured WAV header durations"
+      },
+      "assetIds": [
+        "VOICE_B7",
+        "VOICE_B8"
+      ],
+      "audioIds": [
+        "VO_B7",
+        "VO_B8"
+      ]
+    }
+  ],
+  "globalStyle": {
+    "background": "#0b3d91",
+    "captionStyle": "sentence-subtitle",
+    "motionStyle": "slow-push",
+    "typography": "system-ui",
+    "safeArea": "youtube-default"
+  },
+  "render": {
+    "compositionId": "UNFOLDIQVideo",
+    "outputName": "pilot-sky-blue-canonical-final"
+  }
+}

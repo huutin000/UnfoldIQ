@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "1.0.0",
+  "ttsSegmentAudioId": "tsa-37d1548b9837",
+  "version": 1,
+  "projectId": "pilot-sky-blue-canonical",
+  "scriptRef": {
+    "scriptArtifactId": "fss-pilot-sky-blue-canonical",
+    "scriptVersion": 2
+  },
+  "segmentId": "S2",
+  "segmentOrdinal": 1,
+  "sourceTextHash": "2e8bd1824b557bca",
+  "compiledInputHash": "2e8bd1824b557bca",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "narrationDirectionRef": "nd-ba9e14b889f3",
+  "pronunciationPassRef": "prp-ef2591fc81ec",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "runtimeIdentity": {
+    "runtimeMode": "LOCAL_SYNTHESIS",
+    "modelRepo": "hexgrad/Kokoro-82M",
+    "modelHash": "UNKNOWN_NOT_AVAILABLE",
+    "languageCode": "a"
+  },
+  "voiceId": "am_michael",
+  "effectiveSpeed": 1,
+  "pacePolicyVersion": "pace-speed-1.0.0",
+  "audioRef": "assets/voice/narration-segments/tsa-37d1548b9837.wav",
+  "audioContentHash": "fcbe7e3c3e85f22c1bc6a309f86ad4d3d54e653caaf40758a58a5d8b2f5bb116",
+  "durationMs": 9425,
+  "sampleRate": 24000,
+  "channels": 1,
+  "technicalQa": {
+    "decodePass": true,
+    "nonSilent": true,
+    "finiteSamples": true,
+    "peak": 16186,
+    "rms": 1316.82,
+    "clippingSamples": 0,
+    "transcript": "The answer is written into the air itself, tiny molecules of nitrogen and oxygen, each one far smaller than a wave of light.",
+    "wer": 0,
+    "missingWords": 0,
+    "substitutedWords": 0,
+    "repeatedWords": 0,
+    "hallucinatedWords": 0,
+    "criticalMismatch": false
+  },
+  "attempt": {
+    "number": 1,
+    "parentAttemptId": null,
+    "reason": "initial synthesis",
+    "selected": null
+  },
+  "issues": [],
+  "status": "READY",
+  "provenance": {
+    "createdAt": "2026-10-06T06:51:11.750Z",
+    "evidenceRefs": [
+      "scripts/cli/pilot-narration.js"
+    ]
+  },
+  "fingerprint": "9d5ad825fec52616"
+}

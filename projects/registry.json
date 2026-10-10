@@ -120,6 +120,13 @@
       "status": "ACTIVE"
     },
     {
+      "kind": "DEMO",
+      "manifestRef": null,
+      "path": "projects/pilot-sky-blue-canonical",
+      "projectId": "pilot-sky-blue-canonical",
+      "status": "ACTIVE"
+    },
+    {
       "projectId": "post-1h-physical-migration",
       "kind": "VALIDATION",
       "status": "ACTIVE",

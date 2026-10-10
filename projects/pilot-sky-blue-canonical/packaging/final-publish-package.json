@@ -1,0 +1,43 @@
+{
+  "version": "1.0.0",
+  "projectId": "pilot-sky-blue-canonical",
+  "sourceProjectManifestVersion": "unknown",
+  "sourceTimelineId": null,
+  "sourceTimelineRevision": 0,
+  "sourceMotionPlanVersion": "unknown",
+  "sourceResponsiveVariantId": null,
+  "finalVideoRef": "out/pilot-sky-blue-canonical/final.mp4",
+  "experimentSetRef": "pxs-3b6db9620ead",
+  "selectedVariantId": "pkv-202fd90e1b72",
+  "selectedTitle": "Why Sunsets Turn Red While the Sky Stays Blue",
+  "selectedThumbnail": "THUMB_S05",
+  "language": "en",
+  "descriptionRef": "packaging/description.md",
+  "captions": {
+    "srt": "captions/captions.srt",
+    "vtt": "captions/captions.vtt"
+  },
+  "metadataRef": "packaging/metadata.json",
+  "rightsProvenanceRef": "packaging/rights-provenance.json",
+  "platformComplianceRef": "packaging/platform-compliance.json",
+  "sourcesCitationsRef": "packaging/sources.json",
+  "musicAttributionRef": null,
+  "uploadChecklistRef": "packaging/UPLOAD_CHECKLIST.md",
+  "dependencyHashes": {
+    "script": "4150bc95a872b86abf337519bbdf849c43299c7c190dd28812021c069416a502",
+    "videoSpec": "fa5a44096c27f8f579d30b646e341e91b67fd5f0179cee17994ad7270c1a98f5"
+  },
+  "qaStatus": "REVIEW_REQUIRED",
+  "createdAt": "2026-10-10T02:47:34.385Z",
+  "updatedAt": "2026-10-10T03:02:58.376Z",
+  "uploadChecklist": "# UPLOAD CHECKLIST\n\n- [ ] final.mp4 exists and Phase 4B PASS (currently: PENDING_PHASE_4B)\n- [ ] selected title (Why Sunsets Turn Red While the Sky Stays Blue)\n- [ ] selected thumbnail (THUMB_S05)\n- [ ] description\n- [ ] captions (srt/vtt refs present)\n- [ ] language (en)\n- [ ] audience flag (made-for-kids + age restriction decided)\n- [ ] rights/provenance complete\n- [ ] music attribution (if required)\n- [ ] platform compliance (packaging PASS; final render pending 4B)\n- [ ] sources/citations retained\n- [ ] final human/operator review if policy requires\n\nManual upload remains acceptable for V1.\n",
+  "finalVideoSha256": "7954a86a793ccbe5e153be30875b832ef813f3e23021e0f571a9da5e823dfcdf",
+  "finalVideoAttemptId": "attempt-006",
+  "approvalRef": "approval/owner-approval.json",
+  "approvalStatus": "OWNER_APPROVED",
+  "openItems": [
+    "Phase 4B visual flash/safe-zone validation not run",
+    "Full Multimodal Watch (Gemini Free) not run: no API key available to verify Free Tier",
+    "upload/publish not performed"
+  ]
+}

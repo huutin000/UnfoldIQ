@@ -1,0 +1,170 @@
+{
+  "version": "1.0.0",
+  "projectId": "pilot-sky-blue-canonical",
+  "language": "en",
+  "timingSource": "audio/timing.json",
+  "mode": "BOTH",
+  "timingLevel": "SEGMENT_TIMING",
+  "items": [
+    {
+      "captionId": "cap-1",
+      "startMs": 0,
+      "endMs": 4910,
+      "text": "Look up on a clear day, and the sky is blue. But sunlight itself is white.",
+      "evidence": {
+        "source": "audio/timing.json",
+        "level": "SEGMENT_TIMING"
+      }
+    },
+    {
+      "captionId": "cap-2",
+      "startMs": 4910,
+      "endMs": 7100,
+      "text": "So where does the blue come from?",
+      "evidence": {
+        "source": "audio/timing.json",
+        "level": "SEGMENT_TIMING"
+      }
+    },
+    {
+      "captionId": "cap-3",
+      "startMs": 7100,
+      "endMs": 12884,
+      "text": "The answer is written in the air itself. Tiny molecules of nitrogen and oxygen,",
+      "evidence": {
+        "source": "audio/timing.json",
+        "level": "SEGMENT_TIMING"
+      }
+    },
+    {
+      "captionId": "cap-4",
+      "startMs": 12884,
+      "endMs": 15300,
+      "text": "far smaller than a wave of light.",
+      "evidence": {
+        "source": "audio/timing.json",
+        "level": "SEGMENT_TIMING"
+      }
+    },
+    {
+      "captionId": "cap-5",
+      "startMs": 15300,
+      "endMs": 20719,
+      "text": "When sunlight hits them, they scatter short blue wavelengths in every direction,",
+      "evidence": {
+        "source": "audio/timing.json",
+        "level": "SEGMENT_TIMING"
+      }
+    },
+    {
+      "captionId": "cap-6",
+      "startMs": 20719,
+      "endMs": 23225,
+      "text": "several times more strongly than red.",
+      "evidence": {
+        "source": "audio/timing.json",
+        "level": "SEGMENT_TIMING"
+      }
+    },
+    {
+      "captionId": "cap-7",
+      "startMs": 23225,
+      "endMs": 27798,
+      "text": "That scattered blue light reaches your eyes from everywhere overhead.",
+      "evidence": {
+        "source": "audio/timing.json",
+        "level": "SEGMENT_TIMING"
+      }
+    },
+    {
+      "captionId": "cap-8",
+      "startMs": 27798,
+      "endMs": 30250,
+      "text": "That is why the whole sky glows blue.",
+      "evidence": {
+        "source": "audio/timing.json",
+        "level": "SEGMENT_TIMING"
+      }
+    },
+    {
+      "captionId": "cap-9",
+      "startMs": 30250,
+      "endMs": 34738,
+      "text": "Violet is scattered even more, but there is less of it in sunlight,",
+      "evidence": {
+        "source": "audio/timing.json",
+        "level": "SEGMENT_TIMING"
+      }
+    },
+    {
+      "captionId": "cap-10",
+      "startMs": 34738,
+      "endMs": 37350,
+      "text": "and your eyes are less sensitive to it.",
+      "evidence": {
+        "source": "audio/timing.json",
+        "level": "SEGMENT_TIMING"
+      }
+    },
+    {
+      "captionId": "cap-11",
+      "startMs": 37350,
+      "endMs": 42240,
+      "text": "At sunset, sunlight crosses much more air. The blue is scattered away,",
+      "evidence": {
+        "source": "audio/timing.json",
+        "level": "SEGMENT_TIMING"
+      }
+    },
+    {
+      "captionId": "cap-12",
+      "startMs": 42240,
+      "endMs": 44475,
+      "text": "and the reds and oranges remain.",
+      "evidence": {
+        "source": "audio/timing.json",
+        "level": "SEGMENT_TIMING"
+      }
+    },
+    {
+      "captionId": "cap-13",
+      "startMs": 44475,
+      "endMs": 47786,
+      "text": "Dust and pollution scatter all colors equally,",
+      "evidence": {
+        "source": "audio/timing.json",
+        "level": "SEGMENT_TIMING"
+      }
+    },
+    {
+      "captionId": "cap-14",
+      "startMs": 47786,
+      "endMs": 51025,
+      "text": "which is why a hazy sky looks pale and white.",
+      "evidence": {
+        "source": "audio/timing.json",
+        "level": "SEGMENT_TIMING"
+      }
+    },
+    {
+      "captionId": "cap-15",
+      "startMs": 51025,
+      "endMs": 55731,
+      "text": "So the blue sky is not a thing. It is sunlight, rearranged by the air.",
+      "evidence": {
+        "source": "audio/timing.json",
+        "level": "SEGMENT_TIMING"
+      }
+    },
+    {
+      "captionId": "cap-16",
+      "startMs": 55731,
+      "endMs": 57075,
+      "text": "Thanks for watching.",
+      "evidence": {
+        "source": "audio/timing.json",
+        "level": "SEGMENT_TIMING"
+      }
+    }
+  ]
+}
