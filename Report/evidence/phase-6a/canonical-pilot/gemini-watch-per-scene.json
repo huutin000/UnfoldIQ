@@ -1,0 +1,453 @@
+{
+  "generatedAt": "2026-10-10T03:37:09.601Z",
+  "provider": "gemini-api (AI Studio)",
+  "model": "gemini-3.5-flash-lite",
+  "freeTier": "OWNER_ATTESTED (not verifiable via API)",
+  "calls": {
+    "upload": 1,
+    "generateContent": 6,
+    "retries": 0
+  },
+  "latencyMs": 41574,
+  "video": "final.mp4",
+  "videoSizeBytes": 18954217,
+  "mode": "PER_SCENE",
+  "scenes": [
+    {
+      "sceneId": "S01",
+      "startS": 0,
+      "endS": 7.1,
+      "expected": "Look up on a clear day, and the sky is blue. But sunlight itself is white. So where does the blue come from?",
+      "localCheck": {
+        "transcriptWer": 0,
+        "captionCuesExpected": 2,
+        "captionCuesMatchedExactly": 2,
+        "captionStartOffsetsS": [
+          0,
+          0.39
+        ]
+      },
+      "model": {
+        "scene": "S01",
+        "heard_transcript": "Look up on a clear day, and the sky is blue. But sunlight itself is white. So where does the blue come from?",
+        "captions_seen": [
+          {
+            "first_visible_s": 0,
+            "text": "Look up on a clear day, and the sky is blue. But sunlight itself is white."
+          },
+          {
+            "first_visible_s": 5.3,
+            "text": "So where does the blue come from?"
+          }
+        ],
+        "caption_vs_speech_sync": {
+          "verdict": "PASS",
+          "estimated_max_offset_s": 0.1,
+          "notes": "Captions match the narration well."
+        },
+        "visual": {
+          "description": "An animated sun shines in a blue sky above rolling green hills. White dashed lines representing sunlight stream from the sun toward the right side of the screen, where labels 'Sunlight: white' and 'Sky: blue' with a question mark appear.",
+          "scientifically_accurate": true,
+          "notes": "Depicts the premise of the scientific question about sky color."
+        },
+        "audio": {
+          "clean": true,
+          "notes": "Clear voiceover with no distracting background noise."
+        },
+        "flash_or_strobe": {
+          "present": false,
+          "notes": "No flashing or strobing effects."
+        },
+        "text_legibility": {
+          "verdict": "PASS",
+          "notes": "Text is large, high contrast, and easy to read at the bottom and top."
+        },
+        "issues": []
+      },
+      "usage": {
+        "promptTokenCount": 962,
+        "candidatesTokenCount": 293,
+        "totalTokenCount": 1255,
+        "promptTokensDetails": [
+          {
+            "modality": "VIDEO",
+            "tokenCount": 637
+          },
+          {
+            "modality": "TEXT",
+            "tokenCount": 325
+          }
+        ],
+        "serviceTier": "standard"
+      }
+    },
+    {
+      "sceneId": "S02",
+      "startS": 7.1,
+      "endS": 15.3,
+      "expected": "The answer is written in the air itself. Tiny molecules of nitrogen and oxygen, far smaller than a wave of light.",
+      "localCheck": {
+        "transcriptWer": 0,
+        "captionCuesExpected": 2,
+        "captionCuesMatchedExactly": 2,
+        "captionStartOffsetsS": [
+          0,
+          1.22
+        ]
+      },
+      "model": {
+        "scene": "S02",
+        "heard_transcript": "The answer is written in the air itself. Tiny molecules of nitrogen and oxygen, far smaller than a wave of light.",
+        "captions_seen": [
+          {
+            "first_visible_s": 7.1,
+            "text": "The answer is written in the air itself. Tiny molecules of nitrogen and oxygen,"
+          },
+          {
+            "first_visible_s": 14.1,
+            "text": "far smaller than a wave of light."
+          }
+        ],
+        "caption_vs_speech_sync": {
+          "verdict": "PASS",
+          "estimated_max_offset_s": 0.2,
+          "notes": "Captions appear almost perfectly aligned with the spoken narration."
+        },
+        "visual": {
+          "description": "An animation on a dark blue background showing the sun on the left emitting rays toward a box containing floating blue and orange diatomic molecules representing nitrogen and oxygen. Below the box, labels appear identifying 'Nitrogen (N₂) and oxygen (O₂) molecules', along with a comparative visual showing a light wave versus a molecule label indicating 'far smaller'.",
+          "scientifically_accurate": true,
+          "notes": "Diatomic molecules are correctly depicted with two atoms each."
+        },
+        "audio": {
+          "clean": true,
+          "notes": "Voiceover is crisp, clear, and free from background noise."
+        },
+        "flash_or_strobe": {
+          "present": false,
+          "notes": "No flashing or strobing effects present."
+        },
+        "text_legibility": {
+          "verdict": "PASS",
+          "notes": "White text with black outline and caption banner are clear, high contrast, and legible."
+        },
+        "issues": []
+      },
+      "usage": {
+        "promptTokenCount": 1050,
+        "candidatesTokenCount": 315,
+        "totalTokenCount": 1365,
+        "promptTokensDetails": [
+          {
+            "modality": "VIDEO",
+            "tokenCount": 728
+          },
+          {
+            "modality": "TEXT",
+            "tokenCount": 322
+          }
+        ],
+        "serviceTier": "standard"
+      }
+    },
+    {
+      "sceneId": "S03",
+      "startS": 15.3,
+      "endS": 30.25,
+      "expected": "When sunlight hits them, they scatter short blue wavelengths in every direction, several times more strongly than red. That scattered blue light reaches your eyes from everywhere overhead. That is why the whole sky glows blue.",
+      "localCheck": {
+        "transcriptWer": 0,
+        "captionCuesExpected": 4,
+        "captionCuesMatchedExactly": 4,
+        "captionStartOffsetsS": [
+          -0.3,
+          -0.22,
+          0.07,
+          0.3
+        ]
+      },
+      "model": {
+        "scene": "S03",
+        "heard_transcript": "When sunlight hits them, they scatter short blue wavelengths in every direction, several times more strongly than red. That scattered blue light reaches your eyes from everywhere overhead. That is why the whole sky glows blue.",
+        "captions_seen": [
+          {
+            "first_visible_s": 15,
+            "text": "When sunlight hits them, they scatter short blue wavelengths in every direction,"
+          },
+          {
+            "first_visible_s": 20.5,
+            "text": "several times more strongly than red."
+          },
+          {
+            "first_visible_s": 23.3,
+            "text": "That scattered blue light reaches your eyes from everywhere overhead."
+          },
+          {
+            "first_visible_s": 28.1,
+            "text": "That is why the whole sky glows blue."
+          }
+        ],
+        "caption_vs_speech_sync": {
+          "verdict": "PASS",
+          "estimated_max_offset_s": 0.1,
+          "notes": "Captions appear very closely synchronized with spoken narration."
+        },
+        "visual": {
+          "description": "An animated diagram showing sunlight hitting air molecules, scattering blue light in all directions while red light passes straight through. An eye icon receives scattered blue light rays coming from all angles above.",
+          "scientifically_accurate": true,
+          "notes": "Rayleigh scattering mechanism is depicted clearly and accurately."
+        },
+        "audio": {
+          "clean": true,
+          "notes": "Clear narration voiceover with no background noise or clipping."
+        },
+        "flash_or_strobe": {
+          "present": false,
+          "notes": "No flashing lights or strobe effects."
+        },
+        "text_legibility": {
+          "verdict": "PASS",
+          "notes": "Captions and diagram labels are high contrast, properly sized, and easy to read."
+        },
+        "issues": []
+      },
+      "usage": {
+        "promptTokenCount": 1704,
+        "candidatesTokenCount": 473,
+        "totalTokenCount": 2177,
+        "promptTokensDetails": [
+          {
+            "modality": "VIDEO",
+            "tokenCount": 1365
+          },
+          {
+            "modality": "TEXT",
+            "tokenCount": 339
+          }
+        ],
+        "serviceTier": "standard"
+      }
+    },
+    {
+      "sceneId": "S04",
+      "startS": 30.25,
+      "endS": 37.35,
+      "expected": "Violet is scattered even more, but there is less of it in sunlight, and your eyes are less sensitive to it.",
+      "localCheck": {
+        "transcriptWer": 0,
+        "captionCuesExpected": 2,
+        "captionCuesMatchedExactly": 2,
+        "captionStartOffsetsS": [
+          0.35,
+          1.36
+        ]
+      },
+      "model": {
+        "scene": "S04",
+        "heard_transcript": "Violet is scattered even more, but there is less of it in sunlight, and your eyes are less sensitive to it.",
+        "captions_seen": [
+          {
+            "first_visible_s": 30.6,
+            "text": "Violet is scattered even more, but there is less of it in sunlight,"
+          },
+          {
+            "first_visible_s": 36.1,
+            "text": "and your eyes are less sensitive to it."
+          }
+        ],
+        "caption_vs_speech_sync": {
+          "verdict": "PASS",
+          "estimated_max_offset_s": 0.1,
+          "notes": "Captions match the voiceover well."
+        },
+        "visual": {
+          "description": "Bars fill up sequentially representing 'Violet in sunlight', 'Violet scattering', and 'Eye sensitivity to violet', while a cartoon eye icon sits on the right.",
+          "scientifically_accurate": true,
+          "notes": "Demonstrates why the sky isn't violet by combining sunlight abundance, scattering efficiency, and eye sensitivity."
+        },
+        "audio": {
+          "clean": true,
+          "notes": "Clear narration without background noise."
+        },
+        "flash_or_strobe": {
+          "present": false,
+          "notes": "No flashing or strobe effects."
+        },
+        "text_legibility": {
+          "verdict": "PASS",
+          "notes": "Labels inside the translucent boxes and bottom caption text are legible and high contrast."
+        },
+        "issues": []
+      },
+      "usage": {
+        "promptTokenCount": 959,
+        "candidatesTokenCount": 381,
+        "totalTokenCount": 1340,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 322
+          },
+          {
+            "modality": "VIDEO",
+            "tokenCount": 637
+          }
+        ],
+        "serviceTier": "standard"
+      }
+    },
+    {
+      "sceneId": "S05",
+      "startS": 37.35,
+      "endS": 44.475,
+      "expected": "At sunset, sunlight crosses much more air. The blue is scattered away, and the reds and oranges remain.",
+      "localCheck": {
+        "transcriptWer": 0,
+        "captionCuesExpected": 2,
+        "captionCuesMatchedExactly": 2,
+        "captionStartOffsetsS": [
+          -37.35,
+          -38.14
+        ]
+      },
+      "model": {
+        "scene": "S05",
+        "heard_transcript": "At sunset, sunlight crosses much more air. The blue is scattered away, and the reds and oranges remain.",
+        "captions_seen": [
+          {
+            "first_visible_s": 0,
+            "text": "At sunset, sunlight crosses much more air. The blue is scattered away,"
+          },
+          {
+            "first_visible_s": 4.1,
+            "text": "and the reds and oranges remain."
+          }
+        ],
+        "caption_vs_speech_sync": {
+          "verdict": "PASS",
+          "estimated_max_offset_s": 0.1,
+          "notes": "Captions match the spoken narration and appear and transition smoothly."
+        },
+        "visual": {
+          "description": "An animated diagram showing the Earth's atmosphere, the sun positioned low on the horizon, and a dashed white line indicating a long path of sunlight through the air. Blue particles scatter away along the path, while text labels ('long path through air', 'blue scattered away -> reds & oranges remain') appear progressively to explain Rayleigh scattering at sunset.",
+          "scientifically_accurate": true,
+          "notes": "Clear visual representation of how increased atmospheric path length at sunset filters out blue light and leaves longer wavelengths visible."
+        },
+        "audio": {
+          "clean": true,
+          "notes": "Clear narration voiceover with no background noise or distortion."
+        },
+        "flash_or_strobe": {
+          "present": false,
+          "notes": "No rapid flashes or strobe effects."
+        },
+        "text_legibility": {
+          "verdict": "PASS",
+          "notes": "White and grey text with high contrast against the gradient sky background, clearly legible."
+        },
+        "issues": []
+      },
+      "usage": {
+        "promptTokenCount": 957,
+        "candidatesTokenCount": 424,
+        "totalTokenCount": 1381,
+        "promptTokensDetails": [
+          {
+            "modality": "VIDEO",
+            "tokenCount": 637
+          },
+          {
+            "modality": "TEXT",
+            "tokenCount": 320
+          }
+        ],
+        "serviceTier": "standard"
+      }
+    },
+    {
+      "sceneId": "S06",
+      "startS": 44.475,
+      "endS": 57.075,
+      "expected": "Dust and pollution scatter all colors equally, which is why a hazy sky looks pale and white. So the blue sky is not a thing. It is sunlight, rearranged by the air. Thanks for watching.",
+      "localCheck": {
+        "transcriptWer": 0,
+        "captionCuesExpected": 4,
+        "captionCuesMatchedExactly": 4,
+        "captionStartOffsetsS": [
+          -0.48,
+          -0.79,
+          -0.02,
+          0.27
+        ]
+      },
+      "model": {
+        "scene": "S06",
+        "heard_transcript": "Dust and pollution scatter all colors equally, which is why a hazy sky looks pale and white. So the blue sky is not a thing. It is sunlight, rearranged by the air. Thanks for watching.",
+        "captions_seen": [
+          {
+            "first_visible_s": 44,
+            "text": "Dust and pollution scatter all colors equally,"
+          },
+          {
+            "first_visible_s": 45,
+            "text": "dust & pollution scatter all colors equally\n→ pale, white haze"
+          },
+          {
+            "first_visible_s": 47,
+            "text": "which is why a hazy sky looks pale and white."
+          },
+          {
+            "first_visible_s": 51,
+            "text": "sunlight, rearranged by the air"
+          },
+          {
+            "first_visible_s": 51,
+            "text": "So the blue sky is not a thing. It is sunlight, rearranged by the air."
+          },
+          {
+            "first_visible_s": 56,
+            "text": "Thanks for watching."
+          }
+        ],
+        "caption_vs_speech_sync": {
+          "verdict": "PASS",
+          "estimated_max_offset_s": 0.2,
+          "notes": "Captions and burned-in text match the voiceover well."
+        },
+        "visual": {
+          "description": "An animation illustrates dust and pollution particles scattering incoming colored light rays equally within a grey box to produce a pale haze. Then, a diagram shows a sun emitting white light into a block of air, which splits into multiple colored rays.",
+          "scientifically_accurate": true,
+          "notes": "Clear and illustrative animation style."
+        },
+        "audio": {
+          "clean": true,
+          "notes": "Good clarity and stable volume."
+        },
+        "flash_or_strobe": {
+          "present": false,
+          "notes": "No flashing or strobe effects present."
+        },
+        "text_legibility": {
+          "verdict": "PASS",
+          "notes": "All text and labels are high contrast, appropriately sized, and legible."
+        },
+        "issues": []
+      },
+      "usage": {
+        "promptTokenCount": 1522,
+        "candidatesTokenCount": 551,
+        "totalTokenCount": 2073,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 339
+          },
+          {
+            "modality": "VIDEO",
+            "tokenCount": 1183
+          }
+        ],
+        "serviceTier": "standard"
+      }
+    }
+  ]
+}

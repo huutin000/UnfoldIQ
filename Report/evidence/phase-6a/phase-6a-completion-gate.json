@@ -1,23 +1,27 @@
 {
   "phase": "6A",
-  "generatedAt": "2026-10-09",
+  "generatedAt": "2026-10-10",
   "regressionMethod": "PER_SUITE_EVIDENCE (runner timeout not raised; heavy render suites run directly via node, not through scripts/run-tests.js)",
   "gates": {
-    "CANONICAL_PILOT_LINEAGE": "NOT_PROVEN",
-    "PACKAGING_PROMISE_SOURCE": "NOT_VERIFIED (fixture exception)",
+    "CANONICAL_PILOT_LINEAGE": "PROVEN_PARTIAL (pilot-sky-blue-canonical: approved script + per-scene Remotion diagrams + local Kokoro am_michael narration + burned-in/sidecar captions; attempt-006 -> out/pilot-sky-blue-canonical/final.mp4 sha256 7954a86a...; owner approved by explicit message; see Report/evidence/phase-6a/canonical-pilot/)",
+    "PACKAGING_PROMISE_SOURCE": "VERIFIED (persisted Phase 4A experiment set pxs-3b6db9620ead, 3 variants, QA 0 BLOCK; owner selected pkv-202fd90e1b72; projects/pilot-sky-blue-canonical/packaging/)",
     "FULL_AV_WATCH_ACTUAL_FILE": "HUMAN_SIGNED_PARTIAL (pilot-4b.mp4 sha256 d3e71094..., full 00:00-02:30 at 1.0x, signed 'Tin' 2026-10-09; narration/audio only, visual is an ffmpeg test pattern; items 1,2,6,7,8,9 N/A; 5 silent gaps 8-13 s reported, severity not classified)",
-    "FULL_AV_WATCH_AUDIO_AND_VISUAL": "NOT_PROVEN (no real visual content reviewed)",
-    "AUTONOMOUS_MULTIMODAL_WATCH": "NOT_PROVEN",
+    "FULL_AV_WATCH_AUDIO_AND_VISUAL": "PROVEN_BY_MODEL_WATCH (whole + per-scene; content/transcript/caption text verified locally) + OWNER_VIEWED_UNSIGNED; caption timing evidenced by rendered boundary frames (146/147/148) and QA, not by the model",
+    "AUTONOMOUS_MULTIMODAL_WATCH": "PASS_MEDIUM_GRANULARITY (whole-video pass: gemini-3.5-flash 10/10 PASS, 0 findings, 6864 tokens; per-scene pass: gemini-3.5-flash-lite after 3x HTTP 503 from gemini-3.5-flash, 6 calls, 9591 tokens, 0 issues. Locally verified: transcript WER 0 on 6/6 scenes, 16/16 burned-in caption texts read exactly. NOT reliable: model caption timestamps mix clip-relative and absolute time, so caption timing is not proven by the model. Free Tier OWNER_ATTESTED. Evidence: canonical-pilot/gemini-watch.json, gemini-watch-per-scene.json)",
     "PAID_EXTERNAL_COST_VND": 0,
     "REAL_CREATIVE_PATCH": "PROVEN (fixture)",
     "REAL_INCREMENTAL_RENDER_EXECUTION": "PROVEN (fixture)",
     "PARTIAL_QA_AFTER_REPAIR": "REVIEW_REQUIRED",
     "SEGMENT_REWATCH": "DETERMINISTIC_PASS / AV NOT_PROVEN",
     "CREATIVE_GOLDENS": "PASS (66/66, 12/12)",
-    "FULL_REGRESSION": "NOT_PROVEN (no single npm test run exited 0; see perSuiteEvidence)",
+    "FULL_REGRESSION": "PASS (node scripts/run-tests.js exit 0, 0 failed suites, 1051.7s; Report/evidence/phase-6a/full-regression-final-6a-close.log). Supersedes older NOT_PROVEN notes in this file.",
+    "CANONICAL_PILOT_ROUND2": "SUPERSEDED by round 3: input unblocked by owner (budget 0 VND; free local visuals). Owner approval recorded; FinalPublishPackage persisted with finalVideoRef + sha256 (qaStatus REVIEW_REQUIRED, open items listed).",
     "HYGIENE": "PASS (check:workspace ok, check:repo-structure ok)",
-    "PHASE_6A": "NOT_COMPLETE",
-    "PHASE_6B_READY": "NO"
+    "PHASE_6A": "CLOSED_BY_OWNER_DECISION (2026-10-10, owner message: chot va commit). Evidence gates have real evidence (see canonicalPilotRound3). Caveat: FULL_REGRESSION was last run on revision 4a57790 and NOT re-run after the remotion caption/diagram changes; only npm run test:remotion (0 failed suites), check:repo-structure and check:workspace were re-run.",
+    "PHASE_6B_READY": "NO (not decided in this round; separate owner decision)",
+    "PHASE_4B_FINAL_QC_DETERMINISTIC": "PASS (final.mp4: decode ok, 0 black, 0 freeze, 0 silence, flash screen 0 large luminance transitions at 2 fps and at all 1713 frames; maxVolume -4.2 dB; Report/evidence/phase-6a/canonical-pilot/phase4b-final-qc.json). Deterministic ffmpeg only; not a photosensitivity certification.",
+    "FLASH_SAFETY_REVIEW": "RECHECKED: deterministic PASS (0 large luminance transitions, all 1713 frames) + model watch reports no flash/strobe",
+    "AUDIO_VISUAL_ENERGY_MISMATCH": "RECHECKED_BY_MODEL: no mismatch reported (calm narration vs calm diagram motion); single low-granularity pass"
   },
   "perSuiteEvidence": {
     "tests/incremental/test-pilot-repair-a.js": "PASS 3/0 (run directly)",
@@ -41,7 +45,45 @@
     "status": "RECOMMENDED_BY_AGENT_NOT_CONFIRMED_BY_OWNER; no gate raised by this decision"
   },
   "blockingOwnerActions": [
-    "Choose canonical pilot video (pilot-4b.mp4 for narration/AV-sync only, pilot-sky-blue as secondary fixture, or supply a real video)",
-    "Human audio+visual watch signed in phase-6a-full-av-watch-evidence.md, or approve a Gemini video-review adapter"
-  ]
+    "Decide Phase 6B readiness",
+    "Optionally run full regression (node scripts/run-tests.js, ~17.5 min) on the new revision",
+    "Revert or commit the ~18 regression-generated tracked files under projects/ and providers/ (not included in this commit)"
+  ],
+  "canonicalPilotRound3": {
+    "projectId": "pilot-sky-blue-canonical",
+    "attempts": {
+      "total": 6,
+      "rendered": [
+        "attempt-001",
+        "attempt-003",
+        "attempt-004",
+        "attempt-005",
+        "attempt-006"
+      ],
+      "interrupted": [
+        "attempt-002"
+      ],
+      "finalAttempt": "attempt-006"
+    },
+    "finalVideo": {
+      "path": "out/pilot-sky-blue-canonical/final.mp4",
+      "sha256": "7954a86a793ccbe5e153be30875b832ef813f3e23021e0f571a9da5e823dfcdf",
+      "durationMs": 57152,
+      "loudnessLufs": -18.2
+    },
+    "approval": "projects/pilot-sky-blue-canonical/approval/owner-approval.json",
+    "stateEdit": "Removed stale pipeline blocker MAX_ATTEMPTS from pipeline/state.json with explicit owner permission (approval/blocker-removal.json); attempts 4-6 ran via CLI --max-attempts.",
+    "defectsFixedThisRound": [
+      "burned-in captions hidden behind scene video layers (CaptionTrack missing zIndex) - test RC9",
+      "one-frame double-caption flash at cue boundaries - test RC10",
+      "S06 crossfade ghosting",
+      "Kokoro narration too quiet (-27.5 LUFS) - gain/limiter applied"
+    ],
+    "designChanges": [
+      "scene titles removed",
+      "ILLUSTRATION badge removed",
+      "diagram visuals redesigned"
+    ],
+    "externalCostVnd": 0
+  }
 }

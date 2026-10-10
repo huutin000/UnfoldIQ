@@ -1,0 +1,40 @@
+{
+  "generatedAt": "2026-10-10T03:04:28.417Z",
+  "command": "node (scratch) lib/render/probe.js + lib/render/qc.js against out/pilot-sky-blue-canonical/final.mp4",
+  "finalSha256": "7954a86a793ccbe5e153be30875b832ef813f3e23021e0f571a9da5e823dfcdf",
+  "probe": {
+    "ok": true,
+    "duration": 57.152,
+    "decodeOk": true
+  },
+  "black": [],
+  "freeze": [],
+  "silence": [],
+  "volume": {
+    "ok": true,
+    "maxVolumeDb": -4.2,
+    "meanVolumeDb": -21.8,
+    "noAudio": false
+  },
+  "luminance2fps": {
+    "ok": true,
+    "frames": 114,
+    "duration": 57.152,
+    "meanDelta": 0.010140780746910364,
+    "maxDelta": 0.2575231481481482,
+    "bigCount": 0,
+    "maxInWindow": 0
+  },
+  "luminanceAllFrames": {
+    "ok": true,
+    "frames": 1713,
+    "duration": 57.152,
+    "meanDelta": 0.0007839303621240811,
+    "maxDelta": 0.18538262527233113,
+    "bigCount": 0,
+    "maxInWindow": 0
+  },
+  "findings": [],
+  "verdict": "PASS",
+  "limits": "Deterministic ffmpeg checks only. Not a photosensitivity certification, not a semantic/audio-visual watch."
+}

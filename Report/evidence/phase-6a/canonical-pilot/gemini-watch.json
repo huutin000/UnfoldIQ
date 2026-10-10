@@ -1,0 +1,77 @@
+{
+  "generatedAt": "2026-10-10T03:23:12.503Z",
+  "provider": "gemini-api (AI Studio)",
+  "model": "gemini-3.5-flash",
+  "freeTier": "OWNER_ATTESTED (not verifiable via API)",
+  "calls": {
+    "upload": 1,
+    "generateContent": 1,
+    "retries": 0
+  },
+  "latencyMs": 25727,
+  "usage": {
+    "promptTokenCount": 5747,
+    "candidatesTokenCount": 515,
+    "totalTokenCount": 6864,
+    "promptTokensDetails": [
+      {
+        "modality": "VIDEO",
+        "tokenCount": 5187
+      },
+      {
+        "modality": "TEXT",
+        "tokenCount": 560
+      }
+    ],
+    "thoughtsTokenCount": 602,
+    "serviceTier": "standard"
+  },
+  "video": "final.mp4",
+  "videoSizeBytes": 18954217,
+  "verdict": {
+    "overall": "PASS",
+    "checks": {
+      "audio_quality": {
+        "verdict": "PASS",
+        "evidence": "Voiceover audio is clean, intelligible, well-balanced, with no background noise or distortion."
+      },
+      "narration_matches_script": {
+        "verdict": "PASS",
+        "evidence": "Spoken narration matches approved script lines B1 through B8 verbatim."
+      },
+      "caption_accuracy_and_sync": {
+        "verdict": "PASS",
+        "evidence": "Burned-in captions accurately reflect the spoken text and are well-synchronized throughout."
+      },
+      "visual_clarity_and_scientific_accuracy": {
+        "verdict": "PASS",
+        "evidence": "Animations clearly and accurately illustrate Rayleigh scattering, light wavelengths, violet light human eye sensitivity/abundance, long atmospheric path length at sunset, and Mie scattering from dust/pollution."
+      },
+      "audio_visual_sync_and_rhythm": {
+        "verdict": "PASS",
+        "evidence": "Visual animations, bar charts, and ray diagrams appear in step with the spoken explanation."
+      },
+      "audio_visual_energy_match": {
+        "verdict": "PASS",
+        "evidence": "Pacing of narration and visual transitions matches the calm, educational tone of the video."
+      },
+      "flash_or_strobe_risk": {
+        "verdict": "PASS",
+        "evidence": "No rapid flashing, strobing, or harsh high-contrast flickering present."
+      },
+      "text_legibility_and_safe_zone": {
+        "verdict": "PASS",
+        "evidence": "On-screen text, diagram labels, and captions use high-contrast fonts and stay well within safe margins."
+      },
+      "music_sfx": {
+        "verdict": "PASS",
+        "evidence": "No background music or sound effects present; speech-only presentation is clear."
+      },
+      "packaging_promise_delivered": {
+        "verdict": "PASS",
+        "evidence": "Delivers directly on the title topic and thumbnail expectation regarding blue sky physics and sunset color shifts."
+      }
+    },
+    "findings": []
+  }
+}
