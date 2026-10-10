@@ -1,0 +1,22 @@
+{
+  "version": "1.0.0",
+  "projectId": "pilot-sky-blue-canonical",
+  "kind": "OWNER_DECISIONS_RECONCILIATION",
+  "decidedAt": "2026-10-10",
+  "decidedBy": "owner (explicit chat message: 'cả 5 mục đồng ý')",
+  "videoSha256": "7954a86a793ccbe5e153be30875b832ef813f3e23021e0f571a9da5e823dfcdf",
+  "decisions": [
+    { "id": 1, "decision": "Install Playwright chromium (Node + research/.venv) and run exactly one final full regression", "status": "APPROVED" },
+    { "id": 2, "decision": "Replace 'Microsoft SAPI' with 'Kokoro-82M, local' in description.md, metadata.json description and policy-refresh.json rightsNotes", "status": "APPROVED_AND_APPLIED", "note": "Video bytes unchanged; no render. Re-confirmation of the packaging variant after the wording change is requested separately (see packagingReapproval)." },
+    { "id": 3, "decision": "57.152 s video accepted as representative Phase 6A pilot", "status": "ACCEPTED_REPRESENTATIVE_PILOT", "note": "Does not prove the Phase 4 2-3 minute long-form requirement." },
+    { "id": 4, "decision": "Signed human full-watch not required for Phase 6A gate; model watch + owner approval is sufficient", "status": "ACCEPTED" },
+    { "id": 5, "decision": "Null category / licenseDistribution / playlistIntent acceptable for private, unpublished pilot", "status": "ACCEPTED" }
+  ],
+  "packagingReapproval": {
+    "status": "PENDING_OWNER_CONFIRMATION",
+    "selectedVariantId": "pkv-202fd90e1b72",
+    "changedFields": ["description (narration engine wording)"],
+    "unchanged": ["title", "thumbnail THUMB_S05", "final.mp4 bytes"]
+  },
+  "notCovered": ["upload/publish"]
+}

@@ -6,7 +6,7 @@ In this video:
 • Why sunsets turn red and orange
 • Why a hazy sky looks pale and white
 
-Sources: NOAA JetStream, NASA Goddard, NOAA NESDIS, NASA Space Place, HyperPhysics, Britannica. Visuals are original illustrations, not to scale. Narration is synthetic (Microsoft SAPI).
+Sources: NOAA JetStream, NASA Goddard, NOAA NESDIS, NASA Space Place, HyperPhysics, Britannica. Visuals are original illustrations, not to scale. Narration is synthetic (Kokoro-82M, local).
 
 Chapters:
 0:00 Why is the sky blue?
