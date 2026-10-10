@@ -75,7 +75,21 @@ runTest("RC8 no fake timing (no even-division/interpolation of text into words)"
   assert(bad.length === 0, "fake-timing patterns found");
 });
 
-console.log("\n=== SUMMARY test-remotion-captions RC1-RC8 ===");
+runTest("RC9 caption container stacks above scene layers (scene layers use zIndex: layer index)", () => {
+  const scene = src("remotion/src/scenes/Scene.tsx");
+  assert(/zIndex:\s*index/.test(scene), "scene layers are stacked by zIndex: index");
+  const m = CAP.match(/position:\s*'absolute',[\s\S]{0,200}?zIndex:\s*(\d+)/);
+  assert(m, "caption container must set an explicit zIndex");
+  assert(Number(m[1]) >= 100, "caption zIndex must exceed any scene layer index, got " + m[1]);
+});
+
+runTest("RC10 one-frame boundary overlap of back-to-back cues must not stack two captions (flash)", () => {
+  // floor(start)/ceil(end) makes adjacent cues share one frame; the superseded cue must be dropped.
+  assert(/superseded/.test(CAP), "boundary-overlap (superseded cue) handling present");
+  assert(/range\.end\s*-\s*1|end\s*-\s*1/.test(CAP), "overlap tolerance is exactly the 1-frame rounding artifact");
+});
+
+console.log("\n=== SUMMARY test-remotion-captions RC1-RC10 ===");
 console.log("passed=" + passed + " failed=" + failed);
 console.log(failed === 0 ? "RESULT: PASS" : "RESULT: FAIL");
 process.exit(failed === 0 ? 0 : 1);

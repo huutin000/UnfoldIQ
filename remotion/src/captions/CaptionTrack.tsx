@@ -60,9 +60,18 @@ export const CaptionTrack: React.FC<CaptionTrackProps> = ({ captions, visualSyst
   if (active.length === 0) {
     return null;
   }
+  // Back-to-back cues share one frame (start=floor, end=ceil). Drop the cue
+  // that a later active cue has superseded so the stack does not jump (flash).
+  const ranges = new Map(active.map((item) => [item, frameRangeForInterval(item.startMs, item.endMs, fps)]));
+  const current = active.filter(
+    (item) =>
+      !active.some(
+        (other) => other !== item && ranges.get(other)!.start >= ranges.get(item)!.end - 1 && other.startMs > item.startMs,
+      ),
+  );
   // Sentence/phrase style: show at most the two most recent active items,
   // stacked deterministically (no text measurement).
-  const visible = active.slice(-2);
+  const visible = current.slice(-2);
 
   const bottomPct = captions.safeZone?.bottomPct ?? DEFAULT_SAFE_ZONE_BOTTOM_PCT;
   const bottomPx = (bottomPct / 100) * canvas.height;
@@ -72,6 +81,8 @@ export const CaptionTrack: React.FC<CaptionTrackProps> = ({ captions, visualSyst
     <div
       style={{
         position: 'absolute',
+        // Scene layers are stacked with zIndex = layer index; keep captions above them.
+        zIndex: 1000,
         left: 16,
         right: 16,
         bottom: bottomPx,
