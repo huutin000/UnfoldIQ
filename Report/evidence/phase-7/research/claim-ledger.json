@@ -1,7 +1,7 @@
 {
   "kind": "PHASE7_CLAIM_LEDGER",
   "version": "1.2.0",
-  "generatedAt": "2026-10-11T06:45:45.520Z",
+  "generatedAt": "2026-10-11T07:05:08.509Z",
   "policy": "Owner evidence policy 10/10/2026 (>=1 attributable source per material claim; critical numerics: >=2 independent sources OR 1 authoritative source + reproducible derivation).",
   "independence": "Official sources SRC1-4,6-11,15-16 share one program ecosystem (US government) and are treated as ONE independence group; ESA Navipedia (SRC12-14,17-20) and the peer-reviewed Ashby paper (SRC5) are separate groups. Critical numerics C4/C5/C11/C12 additionally carry a reproducible derivation.",
   "sources": [
@@ -232,6 +232,10 @@
           "src": "SRC10",
           "quote": "We recommend you contact your wireless carrier. They may be able to track down your phone/device using the location technology built into it."
         }
+      ],
+      "forbidden": [
+        "(phone|receiver)[^.]*(sends|transmits|uploads)[^.]*(request|location|position)[^.]*satellite",
+        "satellites?[^.]*(replies|responds|answers)"
       ]
     },
     "C2": {
@@ -425,7 +429,8 @@
       "forbidden": [
         "position(al)? errors?",
         "errors? (would )?(grow|pile|accumulate|build)",
-        "drift(s|ed)? by (roughly |about )?(ten|10|eleven|11) kilomet"
+        "drift(s|ed)? by (roughly |about )?(ten|10|eleven|11) kilomet",
+        "position[^.]*(wrong|off|out) by[^.]*kilomet"
       ],
       "evidence": [
         {

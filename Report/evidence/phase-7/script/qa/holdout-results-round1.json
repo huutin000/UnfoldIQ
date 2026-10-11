@@ -1,0 +1,332 @@
+{
+  "kind": "SCRIPT_QA_HOLDOUT_RESULT",
+  "round": 1,
+  "note": "Engine and ledger frozen (hashes below) before the first run; predictions were written before running; nothing was tuned on these cases. After this run, failure modes were promoted to ledger data and golden regression cases; this file is not re-run.",
+  "frozenHashes": {
+    "lib/script-qa/index.js": "5061ee27f930d40f1b33c4ad31d102b9b76e591c94c2d2ff265bd3aeddc16418",
+    "lib/script-qa/numbers.js": "c9957746cd343e91170316bfdc79bf81ec5e24bb9a47f9687bd3d6a255202d1b",
+    "lib/script-qa/golden.js": "59e3050bbc7e51af162bede320d25c38223d727941ba41038b00353a6ba0818e",
+    "tests/fixtures/script-qa/ledger.json": "5b90fd00dfa6b4fd7fa923dc4cd2bbca145aa2616de329531fd47c451f36131e",
+    "tests/fixtures/script-qa/holdout-cases.json": "5cc7322f38fffdb9b0e9c62c0a67cecf530471d6bdfa063d92202c9ad9c9c67b"
+  },
+  "summary": {
+    "cases": 24,
+    "asPredicted": 23,
+    "negatives": 15,
+    "negativesDetectedWithExpectedCode": 11,
+    "negativesFlaggedWithOtherCode": [
+      "H-N9"
+    ],
+    "negativesMissed": [
+      "H-N1",
+      "H-N6",
+      "H-N7"
+    ],
+    "positives": 9,
+    "falsePositives": [],
+    "surprises": [
+      "H-N9"
+    ]
+  },
+  "rows": [
+    {
+      "id": "H-N1",
+      "kind": "NEGATIVE",
+      "predicted": "MISS",
+      "actual": "MISS",
+      "asPredicted": true,
+      "foundCodes": [],
+      "expectedCodes": [
+        "FORBIDDEN_BY_LEDGER"
+      ],
+      "note": "position-error conflation phrased without the ledger trigger words"
+    },
+    {
+      "id": "H-N2",
+      "kind": "NEGATIVE",
+      "predicted": "DETECT",
+      "actual": "DETECT",
+      "asPredicted": true,
+      "foundCodes": [
+        "NUMBER_NOT_IN_EVIDENCE"
+      ],
+      "expectedCodes": [
+        "NUMBER_NOT_IN_EVIDENCE"
+      ],
+      "note": "wrong magnitude"
+    },
+    {
+      "id": "H-N3",
+      "kind": "NEGATIVE",
+      "predicted": "DETECT",
+      "actual": "DETECT",
+      "asPredicted": true,
+      "foundCodes": [
+        "NUMBER_NOT_IN_EVIDENCE"
+      ],
+      "expectedCodes": [
+        "NUMBER_NOT_IN_EVIDENCE"
+      ],
+      "note": "off by a factor of ten"
+    },
+    {
+      "id": "H-N4",
+      "kind": "NEGATIVE",
+      "predicted": "DETECT",
+      "actual": "DETECT",
+      "asPredicted": true,
+      "foundCodes": [
+        "NUMBER_COARSE_APPROXIMATION",
+        "ABSOLUTE_LANGUAGE"
+      ],
+      "expectedCodes": [
+        "ABSOLUTE_LANGUAGE"
+      ],
+      "note": "absolute plus a count not in the evidence"
+    },
+    {
+      "id": "H-N5",
+      "kind": "NEGATIVE",
+      "predicted": "DETECT",
+      "actual": "DETECT",
+      "asPredicted": true,
+      "foundCodes": [
+        "ABSOLUTE_LANGUAGE"
+      ],
+      "expectedCodes": [
+        "ABSOLUTE_LANGUAGE"
+      ],
+      "note": "absolute claim"
+    },
+    {
+      "id": "H-N6",
+      "kind": "NEGATIVE",
+      "predicted": "MISS",
+      "actual": "MISS",
+      "asPredicted": true,
+      "foundCodes": [],
+      "expectedCodes": [
+        "NUMBER_NOT_IN_EVIDENCE"
+      ],
+      "note": "direction error (faster, not slower) with a correct number"
+    },
+    {
+      "id": "H-N7",
+      "kind": "NEGATIVE",
+      "predicted": "MISS",
+      "actual": "MISS",
+      "asPredicted": true,
+      "foundCodes": [],
+      "expectedCodes": [
+        "FORBIDDEN_BY_LEDGER"
+      ],
+      "note": "contradicts the one-way broadcast; the ledger has no rule for it"
+    },
+    {
+      "id": "H-N8",
+      "kind": "NEGATIVE",
+      "predicted": "DETECT",
+      "actual": "DETECT",
+      "asPredicted": true,
+      "foundCodes": [
+        "NUMBER_NOT_IN_EVIDENCE"
+      ],
+      "expectedCodes": [
+        "NUMBER_NOT_IN_EVIDENCE"
+      ],
+      "note": "unit slip: one millisecond is about 300 km"
+    },
+    {
+      "id": "H-N9",
+      "kind": "NEGATIVE",
+      "predicted": "DETECT",
+      "actual": "FLAGGED_OTHER_CODE",
+      "asPredicted": false,
+      "foundCodes": [
+        "NUMBER_COARSE_APPROXIMATION"
+      ],
+      "expectedCodes": [
+        "NUMBER_NOT_IN_EVIDENCE"
+      ],
+      "note": "kilometers vs meters"
+    },
+    {
+      "id": "H-N10",
+      "kind": "NEGATIVE",
+      "predicted": "DETECT",
+      "actual": "DETECT",
+      "asPredicted": true,
+      "foundCodes": [
+        "MISSING_CAVEAT",
+        "ABSOLUTE_LANGUAGE"
+      ],
+      "expectedCodes": [
+        "MISSING_CAVEAT",
+        "ABSOLUTE_LANGUAGE"
+      ],
+      "note": "dropped flat-map scope plus absolutes"
+    },
+    {
+      "id": "H-N11",
+      "kind": "NEGATIVE",
+      "predicted": "DETECT",
+      "actual": "DETECT",
+      "asPredicted": true,
+      "foundCodes": [
+        "MISSING_CAVEAT"
+      ],
+      "expectedCodes": [
+        "MISSING_CAVEAT"
+      ],
+      "note": "dropped the open-sky condition"
+    },
+    {
+      "id": "H-N12",
+      "kind": "NEGATIVE",
+      "predicted": "DETECT",
+      "actual": "DETECT",
+      "asPredicted": true,
+      "foundCodes": [
+        "LECTURE_PHRASE"
+      ],
+      "expectedCodes": [
+        "LECTURE_PHRASE"
+      ],
+      "note": "lecture phrases"
+    },
+    {
+      "id": "H-N13",
+      "kind": "NEGATIVE",
+      "predicted": "DETECT",
+      "actual": "DETECT",
+      "asPredicted": true,
+      "foundCodes": [
+        "REPEATED_CONTENT"
+      ],
+      "expectedCodes": [
+        "REPEATED_CONTENT"
+      ],
+      "note": "near-duplicate scenes"
+    },
+    {
+      "id": "H-P1",
+      "kind": "POSITIVE",
+      "predicted": "CLEAN",
+      "actual": "CLEAN",
+      "asPredicted": true,
+      "foundCodes": [],
+      "expectedCodes": null,
+      "note": "rounded derived number"
+    },
+    {
+      "id": "H-P2",
+      "kind": "POSITIVE",
+      "predicted": "CLEAN",
+      "actual": "CLEAN",
+      "asPredicted": true,
+      "foundCodes": [],
+      "expectedCodes": null,
+      "note": "clean paraphrase"
+    },
+    {
+      "id": "H-P3",
+      "kind": "POSITIVE",
+      "predicted": "CLEAN",
+      "actual": "CLEAN",
+      "asPredicted": true,
+      "foundCodes": [],
+      "expectedCodes": null,
+      "note": "bounded number with URE framing"
+    },
+    {
+      "id": "H-P4",
+      "kind": "POSITIVE",
+      "predicted": "CLEAN",
+      "actual": "CLEAN",
+      "asPredicted": true,
+      "foundCodes": [],
+      "expectedCodes": null,
+      "note": "coarse rounding of 20,200 km"
+    },
+    {
+      "id": "H-P5",
+      "kind": "POSITIVE",
+      "predicted": "CLEAN",
+      "actual": "CLEAN",
+      "asPredicted": true,
+      "foundCodes": [],
+      "expectedCodes": null,
+      "note": "sourced number"
+    },
+    {
+      "id": "H-P6",
+      "kind": "POSITIVE",
+      "predicted": "CLEAN",
+      "actual": "CLEAN",
+      "asPredicted": true,
+      "foundCodes": [],
+      "expectedCodes": null,
+      "note": "troposphere number"
+    },
+    {
+      "id": "H-P7",
+      "kind": "POSITIVE",
+      "predicted": "CLEAN",
+      "actual": "CLEAN",
+      "asPredicted": true,
+      "foundCodes": [],
+      "expectedCodes": null,
+      "note": "hypothetical example is exempt"
+    },
+    {
+      "id": "H-P8",
+      "kind": "POSITIVE",
+      "predicted": "CLEAN",
+      "actual": "CLEAN",
+      "asPredicted": true,
+      "foundCodes": [],
+      "expectedCodes": null,
+      "note": "correct framing of the common bias"
+    },
+    {
+      "id": "H-O1",
+      "kind": "NEGATIVE",
+      "predicted": "DETECT",
+      "actual": "DETECT",
+      "asPredicted": true,
+      "foundCodes": [
+        "NUMBER_NOT_IN_EVIDENCE"
+      ],
+      "expectedCodes": [
+        "NUMBER_NOT_IN_EVIDENCE"
+      ],
+      "note": "other domain: wrong number"
+    },
+    {
+      "id": "H-O2",
+      "kind": "NEGATIVE",
+      "predicted": "DETECT",
+      "actual": "DETECT",
+      "asPredicted": true,
+      "foundCodes": [
+        "MISSING_CAVEAT"
+      ],
+      "expectedCodes": [
+        "MISSING_CAVEAT"
+      ],
+      "note": "other domain: dropped condition"
+    },
+    {
+      "id": "H-O3",
+      "kind": "POSITIVE",
+      "predicted": "CLEAN",
+      "actual": "CLEAN",
+      "asPredicted": true,
+      "foundCodes": [
+        "NUMBER_COARSE_APPROXIMATION"
+      ],
+      "expectedCodes": null,
+      "note": "other domain: clean"
+    }
+  ]
+}

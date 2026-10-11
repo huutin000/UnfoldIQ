@@ -1,0 +1,118 @@
+{
+ "voice": "am_michael",
+ "rows": [
+  {
+   "file": "L2C__before-original-text.wav",
+   "label": "BEFORE (no pronunciation entries)",
+   "speed": 1,
+   "durationSec": 21.3,
+   "textSynthesized": "The ionosphere changes with the time of day and with solar activity. It delays lower frequencies more, in proportion to one over the frequency squared. A receiver listening on two frequencies can compare the delays and correct for it. With the newer civil signal L2C, civilian receivers can do that.",
+   "asrHeard": "The ionosphere changes with the time of day and with solar activity.  It delays lower frequencies more in proportion to one over the frequency squared.  A receiver listening on two frequencies can compare the delays and correct for it.  With the newer civil signal L2C, civilian receivers can do that."
+  },
+  {
+   "file": "L2C__after-profile-speed1.0.wav",
+   "label": "AFTER (profile readings)",
+   "speed": 1,
+   "durationSec": 21.38,
+   "textSynthesized": "The ionosphere changes with the time of day and with solar activity. It delays lower frequencies more, in proportion to one over the frequency squared. A receiver listening on two frequencies can compare the delays and correct for it. With the newer civil signal L two C, civilian receivers can do that.",
+   "asrHeard": "The ionosphere changes with the time of day and with solar activity.  It delays lower frequencies more in proportion to one over the frequency squared.  A receiver listening on two frequencies can compare the delays and correct for it.  With the newer civil signal L2C, civilian receivers can do that."
+  },
+  {
+   "file": "L2C__after-profile-speed1.1.wav",
+   "label": "AFTER (profile readings)",
+   "speed": 1.1,
+   "durationSec": 20,
+   "textSynthesized": "The ionosphere changes with the time of day and with solar activity. It delays lower frequencies more, in proportion to one over the frequency squared. A receiver listening on two frequencies can compare the delays and correct for it. With the newer civil signal L two C, civilian receivers can do that.",
+   "asrHeard": "The ionosphere changes with the time of day and with solar activity.  It delays lower frequencies more in proportion to one over the frequency squared.  A receiver listening on two frequencies can compare the delays and correct for it.  With the newer civil signal L2C, civilian receivers can do that."
+  },
+  {
+   "file": "L5-L1C-L2C-Galileo__before-original-text.wav",
+   "label": "BEFORE (no pronunciation entries)",
+   "speed": 1,
+   "durationSec": 15.82,
+   "textSynthesized": "Newer civil signals, called L2C, L5 and L1C, are being added next to the original one, but receivers must be upgraded to use them. Other nations fly their own constellations, like Galileo in Europe.",
+   "asrHeard": "Newer civil signals called L2C, L5 and L1C are being added next to the original one,  but receivers must be upgraded to use them.  Other nations fly their own constellations like Galileo in Europe."
+  },
+  {
+   "file": "L5-L1C-L2C-Galileo__after-profile-speed1.0.wav",
+   "label": "AFTER (profile readings)",
+   "speed": 1,
+   "durationSec": 16.18,
+   "textSynthesized": "Newer civil signals, called L two C, L five and L one C, are being added next to the original one, but receivers must be upgraded to use them. Other nations fly their own constellations, like Galileo in Europe.",
+   "asrHeard": "Newer civil signals called L2C, L5 and L1C are being added next to the original one,  but receivers must be upgraded to use them.  Other nations fly their own constellations like Galileo in Europe."
+  },
+  {
+   "file": "L5-L1C-L2C-Galileo__after-profile-speed1.1.wav",
+   "label": "AFTER (profile readings)",
+   "speed": 1.1,
+   "durationSec": 15.4,
+   "textSynthesized": "Newer civil signals, called L two C, L five and L one C, are being added next to the original one, but receivers must be upgraded to use them. Other nations fly their own constellations, like Galileo in Europe.",
+   "asrHeard": "Newer civil signals called L2C, L5 and L1C are being added next to the original one,  but receivers must be upgraded to use them.  Other nations fly their own constellations like Galileo in Europe."
+  },
+  {
+   "file": "WAAS-FAA__before-original-text.wav",
+   "label": "BEFORE (no pronunciation entries)",
+   "speed": 1,
+   "durationSec": 11.38,
+   "textSynthesized": "Engineers push further. Augmentation systems add corrections; WAAS, run by the FAA, helps aircraft navigate across North America.",
+   "asrHeard": "Engineers push further. Augmentation systems add corrections.  WAAS run by the FAA helps aircraft navigate across North America."
+  },
+  {
+   "file": "WAAS-FAA__after-profile-speed1.0.wav",
+   "label": "AFTER (profile readings)",
+   "speed": 1,
+   "durationSec": 11.38,
+   "textSynthesized": "Engineers push further. Augmentation systems add corrections; W.A.A.S., run by the F.A.A., helps aircraft navigate across North America.",
+   "asrHeard": "Engineers push further. Augmentation systems add corrections.  WAAS run by the FAA helps aircraft navigate across North America."
+  },
+  {
+   "file": "WAAS-FAA__after-profile-speed1.1.wav",
+   "label": "AFTER (profile readings)",
+   "speed": 1.1,
+   "durationSec": 10.7,
+   "textSynthesized": "Engineers push further. Augmentation systems add corrections; W.A.A.S., run by the F.A.A., helps aircraft navigate across North America.",
+   "asrHeard": "Engineers push further. Augmentation systems add corrections.  WAAS run by the FAA helps aircraft navigate across North America."
+  },
+  {
+   "file": "NIST__before-original-text.wav",
+   "label": "BEFORE (no pronunciation entries)",
+   "speed": 1,
+   "durationSec": 17.1,
+   "textSynthesized": "Relativity is not only for satellites. NIST physicists once ran two clocks just a foot apart in height, and they ticked at different rates. Gravity changes how time passes, and every time that blue dot appears, GPS has accounted for it.",
+   "asrHeard": "Relativity is not only for satellites.  NIST physicists once ran two clocks just a foot apart in height  and they ticked at different rates.  Gravity changes how time passes  and every time that blue dot appears, GPS has accounted for it."
+  },
+  {
+   "file": "NIST__after-profile-speed1.0.wav",
+   "label": "AFTER (profile readings)",
+   "speed": 1,
+   "durationSec": 17.1,
+   "textSynthesized": "Relativity is not only for satellites. nist physicists once ran two clocks just a foot apart in height, and they ticked at different rates. Gravity changes how time passes, and every time that blue dot appears, GPS has accounted for it.",
+   "asrHeard": "Relativity is not only for satellites.  Missed physicists once ran two clocks just a foot apart in height,  and they ticked at different rates.  Gravity changes how time passes,  and every time that blue dot appears, GPS has accounted for it."
+  },
+  {
+   "file": "NIST__after-profile-speed1.1.wav",
+   "label": "AFTER (profile readings)",
+   "speed": 1.1,
+   "durationSec": 16.12,
+   "textSynthesized": "Relativity is not only for satellites. nist physicists once ran two clocks just a foot apart in height, and they ticked at different rates. Gravity changes how time passes, and every time that blue dot appears, GPS has accounted for it.",
+   "asrHeard": "Relativity is not only for satellites.  NIST physicists once ran two clocks just a foot apart in height,  and they ticked at different rates.  Gravity changes how time passes,  and every time that blue dot appears, GPS has accounted for it."
+  },
+  {
+   "file": "WAAS__alt-wahs.wav",
+   "label": "ALTERNATIVE reading wahs",
+   "speed": 1,
+   "durationSec": 10.8,
+   "textSynthesized": "Engineers push further. Augmentation systems add corrections; wahs, run by the F.A.A., helps aircraft navigate across North America.",
+   "asrHeard": "Engineers push further. Augmentation systems add corrections. WAS, run by the FAA, helps aircraft navigate across North America."
+  },
+  {
+   "file": "NIST__alt-letters.wav",
+   "label": "ALTERNATIVE reading N I S T",
+   "speed": 1,
+   "durationSec": 18,
+   "textSynthesized": "Relativity is not only for satellites. N I S T physicists once ran two clocks just a foot apart in height, and they ticked at different rates. Gravity changes how time passes, and every time that blue dot appears, GPS has accounted for it.",
+   "asrHeard": "Relativity is not only for satellites.  NIST physicists once ran two clocks just a foot apart in height, and they ticked at different rates.  Gravity changes how time passes, and every time that blue dot appears GPS has accounted for it."
+  }
+ ],
+ "note": "WAV files are in out/phase7-gps-pronunciation-samples (gitignored, not committed). asrHeard is a faster-whisper proxy and varies between runs; it is NOT a listening test."
+}

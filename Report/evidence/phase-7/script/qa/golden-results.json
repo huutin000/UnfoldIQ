@@ -233,17 +233,64 @@
       "missing": [],
       "unexpected": [],
       "basis": "exact match with qualifier"
+    },
+    {
+      "id": "NEG-holdout-H-N1",
+      "origin": "holdout round 1 (promoted after the run)",
+      "kind": "NEGATIVE",
+      "pass": true,
+      "found": [
+        "FORBIDDEN_BY_LEDGER"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "basis": "SRC24: position is unaffected; a position error of kilometers is the conflation. Ledger C12 gained a trigger pattern after the miss"
+    },
+    {
+      "id": "NEG-holdout-H-N7",
+      "origin": "holdout round 1 (promoted after the run)",
+      "kind": "NEGATIVE",
+      "pass": true,
+      "found": [
+        "FORBIDDEN_BY_LEDGER"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "basis": "SRC10: satellites are one-way beacons. Ledger C1 gained a forbidden pattern after the miss"
+    },
+    {
+      "id": "NEG-holdout-H-N9-limit",
+      "origin": "holdout round 1 (documents a limit)",
+      "kind": "NEGATIVE",
+      "pass": true,
+      "found": [
+        "NUMBER_COARSE_APPROXIMATION"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "basis": "unit slip (m vs km) is only flagged at REVIEW level because an unrelated 10 km figure inside the same quote lies within 50%; per-claim number binding is a LATER improvement. Still not silent: the verdict stays REVIEW_REQUIRED until dispositioned"
+    },
+    {
+      "id": "KFN-holdout-H-N6",
+      "origin": "holdout round 1",
+      "kind": "KNOWN_FALSE_NEGATIVE",
+      "pass": true,
+      "found": [],
+      "missing": [],
+      "unexpected": [],
+      "basis": "direction error (slower vs faster) with a correct number: needs the editorial reviewer"
     }
   ],
   "summary": {
-    "cases": 21,
-    "passed": 21,
-    "negativeDetected": "10/10",
+    "cases": 25,
+    "passed": 25,
+    "negativeDetected": "13/13",
     "falseNegatives": [],
     "falsePositives": [],
     "knownFalseNegatives": [
       "KFN-v1-S01",
-      "KFN-v1-S24"
+      "KFN-v1-S24",
+      "KFN-holdout-H-N6"
     ],
     "allPassed": true
   }

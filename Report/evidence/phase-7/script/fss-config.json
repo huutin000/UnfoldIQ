@@ -1,0 +1,27 @@
+{
+  "projectId": "phase7-gps-explainer",
+  "title": "How Does GPS Know Where You Are?",
+  "fssArtifactId": "fss-phase7-gps-explainer",
+  "fssVersion": 1,
+  "language": "en-us",
+  "contentMode": "technical-explainer",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "scriptMd": "Report/evidence/phase-7/script/gps-script-v3.md",
+  "ledger": "Report/evidence/phase-7/research/claim-ledger.json",
+  "meta": "Report/evidence/phase-7/script/script-meta.json",
+  "editorial": "Report/evidence/phase-7/script/qa/editorial-v3.json",
+  "dispositions": "Report/evidence/phase-7/script/qa/dispositions-v3.json",
+  "goldenCases": "tests/fixtures/script-qa/golden-cases.json",
+  "goldenLedger": "tests/fixtures/script-qa/ledger.json",
+  "ttsCalibration": "Report/evidence/phase-7/script/qa/tts-calibration.json",
+  "ttsSpeed": 1,
+  "resultOut": "Report/evidence/phase-7/script/qa/fss-canonicalization-result.json",
+  "pronunciation": [
+    { "displayTerm": "L2C", "category": "ACRONYM", "acronymMode": "CUSTOM", "reading": { "notation": "READ_AS", "value": "L two C" }, "notes": "proposed reading; owner verifies by listening" },
+    { "displayTerm": "L5", "category": "ACRONYM", "acronymMode": "CUSTOM", "reading": { "notation": "READ_AS", "value": "L five" }, "notes": "proposed reading; owner verifies by listening" },
+    { "displayTerm": "L1C", "category": "ACRONYM", "acronymMode": "CUSTOM", "reading": { "notation": "READ_AS", "value": "L one C" }, "notes": "proposed reading; owner verifies by listening" },
+    { "displayTerm": "WAAS", "category": "ACRONYM", "acronymMode": "LETTER_BY_LETTER", "reading": { "notation": "READ_AS", "value": "W A A S" }, "notes": "letter-by-letter is the intelligible default; official speech says 'wahs'; owner chooses" },
+    { "displayTerm": "FAA", "category": "ACRONYM", "acronymMode": "LETTER_BY_LETTER", "reading": { "notation": "READ_AS", "value": "F A A" }, "notes": "proposed reading" },
+    { "displayTerm": "NIST", "category": "ACRONYM", "acronymMode": "CUSTOM", "reading": { "notation": "READ_AS", "value": "nist" }, "notes": "spoken as a word by NIST staff; owner verifies by listening" }
+  ]
+}

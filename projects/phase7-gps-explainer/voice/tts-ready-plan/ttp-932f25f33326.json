@@ -1,0 +1,404 @@
+{
+  "schemaVersion": "1.0.0",
+  "ttsReadyPlanId": "ttp-932f25f33326",
+  "version": 1,
+  "projectId": "phase7-gps-explainer",
+  "scriptRef": {
+    "scriptArtifactId": "fss-phase7-gps-explainer",
+    "scriptVersion": 1
+  },
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "narrationDirectionRef": "nd-1be5f39e7bf3",
+  "pronunciationPassRef": "prp-576fd44703c0",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "language": "en-us",
+  "overall": "READY_FOR_TTS",
+  "productionTtsBlocked": true,
+  "segments": [
+    {
+      "segmentId": "N01",
+      "sourceTextHash": "dccdf56a6e439269",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "dccdf56a6e439269",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N02",
+      "sourceTextHash": "b1e57d3185a4c533",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "b1e57d3185a4c533",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N03",
+      "sourceTextHash": "b471eb739862a86e",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "b471eb739862a86e",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N04",
+      "sourceTextHash": "82292adfa5a8773d",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "82292adfa5a8773d",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N05",
+      "sourceTextHash": "0d5a998a205e7057",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "0d5a998a205e7057",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N06",
+      "sourceTextHash": "6c07d5ea296e259f",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "6c07d5ea296e259f",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N07",
+      "sourceTextHash": "0445714e5153f350",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "0445714e5153f350",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N08",
+      "sourceTextHash": "983500c0bd3d414d",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "983500c0bd3d414d",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N09",
+      "sourceTextHash": "5a3e49a899d5dc54",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "5a3e49a899d5dc54",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N10",
+      "sourceTextHash": "de54438c61e7b459",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "de54438c61e7b459",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N11",
+      "sourceTextHash": "441c396dca6d35ac",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "441c396dca6d35ac",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N12",
+      "sourceTextHash": "e27a55c15898fd4d",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "e27a55c15898fd4d",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N13",
+      "sourceTextHash": "b4e61076d0ccbeab",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "b4e61076d0ccbeab",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N14",
+      "sourceTextHash": "bef4960818c69195",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "bef4960818c69195",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N15",
+      "sourceTextHash": "d05e4d4b1209c364",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "d05e4d4b1209c364",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N16",
+      "sourceTextHash": "dab724e2413b807f",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "dab724e2413b807f",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N17",
+      "sourceTextHash": "19af844c75b66dd6",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "19af844c75b66dd6",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N18",
+      "sourceTextHash": "13c31414172a3e79",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "13c31414172a3e79",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N19",
+      "sourceTextHash": "9b2cf650b799fc15",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "9b2cf650b799fc15",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N19b",
+      "sourceTextHash": "0d8bba18c2b19c4d",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "0d8bba18c2b19c4d",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N20",
+      "sourceTextHash": "394552e5091b9c3f",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "394552e5091b9c3f",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N21",
+      "sourceTextHash": "309bc62aa11ea0a4",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "309bc62aa11ea0a4",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N22",
+      "sourceTextHash": "add461012292c7d4",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "add461012292c7d4",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N23",
+      "sourceTextHash": "902d5d2d81150b4b",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "902d5d2d81150b4b",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N24",
+      "sourceTextHash": "df9bba1f88dc29c2",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "df9bba1f88dc29c2",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N25",
+      "sourceTextHash": "accb0a6cb7f6c4e7",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "accb0a6cb7f6c4e7",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N26",
+      "sourceTextHash": "f2eeabd1fe613a23",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "1e27f97677ae6fef",
+      "pronunciationStatus": "OVERRIDE_APPLIED",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N27",
+      "sourceTextHash": "685b9267e38cdce6",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "685b9267e38cdce6",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N28",
+      "sourceTextHash": "0d5f888151ab5176",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "0d5f888151ab5176",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N29",
+      "sourceTextHash": "381cb05d6e340791",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "381cb05d6e340791",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N30",
+      "sourceTextHash": "2b7126208f6b844c",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "2b7126208f6b844c",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N31",
+      "sourceTextHash": "ae93a5d2da86c415",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "4911bca86865cff8",
+      "pronunciationStatus": "OVERRIDE_APPLIED",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N32",
+      "sourceTextHash": "41fcc11b24c92ef6",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "87f6e0311cfffb52",
+      "pronunciationStatus": "OVERRIDE_APPLIED",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N33",
+      "sourceTextHash": "6ba03ee08712cf1a",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "6ba03ee08712cf1a",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N34",
+      "sourceTextHash": "76437c783486c8d9",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "76437c783486c8d9",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N35",
+      "sourceTextHash": "255936776061e2e3",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "090fa3664ba917e4",
+      "pronunciationStatus": "OVERRIDE_APPLIED",
+      "readyForTts": true,
+      "blockers": []
+    },
+    {
+      "segmentId": "N36",
+      "sourceTextHash": "f0101ff94d3a7d3d",
+      "speakerId": "narrator",
+      "directionRef": null,
+      "compiledTextHash": "f0101ff94d3a7d3d",
+      "pronunciationStatus": "CLEAN",
+      "readyForTts": true,
+      "blockers": []
+    }
+  ],
+  "provenance": {
+    "source": "phase-2.2-2.3",
+    "createdAt": "2026-10-11T07:12:25.084Z",
+    "productionScriptStatus": "CANONICAL",
+    "evidenceRefs": [],
+    "scriptQa": {
+      "required": true,
+      "ok": false,
+      "code": "SCRIPT_OWNER_APPROVAL_PENDING",
+      "verdict": "READY_FOR_LOCK",
+      "scriptTextHash": "f814512dc6ca1986"
+    }
+  },
+  "fingerprint": "94fce293d642ef4a"
+}

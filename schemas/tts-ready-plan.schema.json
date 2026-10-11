@@ -43,7 +43,19 @@
         "source": { "type": "string", "minLength": 1 },
         "createdAt": { "type": ["string", "null"] },
         "productionScriptStatus": { "enum": ["NOT_APPLICABLE", "CANONICAL", "PENDING"], "description": "Copied from the source script contract; anything other than CANONICAL blocks production TTS." },
-        "evidenceRefs": { "type": "array", "items": { "type": "string" } }
+        "evidenceRefs": { "type": "array", "items": { "type": "string" } },
+        "scriptQa": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Present only when the plan was built with requireScriptQa; production TTS is blocked unless ok is true.",
+          "properties": {
+            "required": { "type": "boolean" },
+            "ok": { "type": "boolean" },
+            "code": { "type": "string" },
+            "verdict": { "type": ["string", "null"] },
+            "scriptTextHash": { "type": ["string", "null"] }
+          }
+        }
       }
     },
     "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" }

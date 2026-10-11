@@ -369,6 +369,72 @@
         "NUMBER_WITHOUT_QUALIFIER"
       ],
       "basis": "exact match with qualifier"
+    },
+    {
+      "id": "NEG-holdout-H-N1",
+      "kind": "NEGATIVE",
+      "expect": [
+        "FORBIDDEN_BY_LEDGER"
+      ],
+      "scenes": [
+        {
+          "id": "H1",
+          "text": "Without a fix, the satellite clocks would drift so much that your position would be wrong by about eleven kilometers a day.",
+          "evidence": "C12 (SRC24)",
+          "visual": "D"
+        }
+      ],
+      "origin": "holdout round 1 (promoted after the run)",
+      "basis": "SRC24: position is unaffected; a position error of kilometers is the conflation. Ledger C12 gained a trigger pattern after the miss"
+    },
+    {
+      "id": "NEG-holdout-H-N7",
+      "kind": "NEGATIVE",
+      "expect": [
+        "FORBIDDEN_BY_LEDGER"
+      ],
+      "scenes": [
+        {
+          "id": "H7",
+          "text": "Your phone sends a request to the satellite, and the satellite replies with your position.",
+          "evidence": "C1 (SRC10)",
+          "visual": "D"
+        }
+      ],
+      "origin": "holdout round 1 (promoted after the run)",
+      "basis": "SRC10: satellites are one-way beacons. Ledger C1 gained a forbidden pattern after the miss"
+    },
+    {
+      "id": "NEG-holdout-H-N9-limit",
+      "kind": "NEGATIVE",
+      "expect": [
+        "NUMBER_COARSE_APPROXIMATION"
+      ],
+      "scenes": [
+        {
+          "id": "H9",
+          "text": "The satellites move at about fourteen thousand meters an hour.",
+          "evidence": "C4 (SRC21)",
+          "visual": "D"
+        }
+      ],
+      "origin": "holdout round 1 (documents a limit)",
+      "basis": "unit slip (m vs km) is only flagged at REVIEW level because an unrelated 10 km figure inside the same quote lies within 50%; per-claim number binding is a LATER improvement. Still not silent: the verdict stays REVIEW_REQUIRED until dispositioned"
+    },
+    {
+      "id": "KFN-holdout-H-N6",
+      "kind": "KNOWN_FALSE_NEGATIVE",
+      "expect": [],
+      "scenes": [
+        {
+          "id": "H6",
+          "text": "Relativity makes the satellite clocks run slower by thirty-eight microseconds a day.",
+          "evidence": "C11 (SRC24)",
+          "visual": "D"
+        }
+      ],
+      "origin": "holdout round 1",
+      "basis": "direction error (slower vs faster) with a correct number: needs the editorial reviewer"
     }
   ]
 }

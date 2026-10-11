@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "1.0.0",
+  "narrationDirectionId": "nd-1be5f39e7bf3",
+  "version": 1,
+  "projectId": "phase7-gps-explainer",
+  "scriptRef": {
+    "scriptArtifactId": "fss-phase7-gps-explainer",
+    "scriptVersion": 1
+  },
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "language": "en-us",
+  "segments": [],
+  "stats": {
+    "totalSegments": 37,
+    "directedSegments": 0,
+    "directionCoveragePercent": 0,
+    "emphasisCount": 0,
+    "explicitPauseCount": 0,
+    "overDirectionReview": false
+  },
+  "provenance": {
+    "source": "phase-2.2",
+    "createdAt": "2026-10-11T07:12:17.051Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "977f3076bec0fdc6"
+}

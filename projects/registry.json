@@ -146,6 +146,13 @@
       "path": "projects/postv1b-flow-companion-live",
       "projectId": "postv1b-flow-companion-live",
       "status": "FROZEN"
+    },
+    {
+      "kind": "ACTIVE",
+      "manifestRef": null,
+      "path": "projects/phase7-gps-explainer",
+      "projectId": "phase7-gps-explainer",
+      "status": "ACTIVE"
     }
   ],
   "schemaVersion": "1.0.0"

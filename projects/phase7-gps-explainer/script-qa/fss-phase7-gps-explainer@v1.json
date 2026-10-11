@@ -1,0 +1,31 @@
+{
+  "kind": "SCRIPT_QA_DECISION",
+  "version": "1.0.0",
+  "scriptRef": {
+    "scriptArtifactId": "fss-phase7-gps-explainer",
+    "scriptVersion": 1
+  },
+  "scriptTextHash": "f814512dc6ca1986",
+  "verdict": "READY_FOR_LOCK",
+  "requirements": [
+    {
+      "id": "NO_OPEN_FINDINGS",
+      "met": true
+    },
+    {
+      "id": "DURATION_MEASURED",
+      "met": true
+    },
+    {
+      "id": "GOLDEN_TESTS_PASSED",
+      "met": true
+    }
+  ],
+  "openFindings": 0,
+  "scenes": 37,
+  "words": 1349,
+  "durationBasis": "MEASURED",
+  "ledgerVersion": "1.2.0",
+  "decidedAt": "2026-10-11T07:12:16.724Z",
+  "note": "READY_FOR_LOCK is a recommendation; locking is an owner decision"
+}

@@ -1,6 +1,6 @@
 {
   "kind": "PHASE7_RESEARCH_BATCH_2",
-  "generatedAt": "2026-10-11T06:45:45.519Z",
+  "generatedAt": "2026-10-11T07:05:08.508Z",
   "method": "acquireBatch (local Crawl4AI, robots enforced) + agent WebSearch only to discover URLs; every quote below was extracted from acquired page text, not from search snippets",
   "note": "Search-result summaries were NOT used as evidence. Patent/forum search hits were ignored.",
   "sources": [

@@ -1,0 +1,341 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectId": "phase7-gps-explainer",
+  "revision": 29,
+  "createdAt": "2026-10-11T07:12:16.868Z",
+  "updatedAt": "2026-10-11T07:12:25.103Z",
+  "nodes": {
+    "SHOT_PLAN": {
+      "artifactKey": "SHOT_PLAN",
+      "artifactType": "SHOT_PLAN",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "VOICE_BIBLE": {
+      "artifactKey": "VOICE_BIBLE",
+      "artifactType": "VOICE_BIBLE",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "FINAL_SPOKEN_SCRIPT": {
+      "artifactKey": "FINAL_SPOKEN_SCRIPT",
+      "artifactType": "FINAL_SPOKEN_SCRIPT",
+      "versionRef": "fss-phase7-gps-explainer@v1",
+      "state": "CLEAN",
+      "inputRefs": [
+        {
+          "key": "NATURALNESS_QA",
+          "type": "NATURALNESS_EVIDENCE"
+        },
+        {
+          "key": "SPOKEN_HUMANIZATION",
+          "type": "SOURCE_LINEAGE"
+        }
+      ],
+      "dependencyFingerprint": "4a49243b89e04719",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "VOICE": {
+      "artifactKey": "VOICE",
+      "artifactType": "VOICE",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "FINAL_AUDIO": {
+      "artifactKey": "FINAL_AUDIO",
+      "artifactType": "FINAL_AUDIO",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "FORCED_ALIGNMENT": {
+      "artifactKey": "FORCED_ALIGNMENT",
+      "artifactType": "FORCED_ALIGNMENT",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "CAPTIONS": {
+      "artifactKey": "CAPTIONS",
+      "artifactType": "CAPTIONS",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "MASTER_TIMELINE": {
+      "artifactKey": "MASTER_TIMELINE",
+      "artifactType": "MASTER_TIMELINE",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "SCENE_TIMING": {
+      "artifactKey": "SCENE_TIMING",
+      "artifactType": "SCENE_TIMING",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "VISUAL_TIMING": {
+      "artifactKey": "VISUAL_TIMING",
+      "artifactType": "VISUAL_TIMING",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "ANIMATION_TIMING": {
+      "artifactKey": "ANIMATION_TIMING",
+      "artifactType": "ANIMATION_TIMING",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "THUMBNAIL": {
+      "artifactKey": "THUMBNAIL",
+      "artifactType": "THUMBNAIL",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "PUBLISH_PACKAGE": {
+      "artifactKey": "PUBLISH_PACKAGE",
+      "artifactType": "PUBLISH_PACKAGE",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "CREATIVE_BRIEF": {
+      "artifactKey": "CREATIVE_BRIEF",
+      "artifactType": "CREATIVE_BRIEF",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "RESEARCH_PACK": {
+      "artifactKey": "RESEARCH_PACK",
+      "artifactType": "RESEARCH_PACK",
+      "versionRef": null,
+      "state": "NOT_CREATED_YET",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": null,
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": null
+    },
+    "SPOKEN_HUMANIZATION": {
+      "artifactKey": "SPOKEN_HUMANIZATION",
+      "artifactType": "SPOKEN_HUMANIZATION",
+      "versionRef": "hum-8ab7d7a1fca2",
+      "state": "CLEAN",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": "fix-pre-2.4:humanizer",
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": "LIVE"
+    },
+    "EVIDENCE_FIDELITY_DECISION": {
+      "artifactKey": "EVIDENCE_FIDELITY_DECISION",
+      "artifactType": "EVIDENCE_FIDELITY_DECISION",
+      "versionRef": "fid-94c5c7450319",
+      "state": "CLEAN",
+      "inputRefs": [
+        {
+          "key": "SPOKEN_HUMANIZATION",
+          "type": "HUMANIZATION_CANDIDATE"
+        }
+      ],
+      "dependencyFingerprint": "3f8f37f1af700649",
+      "producedBy": "fix-pre-2.4:fidelity",
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": "LIVE"
+    },
+    "NATURALNESS_QA": {
+      "artifactKey": "NATURALNESS_QA",
+      "artifactType": "NATURALNESS_QA",
+      "versionRef": "nqa-0c3d0cab5b06",
+      "state": "CLEAN",
+      "inputRefs": [
+        {
+          "key": "EVIDENCE_FIDELITY_DECISION",
+          "type": "FIDELITY_EVIDENCE"
+        }
+      ],
+      "dependencyFingerprint": "5bb4eb6193c5d2d4",
+      "producedBy": "fix-pre-2.4:naturalness",
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": "LIVE"
+    },
+    "SCRIPT_QA_DECISION": {
+      "artifactKey": "SCRIPT_QA_DECISION",
+      "artifactType": "SCRIPT_QA_DECISION",
+      "versionRef": "fss-phase7-gps-explainer@v1",
+      "state": "CLEAN",
+      "inputRefs": [
+        {
+          "key": "FINAL_SPOKEN_SCRIPT",
+          "type": "SPOKEN_TEXT"
+        }
+      ],
+      "dependencyFingerprint": "fdf101a5dd20bdb4",
+      "producedBy": "script-qa",
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": "LIVE"
+    },
+    "NARRATION_DIRECTION": {
+      "artifactKey": "NARRATION_DIRECTION",
+      "artifactType": "NARRATION_DIRECTION",
+      "versionRef": "nd-1be5f39e7bf3",
+      "state": "CLEAN",
+      "inputRefs": [
+        {
+          "key": "FINAL_SPOKEN_SCRIPT",
+          "type": "SPOKEN_TEXT"
+        },
+        {
+          "key": "VOICE_BIBLE",
+          "type": "VOICE_IDENTITY"
+        }
+      ],
+      "dependencyFingerprint": "ed4ba48458cc119f",
+      "producedBy": "phase-2.2:narration-direction",
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": "LIVE"
+    },
+    "PRONUNCIATION_PROFILE": {
+      "artifactKey": "PRONUNCIATION_PROFILE",
+      "artifactType": "PRONUNCIATION_PROFILE",
+      "versionRef": "pron-2243101e4d39",
+      "state": "CLEAN",
+      "inputRefs": [],
+      "dependencyFingerprint": "62b512d8c76bbed3",
+      "producedBy": "phase-2.3:pronunciation",
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": "LIVE"
+    },
+    "PRONUNCIATION_RUNTIME_PASS": {
+      "artifactKey": "PRONUNCIATION_RUNTIME_PASS",
+      "artifactType": "PRONUNCIATION_RUNTIME_PASS",
+      "versionRef": "prp-576fd44703c0",
+      "state": "CLEAN",
+      "inputRefs": [
+        {
+          "key": "FINAL_SPOKEN_SCRIPT",
+          "type": "SPOKEN_TEXT"
+        },
+        {
+          "key": "PRONUNCIATION_PROFILE",
+          "type": "PRONUNCIATION_READINGS"
+        }
+      ],
+      "dependencyFingerprint": "0588c840bec005c2",
+      "producedBy": "phase-2.3:pronunciation",
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": "LIVE"
+    },
+    "TTS_READY_PLAN": {
+      "artifactKey": "TTS_READY_PLAN",
+      "artifactType": "TTS_READY_PLAN",
+      "versionRef": "ttp-932f25f33326",
+      "state": "CLEAN",
+      "inputRefs": [
+        {
+          "key": "NARRATION_DIRECTION",
+          "type": "DIRECTION"
+        },
+        {
+          "key": "PRONUNCIATION_RUNTIME_PASS",
+          "type": "PRONUNCIATION_EVIDENCE"
+        },
+        {
+          "key": "SCRIPT_QA_DECISION",
+          "type": "SCRIPT_QA"
+        }
+      ],
+      "dependencyFingerprint": "811c03a2ab2854e1",
+      "producedBy": "phase-2.2-2.3:tts-ready-plan",
+      "lockTarget": null,
+      "blockedReason": null,
+      "provenance": "LIVE"
+    }
+  },
+  "fingerprint": "3d1c50ecac9b6bfe"
+}

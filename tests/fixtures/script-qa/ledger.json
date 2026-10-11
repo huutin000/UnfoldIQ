@@ -137,6 +137,10 @@
      "src": "SRC10",
      "quote": "We recommend you contact your wireless carrier. They may be able to track down your phone/device using the location technology built into it."
     }
+   ],
+   "forbidden": [
+    "(phone|receiver)[^.]*(sends|transmits|uploads)[^.]*(request|location|position)[^.]*satellite",
+    "satellites?[^.]*(replies|responds|answers)"
    ]
   },
   "C2": {
@@ -330,7 +334,8 @@
    "forbidden": [
     "position(al)? errors?",
     "errors? (would )?(grow|pile|accumulate|build)",
-    "drift(s|ed)? by (roughly |about )?(ten|10|eleven|11) kilomet"
+    "drift(s|ed)? by (roughly |about )?(ten|10|eleven|11) kilomet",
+    "position[^.]*(wrong|off|out) by[^.]*kilomet"
    ],
    "evidence": [
     {

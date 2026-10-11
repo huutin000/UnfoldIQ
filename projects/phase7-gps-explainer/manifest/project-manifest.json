@@ -1,0 +1,180 @@
+{
+  "schemaVersion": "1.6.0",
+  "manifestId": "pm-81b1cf9df1e2",
+  "projectId": "phase7-gps-explainer",
+  "projectVersion": 6,
+  "revision": 6,
+  "pipelineVersion": null,
+  "contentMode": "technical-explainer",
+  "contentClass": "FACTUAL",
+  "createdAt": "2026-10-11T07:12:16.829Z",
+  "updatedAt": "2026-10-11T07:12:25.092Z",
+  "artifacts": {
+    "creativeBriefVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "channelBibleVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "storyBibleVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "characterBibleVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "worldBibleVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "visualBibleVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "researchPackVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "finalSpokenScriptVersion": {
+      "version": "fss-phase7-gps-explainer@v1",
+      "status": "VERIFIED",
+      "ref": "input/final-spoken-script/fss-phase7-gps-explainer-v1.json",
+      "detail": "productionScriptStatus=CANONICAL hum=hum-8ab7d7a1fca2 fid=fid-94c5c7450319 nqa=nqa-0c3d0cab5b06"
+    },
+    "voiceBibleVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "shotPlanVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "promptCompilerVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "agentInstructionsVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "assetRegistryVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "finalAudioVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "alignmentVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "timelineVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "renderVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "narrationDirectionVersion": {
+      "version": "nd-1be5f39e7bf3",
+      "status": "UNRESOLVED",
+      "ref": "voice/narration-direction/nd-1be5f39e7bf3.json",
+      "detail": "v1 coverage=0% INVALID_SEGMENTS"
+    },
+    "pronunciationProfileVersion": {
+      "version": "pron-2243101e4d39",
+      "status": "VERIFIED",
+      "ref": "voice/pronunciation-profile/pron-2243101e4d39.json",
+      "detail": "v1 6 entries"
+    },
+    "pronunciationRuntimePassVersion": {
+      "version": "prp-576fd44703c0",
+      "status": "VERIFIED",
+      "ref": "voice/pronunciation-pass/prp-576fd44703c0.json",
+      "detail": "v1 local-kokoro/kokoro-v1 statuses=CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,OVERRIDE_APPLIED,CLEAN,CLEAN,CLEAN,CLEAN,OVERRIDE_APPLIED,OVERRIDE_APPLIED,CLEAN,CLEAN,OVERRIDE_APPLIED,CLEAN"
+    },
+    "ttsReadyPlanVersion": {
+      "version": "ttp-932f25f33326",
+      "status": "UNRESOLVED",
+      "ref": "voice/tts-ready-plan/ttp-932f25f33326.json",
+      "detail": "overall=READY_FOR_TTS segments=37 PRODUCTION_TTS_BLOCKED(non-canonical script)"
+    },
+    "narrationAudioVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "speechRateQaVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "performanceQaVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    },
+    "dialogueRoutingVersion": {
+      "version": null,
+      "status": "NOT_CREATED_YET",
+      "ref": null,
+      "detail": null
+    }
+  },
+  "providers": {
+    "registryVersion": null,
+    "selections": []
+  },
+  "state": {
+    "stage": "phase-7-script",
+    "status": "ACTIVE"
+  },
+  "history": null,
+  "recovery": null,
+  "governance": null,
+  "lineage": {
+    "previousManifestId": null,
+    "previousProjectVersion": null
+  },
+  "fingerprint": "da9a297e9e3cfcae"
+}

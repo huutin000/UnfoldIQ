@@ -1,0 +1,40 @@
+{
+  "projectId": "phase7-gps-explainer",
+  "fssArtifactId": "fss-phase7-gps-explainer",
+  "scriptVersion": 1,
+  "steps": {
+    "scriptQa": {
+      "verdict": "READY_FOR_LOCK",
+      "wordsPerSecond": 2.486,
+      "goldenAllPassed": true,
+      "open": []
+    },
+    "fss": {
+      "fidelity": "PASS",
+      "naturalness": "PASS",
+      "textUnchanged": true
+    },
+    "pronunciation": {
+      "profile": "pron-2243101e4d39",
+      "pass": "prp-576fd44703c0",
+      "segmentStatuses": [
+        "CLEAN",
+        "OVERRIDE_APPLIED"
+      ]
+    },
+    "ttsReadyPlan": {
+      "id": "ttp-932f25f33326",
+      "overall": "READY_FOR_TTS",
+      "productionTtsBlocked": true,
+      "scriptQa": {
+        "required": true,
+        "ok": false,
+        "code": "SCRIPT_OWNER_APPROVAL_PENDING",
+        "verdict": "READY_FOR_LOCK",
+        "scriptTextHash": "f814512dc6ca1986"
+      }
+    }
+  },
+  "decisionRef": "script-qa/fss-phase7-gps-explainer@v1.json",
+  "verdict": "FSS_CANONICAL_TTS_BLOCKED_UNTIL_OWNER_APPROVAL"
+}

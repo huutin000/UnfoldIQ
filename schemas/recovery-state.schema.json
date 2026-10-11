@@ -361,7 +361,8 @@
             "PUBLISH_PACKAGE",
             "POLICY_SNAPSHOT",
             "COMPLIANCE_DECISION",
-            "PROVENANCE_REF"
+            "PROVENANCE_REF",
+            "SCRIPT_QA_DECISION"
           ]
         },
         "versionRef": {

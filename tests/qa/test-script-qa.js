@@ -56,8 +56,8 @@ runTest("matching policy: rounding, bounds, coarse approximation, mismatch", () 
 runTest("golden regression from real GPS draft v1/v2 errors and positive guards", () => {
   const r = runGolden(golden.cases, ledger);
   for (const x of r.results) assert(x.pass, `${x.id} (${x.kind}) found=[${x.found.join(",")}] missing=[${x.missing}] unexpected=[${x.unexpected}]`);
-  assert(r.summary.negativeDetected === "10/10" && r.summary.falsePositives.length === 0, "all negatives detected, no false positives");
-  assert(r.summary.knownFalseNegatives.length === 2, "two documented editorial-only limitations");
+  assert(r.summary.negativeDetected === "13/13" && r.summary.falsePositives.length === 0, "all negatives detected, no false positives");
+  assert(r.summary.knownFalseNegatives.length === 3, "three documented editorial-only limitations");
 });
 
 runTest("engine is topic-agnostic: a different topic works with only ledger data", () => {
