@@ -29,3 +29,6 @@ Highest existing ID is GAP-051. Proposed **GAP-052 — Independent Visual Source
 
 ## Not verified
 Flow UI balance, per-generation cost, active image/video model and availability (`CAPABILITY_UNKNOWN`, `CREDIT_COST_UNKNOWN`). Policy and owner file quote different quotas (50/day free vs 200/month Plus); the account UI decides.
+
+## Implementation update (owner go, 10/10/2026)
+Gaps 1-5 addressed additively in `lib/visual-motion/routing.js` (exported as `visualMotion.routing`): VisualSource/MotionEngine enums, `routeShot` (ShotVisualDecision, fake-parallax rejection, realism block, spend gate, missing-reference block, override validation), `reuseLocked`, `dirtyScope`, `createCreditLedger` (idempotent, bounded retry, cap), `validateLineage`, `audioConflict`, `treatmentRepetition`. Gap 6 covered only as a detection helper. NOT done: wiring into `decidePlanProduction`/persisted store, real Flow readback, registry GAP entries.
