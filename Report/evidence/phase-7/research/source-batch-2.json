@@ -1,0 +1,194 @@
+{
+  "kind": "PHASE7_RESEARCH_BATCH_2",
+  "generatedAt": "2026-10-11T05:27:16.856Z",
+  "method": "acquireBatch (local Crawl4AI, robots enforced) + agent WebSearch only to discover URLs; every quote below was extracted from acquired page text, not from search snippets",
+  "note": "Search-result summaries were NOT used as evidence. Patent/forum search hits were ignored.",
+  "sources": [
+    {
+      "id": "SRC6",
+      "title": "GPS.gov GPS overview",
+      "role": "US government (GPS program), official primary",
+      "requestedUrl": "https://www.gps.gov/gps",
+      "finalUrl": "https://www.gps.gov/gps",
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T05:23:00.819930Z",
+      "chars": 11140,
+      "sha256": "1d74c3fbb8c0e7450a757279e0089def31c1b1d3226a63d07ca3dd573a2567d6"
+    },
+    {
+      "id": "SRC7",
+      "title": "GPS.gov GPS and Telling Time",
+      "role": "US government (GPS program), official primary",
+      "requestedUrl": "https://www.gps.gov/gps-and-telling-time",
+      "finalUrl": "https://www.gps.gov/gps-and-telling-time",
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T05:23:00.817923Z",
+      "chars": 9197,
+      "sha256": "c151849ae2e5798186a41b33a45991c7249e16c3a895ce348caa695db1ecec4e"
+    },
+    {
+      "id": "SRC8",
+      "title": "GPS.gov Augmentation Systems",
+      "role": "US government (GPS program), official primary",
+      "requestedUrl": "https://www.gps.gov/augmentation-systems",
+      "finalUrl": "https://www.gps.gov/augmentation-systems",
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T05:23:06.357529Z",
+      "chars": 13620,
+      "sha256": "d50cb3f041114fa5620c3245ff3a13dd737246d33ea03c1eb8f931b7d184e324"
+    },
+    {
+      "id": "SRC9",
+      "title": "GPS.gov Other GNSS",
+      "role": "US government (GPS program), official primary",
+      "requestedUrl": "https://www.gps.gov/other-global-navigation-satellite-systems-gnss",
+      "finalUrl": "https://www.gps.gov/other-global-navigation-satellite-systems-gnss",
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T05:23:06.362579Z",
+      "chars": 9797,
+      "sha256": "c61b1a0fc58c4038a52316d8048dc278ae196fca12725b9adf19130faa9a7c4d"
+    },
+    {
+      "id": "SRC10",
+      "title": "GPS.gov FAQ",
+      "role": "US government (GPS program), official primary",
+      "requestedUrl": "https://www.gps.gov/faq",
+      "finalUrl": "https://www.gps.gov/faq",
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T05:23:10.512143Z",
+      "chars": 13684,
+      "sha256": "8dcf238b43190f67e41d1ff9f30c31321b201eb7efa6dd69f7d07069579e23c9"
+    },
+    {
+      "id": "SRC11",
+      "title": "GPS.gov New Civil Signals",
+      "role": "US government (GPS program), official primary",
+      "requestedUrl": "https://www.gps.gov/new-civil-signals",
+      "finalUrl": "https://www.gps.gov/new-civil-signals",
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T05:23:10.540847Z",
+      "chars": 13460,
+      "sha256": "5bf05024ff349820560f5635a45f0fa5437f1105f539a56fe46d0f42982f96b2"
+    },
+    {
+      "id": "SRC12",
+      "title": "ESA Navipedia Multipath",
+      "role": "ESA (independent of US program), reference wiki edited by experts",
+      "requestedUrl": "https://gssc.esa.int/navipedia/index.php/Multipath",
+      "finalUrl": "https://gssc.esa.int/navipedia/index.php/Multipath",
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T05:23:14.879823Z",
+      "chars": 9425,
+      "sha256": "89d507a746bdd2571e4047d7e65ab1add89a9daada39de83be095e0b876154c6"
+    },
+    {
+      "id": "SRC13",
+      "title": "ESA Navipedia Ionospheric Delay",
+      "role": "ESA, reference wiki",
+      "requestedUrl": "https://gssc.esa.int/navipedia/index.php/Ionospheric_Delay",
+      "finalUrl": "https://gssc.esa.int/navipedia/index.php/Ionospheric_Delay",
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T05:23:17.393347Z",
+      "chars": 18705,
+      "sha256": "451177053de98a4a6f1c0c34819e1a559574f8fccfcd080ac9c210d9407d3c8b"
+    },
+    {
+      "id": "SRC14",
+      "title": "ESA Navipedia GPS Navigation Message",
+      "role": "ESA, reference wiki",
+      "requestedUrl": "https://gssc.esa.int/navipedia/index.php/GPS_Navigation_Message",
+      "finalUrl": "https://gssc.esa.int/navipedia/index.php/GPS_Navigation_Message",
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T05:23:20.424417Z",
+      "chars": 17758,
+      "sha256": "c4b33c3ea9103bafb683510c595bbfddc776a2027ac1b7db8202e0800590075d"
+    },
+    {
+      "id": "SRC15",
+      "title": "GPS.gov GPS Accuracy (current)",
+      "role": "US government (GPS program), official primary",
+      "requestedUrl": "https://www.gps.gov/gps-accuracy",
+      "finalUrl": "https://www.gps.gov/gps-accuracy",
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T05:24:18.176719Z",
+      "chars": 12960,
+      "sha256": "9544ade8da1e410950ff568df2941b96e91ebc395dfb2458a7cacb5a306680cb"
+    },
+    {
+      "id": "SRC16",
+      "title": "GPS.gov GPS Accuracy (archive.gps.gov, cites ION)",
+      "role": "US government (GPS program), official archived page",
+      "requestedUrl": "https://archive.gps.gov/systems/gps/performance/accuracy/",
+      "finalUrl": "https://archive.gps.gov/systems/gps/performance/accuracy/",
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T05:24:19.303805Z",
+      "chars": 21872,
+      "sha256": "9a9c36d803b5313852e8148b7ea9c5c151c0ec7d7e4c8a168f52745c6f91e964"
+    },
+    {
+      "id": "SRC17",
+      "title": "ESA Navipedia Code Based Positioning (SPS)",
+      "role": "ESA, reference wiki",
+      "requestedUrl": "https://gssc.esa.int/navipedia/index.php/Code_Based_Positioning_(SPS)",
+      "finalUrl": "https://gssc.esa.int/navipedia/index.php/Code_Based_Positioning_(SPS)",
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T05:24:24.015312Z",
+      "chars": 13583,
+      "sha256": "608fb1420b0b21221c3483ad0130d8c9e9f62a34d429221c424fc87f4a34893d"
+    },
+    {
+      "id": "SRC18",
+      "title": "ESA Navipedia GPS Services",
+      "role": "ESA, reference wiki",
+      "requestedUrl": "https://gssc.esa.int/navipedia/index.php/GPS_Services",
+      "finalUrl": "https://gssc.esa.int/navipedia/index.php/GPS_Services",
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T05:24:25.752095Z",
+      "chars": 12163,
+      "sha256": "8589393e687dcbc53ef5c60b6edfc4ca2ef9044e14828ab8e4faf73890c0a443"
+    },
+    {
+      "id": "SRC19",
+      "title": "ESA Navipedia Correlators",
+      "role": "ESA, reference wiki",
+      "requestedUrl": "https://gssc.esa.int/navipedia/index.php/Correlators",
+      "finalUrl": "https://gssc.esa.int/navipedia/index.php/Correlators",
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T05:24:29.483860Z",
+      "chars": 15871,
+      "sha256": "7fc230c8bfdc42c08cdf72d21a75724c75b20b3a5af2ad8da204e1adfeddc04b"
+    },
+    {
+      "id": "SRC20",
+      "title": "ESA Navipedia Tropospheric Delay",
+      "role": "ESA, reference wiki",
+      "requestedUrl": "https://gssc.esa.int/navipedia/index.php/Tropospheric_Delay",
+      "finalUrl": "https://gssc.esa.int/navipedia/index.php/Tropospheric_Delay",
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T05:24:31.323684Z",
+      "chars": 18846,
+      "sha256": "d11f7f9487de6604764c66704f7d38b64adae0aa06850e0c2ba775012d662c58"
+    },
+    {
+      "id": "SRC21",
+      "title": "GPS World: GPS takes into account mysterious black hole time warps",
+      "role": "trade press, secondary (quotes physics literature)",
+      "requestedUrl": "https://www.gpsworld.com/gps-takes-into-account-mysterious-black-hole-time-warps/",
+      "finalUrl": "https://www.gpsworld.com/gps-takes-into-account-mysterious-black-hole-time-warps/",
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T05:25:52.198904Z",
+      "chars": 17301,
+      "sha256": "e4526ab61328a7b677ec014912a4e33c31fc4604c201f6760fa135bc4525edfd"
+    }
+  ],
+  "rejected": [
+    {
+      "url": "https://gssc.esa.int/navipedia/index.php/Receiver_Clock_Offset",
+      "reason": "page has no text"
+    },
+    {
+      "url": "GNSS_Receivers, Positioning_Concept, GPS_General_Introduction (Navipedia)",
+      "reason": "acquired, no claim-relevant text; not used"
+    }
+  ]
+}

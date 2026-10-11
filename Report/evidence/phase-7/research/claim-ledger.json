@@ -1,0 +1,428 @@
+{
+  "kind": "PHASE7_CLAIM_LEDGER",
+  "version": "1.0.0",
+  "generatedAt": "2026-10-11T05:27:16.857Z",
+  "policy": "Owner evidence policy 10/10/2026 (>=1 attributable source per material claim; critical numerics: >=2 independent sources OR 1 authoritative source + reproducible derivation).",
+  "independence": "Official sources SRC1-4,6-11,15-16 share one program ecosystem (US government) and are treated as ONE independence group; ESA Navipedia (SRC12-14,17-20) and the peer-reviewed Ashby paper (SRC5) are separate groups. Critical numerics C4/C5/C11/C12 additionally carry a reproducible derivation.",
+  "sources": [
+    {
+      "id": "SRC1",
+      "title": "GPS.gov Space Segment",
+      "role": "US government (GPS program), official primary",
+      "finalUrl": "https://www.gps.gov/space-segment",
+      "retrievedAt": "2026-10-11T05:20:26.969837Z",
+      "sha256": "fe3f294f4f79820127b09c352d05a0e94a611a6a5081647b43da407e3d3a6e5f"
+    },
+    {
+      "id": "SRC2",
+      "title": "GPS.gov Trilateration",
+      "role": "US government (GPS program), official primary",
+      "finalUrl": "https://www.gps.gov/trilateration",
+      "retrievedAt": "2026-10-11T05:20:26.969837Z",
+      "sha256": "6f2d2bdc5d034547876b8516020d22ba88ef2ff93fe79afae27d670a14760661"
+    },
+    {
+      "id": "SRC3",
+      "title": "NIST Putting Einstein to the Test",
+      "role": "US government (NIST), official",
+      "finalUrl": "https://www.nist.gov/atomic-clocks/a-powerful-tool-for-science/putting-einstein-test",
+      "retrievedAt": "2026-10-11T05:20:40.976259Z",
+      "sha256": "773f8a54631da1d7be8c4c5626d944d402c1cac8e6c7234d68dde067d2327e1a"
+    },
+    {
+      "id": "SRC4",
+      "title": "NASA GPS",
+      "role": "US government (NASA), official",
+      "finalUrl": "https://www.nasa.gov/directorates/somd/space-communications-navigation-program/gps/",
+      "retrievedAt": "2026-10-11T05:20:44.569534Z",
+      "sha256": "67debff9718f060ccf40fc8ea066d185bb13891537fb303bc4292ac05182da8d"
+    },
+    {
+      "id": "SRC5",
+      "title": "Ashby 2003, Relativity in the GPS (Living Reviews in Relativity)",
+      "role": "peer-reviewed academic",
+      "finalUrl": "https://link.springer.com/article/10.12942/lrr-2003-1",
+      "retrievedAt": "2026-10-11T05:20:45.381643Z",
+      "sha256": "b78df8638bd5058f31a4ce192a4a9ac3a74d03745fd06d5d52c557055a1db4d5"
+    },
+    {
+      "id": "SRC6",
+      "title": "GPS.gov GPS overview",
+      "role": "US government (GPS program), official primary",
+      "finalUrl": "https://www.gps.gov/gps",
+      "retrievedAt": "2026-10-11T05:23:00.819930Z",
+      "sha256": "1d74c3fbb8c0e7450a757279e0089def31c1b1d3226a63d07ca3dd573a2567d6"
+    },
+    {
+      "id": "SRC7",
+      "title": "GPS.gov GPS and Telling Time",
+      "role": "US government (GPS program), official primary",
+      "finalUrl": "https://www.gps.gov/gps-and-telling-time",
+      "retrievedAt": "2026-10-11T05:23:00.817923Z",
+      "sha256": "c151849ae2e5798186a41b33a45991c7249e16c3a895ce348caa695db1ecec4e"
+    },
+    {
+      "id": "SRC8",
+      "title": "GPS.gov Augmentation Systems",
+      "role": "US government (GPS program), official primary",
+      "finalUrl": "https://www.gps.gov/augmentation-systems",
+      "retrievedAt": "2026-10-11T05:23:06.357529Z",
+      "sha256": "d50cb3f041114fa5620c3245ff3a13dd737246d33ea03c1eb8f931b7d184e324"
+    },
+    {
+      "id": "SRC9",
+      "title": "GPS.gov Other GNSS",
+      "role": "US government (GPS program), official primary",
+      "finalUrl": "https://www.gps.gov/other-global-navigation-satellite-systems-gnss",
+      "retrievedAt": "2026-10-11T05:23:06.362579Z",
+      "sha256": "c61b1a0fc58c4038a52316d8048dc278ae196fca12725b9adf19130faa9a7c4d"
+    },
+    {
+      "id": "SRC10",
+      "title": "GPS.gov FAQ",
+      "role": "US government (GPS program), official primary",
+      "finalUrl": "https://www.gps.gov/faq",
+      "retrievedAt": "2026-10-11T05:23:10.512143Z",
+      "sha256": "8dcf238b43190f67e41d1ff9f30c31321b201eb7efa6dd69f7d07069579e23c9"
+    },
+    {
+      "id": "SRC11",
+      "title": "GPS.gov New Civil Signals",
+      "role": "US government (GPS program), official primary",
+      "finalUrl": "https://www.gps.gov/new-civil-signals",
+      "retrievedAt": "2026-10-11T05:23:10.540847Z",
+      "sha256": "5bf05024ff349820560f5635a45f0fa5437f1105f539a56fe46d0f42982f96b2"
+    },
+    {
+      "id": "SRC12",
+      "title": "ESA Navipedia Multipath",
+      "role": "ESA (independent of US program), reference wiki edited by experts",
+      "finalUrl": "https://gssc.esa.int/navipedia/index.php/Multipath",
+      "retrievedAt": "2026-10-11T05:23:14.879823Z",
+      "sha256": "89d507a746bdd2571e4047d7e65ab1add89a9daada39de83be095e0b876154c6"
+    },
+    {
+      "id": "SRC13",
+      "title": "ESA Navipedia Ionospheric Delay",
+      "role": "ESA, reference wiki",
+      "finalUrl": "https://gssc.esa.int/navipedia/index.php/Ionospheric_Delay",
+      "retrievedAt": "2026-10-11T05:23:17.393347Z",
+      "sha256": "451177053de98a4a6f1c0c34819e1a559574f8fccfcd080ac9c210d9407d3c8b"
+    },
+    {
+      "id": "SRC14",
+      "title": "ESA Navipedia GPS Navigation Message",
+      "role": "ESA, reference wiki",
+      "finalUrl": "https://gssc.esa.int/navipedia/index.php/GPS_Navigation_Message",
+      "retrievedAt": "2026-10-11T05:23:20.424417Z",
+      "sha256": "c4b33c3ea9103bafb683510c595bbfddc776a2027ac1b7db8202e0800590075d"
+    },
+    {
+      "id": "SRC15",
+      "title": "GPS.gov GPS Accuracy (current)",
+      "role": "US government (GPS program), official primary",
+      "finalUrl": "https://www.gps.gov/gps-accuracy",
+      "retrievedAt": "2026-10-11T05:24:18.176719Z",
+      "sha256": "9544ade8da1e410950ff568df2941b96e91ebc395dfb2458a7cacb5a306680cb"
+    },
+    {
+      "id": "SRC16",
+      "title": "GPS.gov GPS Accuracy (archive.gps.gov, cites ION)",
+      "role": "US government (GPS program), official archived page",
+      "finalUrl": "https://archive.gps.gov/systems/gps/performance/accuracy/",
+      "retrievedAt": "2026-10-11T05:24:19.303805Z",
+      "sha256": "9a9c36d803b5313852e8148b7ea9c5c151c0ec7d7e4c8a168f52745c6f91e964"
+    },
+    {
+      "id": "SRC17",
+      "title": "ESA Navipedia Code Based Positioning (SPS)",
+      "role": "ESA, reference wiki",
+      "finalUrl": "https://gssc.esa.int/navipedia/index.php/Code_Based_Positioning_(SPS)",
+      "retrievedAt": "2026-10-11T05:24:24.015312Z",
+      "sha256": "608fb1420b0b21221c3483ad0130d8c9e9f62a34d429221c424fc87f4a34893d"
+    },
+    {
+      "id": "SRC18",
+      "title": "ESA Navipedia GPS Services",
+      "role": "ESA, reference wiki",
+      "finalUrl": "https://gssc.esa.int/navipedia/index.php/GPS_Services",
+      "retrievedAt": "2026-10-11T05:24:25.752095Z",
+      "sha256": "8589393e687dcbc53ef5c60b6edfc4ca2ef9044e14828ab8e4faf73890c0a443"
+    },
+    {
+      "id": "SRC19",
+      "title": "ESA Navipedia Correlators",
+      "role": "ESA, reference wiki",
+      "finalUrl": "https://gssc.esa.int/navipedia/index.php/Correlators",
+      "retrievedAt": "2026-10-11T05:24:29.483860Z",
+      "sha256": "7fc230c8bfdc42c08cdf72d21a75724c75b20b3a5af2ad8da204e1adfeddc04b"
+    },
+    {
+      "id": "SRC20",
+      "title": "ESA Navipedia Tropospheric Delay",
+      "role": "ESA, reference wiki",
+      "finalUrl": "https://gssc.esa.int/navipedia/index.php/Tropospheric_Delay",
+      "retrievedAt": "2026-10-11T05:24:31.323684Z",
+      "sha256": "d11f7f9487de6604764c66704f7d38b64adae0aa06850e0c2ba775012d662c58"
+    },
+    {
+      "id": "SRC21",
+      "title": "GPS World: GPS takes into account mysterious black hole time warps",
+      "role": "trade press, secondary (quotes physics literature)",
+      "finalUrl": "https://www.gpsworld.com/gps-takes-into-account-mysterious-black-hole-time-warps/",
+      "retrievedAt": "2026-10-11T05:25:52.198904Z",
+      "sha256": "e4526ab61328a7b677ec014912a4e33c31fc4604c201f6760fa135bc4525edfd"
+    }
+  ],
+  "derivation": {
+    "inputs": {
+      "GM_m3s2": 398600441800000,
+      "c_ms": 299792458,
+      "earthRadiusM": 6371000,
+      "altitudeM": 20200000
+    },
+    "results": {
+      "orbitalSpeedKmS": 3.873,
+      "orbitalPeriodHours": 11.97,
+      "specialRelativityUsPerDay": -7.2,
+      "generalRelativityUsPerDay": 45.7,
+      "netUsPerDay": 38.5,
+      "netRangeErrorKmPerDay": 11.5,
+      "nsToCm": 30,
+      "zenithTravelTimeS": 0.0674,
+      "ashbyNetFractionalOffset": 4.4647e-10,
+      "ashbyNetUsPerDay": 38.6
+    },
+    "caveat": "Simplified circular orbit, spherical non-rotating Earth; published values include Earth oblateness/rotation. Used only to check magnitudes of sourced numbers."
+  },
+  "claims": {
+    "C1": {
+      "status": "SUPPORTED",
+      "wording": "GPS satellites only broadcast; your phone listens. Do NOT say a phone works without any network (phones can also use carrier/Wi-Fi location).",
+      "evidence": [
+        {
+          "src": "SRC10",
+          "quote": "Please be aware that the GPS satellites themselves do not track anything on the ground. They are simply beacons, like lighthouses, broadcasting one-way reference signals. Therefore, the government operators of GPS cannot locate your phone/device."
+        },
+        {
+          "src": "SRC10",
+          "quote": "We recommend you contact your wireless carrier. They may be able to track down your phone/device using the location technology built into it."
+        }
+      ]
+    },
+    "C2": {
+      "status": "SUPPORTED",
+      "evidence": [
+        {
+          "src": "SRC4",
+          "quote": "User Segment: Receivers that process the navigation signals from the GPS satellites and calculate position and time."
+        },
+        {
+          "src": "SRC6",
+          "quote": "The Global Positioning System (GPS) is a U.S.-owned utility that provides users with positioning, navigation, and timing (PNT) services. This system consists of three segments: the space segment, the control segment, and the user segment. The U.S. Space Force develops, maintains, and operates the space and control segments."
+        }
+      ]
+    },
+    "C3": {
+      "status": "SUPPORTED",
+      "wording": "2D circles are a teaching analogy; real GPS uses spheres plus the receiver clock (C9).",
+      "evidence": [
+        {
+          "src": "SRC2",
+          "quote": "GPS positioning works on two basic mathematical concepts. The first is called trilateration, which literally means positioning from three distances. The second concept is the relationship between distance traveled, rate (speed) of travel, and amount of time spent traveling, or:"
+        },
+        {
+          "src": "SRC2",
+          "quote": "In true 3 dimensional GPS positioning, the signals from the satellites are represented by spheres. For this exercise, we are going to use circles since we are on a 2 dimensional map. So, as a GPS receiver you need to figure out just how far from each satellite you are. Keep in mind you could be anywhere!"
+        }
+      ]
+    },
+    "C4": {
+      "status": "SUPPORTED",
+      "evidence": [
+        {
+          "src": "SRC1",
+          "quote": "GPS satellites fly in medium Earth orbit (MEO) at an altitude of approximately 20,200 km (12,550 miles). Each satellite circles the Earth twice a day."
+        },
+        {
+          "src": "SRC4",
+          "quote": "Space Segment: A constellation of at least 24 US government satellites distributed in six orbital planes inclined 55° from the equator in a Medium Earth Orbit (MEO) at about 20,200 kilometers (12,550 miles) and circling the Earth every 12 hours."
+        }
+      ],
+      "derivation": "Kepler period 11.97 h"
+    },
+    "C5": {
+      "status": "SUPPORTED",
+      "wording": "Say \"about a tenth of a second\" (zenith 0.067 s, slanted paths up to ~0.09 s).",
+      "evidence": [
+        {
+          "src": "SRC2",
+          "quote": "In GPS positioning the rate is how fast the radio signal travels, which is equal to the speed of light (299,792,458 meters per second). Time is determined by how long it takes for a signal to travel from the GPS satellite to a GPS receiver on earth. With a known rate and a known time we can solve for the distance between satellite and receiver. Once we have  ..."
+        }
+      ],
+      "derivation": "1 ns = 30 cm; zenith 0.0674 s"
+    },
+    "C6": {
+      "status": "SUPPORTED",
+      "wording": "Say \"at least 24\", six orbital planes; GPS.gov: users can view at least four satellites from virtually anywhere.",
+      "evidence": [
+        {
+          "src": "SRC4",
+          "quote": "Space Segment: A constellation of at least 24 US government satellites distributed in six orbital planes inclined 55° from the equator in a Medium Earth Orbit (MEO) at about 20,200 kilometers (12,550 miles) and circling the Earth every 12 hours."
+        },
+        {
+          "src": "SRC1",
+          "quote": "The satellites in the GPS constellation are arranged into six equally-spaced orbital planes surrounding the Earth. Each plane contains four \"slots\" occupied by baseline satellites. This 24-slot arrangement ensures users can view at least four satellites from virtually any point on the planet."
+        }
+      ]
+    },
+    "C7": {
+      "status": "SUPPORTED",
+      "evidence": [
+        {
+          "src": "SRC18",
+          "quote": "The Coarse/Acquisition code (C/A(t)), which is modulated only on L1. It has a chipping-rate of 1.023 MHz, and contains 1 023 chips, so that the code is repeated every millisecond and each chip lasts about 1 µs, meaning a chip-width or wavelength of 293.1 metre."
+        },
+        {
+          "src": "SRC19",
+          "quote": "As an example, Figure 1 depicts the auto-correlation of GPS PRN1 and the cross-correlation between GPS PRN1 and GPS PRN17. It can be seen that regardless of the delay considered, the cross-correlation always provides low values, while the auto-correlation (correlation between PRN1 and itself) presents a peak only when both replicas are aligned."
+        },
+        {
+          "src": "SRC14",
+          "quote": "Sub-frame 1: contains information about the parameters to be applied to satellite clock status for its correction. These values are polynomial coefficients that allow converting time on board to GPS time. It also has information about satellite health condition."
+        }
+      ]
+    },
+    "C8": {
+      "status": "SUPPORTED_AFTER_REWRITE",
+      "wording": "Satellites carry atomic clocks; the receiver does not need one because it solves for its own clock error. Do NOT claim \"phones use cheap quartz clocks\" (no source acquired).",
+      "evidence": [
+        {
+          "src": "SRC3",
+          "quote": "Though not designed as a test of Einstein, GPS satellites — the ones that control the blue dot on your phone — all carry atomic clocks and are subject to the effects of relativity. These satellites hurtle so fast through space that special relativity indicates they should fall behind earthbound clocks by 7 microseconds (millionths of a second) per day. Meanw ..."
+        },
+        {
+          "src": "SRC1",
+          "quote": "Advanced atomic clocks"
+        },
+        {
+          "src": "SRC17",
+          "quote": "The right side contains the four unknown parameters: The receiver coordinates [math]\\displaystyle{ (x,y,z) }[/math] and the receiver clock offset [math]\\displaystyle{ \\delta t }[/math]."
+        }
+      ],
+      "derivation": "1 microsecond of receiver clock error = 299.8 m of range (c x 1e-6)"
+    },
+    "C9": {
+      "status": "SUPPORTED",
+      "evidence": [
+        {
+          "src": "SRC17",
+          "quote": "The right side contains the four unknown parameters: The receiver coordinates [math]\\displaystyle{ (x,y,z) }[/math] and the receiver clock offset [math]\\displaystyle{ \\delta t }[/math]."
+        },
+        {
+          "src": "SRC5",
+          "quote": "The principles of position determination and time transfer in the GPS can be very simply stated. Let there be four synchronized atomic clocks that transmit sharply defined pulses from the positions _r_ _j_ at times _t_ _j_ , with _j_ = 1, 2, 3, 4 an index labelling the different transmission events. Suppose that these four signals are received at position ** ..."
+        }
+      ]
+    },
+    "C10": {
+      "status": "SUPPORTED",
+      "evidence": [
+        {
+          "src": "SRC7",
+          "quote": "Precise synchronization of communications systems, power grids, financial networks, and other critical infrastructure."
+        }
+      ]
+    },
+    "C11": {
+      "status": "SUPPORTED",
+      "wording": "Say \"about 7 behind, about 45 ahead, net about 38 microseconds a day\".",
+      "evidence": [
+        {
+          "src": "SRC3",
+          "quote": "Though not designed as a test of Einstein, GPS satellites — the ones that control the blue dot on your phone — all carry atomic clocks and are subject to the effects of relativity. These satellites hurtle so fast through space that special relativity indicates they should fall behind earthbound clocks by 7 microseconds (millionths of a second) per day. Meanwhile, the lower gravity in medium Earth orbit should speed them up by 45 microseconds per day compared to clocks on Earth. Combining the two effects, atomic clo ..."
+        },
+        {
+          "src": "SRC21",
+          "quote": "“When viewed from the surface of the Earth, the clocks on GPS satellites appear to be ticking faster than identical clocks on the ground. A calculation using general relativity predicts that the clocks in each GPS satellite should get ahead of ground-based clocks by 45 microseconds per day."
+        },
+        {
+          "src": "SRC5",
+          "quote": "$$\\frac{{3G{M_E}}}{{2a{c^2}}} + \\frac{{{\\Phi _0}}}{{{c^2}}} = + 2.5046 \\times {10^{ - 10}} - 6.9693 \\times {10^{ - 10}} = - 4.4647 \\times {10^{ - 10}}.$$"
+        }
+      ],
+      "derivation": "SR -7.2, GR +45.7, net +38.5 us/day; Ashby offset 4.4647e-10 = 38.6 us/day"
+    },
+    "C12": {
+      "status": "SUPPORTED",
+      "wording": "Say \"roughly ten kilometres a day\" (source) - our derivation gives about 11.5 km.",
+      "evidence": [
+        {
+          "src": "SRC21",
+          "quote": "“If these effects were not properly taken into account, a navigational fix based on the GPS constellation would be false after only 2 minutes, and errors in global positions would continue to accumulate at a rate of about 10 kilometers each day. The whole system would be utterly worthless for navigation in a very short time.”"
+        }
+      ],
+      "derivation": "38 us x c = 11.5 km/day"
+    },
+    "C13": {
+      "status": "SUPPORTED",
+      "wording": "Use \"typically within about 5 metres under open sky\" (GPS.gov archive, cites ION); accuracy worsens near buildings. Distinguish signal-in-space URE (<= 2.0 m, 95%) from user accuracy.",
+      "evidence": [
+        {
+          "src": "SRC16",
+          "quote": "For example, GPS-enabled smartphones are typically accurate to within a 4.9 m (16 ft.) radius under open sky (view source at ION.org). However, their accuracy worsens near buildings, bridges, and trees."
+        },
+        {
+          "src": "SRC15",
+          "quote": "It depends. GPS satellites broadcast their signals in space with a certain accuracy, but what you receive depends on additional factors, including satellite geometry, signal blockage, atmospheric conditions, and receiver design features/quality."
+        },
+        {
+          "src": "SRC15",
+          "quote": "The accuracy commitments do not apply to GPS devices, but rather to the signals transmitted in space. For example, the government commits to broadcasting the GPS signal in space with a daily global average user range error (URE) of ≤2.0 m (6.6 ft.), with 95% probability, across all healthy satellite ..."
+        },
+        {
+          "src": "SRC12",
+          "quote": "The multipath error can be minimised improving the antenna quality, that is to say, making them to mitigate the signal coming from certain low elevation directions, and moving the antenna away from reflecting objects (when possible)."
+        },
+        {
+          "src": "SRC13",
+          "quote": "The ionosphere is the zone of the terrestrial atmosphere that extends itself from about 60 km until more than 2.000 km in high. As it name says, it contains a partially ionised medium, as result of the X and UV rays of Solar Radiation and the incidence of charged particles."
+        },
+        {
+          "src": "SRC20",
+          "quote": "The effect of the troposphere on the GNSS signals appears as an extra delay in the measurement of the signal traveling from the satellite to receiver. This delay depends on the temperature, pressure, humidity as well as the transmitter and receiver antennas location and, according to          [math]\\displaystyle{ \\Delta=\\int_{_{\\mbox{straight line}}}{(n-1)\\, ..."
+        }
+      ]
+    },
+    "C14": {
+      "status": "SUPPORTED",
+      "evidence": [
+        {
+          "src": "SRC8",
+          "quote": "A GPS augmentation is any system that aids GPS by providing accuracy, integrity, availability, or any other improvement to positioning, navigation, and timing that is not inherently part of GPS itself."
+        },
+        {
+          "src": "SRC11",
+          "quote": "When combined with L1 C/A in a dual-frequency receiver, L2C enables ionospheric correction, a technique that boosts accuracy. Civilians with dual-frequency GPS receivers enjoy the same accuracy as the military (or better)."
+        },
+        {
+          "src": "SRC9",
+          "quote": "Galileo is a global GNSS owned and operated by the European Union. The EU declared the start of Galileo Initial Services in 2016 and 24+ satellites."
+        }
+      ]
+    }
+  },
+  "verdict": {
+    "RESEARCH_SUFFICIENCY": "PASS_FOR_SCRIPTING",
+    "claimsTotal": 14,
+    "notSupported": [],
+    "limits": [
+      "Government sources share one ecosystem (one independence group); numerics rely on derivation plus NIST/Ashby/GPS World",
+      "Navipedia is a reference wiki, used for mechanism not for headline numbers",
+      "GPS World is secondary; used only for the \"about 10 km/day\" phrasing alongside our derivation",
+      "No quartz-oscillator claim: C8 rewritten",
+      "Pages are snapshots of 2026-10-10/11; raw text not committed (sha256 identifies the snapshot)",
+      "Script quotes must be re-checked against these quotes before the final spoken script is locked"
+    ]
+  }
+}

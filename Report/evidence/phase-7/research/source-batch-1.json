@@ -1,0 +1,111 @@
+{
+  "kind": "PHASE7_RESEARCH_BATCH_1",
+  "generatedAt": "2026-10-11T05:21:55.518Z",
+  "method": "lib/research-acquisition acquireBatch (local Crawl4AI, robots enforced, concurrency 2, no paid provider, no deep research / Gemini call)",
+  "deepResearch": "research:deep:doctor = READY_NO_LIVE_APPROVAL; live deep research NOT run (not approved, key tier unverified by agent)",
+  "sources": [
+    {
+      "id": "SRC1",
+      "role": "US government GPS.gov Space Segment (official, primary)",
+      "requestedUrl": "https://www.gps.gov/space-segment",
+      "finalUrl": "https://www.gps.gov/space-segment",
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T05:20:26.969837Z",
+      "route": "crawl4ai-direct",
+      "crawlerVersion": "0.9.4",
+      "chars": 12323,
+      "sha256": "fe3f294f4f79820127b09c352d05a0e94a611a6a5081647b43da407e3d3a6e5f",
+      "rawStored": "NOT_COMMITTED (re-acquire; hash identifies the snapshot)"
+    },
+    {
+      "id": "SRC2",
+      "role": "US government GPS.gov Trilateration educator page (official, primary)",
+      "requestedUrl": "https://www.gps.gov/trilateration",
+      "finalUrl": "https://www.gps.gov/trilateration",
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T05:20:26.969837Z",
+      "route": "crawl4ai-direct",
+      "crawlerVersion": "0.9.4",
+      "chars": 16115,
+      "sha256": "6f2d2bdc5d034547876b8516020d22ba88ef2ff93fe79afae27d670a14760661",
+      "rawStored": "NOT_COMMITTED (re-acquire; hash identifies the snapshot)"
+    },
+    {
+      "id": "SRC3",
+      "role": "NIST: Putting Einstein to the Test (official)",
+      "requestedUrl": "https://www.nist.gov/atomic-clocks/a-powerful-tool-for-science/putting-einstein-test",
+      "finalUrl": "https://www.nist.gov/atomic-clocks/a-powerful-tool-for-science/putting-einstein-test",
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T05:20:40.976259Z",
+      "route": "crawl4ai-direct",
+      "crawlerVersion": "0.9.4",
+      "chars": 20897,
+      "sha256": "773f8a54631da1d7be8c4c5626d944d402c1cac8e6c7234d68dde067d2327e1a",
+      "rawStored": "NOT_COMMITTED (re-acquire; hash identifies the snapshot)"
+    },
+    {
+      "id": "SRC4",
+      "role": "NASA SCaN GPS page (official, same agency family as DoD/GPS program but separately authored)",
+      "requestedUrl": "https://www.nasa.gov/directorates/somd/space-communications-navigation-program/gps/",
+      "finalUrl": "https://www.nasa.gov/directorates/somd/space-communications-navigation-program/gps/",
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T05:20:44.569534Z",
+      "route": "crawl4ai-direct",
+      "crawlerVersion": "0.9.4",
+      "chars": 39353,
+      "sha256": "67debff9718f060ccf40fc8ea066d185bb13891537fb303bc4292ac05182da8d",
+      "rawStored": "NOT_COMMITTED (re-acquire; hash identifies the snapshot)"
+    },
+    {
+      "id": "SRC5",
+      "role": "Ashby, Relativity in the Global Positioning System, Living Reviews in Relativity 2003 (peer-reviewed)",
+      "requestedUrl": "https://link.springer.com/article/10.12942/lrr-2003-1",
+      "finalUrl": "https://link.springer.com/article/10.12942/lrr-2003-1",
+      "httpStatus": 303,
+      "retrievedAt": "2026-10-11T05:20:45.381643Z",
+      "route": "crawl4ai-direct",
+      "crawlerVersion": "0.9.4",
+      "chars": 160604,
+      "sha256": "b78df8638bd5058f31a4ce192a4a9ac3a74d03745fd06d5d52c557055a1db4d5",
+      "rawStored": "NOT_COMMITTED (re-acquire; hash identifies the snapshot)"
+    }
+  ],
+  "rejected": [
+    {
+      "url": "https://www.gps.gov/systems/gps/space/",
+      "reason": "Page not found (guessed URL), discarded"
+    },
+    {
+      "url": "https://www.gps.gov/systems/gps/performance/accuracy/",
+      "reason": "Page not found (guessed URL), discarded"
+    },
+    {
+      "url": "https://www.gps.gov/systems/gps/control/",
+      "reason": "Page not found (guessed URL), discarded"
+    }
+  ],
+  "derivation": {
+    "inputs": {
+      "GM_m3s2": 398600441800000,
+      "c_ms": 299792458,
+      "earthRadiusM": 6371000,
+      "altitudeM": 20200000
+    },
+    "results": {
+      "orbitalSpeedKmS": 3.873,
+      "orbitalPeriodHours": 11.97,
+      "specialRelativityUsPerDay": -7.2,
+      "generalRelativityUsPerDay": 45.7,
+      "netUsPerDay": 38.5,
+      "netRangeErrorKmPerDay": 11.5,
+      "nsToCm": 30,
+      "zenithTravelTimeS": 0.0674,
+      "ashbyNetFractionalOffset": 4.4647e-10,
+      "ashbyNetUsPerDay": 38.6
+    },
+    "caveat": "Simplified circular orbit, spherical non-rotating Earth; published values include Earth oblateness/rotation. Used only to check magnitudes of sourced numbers."
+  },
+  "claims": "SUPERSEDED by claim-ledger.json",
+  "policy": "Owner evidence policy 10/10/2026: >=1 attributable source per material claim; critical numerics need >=2 independent sources OR one authoritative source + reproducible derivation. Web content treated as untrusted data.",
+  "sufficiency": "NOT_YET: RESEARCH_SUFFICIENCY stays open until C1,C2,C7,C9,C10,C13,C14 are sourced and C8/C12 completed"
+}
