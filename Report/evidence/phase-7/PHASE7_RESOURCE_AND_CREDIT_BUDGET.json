@@ -15,14 +15,14 @@
     "paidApiAllowed": false,
     "autoUpgradeToPaid": false,
     "cloudProviders": "openai-image, google-veo, elevenlabs-*, configured-cloud-* all REGISTERED enabled=no, paidAllowed=false (doctor:provider, 2026-10-10)",
-    "flowNote": "Cap 80 credits from existing Google AI Plus balance (verify in Flow UI); an upper bound, not a target; includes retries/images/video/edits. Generation WAITS for owner approval of the shortlist in PHASE7_VISUAL_ROUTING_MATRIX.md. Max 2 Veo candidates. Any unclear cost or cap overrun => STOP / OWNER_REVIEW_REQUIRED.",
+    "flowNote": "Cap 80 credits from existing Google AI Plus balance (verify in Flow UI); an upper bound, not a target; includes retries/images/video/edits. Generation WAITS for owner approval of the shortlist in scene-visual-routing-matrix.md. Max 2 Veo candidates. Any unclear cost or cap overrun => STOP / OWNER_REVIEW_REQUIRED.",
     "geminiFree": {
       "plannedCallsMax": 10,
-      "status": "VERIFY_PROJECT",
-      "reason": "Flow/Google AI Plus does not verify the Gemini API project tier. No upload authorized; fallback is human full watch + deterministic QA, honest NOT_USED.",
+      "status": "VERIFY_PROJECT_TIER_OWNER_CONFIRMATION_PENDING",
+      "reason": "Owner consented to uploading the unpublished GPS video. Consent is void for any other file. Free tier of the API project is still unconfirmed: no call until owner confirms it in Google AI Studio; free-tier-proven model only, no auto-upgrade; if unverifiable or quota gone => NOT_USED + human watch.",
       "estimatedVideoTokensPerWholePass": 52000,
       "basis": "6A: 5187 video tokens for 57.15 s (~91 tok/s) x 575 s; estimate, not measured",
-      "uploadPermission": "PENDING_OWNER_EXPLICIT_CONSENT"
+      "uploadPermission": "GRANTED_BY_OWNER_2026-10-10_GPS_VIDEO_ONLY"
     },
     "extraVndAllowed": 0,
     "flowCreditCap": 80,

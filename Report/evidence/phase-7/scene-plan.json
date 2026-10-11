@@ -15,15 +15,40 @@
       "words": 29,
       "beatId": "B01",
       "primitive": "PhoneMapDot",
-      "visualSource": "FLOW_IMAGE_CANDIDATE",
-      "motionSource": "REMOTION_STILL_MOTION",
       "reason": "Phone held in a real outdoor street setting; establishes the everyday hook",
       "expectedQualityGain": "MEDIUM: cinematic context to counter modality monotony",
-      "estimatedCredits": null,
       "fallback": "REMOTION_SVG (or approved/licensed media); BLOCKED_BY_ASSET if below quality bar",
       "license": "UNKNOWN_UNTIL_GENERATED",
-      "rightsStatus": "PENDING_PROVENANCE",
-      "approvalState": "PROPOSED_SHORTLIST"
+      "shotId": "SH01",
+      "shotIntent": "Phone shows a blue dot; how does it know?",
+      "visualSource": "FLOW_GENERATED_IMAGE",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "REALISTIC",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "CINEMATIC_CONTEXT_STILL",
+        "COUNTER_MODALITY_MONOTONY"
+      ],
+      "alternativeRoutes": [
+        {
+          "source": "APPROVED_ASSET",
+          "engine": "REMOTION_2D"
+        },
+        {
+          "source": "PROCEDURAL_GRAPHICS",
+          "engine": "REMOTION_2D"
+        }
+      ],
+      "qualityRisks": [
+        "AI_NOT_AUTHORITATIVE_DIAGRAM",
+        "STYLE_CONTINUITY"
+      ],
+      "rightsReviewStatus": "REVIEW_REQUIRED",
+      "aiDisclosureReview": "REQUIRED",
+      "creditEstimate": null,
+      "creditApproval": "APPROVED_SHORTLIST_COST_READBACK_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S02",
@@ -38,19 +63,40 @@
       "words": 31,
       "beatId": "B02",
       "primitive": "OrbitScene",
-      "visualSource": "FLOW_IMAGE_CANDIDATE",
-      "motionSource": "REMOTION_STILL_MOTION",
       "reason": "Satellite and Earth hero frame; atmosphere only, NOT an authoritative scientific diagram",
       "expectedQualityGain": "MEDIUM: cinematic context to counter modality monotony",
-      "estimatedCredits": null,
       "fallback": "REMOTION_SVG (or approved/licensed media); BLOCKED_BY_ASSET if below quality bar",
       "license": "UNKNOWN_UNTIL_GENERATED",
-      "rightsStatus": "PENDING_PROVENANCE",
-      "approvalState": "PROPOSED_SHORTLIST",
-      "veoCandidate": {
-        "state": "OPTIONAL_CONDITIONAL",
-        "need": "orbiting satellite with Earth rotation parallax that pan/zoom cannot express"
-      }
+      "shotId": "SH01",
+      "shotIntent": "It is not looking at you; it is listening to the sky",
+      "visualSource": "FLOW_GENERATED_IMAGE",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ILLUSTRATIVE",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "CINEMATIC_CONTEXT_STILL",
+        "COUNTER_MODALITY_MONOTONY"
+      ],
+      "alternativeRoutes": [
+        {
+          "source": "APPROVED_ASSET",
+          "engine": "REMOTION_2D"
+        },
+        {
+          "source": "PROCEDURAL_GRAPHICS",
+          "engine": "REMOTION_2D"
+        }
+      ],
+      "qualityRisks": [
+        "AI_NOT_AUTHORITATIVE_DIAGRAM",
+        "STYLE_CONTINUITY"
+      ],
+      "rightsReviewStatus": "REVIEW_REQUIRED",
+      "aiDisclosureReview": "REVIEW_REQUIRED",
+      "creditEstimate": null,
+      "creditApproval": "APPROVED_SHORTLIST_COST_READBACK_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S03",
@@ -65,15 +111,30 @@
       "words": 29,
       "beatId": "B03",
       "primitive": "TextCard",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Promise: three ideas (distance, clock, relativity)",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S04",
@@ -88,15 +149,30 @@
       "words": 29,
       "beatId": "B04",
       "primitive": "BarChart",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Teaser: the fix that needs Einstein",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S05",
@@ -111,15 +187,30 @@
       "words": 29,
       "beatId": "B05",
       "primitive": "TrilaterationScene",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Landmark bearings: old way of locating yourself",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S06",
@@ -134,15 +225,30 @@
       "words": 31,
       "beatId": "B06",
       "primitive": "TrilaterationScene",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "One distance gives a circle of possible places",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S07",
@@ -157,15 +263,30 @@
       "words": 29,
       "beatId": "B07",
       "primitive": "TrilaterationScene",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Two distances give two points",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S08",
@@ -180,15 +301,30 @@
       "words": 29,
       "beatId": "B08",
       "primitive": "TrilaterationScene",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Three distances pin down the point (2D)",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S09",
@@ -203,15 +339,30 @@
       "words": 29,
       "beatId": "B09",
       "primitive": "TrilaterationScene",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Real world is 3D: spheres, not circles",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S10",
@@ -226,15 +377,30 @@
       "words": 31,
       "beatId": "B10",
       "primitive": "TrilaterationScene",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Beacons must know their own position",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S11",
@@ -249,15 +415,30 @@
       "words": 29,
       "beatId": "B11",
       "primitive": "TextCard",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Recap card: distance to known points",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S12",
@@ -272,15 +453,30 @@
       "words": 29,
       "beatId": "B12",
       "primitive": "TrilaterationScene",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Question: how do we measure distance to something 20,000 km away?",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S13",
@@ -295,15 +491,30 @@
       "words": 29,
       "beatId": "B13",
       "primitive": "OrbitScene",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Satellites in medium Earth orbit",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S14",
@@ -318,15 +529,30 @@
       "words": 31,
       "beatId": "B14",
       "primitive": "BarChart",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Orbit altitude and period (scale shown)",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S15",
@@ -341,15 +567,30 @@
       "words": 29,
       "beatId": "B15",
       "primitive": "OrbitScene",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Why 24+ satellites: always 4+ in view",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S16",
@@ -364,15 +605,30 @@
       "words": 31,
       "beatId": "B16",
       "primitive": "OrbitScene",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Six orbital planes",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S17",
@@ -387,15 +643,41 @@
       "words": 29,
       "beatId": "B17",
       "primitive": "OrbitScene",
-      "visualSource": "FLOW_IMAGE_CANDIDATE",
-      "motionSource": "REMOTION_STILL_MOTION",
       "reason": "Ground-control room atmosphere behind the ground-segment diagram",
       "expectedQualityGain": "MEDIUM: cinematic context to counter modality monotony",
-      "estimatedCredits": null,
       "fallback": "REMOTION_SVG (or approved/licensed media); BLOCKED_BY_ASSET if below quality bar",
       "license": "UNKNOWN_UNTIL_GENERATED",
-      "rightsStatus": "PENDING_PROVENANCE",
-      "approvalState": "PROPOSED_SHORTLIST"
+      "shotId": "SH01",
+      "shotIntent": "Ground control keeps orbits known",
+      "visualSource": "FLOW_GENERATED_IMAGE",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ILLUSTRATIVE",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "CINEMATIC_CONTEXT_STILL",
+        "COUNTER_MODALITY_MONOTONY",
+        "RESERVE_ONLY_IF_CREDITS_REMAIN"
+      ],
+      "alternativeRoutes": [
+        {
+          "source": "APPROVED_ASSET",
+          "engine": "REMOTION_2D"
+        },
+        {
+          "source": "PROCEDURAL_GRAPHICS",
+          "engine": "REMOTION_2D"
+        }
+      ],
+      "qualityRisks": [
+        "AI_NOT_AUTHORITATIVE_DIAGRAM",
+        "STYLE_CONTINUITY"
+      ],
+      "rightsReviewStatus": "REVIEW_REQUIRED",
+      "aiDisclosureReview": "REVIEW_REQUIRED",
+      "creditEstimate": null,
+      "creditApproval": "PENDING_OWNER_RESERVE",
+      "state": "RESERVE"
     },
     {
       "scene": "S18",
@@ -410,15 +692,30 @@
       "words": 31,
       "beatId": "B18",
       "primitive": "SignalPathScene",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Satellite broadcasts: position + time",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S19",
@@ -433,15 +730,30 @@
       "words": 29,
       "beatId": "B19",
       "primitive": "OrbitScene",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Sky view: which satellites you can see",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S20",
@@ -456,15 +768,30 @@
       "words": 29,
       "beatId": "B20",
       "primitive": "SignalPathScene",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Radio travels at the speed of light",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S21",
@@ -479,15 +806,30 @@
       "words": 31,
       "beatId": "B21",
       "primitive": "TextCard",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Distance = speed x travel time",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S22",
@@ -502,15 +844,30 @@
       "words": 29,
       "beatId": "B22",
       "primitive": "BarChart",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Travel time is about a tenth of a second",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S23",
@@ -525,15 +882,30 @@
       "words": 29,
       "beatId": "B23",
       "primitive": "BarChart",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "One nanosecond is about 30 cm",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S24",
@@ -548,15 +920,30 @@
       "words": 29,
       "beatId": "B24",
       "primitive": "SignalPathScene",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "How the receiver matches the satellite's code",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S25",
@@ -571,15 +958,30 @@
       "words": 31,
       "beatId": "B25",
       "primitive": "SignalPathScene",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Offset between codes = travel time",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S26",
@@ -594,15 +996,30 @@
       "words": 29,
       "beatId": "B26",
       "primitive": "TrilaterationScene",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Example: four ranges, one fix",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S27",
@@ -617,15 +1034,30 @@
       "words": 29,
       "beatId": "B27",
       "primitive": "ClockCompare",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Question: the receiver clock is cheap, so now what?",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S28",
@@ -640,15 +1072,40 @@
       "words": 31,
       "beatId": "B28",
       "primitive": "ClockCompare",
-      "visualSource": "FLOW_IMAGE_CANDIDATE",
-      "motionSource": "REMOTION_STILL_MOTION",
       "reason": "Atomic-clock laboratory atmosphere behind the clock card",
       "expectedQualityGain": "MEDIUM: cinematic context to counter modality monotony",
-      "estimatedCredits": null,
       "fallback": "REMOTION_SVG (or approved/licensed media); BLOCKED_BY_ASSET if below quality bar",
       "license": "UNKNOWN_UNTIL_GENERATED",
-      "rightsStatus": "PENDING_PROVENANCE",
-      "approvalState": "PROPOSED_SHORTLIST"
+      "shotId": "SH01",
+      "shotIntent": "Satellites carry atomic clocks",
+      "visualSource": "FLOW_GENERATED_IMAGE",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ILLUSTRATIVE",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "CINEMATIC_CONTEXT_STILL",
+        "COUNTER_MODALITY_MONOTONY"
+      ],
+      "alternativeRoutes": [
+        {
+          "source": "APPROVED_ASSET",
+          "engine": "REMOTION_2D"
+        },
+        {
+          "source": "PROCEDURAL_GRAPHICS",
+          "engine": "REMOTION_2D"
+        }
+      ],
+      "qualityRisks": [
+        "AI_NOT_AUTHORITATIVE_DIAGRAM",
+        "STYLE_CONTINUITY"
+      ],
+      "rightsReviewStatus": "REVIEW_REQUIRED",
+      "aiDisclosureReview": "REVIEW_REQUIRED",
+      "creditEstimate": null,
+      "creditApproval": "APPROVED_SHORTLIST_COST_READBACK_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S29",
@@ -663,15 +1120,30 @@
       "words": 31,
       "beatId": "B29",
       "primitive": "GrowthChart",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Phone clock drift turns into kilometres",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S30",
@@ -686,15 +1158,30 @@
       "words": 31,
       "beatId": "B30",
       "primitive": "TrilaterationScene",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Receiver clock error is one extra unknown",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S31",
@@ -709,15 +1196,30 @@
       "words": 34,
       "beatId": "B31",
       "primitive": "TrilaterationScene",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Fourth satellite solves position AND time",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S32",
@@ -732,15 +1234,30 @@
       "words": 31,
       "beatId": "B32",
       "primitive": "ClockCompare",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Phone gets atomic-grade time as a side effect",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S33",
@@ -755,15 +1272,30 @@
       "words": 31,
       "beatId": "B33",
       "primitive": "TextCard",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Why timing matters beyond maps",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S34",
@@ -778,15 +1310,30 @@
       "words": 31,
       "beatId": "B34",
       "primitive": "TextCard",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Recap card: positions + time",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S35",
@@ -801,15 +1348,30 @@
       "words": 29,
       "beatId": "B35",
       "primitive": "ClockCompare",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Satellites move fast: moving clocks run slower",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S36",
@@ -824,15 +1386,30 @@
       "words": 31,
       "beatId": "B36",
       "primitive": "ClockCompare",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Weaker gravity up there: clocks run faster",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S37",
@@ -847,15 +1424,30 @@
       "words": 29,
       "beatId": "B37",
       "primitive": "BarChart",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "The two effects partly cancel; net gain per day",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S38",
@@ -870,15 +1462,30 @@
       "words": 31,
       "beatId": "B38",
       "primitive": "GrowthChart",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Left uncorrected: kilometres of error per day",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S39",
@@ -893,15 +1500,30 @@
       "words": 29,
       "beatId": "B39",
       "primitive": "ClockCompare",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Engineers pre-adjust the clock frequency",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S40",
@@ -916,15 +1538,30 @@
       "words": 31,
       "beatId": "B40",
       "primitive": "TextCard",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Payoff to the opening teaser",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S41",
@@ -939,15 +1576,30 @@
       "words": 29,
       "beatId": "B41",
       "primitive": "GrowthChart",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Caveat: effect sizes are small but accumulate",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S42",
@@ -962,15 +1614,30 @@
       "words": 31,
       "beatId": "B42",
       "primitive": "SignalPathScene",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Atmosphere slows the signal",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S43",
@@ -985,19 +1652,50 @@
       "words": 29,
       "beatId": "B43",
       "primitive": "SignalPathScene",
-      "visualSource": "FLOW_IMAGE_CANDIDATE",
-      "motionSource": "REMOTION_STILL_MOTION",
       "reason": "City-canyon street context for multipath; reflection geometry stays SVG",
       "expectedQualityGain": "MEDIUM: cinematic context to counter modality monotony",
-      "estimatedCredits": null,
       "fallback": "REMOTION_SVG (or approved/licensed media); BLOCKED_BY_ASSET if below quality bar",
       "license": "UNKNOWN_UNTIL_GENERATED",
-      "rightsStatus": "PENDING_PROVENANCE",
-      "approvalState": "PROPOSED_SHORTLIST",
       "veoCandidate": {
         "state": "OPTIONAL_CONDITIONAL",
-        "need": "moving vehicle through a canyon showing signal blockage over time"
-      }
+        "need": "moving vehicle through a canyon showing signal blockage over time",
+        "motionEngineIfApproved": "VEO_IMAGE_TO_VIDEO"
+      },
+      "shotId": "SH01",
+      "shotIntent": "Multipath: reflections in city canyons",
+      "visualSource": "FLOW_GENERATED_IMAGE",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "REALISTIC",
+      "realismRequired": false,
+      "motionRequirement": "SEMANTIC_ACTION",
+      "reasonCodes": [
+        "CINEMATIC_CONTEXT_STILL",
+        "COUNTER_MODALITY_MONOTONY",
+        "OPTIONAL_SEMANTIC_MOTION"
+      ],
+      "alternativeRoutes": [
+        {
+          "source": "APPROVED_ASSET",
+          "engine": "REMOTION_2D"
+        },
+        {
+          "source": "PROCEDURAL_GRAPHICS",
+          "engine": "REMOTION_2D"
+        },
+        {
+          "source": "FLOW_GENERATED_IMAGE",
+          "engine": "VEO_IMAGE_TO_VIDEO"
+        }
+      ],
+      "qualityRisks": [
+        "AI_NOT_AUTHORITATIVE_DIAGRAM",
+        "STYLE_CONTINUITY"
+      ],
+      "rightsReviewStatus": "REVIEW_REQUIRED",
+      "aiDisclosureReview": "REQUIRED",
+      "creditEstimate": null,
+      "creditApproval": "APPROVED_SHORTLIST_COST_READBACK_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S44",
@@ -1012,15 +1710,30 @@
       "words": 31,
       "beatId": "B44",
       "primitive": "BarChart",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Typical error budget (qualitative)",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S45",
@@ -1035,15 +1748,30 @@
       "words": 31,
       "beatId": "B45",
       "primitive": "SignalPathScene",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Corrections: augmentation and dual frequency",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S46",
@@ -1058,15 +1786,30 @@
       "words": 29,
       "beatId": "B46",
       "primitive": "CardGrid",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Other systems: GNSS family",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S47",
@@ -1081,15 +1824,41 @@
       "words": 31,
       "beatId": "B47",
       "primitive": "SignalPathScene",
-      "visualSource": "FLOW_IMAGE_CANDIDATE",
-      "motionSource": "REMOTION_STILL_MOTION",
       "reason": "Tunnel/indoor context for the signal-loss caveat",
       "expectedQualityGain": "MEDIUM: cinematic context to counter modality monotony",
-      "estimatedCredits": null,
       "fallback": "REMOTION_SVG (or approved/licensed media); BLOCKED_BY_ASSET if below quality bar",
       "license": "UNKNOWN_UNTIL_GENERATED",
-      "rightsStatus": "PENDING_PROVENANCE",
-      "approvalState": "PROPOSED_SHORTLIST"
+      "shotId": "SH01",
+      "shotIntent": "Limits: indoors and tunnels",
+      "visualSource": "FLOW_GENERATED_IMAGE",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "REALISTIC",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "CINEMATIC_CONTEXT_STILL",
+        "COUNTER_MODALITY_MONOTONY",
+        "RESERVE_ONLY_IF_CREDITS_REMAIN"
+      ],
+      "alternativeRoutes": [
+        {
+          "source": "APPROVED_ASSET",
+          "engine": "REMOTION_2D"
+        },
+        {
+          "source": "PROCEDURAL_GRAPHICS",
+          "engine": "REMOTION_2D"
+        }
+      ],
+      "qualityRisks": [
+        "AI_NOT_AUTHORITATIVE_DIAGRAM",
+        "STYLE_CONTINUITY"
+      ],
+      "rightsReviewStatus": "REVIEW_REQUIRED",
+      "aiDisclosureReview": "REQUIRED",
+      "creditEstimate": null,
+      "creditApproval": "PENDING_OWNER_RESERVE",
+      "state": "RESERVE"
     },
     {
       "scene": "S48",
@@ -1104,15 +1873,30 @@
       "words": 31,
       "beatId": "B48",
       "primitive": "TextCard",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Three ideas recapped",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S49",
@@ -1127,15 +1911,30 @@
       "words": 29,
       "beatId": "B49",
       "primitive": "PhoneMapDot",
-      "visualSource": "REMOTION_SVG",
-      "motionSource": "REMOTION",
       "reason": "Exact technical exposition / deterministic text and numbers",
       "expectedQualityGain": "NONE_NEEDED",
-      "estimatedCredits": null,
       "fallback": "none",
       "license": "ORIGINAL_IN_REPO",
-      "rightsStatus": "ORIGINAL",
-      "approvalState": "LOCAL_AUTHORING_PENDING_BUILD"
+      "shotId": "SH01",
+      "shotIntent": "Final picture: the blue dot explained",
+      "visualSource": "PROCEDURAL_GRAPHICS",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ABSTRACT",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "EXACT_TECHNICAL_EXPOSITION",
+        "DETERMINISTIC_TEXT_AND_NUMBERS"
+      ],
+      "alternativeRoutes": [],
+      "qualityRisks": [
+        "VISUAL_MONOTONY"
+      ],
+      "rightsReviewStatus": "APPROVED",
+      "aiDisclosureReview": "NOT_REQUIRED",
+      "creditEstimate": 0,
+      "creditApproval": "NOT_REQUIRED",
+      "state": "PLANNED"
     },
     {
       "scene": "S50",
@@ -1150,15 +1949,40 @@
       "words": 31,
       "beatId": "B50",
       "primitive": "TextCard",
-      "visualSource": "FLOW_IMAGE_CANDIDATE",
-      "motionSource": "REMOTION_STILL_MOTION",
       "reason": "Outro backdrop behind the sources card",
       "expectedQualityGain": "MEDIUM: cinematic context to counter modality monotony",
-      "estimatedCredits": null,
       "fallback": "REMOTION_SVG (or approved/licensed media); BLOCKED_BY_ASSET if below quality bar",
       "license": "UNKNOWN_UNTIL_GENERATED",
-      "rightsStatus": "PENDING_PROVENANCE",
-      "approvalState": "PROPOSED_SHORTLIST"
+      "shotId": "SH01",
+      "shotIntent": "Outro and sources note",
+      "visualSource": "FLOW_GENERATED_IMAGE",
+      "motionEngine": "REMOTION_2D",
+      "targetRealism": "ILLUSTRATIVE",
+      "realismRequired": false,
+      "motionRequirement": "CAMERA_ONLY",
+      "reasonCodes": [
+        "CINEMATIC_CONTEXT_STILL",
+        "COUNTER_MODALITY_MONOTONY"
+      ],
+      "alternativeRoutes": [
+        {
+          "source": "APPROVED_ASSET",
+          "engine": "REMOTION_2D"
+        },
+        {
+          "source": "PROCEDURAL_GRAPHICS",
+          "engine": "REMOTION_2D"
+        }
+      ],
+      "qualityRisks": [
+        "AI_NOT_AUTHORITATIVE_DIAGRAM",
+        "STYLE_CONTINUITY"
+      ],
+      "rightsReviewStatus": "REVIEW_REQUIRED",
+      "aiDisclosureReview": "REVIEW_REQUIRED",
+      "creditEstimate": null,
+      "creditApproval": "APPROVED_SHORTLIST_COST_READBACK_REQUIRED",
+      "state": "PLANNED"
     }
   ],
   "claims": {
@@ -1185,7 +2009,7 @@
   },
   "narrationWordsEstimate": 1501,
   "wordsPerSecondBasis": "2.6 w/s = 6A pilot measured rate (Kokoro am_michael speed 1.1)",
-  "version": "1.1.0-owner-decisions",
+  "version": "1.2.0-routing-policy",
   "primitives": [
     "TextCard",
     "TrilaterationScene",
@@ -1241,12 +2065,16 @@
   "flowShortlist": [
     "S01",
     "S02",
-    "S17",
     "S28",
     "S43",
-    "S47",
     "S50"
   ],
-  "veoCandidatesMax": 2,
-  "sceneCountNote": "50 scenes are a draft, not a quota; shot durations must follow beat meaning and final audio."
+  "veoCandidatesMax": 1,
+  "sceneCountNote": "50 scenes are a draft, not a quota; shot durations must follow beat meaning and final audio.",
+  "vocabulary": "Visual Source & Motion Routing Policy 10/10/2026 section 3 (VisualSource x MotionEngine)",
+  "flowReserve": [
+    "S17",
+    "S47"
+  ],
+  "shortlistDecision": "Owner accepted agent recommendation: 5 approved-for-credit-readback shots, 2 reserve, Veo only S43"
 }

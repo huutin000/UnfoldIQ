@@ -14,7 +14,7 @@ FLOW_CREDIT_CAP               = 80
 EXTRA_VND_ALLOWED             = 0
 FLOW_GENERATION               = WAIT_FOR_SHOT_SHORTLIST_APPROVAL
 GEMINI_FREE_TIER              = VERIFY_PROJECT
-GEMINI_UPLOAD_PERMISSION      = PENDING_OWNER_EXPLICIT_CONSENT
+GEMINI_UPLOAD_PERMISSION      = GRANTED_GPS_VIDEO_ONLY (owner, chat 2026-10-10); free-tier confirmation still pending
 MUSIC                         = OPTIONAL_LICENSED_OR_INTENTIONAL_SILENCE
 EVIDENCE_POLICY               = APPROVED_WITH_DERIVATION_EXCEPTION
 SLICE_A_DOC_COMMIT            = ALLOWED_AFTER_REVIEW
@@ -29,7 +29,7 @@ PHASE_7                       = NOT_COMPLETE
 - Phase 6A pilot (`final.mp4` sha256 `7954a86a…dfcdf`) is not modified or re-rendered.
 
 ## Visual routing
-See `PHASE7_VISUAL_ROUTING_MATRIX.md` (+ `Report/evidence/phase-7/scene-plan.json`): 9 parametric primitives replace 39 bespoke components; 7-shot Flow-image shortlist (cap 80 credits, ≤2 optional Veo candidates, nothing forced); technical exposition stays local SVG/chart.
+See `Report/evidence/phase-7/scene-visual-routing-matrix.md` (+ `scene-plan.json`): 9 parametric primitives replace 39 bespoke components; 7-shot Flow-image shortlist (cap 80 credits, ≤2 optional Veo candidates, nothing forced); technical exposition stays local SVG/chart.
 
 ## Claim / evidence policy (replaces the v1.0 note under the claim map)
 - Every material factual claim maps to ≥1 traceable, credible source; primary/official preferred (GPS.gov, NIST, standards, Ashby in Living Reviews in Relativity).
@@ -45,4 +45,4 @@ See `PHASE7_VISUAL_ROUTING_MATRIX.md` (+ `Report/evidence/phase-7/scene-plan.jso
 - Music: no unlicensed/test-only audio in the final mix. At Slice B propose 2–3 instrumental cues (YouTube Audio Library preferred) with track identity, origin, license snapshot, attribution and local provenance; `INTENTIONALLY_ABSENT` is valid only if creative watch confirms engagement.
 
 ## Next step
-Owner approves (or edits) the Flow shortlist in `PHASE7_VISUAL_ROUTING_MATRIX.md` and gives the Gemini upload decision; then Slice B begins with `npm run research:deep:doctor`. No Flow generation, render or upload before that.
+Owner approves (or edits) the Flow shortlist in `scene-visual-routing-matrix.md` and gives the Gemini upload decision; then Slice B begins with `npm run research:deep:doctor`. No Flow generation, render or upload before that.

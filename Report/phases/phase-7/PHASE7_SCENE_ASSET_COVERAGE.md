@@ -1,4 +1,4 @@
-# PHASE 7 — Scene Asset Coverage (Slice A v1.0, SUPERSEDED IN PART — see PHASE_7_SLICE_A_OWNER_DECISIONS_ADDENDUM.md and PHASE7_VISUAL_ROUTING_MATRIX.md)
+# PHASE 7 — Scene Asset Coverage (Slice A v1.0, SUPERSEDED IN PART — see PHASE_7_SLICE_A_OWNER_DECISIONS_ADDENDUM.md and scene-visual-routing-matrix.md)
 
 > **Owner decision 10/10/2026:** this diagram-heavy matrix is NOT approved as the final creative treatment; the 39 components and the claim-evidence threshold below are replaced by the addendum (9 parametric primitives, Flow shortlist, calibrated evidence policy). Kept as the historical proposal.
 

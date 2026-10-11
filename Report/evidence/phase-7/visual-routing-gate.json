@@ -1,0 +1,31 @@
+{
+  "kind": "PHASE7_VISUAL_ROUTING_GATE",
+  "version": "1.0.0",
+  "generatedAt": "2026-10-10",
+  "scope": "Slice A of Visual Source & Motion Routing Policy (discovery + plan, no generation)",
+  "head": "891c3c6 + uncommitted routing docs",
+  "verdict": {
+    "VISUAL_ROUTING_CONTRACT": "NOT_READY",
+    "VISUAL_SOURCE_MOTION_SEPARATION": "NOT_PROVEN",
+    "REMOTION_GRAPHICS_ROUTE": "NOT_PROVEN",
+    "FLOW_IMAGE_REMOTION_ROUTE": "APPROVED_PENDING_COST_READBACK",
+    "VEO_SEMANTIC_MOTION_ROUTE": "PENDING_OWNER (S43 only, conditional)",
+    "SHOT_COVERAGE_MATRIX": "READY",
+    "FLOW_CREDIT_PLAN": "READY",
+    "RIGHTS_FACTUALITY_DISCLOSURE": "NOT_READY",
+    "NO_SILENT_QUALITY_DOWNGRADE": "NOT_PROVEN",
+    "EXTERNAL_PAID_COST_VND": 0,
+    "PHASE7_ROUTING_PREFLIGHT": "WAITING_OWNER",
+    "PHASE7_LONGFORM_E2E": "NOT_RUN"
+  },
+  "reasons": {
+    "VISUAL_ROUTING_CONTRACT": "repo has no independent visualSource axis; extension of lib/visual-motion not yet authorized/implemented",
+    "RIGHTS_FACTUALITY_DISCLOSURE": "no asset exists; rights/AI-disclosure per shot are REVIEW_REQUIRED/PENDING until generation and review",
+    "FLOW_CREDIT_PLAN": "READY as a plan; balance and cost per generation UNKNOWN (CREDIT_COST_UNKNOWN)"
+  },
+  "routeTests": { "ROUTE-01..18": "NOT_RUN (no code written; no mock or live evidence)" },
+  "generation": { "flowCreditsUsed": 0, "veoClips": 0, "providerCalls": 0, "mediaGenerated": 0 },
+  "pendingOwner": ["Flow shortlist APPROVED: S01,S02,S28,S43,S50 (reserve S17,S47; Veo S43 only); cost readback still required before spend", "go for GAP-052/053 implementation (extend lib/visual-motion)", "Gemini free-tier confirmation (upload consent GRANTED for GPS video only)"],
+  "artifacts": ["Report/evidence/phase-7/visual-routing-audit.md", "Report/evidence/phase-7/scene-visual-routing-matrix.md", "Report/evidence/phase-7/flow-free-credit-plan.md", "Report/evidence/phase-7/scene-plan.json", "Report/phases/phase-7/PHASE_7_VISUAL_ROUTING_DECISION_REPORT.md"],
+  "lockedAssetsTouched": false
+}
