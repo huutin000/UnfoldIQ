@@ -1,0 +1,182 @@
+{
+  "kind": "PHASE7_RESOURCE_AND_CREDIT_BUDGET",
+  "version": "1.1.0",
+  "status": "APPROVED_CONDITIONAL_BY_OWNER_DECISIONS",
+  "generatedAt": "2026-10-10",
+  "project": "phase7-gps-explainer (proposed; not created)",
+  "gitSnapshot": {
+    "head": "f57998562ba7d25f95686a76c27b3d714d07587b",
+    "branch": "main",
+    "trackedTreeClean": true,
+    "untrackedPreexisting": 16
+  },
+  "cost": {
+    "externalPaidCostBudgetVnd": 0,
+    "paidApiAllowed": false,
+    "autoUpgradeToPaid": false,
+    "cloudProviders": "openai-image, google-veo, elevenlabs-*, configured-cloud-* all REGISTERED enabled=no, paidAllowed=false (doctor:provider, 2026-10-10)",
+    "flowNote": "Cap 80 credits from existing Google AI Plus balance (verify in Flow UI); an upper bound, not a target; includes retries/images/video/edits. Generation WAITS for owner approval of the shortlist in PHASE7_VISUAL_ROUTING_MATRIX.md. Max 2 Veo candidates. Any unclear cost or cap overrun => STOP / OWNER_REVIEW_REQUIRED.",
+    "geminiFree": {
+      "plannedCallsMax": 10,
+      "status": "VERIFY_PROJECT",
+      "reason": "Flow/Google AI Plus does not verify the Gemini API project tier. No upload authorized; fallback is human full watch + deterministic QA, honest NOT_USED.",
+      "estimatedVideoTokensPerWholePass": 52000,
+      "basis": "6A: 5187 video tokens for 57.15 s (~91 tok/s) x 575 s; estimate, not measured",
+      "uploadPermission": "PENDING_OWNER_EXPLICIT_CONSENT"
+    },
+    "extraVndAllowed": 0,
+    "flowCreditCap": 80,
+    "flowUsed": {
+      "credits": 0,
+      "balanceBefore": null,
+      "balanceAfter": null
+    }
+  },
+  "video": {
+    "targetSeconds": 575,
+    "targetRangeSeconds": [
+      540,
+      600
+    ],
+    "fps": 30,
+    "frames": 17250,
+    "resolution": "1920x1080",
+    "scenes": 50,
+    "narrationWordsEstimate": 1501,
+    "wordsPerSecondBasis": 2.6,
+    "scenesNote": "50 scenes draft, not a quota; actual duration set by final audio"
+  },
+  "host": {
+    "cpu": "Intel i5-11400H, 6 cores / 12 threads",
+    "ramTotalGB": 15.8,
+    "ramFreeGBAtCheck": 5.1,
+    "gpu": "NVIDIA RTX 3050 Laptop 4GB (not used by the Remotion CPU path)",
+    "diskFreeGB_D": 213,
+    "renderDoctor": "READY (Remotion 4.0.529, ffmpeg/ffprobe OK, headless shell present)",
+    "ttsLocal": "Kokoro 0.9.4 + faster-whisper 1.2.1 importable in default Python 3.12 (doctor:local shows env vars unset; not a blocker)",
+    "whisperCppBinary": "NOT_CONFIGURED (not required: faster-whisper is the used path)",
+    "comfyuiServer": "NOT_AVAILABLE (not needed)"
+  },
+  "estimates": {
+    "note": "ESTIMATES derived from Phase 5A/5C measurements on this host; not guarantees. Phase 5C fixture was synthetic; real SVG/Remotion scenes may differ (band 1.0-2.0x).",
+    "ttsWallMinutes": {
+      "typical": 5,
+      "band": [
+        4,
+        10
+      ],
+      "basis": "5A: ~70 s local TTS for a 150 s video (0.47x) => ~270 s"
+    },
+    "forcedAlignmentWallMinutes": {
+      "typical": 4,
+      "band": [
+        2,
+        8
+      ],
+      "basis": "faster-whisper base on CPU; NOT_MEASURED for 9.6 min"
+    },
+    "previewRenders": {
+      "segments": 5,
+      "framesEach": 450,
+      "wallMinutes": 4,
+      "basis": "17250 frames class at 14.8 fps (5C) + startup ~10 s per range"
+    },
+    "fullRenderWallMinutes": {
+      "typical": 20,
+      "band": [
+        19,
+        39
+      ],
+      "basis": "5C: 10 min = 1216 s @14.8 fps (c=4); 17250 frames => ~1165 s; scaling 1.43-2.03x observed 10->20->30 min estimates",
+      "checkpointNote": "40-min investigation checkpoint (collect evidence, ask before retry); not an auto-kill"
+    },
+    "technicalQaWallMinutes": {
+      "typical": 8,
+      "band": [
+        5,
+        15
+      ],
+      "basis": "6A deterministic ffmpeg final QC on 57 s; scales with duration"
+    },
+    "creativeAndWatchReviewMinutes": {
+      "typical": 15,
+      "note": "Gemini Free (if permitted) or owner human watch; owner time is real and unavoidable for approval"
+    },
+    "assetAuthoringSessions": {
+      "typical": 4,
+      "band": [
+        3,
+        6
+      ],
+      "note": "Dominant cost: author ~12 parametric Remotion primitives + 50 scene configs + new visual bible. Agent/engineering time, not machine time."
+    },
+    "peakRssMB": {
+      "typical": 450,
+      "basis": "5C RSS peak 398-449 MB at c=4; concurrent renders capped at 2 by budget gate"
+    },
+    "outputBytes": {
+      "final": 176000000,
+      "basis": "5C: 176 MB per 10 min; ~170 MB expected"
+    },
+    "tempAndCacheDiskGB": {
+      "typical": 3,
+      "band": [
+        2,
+        6
+      ],
+      "basis": "ESTIMATE (chunks + preview segments + render cache); not measured for this topic"
+    },
+    "totalMachineWallClockHours": {
+      "typical": 1.2,
+      "note": "excludes authoring sessions and owner review time"
+    },
+    "firstFullRenderCheckpointMinutes": 40
+  },
+  "retries": {
+    "ttsPerSegment": 2,
+    "assetAuthoringPerScene": 2,
+    "previewRerenderPerSegment": 2,
+    "fullRender": "exactly 1 authorized full render, after preflight gates; an extra full render needs verified defect + separate owner approval",
+    "researchFetchPerSource": 2,
+    "geminiPerCall": 1,
+    "providerCreditActions": 0
+  },
+  "stopConditions": [
+    "any command running > 20 min without progress (report process, elapsed, log, resources; no blind rerun)",
+    "free-quota exhaustion or any request that would require billing",
+    "any asset without rights/provenance record or with unsupported factual depiction",
+    "factual claim lacking source after 2 fetch attempts (rewrite claim, never waive)",
+    "free RAM < 2 GB or free disk < 20 GB",
+    "render doctor NOT_READY (Smart App Control): stop and ask owner to toggle manually; agent must not toggle",
+    "any duplicate expensive/provider action detected",
+    "owner approval missing for brief, budget, preview or final"
+  ],
+  "strategy": {
+    "render": "LOCAL (Phase 5C V1 decision; no cloud migration)",
+    "incremental": "reuse Phase 5B range-render/cache for any localized repair; no automatic full rerender"
+  },
+  "governance": {
+    "baselineRegressionIsolation": "Run only targeted tests during production; full regression once after source/config changes stop. Known debt: run-tests.js rewrites ~30 tracked baseline files (Regression Output Isolation)."
+  },
+  "approval": {
+    "ownerApprovedBudget": "CONDITIONAL",
+    "ownerApprovedFlowCredits": "CAP_80_SHORTLIST_PENDING",
+    "ownerApprovedBrief": "CONDITIONAL",
+    "ownerApprovedMusic": "NO_UNLICENSED_MUSIC",
+    "evidencePolicy": "APPROVED_WITH_DERIVATION_EXCEPTION",
+    "source": "D:/Downloads All/UNFOLDIQ_PHASE7_SLICE_A_OWNER_DECISIONS.md",
+    "sourceSha256": "b0a7057c77df1fbb12958691bd1d3b57f1158c93204cf3b7ebfc3f51c2e1ec5d",
+    "note": "Provenance of owner decisions as forwarded; not a human signature."
+  },
+  "updatedAt": "2026-10-10",
+  "preFullRenderGates": [
+    "research sufficiency",
+    "spoken script",
+    "rights",
+    "coverage",
+    "local audio+alignment",
+    "technical preflight",
+    "targeted previews: opening, detail-dense technical shot, any Flow/Veo integration, transitions, ending",
+    "Phase 6A/6B creative QA on impacted scope"
+  ]
+}
