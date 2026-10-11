@@ -18,11 +18,12 @@
     "flowNote": "Cap 80 credits from existing Google AI Plus balance (verify in Flow UI); an upper bound, not a target; includes retries/images/video/edits. Generation WAITS for owner approval of the shortlist in scene-visual-routing-matrix.md. Max 2 Veo candidates. Any unclear cost or cap overrun => STOP / OWNER_REVIEW_REQUIRED.",
     "geminiFree": {
       "plannedCallsMax": 10,
-      "status": "VERIFY_PROJECT_TIER_OWNER_CONFIRMATION_PENDING",
+      "status": "FREE_TIER_OWNER_CONFIRMED_NOT_AGENT_VERIFIED",
       "reason": "Owner consented to uploading the unpublished GPS video. Consent is void for any other file. Free tier of the API project is still unconfirmed: no call until owner confirms it in Google AI Studio; free-tier-proven model only, no auto-upgrade; if unverifiable or quota gone => NOT_USED + human watch.",
       "estimatedVideoTokensPerWholePass": 52000,
       "basis": "6A: 5187 video tokens for 57.15 s (~91 tok/s) x 575 s; estimate, not measured",
-      "uploadPermission": "GRANTED_BY_OWNER_2026-10-10_GPS_VIDEO_ONLY"
+      "uploadPermission": "GRANTED_BY_OWNER_2026-10-10_GPS_VIDEO_ONLY",
+      "ownerConfirmation": "Owner replied \"dung\" (2026-10-10) to the Free-tier question; agent cannot observe the API project tier and never reads .env. GEMINI_API_KEY/GOOGLE_API_KEY still unset in the shell, so no call is possible until the owner provides the key via environment."
     },
     "extraVndAllowed": 0,
     "flowCreditCap": 80,
