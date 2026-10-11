@@ -2,6 +2,7 @@ import { Composition } from "remotion";
 import { Blank } from "./compositions/Blank";
 import { UnfoldiqVideo } from "./UnfoldiqVideo";
 import { SkyDiagram } from "./compositions/SkyDiagram";
+import { DiagramScene, DiagramSpec } from "./diagram/DiagramScene";
 import { calculateUnfoldiqMetadata } from "./remotion-entry";
 import type { UnfoldiqRenderInput } from "./runtime/types";
 
@@ -81,6 +82,16 @@ export const Root: React.FC = () => {
         height={1080}
         durationInFrames={150}
         defaultProps={defaultUnfoldiqProps}
+      />
+      <Composition
+        id="DiagramScene"
+        component={DiagramScene}
+        fps={30}
+        width={1920}
+        height={1080}
+        durationInFrames={300}
+        calculateMetadata={({ props }) => ({ durationInFrames: Math.max(1, Math.ceil(props.spec.durationSec * 30)) })}
+        defaultProps={{ spec: { version: 1, durationSec: 10, elements: [] } as DiagramSpec }}
       />
       <Composition
         id="SkyDiagram"

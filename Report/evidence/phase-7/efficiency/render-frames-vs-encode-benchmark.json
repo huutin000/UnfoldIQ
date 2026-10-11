@@ -1,0 +1,70 @@
+{
+  "measuredAt": "2026-10-11T04:58:22.209Z",
+  "concurrency": 4,
+  "frameRange": [
+    0,
+    239
+  ],
+  "rows": [
+    {
+      "rep": 0,
+      "name": "SkyDiagram-S03",
+      "frames": 240,
+      "framesOnlyMs": 18437,
+      "framesPlusEncodeMs": 10366,
+      "impliedEncodeAndStitchMs": -8071,
+      "framesOnlyFps": 13,
+      "fullFps": 23.2
+    },
+    {
+      "rep": 0,
+      "name": "DiagramScene-trilateration",
+      "frames": 240,
+      "framesOnlyMs": 6861,
+      "framesPlusEncodeMs": 7498,
+      "impliedEncodeAndStitchMs": 637,
+      "framesOnlyFps": 35,
+      "fullFps": 32
+    },
+    {
+      "rep": 1,
+      "name": "SkyDiagram-S03",
+      "frames": 240,
+      "framesOnlyMs": 17988,
+      "framesPlusEncodeMs": 10170,
+      "impliedEncodeAndStitchMs": -7818,
+      "framesOnlyFps": 13.3,
+      "fullFps": 23.6
+    },
+    {
+      "rep": 1,
+      "name": "DiagramScene-trilateration",
+      "frames": 240,
+      "framesOnlyMs": 6258,
+      "framesPlusEncodeMs": 7337,
+      "impliedEncodeAndStitchMs": 1079,
+      "framesOnlyFps": 38.4,
+      "fullFps": 32.7
+    },
+    {
+      "rep": 2,
+      "name": "SkyDiagram-S03",
+      "frames": 240,
+      "framesOnlyMs": 18974,
+      "framesPlusEncodeMs": 10582,
+      "impliedEncodeAndStitchMs": -8392,
+      "framesOnlyFps": 12.6,
+      "fullFps": 22.7
+    },
+    {
+      "rep": 2,
+      "name": "DiagramScene-trilateration",
+      "frames": 240,
+      "framesOnlyMs": 6354,
+      "framesPlusEncodeMs": 7606,
+      "impliedEncodeAndStitchMs": 1252,
+      "framesOnlyFps": 37.8,
+      "fullFps": 31.6
+    }
+  ]
+}

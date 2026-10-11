@@ -1,0 +1,228 @@
+{
+  "version": 1,
+  "durationSec": 12,
+  "background": "#0b1424",
+  "elements": [
+    {
+      "id": "title",
+      "type": "text",
+      "x": 960,
+      "y": 110,
+      "text": "Three known points, three distances",
+      "size": 56,
+      "anchor": "middle",
+      "fill": "#f5f7fa"
+    },
+    {
+      "id": "A-dot",
+      "type": "circle",
+      "cx": 480,
+      "cy": 260,
+      "r": 14,
+      "fill": "#4da3ff",
+      "show": [
+        0.19999999999999996
+      ],
+      "opacity": [
+        [
+          0.19999999999999996,
+          0
+        ],
+        [
+          0.6,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "A-label",
+      "type": "text",
+      "x": 480,
+      "y": 230,
+      "text": "Beacon A",
+      "size": 34,
+      "anchor": "middle",
+      "fill": "#4da3ff",
+      "show": [
+        0.19999999999999996
+      ]
+    },
+    {
+      "id": "A-ring",
+      "type": "circle",
+      "cx": 480,
+      "cy": 260,
+      "r": [
+        [
+          0.6,
+          0
+        ],
+        [
+          2.4,
+          494
+        ]
+      ],
+      "stroke": "#4da3ff",
+      "strokeWidth": 5,
+      "show": [
+        0.6
+      ]
+    },
+    {
+      "id": "B-dot",
+      "type": "circle",
+      "cx": 1440,
+      "cy": 260,
+      "r": 14,
+      "fill": "#2fd17f",
+      "show": [
+        3
+      ],
+      "opacity": [
+        [
+          3,
+          0
+        ],
+        [
+          3.4,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "B-label",
+      "type": "text",
+      "x": 1440,
+      "y": 230,
+      "text": "Beacon B",
+      "size": 34,
+      "anchor": "middle",
+      "fill": "#2fd17f",
+      "show": [
+        3
+      ]
+    },
+    {
+      "id": "B-ring",
+      "type": "circle",
+      "cx": 1440,
+      "cy": 260,
+      "r": [
+        [
+          3.4,
+          0
+        ],
+        [
+          5.2,
+          599
+        ]
+      ],
+      "stroke": "#2fd17f",
+      "strokeWidth": 5,
+      "show": [
+        3.4
+      ]
+    },
+    {
+      "id": "C-dot",
+      "type": "circle",
+      "cx": 960,
+      "cy": 860,
+      "r": 14,
+      "fill": "#ffd23f",
+      "show": [
+        5.8
+      ],
+      "opacity": [
+        [
+          5.8,
+          0
+        ],
+        [
+          6.2,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "C-label",
+      "type": "text",
+      "x": 960,
+      "y": 830,
+      "text": "Beacon C",
+      "size": 34,
+      "anchor": "middle",
+      "fill": "#ffd23f",
+      "show": [
+        5.8
+      ]
+    },
+    {
+      "id": "C-ring",
+      "type": "circle",
+      "cx": 960,
+      "cy": 860,
+      "r": [
+        [
+          6.2,
+          0
+        ],
+        [
+          8,
+          345
+        ]
+      ],
+      "stroke": "#ffd23f",
+      "strokeWidth": 5,
+      "show": [
+        6.2
+      ]
+    },
+    {
+      "id": "you-dot",
+      "type": "circle",
+      "cx": 900,
+      "cy": 520,
+      "r": [
+        [
+          9.2,
+          0
+        ],
+        [
+          9.8,
+          22
+        ],
+        [
+          10.4,
+          16
+        ]
+      ],
+      "fill": "#f0484a",
+      "show": [
+        9.2
+      ]
+    },
+    {
+      "id": "you-label",
+      "type": "text",
+      "x": 940,
+      "y": 590,
+      "text": "You are here",
+      "size": 44,
+      "fill": "#f5f7fa",
+      "show": [
+        9.6
+      ],
+      "opacity": [
+        [
+          9.6,
+          0
+        ],
+        [
+          10.2,
+          1
+        ]
+      ]
+    }
+  ]
+}

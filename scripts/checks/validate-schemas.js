@@ -77,7 +77,8 @@ const schemaFiles = [
   "fix-plan.schema.json",
   "render-qa.schema.json",
   "visual-review.schema.json",
-  "final-artifact.schema.json"
+  "final-artifact.schema.json",
+  "diagram-spec.schema.json"
 ];
 
 function createAjv() {

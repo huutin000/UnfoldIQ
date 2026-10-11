@@ -1,0 +1,85 @@
+{
+  "measuredAt": "2026-10-11T04:52:32.188Z",
+  "bundleMs": 9514,
+  "composition": "SkyDiagram S03",
+  "frameRange": [
+    0,
+    239
+  ],
+  "results": [
+    {
+      "label": "c4-baseline-a",
+      "concurrency": 4,
+      "frames": 240,
+      "wallMs": 23232,
+      "fps": 10.33,
+      "bytes": 1167122,
+      "mainRssMB": 581,
+      "error": null
+    },
+    {
+      "label": "c2",
+      "concurrency": 2,
+      "frames": 240,
+      "wallMs": 24305,
+      "fps": 9.87,
+      "bytes": 1166597,
+      "mainRssMB": 408,
+      "error": null
+    },
+    {
+      "label": "c6",
+      "concurrency": 6,
+      "frames": 240,
+      "wallMs": 21411,
+      "fps": 11.21,
+      "bytes": 1164265,
+      "mainRssMB": 426,
+      "error": null
+    },
+    {
+      "label": "c4-baseline-b",
+      "concurrency": 4,
+      "frames": 240,
+      "wallMs": 23486,
+      "fps": 10.22,
+      "bytes": 1167122,
+      "mainRssMB": 408,
+      "error": null
+    },
+    {
+      "label": "c4-frames-only-png-sequence",
+      "concurrency": 4,
+      "imageSequence": true,
+      "frames": 240,
+      "wallMs": 8,
+      "fps": 30000,
+      "bytes": null,
+      "mainRssMB": 0,
+      "error": "When using the h264 codec with the aac audio codec, the output filename must end in one of the following: mp4, mkv, mov."
+    },
+    {
+      "label": "c4-hw-if-possible",
+      "concurrency": 4,
+      "hardwareAcceleration": "if-possible",
+      "frames": 240,
+      "wallMs": 20866,
+      "fps": 11.5,
+      "bytes": 1959845,
+      "mainRssMB": 413,
+      "error": null
+    },
+    {
+      "label": "c4-jpeg-scale0.5-preview",
+      "concurrency": 4,
+      "imageFormat": "jpeg",
+      "scale": 0.5,
+      "frames": 240,
+      "wallMs": 4895,
+      "fps": 49.03,
+      "bytes": 768562,
+      "mainRssMB": 336,
+      "error": null
+    }
+  ]
+}

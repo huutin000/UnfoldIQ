@@ -1,0 +1,201 @@
+{
+  "version": 1,
+  "durationSec": 8,
+  "background": "#0b1424",
+  "elements": [
+    {
+      "id": "title",
+      "type": "text",
+      "x": 960,
+      "y": 110,
+      "text": "LAYOUT EXAMPLE - PLACEHOLDER DATA, NOT FOR PRODUCTION",
+      "size": 44,
+      "anchor": "middle",
+      "fill": "#f5f7fa"
+    },
+    {
+      "id": "bars-axis",
+      "type": "line",
+      "x1": 260,
+      "y1": 860,
+      "x2": 1660,
+      "y2": 860,
+      "stroke": "#8a93a6",
+      "strokeWidth": 3
+    },
+    {
+      "id": "bars-bar0",
+      "type": "rect",
+      "x": 260,
+      "y": [
+        [
+          0.6,
+          860
+        ],
+        [
+          1.5,
+          760.4444444444445
+        ]
+      ],
+      "w": 450.6666666666667,
+      "h": [
+        [
+          0.6,
+          0
+        ],
+        [
+          1.5,
+          99.55555555555556
+        ]
+      ],
+      "rx": 8,
+      "fill": "#f0484a"
+    },
+    {
+      "id": "bars-val0",
+      "type": "text",
+      "x": 485.33333333333337,
+      "y": 742.4444444444445,
+      "text": "7 units",
+      "size": 38,
+      "fill": "#f5f7fa",
+      "anchor": "middle",
+      "opacity": [
+        [
+          1.1400000000000001,
+          0
+        ],
+        [
+          1.5,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "bars-lab0",
+      "type": "text",
+      "x": 485.33333333333337,
+      "y": 916,
+      "text": "Bar A",
+      "size": 34,
+      "fill": "#8a93a6",
+      "anchor": "middle"
+    },
+    {
+      "id": "bars-bar1",
+      "type": "rect",
+      "x": 734.6666666666667,
+      "y": [
+        [
+          1.1,
+          860
+        ],
+        [
+          2,
+          220
+        ]
+      ],
+      "w": 450.6666666666667,
+      "h": [
+        [
+          1.1,
+          0
+        ],
+        [
+          2,
+          640
+        ]
+      ],
+      "rx": 8,
+      "fill": "#2fd17f"
+    },
+    {
+      "id": "bars-val1",
+      "type": "text",
+      "x": 960.0000000000001,
+      "y": 202,
+      "text": "45 units",
+      "size": 38,
+      "fill": "#f5f7fa",
+      "anchor": "middle",
+      "opacity": [
+        [
+          1.6400000000000001,
+          0
+        ],
+        [
+          2,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "bars-lab1",
+      "type": "text",
+      "x": 960.0000000000001,
+      "y": 916,
+      "text": "Bar B",
+      "size": 34,
+      "fill": "#8a93a6",
+      "anchor": "middle"
+    },
+    {
+      "id": "bars-bar2",
+      "type": "rect",
+      "x": 1209.3333333333335,
+      "y": [
+        [
+          1.6,
+          860
+        ],
+        [
+          2.5,
+          319.55555555555554
+        ]
+      ],
+      "w": 450.6666666666667,
+      "h": [
+        [
+          1.6,
+          0
+        ],
+        [
+          2.5,
+          540.4444444444445
+        ]
+      ],
+      "rx": 8,
+      "fill": "#4da3ff"
+    },
+    {
+      "id": "bars-val2",
+      "type": "text",
+      "x": 1434.6666666666667,
+      "y": 301.55555555555554,
+      "text": "38 units",
+      "size": 38,
+      "fill": "#f5f7fa",
+      "anchor": "middle",
+      "opacity": [
+        [
+          2.14,
+          0
+        ],
+        [
+          2.5,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "bars-lab2",
+      "type": "text",
+      "x": 1434.6666666666667,
+      "y": 916,
+      "text": "Bar C",
+      "size": 34,
+      "fill": "#8a93a6",
+      "anchor": "middle"
+    }
+  ]
+}

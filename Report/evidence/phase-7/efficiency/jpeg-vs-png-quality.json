@@ -1,0 +1,118 @@
+{
+  "measuredAt": "2026-10-11T05:16:32.974Z",
+  "method": "frame 40 of a 60-frame h264 yuv420p render per variant vs lossless renderStill of the same frame; ssim/psnr via ffmpeg",
+  "rows": [
+    {
+      "scene": "SkyDiagram-S03-glow",
+      "variant": "png",
+      "wallMs": 5971,
+      "mp4Bytes": 409887,
+      "ssimVsLosslessStill": "0.984317",
+      "psnrVsLosslessStill": "38.286134"
+    },
+    {
+      "scene": "SkyDiagram-S03-glow",
+      "variant": "jpeg-q80-current-default",
+      "wallMs": 3279,
+      "mp4Bytes": 614202,
+      "ssimVsLosslessStill": "0.978481",
+      "psnrVsLosslessStill": "37.130285",
+      "ssimVsPngVideoFrame": "0.982323",
+      "psnrVsPngVideoFrame": "40.646501"
+    },
+    {
+      "scene": "SkyDiagram-S03-glow",
+      "variant": "jpeg-q95",
+      "wallMs": 3443,
+      "mp4Bytes": 539360,
+      "ssimVsLosslessStill": "0.982872",
+      "psnrVsLosslessStill": "38.534177",
+      "ssimVsPngVideoFrame": "0.986239",
+      "psnrVsPngVideoFrame": "43.654386"
+    },
+    {
+      "scene": "SkyDiagram-S06",
+      "variant": "png",
+      "wallMs": 7886,
+      "mp4Bytes": 529269,
+      "ssimVsLosslessStill": "0.980338",
+      "psnrVsLosslessStill": "38.710091"
+    },
+    {
+      "scene": "SkyDiagram-S06",
+      "variant": "jpeg-q80-current-default",
+      "wallMs": 3537,
+      "mp4Bytes": 643683,
+      "ssimVsLosslessStill": "0.973535",
+      "psnrVsLosslessStill": "37.484167",
+      "ssimVsPngVideoFrame": "0.979333",
+      "psnrVsPngVideoFrame": "40.764700"
+    },
+    {
+      "scene": "SkyDiagram-S06",
+      "variant": "jpeg-q95",
+      "wallMs": 3647,
+      "mp4Bytes": 714282,
+      "ssimVsLosslessStill": "0.978859",
+      "psnrVsLosslessStill": "39.087596",
+      "ssimVsPngVideoFrame": "0.983895",
+      "psnrVsPngVideoFrame": "43.725143"
+    },
+    {
+      "scene": "Diagram-trilateration-thin-lines-text",
+      "variant": "png",
+      "wallMs": 2367,
+      "mp4Bytes": 122122,
+      "ssimVsLosslessStill": "0.992239",
+      "psnrVsLosslessStill": "38.767717"
+    },
+    {
+      "scene": "Diagram-trilateration-thin-lines-text",
+      "variant": "jpeg-q80-current-default",
+      "wallMs": 2241,
+      "mp4Bytes": 206466,
+      "ssimVsLosslessStill": "0.986582",
+      "psnrVsLosslessStill": "38.075759",
+      "ssimVsPngVideoFrame": "0.990247",
+      "psnrVsPngVideoFrame": "40.124695"
+    },
+    {
+      "scene": "Diagram-trilateration-thin-lines-text",
+      "variant": "jpeg-q95",
+      "wallMs": 2284,
+      "mp4Bytes": 140668,
+      "ssimVsLosslessStill": "0.992475",
+      "psnrVsLosslessStill": "39.901269",
+      "ssimVsPngVideoFrame": "0.996117",
+      "psnrVsPngVideoFrame": "43.319839"
+    },
+    {
+      "scene": "Diagram-bars-text",
+      "variant": "png",
+      "wallMs": 2320,
+      "mp4Bytes": 32418,
+      "ssimVsLosslessStill": "0.995110",
+      "psnrVsLosslessStill": "39.068618"
+    },
+    {
+      "scene": "Diagram-bars-text",
+      "variant": "jpeg-q80-current-default",
+      "wallMs": 2353,
+      "mp4Bytes": 38640,
+      "ssimVsLosslessStill": "0.991445",
+      "psnrVsLosslessStill": "38.722040",
+      "ssimVsPngVideoFrame": "0.992713",
+      "psnrVsPngVideoFrame": "41.182715"
+    },
+    {
+      "scene": "Diagram-bars-text",
+      "variant": "jpeg-q95",
+      "wallMs": 2771,
+      "mp4Bytes": 36367,
+      "ssimVsLosslessStill": "0.995373",
+      "psnrVsLosslessStill": "40.153692",
+      "ssimVsPngVideoFrame": "0.996541",
+      "psnrVsPngVideoFrame": "43.751696"
+    }
+  ]
+}
