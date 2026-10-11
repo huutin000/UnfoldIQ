@@ -1,0 +1,251 @@
+{
+ "voice": "am_michael",
+ "voiceBible": "vb-19f4fd6a4596",
+ "kokoroLoadSec": 5.4,
+ "asrModel": "faster-whisper base int8 (proxy for intelligibility, not a human listening test)",
+ "rows": [
+  {
+   "segment": "A-hook",
+   "scenes": [
+    "N01",
+    "N02",
+    "N03"
+   ],
+   "speed": 1,
+   "words": 88,
+   "durationSec": 34.27,
+   "wordsPerSec": 2.567,
+   "synthSec": 14.5,
+   "pauseCount": 11,
+   "pauseTotalSec": 6.64,
+   "pauseMaxSec": 1.01,
+   "sampleRate": 24000,
+   "wavFile": "tts-out\\A-hook-speed1.0.wav",
+   "asrWordMismatchRatio": 0.028,
+   "asrDiffs": [
+    [
+     "thirty",
+     "30"
+    ],
+    [
+     "thirty eight",
+     "38"
+    ]
+   ],
+   "asrHeard": "Your phone can find you on Earth to within a few meters, yet not one GPS satellite is tracking it.  They only broadcast like lighthouses.  So how does a phone find itself from signals that only travel one way?  By measuring time, so precisely that one billionth of a second is 30 centimeters of error.  And the clocks involved are strange.  The ones on the satellites gain about 38 microseconds a day on yours.  It is thousands of times more than navigation can tolerate, and Einstein explains why.",
+   "wavRetained": false
+  },
+  {
+   "segment": "A-hook",
+   "scenes": [
+    "N01",
+    "N02",
+    "N03"
+   ],
+   "speed": 1.1,
+   "words": 88,
+   "durationSec": 31.95,
+   "wordsPerSec": 2.754,
+   "synthSec": 13,
+   "pauseCount": 11,
+   "pauseTotalSec": 6.08,
+   "pauseMaxSec": 0.95,
+   "sampleRate": 24000,
+   "wavFile": "tts-out\\A-hook-speed1.1.wav",
+   "asrWordMismatchRatio": 0.028,
+   "asrDiffs": [
+    [
+     "thirty",
+     "30"
+    ],
+    [
+     "thirty eight",
+     "38"
+    ]
+   ],
+   "asrHeard": "Your phone can find you on Earth to within a few meters, yet not one GPS satellite is tracking it.  They only broadcast like lighthouses, so how does a phone find itself from signals that only travel one way?  By measuring time, so precisely that one billionth of a second is 30 centimeters of error,  and the clocks involved are strange.  The ones on the satellites gain about 38 microseconds a day on yours.  It is thousands of times more than navigation can tolerate, and Einstein explains why.",
+   "wavRetained": false
+  },
+  {
+   "segment": "B-numbers",
+   "scenes": [
+    "N17",
+    "N18",
+    "N19",
+    "N19b"
+   ],
+   "speed": 1,
+   "words": 164,
+   "durationSec": 67.28,
+   "wordsPerSec": 2.438,
+   "synthSec": 27.7,
+   "pauseCount": 22,
+   "pauseTotalSec": 13.65,
+   "pauseMaxSec": 1.19,
+   "sampleRate": 24000,
+   "wavFile": "tts-out\\B-numbers-speed1.0.wav",
+   "asrWordMismatchRatio": 0.06,
+   "asrDiffs": [
+    [
+     "fourteen thousand",
+     "14 000"
+    ],
+    [
+     "forty five",
+     "45"
+    ],
+    [
+     "together",
+     "other"
+    ],
+    [
+     "thirty eight",
+     "38"
+    ],
+    [
+     "thirty eight",
+     "38"
+    ],
+    [
+     "eleven",
+     "11"
+    ],
+    [
+     "thirty eight",
+     "38"
+    ]
+   ],
+   "asrHeard": "Now those atomic clocks have a problem and it comes from Einstein.  Special relativity says moving clocks tick slower.  At 14,000 kilometers an hour, satellite clocks fall behind ground clocks by about seven microseconds  a day.  General relativity says clocks tick faster where gravity is weaker.  Up there, that adds about 45 microseconds a day.  Other, satellite clocks run about 38 microseconds a day faster than ground clocks.  About 38 microseconds a day sounds tiny, but a ranging error of three meters takes only  ten nanoseconds of clock error.  The offset is thousands of times too big to ignore.  Here is the twist.  Had engineers ignored relativity, every distance would come out too short by the same amount,  up to about 11 kilometers by the next daily clock update.  In this simplified picture, the receiver would absorb that shared error into its own clock  bias and your position would survive.  GPS time would not.  It would be off by 38 microseconds a day.",
+   "wavRetained": false
+  },
+  {
+   "segment": "B-numbers",
+   "scenes": [
+    "N17",
+    "N18",
+    "N19",
+    "N19b"
+   ],
+   "speed": 1.1,
+   "words": 164,
+   "durationSec": 63.55,
+   "wordsPerSec": 2.581,
+   "synthSec": 24.4,
+   "pauseCount": 22,
+   "pauseTotalSec": 12.59,
+   "pauseMaxSec": 1.16,
+   "sampleRate": 24000,
+   "wavFile": "tts-out\\B-numbers-speed1.1.wav",
+   "asrWordMismatchRatio": 0.057,
+   "asrDiffs": [
+    [
+     "fourteen thousand",
+     "14 000"
+    ],
+    [
+     "forty five",
+     "45"
+    ],
+    [
+     "thirty eight",
+     "38"
+    ],
+    [
+     "about thirty eight",
+     "38"
+    ],
+    [
+     "eleven",
+     "11"
+    ],
+    [
+     "thirty eight",
+     "38"
+    ]
+   ],
+   "asrHeard": "Now those atomic clocks have a problem and it comes from Einstein.  Special relativity says moving clocks tick slower.  At 14,000 kilometers an hour, satellite clocks fall behind ground clocks by about seven  microseconds a day.  General relativity says clocks tick faster where gravity is weaker.  Up there, that adds about 45 microseconds a day.  Together, satellite clocks run about 38 microseconds a day faster than ground clocks.  38 microseconds a day sounds tiny, but a ranging error of three meters takes only ten nanoseconds  of clock error.  The offset is thousands of times too big to ignore.  Here is the twist.  Had engineers ignored relativity, every distance would come out too short by the same amount,  up to about 11 kilometers by the next daily clock update.  In this simplified picture, the receiver would absorb that shared error into its own clock  bias and your position would survive.  GPS time would not.  It would be off by 38 microseconds a day.",
+   "wavRetained": false
+  },
+  {
+   "segment": "C-technical",
+   "scenes": [
+    "N24",
+    "N26"
+   ],
+   "speed": 1,
+   "words": 103,
+   "durationSec": 41.23,
+   "wordsPerSec": 2.498,
+   "synthSec": 15.3,
+   "pauseCount": 14,
+   "pauseTotalSec": 8.52,
+   "pauseMaxSec": 1.18,
+   "sampleRate": 24000,
+   "wavFile": "tts-out\\C-technical-speed1.0.wav",
+   "asrWordMismatchRatio": 0.075,
+   "asrDiffs": [
+    [
+     "three hundred",
+     "300"
+    ],
+    [
+     "fifty",
+     "50"
+    ],
+    [
+     "six",
+     "6"
+    ],
+    [
+     "it delays",
+     "the delay is"
+    ],
+    [
+     "l2c",
+     "out to c"
+    ]
+   ],
+   "asrHeard": "The pattern repeats every millisecond, about 300 kilometers of signal, so the code alone  fixes the delay only within one millisecond.  The message supplies the rest.  At 50 bits a second, each 6 second block carries a time-of-week word near its start, so the receiver  can work out which millisecond it is hearing.  The ionosphere changes with the time of day and with solar activity.  The delay is lower frequencies more in proportion to one over the frequency squared.  A receiver listening on two frequencies can compare the delays and correct for it.  With the newer civil signal out to C, civilian receivers can do that.",
+   "wavRetained": false
+  },
+  {
+   "segment": "C-technical",
+   "scenes": [
+    "N24",
+    "N26"
+   ],
+   "speed": 1.1,
+   "words": 103,
+   "durationSec": 38.83,
+   "wordsPerSec": 2.653,
+   "synthSec": 14.6,
+   "pauseCount": 14,
+   "pauseTotalSec": 7.89,
+   "pauseMaxSec": 1.11,
+   "sampleRate": 24000,
+   "wavFile": "tts-out\\C-technical-speed1.1.wav",
+   "asrWordMismatchRatio": 0.043,
+   "asrDiffs": [
+    [
+     "three hundred",
+     "300"
+    ],
+    [
+     "fifty",
+     "50"
+    ],
+    [
+     "six",
+     "6"
+    ],
+    [
+     "l2c",
+     "altacy"
+    ]
+   ],
+   "asrHeard": "The pattern repeats every millisecond, about 300 kilometers of signal, so the code alone  fixes the delay only within one millisecond.  The message supplies the rest.  At 50 bits a second, each 6 second block carries a time-of-week word near its start, so the  receiver can work out which millisecond it is hearing.  The ionosphere changes with the time of day and with solar activity.  It delays lower frequencies more, in proportion to one over the frequency squared.  A receiver listening on two frequencies can compare the delays and correct for it.  With the newer civil signal altacy, civilian receivers can do that.",
+   "wavRetained": false
+  }
+ ],
+ "note": "WAV files were written to a temporary scratch folder and are NOT committed. Measured on the local Kokoro 0.9.4 CPU path; 3 segments (355 words), speeds 1.0 and 1.1."
+}

@@ -1,0 +1,374 @@
+{
+  "version": "1.0.0",
+  "note": "Cases come from real GPS draft v1/v2 text; expectations are verified against acquired sources (see basis). Production rules contain no GPS content; topic constraints come from the ledger fixture.",
+  "cases": [
+    {
+      "id": "NEG-v1-S08",
+      "origin": "GPS draft v1 S08",
+      "kind": "NEGATIVE",
+      "scenes": [
+        {
+          "id": "S08",
+          "text": "A third distance picks the winner. Three circles meet at exactly one point. That is trilateration: positioning from three distances.",
+          "evidence": "C3 (SRC2)",
+          "visual": "D"
+        }
+      ],
+      "expect": [
+        "MISSING_CAVEAT",
+        "ABSOLUTE_LANGUAGE"
+      ],
+      "basis": "GPS.gov trilateration page: \"there should only be one place on the map where they all intersect\" (flat-map scope); ledger C3 caveat"
+    },
+    {
+      "id": "NEG-v1-S09",
+      "origin": "GPS draft v1 S09",
+      "kind": "NEGATIVE",
+      "scenes": [
+        {
+          "id": "S09",
+          "text": "The real world has one more dimension. In three dimensions each distance is a sphere, not a circle, and the spheres meet at your position in space.",
+          "evidence": "C3 (SRC2: spheres)",
+          "visual": "D"
+        }
+      ],
+      "expect": [
+        "FORBIDDEN_BY_LEDGER"
+      ],
+      "basis": "geometry: three spheres meet at two points; SRC17: four unknowns need at least four ranges; ledger C3 forbidden pattern"
+    },
+    {
+      "id": "NEG-v1-S22",
+      "origin": "GPS draft v1 S22",
+      "kind": "NEGATIVE",
+      "scenes": [
+        {
+          "id": "S22",
+          "text": "From twenty thousand kilometers away, a signal arrives in about a tenth of a second. Short, but measurable.",
+          "evidence": "C5 (derived 0.067 s zenith)",
+          "visual": "D"
+        }
+      ],
+      "expect": [
+        "NUMBER_COARSE_APPROXIMATION"
+      ],
+      "basis": "derived: 20,200 km / c = 0.067 s overhead, 0.086 s at the horizon (ledger C5 derivation); \"a tenth\" is 16-48% off"
+    },
+    {
+      "id": "NEG-v1-S25",
+      "origin": "GPS draft v1 S25",
+      "kind": "NEGATIVE",
+      "scenes": [
+        {
+          "id": "S25",
+          "text": "Your receiver makes its own copy of the pattern and slides it until the two line up. The shift needed to match is the travel time.",
+          "evidence": "C7 (SRC19)",
+          "visual": "D"
+        }
+      ],
+      "expect": [
+        "MISSING_CAVEAT"
+      ],
+      "basis": "SRC17 pseudorange equation and SRC24: receivers measure pseudoranges (range plus receiver clock bias), not true travel time; ledger C9 caveat"
+    },
+    {
+      "id": "NEG-v1-S34",
+      "origin": "GPS draft v1 S34",
+      "kind": "NEGATIVE",
+      "scenes": [
+        {
+          "id": "S34",
+          "text": "So GPS gives you two things at once: where you are, and exactly what time it is.",
+          "evidence": "recap",
+          "visual": "D"
+        }
+      ],
+      "expect": [
+        "ABSOLUTE_LANGUAGE"
+      ],
+      "basis": "\"exactly what time it is\" appears in no cited evidence"
+    },
+    {
+      "id": "NEG-v1-S40",
+      "origin": "GPS draft v1 S40",
+      "kind": "NEGATIVE",
+      "scenes": [
+        {
+          "id": "S40",
+          "text": "That is the payoff to our opening question mark: GPS only works because its designers corrected for relativity.",
+          "evidence": "C12 (SRC21)",
+          "visual": "D"
+        }
+      ],
+      "expect": [
+        "CAUSAL_OVERCLAIM"
+      ],
+      "basis": "SRC24: relativity breaks timing, position unaffected in the idealised case; \"only works because\" is not in any source"
+    },
+    {
+      "id": "NEG-v2-N03",
+      "origin": "GPS draft v2 N03",
+      "kind": "NEGATIVE",
+      "scenes": [
+        {
+          "id": "N03",
+          "text": "And the clocks involved are strange: the ones on the satellites run faster than yours. Einstein explains why, and engineers estimate that without the fix, errors would grow by roughly ten kilometers a day.",
+          "evidence": "C11, C12 (SRC3, SRC21)",
+          "visual": "D"
+        }
+      ],
+      "expect": [
+        "FORBIDDEN_BY_LEDGER"
+      ],
+      "basis": "SRC24 (Misra): common range bias up to ~11 km between daily uploads is absorbed in the receiver clock bias; position estimate unaffected. Ledger C12 forbids \"errors would grow by ten kilometers\""
+    },
+    {
+      "id": "NEG-v2-N19",
+      "origin": "GPS draft v2 N19",
+      "kind": "NEGATIVE",
+      "scenes": [
+        {
+          "id": "N19",
+          "text": "Thirty-eight microseconds sounds tiny, but a signal travels three hundred meters in one. Engineers estimate that, uncorrected, the errors would grow by roughly ten kilometers every day.",
+          "evidence": "C12 (SRC21), derived",
+          "visual": "D"
+        }
+      ],
+      "expect": [
+        "FORBIDDEN_BY_LEDGER",
+        "NUMBER_NOT_IN_EVIDENCE"
+      ],
+      "basis": "same as N03; plus \"three hundred meters\" was not mapped to the cited claims"
+    },
+    {
+      "id": "NEG-v2-N24",
+      "origin": "GPS draft v2 N24",
+      "kind": "NEGATIVE",
+      "scenes": [
+        {
+          "id": "N24",
+          "text": "The pattern repeats every millisecond, about three hundred kilometers of signal, so the message also carries a time count that tells the receiver which repeat it is hearing. With the orbit data in the message, each satellite becomes one sphere.",
+          "evidence": "derived 299.8 km; SRC14 (message TOW count, ephemeris); inference flagged in risks",
+          "visual": "D"
+        }
+      ],
+      "expect": [
+        "NUMBER_NOT_IN_EVIDENCE"
+      ],
+      "basis": "the 1 ms = 300 km derivation lives in ledger C24, which the scene did not cite"
+    },
+    {
+      "id": "NEG-v2-N29-ure",
+      "origin": "GPS draft v2 N29 (evidence tag corrected to cite C25)",
+      "kind": "NEGATIVE",
+      "scenes": [
+        {
+          "id": "N29",
+          "text": "That is why the satellites' accuracy and yours differ. The government commits to a signal error of at most two meters, and measured under one meter on one day in 2021. Phones typically get within about five meters under open sky.",
+          "evidence": "C25 (SRC16), C21, C13",
+          "visual": "D"
+        }
+      ],
+      "expect": [
+        "MISSING_CAVEAT"
+      ],
+      "basis": "SRC16: URE is ranging accuracy, user accuracy is a position radius; the scene presents the satellite figure without saying it is one distance"
+    },
+    {
+      "id": "KFN-v1-S01",
+      "origin": "GPS draft v1 S01",
+      "kind": "KNOWN_FALSE_NEGATIVE",
+      "scenes": [
+        {
+          "id": "S01",
+          "text": "That blue dot on your phone shows where you are, usually within about five meters when you can see the sky. Yet the satellites overhead are not tracking you at all. So how does the dot know?",
+          "evidence": "C13 (4.9 m), C1 (beacons)",
+          "visual": "D"
+        }
+      ],
+      "expect": [],
+      "basis": "implying the blue dot is purely GPS is a semantic framing issue; no deterministic rule can see it: needs the editorial reviewer"
+    },
+    {
+      "id": "KFN-v1-S24",
+      "origin": "GPS draft v1 S24",
+      "kind": "KNOWN_FALSE_NEGATIVE",
+      "scenes": [
+        {
+          "id": "S24",
+          "text": "How does the receiver measure that time? Each satellite sends its own code, a pattern of one thousand twenty-three pulses that repeats every millisecond.",
+          "evidence": "C7 (SRC18)",
+          "visual": "D"
+        }
+      ],
+      "expect": [],
+      "basis": "\"pulses\" for chips and the omitted 1 ms repeat are precision issues: needs the editorial reviewer"
+    },
+    {
+      "id": "POS-v3-N05",
+      "origin": "GPS v3 N05",
+      "kind": "POSITIVE",
+      "scenes": [
+        {
+          "id": "N05",
+          "text": "On a flat map, a second tower gives a second circle, and the two cross in two places. A third circle leaves just one spot where all three meet. Positioning from three distances: trilateration.",
+          "evidence": "C3 (SRC2)",
+          "visual": "D"
+        }
+      ],
+      "absent": [
+        "MISSING_CAVEAT",
+        "FORBIDDEN_BY_LEDGER",
+        "ABSOLUTE_LANGUAGE"
+      ],
+      "basis": "flat-map scope stated"
+    },
+    {
+      "id": "POS-v3-N06",
+      "origin": "GPS v3 N06",
+      "kind": "POSITIVE",
+      "scenes": [
+        {
+          "id": "N06",
+          "text": "The real world has three dimensions, so each distance is a sphere. Three spheres can still meet at two points, so a receiver needs more measurements than that. One extra measurement turns out to matter for a surprising reason.",
+          "evidence": "C3 (SRC2 spheres)",
+          "visual": "D"
+        }
+      ],
+      "absent": [
+        "FORBIDDEN_BY_LEDGER",
+        "MISSING_CAVEAT"
+      ],
+      "basis": "three spheres can still meet at two points"
+    },
+    {
+      "id": "POS-v3-N12",
+      "origin": "GPS v3 N12",
+      "kind": "POSITIVE",
+      "scenes": [
+        {
+          "id": "N12",
+          "text": "From straight overhead, the signal takes about seven hundredths of a second. Lower in the sky, up to about nine hundredths. Short, but a clock that is off by just one microsecond moves the answer by three hundred meters.",
+          "evidence": "C5, C8 (derived 0.067 s, 0.086 s, 299.8 m)",
+          "visual": "D"
+        }
+      ],
+      "absent": [
+        "NUMBER_NOT_IN_EVIDENCE",
+        "NUMBER_COARSE_APPROXIMATION"
+      ],
+      "basis": "seven and nine hundredths match 0.0674 s and 0.086 s after rounding; 300 m matches 299.8 m"
+    },
+    {
+      "id": "POS-v3-N19b",
+      "origin": "GPS v3 N19b",
+      "kind": "POSITIVE",
+      "scenes": [
+        {
+          "id": "N19b",
+          "text": "Here is the twist. Had engineers ignored relativity, every distance would come out too short by the same amount, up to about eleven kilometers by the next daily clock update. In this simplified picture the receiver would absorb that shared error into its own clock bias, and your position would survive. GPS time would not: it would be off by thirty-eight microseconds a day.",
+          "evidence": "C12 (SRC24), C11 (SRC24)",
+          "visual": "D"
+        }
+      ],
+      "absent": [
+        "FORBIDDEN_BY_LEDGER",
+        "NUMBER_NOT_IN_EVIDENCE",
+        "NUMBER_COARSE_APPROXIMATION"
+      ],
+      "basis": "kilometer language is allowed when framed as a common range bias (SRC24)"
+    },
+    {
+      "id": "POS-v3-N21",
+      "origin": "GPS v3 N21",
+      "kind": "POSITIVE",
+      "scenes": [
+        {
+          "id": "N21",
+          "text": "Orbits are not perfect circles, so a smaller relativistic error is left over, and it differs from satellite to satellite. For a slightly oval orbit it can reach about forty-five nanoseconds, roughly fifteen meters of range error, and receivers correct for it.",
+          "evidence": "C18 (SRC24, SRC5)",
+          "visual": "D"
+        }
+      ],
+      "absent": [
+        "NUMBER_NOT_IN_EVIDENCE",
+        "NUMBER_COARSE_APPROXIMATION"
+      ],
+      "basis": "45 ns and 15 m are in SRC24"
+    },
+    {
+      "id": "POS-v3-N24",
+      "origin": "GPS v3 N24",
+      "kind": "POSITIVE",
+      "scenes": [
+        {
+          "id": "N24",
+          "text": "The pattern repeats every millisecond, about three hundred kilometers of signal, so the code alone fixes the delay only within one millisecond. The message supplies the rest: at fifty bits a second, each six-second block carries a time-of-week word near its start, so the receiver can work out which millisecond it is hearing.",
+          "evidence": "C24 (SRC18, SRC14; derived 299.8 km)",
+          "visual": "D"
+        }
+      ],
+      "absent": [
+        "NUMBER_NOT_IN_EVIDENCE",
+        "NUMBER_COARSE_APPROXIMATION"
+      ],
+      "basis": "300 km, 1 ms, 50 bps and 6 s all map to C24 evidence"
+    },
+    {
+      "id": "POS-v3-N29",
+      "origin": "GPS v3 N29",
+      "kind": "POSITIVE",
+      "scenes": [
+        {
+          "id": "N29",
+          "text": "Accuracy comes in layers. The satellite signal is held to an error of at most about two meters, ninety-five percent of the time, and on one day in 2021 it stayed under one meter. But that is the error of one distance. Your position also depends on satellite geometry, the atmosphere and nearby buildings, so phones typically land within about five meters under open sky.",
+          "evidence": "C25 (SRC15, SRC16), C21, C13 (SRC16)",
+          "visual": "D"
+        }
+      ],
+      "absent": [
+        "NUMBER_NOT_IN_EVIDENCE",
+        "NUMBER_COARSE_APPROXIMATION",
+        "MISSING_CAVEAT"
+      ],
+      "basis": "\"one day in 2021\" is a calendar reference, not a measurement; URE is framed as one distance"
+    },
+    {
+      "id": "POS-explain-hypothetical",
+      "origin": "GPS v3 N04",
+      "kind": "POSITIVE",
+      "scenes": [
+        {
+          "id": "N04",
+          "text": "First, the geometry. Suppose you are exactly five kilometers from a tower. You could be anywhere on a circle around it. One distance is not enough.",
+          "evidence": "Explain",
+          "visual": "D"
+        }
+      ],
+      "absent": [
+        "ABSOLUTE_LANGUAGE",
+        "NUMBER_NOT_IN_EVIDENCE"
+      ],
+      "basis": "Explain scenes (hypothetical example \"exactly five kilometers\") are exempt: false-positive guard"
+    },
+    {
+      "id": "POS-approx-wording",
+      "origin": "synthetic",
+      "kind": "POSITIVE",
+      "scenes": [
+        {
+          "id": "P1",
+          "text": "Satellites orbit about twenty thousand two hundred kilometers up.",
+          "evidence": "C4 (SRC1)",
+          "visual": "D"
+        }
+      ],
+      "absent": [
+        "NUMBER_NOT_IN_EVIDENCE",
+        "NUMBER_COARSE_APPROXIMATION",
+        "NUMBER_WITHOUT_QUALIFIER"
+      ],
+      "basis": "exact match with qualifier"
+    }
+  ]
+}

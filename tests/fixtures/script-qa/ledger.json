@@ -1,0 +1,593 @@
+{
+ "kind": "PHASE7_CLAIM_LEDGER",
+ "version": "1.2.0",
+ "note": "fixture copy of the Phase 7 GPS ledger for regression tests",
+ "sources": [
+  {
+   "id": "SRC1",
+   "title": "GPS.gov Space Segment",
+   "role": "US government (GPS program), official primary"
+  },
+  {
+   "id": "SRC2",
+   "title": "GPS.gov Trilateration",
+   "role": "US government (GPS program), official primary"
+  },
+  {
+   "id": "SRC3",
+   "title": "NIST Putting Einstein to the Test",
+   "role": "US government (NIST), official"
+  },
+  {
+   "id": "SRC4",
+   "title": "NASA GPS",
+   "role": "US government (NASA), official"
+  },
+  {
+   "id": "SRC5",
+   "title": "Ashby 2003, Relativity in the GPS (Living Reviews in Relativity)",
+   "role": "peer-reviewed academic"
+  },
+  {
+   "id": "SRC6",
+   "title": "GPS.gov GPS overview",
+   "role": "US government (GPS program), official primary"
+  },
+  {
+   "id": "SRC7",
+   "title": "GPS.gov GPS and Telling Time",
+   "role": "US government (GPS program), official primary"
+  },
+  {
+   "id": "SRC8",
+   "title": "GPS.gov Augmentation Systems",
+   "role": "US government (GPS program), official primary"
+  },
+  {
+   "id": "SRC9",
+   "title": "GPS.gov Other GNSS",
+   "role": "US government (GPS program), official primary"
+  },
+  {
+   "id": "SRC10",
+   "title": "GPS.gov FAQ",
+   "role": "US government (GPS program), official primary"
+  },
+  {
+   "id": "SRC11",
+   "title": "GPS.gov New Civil Signals",
+   "role": "US government (GPS program), official primary"
+  },
+  {
+   "id": "SRC12",
+   "title": "ESA Navipedia Multipath",
+   "role": "ESA (independent of US program), reference wiki edited by experts"
+  },
+  {
+   "id": "SRC13",
+   "title": "ESA Navipedia Ionospheric Delay",
+   "role": "ESA, reference wiki"
+  },
+  {
+   "id": "SRC14",
+   "title": "ESA Navipedia GPS Navigation Message",
+   "role": "ESA, reference wiki"
+  },
+  {
+   "id": "SRC15",
+   "title": "GPS.gov GPS Accuracy (current)",
+   "role": "US government (GPS program), official primary"
+  },
+  {
+   "id": "SRC16",
+   "title": "GPS.gov GPS Accuracy (archive.gps.gov, cites ION)",
+   "role": "US government (GPS program), official archived page"
+  },
+  {
+   "id": "SRC17",
+   "title": "ESA Navipedia Code Based Positioning (SPS)",
+   "role": "ESA, reference wiki"
+  },
+  {
+   "id": "SRC18",
+   "title": "ESA Navipedia GPS Services",
+   "role": "ESA, reference wiki"
+  },
+  {
+   "id": "SRC19",
+   "title": "ESA Navipedia Correlators",
+   "role": "ESA, reference wiki"
+  },
+  {
+   "id": "SRC20",
+   "title": "ESA Navipedia Tropospheric Delay",
+   "role": "ESA, reference wiki"
+  },
+  {
+   "id": "SRC22",
+   "title": "GPS.gov Selective Availability",
+   "role": "US government (GPS program), official primary"
+  },
+  {
+   "id": "SRC23",
+   "title": "GPS.gov GPS in Space",
+   "role": "US government (GPS program), official primary"
+  },
+  {
+   "id": "SRC21",
+   "title": "GPS World: GPS takes into account mysterious black hole time warps",
+   "role": "trade press, secondary (quotes physics literature)"
+  },
+  {
+   "id": "SRC24",
+   "title": "GPS World: Inside the box: GPS and relativity (Pratap Misra, Tufts; 2023)",
+   "role": "trade press, expert-authored engineering analysis (cites Ashby)"
+  }
+ ],
+ "claims": {
+  "C1": {
+   "status": "SUPPORTED",
+   "wording": "GPS satellites only broadcast; your phone listens. Do NOT say a phone works without any network (phones can also use carrier/Wi-Fi location).",
+   "evidence": [
+    {
+     "src": "SRC10",
+     "quote": "Please be aware that the GPS satellites themselves do not track anything on the ground. They are simply beacons, like lighthouses, broadcasting one-way reference signals. Therefore, the government operators of GPS cannot locate your phone/device."
+    },
+    {
+     "src": "SRC10",
+     "quote": "We recommend you contact your wireless carrier. They may be able to track down your phone/device using the location technology built into it."
+    }
+   ]
+  },
+  "C2": {
+   "status": "SUPPORTED",
+   "evidence": [
+    {
+     "src": "SRC4",
+     "quote": "User Segment: Receivers that process the navigation signals from the GPS satellites and calculate position and time."
+    },
+    {
+     "src": "SRC6",
+     "quote": "The Global Positioning System (GPS) is a U.S.-owned utility that provides users with positioning, navigation, and timing (PNT) services. This system consists of three segments: the space segment, the control segment, and the user segment. The U.S. Space Force develops, maintains, and operates the space and control segments."
+    }
+   ]
+  },
+  "C3": {
+   "status": "SUPPORTED",
+   "wording": "2D circles are a teaching analogy; real GPS uses spheres plus the receiver clock (C9).",
+   "evidence": [
+    {
+     "src": "SRC2",
+     "quote": "GPS positioning works on two basic mathematical concepts. The first is called trilateration, which literally means positioning from three distances. The second concept is the relationship between distance traveled, rate (speed) of travel, and amount of time spent traveling, or:"
+    },
+    {
+     "src": "SRC2",
+     "quote": "In true 3 dimensional GPS positioning, the signals from the satellites are represented by spheres. For this exercise, we are going to use circles since we are on a 2 dimensional map. So, as a GPS receiver you need to figure out just how far from each satellite you are. Keep in mind you could be anywhere!"
+    }
+   ],
+   "forbidden": [
+    "spheres?[^.]*(meet|cross|intersect)[^.]*(at )?your position"
+   ],
+   "caveats": [
+    {
+     "trigger": "three circles[^.]*(exactly|only|just)[^.]*(point|spot)",
+     "requires": "flat map|on a map|on the map|two.dimension|2D",
+     "note": "three circles meeting at one point holds on a flat map only"
+    }
+   ]
+  },
+  "C4": {
+   "status": "SUPPORTED",
+   "evidence": [
+    {
+     "src": "SRC1",
+     "quote": "GPS satellites fly in medium Earth orbit (MEO) at an altitude of approximately 20,200 km (12,550 miles). Each satellite circles the Earth twice a day."
+    },
+    {
+     "src": "SRC4",
+     "quote": "Space Segment: A constellation of at least 24 US government satellites distributed in six orbital planes inclined 55° from the equator in a Medium Earth Orbit (MEO) at about 20,200 kilometers (12,550 miles) and circling the Earth every 12 hours."
+    },
+    {
+     "src": "SRC21",
+     "quote": "GPS satellites move about 14,000 kilometers per hour, in a weak gravitational field about 20,000 kilometers above us. Because of relativity, the clock rates of the satellites would drift by about 38 microseconds per day, causing a positioning error of about 10 kilometers if not accounted for."
+    }
+   ],
+   "derivation": "Kepler period 11.97 h; 20,200 km / 6,371 km = 3.2 Earth radii; orbital speed 3.873 km/s = 13943 km/h"
+  },
+  "C5": {
+   "status": "SUPPORTED",
+   "wording": "Say \"about a tenth of a second\" (zenith 0.067 s, slanted paths up to ~0.09 s).",
+   "evidence": [
+    {
+     "src": "SRC2",
+     "quote": "In GPS positioning the rate is how fast the radio signal travels, which is equal to the speed of light (299,792,458 meters per second)."
+    }
+   ],
+   "derivation": "1 ns = 30 cm; zenith 0.0674 s; slant at 0 deg elevation 25796 km = 0.086 s; 1 ms x c = 299.8 km"
+  },
+  "C6": {
+   "status": "SUPPORTED",
+   "wording": "Say \"at least 24\", six orbital planes; GPS.gov: users can view at least four satellites from virtually anywhere.",
+   "evidence": [
+    {
+     "src": "SRC4",
+     "quote": "Space Segment: A constellation of at least 24 US government satellites distributed in six orbital planes inclined 55° from the equator in a Medium Earth Orbit (MEO) at about 20,200 kilometers (12,550 miles) and circling the Earth every 12 hours."
+    },
+    {
+     "src": "SRC1",
+     "quote": "The satellites in the GPS constellation are arranged into six equally-spaced orbital planes surrounding the Earth. Each plane contains four \"slots\" occupied by baseline satellites. This 24-slot arrangement ensures users can view at least four satellites from virtually any point on the planet."
+    }
+   ]
+  },
+  "C7": {
+   "status": "SUPPORTED",
+   "evidence": [
+    {
+     "src": "SRC18",
+     "quote": "The Coarse/Acquisition code (C/A(t)), which is modulated only on L1. It has a chipping-rate of 1.023 MHz, and contains 1 023 chips, so that the code is repeated every millisecond and each chip lasts about 1 µs, meaning a chip-width or wavelength of 293.1 metre."
+    },
+    {
+     "src": "SRC19",
+     "quote": "As an example, Figure 1 depicts the auto-correlation of GPS PRN1 and the cross-correlation between GPS PRN1 and GPS PRN17. It can be seen that regardless of the delay considered, the cross-correlation always provides low values, while the auto-correlation (correlation between PRN1 and itself) presents a peak only when both replicas are aligned."
+    },
+    {
+     "src": "SRC14",
+     "quote": "Sub-frame 1: contains information about the parameters to be applied to satellite clock status for its correction. These values are polynomial coefficients that allow converting time on board to GPS time. It also has information about satellite health condition."
+    },
+    {
+     "src": "SRC14",
+     "quote": "As a minimum, each GPS navigation message includes the ephemeris parameters, needed to compute the satellite coordinates with enough accuracy; the time parameters and satellite clock corrections, to compute satellite clock offsets and time conversions; service parameters such as satellite health flags; ionospheric parameters, used by single frequency receivers; and the almanacs, which allow the computation of the position of \"all satellites in the constellation\" with a reduced accuracy (1 - 2 km of 1-sigma error) i ..."
+    },
+    {
+     "src": "SRC14",
+     "quote": "Sub-frame 4: provides ionospheric model parameters (in order to adjust for ionospheric refraction), UTC information (Universal Coordinate Time), part of the almanac, and indications whether the Anti-Spoofing, A/S, is activated or not (which transforms P code into the encrypted Y code)."
+    },
+    {
+     "src": "SRC14",
+     "quote": "Under nominal conditions, the GPS Control Segment uploads new ephemeris data approximately every two hours, with longer intervals of six hours or more during non-nominal conditions. The almanac changes much more slowly, being updated at least every six days but usually refreshed daily."
+    }
+   ]
+  },
+  "C8": {
+   "status": "SUPPORTED",
+   "wording": "Satellites carry atomic clocks; receivers use inexpensive clocks that drift and estimate their own clock offset along with position (SRC24).",
+   "evidence": [
+    {
+     "src": "SRC3",
+     "quote": "Though not designed as a test of Einstein, GPS satellites — the ones that control the blue dot on your phone — all carry atomic clocks and are subject to the effects of relativity."
+    },
+    {
+     "src": "SRC1",
+     "quote": "Advanced atomic clocks"
+    },
+    {
+     "src": "SRC24",
+     "quote": "The receivers use inexpensive clocks that drift and have frequency stability no bet-ter than ."
+    },
+    {
+     "src": "SRC17",
+     "quote": "The right side contains the four unknown parameters: The receiver coordinates [math]\\displaystyle{ (x,y,z) }[/math] and the receiver clock offset [math]\\displaystyle{ \\delta t }[/math]."
+    }
+   ],
+   "derivation": "1 microsecond of receiver clock error = 299.8 m of range (c x 1e-6)"
+  },
+  "C9": {
+   "status": "SUPPORTED",
+   "evidence": [
+    {
+     "src": "SRC17",
+     "quote": "The right side contains the four unknown parameters: The receiver coordinates [math]\\displaystyle{ (x,y,z) }[/math] and the receiver clock offset [math]\\displaystyle{ \\delta t }[/math]."
+    },
+    {
+     "src": "SRC5",
+     "quote": "Let there be four synchronized atomic clocks that transmit sharply defined pulses from the positions _r_ _j_ at times _t_ _j_ , with _j_ = 1, 2, 3, 4 an index labelling the different transmission events."
+    }
+   ],
+   "caveats": [
+    {
+     "trigger": "(shift|slides?|match(es)?)[^.]*(is|equals|gives|means)[^.]*travel time",
+     "requires": "clock|pseudorange|offset|late",
+     "note": "the code shift is a delay by the receiver clock (a pseudorange), not the true travel time"
+    }
+   ]
+  },
+  "C10": {
+   "status": "SUPPORTED",
+   "evidence": [
+    {
+     "src": "SRC7",
+     "quote": "Precise synchronization of communications systems, power grids, financial networks, and other critical infrastructure."
+    }
+   ]
+  },
+  "C11": {
+   "status": "SUPPORTED",
+   "wording": "Say \"about 7 behind, about 45 ahead, net about 38 microseconds a day\"; the offset is secular (grows from day to day).",
+   "evidence": [
+    {
+     "src": "SRC3",
+     "quote": "These satellites hurtle so fast through space that special relativity indicates they should fall behind earthbound clocks by 7 microseconds (millionths of a second) per day."
+    },
+    {
+     "src": "SRC24",
+     "quote": "The net effect:** A GPS satellite clock will gain about 38 microseconds per day over a clock at rest at mean sea level. This effect is secular, meaning the time offset will grow from day to day."
+    },
+    {
+     "src": "SRC21",
+     "quote": "“When viewed from the surface of the Earth, the clocks on GPS satellites appear to be ticking faster than identical clocks on the ground. A calculation using general relativity predicts that the clocks in each GPS satellite should get ahead of ground-based clocks by 45 microseconds per day."
+    },
+    {
+     "src": "SRC5",
+     "quote": "$$\\frac{{3G{M_E}}}{{2a{c^2}}} + \\frac{{{\\Phi _0}}}{{{c^2}}} = + 2.5046 \\times {10^{ - 10}} - 6.9693 \\times {10^{ - 10}} = - 4.4647 \\times {10^{ - 10}}.$$"
+    }
+   ],
+   "derivation": "SR -7.2, GR +45.7, net +38.5 us/day; Ashby offset 4.4647e-10 = 38.6 us/day"
+  },
+  "C12": {
+   "status": "SUPPORTED_REVISED",
+   "revision": "v1.2: the earlier reading \"errors of about 10 km a day in position\" (SRC21, quoting older literature) is CONTRADICTED by SRC24 and must not be used.",
+   "wording": "If relativity were ignored, ranges to all satellites would be too short by a common amount (up to about 11 km between daily clock uploads). That common bias is absorbed by the receiver clock offset, so POSITION is unaffected in the idealised identical-orbit case; TIME from GPS would be off by 38 microseconds a day. Do not describe 10-11 km as a position error.",
+   "forbidden": [
+    "position(al)? errors?",
+    "errors? (would )?(grow|pile|accumulate|build)",
+    "drift(s|ed)? by (roughly |about )?(ten|10|eleven|11) kilomet"
+   ],
+   "evidence": [
+    {
+     "src": "SRC24",
+     "quote": "A GPS receiver would have meas-ured the ranges to all satellites in view as too short by a common amount (up to about 11 kilometers between daily uploads of clock corrections)."
+    },
+    {
+     "src": "SRC24",
+     "quote": "So, what would that do to positioning? The answer is that the common bias introduced by the relativistic effects would get lumped with the typically much larger bias introduced by the offset in the receiver clock. The position estimate would be unaffected."
+    },
+    {
+     "src": "SRC24",
+     "quote": "So, if the relativistic effects had been ignored, the timing accuracy would have suffered to the ex-tent of 38 microseconds per day between updates of the clock parameters."
+    }
+   ],
+   "conflicts": [
+    {
+     "src": "SRC21",
+     "quote": "“If these effects were not properly taken into account, a navigational fix based on the GPS constellation would be false after only 2 minutes, and errors in global positions would continue to accumulate at a rate of about 10 kilometers each day. The whole system would be utterly worthless for navigation in a very short time.”",
+     "verdict": "OVERSTATED as a position error; superseded by SRC24 engineering analysis"
+    }
+   ],
+   "derivation": "38 us x c = 11.5 km/day of common range bias"
+  },
+  "C13": {
+   "status": "SUPPORTED",
+   "wording": "Use \"typically within about 5 metres under open sky\" (GPS.gov archive, cites ION); accuracy worsens near buildings. Distinguish signal-in-space URE (<= 2.0 m, 95%) from user accuracy.",
+   "evidence": [
+    {
+     "src": "SRC16",
+     "quote": "For example, GPS-enabled smartphones are typically accurate to within a 4.9 m (16 ft.) radius under open sky (view source at ION.org). However, their accuracy worsens near buildings, bridges, and trees."
+    },
+    {
+     "src": "SRC15",
+     "quote": "It depends. GPS satellites broadcast their signals in space with a certain accuracy, but what you receive depends on additional factors, including satellite geometry, signal blockage, atmospheric conditions, and receiver design features/quality."
+    },
+    {
+     "src": "SRC15",
+     "quote": "For example, the government commits to broadcasting the GPS signal in space with a daily global average user range error (URE) of ≤2.0 m (6.6 ft.), with 95% probability, across all healthy satellites in constellation slots."
+    },
+    {
+     "src": "SRC12",
+     "quote": "The multipath error can be minimised improving the antenna quality, that is to say, making them to mitigate the signal coming from certain low elevation directions, and moving the antenna away from reflecting objects (when possible)."
+    },
+    {
+     "src": "SRC13",
+     "quote": "The ionosphere is the zone of the terrestrial atmosphere that extends itself from about 60 km until more than 2.000 km in high. As it name says, it contains a partially ionised medium, as result of the X and UV rays of Solar Radiation and the incidence of charged particles."
+    },
+    {
+     "src": "SRC20",
+     "quote": "The effect of the troposphere on the GNSS signals appears as an extra delay in the measurement of the signal traveling from the satellite to receiver."
+    },
+    {
+     "src": "SRC20",
+     "quote": "The error caused by this component is about 2.3 meters in the zenith direction and 10 meters for lower elevations ([math]\\displaystyle{ 10^o }[/math] approximately)."
+    },
+    {
+     "src": "SRC20",
+     "quote": "_Wet component delay_ :** it is caused by the water vapour and condensed water in form of clouds and, thence, it depends on weather conditions. The excess delay is small in this case, only some tens of centimetres, but this component varies faster than the hydrostatic component and a quite randomly way, being very difficult to model."
+    },
+    {
+     "src": "SRC13",
+     "quote": "The TEC, and thence, the ionospheric refraction depends on the geographical location of the receiver, the hour of day and the solar activity."
+    }
+   ],
+   "caveats": [
+    {
+     "trigger": "(within|about|around|roughly)[^.]*five meters",
+     "requires": "open sky|see the sky|outdoors|clear sky",
+     "note": "the typical smartphone figure holds under open sky"
+    }
+   ]
+  },
+  "C14": {
+   "status": "SUPPORTED",
+   "evidence": [
+    {
+     "src": "SRC8",
+     "quote": "A GPS augmentation is any system that aids GPS by providing accuracy, integrity, availability, or any other improvement to positioning, navigation, and timing that is not inherently part of GPS itself."
+    },
+    {
+     "src": "SRC11",
+     "quote": "When combined with L1 C/A in a dual-frequency receiver, L2C enables ionospheric correction, a technique that boosts accuracy. Civilians with dual-frequency GPS receivers enjoy the same accuracy as the military (or better)."
+    },
+    {
+     "src": "SRC9",
+     "quote": "Galileo is a global GNSS owned and operated by the European Union. The EU declared the start of Galileo Initial Services in 2016 and 24+ satellites."
+    },
+    {
+     "src": "SRC11",
+     "quote": "The government is in the process of fielding three new signals designed for civilian use: L2C, L5, and L1C. The legacy civil signal, called L1 C/A or C/A at L1, will continue broadcasting, for a total of four civil GPS signals. Users must upgrade their equipment to benefit from the new signals."
+    },
+    {
+     "src": "SRC11",
+     "quote": "The government is in the process of fielding three new signals designed for civilian use: L2C, L5, and L1C. The legacy civil signal, called L1 C/A or C/A at L1, will continue broadcasting, for a total of four civil GPS signals. Users must upgrade their equipment to benefit from the new signals."
+    },
+    {
+     "src": "SRC8",
+     "quote": "WAAS, a regional space-based augmentation system (SBAS) operated by the Federal Aviation Administration (FAA), supports aircraft navigation across North America."
+    }
+   ]
+  },
+  "C15": {
+   "status": "SUPPORTED",
+   "evidence": [
+    {
+     "src": "SRC22",
+     "quote": "Selective Availability (SA) was an intentional degradation of public GPS signals implemented for national security reasons."
+    },
+    {
+     "src": "SRC22",
+     "quote": "In May 2000, at the direction of President Bill Clinton, the U.S government discontinued its use of Selective Availability in order to make GPS more responsive to civil and commercial users worldwide."
+    },
+    {
+     "src": "SRC22",
+     "quote": "The United States has no intent to ever use Selective Availability again.**"
+    }
+   ]
+  },
+  "C16": {
+   "status": "SUPPORTED",
+   "wording": "Say spacecraft SOMETIMES use GPS timing (source lists it as one use among several).",
+   "evidence": [
+    {
+     "src": "SRC23",
+     "quote": "The Global Positioning System (GPS) is revolutionizing and revitalizing the way nations operate in space, from guidance systems for crewed vehicles to the management, tracking, and control of communication satellite constellations, to monitoring the Earth from space."
+    },
+    {
+     "src": "SRC23",
+     "quote": "Timing solutions — replacing expensive spacecraft atomic clocks with low-cost, precise time GPS receivers."
+    }
+   ]
+  },
+  "C17": {
+   "status": "SUPPORTED",
+   "evidence": [
+    {
+     "src": "SRC3",
+     "quote": "At a much smaller scale, clock scientists have also observed gravitational time dilation in the lab. In 2010, then-NIST physicist David Wineland and colleagues ran two optical clocks based on aluminum ions at heights that differed by about a foot. The clocks ticked at slightly different rates, due to the slight difference in gravity at the two locations."
+    }
+   ]
+  },
+  "C18": {
+   "status": "SUPPORTED",
+   "evidence": [
+    {
+     "src": "SRC5",
+     "quote": "This correction must be made by the receiver; it is a correction to the coordinate time as transmitted by the satellite. For a satellite of eccentricity _e_ = 0.01, the maximum size of this term is about 23 ns. The correction is needed because of a combination of effects on the satellite clock due to gravitational frequency shift and second-order Doppler shift, which vary due to orbit eccentricity."
+    },
+    {
+     "src": "SRC24",
+     "quote": "For a satellite in an orbit with an eccentricity of 0.02, the net effect is that a clock can be ahead or behind by as much as 45 nanoseconds."
+    }
+   ],
+   "derivation": "23 ns x c = 6.9 m (e = 0.01); Misra: 45 ns, about +-15 m (e = 0.02)"
+  },
+  "C19": {
+   "status": "SUPPORTED",
+   "wording": "Delay scales as 1/f^2; lower frequency = larger delay.",
+   "evidence": [
+    {
+     "src": "SRC13",
+     "quote": "the difference between the measured range (with the frequency [math]\\displaystyle{ f }[/math] signal) and the Euclidean distance between the satellite and receiver is given by:          [math]\\displaystyle{ \\Delta_{ph,f}^{iono}=-\\displaystyle\\frac{40.3}{f^2}\\int{N_e\\, dl} \\qquad \\qquad \\Delta_{gr,f}^{iono}=+\\displaystyle\\frac{40.3}{f^2}\\int{N_e\\, dl} \\qquad\\mbox{(10)} }[/math]"
+    }
+   ]
+  },
+  "C20": {
+   "status": "SUPPORTED",
+   "evidence": [
+    {
+     "src": "SRC17",
+     "quote": "From the code pseudorange measurements [math]\\displaystyle{ R^j }[/math] for, at least, four satellites (see GNSS Measurements Modelling and Instrumental Delay),          [math]\\displaystyle{ R^j=\\rho^j+c(\\delta t-\\delta t^j)+T^j+\\hat{\\alpha}\\, I^j+TGD^j+\\mathcal{M}^j+{\\boldsymbol \\varepsilon}^j \\qquad \\mbox{(1)} }[/math]"
+    },
+    {
+     "src": "SRC17",
+     "quote": "The target is to determine the receiver coordinates [math]\\displaystyle{ {\\mathbf r}=(x,y,z) }[/math] and clock offset [math]\\displaystyle{ \\delta t }[/math] from pseudorange measurements [math]\\displaystyle{ R^j }[/math] of at least 4 satellites in view."
+    }
+   ]
+  },
+  "C21": {
+   "status": "SUPPORTED",
+   "wording": "Signal-in-space error is not user accuracy.",
+   "evidence": [
+    {
+     "src": "SRC15",
+     "quote": "The accuracy commitments do not apply to GPS devices, but rather to the signals transmitted in space. For example, the government commits to broadcasting the GPS signal in space with a daily global average user range error (URE) of ≤2.0 m (6.6 ft.), with 95% probability, across all healthy satellites in constellation slots. Actual performance is typically much better. On April 20, 2021, the global average URE across all satellites was ≤0.643 m (2.1 ft.), 95% of the time."
+    }
+   ]
+  },
+  "C22": {
+   "status": "SUPPORTED",
+   "wording": "Satellite clocks are set slightly slow before launch (factory offset).",
+   "evidence": [
+    {
+     "src": "SRC24",
+     "quote": "The relativistic effects discussed so far can be compensated for easily by setting the frequency of the satellite clocks lower (by 0.0045674 hertz) in what’s called “factory offset”: The frequency of a satellite clock is set to 10.22999999543 megahertz so that it will tick in orbit at the same rate as a 10.23-megahertz atomic standard at sea level on Earth. What an ingenious solution!"
+    },
+    {
+     "src": "SRC5",
+     "quote": "$$[1 - 4.4647\\; \\times \\;{10^{ - 10}}]\\; \\times \\;10.23\\;MHz = 10.229999995\\;43MHz.$$"
+    }
+   ]
+  },
+  "C23": {
+   "status": "SUPPORTED",
+   "wording": "Meter-level ranging needs nanosecond-level satellite clocks; 10 ns is about 3 m.",
+   "evidence": [
+    {
+     "src": "SRC24",
+     "quote": "It’s a mantra worth repeating: To measure ranges to GPS satellites with meter-level accuracy, the clocks on the satellites must keep time with nanosecond-level accuracy."
+    },
+    {
+     "src": "SRC24",
+     "quote": "An error of 10 nano-seconds in time amounts to an error of about 3 meters in range computation and, speaking roughly, an error of about 3 meters in the position computed by the receiver."
+    }
+   ],
+   "derivation": "38 us = 38,000 ns; 38,000 ns / 10 ns = 3,800 times the 10 ns daily budget"
+  },
+  "C24": {
+   "status": "SUPPORTED",
+   "wording": "The C/A code repeats every ms (about 300 km); the 50 bps message has 6 s subframes that start with a telemetry word and a time-of-week word, which is how the receiver gets the full transmit time. Say the code alone fixes the delay only within a millisecond.",
+   "evidence": [
+    {
+     "src": "SRC18",
+     "quote": "The Coarse/Acquisition code (C/A(t)), which is modulated only on L1. It has a chipping-rate of 1.023 MHz, and contains 1 023 chips, so that the code is repeated every millisecond and each chip lasts about 1 µs, meaning a chip-width or wavelength of 293.1 metre."
+    },
+    {
+     "src": "SRC14",
+     "quote": "The current “legacy” Navigation Message (LNAV) is modulated on both L1 C/A and L2 P(Y) carriers at 50 bps. The whole message contains 25 pages (or \"frames\") of 30 seconds each, forming the master frame that takes 12,5 minutes to be transmitted. Every frame is subdivided into 5 sub-frames of 6 seconds each; in turn, every sub-frame consists of 10 words, with 30 bits per word (see figure 3). Every sub-frame always starts with the telemetry word (TLM), which is necessary for synchronism. Next, the transference word (HOW) appears. This word provides time information (seconds of the GPS week), allowing the receiver to acquire the week-long P(Y)-code segment."
+    },
+    {
+     "src": "SRC14",
+     "quote": "The current “legacy” Navigation Message (LNAV) is modulated on both L1 C/A and L2 P(Y) carriers at 50 bps. The whole message contains 25 pages (or \"frames\") of 30 seconds each, forming the master frame that takes 12,5 minutes to be transmitted. Every frame is subdivided into 5 sub-frames of 6 seconds each; in turn, every sub-frame consists of 10 words, with 30 bits per word (see figure 3). Every sub-frame always starts with the telemetry word (TLM), which is necessary for synchronism. Next, the transference word (HOW) appears. This word provides time information (seconds of the GPS week), allowing the receiver to acquire the week-long P(Y)-code segment."
+    }
+   ],
+   "derivation": "1 ms x c = 299.8 km; 1 bit at 50 bps = 20 ms = 20 code repeats"
+  },
+  "C25": {
+   "status": "SUPPORTED",
+   "wording": "URE is ranging accuracy of the signal in space (one satellite); user accuracy is a position radius. Never present URE as phone accuracy.",
+   "evidence": [
+    {
+     "src": "SRC16",
+     "quote": "To calculate its position, a GPS device measures its distance (range) from multiple GPS satellites. **URE** is a measure of ranging accuracy. **User accuracy** refers to how close the device's calculated position is from the truth, expressed as a radius."
+    },
+    {
+     "src": "SRC15",
+     "quote": "The accuracy commitments do not apply to GPS devices, but rather to the signals transmitted in space. For example, the government commits to broadcasting the GPS signal in space with a daily global average user range error (URE) of ≤2.0 m (6.6 ft.), with 95% probability, across all healthy satellites in constellation slots. Actual performance is typically much better. On April 20, 2021, the global average URE across all satellites was ≤0.643 m (2.1 ft.), 95% of the time."
+    }
+   ],
+   "caveats": [
+    {
+     "trigger": "signal error|ranging error|user range error",
+     "requires": "one distance|one satellite|single (distance|satellite)|your position|position",
+     "note": "URE is the error of one range; do not present it as the accuracy of a phone position"
+    }
+   ]
+  }
+ }
+}

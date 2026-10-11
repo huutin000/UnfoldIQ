@@ -1,0 +1,188 @@
+{
+  "kind": "SCRIPT_QA_RESULT",
+  "version": "1.0.0",
+  "scenes": 36,
+  "words": 1227,
+  "estimatedSeconds": 491,
+  "durationBasis": "ESTIMATED",
+  "wordsPerSecond": 2.5,
+  "findings": [
+    {
+      "key": "ABSOLUTE_LANGUAGE:N02",
+      "code": "ABSOLUTE_LANGUAGE",
+      "severity": "P2",
+      "status": "REVIEW",
+      "scene": "N02",
+      "detail": "\"never\" is not in the cited evidence",
+      "class": "DETERMINISTIC",
+      "checker": "script-qa",
+      "disposition": null
+    },
+    {
+      "key": "WEAK_EVIDENCE_OVERLAP:N02",
+      "code": "WEAK_EVIDENCE_OVERLAP",
+      "severity": "P2",
+      "status": "REVIEW",
+      "scene": "N02",
+      "detail": "only 14% of content words appear in the cited evidence",
+      "class": "DETERMINISTIC",
+      "checker": "script-qa",
+      "disposition": null
+    },
+    {
+      "key": "FORBIDDEN_BY_LEDGER:N03",
+      "code": "FORBIDDEN_BY_LEDGER",
+      "severity": "P0",
+      "status": "FAIL",
+      "scene": "N03",
+      "detail": "C12 forbids /errors? (would )?(grow|pile|accumulate|build)/",
+      "class": "DETERMINISTIC",
+      "checker": "script-qa",
+      "disposition": null
+    },
+    {
+      "key": "WEAK_EVIDENCE_OVERLAP:N14",
+      "code": "WEAK_EVIDENCE_OVERLAP",
+      "severity": "P2",
+      "status": "REVIEW",
+      "scene": "N14",
+      "detail": "only 5% of content words appear in the cited evidence",
+      "class": "DETERMINISTIC",
+      "checker": "script-qa",
+      "disposition": null
+    },
+    {
+      "key": "NUMBER_NOT_IN_EVIDENCE:N19",
+      "code": "NUMBER_NOT_IN_EVIDENCE",
+      "severity": "P1",
+      "status": "FAIL",
+      "scene": "N19",
+      "detail": "\"three hundred\": spoken 300 vs evidence 10000 (97.0% off)",
+      "class": "DETERMINISTIC",
+      "checker": "script-qa",
+      "disposition": null
+    },
+    {
+      "key": "FORBIDDEN_BY_LEDGER:N19",
+      "code": "FORBIDDEN_BY_LEDGER",
+      "severity": "P0",
+      "status": "FAIL",
+      "scene": "N19",
+      "detail": "C12 forbids /errors? (would )?(grow|pile|accumulate|build)/",
+      "class": "DETERMINISTIC",
+      "checker": "script-qa",
+      "disposition": null
+    },
+    {
+      "key": "ABSOLUTE_LANGUAGE:N23",
+      "code": "ABSOLUTE_LANGUAGE",
+      "severity": "P2",
+      "status": "REVIEW",
+      "scene": "N23",
+      "detail": "\"exactly\" is not in the cited evidence",
+      "class": "DETERMINISTIC",
+      "checker": "script-qa",
+      "disposition": null
+    },
+    {
+      "key": "NUMBER_NOT_IN_EVIDENCE:N24",
+      "code": "NUMBER_NOT_IN_EVIDENCE",
+      "severity": "P1",
+      "status": "FAIL",
+      "scene": "N24",
+      "detail": "\"three hundred\": spoken 300000 vs evidence 2000 (14900.0% off)",
+      "class": "DETERMINISTIC",
+      "checker": "script-qa",
+      "disposition": null
+    },
+    {
+      "key": "ABSOLUTE_LANGUAGE:N26",
+      "code": "ABSOLUTE_LANGUAGE",
+      "severity": "P2",
+      "status": "REVIEW",
+      "scene": "N26",
+      "detail": "\"exactly\" is not in the cited evidence",
+      "class": "DETERMINISTIC",
+      "checker": "script-qa",
+      "disposition": null
+    },
+    {
+      "key": "MISSING_CAVEAT:N29",
+      "code": "MISSING_CAVEAT",
+      "severity": "P1",
+      "status": "REVIEW",
+      "scene": "N29",
+      "detail": "C25: URE is the error of one range; do not present it as the accuracy of a phone position",
+      "class": "DETERMINISTIC",
+      "checker": "script-qa",
+      "disposition": null
+    },
+    {
+      "key": "NUMBER_WITHOUT_QUALIFIER:N33",
+      "code": "NUMBER_WITHOUT_QUALIFIER",
+      "severity": "P2",
+      "status": "REVIEW",
+      "scene": "N33",
+      "detail": "\"a billionth\" carries no approximation qualifier",
+      "class": "DETERMINISTIC",
+      "checker": "script-evidence-gate.qualifierPresent",
+      "disposition": null
+    },
+    {
+      "key": "NATURALNESS_REPETITIVE_TRANSITION:-",
+      "code": "NATURALNESS_REPETITIVE_TRANSITION",
+      "severity": "P1",
+      "status": "FAIL",
+      "scene": null,
+      "detail": "transition phrase \"sox6\" opens 6 sentences",
+      "class": "EXISTING_CAPABILITY",
+      "checker": "spoken-script.evaluateNaturalness",
+      "disposition": null
+    },
+    {
+      "key": "RETENTION_DROPPED_PAYOFF:N03",
+      "code": "RETENTION_DROPPED_PAYOFF",
+      "severity": "P2",
+      "status": "REVIEW",
+      "scene": "N03",
+      "detail": "open loop \"einstein-clock-mystery\" opened at 21.2s is never resolved or intentionally deferred",
+      "class": "EXISTING_CAPABILITY",
+      "checker": "creative-retention",
+      "disposition": null
+    }
+  ],
+  "open": [
+    "ABSOLUTE_LANGUAGE:N02",
+    "WEAK_EVIDENCE_OVERLAP:N02",
+    "FORBIDDEN_BY_LEDGER:N03",
+    "WEAK_EVIDENCE_OVERLAP:N14",
+    "NUMBER_NOT_IN_EVIDENCE:N19",
+    "FORBIDDEN_BY_LEDGER:N19",
+    "ABSOLUTE_LANGUAGE:N23",
+    "NUMBER_NOT_IN_EVIDENCE:N24",
+    "ABSOLUTE_LANGUAGE:N26",
+    "MISSING_CAVEAT:N29",
+    "NUMBER_WITHOUT_QUALIFIER:N33",
+    "NATURALNESS_REPETITIVE_TRANSITION:-",
+    "RETENTION_DROPPED_PAYOFF:N03"
+  ],
+  "requirements": [
+    {
+      "id": "NO_OPEN_FINDINGS",
+      "met": false
+    },
+    {
+      "id": "DURATION_MEASURED",
+      "met": false
+    },
+    {
+      "id": "GOLDEN_TESTS_PASSED",
+      "met": false
+    }
+  ],
+  "verdict": "FAIL",
+  "originality": null,
+  "retentionFindingCount": 1,
+  "script": "Report/evidence/phase-7/script/gps-script-draft-v2.md",
+  "ledger": "Report/evidence/phase-7/research/claim-ledger.json"
+}

@@ -1,0 +1,704 @@
+{
+  "kind": "CLAIM_VERIFICATION_MATRIX",
+  "script": "gps-script-v3.md",
+  "ledgerVersion": "1.2.0",
+  "note": "VERIFIED = deterministic checks (evidence mapping, numbers vs ledger text, ledger forbidden/caveats) passed; it does not mean an independent human fact-check. EXPLAIN scenes are geometry/arithmetic/definition.",
+  "rows": [
+    {
+      "scene": "N01",
+      "class": "SOURCED",
+      "claims": [
+        "C13",
+        "C1"
+      ],
+      "sources": [
+        "SRC10"
+      ],
+      "numbers": [],
+      "quotes": [
+        "C13/SRC16: \"For example, GPS-enabled smartphones are typically accurate to within a 4.9 m (16 ft.) rad\"",
+        "C1/SRC10: \"Please be aware that the GPS satellites themselves do not track anything on the ground. Th\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N02",
+      "class": "SOURCED+DERIVED",
+      "claims": [
+        "C5",
+        "C1"
+      ],
+      "sources": [
+        "SRC10"
+      ],
+      "numbers": [
+        "one billionth -> MATCH",
+        "thirty -> MATCH"
+      ],
+      "quotes": [
+        "C5/SRC2: \"In GPS positioning the rate is how fast the radio signal travels, which is equal to the sp\"",
+        "C1/SRC10: \"Please be aware that the GPS satellites themselves do not track anything on the ground. Th\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N03",
+      "class": "SOURCED+DERIVED",
+      "claims": [
+        "C11",
+        "C23"
+      ],
+      "sources": [
+        "SRC3",
+        "SRC24"
+      ],
+      "numbers": [
+        "thirty eight -> MATCH"
+      ],
+      "quotes": [
+        "C11/SRC3: \"These satellites hurtle so fast through space that special relativity indicates they shoul\"",
+        "C23/SRC24: \"It’s a mantra worth repeating: To measure ranges to GPS satellites with meter-level accura\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N04",
+      "class": "EXPLAIN",
+      "claims": [],
+      "sources": [],
+      "numbers": [
+        "five -> EXPLAIN"
+      ],
+      "quotes": [],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N05",
+      "class": "SOURCED",
+      "claims": [
+        "C3"
+      ],
+      "sources": [
+        "SRC2"
+      ],
+      "numbers": [],
+      "quotes": [
+        "C3/SRC2: \"GPS positioning works on two basic mathematical concepts. The first is called trilateratio\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N06",
+      "class": "SOURCED",
+      "claims": [
+        "C3"
+      ],
+      "sources": [
+        "SRC2"
+      ],
+      "numbers": [],
+      "quotes": [
+        "C3/SRC2: \"GPS positioning works on two basic mathematical concepts. The first is called trilateratio\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N07",
+      "class": "SOURCED",
+      "claims": [
+        "C7"
+      ],
+      "sources": [
+        "SRC14"
+      ],
+      "numbers": [
+        "two -> MATCH"
+      ],
+      "quotes": [
+        "C7/SRC18: \"The Coarse/Acquisition code (C/A(t)), which is modulated only on L1. It has a chipping-rat\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N08",
+      "class": "SOURCED+DERIVED",
+      "claims": [
+        "C4"
+      ],
+      "sources": [
+        "SRC1",
+        "SRC21"
+      ],
+      "numbers": [
+        "twenty thousand two hundred -> MATCH",
+        "three -> MATCH",
+        "fourteen thousand -> MATCH"
+      ],
+      "quotes": [
+        "C4/SRC1: \"GPS satellites fly in medium Earth orbit (MEO) at an altitude of approximately 20,200 km (\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N09",
+      "class": "SOURCED",
+      "claims": [
+        "C6"
+      ],
+      "sources": [
+        "SRC4",
+        "SRC1"
+      ],
+      "numbers": [
+        "twenty four -> MATCH",
+        "fifty five -> MATCH"
+      ],
+      "quotes": [
+        "C6/SRC4: \"Space Segment: A constellation of at least 24 US government satellites distributed in six \""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N10",
+      "class": "SOURCED",
+      "claims": [
+        "C7",
+        "C1",
+        "C2"
+      ],
+      "sources": [
+        "SRC14",
+        "SRC4"
+      ],
+      "numbers": [],
+      "quotes": [
+        "C7/SRC18: \"The Coarse/Acquisition code (C/A(t)), which is modulated only on L1. It has a chipping-rat\"",
+        "C1/SRC10: \"Please be aware that the GPS satellites themselves do not track anything on the ground. Th\"",
+        "C2/SRC4: \"User Segment: Receivers that process the navigation signals from the GPS satellites and ca\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N11",
+      "class": "SOURCED+DERIVED",
+      "claims": [
+        "C5"
+      ],
+      "sources": [
+        "SRC2"
+      ],
+      "numbers": [
+        "three hundred thousand -> MATCH"
+      ],
+      "quotes": [
+        "C5/SRC2: \"In GPS positioning the rate is how fast the radio signal travels, which is equal to the sp\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N12",
+      "class": "SOURCED+DERIVED",
+      "claims": [
+        "C5",
+        "C8"
+      ],
+      "sources": [],
+      "numbers": [
+        "seven hundredths -> MATCH",
+        "one -> MATCH",
+        "three hundred -> MATCH"
+      ],
+      "quotes": [
+        "C5/SRC2: \"In GPS positioning the rate is how fast the radio signal travels, which is equal to the sp\"",
+        "C8/SRC3: \"Though not designed as a test of Einstein, GPS satellites — the ones that control the blue\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N13",
+      "class": "SOURCED",
+      "claims": [
+        "C8"
+      ],
+      "sources": [
+        "SRC1",
+        "SRC3",
+        "SRC24",
+        "SRC14"
+      ],
+      "numbers": [],
+      "quotes": [
+        "C8/SRC3: \"Though not designed as a test of Einstein, GPS satellites — the ones that control the blue\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N14",
+      "class": "SOURCED",
+      "claims": [
+        "C9"
+      ],
+      "sources": [
+        "SRC17"
+      ],
+      "numbers": [],
+      "quotes": [
+        "C9/SRC17: \"The right side contains the four unknown parameters: The receiver coordinates [math]\\displ\""
+      ],
+      "findings": [
+        "WEAK_EVIDENCE_OVERLAP(accepted)"
+      ],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N15",
+      "class": "SOURCED",
+      "claims": [
+        "C9"
+      ],
+      "sources": [
+        "SRC17",
+        "SRC5"
+      ],
+      "numbers": [],
+      "quotes": [
+        "C9/SRC17: \"The right side contains the four unknown parameters: The receiver coordinates [math]\\displ\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N16",
+      "class": "SOURCED",
+      "claims": [
+        "C10",
+        "C9"
+      ],
+      "sources": [
+        "SRC7"
+      ],
+      "numbers": [],
+      "quotes": [
+        "C10/SRC7: \"Precise synchronization of communications systems, power grids, financial networks, and ot\"",
+        "C9/SRC17: \"The right side contains the four unknown parameters: The receiver coordinates [math]\\displ\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N17",
+      "class": "SOURCED+DERIVED",
+      "claims": [
+        "C11"
+      ],
+      "sources": [
+        "SRC3",
+        "SRC21"
+      ],
+      "numbers": [
+        "fourteen thousand -> NO_EVIDENCE",
+        "seven -> MATCH"
+      ],
+      "quotes": [
+        "C11/SRC3: \"These satellites hurtle so fast through space that special relativity indicates they shoul\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N18",
+      "class": "SOURCED+DERIVED",
+      "claims": [
+        "C11"
+      ],
+      "sources": [
+        "SRC3",
+        "SRC21",
+        "SRC5"
+      ],
+      "numbers": [
+        "forty five -> MATCH",
+        "thirty eight -> MATCH"
+      ],
+      "quotes": [
+        "C11/SRC3: \"These satellites hurtle so fast through space that special relativity indicates they shoul\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N19",
+      "class": "SOURCED+DERIVED",
+      "claims": [
+        "C11",
+        "C23",
+        "C8"
+      ],
+      "sources": [
+        "SRC24"
+      ],
+      "numbers": [
+        "thirty eight -> MATCH",
+        "three -> MATCH",
+        "ten -> MATCH"
+      ],
+      "quotes": [
+        "C11/SRC3: \"These satellites hurtle so fast through space that special relativity indicates they shoul\"",
+        "C23/SRC24: \"It’s a mantra worth repeating: To measure ranges to GPS satellites with meter-level accura\"",
+        "C8/SRC3: \"Though not designed as a test of Einstein, GPS satellites — the ones that control the blue\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N19b",
+      "class": "SOURCED+DERIVED",
+      "claims": [
+        "C12",
+        "C11"
+      ],
+      "sources": [
+        "SRC24"
+      ],
+      "numbers": [
+        "eleven -> MATCH",
+        "thirty eight -> MATCH"
+      ],
+      "quotes": [
+        "C12/SRC24: \"A GPS receiver would have meas-ured the ranges to all satellites in view as too short by a\"",
+        "C11/SRC3: \"These satellites hurtle so fast through space that special relativity indicates they shoul\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N20",
+      "class": "SOURCED+DERIVED",
+      "claims": [
+        "C22",
+        "C11"
+      ],
+      "sources": [
+        "SRC24",
+        "SRC5"
+      ],
+      "numbers": [
+        "four and a half parts in ten billion -> MATCH"
+      ],
+      "quotes": [
+        "C22/SRC24: \"The relativistic effects discussed so far can be compensated for easily by setting the fre\"",
+        "C11/SRC3: \"These satellites hurtle so fast through space that special relativity indicates they shoul\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N21",
+      "class": "SOURCED+DERIVED",
+      "claims": [
+        "C18"
+      ],
+      "sources": [
+        "SRC24",
+        "SRC5"
+      ],
+      "numbers": [
+        "forty five -> MATCH",
+        "fifteen -> MATCH"
+      ],
+      "quotes": [
+        "C18/SRC5: \"This correction must be made by the receiver; it is a correction to the coordinate time as\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N22",
+      "class": "SOURCED",
+      "claims": [
+        "C7"
+      ],
+      "sources": [
+        "SRC18"
+      ],
+      "numbers": [
+        "one thousand twenty three -> MATCH"
+      ],
+      "quotes": [
+        "C7/SRC18: \"The Coarse/Acquisition code (C/A(t)), which is modulated only on L1. It has a chipping-rat\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N23",
+      "class": "SOURCED",
+      "claims": [
+        "C7",
+        "C9",
+        "C20"
+      ],
+      "sources": [
+        "SRC19",
+        "SRC17"
+      ],
+      "numbers": [],
+      "quotes": [
+        "C7/SRC18: \"The Coarse/Acquisition code (C/A(t)), which is modulated only on L1. It has a chipping-rat\"",
+        "C9/SRC17: \"The right side contains the four unknown parameters: The receiver coordinates [math]\\displ\"",
+        "C20/SRC17: \"From the code pseudorange measurements [math]\\displaystyle{ R^j }[/math] for, at least, fo\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N24",
+      "class": "SOURCED+DERIVED",
+      "claims": [
+        "C24"
+      ],
+      "sources": [
+        "SRC18",
+        "SRC14"
+      ],
+      "numbers": [
+        "three hundred -> MATCH",
+        "one -> MATCH",
+        "fifty -> MATCH",
+        "six -> MATCH"
+      ],
+      "quotes": [
+        "C24/SRC18: \"The Coarse/Acquisition code (C/A(t)), which is modulated only on L1. It has a chipping-rat\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N25",
+      "class": "SOURCED",
+      "claims": [
+        "C13"
+      ],
+      "sources": [
+        "SRC20"
+      ],
+      "numbers": [
+        "two point three -> MATCH",
+        "ten -> MATCH"
+      ],
+      "quotes": [
+        "C13/SRC16: \"For example, GPS-enabled smartphones are typically accurate to within a 4.9 m (16 ft.) rad\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N26",
+      "class": "SOURCED",
+      "claims": [
+        "C19",
+        "C14"
+      ],
+      "sources": [
+        "SRC13",
+        "SRC11"
+      ],
+      "numbers": [],
+      "quotes": [
+        "C19/SRC13: \"the difference between the measured range (with the frequency [math]\\displaystyle{ f }[/ma\"",
+        "C14/SRC8: \"A GPS augmentation is any system that aids GPS by providing accuracy, integrity, availabil\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N27",
+      "class": "SOURCED",
+      "claims": [
+        "C13"
+      ],
+      "sources": [
+        "SRC12",
+        "SRC15"
+      ],
+      "numbers": [],
+      "quotes": [
+        "C13/SRC16: \"For example, GPS-enabled smartphones are typically accurate to within a 4.9 m (16 ft.) rad\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N28",
+      "class": "SOURCED",
+      "claims": [
+        "C20"
+      ],
+      "sources": [
+        "SRC17"
+      ],
+      "numbers": [],
+      "quotes": [
+        "C20/SRC17: \"From the code pseudorange measurements [math]\\displaystyle{ R^j }[/math] for, at least, fo\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N29",
+      "class": "SOURCED",
+      "claims": [
+        "C25",
+        "C21",
+        "C13"
+      ],
+      "sources": [
+        "SRC15",
+        "SRC16"
+      ],
+      "numbers": [
+        "two -> MATCH",
+        "ninety five -> MATCH",
+        "2021 -> MATCH",
+        "one -> MATCH_QUALIFIED",
+        "five -> MATCH"
+      ],
+      "quotes": [
+        "C25/SRC16: \"To calculate its position, a GPS device measures its distance (range) from multiple GPS sa\"",
+        "C21/SRC15: \"The accuracy commitments do not apply to GPS devices, but rather to the signals transmitte\"",
+        "C13/SRC16: \"For example, GPS-enabled smartphones are typically accurate to within a 4.9 m (16 ft.) rad\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N30",
+      "class": "SOURCED",
+      "claims": [
+        "C15"
+      ],
+      "sources": [
+        "SRC22"
+      ],
+      "numbers": [
+        "2000 -> MATCH"
+      ],
+      "quotes": [
+        "C15/SRC22: \"Selective Availability (SA) was an intentional degradation of public GPS signals implement\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N31",
+      "class": "SOURCED",
+      "claims": [
+        "C14"
+      ],
+      "sources": [
+        "SRC8"
+      ],
+      "numbers": [],
+      "quotes": [
+        "C14/SRC8: \"A GPS augmentation is any system that aids GPS by providing accuracy, integrity, availabil\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N32",
+      "class": "SOURCED",
+      "claims": [
+        "C14"
+      ],
+      "sources": [
+        "SRC11",
+        "SRC9"
+      ],
+      "numbers": [],
+      "quotes": [
+        "C14/SRC8: \"A GPS augmentation is any system that aids GPS by providing accuracy, integrity, availabil\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N33",
+      "class": "SOURCED",
+      "claims": [
+        "C5",
+        "C11",
+        "C13",
+        "C23"
+      ],
+      "sources": [
+        "SRC24"
+      ],
+      "numbers": [],
+      "quotes": [
+        "C5/SRC2: \"In GPS positioning the rate is how fast the radio signal travels, which is equal to the sp\"",
+        "C11/SRC3: \"These satellites hurtle so fast through space that special relativity indicates they shoul\"",
+        "C13/SRC16: \"For example, GPS-enabled smartphones are typically accurate to within a 4.9 m (16 ft.) rad\"",
+        "C23/SRC24: \"It’s a mantra worth repeating: To measure ranges to GPS satellites with meter-level accura\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N34",
+      "class": "SOURCED",
+      "claims": [
+        "C16"
+      ],
+      "sources": [
+        "SRC23"
+      ],
+      "numbers": [],
+      "quotes": [
+        "C16/SRC23: \"The Global Positioning System (GPS) is revolutionizing and revitalizing the way nations op\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N35",
+      "class": "SOURCED",
+      "claims": [
+        "C17"
+      ],
+      "sources": [
+        "SRC3",
+        "SRC21"
+      ],
+      "numbers": [],
+      "quotes": [
+        "C17/SRC3: \"At a much smaller scale, clock scientists have also observed gravitational time dilation i\""
+      ],
+      "findings": [],
+      "verdict": "VERIFIED"
+    },
+    {
+      "scene": "N36",
+      "class": "RECAP/SOURCES",
+      "claims": [],
+      "sources": [],
+      "numbers": [],
+      "quotes": [],
+      "findings": [],
+      "verdict": "VERIFIED"
+    }
+  ]
+}

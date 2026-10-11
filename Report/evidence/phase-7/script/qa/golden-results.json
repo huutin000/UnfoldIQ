@@ -1,0 +1,250 @@
+{
+  "kind": "SCRIPT_QA_GOLDEN_RESULT",
+  "results": [
+    {
+      "id": "NEG-v1-S08",
+      "origin": "GPS draft v1 S08",
+      "kind": "NEGATIVE",
+      "pass": true,
+      "found": [
+        "MISSING_CAVEAT",
+        "ABSOLUTE_LANGUAGE"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "basis": "GPS.gov trilateration page: \"there should only be one place on the map where they all intersect\" (flat-map scope); ledger C3 caveat"
+    },
+    {
+      "id": "NEG-v1-S09",
+      "origin": "GPS draft v1 S09",
+      "kind": "NEGATIVE",
+      "pass": true,
+      "found": [
+        "FORBIDDEN_BY_LEDGER"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "basis": "geometry: three spheres meet at two points; SRC17: four unknowns need at least four ranges; ledger C3 forbidden pattern"
+    },
+    {
+      "id": "NEG-v1-S22",
+      "origin": "GPS draft v1 S22",
+      "kind": "NEGATIVE",
+      "pass": true,
+      "found": [
+        "NUMBER_COARSE_APPROXIMATION"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "basis": "derived: 20,200 km / c = 0.067 s overhead, 0.086 s at the horizon (ledger C5 derivation); \"a tenth\" is 16-48% off"
+    },
+    {
+      "id": "NEG-v1-S25",
+      "origin": "GPS draft v1 S25",
+      "kind": "NEGATIVE",
+      "pass": true,
+      "found": [
+        "MISSING_CAVEAT"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "basis": "SRC17 pseudorange equation and SRC24: receivers measure pseudoranges (range plus receiver clock bias), not true travel time; ledger C9 caveat"
+    },
+    {
+      "id": "NEG-v1-S34",
+      "origin": "GPS draft v1 S34",
+      "kind": "NEGATIVE",
+      "pass": true,
+      "found": [
+        "ABSOLUTE_LANGUAGE"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "basis": "\"exactly what time it is\" appears in no cited evidence"
+    },
+    {
+      "id": "NEG-v1-S40",
+      "origin": "GPS draft v1 S40",
+      "kind": "NEGATIVE",
+      "pass": true,
+      "found": [
+        "CAUSAL_OVERCLAIM",
+        "WEAK_EVIDENCE_OVERLAP"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "basis": "SRC24: relativity breaks timing, position unaffected in the idealised case; \"only works because\" is not in any source"
+    },
+    {
+      "id": "NEG-v2-N03",
+      "origin": "GPS draft v2 N03",
+      "kind": "NEGATIVE",
+      "pass": true,
+      "found": [
+        "FORBIDDEN_BY_LEDGER"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "basis": "SRC24 (Misra): common range bias up to ~11 km between daily uploads is absorbed in the receiver clock bias; position estimate unaffected. Ledger C12 forbids \"errors would grow by ten kilometers\""
+    },
+    {
+      "id": "NEG-v2-N19",
+      "origin": "GPS draft v2 N19",
+      "kind": "NEGATIVE",
+      "pass": true,
+      "found": [
+        "NUMBER_NOT_IN_EVIDENCE",
+        "FORBIDDEN_BY_LEDGER"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "basis": "same as N03; plus \"three hundred meters\" was not mapped to the cited claims"
+    },
+    {
+      "id": "NEG-v2-N24",
+      "origin": "GPS draft v2 N24",
+      "kind": "NEGATIVE",
+      "pass": true,
+      "found": [
+        "NUMBER_NOT_IN_EVIDENCE"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "basis": "the 1 ms = 300 km derivation lives in ledger C24, which the scene did not cite"
+    },
+    {
+      "id": "NEG-v2-N29-ure",
+      "origin": "GPS draft v2 N29 (evidence tag corrected to cite C25)",
+      "kind": "NEGATIVE",
+      "pass": true,
+      "found": [
+        "MISSING_CAVEAT"
+      ],
+      "missing": [],
+      "unexpected": [],
+      "basis": "SRC16: URE is ranging accuracy, user accuracy is a position radius; the scene presents the satellite figure without saying it is one distance"
+    },
+    {
+      "id": "KFN-v1-S01",
+      "origin": "GPS draft v1 S01",
+      "kind": "KNOWN_FALSE_NEGATIVE",
+      "pass": true,
+      "found": [],
+      "missing": [],
+      "unexpected": [],
+      "basis": "implying the blue dot is purely GPS is a semantic framing issue; no deterministic rule can see it: needs the editorial reviewer"
+    },
+    {
+      "id": "KFN-v1-S24",
+      "origin": "GPS draft v1 S24",
+      "kind": "KNOWN_FALSE_NEGATIVE",
+      "pass": true,
+      "found": [],
+      "missing": [],
+      "unexpected": [],
+      "basis": "\"pulses\" for chips and the omitted 1 ms repeat are precision issues: needs the editorial reviewer"
+    },
+    {
+      "id": "POS-v3-N05",
+      "origin": "GPS v3 N05",
+      "kind": "POSITIVE",
+      "pass": true,
+      "found": [],
+      "missing": [],
+      "unexpected": [],
+      "basis": "flat-map scope stated"
+    },
+    {
+      "id": "POS-v3-N06",
+      "origin": "GPS v3 N06",
+      "kind": "POSITIVE",
+      "pass": true,
+      "found": [],
+      "missing": [],
+      "unexpected": [],
+      "basis": "three spheres can still meet at two points"
+    },
+    {
+      "id": "POS-v3-N12",
+      "origin": "GPS v3 N12",
+      "kind": "POSITIVE",
+      "pass": true,
+      "found": [],
+      "missing": [],
+      "unexpected": [],
+      "basis": "seven and nine hundredths match 0.0674 s and 0.086 s after rounding; 300 m matches 299.8 m"
+    },
+    {
+      "id": "POS-v3-N19b",
+      "origin": "GPS v3 N19b",
+      "kind": "POSITIVE",
+      "pass": true,
+      "found": [],
+      "missing": [],
+      "unexpected": [],
+      "basis": "kilometer language is allowed when framed as a common range bias (SRC24)"
+    },
+    {
+      "id": "POS-v3-N21",
+      "origin": "GPS v3 N21",
+      "kind": "POSITIVE",
+      "pass": true,
+      "found": [],
+      "missing": [],
+      "unexpected": [],
+      "basis": "45 ns and 15 m are in SRC24"
+    },
+    {
+      "id": "POS-v3-N24",
+      "origin": "GPS v3 N24",
+      "kind": "POSITIVE",
+      "pass": true,
+      "found": [],
+      "missing": [],
+      "unexpected": [],
+      "basis": "300 km, 1 ms, 50 bps and 6 s all map to C24 evidence"
+    },
+    {
+      "id": "POS-v3-N29",
+      "origin": "GPS v3 N29",
+      "kind": "POSITIVE",
+      "pass": true,
+      "found": [],
+      "missing": [],
+      "unexpected": [],
+      "basis": "\"one day in 2021\" is a calendar reference, not a measurement; URE is framed as one distance"
+    },
+    {
+      "id": "POS-explain-hypothetical",
+      "origin": "GPS v3 N04",
+      "kind": "POSITIVE",
+      "pass": true,
+      "found": [],
+      "missing": [],
+      "unexpected": [],
+      "basis": "Explain scenes (hypothetical example \"exactly five kilometers\") are exempt: false-positive guard"
+    },
+    {
+      "id": "POS-approx-wording",
+      "origin": "synthetic",
+      "kind": "POSITIVE",
+      "pass": true,
+      "found": [],
+      "missing": [],
+      "unexpected": [],
+      "basis": "exact match with qualifier"
+    }
+  ],
+  "summary": {
+    "cases": 21,
+    "passed": 21,
+    "negativeDetected": "10/10",
+    "falseNegatives": [],
+    "falsePositives": [],
+    "knownFalseNegatives": [
+      "KFN-v1-S01",
+      "KFN-v1-S24"
+    ],
+    "allPassed": true
+  }
+}

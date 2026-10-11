@@ -1,0 +1,149 @@
+{
+  "kind": "SCRIPT_AUTO_REPAIR_HISTORY",
+  "script": "v2 -> v3",
+  "maxRounds": 3,
+  "roundsUsed": 3,
+  "note": "Local repairs only (single scenes); v2 file kept unchanged for comparison. Repairs were made by the generating model and verified by script-qa plus the editorial list; no source or number was invented.",
+  "repairs": [
+    {
+      "round": 1,
+      "scene": "N03",
+      "why": "FORBIDDEN_BY_LEDGER C12: 10 km/day presented as growing error; owner flagged",
+      "before": "And the clocks involved are strange: the ones on the satellites run faster than yours. Einstein explains why, and engineers estimate that without the fix, errors would grow by roughly ten kilometers a day.",
+      "after": "And the clocks involved are strange: the ones on the satellites gain thirty-eight microseconds a day on yours. That is thousands of times more than navigation can tolerate, and Einstein explains why."
+    },
+    {
+      "round": 1,
+      "scene": "N19",
+      "why": "FORBIDDEN_BY_LEDGER C12 and unmapped number 300 m",
+      "before": "Thirty-eight microseconds sounds tiny, but a signal travels three hundred meters in one. Engineers estimate that, uncorrected, the errors would grow by roughly ten kilometers every day.",
+      "after": "Thirty-eight microseconds a day sounds tiny. But a ranging error of three meters takes only ten nanoseconds of clock error. So the offset is thousands of times too big to ignore."
+    },
+    {
+      "round": 1,
+      "scene": "N19b",
+      "why": "owner: do not equate satellite clock offset, pseudorange bias and position error; SRC24 (Misra) says position unaffected, timing affected",
+      "before": null,
+      "after": "Here is the twist. Had engineers ignored relativity, every distance would come out too short by the same amount, up to about eleven kilometers. In this simplified picture the receiver would absorb that shared error into its own clock bias, and your position would survive. GPS time would not: it would be off by thirty-eight microseconds a day."
+    },
+    {
+      "round": 1,
+      "scene": "N21",
+      "why": "align with SRC24 (45 ns, +-15 m at e = 0.02); keep SRC5 as second source",
+      "before": "Even then, orbits are slightly oval, so receivers apply one final relativity correction themselves. For a slightly oval orbit it reaches about twenty-three nanoseconds, roughly seven meters.",
+      "after": "Orbits are not perfect circles, so a smaller relativistic error is left over, and it differs from satellite to satellite. For a slightly oval orbit it can reach about forty-five nanoseconds, roughly fifteen meters of range error, and receivers correct for it."
+    },
+    {
+      "round": 1,
+      "scene": "N13",
+      "why": "SRC24 now supports the receiver-clock statement; previous wording was hedged",
+      "before": "The satellites carry atomic clocks that the ground system keeps checking. Your receiver has to cope with whatever error its own clock has.",
+      "after": "The satellites carry atomic clocks that the ground system keeps checking. Your receiver uses an inexpensive clock that drifts, so it has to cope with its own error."
+    },
+    {
+      "round": 1,
+      "scene": "N24",
+      "why": "owner: check C/A ambiguity and navigation message timing; now sourced to LNAV structure (SRC14)",
+      "before": "The pattern repeats every millisecond, about three hundred kilometers of signal, so the message also carries a time count that tells the receiver which repeat it is hearing. With the orbit data in the message, each satellite becomes one sphere.",
+      "after": "The pattern repeats every millisecond, about three hundred kilometers of signal, so the code alone fixes the delay only within one millisecond. The message supplies the rest: at fifty bits a second, each six-second block begins with a time-of-week word, so the receiver can work out which millisecond it is hearing."
+    },
+    {
+      "round": 1,
+      "scene": "N29",
+      "why": "owner: do not equate URE with smartphone accuracy; SRC16 defines URE as ranging accuracy and user accuracy as a position radius",
+      "before": "That is why the satellites' accuracy and yours differ. The government commits to a signal error of at most two meters, and measured under one meter on one day in 2021. Phones typically get within about five meters under open sky.",
+      "after": "Accuracy comes in layers. The satellites' signal is held to an error of at most about two meters, ninety-five percent of the time, and on one day in 2021 it averaged under one meter. But that is the error of one distance. Your position also depends on satellite geometry, the atmosphere and nearby buildings, so phones typically land within about five meters under open sky."
+    },
+    {
+      "round": 2,
+      "scene": "N02",
+      "why": "ABSOLUTE_LANGUAGE \"never\" not in evidence; replaced by the sourced one-way fact",
+      "before": "So how does a phone find itself from signals it never answers? By measuring time, so precisely that one billionth of a second is thirty centimeters of error.",
+      "after": "So how does a phone find itself from signals that only travel one way? By measuring time, so precisely that one billionth of a second is thirty centimeters of error."
+    },
+    {
+      "round": 2,
+      "scene": "N23",
+      "why": "ABSOLUTE_LANGUAGE \"exactly\"",
+      "before": "The receiver makes the same pattern and slides it until the two match. That shift is how late the signal arrived, by the receiver's own clock. Which is exactly why the result is a pseudorange.",
+      "after": "The receiver makes the same pattern and slides it until the two match. That shift is how late the signal arrived, by the receiver's own clock. That is why the result is called a pseudorange."
+    },
+    {
+      "round": 2,
+      "scene": "N26",
+      "why": "ABSOLUTE_LANGUAGE \"exactly\" and repetitive \"So\" openings",
+      "before": "The ionosphere changes with the time of day and with solar activity. It delays lower frequencies more, in proportion to one over the frequency squared. So a receiver listening on two frequencies can compare the delays and correct for it. With the newer civil signal L2C, civilian receivers can do exactly that.",
+      "after": "The ionosphere changes with the time of day and with solar activity. It delays lower frequencies more, in proportion to one over the frequency squared. A receiver listening on two frequencies can compare the delays and correct for it. With the newer civil signal L2C, civilian receivers can do that."
+    },
+    {
+      "round": 2,
+      "scene": "N11",
+      "why": "NATURALNESS repetitive \"So\" openings",
+      "before": "Radio waves travel at the speed of light, almost three hundred thousand kilometers a second. So distance is speed times travel time. Measure the time, and you know the distance.",
+      "after": "Radio waves travel at the speed of light, almost three hundred thousand kilometers a second. Distance is then speed times travel time. Measure the time, and you know the distance."
+    },
+    {
+      "round": 2,
+      "scene": "N15",
+      "why": "NATURALNESS repetitive \"So\" openings",
+      "before": "In three dimensions, that makes four unknowns: east-west, north-south, height, and the clock error. So the receiver uses at least four satellites and solves for all of them at once. A distance with this clock error baked in is called a pseudorange.",
+      "after": "In three dimensions, that makes four unknowns: east-west, north-south, height, and the clock error. The receiver therefore uses at least four satellites and solves for all of them at once. A distance with this clock error baked in is called a pseudorange."
+    },
+    {
+      "round": 2,
+      "scene": "N20",
+      "why": "NATURALNESS repetitive \"So\" openings; evidence now also cites C22",
+      "before": "So before launch, each satellite clock is tuned to run slightly slow, by about four and a half parts in ten billion. Once in orbit, relativity cancels that offset.",
+      "after": "Before launch, each satellite clock is tuned to run slightly slow, by about four and a half parts in ten billion. Once in orbit, relativity cancels that offset."
+    },
+    {
+      "round": 2,
+      "scene": "N33",
+      "why": "NUMBER_WITHOUT_QUALIFIER and repetitive \"So\" openings",
+      "before": "So when the blue dot lands on the right street, here is what just happened. Signals that left the satellites a fraction of a second ago were timed to a billionth of a second, then corrected for the atmosphere and for relativity.",
+      "after": "When the blue dot lands on the right street, here is what just happened. Signals that left the satellites a fraction of a second ago were timed to within billionths of a second, then corrected for the atmosphere and for relativity."
+    },
+    {
+      "round": 3,
+      "scene": "N03",
+      "why": "NUMBER_WITHOUT_QUALIFIER (sources say about 38) and repeated \"That is\" openings",
+      "before": "And the clocks involved are strange: the ones on the satellites gain thirty-eight microseconds a day on yours. That is thousands of times more than navigation can tolerate, and Einstein explains why.",
+      "after": "And the clocks involved are strange: the ones on the satellites gain about thirty-eight microseconds a day on yours. It is thousands of times more than navigation can tolerate, and Einstein explains why."
+    },
+    {
+      "round": 3,
+      "scene": "N19",
+      "why": "NUMBER_WITHOUT_QUALIFIER and repetitive \"So\" openings",
+      "before": "Thirty-eight microseconds a day sounds tiny. But a ranging error of three meters takes only ten nanoseconds of clock error. So the offset is thousands of times too big to ignore.",
+      "after": "About thirty-eight microseconds a day sounds tiny. But a ranging error of three meters takes only ten nanoseconds of clock error. The offset is thousands of times too big to ignore."
+    },
+    {
+      "round": 3,
+      "scene": "N27",
+      "why": "NATURALNESS repeated \"That is\" openings",
+      "before": "In cities, signals also bounce off buildings. That is called multipath, and it makes a signal look as if it traveled farther. Where buildings, bridges or trees block the signal, the blue dot gets worse.",
+      "after": "In cities, signals also bounce off buildings. Engineers call it multipath, and it makes a signal look as if it traveled farther. Where buildings, bridges or trees block the signal, the blue dot gets worse."
+    },
+    {
+      "round": 3,
+      "scene": "N19b",
+      "why": "editorial precision: SRC24 says \"up to about 11 kilometers between daily uploads of clock corrections\"",
+      "before": "Here is the twist. Had engineers ignored relativity, every distance would come out too short by the same amount, up to about eleven kilometers. In this simplified picture the receiver would absorb that shared error into its own clock bias, and your position would survive. GPS time would not: it would be off by thirty-eight microseconds a day.",
+      "after": "Here is the twist. Had engineers ignored relativity, every distance would come out too short by the same amount, up to about eleven kilometers by the next daily clock update. In this simplified picture the receiver would absorb that shared error into its own clock bias, and your position would survive. GPS time would not: it would be off by thirty-eight microseconds a day."
+    },
+    {
+      "round": 3,
+      "scene": "N24",
+      "why": "editorial precision: SRC14 lists the telemetry word first, then the time-of-week word, in each subframe",
+      "before": "The pattern repeats every millisecond, about three hundred kilometers of signal, so the code alone fixes the delay only within one millisecond. The message supplies the rest: at fifty bits a second, each six-second block begins with a time-of-week word, so the receiver can work out which millisecond it is hearing.",
+      "after": "The pattern repeats every millisecond, about three hundred kilometers of signal, so the code alone fixes the delay only within one millisecond. The message supplies the rest: at fifty bits a second, each six-second block carries a time-of-week word near its start, so the receiver can work out which millisecond it is hearing."
+    },
+    {
+      "round": 3,
+      "scene": "N29",
+      "why": "editorial precision: SRC15 gives the 0.643 m figure as a 95th-percentile bound for one day, not an average",
+      "before": "Accuracy comes in layers. The satellites' signal is held to an error of at most about two meters, ninety-five percent of the time, and on one day in 2021 it averaged under one meter. But that is the error of one distance. Your position also depends on satellite geometry, the atmosphere and nearby buildings, so phones typically land within about five meters under open sky.",
+      "after": "Accuracy comes in layers. The satellite signal is held to an error of at most about two meters, ninety-five percent of the time, and on one day in 2021 it stayed under one meter. But that is the error of one distance. Your position also depends on satellite geometry, the atmosphere and nearby buildings, so phones typically land within about five meters under open sky."
+    }
+  ]
+}

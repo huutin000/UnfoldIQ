@@ -1,6 +1,6 @@
 {
   "kind": "PHASE7_RESEARCH_BATCH_2",
-  "generatedAt": "2026-10-11T05:27:16.856Z",
+  "generatedAt": "2026-10-11T06:45:45.519Z",
   "method": "acquireBatch (local Crawl4AI, robots enforced) + agent WebSearch only to discover URLs; every quote below was extracted from acquired page text, not from search snippets",
   "note": "Search-result summaries were NOT used as evidence. Patent/forum search hits were ignored.",
   "sources": [
@@ -170,6 +170,28 @@
       "sha256": "d11f7f9487de6604764c66704f7d38b64adae0aa06850e0c2ba775012d662c58"
     },
     {
+      "id": "SRC22",
+      "title": "GPS.gov Selective Availability",
+      "role": "US government (GPS program), official primary",
+      "requestedUrl": "https://www.gps.gov/selective-availability",
+      "finalUrl": "https://www.gps.gov/selective-availability",
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T06:26:11.286614Z",
+      "chars": 15576,
+      "sha256": "99f293cc6ba94af2c38b5f2a3648f8de0b65379666012359d2b8c88fd72f4d22"
+    },
+    {
+      "id": "SRC23",
+      "title": "GPS.gov GPS in Space",
+      "role": "US government (GPS program), official primary",
+      "requestedUrl": "https://www.gps.gov/gps-space",
+      "finalUrl": "https://www.gps.gov/gps-space",
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T06:26:11.286614Z",
+      "chars": 8980,
+      "sha256": "69bfff945ae5e30c52950a73c4eb4f2e728a1e9eeda0e1ec531da3ba905b2b90"
+    },
+    {
       "id": "SRC21",
       "title": "GPS World: GPS takes into account mysterious black hole time warps",
       "role": "trade press, secondary (quotes physics literature)",
@@ -179,6 +201,17 @@
       "retrievedAt": "2026-10-11T05:25:52.198904Z",
       "chars": 17301,
       "sha256": "e4526ab61328a7b677ec014912a4e33c31fc4604c201f6760fa135bc4525edfd"
+    },
+    {
+      "id": "SRC24",
+      "title": "GPS World: Inside the box: GPS and relativity (Pratap Misra, Tufts; 2023)",
+      "role": "trade press, expert-authored engineering analysis (cites Ashby)",
+      "requestedUrl": "https://www.gpsworld.com/inside-the-box-gps-and-relativity/",
+      "finalUrl": "https://www.gpsworld.com/inside-the-box-gps-and-relativity/",
+      "httpStatus": 200,
+      "retrievedAt": "2026-10-11T06:37:31.521730Z",
+      "chars": 21725,
+      "sha256": "a293d1210709a7c9f9c217b8d5e254343dcd9db1c7d1b0bb6cf5cf6315d25490"
     }
   ],
   "rejected": [

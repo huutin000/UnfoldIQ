@@ -1,0 +1,60 @@
+{
+  "projectId": "phase7-gps-explainer",
+  "contentClass": "FACTUAL",
+  "hookClass": "EXPLAINER",
+  "title": "How Does GPS Know Where You Are?",
+  "promise": [
+    "how GPS finds your position",
+    "why satellite clocks and relativity matter"
+  ],
+  "openingMustEstablish": [
+    "gps",
+    "satellite"
+  ],
+  "mustNotImply": [
+    "phones transmit your location to satellites",
+    "relativity errors are position errors of kilometers"
+  ],
+  "beats": {
+    "N01": {
+      "role": "HOOK"
+    },
+    "N03": {
+      "role": "QUESTION",
+      "opens": [
+        "einstein-clock-mystery"
+      ]
+    },
+    "N04": {
+      "role": "SETUP"
+    },
+    "N17": {
+      "role": "REVEAL"
+    },
+    "N19b": {
+      "role": "REVEAL",
+      "resolves": [
+        "einstein-clock-mystery"
+      ]
+    },
+    "N36": {
+      "role": "OUTRO"
+    },
+    "N02": {
+      "role": "QUESTION",
+      "opens": [
+        "how-does-phone-find-itself"
+      ]
+    },
+    "N33": {
+      "role": "PAYOFF",
+      "resolves": [
+        "how-does-phone-find-itself"
+      ]
+    }
+  },
+  "scope": {
+    "ownerId": "owner-unfoldiq",
+    "channelId": "unfoldiq-main"
+  }
+}

@@ -1,0 +1,170 @@
+{
+  "kind": "SCRIPT_QA_RESULT",
+  "version": "1.0.0",
+  "scenes": 37,
+  "words": 1349,
+  "estimatedSeconds": 543,
+  "durationBasis": "MEASURED",
+  "wordsPerSecond": 2.486,
+  "findings": [
+    {
+      "key": "WEAK_EVIDENCE_OVERLAP:N14",
+      "code": "WEAK_EVIDENCE_OVERLAP",
+      "severity": "P2",
+      "status": "REVIEW",
+      "scene": "N14",
+      "detail": "only 5% of content words appear in the cited evidence",
+      "class": "DETERMINISTIC",
+      "checker": "script-qa",
+      "disposition": {
+        "decision": "ACCEPT",
+        "reason": "Explain scene: geometric illustration of the pseudorange model; the quantitative claim (clock error as an extra unknown) is evidenced in N15 (SRC17).",
+        "proposedBy": "agent",
+        "ownerConfirmation": "PENDING"
+      }
+    },
+    {
+      "key": "EDITORIAL:E-001",
+      "code": "FACTUAL_CONFLATION_10KM",
+      "severity": "P0",
+      "status": "RESOLVED",
+      "scene": "N03,N19,N19b",
+      "detail": "v2 equated the 38 us/day satellite clock offset, a common pseudorange bias (~11 km) and a GPS position error. SRC24 (Misra) says the common bias is absorbed by the receiver clock offset, position unaffected, timing off 38 us/day. Fixed in v3 N03, N19, N19b; ledger C12 revised with a forbidden pattern.",
+      "class": "EDITORIAL",
+      "assessor": {
+        "type": "MODEL",
+        "family": "same as script generator",
+        "independent": false
+      },
+      "disposition": null
+    },
+    {
+      "key": "EDITORIAL:E-002",
+      "code": "PRECISION_CA_AMBIGUITY",
+      "severity": "P1",
+      "status": "RESOLVED",
+      "scene": "N24",
+      "detail": "v2 said the message time count 'tells the receiver which repeat'. v3 states the code fixes delay only within 1 ms and that each LNAV 6 s block carries a time-of-week word near its start (SRC14), 50 bps.",
+      "class": "EDITORIAL",
+      "assessor": {
+        "type": "MODEL",
+        "family": "same as script generator",
+        "independent": false
+      },
+      "disposition": null
+    },
+    {
+      "key": "EDITORIAL:E-003",
+      "code": "URE_VS_USER_ACCURACY",
+      "severity": "P1",
+      "status": "RESOLVED",
+      "scene": "N29",
+      "detail": "v2 let the signal-in-space URE read as phone accuracy. v3 labels URE as the error of one distance and gives the phone figure separately (SRC16, SRC15); 0.643 m is a 95th-percentile bound on one day, not an average.",
+      "class": "EDITORIAL",
+      "assessor": {
+        "type": "MODEL",
+        "family": "same as script generator",
+        "independent": false
+      },
+      "disposition": null
+    },
+    {
+      "key": "EDITORIAL:E-004",
+      "code": "NUANCE_DAILY_UPLOADS",
+      "severity": "P2",
+      "status": "RESOLVED",
+      "scene": "N19b",
+      "detail": "SRC24 states the 11 km bound applies 'between daily uploads of clock corrections' and under identical circular orbits; v3 adds 'by the next daily clock update' and 'in this simplified picture'.",
+      "class": "EDITORIAL",
+      "assessor": {
+        "type": "MODEL",
+        "family": "same as script generator",
+        "independent": false
+      },
+      "disposition": null
+    },
+    {
+      "key": "EDITORIAL:E-005",
+      "code": "RECEIVER_CLOCK_CLAIM",
+      "severity": "P2",
+      "status": "RESOLVED",
+      "scene": "N13",
+      "detail": "SRC24 supports 'receivers use inexpensive clocks that drift'; wording restored with that source.",
+      "class": "EDITORIAL",
+      "assessor": {
+        "type": "MODEL",
+        "family": "same as script generator",
+        "independent": false
+      },
+      "disposition": null
+    },
+    {
+      "key": "EDITORIAL:E-006",
+      "code": "PRONUNCIATION_ACRONYMS",
+      "severity": "P2",
+      "status": "REVIEW",
+      "scene": "N26,N32,N31,N16",
+      "detail": "TTS calibration: Kokoro misread 'L2C' (ASR heard 'out to c' / 'altacy'). L5, L1C, WAAS, FAA, NIST need explicit readings in the pronunciation pass before any full TTS. Numbers and technical words (pseudorange, ionosphere, troposphere) were heard correctly.",
+      "class": "EDITORIAL",
+      "assessor": {
+        "type": "MODEL",
+        "family": "faster-whisper ASR proxy plus same generator",
+        "independent": false
+      },
+      "disposition": {
+        "decision": "ACCEPT",
+        "reason": "Handled by the pronunciation pass that must run before any full TTS; readings listed in the verification report. Not a script-text defect.",
+        "proposedBy": "agent",
+        "ownerConfirmation": "PENDING"
+      }
+    },
+    {
+      "key": "EDITORIAL:E-007",
+      "code": "THUMBNAIL_PROMISE_NOT_EVALUATED",
+      "severity": "P2",
+      "status": "REVIEW",
+      "scene": "title",
+      "detail": "Title promise ('How Does GPS Know Where You Are?') is checked by creative-retention. No thumbnail exists yet, so thumbnail promise fidelity is NOT_EVALUATED; it belongs to the packaging stage.",
+      "class": "EDITORIAL",
+      "assessor": {
+        "type": "MODEL",
+        "family": "same as script generator",
+        "independent": false
+      },
+      "disposition": {
+        "decision": "ACCEPT",
+        "reason": "No thumbnail exists; evaluated at the packaging stage, not a script-lock criterion.",
+        "proposedBy": "agent",
+        "ownerConfirmation": "PENDING"
+      }
+    }
+  ],
+  "open": [],
+  "requirements": [
+    {
+      "id": "NO_OPEN_FINDINGS",
+      "met": true
+    },
+    {
+      "id": "DURATION_MEASURED",
+      "met": true
+    },
+    {
+      "id": "GOLDEN_TESTS_PASSED",
+      "met": true
+    }
+  ],
+  "verdict": "READY_FOR_LOCK",
+  "originality": {
+    "risk": "LOW",
+    "coverage": "SUFFICIENT_FOR_SCOPE",
+    "channelLevelOriginality": "NOT_PROVEN",
+    "corpusCount": 1,
+    "findings": [
+      "INSUFFICIENT_COMPARISON_CORPUS"
+    ]
+  },
+  "retentionFindingCount": 0,
+  "script": "Report/evidence/phase-7/script/gps-script-v3.md",
+  "ledger": "Report/evidence/phase-7/research/claim-ledger.json"
+}

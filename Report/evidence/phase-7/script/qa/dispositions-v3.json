@@ -1,0 +1,5 @@
+{
+  "WEAK_EVIDENCE_OVERLAP:N14": { "decision": "ACCEPT", "reason": "Explain scene: geometric illustration of the pseudorange model; the quantitative claim (clock error as an extra unknown) is evidenced in N15 (SRC17).", "proposedBy": "agent", "ownerConfirmation": "PENDING" },
+  "EDITORIAL:E-006": { "decision": "ACCEPT", "reason": "Handled by the pronunciation pass that must run before any full TTS; readings listed in the verification report. Not a script-text defect.", "proposedBy": "agent", "ownerConfirmation": "PENDING" },
+  "EDITORIAL:E-007": { "decision": "ACCEPT", "reason": "No thumbnail exists; evaluated at the packaging stage, not a script-lock criterion.", "proposedBy": "agent", "ownerConfirmation": "PENDING" }
+}
