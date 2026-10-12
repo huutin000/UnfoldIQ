@@ -1,0 +1,3182 @@
+{
+  "schemaVersion": "1.0.0",
+  "decisionId": "fid-ed71c7b73d5c",
+  "version": 1,
+  "projectId": "phase7-gps-explainer",
+  "contentMode": "technical-explainer",
+  "contentClass": "FACTUAL",
+  "sourceScriptRef": {
+    "artifact": "script-v2.json",
+    "version": "2"
+  },
+  "humanizationRef": "hum-49965f9304f0",
+  "checks": [
+    {
+      "checkId": "N01:NUMBER",
+      "segmentId": "N01",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N01:DATE",
+      "segmentId": "N01",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N01:QUOTE",
+      "segmentId": "N01",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N01:NAME",
+      "segmentId": "N01",
+      "protectedItemType": "NAME",
+      "sourceValue": "earth|gps",
+      "candidateValue": "earth|gps",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N01:CAVEAT",
+      "segmentId": "N01",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N01:UNCERTAINTY",
+      "segmentId": "N01",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N01:CLASSIFICATION",
+      "segmentId": "N01",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N01:EVIDENCE:C13",
+      "segmentId": "N01",
+      "protectedItemType": "FACT",
+      "sourceValue": "C13",
+      "candidateValue": "C13",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C13"
+    },
+    {
+      "checkId": "N01:EVIDENCE:C1",
+      "segmentId": "N01",
+      "protectedItemType": "FACT",
+      "sourceValue": "C1",
+      "candidateValue": "C1",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C1"
+    },
+    {
+      "checkId": "N02:NUMBER",
+      "segmentId": "N02",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N02:DATE",
+      "segmentId": "N02",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N02:QUOTE",
+      "segmentId": "N02",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N02:NAME",
+      "segmentId": "N02",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N02:CAVEAT",
+      "segmentId": "N02",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N02:UNCERTAINTY",
+      "segmentId": "N02",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N02:CLASSIFICATION",
+      "segmentId": "N02",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N02:EVIDENCE:C5",
+      "segmentId": "N02",
+      "protectedItemType": "FACT",
+      "sourceValue": "C5",
+      "candidateValue": "C5",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C5"
+    },
+    {
+      "checkId": "N02:EVIDENCE:C1",
+      "segmentId": "N02",
+      "protectedItemType": "FACT",
+      "sourceValue": "C1",
+      "candidateValue": "C1",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C1"
+    },
+    {
+      "checkId": "N03:NUMBER",
+      "segmentId": "N03",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N03:DATE",
+      "segmentId": "N03",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N03:QUOTE",
+      "segmentId": "N03",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N03:NAME",
+      "segmentId": "N03",
+      "protectedItemType": "NAME",
+      "sourceValue": "gps|gps|einstein",
+      "candidateValue": "gps|gps|einstein",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N03:CAVEAT",
+      "segmentId": "N03",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": "aboutx1",
+      "candidateValue": "aboutx1",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N03:UNCERTAINTY",
+      "segmentId": "N03",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N03:CLASSIFICATION",
+      "segmentId": "N03",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N03:EVIDENCE:C11",
+      "segmentId": "N03",
+      "protectedItemType": "FACT",
+      "sourceValue": "C11",
+      "candidateValue": "C11",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C11"
+    },
+    {
+      "checkId": "N03:EVIDENCE:C23",
+      "segmentId": "N03",
+      "protectedItemType": "FACT",
+      "sourceValue": "C23",
+      "candidateValue": "C23",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C23"
+    },
+    {
+      "checkId": "N04:NUMBER",
+      "segmentId": "N04",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N04:DATE",
+      "segmentId": "N04",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N04:QUOTE",
+      "segmentId": "N04",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N04:NAME",
+      "segmentId": "N04",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N04:CAVEAT",
+      "segmentId": "N04",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": "couldx1|aroundx1",
+      "candidateValue": "couldx1|aroundx1",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N04:UNCERTAINTY",
+      "segmentId": "N04",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": "exactly",
+      "candidateValue": "exactly",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N04:CLASSIFICATION",
+      "segmentId": "N04",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N04:EVIDENCE",
+      "segmentId": "N04",
+      "protectedItemType": "FACT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": "no claims declared for this segment",
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N05:NUMBER",
+      "segmentId": "N05",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N05:DATE",
+      "segmentId": "N05",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N05:QUOTE",
+      "segmentId": "N05",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N05:NAME",
+      "segmentId": "N05",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N05:CAVEAT",
+      "segmentId": "N05",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N05:UNCERTAINTY",
+      "segmentId": "N05",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N05:CLASSIFICATION",
+      "segmentId": "N05",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N05:EVIDENCE:C3",
+      "segmentId": "N05",
+      "protectedItemType": "FACT",
+      "sourceValue": "C3",
+      "candidateValue": "C3",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C3"
+    },
+    {
+      "checkId": "N06:NUMBER",
+      "segmentId": "N06",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N06:DATE",
+      "segmentId": "N06",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N06:QUOTE",
+      "segmentId": "N06",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N06:NAME",
+      "segmentId": "N06",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N06:CAVEAT",
+      "segmentId": "N06",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N06:UNCERTAINTY",
+      "segmentId": "N06",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N06:COMPARISON:more measurements than",
+      "segmentId": "N06",
+      "protectedItemType": "COMPARISON",
+      "sourceValue": "more measurements than",
+      "candidateValue": "more measurements than",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N06:CLASSIFICATION",
+      "segmentId": "N06",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N06:EVIDENCE:C3",
+      "segmentId": "N06",
+      "protectedItemType": "FACT",
+      "sourceValue": "C3",
+      "candidateValue": "C3",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C3"
+    },
+    {
+      "checkId": "N07:NUMBER",
+      "segmentId": "N07",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N07:DATE",
+      "segmentId": "N07",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N07:QUOTE",
+      "segmentId": "N07",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N07:NAME",
+      "segmentId": "N07",
+      "protectedItemType": "NAME",
+      "sourceValue": "gps",
+      "candidateValue": "gps",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N07:CAVEAT",
+      "segmentId": "N07",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": "aboutx1",
+      "candidateValue": "aboutx1",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N07:UNCERTAINTY",
+      "segmentId": "N07",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N07:CLASSIFICATION",
+      "segmentId": "N07",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N07:EVIDENCE:C7",
+      "segmentId": "N07",
+      "protectedItemType": "FACT",
+      "sourceValue": "C7",
+      "candidateValue": "C7",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C7"
+    },
+    {
+      "checkId": "N08:NUMBER",
+      "segmentId": "N08",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N08:DATE",
+      "segmentId": "N08",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N08:QUOTE",
+      "segmentId": "N08",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N08:NAME",
+      "segmentId": "N08",
+      "protectedItemType": "NAME",
+      "sourceValue": "earth",
+      "candidateValue": "earth",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N08:CAVEAT",
+      "segmentId": "N08",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": "aboutx2|roughlyx1",
+      "candidateValue": "aboutx2|roughlyx1",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N08:UNCERTAINTY",
+      "segmentId": "N08",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N08:CLASSIFICATION",
+      "segmentId": "N08",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N08:EVIDENCE:C4",
+      "segmentId": "N08",
+      "protectedItemType": "FACT",
+      "sourceValue": "C4",
+      "candidateValue": "C4",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C4"
+    },
+    {
+      "checkId": "N09:NUMBER",
+      "segmentId": "N09",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N09:DATE",
+      "segmentId": "N09",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N09:QUOTE",
+      "segmentId": "N09",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N09:NAME",
+      "segmentId": "N09",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N09:CAVEAT",
+      "segmentId": "N09",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N09:UNCERTAINTY",
+      "segmentId": "N09",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N09:CLASSIFICATION",
+      "segmentId": "N09",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N09:EVIDENCE:C6",
+      "segmentId": "N09",
+      "protectedItemType": "FACT",
+      "sourceValue": "C6",
+      "candidateValue": "C6",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C6"
+    },
+    {
+      "checkId": "N10:NUMBER",
+      "segmentId": "N10",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N10:DATE",
+      "segmentId": "N10",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N10:QUOTE",
+      "segmentId": "N10",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N10:NAME",
+      "segmentId": "N10",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N10:CAVEAT",
+      "segmentId": "N10",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N10:UNCERTAINTY",
+      "segmentId": "N10",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N10:CLASSIFICATION",
+      "segmentId": "N10",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N10:EVIDENCE:C7",
+      "segmentId": "N10",
+      "protectedItemType": "FACT",
+      "sourceValue": "C7",
+      "candidateValue": "C7",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C7"
+    },
+    {
+      "checkId": "N10:EVIDENCE:C1",
+      "segmentId": "N10",
+      "protectedItemType": "FACT",
+      "sourceValue": "C1",
+      "candidateValue": "C1",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C1"
+    },
+    {
+      "checkId": "N10:EVIDENCE:C2",
+      "segmentId": "N10",
+      "protectedItemType": "FACT",
+      "sourceValue": "C2",
+      "candidateValue": "C2",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C2"
+    },
+    {
+      "checkId": "N11:NUMBER",
+      "segmentId": "N11",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N11:DATE",
+      "segmentId": "N11",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N11:QUOTE",
+      "segmentId": "N11",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N11:NAME",
+      "segmentId": "N11",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N11:CAVEAT",
+      "segmentId": "N11",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N11:UNCERTAINTY",
+      "segmentId": "N11",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N11:CLASSIFICATION",
+      "segmentId": "N11",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N11:EVIDENCE:C5",
+      "segmentId": "N11",
+      "protectedItemType": "FACT",
+      "sourceValue": "C5",
+      "candidateValue": "C5",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C5"
+    },
+    {
+      "checkId": "N12:NUMBER",
+      "segmentId": "N12",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N12:DATE",
+      "segmentId": "N12",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N12:QUOTE",
+      "segmentId": "N12",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N12:NAME",
+      "segmentId": "N12",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N12:CAVEAT",
+      "segmentId": "N12",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": "aboutx2",
+      "candidateValue": "aboutx2",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N12:UNCERTAINTY",
+      "segmentId": "N12",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N12:CLASSIFICATION",
+      "segmentId": "N12",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N12:EVIDENCE:C5",
+      "segmentId": "N12",
+      "protectedItemType": "FACT",
+      "sourceValue": "C5",
+      "candidateValue": "C5",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C5"
+    },
+    {
+      "checkId": "N12:EVIDENCE:C8",
+      "segmentId": "N12",
+      "protectedItemType": "FACT",
+      "sourceValue": "C8",
+      "candidateValue": "C8",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C8"
+    },
+    {
+      "checkId": "N13:NUMBER",
+      "segmentId": "N13",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N13:DATE",
+      "segmentId": "N13",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N13:QUOTE",
+      "segmentId": "N13",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N13:NAME",
+      "segmentId": "N13",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N13:CAVEAT",
+      "segmentId": "N13",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N13:UNCERTAINTY",
+      "segmentId": "N13",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N13:CLASSIFICATION",
+      "segmentId": "N13",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N13:EVIDENCE:C8",
+      "segmentId": "N13",
+      "protectedItemType": "FACT",
+      "sourceValue": "C8",
+      "candidateValue": "C8",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C8"
+    },
+    {
+      "checkId": "N14:NUMBER",
+      "segmentId": "N14",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N14:DATE",
+      "segmentId": "N14",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N14:QUOTE",
+      "segmentId": "N14",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N14:NAME",
+      "segmentId": "N14",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N14:CAVEAT",
+      "segmentId": "N14",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N14:UNCERTAINTY",
+      "segmentId": "N14",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N14:CLASSIFICATION",
+      "segmentId": "N14",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N14:EVIDENCE:C9",
+      "segmentId": "N14",
+      "protectedItemType": "FACT",
+      "sourceValue": "C9",
+      "candidateValue": "C9",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C9"
+    },
+    {
+      "checkId": "N15:NUMBER",
+      "segmentId": "N15",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N15:DATE",
+      "segmentId": "N15",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N15:QUOTE",
+      "segmentId": "N15",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N15:NAME",
+      "segmentId": "N15",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N15:CAVEAT",
+      "segmentId": "N15",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N15:UNCERTAINTY",
+      "segmentId": "N15",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N15:CLASSIFICATION",
+      "segmentId": "N15",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N15:EVIDENCE:C9",
+      "segmentId": "N15",
+      "protectedItemType": "FACT",
+      "sourceValue": "C9",
+      "candidateValue": "C9",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C9"
+    },
+    {
+      "checkId": "N16:NUMBER",
+      "segmentId": "N16",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N16:DATE",
+      "segmentId": "N16",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N16:QUOTE",
+      "segmentId": "N16",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N16:NAME",
+      "segmentId": "N16",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N16:CAVEAT",
+      "segmentId": "N16",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N16:UNCERTAINTY",
+      "segmentId": "N16",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N16:CLASSIFICATION",
+      "segmentId": "N16",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N16:EVIDENCE:C10",
+      "segmentId": "N16",
+      "protectedItemType": "FACT",
+      "sourceValue": "C10",
+      "candidateValue": "C10",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C10"
+    },
+    {
+      "checkId": "N16:EVIDENCE:C9",
+      "segmentId": "N16",
+      "protectedItemType": "FACT",
+      "sourceValue": "C9",
+      "candidateValue": "C9",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C9"
+    },
+    {
+      "checkId": "N17:NUMBER",
+      "segmentId": "N17",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N17:DATE",
+      "segmentId": "N17",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N17:QUOTE",
+      "segmentId": "N17",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N17:NAME",
+      "segmentId": "N17",
+      "protectedItemType": "NAME",
+      "sourceValue": "einstein",
+      "candidateValue": "einstein",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N17:CAVEAT",
+      "segmentId": "N17",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": "aboutx1",
+      "candidateValue": "aboutx1",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N17:UNCERTAINTY",
+      "segmentId": "N17",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N17:CLASSIFICATION",
+      "segmentId": "N17",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N17:EVIDENCE:C11",
+      "segmentId": "N17",
+      "protectedItemType": "FACT",
+      "sourceValue": "C11",
+      "candidateValue": "C11",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C11"
+    },
+    {
+      "checkId": "N18:NUMBER",
+      "segmentId": "N18",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N18:DATE",
+      "segmentId": "N18",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N18:QUOTE",
+      "segmentId": "N18",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N18:NAME",
+      "segmentId": "N18",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N18:CAVEAT",
+      "segmentId": "N18",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": "aboutx2",
+      "candidateValue": "aboutx2",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N18:UNCERTAINTY",
+      "segmentId": "N18",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N18:CLASSIFICATION",
+      "segmentId": "N18",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N18:EVIDENCE:C11",
+      "segmentId": "N18",
+      "protectedItemType": "FACT",
+      "sourceValue": "C11",
+      "candidateValue": "C11",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C11"
+    },
+    {
+      "checkId": "N19:NUMBER",
+      "segmentId": "N19",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N19:DATE",
+      "segmentId": "N19",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N19:QUOTE",
+      "segmentId": "N19",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N19:NAME",
+      "segmentId": "N19",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N19:CAVEAT",
+      "segmentId": "N19",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": "aboutx1",
+      "candidateValue": "aboutx1",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N19:UNCERTAINTY",
+      "segmentId": "N19",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N19:CLASSIFICATION",
+      "segmentId": "N19",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N19:EVIDENCE:C11",
+      "segmentId": "N19",
+      "protectedItemType": "FACT",
+      "sourceValue": "C11",
+      "candidateValue": "C11",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C11"
+    },
+    {
+      "checkId": "N19:EVIDENCE:C23",
+      "segmentId": "N19",
+      "protectedItemType": "FACT",
+      "sourceValue": "C23",
+      "candidateValue": "C23",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C23"
+    },
+    {
+      "checkId": "N19:EVIDENCE:C8",
+      "segmentId": "N19",
+      "protectedItemType": "FACT",
+      "sourceValue": "C8",
+      "candidateValue": "C8",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C8"
+    },
+    {
+      "checkId": "N19b:NUMBER",
+      "segmentId": "N19b",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N19b:DATE",
+      "segmentId": "N19b",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N19b:QUOTE",
+      "segmentId": "N19b",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N19b:NAME",
+      "segmentId": "N19b",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N19b:CAVEAT",
+      "segmentId": "N19b",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": "couldx2|aboutx1",
+      "candidateValue": "couldx2|aboutx1",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N19b:UNCERTAINTY",
+      "segmentId": "N19b",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N19b:CLASSIFICATION",
+      "segmentId": "N19b",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N19b:EVIDENCE:C12",
+      "segmentId": "N19b",
+      "protectedItemType": "FACT",
+      "sourceValue": "C12",
+      "candidateValue": "C12",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C12"
+    },
+    {
+      "checkId": "N19b:EVIDENCE:C11",
+      "segmentId": "N19b",
+      "protectedItemType": "FACT",
+      "sourceValue": "C11",
+      "candidateValue": "C11",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C11"
+    },
+    {
+      "checkId": "N20:NUMBER",
+      "segmentId": "N20",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N20:DATE",
+      "segmentId": "N20",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N20:QUOTE",
+      "segmentId": "N20",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N20:NAME",
+      "segmentId": "N20",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N20:CAVEAT",
+      "segmentId": "N20",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": "aboutx1",
+      "candidateValue": "aboutx1",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N20:UNCERTAINTY",
+      "segmentId": "N20",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N20:CLASSIFICATION",
+      "segmentId": "N20",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N20:EVIDENCE:C22",
+      "segmentId": "N20",
+      "protectedItemType": "FACT",
+      "sourceValue": "C22",
+      "candidateValue": "C22",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C22"
+    },
+    {
+      "checkId": "N20:EVIDENCE:C11",
+      "segmentId": "N20",
+      "protectedItemType": "FACT",
+      "sourceValue": "C11",
+      "candidateValue": "C11",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C11"
+    },
+    {
+      "checkId": "N21:NUMBER",
+      "segmentId": "N21",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N21:DATE",
+      "segmentId": "N21",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N21:QUOTE",
+      "segmentId": "N21",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N21:NAME",
+      "segmentId": "N21",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N21:CAVEAT",
+      "segmentId": "N21",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": "aboutx1|roughlyx1",
+      "candidateValue": "aboutx1|roughlyx1",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N21:UNCERTAINTY",
+      "segmentId": "N21",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N21:CLASSIFICATION",
+      "segmentId": "N21",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N21:EVIDENCE:C18",
+      "segmentId": "N21",
+      "protectedItemType": "FACT",
+      "sourceValue": "C18",
+      "candidateValue": "C18",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C18"
+    },
+    {
+      "checkId": "N22:NUMBER",
+      "segmentId": "N22",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N22:DATE",
+      "segmentId": "N22",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N22:QUOTE",
+      "segmentId": "N22",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N22:NAME",
+      "segmentId": "N22",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N22:CAVEAT",
+      "segmentId": "N22",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N22:UNCERTAINTY",
+      "segmentId": "N22",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N22:CLASSIFICATION",
+      "segmentId": "N22",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N22:EVIDENCE:C7",
+      "segmentId": "N22",
+      "protectedItemType": "FACT",
+      "sourceValue": "C7",
+      "candidateValue": "C7",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C7"
+    },
+    {
+      "checkId": "N23:NUMBER",
+      "segmentId": "N23",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N23:DATE",
+      "segmentId": "N23",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N23:QUOTE",
+      "segmentId": "N23",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N23:NAME",
+      "segmentId": "N23",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N23:CAVEAT",
+      "segmentId": "N23",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N23:UNCERTAINTY",
+      "segmentId": "N23",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N23:CLASSIFICATION",
+      "segmentId": "N23",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N23:EVIDENCE:C7",
+      "segmentId": "N23",
+      "protectedItemType": "FACT",
+      "sourceValue": "C7",
+      "candidateValue": "C7",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C7"
+    },
+    {
+      "checkId": "N23:EVIDENCE:C9",
+      "segmentId": "N23",
+      "protectedItemType": "FACT",
+      "sourceValue": "C9",
+      "candidateValue": "C9",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C9"
+    },
+    {
+      "checkId": "N23:EVIDENCE:C20",
+      "segmentId": "N23",
+      "protectedItemType": "FACT",
+      "sourceValue": "C20",
+      "candidateValue": "C20",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C20"
+    },
+    {
+      "checkId": "N24:NUMBER",
+      "segmentId": "N24",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N24:DATE",
+      "segmentId": "N24",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N24:QUOTE",
+      "segmentId": "N24",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N24:NAME",
+      "segmentId": "N24",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N24:CAVEAT",
+      "segmentId": "N24",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": "aboutx1",
+      "candidateValue": "aboutx1",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N24:UNCERTAINTY",
+      "segmentId": "N24",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N24:CLASSIFICATION",
+      "segmentId": "N24",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N24:EVIDENCE:C24",
+      "segmentId": "N24",
+      "protectedItemType": "FACT",
+      "sourceValue": "C24",
+      "candidateValue": "C24",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C24"
+    },
+    {
+      "checkId": "N25:NUMBER",
+      "segmentId": "N25",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N25:DATE",
+      "segmentId": "N25",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N25:QUOTE",
+      "segmentId": "N25",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N25:NAME",
+      "segmentId": "N25",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N25:CAVEAT",
+      "segmentId": "N25",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": "aboutx2",
+      "candidateValue": "aboutx2",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N25:UNCERTAINTY",
+      "segmentId": "N25",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N25:CLASSIFICATION",
+      "segmentId": "N25",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N25:EVIDENCE:C13",
+      "segmentId": "N25",
+      "protectedItemType": "FACT",
+      "sourceValue": "C13",
+      "candidateValue": "C13",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C13"
+    },
+    {
+      "checkId": "N26:NUMBER",
+      "segmentId": "N26",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N26:DATE",
+      "segmentId": "N26",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N26:QUOTE",
+      "segmentId": "N26",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N26:NAME",
+      "segmentId": "N26",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N26:CAVEAT",
+      "segmentId": "N26",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N26:UNCERTAINTY",
+      "segmentId": "N26",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N26:CLASSIFICATION",
+      "segmentId": "N26",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N26:EVIDENCE:C19",
+      "segmentId": "N26",
+      "protectedItemType": "FACT",
+      "sourceValue": "C19",
+      "candidateValue": "C19",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C19"
+    },
+    {
+      "checkId": "N26:EVIDENCE:C14",
+      "segmentId": "N26",
+      "protectedItemType": "FACT",
+      "sourceValue": "C14",
+      "candidateValue": "C14",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C14"
+    },
+    {
+      "checkId": "N27:NUMBER",
+      "segmentId": "N27",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N27:DATE",
+      "segmentId": "N27",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N27:QUOTE",
+      "segmentId": "N27",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N27:NAME",
+      "segmentId": "N27",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N27:CAVEAT",
+      "segmentId": "N27",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N27:UNCERTAINTY",
+      "segmentId": "N27",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N27:CLASSIFICATION",
+      "segmentId": "N27",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N27:EVIDENCE:C13",
+      "segmentId": "N27",
+      "protectedItemType": "FACT",
+      "sourceValue": "C13",
+      "candidateValue": "C13",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C13"
+    },
+    {
+      "checkId": "N28:NUMBER",
+      "segmentId": "N28",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N28:DATE",
+      "segmentId": "N28",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N28:QUOTE",
+      "segmentId": "N28",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N28:NAME",
+      "segmentId": "N28",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N28:CAVEAT",
+      "segmentId": "N28",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N28:UNCERTAINTY",
+      "segmentId": "N28",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N28:CLASSIFICATION",
+      "segmentId": "N28",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N28:EVIDENCE:C20",
+      "segmentId": "N28",
+      "protectedItemType": "FACT",
+      "sourceValue": "C20",
+      "candidateValue": "C20",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C20"
+    },
+    {
+      "checkId": "N29:NUMBER",
+      "segmentId": "N29",
+      "protectedItemType": "NUMBER",
+      "sourceValue": "2021",
+      "candidateValue": "2021",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N29:DATE",
+      "segmentId": "N29",
+      "protectedItemType": "DATE",
+      "sourceValue": "2021",
+      "candidateValue": "2021",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N29:QUOTE",
+      "segmentId": "N29",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N29:NAME",
+      "segmentId": "N29",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N29:CAVEAT",
+      "segmentId": "N29",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": "aboutx2",
+      "candidateValue": "aboutx2",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N29:UNCERTAINTY",
+      "segmentId": "N29",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N29:CLASSIFICATION",
+      "segmentId": "N29",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N29:EVIDENCE:C25",
+      "segmentId": "N29",
+      "protectedItemType": "FACT",
+      "sourceValue": "C25",
+      "candidateValue": "C25",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C25"
+    },
+    {
+      "checkId": "N29:EVIDENCE:C21",
+      "segmentId": "N29",
+      "protectedItemType": "FACT",
+      "sourceValue": "C21",
+      "candidateValue": "C21",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C21"
+    },
+    {
+      "checkId": "N29:EVIDENCE:C13",
+      "segmentId": "N29",
+      "protectedItemType": "FACT",
+      "sourceValue": "C13",
+      "candidateValue": "C13",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C13"
+    },
+    {
+      "checkId": "N30:NUMBER",
+      "segmentId": "N30",
+      "protectedItemType": "NUMBER",
+      "sourceValue": "2000",
+      "candidateValue": "2000",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N30:DATE",
+      "segmentId": "N30",
+      "protectedItemType": "DATE",
+      "sourceValue": "2000",
+      "candidateValue": "2000",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N30:QUOTE",
+      "segmentId": "N30",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N30:NAME",
+      "segmentId": "N30",
+      "protectedItemType": "NAME",
+      "sourceValue": "may|united states|gps",
+      "candidateValue": "may|united states|gps",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N30:CAVEAT",
+      "segmentId": "N30",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": "mayx1",
+      "candidateValue": "mayx1",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N30:UNCERTAINTY",
+      "segmentId": "N30",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N30:CLASSIFICATION",
+      "segmentId": "N30",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N30:EVIDENCE:C15",
+      "segmentId": "N30",
+      "protectedItemType": "FACT",
+      "sourceValue": "C15",
+      "candidateValue": "C15",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C15"
+    },
+    {
+      "checkId": "N31:NUMBER",
+      "segmentId": "N31",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N31:DATE",
+      "segmentId": "N31",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N31:QUOTE",
+      "segmentId": "N31",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N31:NAME",
+      "segmentId": "N31",
+      "protectedItemType": "NAME",
+      "sourceValue": "waas|faa|north america",
+      "candidateValue": "waas|faa|north america",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N31:CAVEAT",
+      "segmentId": "N31",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N31:UNCERTAINTY",
+      "segmentId": "N31",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N31:CLASSIFICATION",
+      "segmentId": "N31",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N31:EVIDENCE:C14",
+      "segmentId": "N31",
+      "protectedItemType": "FACT",
+      "sourceValue": "C14",
+      "candidateValue": "C14",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C14"
+    },
+    {
+      "checkId": "N32:NUMBER",
+      "segmentId": "N32",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N32:DATE",
+      "segmentId": "N32",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N32:QUOTE",
+      "segmentId": "N32",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N32:NAME",
+      "segmentId": "N32",
+      "protectedItemType": "NAME",
+      "sourceValue": "galileo|europe",
+      "candidateValue": "galileo|europe",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N32:CAVEAT",
+      "segmentId": "N32",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N32:UNCERTAINTY",
+      "segmentId": "N32",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N32:CLASSIFICATION",
+      "segmentId": "N32",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N32:EVIDENCE:C14",
+      "segmentId": "N32",
+      "protectedItemType": "FACT",
+      "sourceValue": "C14",
+      "candidateValue": "C14",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C14"
+    },
+    {
+      "checkId": "N33:NUMBER",
+      "segmentId": "N33",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N33:DATE",
+      "segmentId": "N33",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N33:QUOTE",
+      "segmentId": "N33",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N33:NAME",
+      "segmentId": "N33",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N33:CAVEAT",
+      "segmentId": "N33",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N33:UNCERTAINTY",
+      "segmentId": "N33",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N33:CLASSIFICATION",
+      "segmentId": "N33",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N33:EVIDENCE:C5",
+      "segmentId": "N33",
+      "protectedItemType": "FACT",
+      "sourceValue": "C5",
+      "candidateValue": "C5",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C5"
+    },
+    {
+      "checkId": "N33:EVIDENCE:C11",
+      "segmentId": "N33",
+      "protectedItemType": "FACT",
+      "sourceValue": "C11",
+      "candidateValue": "C11",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C11"
+    },
+    {
+      "checkId": "N33:EVIDENCE:C13",
+      "segmentId": "N33",
+      "protectedItemType": "FACT",
+      "sourceValue": "C13",
+      "candidateValue": "C13",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C13"
+    },
+    {
+      "checkId": "N33:EVIDENCE:C23",
+      "segmentId": "N33",
+      "protectedItemType": "FACT",
+      "sourceValue": "C23",
+      "candidateValue": "C23",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C23"
+    },
+    {
+      "checkId": "N34:NUMBER",
+      "segmentId": "N34",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N34:DATE",
+      "segmentId": "N34",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N34:QUOTE",
+      "segmentId": "N34",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N34:NAME",
+      "segmentId": "N34",
+      "protectedItemType": "NAME",
+      "sourceValue": "gps",
+      "candidateValue": "gps",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N34:CAVEAT",
+      "segmentId": "N34",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N34:UNCERTAINTY",
+      "segmentId": "N34",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N34:CLASSIFICATION",
+      "segmentId": "N34",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N34:EVIDENCE:C16",
+      "segmentId": "N34",
+      "protectedItemType": "FACT",
+      "sourceValue": "C16",
+      "candidateValue": "C16",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C16"
+    },
+    {
+      "checkId": "N35:NUMBER",
+      "segmentId": "N35",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N35:DATE",
+      "segmentId": "N35",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N35:QUOTE",
+      "segmentId": "N35",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N35:NAME",
+      "segmentId": "N35",
+      "protectedItemType": "NAME",
+      "sourceValue": "gps",
+      "candidateValue": "gps",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N35:CAVEAT",
+      "segmentId": "N35",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N35:UNCERTAINTY",
+      "segmentId": "N35",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N35:CLASSIFICATION",
+      "segmentId": "N35",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N35:EVIDENCE:C17",
+      "segmentId": "N35",
+      "protectedItemType": "FACT",
+      "sourceValue": "C17",
+      "candidateValue": "C17",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": "research/research-brief.json#claims.C17"
+    },
+    {
+      "checkId": "N36:NUMBER",
+      "segmentId": "N36",
+      "protectedItemType": "NUMBER",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N36:DATE",
+      "segmentId": "N36",
+      "protectedItemType": "DATE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N36:QUOTE",
+      "segmentId": "N36",
+      "protectedItemType": "QUOTE",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N36:NAME",
+      "segmentId": "N36",
+      "protectedItemType": "NAME",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N36:CAVEAT",
+      "segmentId": "N36",
+      "protectedItemType": "CAVEAT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N36:UNCERTAINTY",
+      "segmentId": "N36",
+      "protectedItemType": "UNCERTAINTY",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N36:CLASSIFICATION",
+      "segmentId": "N36",
+      "protectedItemType": "CLASSIFICATION",
+      "sourceValue": "FACTUAL",
+      "candidateValue": "FACTUAL",
+      "status": "PRESERVED",
+      "reason": null,
+      "evidenceRef": null
+    },
+    {
+      "checkId": "N36:EVIDENCE",
+      "segmentId": "N36",
+      "protectedItemType": "FACT",
+      "sourceValue": null,
+      "candidateValue": null,
+      "status": "NOT_APPLICABLE",
+      "reason": "no claims declared for this segment",
+      "evidenceRef": null
+    }
+  ],
+  "issues": [],
+  "decision": "PASS",
+  "provenance": {
+    "createdAt": "2026-10-11T07:55:22.604Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "f2f9a3502f3537ec"
+}

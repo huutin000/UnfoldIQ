@@ -54,6 +54,16 @@ function main() {
   const P = cfg.projectId;
   const scenes = parseScriptTable(fs.readFileSync(path.join(REPO, cfg.scriptMd), "utf8"));
   const ledger = readJson(cfg.ledger);
+  // Checked before any write so a mismatch cannot leave a half-canonicalized project.
+  const wanted = (cfg.pronunciation || []).map((e) => `${e.displayTerm}=${e.reading.value}`).sort().join("|");
+  const latestProfile = pron.latestPronunciationProfile(REPO, P);
+  if (latestProfile.ok && latestProfile.profile.entries.map((e) => `${e.displayTerm}=${e.reading.value}`).sort().join("|") !== wanted) {
+    console.error("FSS_CANONICALIZE_FAILED: pronunciation entries differ from the existing profile; revise the profile first"); process.exit(1);
+  }
+  const prior = gate.loadDecision(REPO, P, cfg.fssArtifactId, cfg.fssVersion);
+  if (prior.ok && prior.decision.ownerApproval) {
+    console.error(`FSS_CANONICALIZE_FAILED: ${cfg.fssArtifactId}@v${cfg.fssVersion} already has an owner approval; bump fssVersion instead of rerunning`); process.exit(1);
+  }
   const out = { projectId: P, fssArtifactId: cfg.fssArtifactId, scriptVersion: cfg.fssVersion, steps: {} };
 
   // 1. Script QA gate (golden + measured duration computed here).
@@ -79,7 +89,8 @@ function main() {
   fs.mkdirSync(projDir, { recursive: true });
   const claimRefsOf = (s) => [...s.evidence.matchAll(/\bC(\d+)\b/g)].map((m) => "C" + m[1]);
   const source = { scriptVersion: cfg.fssVersion, title: cfg.title, beats: scenes.map((s) => ({ beatId: s.id, text: s.text, claimRefs: claimRefsOf(s) })) };
-  const srcPath = path.join(projDir, "script.json");
+  const sourceFile = cfg.sourceScriptFile || "script.json"; // later FSS versions set their own file; earlier ones stay immutable
+  const srcPath = path.join(projDir, sourceFile);
   const srcText = JSON.stringify(source, null, 2) + "\n";
   if (fs.existsSync(srcPath) && fs.readFileSync(srcPath, "utf8") !== srcText) {
     console.error("FSS_CANONICALIZE_FAILED: source script already exists with different content (immutable); bump fssVersion");
@@ -90,7 +101,7 @@ function main() {
   // 3. Humanization candidate == source (no content change), fidelity, naturalness, canonical FSS.
   const hum = step("humanization", ss.createHumanization(REPO, P, {
     contentMode: cfg.contentMode, contentClass: "FACTUAL",
-    sourceScriptRef: { artifact: "script.json", version: String(cfg.fssVersion) },
+    sourceScriptRef: { artifact: sourceFile, version: String(cfg.fssVersion) },
     sourceSegments: scenes.map((s) => ({ segmentId: s.id, text: s.text })),
     segments: scenes.map((s) => ({ segmentId: s.id, sourceSegmentIds: [s.id], candidateSpokenText: s.text, changeTypes: [], changeNotes: "script already written for speech; no change" })),
     changeSummary: "No spoken-text change: Script QA verified the exact text; pronunciation is handled by the pronunciation profile.",
@@ -119,14 +130,18 @@ function main() {
   const dagNow = dagLib.loadDag(REPO, P);
   if (!dagNow.dag.nodes.SCRIPT_QA_DECISION) {
     step("dag-qa", dagLib.addNode(REPO, P, { artifactKey: "SCRIPT_QA_DECISION", artifactType: "SCRIPT_QA_DECISION", versionRef: `${cfg.fssArtifactId}@v${cfg.fssVersion}`, state: "CLEAN", producedBy: "script-qa", provenance: "LIVE", inputRefs: [{ key: "FINAL_SPOKEN_SCRIPT", type: "SPOKEN_TEXT" }] }));
+  } else { // later FSS version: repoint the node, otherwise it stays on the old version and DIRTY
+    step("dag-qa-version", dagLib.setNodeVersion(REPO, P, "SCRIPT_QA_DECISION", `${cfg.fssArtifactId}@v${cfg.fssVersion}`));
+    step("dag-qa-clean", dagLib.setNodeState(REPO, P, "SCRIPT_QA_DECISION", "CLEAN"));
   }
 
   // 5. Narration direction + pronunciation (quiet runtime) + TTS-ready plan.
   const vb = readJson(`projects/phase2-1-validation/voice/voice-bible/${cfg.voiceBibleRef}.json`);
-  const nd = step("narration-direction", narr.createNarrationDirection(REPO, P, { scriptDoc: fss.script, voiceBible: vb, directions: [] }));
+  const hasNd = narr.listNarrationDirections(REPO, P).narrationDirections.length > 0; // later FSS version: versions are immutable, so revise
+  const nd = step("narration-direction", (hasNd ? narr.reviseNarrationDirection : narr.createNarrationDirection)(REPO, P, { scriptDoc: fss.script, voiceBible: vb, directions: [] }));
   step("manifest-nd", narr.attachManifestReference(REPO, P, nd.narrationDirection.narrationDirectionId, { scriptDoc: fss.script, voiceBible: vb }));
   step("dag-nd", narr.registerDagNode(REPO, P, nd.narrationDirection.narrationDirectionId));
-  const profile = step("pron-profile", pron.createPronunciationProfile(REPO, P, {
+  const profile = latestProfile.ok ? latestProfile : step("pron-profile", pron.createPronunciationProfile(REPO, P, {
     language: cfg.language,
     entries: (cfg.pronunciation || []).map((e) => ({ ...e, language: cfg.language, scope: { level: "PROJECT", projectId: P }, source: "PROJECT_OVERRIDE", quality: "AUTO" })),
     provenance: { source: "phase-7-script", evidenceRefs: [cfg.scriptMd] },

@@ -1,0 +1,261 @@
+{
+  "kind": "PRONUNCIATION_SAMPLES_INDEX_V4",
+  "script": "gps-script-v4.md",
+  "voice": "am_michael",
+  "kokoro": "local CPU, no network, no paid API",
+  "status": "PENDING_OWNER_EAR_REVIEW",
+  "note": "ASR is faster-whisper base int8, a noisy proxy (it writes digits/L2C regardless of what was spoken); it cannot approve any reading. Audio is gitignored under out/phase7-gps-v4-samples. Default reading candidates are the profile entries; alt-* files are alternates.",
+  "terms": {
+    "L2C": "L two C",
+    "L5": "L five",
+    "L1C": "L one C",
+    "WAAS": "W A A S (alt: wahs)",
+    "FAA": "F A A",
+    "NIST": "nist (alt: N I S T)",
+    "pseudorange": "no entry (check by ear in terms-pseudorange)",
+    "ionosphere": "no entry",
+    "troposphere": "no entry"
+  },
+  "rows": [
+    {
+      "file": "out/phase7-gps-v4-samples/L2C__before-original-text-speed1.0.wav",
+      "scenes": [
+        "N26"
+      ],
+      "label": "before-original-text",
+      "speed": 1,
+      "durationSec": 21.3,
+      "textSynthesized": "The ionosphere changes with the time of day and with solar activity. It delays lower frequencies more, in proportion to one over the frequency squared. A receiver listening on two frequencies can compare the delays and correct for it. With the newer civil signal L2C, civilian receivers can do that.",
+      "asrHeard": "The ionosphere changes with the time of day and with solar activity. It delays lower frequencies more in proportion to one over the frequency squared. A receiver listening on two frequencies can compare the delays and correct for it. With the newer civil signal L2C, civilian receivers can do that.",
+      "ownerEarReview": "PENDING_OWNER_EAR_REVIEW"
+    },
+    {
+      "file": "out/phase7-gps-v4-samples/L2C__after-profile-speed1.0.wav",
+      "scenes": [
+        "N26"
+      ],
+      "label": "after-profile",
+      "speed": 1,
+      "durationSec": 21.38,
+      "textSynthesized": "The ionosphere changes with the time of day and with solar activity. It delays lower frequencies more, in proportion to one over the frequency squared. A receiver listening on two frequencies can compare the delays and correct for it. With the newer civil signal L two C, civilian receivers can do that.",
+      "asrHeard": "The ionosphere changes with the time of day and with solar activity. It delays lower frequencies more in proportion to one over the frequency squared. A receiver listening on two frequencies can compare the delays and correct for it. With the newer civil signal L2C, civilian receivers can do that.",
+      "ownerEarReview": "PENDING_OWNER_EAR_REVIEW"
+    },
+    {
+      "file": "out/phase7-gps-v4-samples/L2C__after-profile-speed1.1.wav",
+      "scenes": [
+        "N26"
+      ],
+      "label": "after-profile",
+      "speed": 1.1,
+      "durationSec": 20,
+      "textSynthesized": "The ionosphere changes with the time of day and with solar activity. It delays lower frequencies more, in proportion to one over the frequency squared. A receiver listening on two frequencies can compare the delays and correct for it. With the newer civil signal L two C, civilian receivers can do that.",
+      "asrHeard": "The ionosphere changes with the time of day and with solar activity. It delays lower frequencies more in proportion to one over the frequency squared. A receiver listening on two frequencies can compare the delays and correct for it. With the newer civil signal L2C, civilian receivers can do that.",
+      "ownerEarReview": "PENDING_OWNER_EAR_REVIEW"
+    },
+    {
+      "file": "out/phase7-gps-v4-samples/L5-L1C-L2C-Galileo__before-original-text-speed1.0.wav",
+      "scenes": [
+        "N32"
+      ],
+      "label": "before-original-text",
+      "speed": 1,
+      "durationSec": 15.82,
+      "textSynthesized": "Newer civil signals, called L2C, L5 and L1C, are being added next to the original one, but receivers must be upgraded to use them. Other nations fly their own constellations, like Galileo in Europe.",
+      "asrHeard": "Newer civil signals called L2C, L5 and L1C are being added next to the original one, but receivers must be upgraded to use them. Other nations fly their own constellations like Galileo in Europe.",
+      "ownerEarReview": "PENDING_OWNER_EAR_REVIEW"
+    },
+    {
+      "file": "out/phase7-gps-v4-samples/L5-L1C-L2C-Galileo__after-profile-speed1.0.wav",
+      "scenes": [
+        "N32"
+      ],
+      "label": "after-profile",
+      "speed": 1,
+      "durationSec": 16.18,
+      "textSynthesized": "Newer civil signals, called L two C, L five and L one C, are being added next to the original one, but receivers must be upgraded to use them. Other nations fly their own constellations, like Galileo in Europe.",
+      "asrHeard": "Newer civil signals called L2C, L5 and L1C are being added next to the original one, but receivers must be upgraded to use them. Other nations fly their own constellations like Galileo in Europe.",
+      "ownerEarReview": "PENDING_OWNER_EAR_REVIEW"
+    },
+    {
+      "file": "out/phase7-gps-v4-samples/L5-L1C-L2C-Galileo__after-profile-speed1.1.wav",
+      "scenes": [
+        "N32"
+      ],
+      "label": "after-profile",
+      "speed": 1.1,
+      "durationSec": 15.4,
+      "textSynthesized": "Newer civil signals, called L two C, L five and L one C, are being added next to the original one, but receivers must be upgraded to use them. Other nations fly their own constellations, like Galileo in Europe.",
+      "asrHeard": "Newer civil signals called L2C, L5 and L1C are being added next to the original one, but receivers must be upgraded to use them. Other nations fly their own constellations like Galileo in Europe.",
+      "ownerEarReview": "PENDING_OWNER_EAR_REVIEW"
+    },
+    {
+      "file": "out/phase7-gps-v4-samples/WAAS-FAA__before-original-text-speed1.0.wav",
+      "scenes": [
+        "N31"
+      ],
+      "label": "before-original-text",
+      "speed": 1,
+      "durationSec": 11.38,
+      "textSynthesized": "Engineers push further. Augmentation systems add corrections; WAAS, run by the FAA, helps aircraft navigate across North America.",
+      "asrHeard": "Engineers push further. Augmentation systems add corrections. WAAS run by the FAA helps aircraft navigate across North America.",
+      "ownerEarReview": "PENDING_OWNER_EAR_REVIEW"
+    },
+    {
+      "file": "out/phase7-gps-v4-samples/WAAS-FAA__after-profile-speed1.0.wav",
+      "scenes": [
+        "N31"
+      ],
+      "label": "after-profile",
+      "speed": 1,
+      "durationSec": 11.82,
+      "textSynthesized": "Engineers push further. Augmentation systems add corrections; W A A S, run by the F A A, helps aircraft navigate across North America.",
+      "asrHeard": "Engineers push further. Augmentation systems add corrections. W-A-A-S run by the FAA helps aircraft navigate across North America.",
+      "ownerEarReview": "PENDING_OWNER_EAR_REVIEW"
+    },
+    {
+      "file": "out/phase7-gps-v4-samples/WAAS-FAA__after-profile-speed1.1.wav",
+      "scenes": [
+        "N31"
+      ],
+      "label": "after-profile",
+      "speed": 1.1,
+      "durationSec": 11.12,
+      "textSynthesized": "Engineers push further. Augmentation systems add corrections; W A A S, run by the F A A, helps aircraft navigate across North America.",
+      "asrHeard": "Engineers push further. Augmentation systems add corrections. W-A-A-S run by the FAA helps aircraft navigate across North America.",
+      "ownerEarReview": "PENDING_OWNER_EAR_REVIEW"
+    },
+    {
+      "file": "out/phase7-gps-v4-samples/WAAS-FAA__alt-wahs-speed1.0.wav",
+      "scenes": [
+        "N31"
+      ],
+      "label": "alt-wahs",
+      "speed": 1,
+      "durationSec": 11.82,
+      "textSynthesized": "Engineers push further. Augmentation systems add corrections; W A A S, run by the F A A, helps aircraft navigate across North America.",
+      "asrHeard": "Engineers push further. Augmentation systems add corrections. W-A-A-S run by the FAA helps aircraft navigate across North America.",
+      "ownerEarReview": "PENDING_OWNER_EAR_REVIEW"
+    },
+    {
+      "file": "out/phase7-gps-v4-samples/NIST__before-original-text-speed1.0.wav",
+      "scenes": [
+        "N35"
+      ],
+      "label": "before-original-text",
+      "speed": 1,
+      "durationSec": 17.1,
+      "textSynthesized": "Relativity is not only for satellites. NIST physicists once ran two clocks just a foot apart in height, and they ticked at different rates. Gravity changes how time passes, and every time that blue dot appears, GPS has accounted for it.",
+      "asrHeard": "Relativity is not only for satellites. Missed physicists once ran two clocks just a foot apart in height, and they ticked at different rates. Gravity changes how time passes, and every time that blue dot appears, GPS has accounted for it.",
+      "ownerEarReview": "PENDING_OWNER_EAR_REVIEW"
+    },
+    {
+      "file": "out/phase7-gps-v4-samples/NIST__after-profile-speed1.0.wav",
+      "scenes": [
+        "N35"
+      ],
+      "label": "after-profile",
+      "speed": 1,
+      "durationSec": 17.1,
+      "textSynthesized": "Relativity is not only for satellites. nist physicists once ran two clocks just a foot apart in height, and they ticked at different rates. Gravity changes how time passes, and every time that blue dot appears, GPS has accounted for it.",
+      "asrHeard": "Relativity is not only for satellites. NIST physicists once ran two clocks just a foot apart in height, and they ticked at different rates. Gravity changes how time passes, and every time that blue dot appears, GPS has accounted for it.",
+      "ownerEarReview": "PENDING_OWNER_EAR_REVIEW"
+    },
+    {
+      "file": "out/phase7-gps-v4-samples/NIST__after-profile-speed1.1.wav",
+      "scenes": [
+        "N35"
+      ],
+      "label": "after-profile",
+      "speed": 1.1,
+      "durationSec": 16.12,
+      "textSynthesized": "Relativity is not only for satellites. nist physicists once ran two clocks just a foot apart in height, and they ticked at different rates. Gravity changes how time passes, and every time that blue dot appears, GPS has accounted for it.",
+      "asrHeard": "Relativity is not only for satellites. NIST physicists once ran two clocks just a foot apart in height, and they ticked at different rates. Gravity changes how time passes, and every time that blue dot appears, GPS has accounted for it.",
+      "ownerEarReview": "PENDING_OWNER_EAR_REVIEW"
+    },
+    {
+      "file": "out/phase7-gps-v4-samples/NIST__alt-letters-speed1.0.wav",
+      "scenes": [
+        "N35"
+      ],
+      "label": "alt-letters",
+      "speed": 1,
+      "durationSec": 18,
+      "textSynthesized": "Relativity is not only for satellites. N I S T physicists once ran two clocks just a foot apart in height, and they ticked at different rates. Gravity changes how time passes, and every time that blue dot appears, GPS has accounted for it.",
+      "asrHeard": "Relativity is not only for satellites. NIST physicists once ran two clocks just a foot apart in height, and they ticked at different rates. Gravity changes how time passes, and every time that blue dot appears, GPS has accounted for it.",
+      "ownerEarReview": "PENDING_OWNER_EAR_REVIEW"
+    },
+    {
+      "file": "out/phase7-gps-v4-samples/terms-pseudorange__before-original-text-speed1.0.wav",
+      "scenes": [
+        "N15"
+      ],
+      "label": "before-original-text",
+      "speed": 1,
+      "durationSec": 17.48,
+      "textSynthesized": "In three dimensions, that makes four unknowns: east-west, north-south, height, and the clock error. The receiver therefore uses at least four satellites and solves for all of them at once. A distance with this clock error baked in is called a pseudorange.",
+      "asrHeard": "In three dimensions, that makes four unknowns, east-west, north-south, height, and the clock error. The receiver therefore uses at least four satellites and solves for all of them at once. A distance with this clock error baked in is called a pseudorange.",
+      "ownerEarReview": "PENDING_OWNER_EAR_REVIEW"
+    },
+    {
+      "file": "out/phase7-gps-v4-samples/terms-pseudorange__after-profile-speed1.0.wav",
+      "scenes": [
+        "N15"
+      ],
+      "label": "after-profile",
+      "speed": 1,
+      "durationSec": 17.48,
+      "textSynthesized": "In three dimensions, that makes four unknowns: east-west, north-south, height, and the clock error. The receiver therefore uses at least four satellites and solves for all of them at once. A distance with this clock error baked in is called a pseudorange.",
+      "asrHeard": "In three dimensions, that makes four unknowns, east-west, north-south, height, and the clock error. The receiver therefore uses at least four satellites and solves for all of them at once. A distance with this clock error baked in is called a pseudorange.",
+      "ownerEarReview": "PENDING_OWNER_EAR_REVIEW"
+    },
+    {
+      "file": "out/phase7-gps-v4-samples/terms-pseudorange__after-profile-speed1.1.wav",
+      "scenes": [
+        "N15"
+      ],
+      "label": "after-profile",
+      "speed": 1.1,
+      "durationSec": 16.5,
+      "textSynthesized": "In three dimensions, that makes four unknowns: east-west, north-south, height, and the clock error. The receiver therefore uses at least four satellites and solves for all of them at once. A distance with this clock error baked in is called a pseudorange.",
+      "asrHeard": "In three dimensions, that makes four unknowns, east-west, north-south, height, and the clock error. The receiver therefore uses at least four satellites and solves for all of them at once. A distance with this clock error baked in is called a suitoring.",
+      "ownerEarReview": "PENDING_OWNER_EAR_REVIEW"
+    },
+    {
+      "file": "out/phase7-gps-v4-samples/terms-ionosphere-troposphere__before-original-text-speed1.0.wav",
+      "scenes": [
+        "N25"
+      ],
+      "label": "before-original-text",
+      "speed": 1,
+      "durationSec": 21.6,
+      "textSynthesized": "Between the satellite and your phone, the signal crosses the ionosphere and the troposphere, and both add delay. Dry air alone adds about two point three meters straight overhead, and about ten meters for satellites low on the horizon. Water vapor adds only tens of centimeters, but it changes quickly and is hard to model.",
+      "asrHeard": "Between the satellite and your phone, the signal crosses the ionosphere and the troposphere, and both add delay. Dry air alone adds about 2.3 meters straight overhead, and about 10 meters for satellites low on the horizon. Water vapor adds only tens of centimeters, but it changes quickly and is hard to model.",
+      "ownerEarReview": "PENDING_OWNER_EAR_REVIEW"
+    },
+    {
+      "file": "out/phase7-gps-v4-samples/terms-ionosphere-troposphere__after-profile-speed1.0.wav",
+      "scenes": [
+        "N25"
+      ],
+      "label": "after-profile",
+      "speed": 1,
+      "durationSec": 21.6,
+      "textSynthesized": "Between the satellite and your phone, the signal crosses the ionosphere and the troposphere, and both add delay. Dry air alone adds about two point three meters straight overhead, and about ten meters for satellites low on the horizon. Water vapor adds only tens of centimeters, but it changes quickly and is hard to model.",
+      "asrHeard": "Between the satellite and your phone, the signal crosses the ionosphere and the troposphere, and both add delay. Dry air alone adds about 2.3 meters straight overhead, and about 10 meters for satellites low on the horizon. Water vapor adds only tens of centimeters, but it changes quickly and is hard to model.",
+      "ownerEarReview": "PENDING_OWNER_EAR_REVIEW"
+    },
+    {
+      "file": "out/phase7-gps-v4-samples/terms-ionosphere-troposphere__after-profile-speed1.1.wav",
+      "scenes": [
+        "N25"
+      ],
+      "label": "after-profile",
+      "speed": 1.1,
+      "durationSec": 20.4,
+      "textSynthesized": "Between the satellite and your phone, the signal crosses the ionosphere and the troposphere, and both add delay. Dry air alone adds about two point three meters straight overhead, and about ten meters for satellites low on the horizon. Water vapor adds only tens of centimeters, but it changes quickly and is hard to model.",
+      "asrHeard": "Between the satellite and your phone, the signal crosses the ionosphere and the troposphere, and both add delay. Dry air alone adds about 2.3 meters straight overhead, and about 10 meters for satellites low on the horizon. Water vapor adds only tens of centimeters, but it changes quickly and is hard to model.",
+      "ownerEarReview": "PENDING_OWNER_EAR_REVIEW"
+    }
+  ]
+}

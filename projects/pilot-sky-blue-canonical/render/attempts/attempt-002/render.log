@@ -1,0 +1,6 @@
+{"t":"2026-10-10T01:53:05.766Z","event":"bundle-start","projectId":"pilot-sky-blue-canonical"}
+{"t":"2026-10-10T01:53:07.478Z","event":"bundle-done"}
+{"t":"2026-10-10T01:53:07.479Z","event":"select-start","compositionId":"UNFOLDIQVideo"}
+{"t":"2026-10-10T01:53:09.826Z","event":"select-done","durationInFrames":1713}
+{"t":"2026-10-10T01:53:09.826Z","event":"render-start-attempt","concurrency":2}
+{"t":"2026-10-10T01:53:09.989Z","event":"render-start","frameCount":1713,"parallelEncoding":true,"resolvedConcurrency":2}

@@ -2,13 +2,13 @@
   "schemaVersion": "1.6.0",
   "manifestId": "pm-81b1cf9df1e2",
   "projectId": "phase7-gps-explainer",
-  "projectVersion": 6,
-  "revision": 6,
+  "projectVersion": 11,
+  "revision": 11,
   "pipelineVersion": null,
   "contentMode": "technical-explainer",
   "contentClass": "FACTUAL",
   "createdAt": "2026-10-11T07:12:16.829Z",
-  "updatedAt": "2026-10-11T07:12:25.092Z",
+  "updatedAt": "2026-10-11T09:59:06.923Z",
   "artifacts": {
     "creativeBriefVersion": {
       "version": null,
@@ -53,10 +53,10 @@
       "detail": null
     },
     "finalSpokenScriptVersion": {
-      "version": "fss-phase7-gps-explainer@v1",
+      "version": "fss-phase7-gps-explainer@v2",
       "status": "VERIFIED",
-      "ref": "input/final-spoken-script/fss-phase7-gps-explainer-v1.json",
-      "detail": "productionScriptStatus=CANONICAL hum=hum-8ab7d7a1fca2 fid=fid-94c5c7450319 nqa=nqa-0c3d0cab5b06"
+      "ref": "input/final-spoken-script/fss-phase7-gps-explainer-v2.json",
+      "detail": "productionScriptStatus=CANONICAL hum=hum-49965f9304f0 fid=fid-ed71c7b73d5c nqa=nqa-65a5ea4288e4"
     },
     "voiceBibleVersion": {
       "version": null,
@@ -113,10 +113,10 @@
       "detail": null
     },
     "narrationDirectionVersion": {
-      "version": "nd-1be5f39e7bf3",
+      "version": "nd-813ce6990d3c",
       "status": "UNRESOLVED",
-      "ref": "voice/narration-direction/nd-1be5f39e7bf3.json",
-      "detail": "v1 coverage=0% INVALID_SEGMENTS"
+      "ref": "voice/narration-direction/nd-813ce6990d3c.json",
+      "detail": "v2 coverage=0% INVALID_SEGMENTS"
     },
     "pronunciationProfileVersion": {
       "version": "pron-2243101e4d39",
@@ -125,16 +125,16 @@
       "detail": "v1 6 entries"
     },
     "pronunciationRuntimePassVersion": {
-      "version": "prp-576fd44703c0",
+      "version": "prp-c9eab301c6c0",
       "status": "VERIFIED",
-      "ref": "voice/pronunciation-pass/prp-576fd44703c0.json",
+      "ref": "voice/pronunciation-pass/prp-c9eab301c6c0.json",
       "detail": "v1 local-kokoro/kokoro-v1 statuses=CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,OVERRIDE_APPLIED,CLEAN,CLEAN,CLEAN,CLEAN,OVERRIDE_APPLIED,OVERRIDE_APPLIED,CLEAN,CLEAN,OVERRIDE_APPLIED,CLEAN"
     },
     "ttsReadyPlanVersion": {
-      "version": "ttp-932f25f33326",
-      "status": "UNRESOLVED",
-      "ref": "voice/tts-ready-plan/ttp-932f25f33326.json",
-      "detail": "overall=READY_FOR_TTS segments=37 PRODUCTION_TTS_BLOCKED(non-canonical script)"
+      "version": "ttp-77f300b60896",
+      "status": "VERIFIED",
+      "ref": "voice/tts-ready-plan/ttp-77f300b60896.json",
+      "detail": "overall=READY_FOR_TTS segments=37"
     },
     "narrationAudioVersion": {
       "version": null,
@@ -176,5 +176,5 @@
     "previousManifestId": null,
     "previousProjectVersion": null
   },
-  "fingerprint": "da9a297e9e3cfcae"
+  "fingerprint": "dfeb2046561c8416"
 }

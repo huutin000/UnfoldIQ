@@ -1,0 +1,161 @@
+[
+  {
+    "id": "H-N1",
+    "kind": "NEGATIVE",
+    "predicted": "MISS",
+    "asPredicted": false,
+    "found": "FORBIDDEN_BY_LEDGER"
+  },
+  {
+    "id": "H-N2",
+    "kind": "NEGATIVE",
+    "predicted": "DETECT",
+    "asPredicted": true,
+    "found": "NUMBER_NOT_IN_EVIDENCE"
+  },
+  {
+    "id": "H-N3",
+    "kind": "NEGATIVE",
+    "predicted": "DETECT",
+    "asPredicted": true,
+    "found": "NUMBER_NOT_IN_EVIDENCE"
+  },
+  {
+    "id": "H-N4",
+    "kind": "NEGATIVE",
+    "predicted": "DETECT",
+    "asPredicted": true,
+    "found": "NUMBER_COARSE_APPROXIMATION,ABSOLUTE_LANGUAGE"
+  },
+  {
+    "id": "H-N5",
+    "kind": "NEGATIVE",
+    "predicted": "DETECT",
+    "asPredicted": true,
+    "found": "ABSOLUTE_LANGUAGE"
+  },
+  {
+    "id": "H-N6",
+    "kind": "NEGATIVE",
+    "predicted": "MISS",
+    "asPredicted": true,
+    "found": ""
+  },
+  {
+    "id": "H-N7",
+    "kind": "NEGATIVE",
+    "predicted": "MISS",
+    "asPredicted": false,
+    "found": "FORBIDDEN_BY_LEDGER"
+  },
+  {
+    "id": "H-N8",
+    "kind": "NEGATIVE",
+    "predicted": "DETECT",
+    "asPredicted": true,
+    "found": "NUMBER_NOT_IN_EVIDENCE"
+  },
+  {
+    "id": "H-N9",
+    "kind": "NEGATIVE",
+    "predicted": "DETECT",
+    "asPredicted": false,
+    "found": "NUMBER_COARSE_APPROXIMATION"
+  },
+  {
+    "id": "H-N10",
+    "kind": "NEGATIVE",
+    "predicted": "DETECT",
+    "asPredicted": true,
+    "found": "MISSING_CAVEAT,ABSOLUTE_LANGUAGE"
+  },
+  {
+    "id": "H-N11",
+    "kind": "NEGATIVE",
+    "predicted": "DETECT",
+    "asPredicted": true,
+    "found": "MISSING_CAVEAT"
+  },
+  {
+    "id": "H-N12",
+    "kind": "NEGATIVE",
+    "predicted": "DETECT",
+    "asPredicted": true,
+    "found": "LECTURE_PHRASE"
+  },
+  {
+    "id": "H-N13",
+    "kind": "NEGATIVE",
+    "predicted": "DETECT",
+    "asPredicted": true,
+    "found": "REPEATED_CONTENT"
+  },
+  {
+    "id": "H-P1",
+    "kind": "POSITIVE",
+    "asPredicted": true,
+    "found": ""
+  },
+  {
+    "id": "H-P2",
+    "kind": "POSITIVE",
+    "asPredicted": true,
+    "found": ""
+  },
+  {
+    "id": "H-P3",
+    "kind": "POSITIVE",
+    "asPredicted": true,
+    "found": ""
+  },
+  {
+    "id": "H-P4",
+    "kind": "POSITIVE",
+    "asPredicted": true,
+    "found": ""
+  },
+  {
+    "id": "H-P5",
+    "kind": "POSITIVE",
+    "asPredicted": true,
+    "found": ""
+  },
+  {
+    "id": "H-P6",
+    "kind": "POSITIVE",
+    "asPredicted": true,
+    "found": ""
+  },
+  {
+    "id": "H-P7",
+    "kind": "POSITIVE",
+    "asPredicted": true,
+    "found": ""
+  },
+  {
+    "id": "H-P8",
+    "kind": "POSITIVE",
+    "asPredicted": true,
+    "found": ""
+  },
+  {
+    "id": "H-O1",
+    "kind": "NEGATIVE",
+    "predicted": "DETECT",
+    "asPredicted": true,
+    "found": "NUMBER_NOT_IN_EVIDENCE"
+  },
+  {
+    "id": "H-O2",
+    "kind": "NEGATIVE",
+    "predicted": "DETECT",
+    "asPredicted": true,
+    "found": "MISSING_CAVEAT"
+  },
+  {
+    "id": "H-O3",
+    "kind": "POSITIVE",
+    "asPredicted": true,
+    "found": "NUMBER_COARSE_APPROXIMATION"
+  }
+]

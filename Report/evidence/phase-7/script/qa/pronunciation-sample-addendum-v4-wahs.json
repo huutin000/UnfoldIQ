@@ -1,0 +1,19 @@
+{
+  "kind": "PRONUNCIATION_SAMPLE_ADDENDUM_V4",
+  "status": "PENDING_OWNER_EAR_REVIEW",
+  "correction": "WAAS-FAA__alt-wahs-speed1.0.wav in pronunciation-samples-index-v4.json was NOT a distinct variant: its textSynthesized equals WAAS-FAA__after-profile-speed1.0.wav (both \"W A A S\"; my scratch script applied the wahs replacement after the letters replacement). WAAS_VARIANT_COMPARISON for that file is INVALID. The old file is kept, not relabeled.",
+  "newSample": {
+    "file": "out/phase7-gps-v4-samples/WAAS-FAA__alt-wahs-phoneme-speed1.0.wav",
+    "speed": 1,
+    "voice": "am_michael",
+    "kokoro": "local CPU 0.9.4, no network",
+    "textSynthesized": "Engineers push further. Augmentation systems add corrections; [WAAS](/wɑs/), run by the F A A, helps aircraft navigate across North America.",
+    "inputNote": "Kokoro custom-phoneme markup forces the word-like reading /wɑs/ (\"wahs\", ends in s). Plain text \"wahs\" was rejected because the g2p gives /wɑz/ (ends in z); \"WAHS\" is spelled out letter by letter.",
+    "phonemesProduced": "ˌɛnʤənˈɪɹz pˈʊʃ fˈɜɹðəɹ. ˌɔɡmˌɛntˈAʃən sˈɪstəmz ˈæd kəɹˈɛkʃənz; wɑs, ɹˈʌn bI ði ˈɛf ˈA ˈA, hˈɛlps ˈɛɹkɹˌæft nˈævəɡˌAt əkɹˈɔs nˈɔɹθ əmˈɛɹəkə.",
+    "durationSec": 10.875,
+    "sha256": "4621e4bcf8386fcb3927afe3566f657eb5b281a8d7a03e9f54dbcd58181e2b5c",
+    "comparedWith": "WAAS-FAA__after-profile-speed1.0.wav (11.825 s, sha256 prefix 8887a749d8b07523), waveform Pearson 0.088 over the common length, duration differs by about 0.95 s"
+  },
+  "untouched": "script v4, FSS @v2, hash b3561db3d17d9331, QA decision, profile pron-2243101e4d39 (WAAS stays \"W A A S\"), manifest, DAG, TTS plan, approval",
+  "note": "Audio is gitignored. A pronunciation change to word-like WAAS would need a separate versioned profile revision, proposed only after the owner listens."
+}

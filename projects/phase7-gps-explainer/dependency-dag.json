@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0.0",
   "projectId": "phase7-gps-explainer",
-  "revision": 29,
+  "revision": 43,
   "createdAt": "2026-10-11T07:12:16.868Z",
-  "updatedAt": "2026-10-11T07:12:25.103Z",
+  "updatedAt": "2026-10-11T09:59:06.939Z",
   "nodes": {
     "SHOT_PLAN": {
       "artifactKey": "SHOT_PLAN",
@@ -32,7 +32,7 @@
     "FINAL_SPOKEN_SCRIPT": {
       "artifactKey": "FINAL_SPOKEN_SCRIPT",
       "artifactType": "FINAL_SPOKEN_SCRIPT",
-      "versionRef": "fss-phase7-gps-explainer@v1",
+      "versionRef": "fss-phase7-gps-explainer@v2",
       "state": "CLEAN",
       "inputRefs": [
         {
@@ -197,7 +197,7 @@
     "SPOKEN_HUMANIZATION": {
       "artifactKey": "SPOKEN_HUMANIZATION",
       "artifactType": "SPOKEN_HUMANIZATION",
-      "versionRef": "hum-8ab7d7a1fca2",
+      "versionRef": "hum-49965f9304f0",
       "state": "CLEAN",
       "inputRefs": [],
       "dependencyFingerprint": "62b512d8c76bbed3",
@@ -209,7 +209,7 @@
     "EVIDENCE_FIDELITY_DECISION": {
       "artifactKey": "EVIDENCE_FIDELITY_DECISION",
       "artifactType": "EVIDENCE_FIDELITY_DECISION",
-      "versionRef": "fid-94c5c7450319",
+      "versionRef": "fid-ed71c7b73d5c",
       "state": "CLEAN",
       "inputRefs": [
         {
@@ -226,7 +226,7 @@
     "NATURALNESS_QA": {
       "artifactKey": "NATURALNESS_QA",
       "artifactType": "NATURALNESS_QA",
-      "versionRef": "nqa-0c3d0cab5b06",
+      "versionRef": "nqa-65a5ea4288e4",
       "state": "CLEAN",
       "inputRefs": [
         {
@@ -243,7 +243,7 @@
     "SCRIPT_QA_DECISION": {
       "artifactKey": "SCRIPT_QA_DECISION",
       "artifactType": "SCRIPT_QA_DECISION",
-      "versionRef": "fss-phase7-gps-explainer@v1",
+      "versionRef": "fss-phase7-gps-explainer@v2",
       "state": "CLEAN",
       "inputRefs": [
         {
@@ -251,7 +251,7 @@
           "type": "SPOKEN_TEXT"
         }
       ],
-      "dependencyFingerprint": "fdf101a5dd20bdb4",
+      "dependencyFingerprint": "e8e5dcd7326a0ca7",
       "producedBy": "script-qa",
       "lockTarget": null,
       "blockedReason": null,
@@ -260,7 +260,7 @@
     "NARRATION_DIRECTION": {
       "artifactKey": "NARRATION_DIRECTION",
       "artifactType": "NARRATION_DIRECTION",
-      "versionRef": "nd-1be5f39e7bf3",
+      "versionRef": "nd-813ce6990d3c",
       "state": "CLEAN",
       "inputRefs": [
         {
@@ -272,7 +272,7 @@
           "type": "VOICE_IDENTITY"
         }
       ],
-      "dependencyFingerprint": "ed4ba48458cc119f",
+      "dependencyFingerprint": "85c074b18f392334",
       "producedBy": "phase-2.2:narration-direction",
       "lockTarget": null,
       "blockedReason": null,
@@ -293,7 +293,7 @@
     "PRONUNCIATION_RUNTIME_PASS": {
       "artifactKey": "PRONUNCIATION_RUNTIME_PASS",
       "artifactType": "PRONUNCIATION_RUNTIME_PASS",
-      "versionRef": "prp-576fd44703c0",
+      "versionRef": "prp-c9eab301c6c0",
       "state": "CLEAN",
       "inputRefs": [
         {
@@ -305,7 +305,7 @@
           "type": "PRONUNCIATION_READINGS"
         }
       ],
-      "dependencyFingerprint": "0588c840bec005c2",
+      "dependencyFingerprint": "39cce793e4c8b292",
       "producedBy": "phase-2.3:pronunciation",
       "lockTarget": null,
       "blockedReason": null,
@@ -314,7 +314,7 @@
     "TTS_READY_PLAN": {
       "artifactKey": "TTS_READY_PLAN",
       "artifactType": "TTS_READY_PLAN",
-      "versionRef": "ttp-932f25f33326",
+      "versionRef": "ttp-77f300b60896",
       "state": "CLEAN",
       "inputRefs": [
         {
@@ -330,12 +330,12 @@
           "type": "SCRIPT_QA"
         }
       ],
-      "dependencyFingerprint": "811c03a2ab2854e1",
+      "dependencyFingerprint": "a569db71b30c8902",
       "producedBy": "phase-2.2-2.3:tts-ready-plan",
       "lockTarget": null,
       "blockedReason": null,
       "provenance": "LIVE"
     }
   },
-  "fingerprint": "3d1c50ecac9b6bfe"
+  "fingerprint": "3453372fd46c31f2"
 }

@@ -1,0 +1,39 @@
+{
+  "kind": "SCRIPT_QA_DECISION",
+  "version": "1.0.0",
+  "scriptRef": {
+    "scriptArtifactId": "fss-phase7-gps-explainer",
+    "scriptVersion": 2
+  },
+  "scriptTextHash": "b3561db3d17d9331",
+  "verdict": "READY_FOR_LOCK",
+  "requirements": [
+    {
+      "id": "NO_OPEN_FINDINGS",
+      "met": true
+    },
+    {
+      "id": "DURATION_MEASURED",
+      "met": true
+    },
+    {
+      "id": "GOLDEN_TESTS_PASSED",
+      "met": true
+    }
+  ],
+  "openFindings": 0,
+  "scenes": 37,
+  "words": 1377,
+  "durationBasis": "MEASURED",
+  "ledgerVersion": "1.2.0",
+  "decidedAt": "2026-10-11T08:12:48.075Z",
+  "note": "READY_FOR_LOCK is a recommendation; locking is an owner decision",
+  "ownerApproval": {
+    "status": "APPROVED",
+    "approvedBy": "Nguyễn Hữu Tín (owner)",
+    "source": "Owner message 2026-10-11: Xác nhận 3 dispositions và duyệt fss-phase7-gps-explainer@v2, hash b3561db3d17d9331, speed 1.0, pronunciation như profile hiện tại.",
+    "note": "Owner heard 7 samples, all NATURAL; WAAS letters, NIST word, speed 1.0. Opens the TTS gate only.",
+    "approvedAt": "2026-10-11T09:59:06.862Z",
+    "scriptTextHash": "b3561db3d17d9331"
+  }
+}

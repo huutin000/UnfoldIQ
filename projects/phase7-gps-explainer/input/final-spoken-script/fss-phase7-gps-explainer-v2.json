@@ -1,0 +1,209 @@
+{
+  "schemaVersion": "1.1.0",
+  "scriptArtifactId": "fss-phase7-gps-explainer",
+  "scriptVersion": 2,
+  "projectId": "phase7-gps-explainer",
+  "language": "en-us",
+  "contentMode": "technical-explainer",
+  "contentClass": "FACTUAL",
+  "segments": [
+    {
+      "segmentId": "N01",
+      "ordinal": 0,
+      "text": "Your phone can find you on Earth to within a few meters. Yet not one GPS satellite is tracking it. They only broadcast, like lighthouses."
+    },
+    {
+      "segmentId": "N02",
+      "ordinal": 1,
+      "text": "So how does a phone find itself from signals that only travel one way? By measuring time, so precisely that one billionth of a second is thirty centimeters of error."
+    },
+    {
+      "segmentId": "N03",
+      "ordinal": 2,
+      "text": "And the clocks involved are strange: without correction, a GPS satellite clock would gain about thirty-eight microseconds a day compared with one on the ground. That is far beyond the timing accuracy GPS needs, and Einstein explains why."
+    },
+    {
+      "segmentId": "N04",
+      "ordinal": 3,
+      "text": "First, the geometry. Suppose you are exactly five kilometers from a tower. You could be anywhere on a circle around it. One distance is not enough."
+    },
+    {
+      "segmentId": "N05",
+      "ordinal": 4,
+      "text": "On a flat map, a second tower gives a second circle, and the two cross in two places. A third circle leaves just one spot where all three meet. Positioning from three distances: trilateration."
+    },
+    {
+      "segmentId": "N06",
+      "ordinal": 5,
+      "text": "The real world has three dimensions, so each distance is a sphere. Three spheres can still meet at two points, so a receiver needs more measurements than that. One extra measurement turns out to matter for a surprising reason."
+    },
+    {
+      "segmentId": "N07",
+      "ordinal": 6,
+      "text": "All of this assumes the towers know where they are. For GPS, monitor stations track every satellite and work out its exact orbit and clock errors. Ground antennas then upload fresh data, about every two hours under normal conditions, and the satellite rebroadcasts it to users."
+    },
+    {
+      "segmentId": "N08",
+      "ordinal": 7,
+      "text": "The satellites orbit about twenty thousand two hundred kilometers up, roughly three Earth radii above your head, moving about fourteen thousand kilometers an hour. Each one circles the planet twice a day."
+    },
+    {
+      "segmentId": "N09",
+      "ordinal": 8,
+      "text": "There are at least twenty-four of them, in six orbital planes tilted fifty-five degrees to the equator. That arrangement lets you see at least four satellites from virtually any point on the planet."
+    },
+    {
+      "segmentId": "N10",
+      "ordinal": 9,
+      "text": "Each satellite broadcasts a message: where it is, what time its clock says, how healthy it is, and even a model of the ionosphere. Your phone only has to listen."
+    },
+    {
+      "segmentId": "N11",
+      "ordinal": 10,
+      "text": "Radio waves travel at the speed of light, almost three hundred thousand kilometers a second. Distance is then speed times travel time. Measure the time, and you know the distance."
+    },
+    {
+      "segmentId": "N12",
+      "ordinal": 11,
+      "text": "From straight overhead, the signal takes about seven hundredths of a second. Lower in the sky, up to about nine hundredths. Short, but a clock that is off by just one microsecond moves the answer by three hundred meters."
+    },
+    {
+      "segmentId": "N13",
+      "ordinal": 12,
+      "text": "The satellites carry atomic clocks that the ground system keeps checking. Your receiver uses an inexpensive clock that drifts, so it has to cope with its own error."
+    },
+    {
+      "segmentId": "N14",
+      "ordinal": 13,
+      "text": "Here is the trick. Suppose every distance comes out too long by the same amount. On a flat map, the three circles no longer meet at one point. Shrink them all equally until they do, and that amount is the clock error."
+    },
+    {
+      "segmentId": "N15",
+      "ordinal": 14,
+      "text": "In three dimensions, that makes four unknowns: east-west, north-south, height, and the clock error. The receiver therefore uses at least four satellites and solves for all of them at once. A distance with this clock error baked in is called a pseudorange."
+    },
+    {
+      "segmentId": "N16",
+      "ordinal": 15,
+      "text": "As a bonus, the receiver now knows the time, straight from the atomic clocks on the satellites. That timing synchronizes communications systems and power grids, and lets financial transactions carry traceable time tags. Hollywood even uses it in movie slates."
+    },
+    {
+      "segmentId": "N17",
+      "ordinal": 16,
+      "text": "Now those atomic clocks have a problem, and it comes from Einstein. Special relativity says moving clocks tick slower. At fourteen thousand kilometers an hour, satellite clocks fall behind ground clocks by about seven microseconds a day."
+    },
+    {
+      "segmentId": "N18",
+      "ordinal": 17,
+      "text": "General relativity says clocks tick faster where gravity is weaker. Up there, that adds about forty-five microseconds a day. Combined with the effect of motion, an uncorrected satellite clock would run about thirty-eight microseconds a day faster than one on the ground."
+    },
+    {
+      "segmentId": "N19",
+      "ordinal": 18,
+      "text": "About thirty-eight microseconds a day sounds tiny. But a ranging error of three meters takes only ten nanoseconds of clock error. The offset is thousands of times too big to ignore."
+    },
+    {
+      "segmentId": "N19b",
+      "ordinal": 19,
+      "text": "Here is the twist. In a simplified model with identical circular satellite orbits, ignoring relativity would make every measured distance appear too short by the same amount, up to about eleven kilometers between daily clock updates. That shared error could be absorbed into the receiver's own clock bias, so the position estimate would survive in this idealized case. GPS time would not: it could drift by thirty-eight microseconds a day."
+    },
+    {
+      "segmentId": "N20",
+      "ordinal": 20,
+      "text": "Before launch, each satellite clock is tuned to run slightly slow, by about four and a half parts in ten billion. Once in orbit, relativity cancels that offset."
+    },
+    {
+      "segmentId": "N21",
+      "ordinal": 21,
+      "text": "Orbits are not perfect circles, so a smaller relativistic error is left over, and it differs from satellite to satellite. For a slightly oval orbit it can reach about forty-five nanoseconds, roughly fifteen meters of range error, and receivers correct for it."
+    },
+    {
+      "segmentId": "N22",
+      "ordinal": 22,
+      "text": "How does a receiver time a signal at all? Every satellite sends its own code: a pattern of one thousand twenty-three pulses, repeating every millisecond."
+    },
+    {
+      "segmentId": "N23",
+      "ordinal": 23,
+      "text": "The receiver makes the same pattern and slides it until the two match. That shift is how late the signal arrived, by the receiver's own clock. That is why the result is called a pseudorange."
+    },
+    {
+      "segmentId": "N24",
+      "ordinal": 24,
+      "text": "The pattern repeats every millisecond, about three hundred kilometers of signal, so the code alone fixes the delay only within one millisecond. The message supplies the rest: at fifty bits a second, each six-second block carries a time-of-week word near its start, so the receiver can work out which millisecond it is hearing."
+    },
+    {
+      "segmentId": "N25",
+      "ordinal": 25,
+      "text": "Between the satellite and your phone, the signal crosses the ionosphere and the troposphere, and both add delay. Dry air alone adds about two point three meters straight overhead, and about ten meters for satellites low on the horizon. Water vapor adds only tens of centimeters, but it changes quickly and is hard to model."
+    },
+    {
+      "segmentId": "N26",
+      "ordinal": 26,
+      "text": "The ionosphere changes with the time of day and with solar activity. It delays lower frequencies more, in proportion to one over the frequency squared. A receiver listening on two frequencies can compare the delays and correct for it. With the newer civil signal L2C, civilian receivers can do that."
+    },
+    {
+      "segmentId": "N27",
+      "ordinal": 27,
+      "text": "In cities, signals also bounce off buildings. Engineers call it multipath, and it makes a signal look as if it traveled farther. Where buildings, bridges or trees block the signal, the blue dot gets worse."
+    },
+    {
+      "segmentId": "N28",
+      "ordinal": 28,
+      "text": "Put it all together, and a pseudorange is simply a sum: the true distance, plus the clock errors, plus the ionosphere and troposphere delays, plus multipath and noise. The receiver's whole job is to untangle that sum."
+    },
+    {
+      "segmentId": "N29",
+      "ordinal": 29,
+      "text": "Accuracy comes in layers. The U.S. government commits to a daily global average signal-in-space ranging error of at most two meters, with ninety-five percent probability, across healthy satellites. On one day in 2021, that average was at most about sixty-four centimeters. But that does not describe your phone's accuracy. Your position also depends on satellite geometry, the atmosphere and nearby buildings, so phones typically land within about five meters under open sky."
+    },
+    {
+      "segmentId": "N30",
+      "ordinal": 30,
+      "text": "It used to be worse by design. Until May 2000, the United States deliberately degraded the public GPS signal for national security reasons. Then it turned that feature off, and says it has no intent to use it again."
+    },
+    {
+      "segmentId": "N31",
+      "ordinal": 31,
+      "text": "Engineers push further. Augmentation systems add corrections; WAAS, run by the FAA, helps aircraft navigate across North America."
+    },
+    {
+      "segmentId": "N32",
+      "ordinal": 32,
+      "text": "Newer civil signals, called L2C, L5 and L1C, are being added next to the original one, but receivers must be upgraded to use them. Other nations fly their own constellations, like Galileo in Europe."
+    },
+    {
+      "segmentId": "N33",
+      "ordinal": 33,
+      "text": "When the blue dot lands on the right street, here is what just happened. Signals that left the satellites a fraction of a second ago were timed to within billionths of a second, then corrected for the atmosphere and for relativity."
+    },
+    {
+      "segmentId": "N34",
+      "ordinal": 34,
+      "text": "And it is not only for phones. Spacecraft use GPS as a compass, and sometimes even as a clock, replacing expensive atomic clocks on board."
+    },
+    {
+      "segmentId": "N35",
+      "ordinal": 35,
+      "text": "Relativity is not only for satellites. NIST physicists once ran two clocks just a foot apart in height, and they ticked at different rates. Gravity changes how time passes, and every time that blue dot appears, GPS has accounted for it."
+    },
+    {
+      "segmentId": "N36",
+      "ordinal": 36,
+      "text": "Every claim in this video is sourced. The list is in the description."
+    }
+  ],
+  "provenance": {
+    "source": "FIX PRE-2.4 humanizer → fidelity → naturalness chain",
+    "createdAt": "2026-10-11T07:55:22.666Z",
+    "productionScriptStatus": "CANONICAL",
+    "sourceScriptRef": {
+      "artifact": "script-v2.json",
+      "version": "2"
+    },
+    "humanizationRef": "hum-49965f9304f0",
+    "evidenceFidelityRef": "fid-ed71c7b73d5c",
+    "naturalnessQaRef": "nqa-65a5ea4288e4"
+  },
+  "fingerprint": "d254424d282ad246"
+}
