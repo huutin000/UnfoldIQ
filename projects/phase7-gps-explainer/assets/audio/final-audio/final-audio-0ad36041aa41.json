@@ -1,0 +1,19 @@
+{
+  "assetId": "final-audio-0ad36041aa41",
+  "mixPlanVersion": "2.0.0",
+  "durationMs": 590125,
+  "integratedLoudness": -15.73,
+  "loudnessRange": 2.5,
+  "truePeak": -2.49,
+  "qaStatus": "PASS",
+  "narrationTimingHash": "e5e58ee03408ed3e52b3f20955c32782a126772dc60705f4fbdec0084d33c8fc",
+  "finalMixHash": "0ad36041aa41c691870fb413d5b746ff48b3fffe1d8aa2dfc7bb18f14b0bbdb9",
+  "sourceDependencies": [
+    "fnt-e2ceed888682",
+    "music-cue-plan.json@1.1.0",
+    "mus-1e79e277b220",
+    "mus-4b4e55ee279f"
+  ],
+  "hash": "1b156119ffbc9f27634f6b3ee8f58d6f49e2fa83a82f69e8287681f06bb6363d",
+  "createdAt": "2026-10-12T08:39:24.415Z"
+}

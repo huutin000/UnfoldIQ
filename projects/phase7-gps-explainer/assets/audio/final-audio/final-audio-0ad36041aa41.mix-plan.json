@@ -1,0 +1,504 @@
+{
+  "version": "2.0.0",
+  "projectId": "phase7-gps-explainer",
+  "tracks": {
+    "voice": [
+      {
+        "clipId": "voice-N01",
+        "segmentId": "N01",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-785651a86ab6.wav",
+        "startMs": 0,
+        "durationMs": 10075,
+        "importance": "NORMAL",
+        "gainDb": 11.24,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N02",
+        "segmentId": "N02",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-1db1fa33d062.wav",
+        "startMs": 10325,
+        "durationMs": 12075,
+        "importance": "NORMAL",
+        "gainDb": 11.6,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N03",
+        "segmentId": "N03",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-a78698a135eb.wav",
+        "startMs": 22650,
+        "durationMs": 17350,
+        "importance": "NORMAL",
+        "gainDb": 11.48,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N04",
+        "segmentId": "N04",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-5ad66bf73ea4.wav",
+        "startMs": 40250,
+        "durationMs": 10625,
+        "importance": "NORMAL",
+        "gainDb": 11.24,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N05",
+        "segmentId": "N05",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-aaa397516504.wav",
+        "startMs": 51125,
+        "durationMs": 14150,
+        "importance": "NORMAL",
+        "gainDb": 11.06,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N06",
+        "segmentId": "N06",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-9bc324156a16.wav",
+        "startMs": 65525,
+        "durationMs": 15600,
+        "importance": "NORMAL",
+        "gainDb": 11.3,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N07",
+        "segmentId": "N07",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-adf3069dd28b.wav",
+        "startMs": 81375,
+        "durationMs": 20175,
+        "importance": "NORMAL",
+        "gainDb": 11.52,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N08",
+        "segmentId": "N08",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-8ffdc64ea257.wav",
+        "startMs": 101800,
+        "durationMs": 14175,
+        "importance": "NORMAL",
+        "gainDb": 11.73,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N09",
+        "segmentId": "N09",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-7545bdf280f6.wav",
+        "startMs": 116225,
+        "durationMs": 13300,
+        "importance": "NORMAL",
+        "gainDb": 11.35,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N10",
+        "segmentId": "N10",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-4851c3dfc501.wav",
+        "startMs": 129775,
+        "durationMs": 11525,
+        "importance": "NORMAL",
+        "gainDb": 11.44,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N11",
+        "segmentId": "N11",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-caa0cc65e22a.wav",
+        "startMs": 141550,
+        "durationMs": 12675,
+        "importance": "NORMAL",
+        "gainDb": 11.08,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N12",
+        "segmentId": "N12",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-1f139d287362.wav",
+        "startMs": 154475,
+        "durationMs": 15475,
+        "importance": "NORMAL",
+        "gainDb": 10.96,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N13",
+        "segmentId": "N13",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-9839c2989133.wav",
+        "startMs": 170200,
+        "durationMs": 11450,
+        "importance": "NORMAL",
+        "gainDb": 11.46,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N14",
+        "segmentId": "N14",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-33a5d6498c87.wav",
+        "startMs": 181900,
+        "durationMs": 15500,
+        "importance": "NORMAL",
+        "gainDb": 11.51,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N15",
+        "segmentId": "N15",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-fcdb9231274c.wav",
+        "startMs": 197650,
+        "durationMs": 17475,
+        "importance": "NORMAL",
+        "gainDb": 11.35,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N16",
+        "segmentId": "N16",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-6e1a431599c2.wav",
+        "startMs": 215375,
+        "durationMs": 18300,
+        "importance": "NORMAL",
+        "gainDb": 11.35,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N17",
+        "segmentId": "N17",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-ec4a5b3729af.wav",
+        "startMs": 233925,
+        "durationMs": 16850,
+        "importance": "NORMAL",
+        "gainDb": 11.75,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N18",
+        "segmentId": "N18",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-33f94c277574.wav",
+        "startMs": 251025,
+        "durationMs": 18625,
+        "importance": "NORMAL",
+        "gainDb": 11.39,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N19",
+        "segmentId": "N19",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-71fe08a5ce35.wav",
+        "startMs": 269900,
+        "durationMs": 13175,
+        "importance": "NORMAL",
+        "gainDb": 11.48,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N19b",
+        "segmentId": "N19b",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-123a55cc9360.wav",
+        "startMs": 283325,
+        "durationMs": 29600,
+        "importance": "NORMAL",
+        "gainDb": 12,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N20",
+        "segmentId": "N20",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-c7db9b06b0d5.wav",
+        "startMs": 313175,
+        "durationMs": 11850,
+        "importance": "NORMAL",
+        "gainDb": 11.48,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N21",
+        "segmentId": "N21",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-1ff36e05a7f9.wav",
+        "startMs": 325275,
+        "durationMs": 18575,
+        "importance": "NORMAL",
+        "gainDb": 11.29,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N22",
+        "segmentId": "N22",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-d02e95ee4a26.wav",
+        "startMs": 344100,
+        "durationMs": 11325,
+        "importance": "NORMAL",
+        "gainDb": 11.48,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N23",
+        "segmentId": "N23",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-78d74668fb65.wav",
+        "startMs": 355675,
+        "durationMs": 13000,
+        "importance": "NORMAL",
+        "gainDb": 11.4,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N24",
+        "segmentId": "N24",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-271c5d0e6e7a.wav",
+        "startMs": 368925,
+        "durationMs": 22100,
+        "importance": "NORMAL",
+        "gainDb": 11.49,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N25",
+        "segmentId": "N25",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-c0989aba0700.wav",
+        "startMs": 391275,
+        "durationMs": 21600,
+        "importance": "NORMAL",
+        "gainDb": 11.45,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N26",
+        "segmentId": "N26",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-112d64d06de9.wav",
+        "startMs": 413125,
+        "durationMs": 21375,
+        "importance": "NORMAL",
+        "gainDb": 11.62,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N27",
+        "segmentId": "N27",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-4301344547cd.wav",
+        "startMs": 434750,
+        "durationMs": 14800,
+        "importance": "NORMAL",
+        "gainDb": 11.25,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N28",
+        "segmentId": "N28",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-7dd1cfd36f8c.wav",
+        "startMs": 449800,
+        "durationMs": 15425,
+        "importance": "NORMAL",
+        "gainDb": 11.33,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N29",
+        "segmentId": "N29",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-64f48c0c88c9.wav",
+        "startMs": 465475,
+        "durationMs": 31575,
+        "importance": "NORMAL",
+        "gainDb": 11.96,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N30",
+        "segmentId": "N30",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-e32cb5c209cc.wav",
+        "startMs": 497300,
+        "durationMs": 15950,
+        "importance": "NORMAL",
+        "gainDb": 11.51,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N31",
+        "segmentId": "N31",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-a6849825636c.wav",
+        "startMs": 513500,
+        "durationMs": 10700,
+        "importance": "NORMAL",
+        "gainDb": 10.97,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N32",
+        "segmentId": "N32",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-89891312a9c4.wav",
+        "startMs": 524450,
+        "durationMs": 16175,
+        "importance": "NORMAL",
+        "gainDb": 11.4,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N33",
+        "segmentId": "N33",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-1ca563ce55d4.wav",
+        "startMs": 540875,
+        "durationMs": 14975,
+        "importance": "NORMAL",
+        "gainDb": 11.31,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N34",
+        "segmentId": "N34",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-d3a9fe50f03f.wav",
+        "startMs": 556100,
+        "durationMs": 11175,
+        "importance": "NORMAL",
+        "gainDb": 11.32,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N35",
+        "segmentId": "N35",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-c0c8c2c76428.wav",
+        "startMs": 567525,
+        "durationMs": 17100,
+        "importance": "NORMAL",
+        "gainDb": 11.46,
+        "timingStatus": "MEASURED"
+      },
+      {
+        "clipId": "voice-N36",
+        "segmentId": "N36",
+        "path": "D:\\Project\\UNFOLDIQ\\projects\\phase7-gps-explainer\\assets\\voice\\narration-segments\\tsa-b1314040c3f2.wav",
+        "startMs": 584875,
+        "durationMs": 5000,
+        "importance": "NORMAL",
+        "gainDb": 10.87,
+        "timingStatus": "MEASURED"
+      }
+    ],
+    "music": [
+      {
+        "clipId": "music-01-vastness-open",
+        "path": "D:\\Project\\UNFOLDIQ\\assets\\music\\audio\\mus-1e79e277b220.wav",
+        "startMs": 0,
+        "durationMs": 229820,
+        "trimStartMs": 0,
+        "trimEndMs": 229820,
+        "gainDb": -15.02,
+        "fadeInMs": 300,
+        "fadeOutMs": 0,
+        "loop": false,
+        "loopPlan": {
+          "strategy": "SINGLE_PASS",
+          "crossfadeMs": 0
+        },
+        "ducking": {
+          "enabled": true,
+          "targetAudioId": "NARRATION",
+          "intensity": "LIGHT",
+          "recoveryIntent": "NATURAL"
+        },
+        "purpose": "PACING",
+        "rightsStatus": "APPROVED_FOR_PROJECT",
+        "timingStatus": "PLANNED"
+      },
+      {
+        "clipId": "music-02-sonor-technical",
+        "path": "D:\\Project\\UNFOLDIQ\\assets\\music\\audio\\mus-4b4e55ee279f.wav",
+        "startMs": 214250,
+        "durationMs": 252000,
+        "trimStartMs": 0,
+        "trimEndMs": 252000,
+        "gainDb": -12.37,
+        "fadeInMs": 100,
+        "fadeOutMs": 2000,
+        "loop": false,
+        "loopPlan": {
+          "strategy": "SINGLE_PASS",
+          "crossfadeMs": 2000
+        },
+        "ducking": {
+          "enabled": true,
+          "targetAudioId": "NARRATION",
+          "intensity": "LIGHT",
+          "recoveryIntent": "NATURAL"
+        },
+        "purpose": "PACING",
+        "rightsStatus": "APPROVED_FOR_PROJECT",
+        "timingStatus": "PLANNED"
+      },
+      {
+        "clipId": "music-03-vastness-close",
+        "path": "D:\\Project\\UNFOLDIQ\\assets\\music\\audio\\mus-1e79e277b220.wav",
+        "startMs": 464250,
+        "durationMs": 125875,
+        "trimStartMs": 103945,
+        "trimEndMs": 229820,
+        "gainDb": -15.02,
+        "fadeInMs": 2000,
+        "fadeOutMs": 0,
+        "loop": false,
+        "loopPlan": {
+          "strategy": "SINGLE_PASS",
+          "crossfadeMs": 2000
+        },
+        "ducking": {
+          "enabled": true,
+          "targetAudioId": "NARRATION",
+          "intensity": "LIGHT",
+          "recoveryIntent": "NATURAL"
+        },
+        "purpose": "PACING",
+        "rightsStatus": "APPROVED_FOR_PROJECT",
+        "timingStatus": "PLANNED"
+      }
+    ],
+    "ambience": [],
+    "sfx": []
+  },
+  "status": "READY",
+  "generatedAt": "2026-10-12T08:39:21.284Z",
+  "generatedClipAudioPolicy": "MUTE_GENERATED_CLIP_AUDIO",
+  "loudness": {
+    "status": "MEASURED",
+    "integratedLufs": -27.46,
+    "tool": "lib/audio-loudness.js bs1770-4"
+  },
+  "loudnessProfileRef": "youtube-standard@1.0.0",
+  "peakPolicyRef": "maxTruePeak -1 dBTP",
+  "narrationTrack": "voice",
+  "duckingRules": [
+    {
+      "targetId": "music-01-vastness-open",
+      "againstId": "NARRATION",
+      "intensity": "LIGHT",
+      "attackMs": 40,
+      "releaseMs": 800,
+      "reason": "duck LIGHT music under narration (purpose PACING)"
+    },
+    {
+      "targetId": "music-02-sonor-technical",
+      "againstId": "NARRATION",
+      "intensity": "LIGHT",
+      "attackMs": 40,
+      "releaseMs": 800,
+      "reason": "duck LIGHT music under narration (purpose PACING)"
+    },
+    {
+      "targetId": "music-03-vastness-close",
+      "againstId": "NARRATION",
+      "intensity": "LIGHT",
+      "attackMs": 40,
+      "releaseMs": 800,
+      "reason": "duck LIGHT music under narration (purpose PACING)"
+    }
+  ],
+  "inputHashes": {
+    "musicCuePlan": "music-cue-plan.json@1.1.0",
+    "narrationTrack": "fnt-e2ceed888682",
+    "narrationTiming": "e5e58ee03408ed3e52b3f20955c32782a126772dc60705f4fbdec0084d33c8fc"
+  },
+  "limiter": {
+    "enabled": true,
+    "ceilingDb": -4
+  },
+  "remasterGainDb": 4.83
+}

@@ -1,0 +1,30 @@
+{
+  "attempts": 0,
+  "qa": {
+    "ok": true,
+    "status": "PASS",
+    "findings": [],
+    "metrics": {
+      "integratedLufs": -15.73,
+      "loudnessRange": 2.5,
+      "truePeakDb": -2.49,
+      "peak": 20675,
+      "mixQaMs": 1724
+    }
+  },
+  "lineage": [
+    {
+      "attempt": 0,
+      "status": "PASS",
+      "findings": [],
+      "metrics": {
+        "integratedLufs": -15.73,
+        "loudnessRange": 2.5,
+        "truePeakDb": -2.49,
+        "peak": 20675,
+        "mixQaMs": 1724
+      },
+      "applied": []
+    }
+  ]
+}

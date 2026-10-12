@@ -1,0 +1,113 @@
+{
+  "version": "1.0.0",
+  "assets": [
+    {
+      "assetId": "mus-1e79e277b220",
+      "title": "Vastness",
+      "artist": "Andrew Ev",
+      "sourceType": "USER_IMPORTED_LICENSED_ASSET",
+      "provider": "Mixkit",
+      "providerTrackId": "MIXKIT-184",
+      "durationMs": 229820,
+      "genre": [
+        "ambient"
+      ],
+      "mood": [
+        "calm"
+      ],
+      "tags": [],
+      "instrumentation": [],
+      "vocalType": "INSTRUMENTAL",
+      "audioRef": "assets/music/audio/mus-1e79e277b220.wav",
+      "audioHash": "1e79e277b220fbbd8df9cf27b02405b6fd03d9e7290e201deaea5fdb189afa2e",
+      "rights": {
+        "provider": "Mixkit",
+        "licenseType": "Mixkit Stock Music Free License",
+        "commercialUse": true,
+        "monetization": true,
+        "allowedPlatforms": [
+          "youtube"
+        ],
+        "allowedRegions": [],
+        "clientWork": false,
+        "paidAds": false,
+        "derivativesAllowed": true,
+        "attributionRequired": false,
+        "reuseScope": "MULTI_PROJECT",
+        "licenseEvidenceRef": "Report/evidence/phase-7/audio/music-license-evidence.json",
+        "sourceUrl": "https://mixkit.co/free-stock-music/instrument/synth/",
+        "verifiedAt": "2026-10-12T08:33:13.715Z",
+        "policyVersion": "music-rights-1.0.0",
+        "status": "APPROVED"
+      },
+      "reuseCount": 0,
+      "createdAt": "2026-10-12T08:33:13.715Z",
+      "usageDecision": {
+        "assetId": "mus-1e79e277b220",
+        "projectId": "phase7-gps-explainer",
+        "targetPlatforms": [
+          "youtube"
+        ],
+        "commercialContext": "COMMERCIAL",
+        "decision": "APPROVED_FOR_PROJECT",
+        "reason": "rights APPROVED (license=Mixkit Stock Music Free License, scope=MULTI_PROJECT) and context matches",
+        "rightsPolicyVersion": "music-rights-1.0.0",
+        "checkedAt": "2026-10-12T08:41:27.532Z"
+      }
+    },
+    {
+      "assetId": "mus-4b4e55ee279f",
+      "title": "Sonor #2",
+      "artist": "Eugenio Mininni",
+      "sourceType": "USER_IMPORTED_LICENSED_ASSET",
+      "provider": "Mixkit",
+      "providerTrackId": "MIXKIT-570",
+      "durationMs": 261923,
+      "genre": [
+        "ambient"
+      ],
+      "mood": [
+        "calm"
+      ],
+      "tags": [],
+      "instrumentation": [],
+      "vocalType": "INSTRUMENTAL",
+      "audioRef": "assets/music/audio/mus-4b4e55ee279f.wav",
+      "audioHash": "4b4e55ee279f801ab5f51642ff87ba7277303aeb393d5fa8ac12870e71bc750e",
+      "rights": {
+        "provider": "Mixkit",
+        "licenseType": "Mixkit Stock Music Free License",
+        "commercialUse": true,
+        "monetization": true,
+        "allowedPlatforms": [
+          "youtube"
+        ],
+        "allowedRegions": [],
+        "clientWork": false,
+        "paidAds": false,
+        "derivativesAllowed": true,
+        "attributionRequired": false,
+        "reuseScope": "MULTI_PROJECT",
+        "licenseEvidenceRef": "Report/evidence/phase-7/audio/music-license-evidence.json",
+        "sourceUrl": "https://mixkit.co/free-stock-music/tag/technology/",
+        "verifiedAt": "2026-10-12T08:33:14.059Z",
+        "policyVersion": "music-rights-1.0.0",
+        "status": "APPROVED"
+      },
+      "reuseCount": 0,
+      "createdAt": "2026-10-12T08:33:14.059Z",
+      "usageDecision": {
+        "assetId": "mus-4b4e55ee279f",
+        "projectId": "phase7-gps-explainer",
+        "targetPlatforms": [
+          "youtube"
+        ],
+        "commercialContext": "COMMERCIAL",
+        "decision": "APPROVED_FOR_PROJECT",
+        "reason": "rights APPROVED (license=Mixkit Stock Music Free License, scope=MULTI_PROJECT) and context matches",
+        "rightsPolicyVersion": "music-rights-1.0.0",
+        "checkedAt": "2026-10-12T08:41:27.843Z"
+      }
+    }
+  ]
+}
