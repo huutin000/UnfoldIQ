@@ -282,6 +282,16 @@ await runTest("Case L — safe-zone/profile validation: geometry conforms to pro
   assert(man.positioning.policy === profile.positioningPolicy, "positioning intent carried for Phase 3.5");
 });
 
+await runTest("Case M — cue that fits 2x42 only by total length is split, never overflows a line", async () => {
+  const profile = { profileId: "en-longform-test", version: "1.0.0", language: "en-us", platform: "GENERIC", contentType: "LONG_FORM", maxLines: 2, maxCharsPerLine: 42, maxCharactersPerSecond: 40, minCueDurationMs: 833, maxCueDurationMs: 20000, minGapMs: 84, presentationMode: "BLOCK", accessibilityMode: "DIALOGUE_ONLY", positioningPolicy: "BOTTOM_CENTER", safeZone: { top: 0.1, right: 0.05, bottom: 0.15, left: 0.05 } };
+  // 3 x 27 chars = 83 in total (<= 84) but no 2-line split keeps every line <= 42.
+  const text = ["a", "b", "c"].map((c) => c.repeat(27)).join(" ");
+  const words = text.split(" ").map((t, i) => ({ wordId: `w-${i + 1}`, segmentId: "S1", speakerId: "narrator", text: t, startMs: i * 100, endMs: i * 100 + 90, confidence: 0.9, status: "ALIGNED" }));
+  const r = captions.buildCaptions({ projectId: "t", alignment: { version: "1.0.0", narrationTimingHash: "00000000", transcriptHash: "00000000", words }, profileRef: profile });
+  assert(r.ok, "built");
+  for (const e of r.artifact.events) for (const l of e.lines) assert(l.length <= 42, "every line <= 42 chars");
+});
+
 console.log(`\n=== validation-cases A-L: ${passed} passed, ${failed} failed ===`);
 process.exit(failed > 0 ? 1 : 0);
 })();
