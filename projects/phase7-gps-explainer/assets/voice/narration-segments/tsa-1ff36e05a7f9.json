@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0.0",
+  "ttsSegmentAudioId": "tsa-1ff36e05a7f9",
+  "version": 1,
+  "projectId": "phase7-gps-explainer",
+  "scriptRef": {
+    "scriptArtifactId": "fss-phase7-gps-explainer",
+    "scriptVersion": 2
+  },
+  "segmentId": "N21",
+  "segmentOrdinal": 21,
+  "sourceTextHash": "309bc62aa11ea0a4",
+  "compiledInputHash": "309bc62aa11ea0a4",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "narrationDirectionRef": "nd-7bd74d759a3c",
+  "pronunciationPassRef": "prp-f6b2f490d97d",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "runtimeIdentity": {
+    "runtimeMode": "LOCAL_SYNTHESIS",
+    "modelRepo": "hexgrad/Kokoro-82M",
+    "modelHash": "UNKNOWN_NOT_AVAILABLE",
+    "languageCode": "a"
+  },
+  "voiceId": "am_michael",
+  "effectiveSpeed": 1,
+  "pacePolicyVersion": "pace-speed-1.0.0",
+  "audioRef": "assets/voice/narration-segments/tsa-1ff36e05a7f9.wav",
+  "audioContentHash": "a089bca741c5eff542e104378aa0251b323667eb795b583adb256b907771ba8d",
+  "durationMs": 18575,
+  "sampleRate": 24000,
+  "channels": 1,
+  "technicalQa": {
+    "decodePass": true,
+    "nonSilent": true,
+    "finiteSamples": true,
+    "peak": 21618,
+    "rms": 1346.3,
+    "clippingSamples": 0,
+    "transcript": "Orbits are not perfect circles, so a smaller relativistic error is left over, and it differs from satellite to satellite. For a slightly oval orbit, it can reach about 45 nanoseconds, roughly 15 meters of range error, and receivers correct for it.",
+    "wer": 0.0698,
+    "missingWords": 1,
+    "substitutedWords": 2,
+    "repeatedWords": 0,
+    "hallucinatedWords": 0,
+    "criticalMismatch": false
+  },
+  "attempt": {
+    "number": 1,
+    "parentAttemptId": null,
+    "reason": "initial synthesis",
+    "selected": null
+  },
+  "issues": [],
+  "status": "READY",
+  "provenance": {
+    "createdAt": "2026-10-12T04:26:26.983Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "fee8aa4a8465af13"
+}

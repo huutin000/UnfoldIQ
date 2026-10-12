@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0.0",
+  "ttsSegmentAudioId": "tsa-d3a9fe50f03f",
+  "version": 1,
+  "projectId": "phase7-gps-explainer",
+  "scriptRef": {
+    "scriptArtifactId": "fss-phase7-gps-explainer",
+    "scriptVersion": 2
+  },
+  "segmentId": "N34",
+  "segmentOrdinal": 34,
+  "sourceTextHash": "76437c783486c8d9",
+  "compiledInputHash": "76437c783486c8d9",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "narrationDirectionRef": "nd-7bd74d759a3c",
+  "pronunciationPassRef": "prp-f6b2f490d97d",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "runtimeIdentity": {
+    "runtimeMode": "LOCAL_SYNTHESIS",
+    "modelRepo": "hexgrad/Kokoro-82M",
+    "modelHash": "UNKNOWN_NOT_AVAILABLE",
+    "languageCode": "a"
+  },
+  "voiceId": "am_michael",
+  "effectiveSpeed": 1,
+  "pacePolicyVersion": "pace-speed-1.0.0",
+  "audioRef": "assets/voice/narration-segments/tsa-d3a9fe50f03f.wav",
+  "audioContentHash": "0df300282591cf12d0283ef48d6956e674b6b894320865a4496e08f4da950807",
+  "durationMs": 11175,
+  "sampleRate": 24000,
+  "channels": 1,
+  "technicalQa": {
+    "decodePass": true,
+    "nonSilent": true,
+    "finiteSamples": true,
+    "peak": 18495,
+    "rms": 1356.86,
+    "clippingSamples": 0,
+    "transcript": "And it is not only for phones. Spacecraft use GPS as a compass and sometimes even as a clock replacing expensive atomic clocks on board.",
+    "wer": 0,
+    "missingWords": 0,
+    "substitutedWords": 0,
+    "repeatedWords": 0,
+    "hallucinatedWords": 0,
+    "criticalMismatch": false
+  },
+  "attempt": {
+    "number": 1,
+    "parentAttemptId": null,
+    "reason": "initial synthesis",
+    "selected": null
+  },
+  "issues": [],
+  "status": "READY",
+  "provenance": {
+    "createdAt": "2026-10-12T04:31:39.386Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "0b999e64b97cc005"
+}

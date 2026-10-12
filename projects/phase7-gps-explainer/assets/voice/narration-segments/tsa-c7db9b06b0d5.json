@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0.0",
+  "ttsSegmentAudioId": "tsa-c7db9b06b0d5",
+  "version": 1,
+  "projectId": "phase7-gps-explainer",
+  "scriptRef": {
+    "scriptArtifactId": "fss-phase7-gps-explainer",
+    "scriptVersion": 2
+  },
+  "segmentId": "N20",
+  "segmentOrdinal": 20,
+  "sourceTextHash": "394552e5091b9c3f",
+  "compiledInputHash": "394552e5091b9c3f",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "narrationDirectionRef": "nd-7bd74d759a3c",
+  "pronunciationPassRef": "prp-f6b2f490d97d",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "runtimeIdentity": {
+    "runtimeMode": "LOCAL_SYNTHESIS",
+    "modelRepo": "hexgrad/Kokoro-82M",
+    "modelHash": "UNKNOWN_NOT_AVAILABLE",
+    "languageCode": "a"
+  },
+  "voiceId": "am_michael",
+  "effectiveSpeed": 1,
+  "pacePolicyVersion": "pace-speed-1.0.0",
+  "audioRef": "assets/voice/narration-segments/tsa-c7db9b06b0d5.wav",
+  "audioContentHash": "c1ad69deb9417514cc11335e0b679ddae954f59a5c1241587de1142f4b68673d",
+  "durationMs": 11850,
+  "sampleRate": 24000,
+  "channels": 1,
+  "technicalQa": {
+    "decodePass": true,
+    "nonSilent": true,
+    "finiteSamples": true,
+    "peak": 13913,
+    "rms": 1345.69,
+    "clippingSamples": 0,
+    "transcript": "Before launch, each satellite clock is tuned to run slightly slow by about four and a half parts in 10 billion. Once in orbit, relativity cancels that offset.",
+    "wer": 0.0357,
+    "missingWords": 0,
+    "substitutedWords": 1,
+    "repeatedWords": 0,
+    "hallucinatedWords": 0,
+    "criticalMismatch": false
+  },
+  "attempt": {
+    "number": 1,
+    "parentAttemptId": null,
+    "reason": "initial synthesis",
+    "selected": null
+  },
+  "issues": [],
+  "status": "READY",
+  "provenance": {
+    "createdAt": "2026-10-12T04:26:02.165Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "c2a2bc364d8cccb5"
+}

@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0.0",
+  "ttsSegmentAudioId": "tsa-8ffdc64ea257",
+  "version": 1,
+  "projectId": "phase7-gps-explainer",
+  "scriptRef": {
+    "scriptArtifactId": "fss-phase7-gps-explainer",
+    "scriptVersion": 2
+  },
+  "segmentId": "N08",
+  "segmentOrdinal": 7,
+  "sourceTextHash": "983500c0bd3d414d",
+  "compiledInputHash": "983500c0bd3d414d",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "narrationDirectionRef": "nd-7bd74d759a3c",
+  "pronunciationPassRef": "prp-f6b2f490d97d",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "runtimeIdentity": {
+    "runtimeMode": "LOCAL_SYNTHESIS",
+    "modelRepo": "hexgrad/Kokoro-82M",
+    "modelHash": "UNKNOWN_NOT_AVAILABLE",
+    "languageCode": "a"
+  },
+  "voiceId": "am_michael",
+  "effectiveSpeed": 1,
+  "pacePolicyVersion": "pace-speed-1.0.0",
+  "audioRef": "assets/voice/narration-segments/tsa-8ffdc64ea257.wav",
+  "audioContentHash": "6ced95ee57d1d53905aa59b5d7c87c0d908a4d0416f4d0bf57a4ab0cd7f12cfe",
+  "durationMs": 14175,
+  "sampleRate": 24000,
+  "channels": 1,
+  "technicalQa": {
+    "decodePass": true,
+    "nonSilent": true,
+    "finiteSamples": true,
+    "peak": 20238,
+    "rms": 1293.36,
+    "clippingSamples": 0,
+    "transcript": "The satellites orbit about 20,200 kilometers up, roughly three Earth radii above your head, moving about 14,000 kilometers an hour. Each one circles the planet twice a day.",
+    "wer": 0.1875,
+    "missingWords": 2,
+    "substitutedWords": 4,
+    "repeatedWords": 0,
+    "hallucinatedWords": 0,
+    "criticalMismatch": false
+  },
+  "attempt": {
+    "number": 1,
+    "parentAttemptId": null,
+    "reason": "initial synthesis",
+    "selected": null
+  },
+  "issues": [],
+  "status": "READY",
+  "provenance": {
+    "createdAt": "2026-10-12T04:21:06.122Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "f14bc39041312aed"
+}

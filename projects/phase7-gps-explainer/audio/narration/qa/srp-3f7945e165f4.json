@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "1.0.0",
+  "policyId": "srp-3f7945e165f4",
+  "version": 2,
+  "projectId": "phase7-gps-explainer",
+  "narrator": "am_michael",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "contentClass": "FACTUAL",
+  "targetBand": {
+    "minWpm": 100,
+    "maxWpm": 180
+  },
+  "guardrails": {
+    "outlierFactor": 1.6,
+    "rateVarianceMax": 1200,
+    "maxSilenceMs": 1500
+  },
+  "reasons": [
+    "v2 (owner decision 2026-10-12, option B): lower bound 120 -> 100 because N31 (18 words, \"WAAS, run by the FAA\" with a word-read acronym and spelled-out FAA) measures 100.93 wpm at speed 1.0 and was graded NATURAL by the owner; the next slowest segment is N32 at 126.12 wpm, so only N31 is affected",
+    "V6.2 golden catalog carries a [120,180] wpm TARGET_RANGE for narration (factual explainer) — adopted as the narrator band prior",
+    "am_michael Voice Bible speedDefault=1.0 + measured first-pass audio baseline; band re-derivable from N>=3 baselines later",
+    "outlierFactor 1.6 / rateVarianceMax 1200 detect uncontrolled swings without punishing natural emphasis pauses",
+    "maxSilenceMs 1500 catches unintended internal silence while allowing natural sentence gaps; directed BEAT/SECTION pauses are exempt (§15)"
+  ],
+  "baseline": {
+    "measuredFrom": "first-pass FINAL_NARRATION synthesis of fss-phase7-gps-explainer@v2 (this run)",
+    "overallWpm": 144.2
+  },
+  "reviewPolicy": "outside band = FAIL (targeted regeneration); outliers/silence = REVIEW_REQUIRED; directed long pauses exempt",
+  "provenance": {
+    "createdAt": "2026-10-12T06:33:51.895Z",
+    "evidenceRefs": [
+      "golden/definitions.json",
+      "projects/phase2-1-validation/voice/voice-bible/vb-19f4fd6a4596.json"
+    ]
+  },
+  "fingerprint": "ebf0b9aa9ec20b1f"
+}

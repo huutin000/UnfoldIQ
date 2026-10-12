@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0.0",
+  "ttsSegmentAudioId": "tsa-d02e95ee4a26",
+  "version": 1,
+  "projectId": "phase7-gps-explainer",
+  "scriptRef": {
+    "scriptArtifactId": "fss-phase7-gps-explainer",
+    "scriptVersion": 2
+  },
+  "segmentId": "N22",
+  "segmentOrdinal": 22,
+  "sourceTextHash": "add461012292c7d4",
+  "compiledInputHash": "add461012292c7d4",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "narrationDirectionRef": "nd-7bd74d759a3c",
+  "pronunciationPassRef": "prp-f6b2f490d97d",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "runtimeIdentity": {
+    "runtimeMode": "LOCAL_SYNTHESIS",
+    "modelRepo": "hexgrad/Kokoro-82M",
+    "modelHash": "UNKNOWN_NOT_AVAILABLE",
+    "languageCode": "a"
+  },
+  "voiceId": "am_michael",
+  "effectiveSpeed": 1,
+  "pacePolicyVersion": "pace-speed-1.0.0",
+  "audioRef": "assets/voice/narration-segments/tsa-d02e95ee4a26.wav",
+  "audioContentHash": "b2c4559eadd45e2ed0f455a00b16af0102c885cdb58a7842c61ee219b7844e59",
+  "durationMs": 11325,
+  "sampleRate": 24000,
+  "channels": 1,
+  "technicalQa": {
+    "decodePass": true,
+    "nonSilent": true,
+    "finiteSamples": true,
+    "peak": 15128,
+    "rms": 1314.16,
+    "clippingSamples": 0,
+    "transcript": "How does a receiver time a signal at all? Every satellite sends its own code, a pattern of 1023 pulses repeating every millisecond.",
+    "wer": 0.1538,
+    "missingWords": 3,
+    "substitutedWords": 1,
+    "repeatedWords": 0,
+    "hallucinatedWords": 0,
+    "criticalMismatch": false
+  },
+  "attempt": {
+    "number": 1,
+    "parentAttemptId": null,
+    "reason": "initial synthesis",
+    "selected": null
+  },
+  "issues": [],
+  "status": "READY",
+  "provenance": {
+    "createdAt": "2026-10-12T04:26:50.402Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "ccb8aba48674c283"
+}

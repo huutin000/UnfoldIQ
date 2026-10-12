@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0.0",
+  "ttsSegmentAudioId": "tsa-785651a86ab6",
+  "version": 1,
+  "projectId": "phase7-gps-explainer",
+  "scriptRef": {
+    "scriptArtifactId": "fss-phase7-gps-explainer",
+    "scriptVersion": 2
+  },
+  "segmentId": "N01",
+  "segmentOrdinal": 0,
+  "sourceTextHash": "dccdf56a6e439269",
+  "compiledInputHash": "dccdf56a6e439269",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "narrationDirectionRef": "nd-7bd74d759a3c",
+  "pronunciationPassRef": "prp-f6b2f490d97d",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "runtimeIdentity": {
+    "runtimeMode": "LOCAL_SYNTHESIS",
+    "modelRepo": "hexgrad/Kokoro-82M",
+    "modelHash": "UNKNOWN_NOT_AVAILABLE",
+    "languageCode": "a"
+  },
+  "voiceId": "am_michael",
+  "effectiveSpeed": 1,
+  "pacePolicyVersion": "pace-speed-1.0.0",
+  "audioRef": "assets/voice/narration-segments/tsa-785651a86ab6.wav",
+  "audioContentHash": "0583804cb427d6510efc4e9bb09754d4792f178f196a8327e1e9ebf3da783b6e",
+  "durationMs": 10075,
+  "sampleRate": 24000,
+  "channels": 1,
+  "technicalQa": {
+    "decodePass": true,
+    "nonSilent": true,
+    "finiteSamples": true,
+    "peak": 14844,
+    "rms": 1373.76,
+    "clippingSamples": 0,
+    "transcript": "Your phone can find you on earth to within a few meters, yet not one GPS satellite is tracking it. They only broadcast like lighthouses.",
+    "wer": 0,
+    "missingWords": 0,
+    "substitutedWords": 0,
+    "repeatedWords": 0,
+    "hallucinatedWords": 0,
+    "criticalMismatch": false
+  },
+  "attempt": {
+    "number": 1,
+    "parentAttemptId": null,
+    "reason": "initial synthesis",
+    "selected": null
+  },
+  "issues": [],
+  "status": "READY",
+  "provenance": {
+    "createdAt": "2026-10-12T04:17:45.011Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "aad435b88ca093ea"
+}

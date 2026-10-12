@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0.0",
+  "ttsSegmentAudioId": "tsa-9839c2989133",
+  "version": 1,
+  "projectId": "phase7-gps-explainer",
+  "scriptRef": {
+    "scriptArtifactId": "fss-phase7-gps-explainer",
+    "scriptVersion": 2
+  },
+  "segmentId": "N13",
+  "segmentOrdinal": 12,
+  "sourceTextHash": "b4e61076d0ccbeab",
+  "compiledInputHash": "b4e61076d0ccbeab",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "narrationDirectionRef": "nd-7bd74d759a3c",
+  "pronunciationPassRef": "prp-f6b2f490d97d",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "runtimeIdentity": {
+    "runtimeMode": "LOCAL_SYNTHESIS",
+    "modelRepo": "hexgrad/Kokoro-82M",
+    "modelHash": "UNKNOWN_NOT_AVAILABLE",
+    "languageCode": "a"
+  },
+  "voiceId": "am_michael",
+  "effectiveSpeed": 1,
+  "pacePolicyVersion": "pace-speed-1.0.0",
+  "audioRef": "assets/voice/narration-segments/tsa-9839c2989133.wav",
+  "audioContentHash": "fbaee7f8a401c4fe9d2c70bd0cd17939d60faf02a007448a2f156073f2d518d7",
+  "durationMs": 11450,
+  "sampleRate": 24000,
+  "channels": 1,
+  "technicalQa": {
+    "decodePass": true,
+    "nonSilent": true,
+    "finiteSamples": true,
+    "peak": 15191,
+    "rms": 1360.34,
+    "clippingSamples": 0,
+    "transcript": "The satellites carry atomic clocks that the ground system keeps checking. Your receiver uses an inexpensive clock that drifts, so it has to cope with its own error.",
+    "wer": 0,
+    "missingWords": 0,
+    "substitutedWords": 0,
+    "repeatedWords": 0,
+    "hallucinatedWords": 0,
+    "criticalMismatch": false
+  },
+  "attempt": {
+    "number": 1,
+    "parentAttemptId": null,
+    "reason": "initial synthesis",
+    "selected": null
+  },
+  "issues": [],
+  "status": "READY",
+  "provenance": {
+    "createdAt": "2026-10-12T04:22:58.175Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "42af5f1bc33bfcdb"
+}

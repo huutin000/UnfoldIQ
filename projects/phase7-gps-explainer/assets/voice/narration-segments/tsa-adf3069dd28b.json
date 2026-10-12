@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0.0",
+  "ttsSegmentAudioId": "tsa-adf3069dd28b",
+  "version": 1,
+  "projectId": "phase7-gps-explainer",
+  "scriptRef": {
+    "scriptArtifactId": "fss-phase7-gps-explainer",
+    "scriptVersion": 2
+  },
+  "segmentId": "N07",
+  "segmentOrdinal": 6,
+  "sourceTextHash": "0445714e5153f350",
+  "compiledInputHash": "0445714e5153f350",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "narrationDirectionRef": "nd-7bd74d759a3c",
+  "pronunciationPassRef": "prp-f6b2f490d97d",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "runtimeIdentity": {
+    "runtimeMode": "LOCAL_SYNTHESIS",
+    "modelRepo": "hexgrad/Kokoro-82M",
+    "modelHash": "UNKNOWN_NOT_AVAILABLE",
+    "languageCode": "a"
+  },
+  "voiceId": "am_michael",
+  "effectiveSpeed": 1,
+  "pacePolicyVersion": "pace-speed-1.0.0",
+  "audioRef": "assets/voice/narration-segments/tsa-adf3069dd28b.wav",
+  "audioContentHash": "9a9a9aa0f3bb73f72bc5e00fc2692d58dc95a3a1d50578f1a1adbfdca705e940",
+  "durationMs": 20175,
+  "sampleRate": 24000,
+  "channels": 1,
+  "technicalQa": {
+    "decodePass": true,
+    "nonSilent": true,
+    "finiteSamples": true,
+    "peak": 17668,
+    "rms": 1332.73,
+    "clippingSamples": 0,
+    "transcript": "All of this assumes the towers know where they are. For GPS, monitor stations track every satellite and work out its exact orbit and clock errors. Ground antennas then upload fresh data about every two hours under normal conditions, and the satellite rebroadcasts it to users.",
+    "wer": 0,
+    "missingWords": 0,
+    "substitutedWords": 0,
+    "repeatedWords": 0,
+    "hallucinatedWords": 0,
+    "criticalMismatch": false
+  },
+  "attempt": {
+    "number": 1,
+    "parentAttemptId": null,
+    "reason": "initial synthesis",
+    "selected": null
+  },
+  "issues": [],
+  "status": "READY",
+  "provenance": {
+    "createdAt": "2026-10-12T04:20:44.875Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "ae26cf7d069c2f68"
+}

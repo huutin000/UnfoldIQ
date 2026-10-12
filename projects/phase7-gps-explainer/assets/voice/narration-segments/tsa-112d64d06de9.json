@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0.0",
+  "ttsSegmentAudioId": "tsa-112d64d06de9",
+  "version": 1,
+  "projectId": "phase7-gps-explainer",
+  "scriptRef": {
+    "scriptArtifactId": "fss-phase7-gps-explainer",
+    "scriptVersion": 2
+  },
+  "segmentId": "N26",
+  "segmentOrdinal": 26,
+  "sourceTextHash": "f2eeabd1fe613a23",
+  "compiledInputHash": "1e27f97677ae6fef",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "narrationDirectionRef": "nd-7bd74d759a3c",
+  "pronunciationPassRef": "prp-f6b2f490d97d",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "runtimeIdentity": {
+    "runtimeMode": "LOCAL_SYNTHESIS",
+    "modelRepo": "hexgrad/Kokoro-82M",
+    "modelHash": "UNKNOWN_NOT_AVAILABLE",
+    "languageCode": "a"
+  },
+  "voiceId": "am_michael",
+  "effectiveSpeed": 1,
+  "pacePolicyVersion": "pace-speed-1.0.0",
+  "audioRef": "assets/voice/narration-segments/tsa-112d64d06de9.wav",
+  "audioContentHash": "3a79f0f8044d3117fa193e12c537bf06fb7a64d721d99f92247412d6608c51c3",
+  "durationMs": 21375,
+  "sampleRate": 24000,
+  "channels": 1,
+  "technicalQa": {
+    "decodePass": true,
+    "nonSilent": true,
+    "finiteSamples": true,
+    "peak": 15959,
+    "rms": 1317.14,
+    "clippingSamples": 0,
+    "transcript": "The ionosphere changes with the time of day and with solar activity. It delays lower frequencies more, in proportion to 1 over the frequency squared. A receiver listening on two frequencies can compare the delays and correct for it. With the newer civil signal L2C, civilian receivers can do that.",
+    "wer": 0.02,
+    "missingWords": 0,
+    "substitutedWords": 1,
+    "repeatedWords": 0,
+    "hallucinatedWords": 0,
+    "criticalMismatch": false
+  },
+  "attempt": {
+    "number": 1,
+    "parentAttemptId": null,
+    "reason": "initial synthesis",
+    "selected": null
+  },
+  "issues": [],
+  "status": "READY",
+  "provenance": {
+    "createdAt": "2026-10-12T04:28:46.545Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "4c688a121c603079"
+}

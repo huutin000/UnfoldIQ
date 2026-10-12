@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0.0",
+  "ttsSegmentAudioId": "tsa-6e1a431599c2",
+  "version": 1,
+  "projectId": "phase7-gps-explainer",
+  "scriptRef": {
+    "scriptArtifactId": "fss-phase7-gps-explainer",
+    "scriptVersion": 2
+  },
+  "segmentId": "N16",
+  "segmentOrdinal": 15,
+  "sourceTextHash": "dab724e2413b807f",
+  "compiledInputHash": "dab724e2413b807f",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "narrationDirectionRef": "nd-7bd74d759a3c",
+  "pronunciationPassRef": "prp-f6b2f490d97d",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "runtimeIdentity": {
+    "runtimeMode": "LOCAL_SYNTHESIS",
+    "modelRepo": "hexgrad/Kokoro-82M",
+    "modelHash": "UNKNOWN_NOT_AVAILABLE",
+    "languageCode": "a"
+  },
+  "voiceId": "am_michael",
+  "effectiveSpeed": 1,
+  "pacePolicyVersion": "pace-speed-1.0.0",
+  "audioRef": "assets/voice/narration-segments/tsa-6e1a431599c2.wav",
+  "audioContentHash": "a0590b7b065eaea4030b81f8c9ebc9eb78e2d31feadf031e4e324d216f3a7006",
+  "durationMs": 18300,
+  "sampleRate": 24000,
+  "channels": 1,
+  "technicalQa": {
+    "decodePass": true,
+    "nonSilent": true,
+    "finiteSamples": true,
+    "peak": 19790,
+    "rms": 1376.93,
+    "clippingSamples": 0,
+    "transcript": "As a bonus, the receiver now knows the time, straight from the atomic clocks on the satellites. That timing synchronizes communication systems and power grids, and lets financial transactions carry traceable time tags. Hollywood even uses it in movie slates.",
+    "wer": 0.025,
+    "missingWords": 0,
+    "substitutedWords": 1,
+    "repeatedWords": 0,
+    "hallucinatedWords": 0,
+    "criticalMismatch": false
+  },
+  "attempt": {
+    "number": 1,
+    "parentAttemptId": null,
+    "reason": "initial synthesis",
+    "selected": null
+  },
+  "issues": [],
+  "status": "READY",
+  "provenance": {
+    "createdAt": "2026-10-12T04:24:06.228Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "8ac586d262ffc2af"
+}

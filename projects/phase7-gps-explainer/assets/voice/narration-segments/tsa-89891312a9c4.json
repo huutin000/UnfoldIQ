@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0.0",
+  "ttsSegmentAudioId": "tsa-89891312a9c4",
+  "version": 1,
+  "projectId": "phase7-gps-explainer",
+  "scriptRef": {
+    "scriptArtifactId": "fss-phase7-gps-explainer",
+    "scriptVersion": 2
+  },
+  "segmentId": "N32",
+  "segmentOrdinal": 32,
+  "sourceTextHash": "41fcc11b24c92ef6",
+  "compiledInputHash": "87f6e0311cfffb52",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "narrationDirectionRef": "nd-7bd74d759a3c",
+  "pronunciationPassRef": "prp-f6b2f490d97d",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "runtimeIdentity": {
+    "runtimeMode": "LOCAL_SYNTHESIS",
+    "modelRepo": "hexgrad/Kokoro-82M",
+    "modelHash": "UNKNOWN_NOT_AVAILABLE",
+    "languageCode": "a"
+  },
+  "voiceId": "am_michael",
+  "effectiveSpeed": 1,
+  "pacePolicyVersion": "pace-speed-1.0.0",
+  "audioRef": "assets/voice/narration-segments/tsa-89891312a9c4.wav",
+  "audioContentHash": "d9fe53d3986b7b7c8e4eebe5190750cffe7baae8006366c290aec7dbe04cd352",
+  "durationMs": 16175,
+  "sampleRate": 24000,
+  "channels": 1,
+  "technicalQa": {
+    "decodePass": true,
+    "nonSilent": true,
+    "finiteSamples": true,
+    "peak": 20153,
+    "rms": 1333.19,
+    "clippingSamples": 0,
+    "transcript": "Newer civil signals called L2C, L5 and L1C are being added next to the original one, but receivers must be upgraded to use them. Other nations fly their own constellations, like Galileo in Europe.",
+    "wer": 0,
+    "missingWords": 0,
+    "substitutedWords": 0,
+    "repeatedWords": 0,
+    "hallucinatedWords": 0,
+    "criticalMismatch": false
+  },
+  "attempt": {
+    "number": 1,
+    "parentAttemptId": null,
+    "reason": "initial synthesis",
+    "selected": null
+  },
+  "issues": [],
+  "status": "READY",
+  "provenance": {
+    "createdAt": "2026-10-12T04:30:59.442Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "8587090491acf1bc"
+}

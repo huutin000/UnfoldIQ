@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0.0",
+  "ttsSegmentAudioId": "tsa-fcdb9231274c",
+  "version": 1,
+  "projectId": "phase7-gps-explainer",
+  "scriptRef": {
+    "scriptArtifactId": "fss-phase7-gps-explainer",
+    "scriptVersion": 2
+  },
+  "segmentId": "N15",
+  "segmentOrdinal": 14,
+  "sourceTextHash": "d05e4d4b1209c364",
+  "compiledInputHash": "d05e4d4b1209c364",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "narrationDirectionRef": "nd-7bd74d759a3c",
+  "pronunciationPassRef": "prp-f6b2f490d97d",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "runtimeIdentity": {
+    "runtimeMode": "LOCAL_SYNTHESIS",
+    "modelRepo": "hexgrad/Kokoro-82M",
+    "modelHash": "UNKNOWN_NOT_AVAILABLE",
+    "languageCode": "a"
+  },
+  "voiceId": "am_michael",
+  "effectiveSpeed": 1,
+  "pacePolicyVersion": "pace-speed-1.0.0",
+  "audioRef": "assets/voice/narration-segments/tsa-fcdb9231274c.wav",
+  "audioContentHash": "e2a8a97ecea7d605b44a6a958468900d473cd9cb8edf4d93d0e332796c75c8c2",
+  "durationMs": 17475,
+  "sampleRate": 24000,
+  "channels": 1,
+  "technicalQa": {
+    "decodePass": true,
+    "nonSilent": true,
+    "finiteSamples": true,
+    "peak": 17874,
+    "rms": 1361.79,
+    "clippingSamples": 0,
+    "transcript": "In three dimensions, that makes four unknowns. East-West, North-South, Height, and the clock error. The receiver therefore uses at least four satellites and solves for all of them at once. A distance with this clock error baked in is called a Souterange.",
+    "wer": 0.0227,
+    "missingWords": 0,
+    "substitutedWords": 1,
+    "repeatedWords": 0,
+    "hallucinatedWords": 0,
+    "criticalMismatch": false
+  },
+  "attempt": {
+    "number": 1,
+    "parentAttemptId": null,
+    "reason": "initial synthesis",
+    "selected": null
+  },
+  "issues": [],
+  "status": "READY",
+  "provenance": {
+    "createdAt": "2026-10-12T04:23:43.293Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "62f52452ee23ff67"
+}

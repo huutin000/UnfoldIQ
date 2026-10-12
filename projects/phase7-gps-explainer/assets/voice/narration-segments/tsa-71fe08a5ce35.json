@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0.0",
+  "ttsSegmentAudioId": "tsa-71fe08a5ce35",
+  "version": 1,
+  "projectId": "phase7-gps-explainer",
+  "scriptRef": {
+    "scriptArtifactId": "fss-phase7-gps-explainer",
+    "scriptVersion": 2
+  },
+  "segmentId": "N19",
+  "segmentOrdinal": 18,
+  "sourceTextHash": "9b2cf650b799fc15",
+  "compiledInputHash": "9b2cf650b799fc15",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "narrationDirectionRef": "nd-7bd74d759a3c",
+  "pronunciationPassRef": "prp-f6b2f490d97d",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "runtimeIdentity": {
+    "runtimeMode": "LOCAL_SYNTHESIS",
+    "modelRepo": "hexgrad/Kokoro-82M",
+    "modelHash": "UNKNOWN_NOT_AVAILABLE",
+    "languageCode": "a"
+  },
+  "voiceId": "am_michael",
+  "effectiveSpeed": 1,
+  "pacePolicyVersion": "pace-speed-1.0.0",
+  "audioRef": "assets/voice/narration-segments/tsa-71fe08a5ce35.wav",
+  "audioContentHash": "518c3a7387e43279c7e972ae871d2372147284f969c215dd6cf6168d767208c2",
+  "durationMs": 13175,
+  "sampleRate": 24000,
+  "channels": 1,
+  "technicalQa": {
+    "decodePass": true,
+    "nonSilent": true,
+    "finiteSamples": true,
+    "peak": 20045,
+    "rms": 1349.75,
+    "clippingSamples": 0,
+    "transcript": "About 38 microseconds a day sounds tiny, but a ranging error of 3 meters takes only 10 nanoseconds of clock error. The offset is thousands of times too big to ignore.",
+    "wer": 0.125,
+    "missingWords": 1,
+    "substitutedWords": 3,
+    "repeatedWords": 0,
+    "hallucinatedWords": 0,
+    "criticalMismatch": false
+  },
+  "attempt": {
+    "number": 1,
+    "parentAttemptId": null,
+    "reason": "initial synthesis",
+    "selected": null
+  },
+  "issues": [],
+  "status": "READY",
+  "provenance": {
+    "createdAt": "2026-10-12T04:25:13.701Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "c6be3c061c691ed9"
+}

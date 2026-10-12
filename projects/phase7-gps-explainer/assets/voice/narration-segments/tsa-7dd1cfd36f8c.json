@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0.0",
+  "ttsSegmentAudioId": "tsa-7dd1cfd36f8c",
+  "version": 1,
+  "projectId": "phase7-gps-explainer",
+  "scriptRef": {
+    "scriptArtifactId": "fss-phase7-gps-explainer",
+    "scriptVersion": 2
+  },
+  "segmentId": "N28",
+  "segmentOrdinal": 28,
+  "sourceTextHash": "0d5f888151ab5176",
+  "compiledInputHash": "0d5f888151ab5176",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "narrationDirectionRef": "nd-7bd74d759a3c",
+  "pronunciationPassRef": "prp-f6b2f490d97d",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "runtimeIdentity": {
+    "runtimeMode": "LOCAL_SYNTHESIS",
+    "modelRepo": "hexgrad/Kokoro-82M",
+    "modelHash": "UNKNOWN_NOT_AVAILABLE",
+    "languageCode": "a"
+  },
+  "voiceId": "am_michael",
+  "effectiveSpeed": 1,
+  "pacePolicyVersion": "pace-speed-1.0.0",
+  "audioRef": "assets/voice/narration-segments/tsa-7dd1cfd36f8c.wav",
+  "audioContentHash": "1eaa8629e112a9da1fcb6758ae5e7d57bec651b28d549bcb96d817c8549207fe",
+  "durationMs": 15425,
+  "sampleRate": 24000,
+  "channels": 1,
+  "technicalQa": {
+    "decodePass": true,
+    "nonSilent": true,
+    "finiteSamples": true,
+    "peak": 13637,
+    "rms": 1369.93,
+    "clippingSamples": 0,
+    "transcript": "Put it all together and a suitoring is simply a sum. The true distance plus the clock errors plus the ionosphere and troposphere delays plus multi-path and noise. The receiver's whole job is to untangle that sum.",
+    "wer": 0.0811,
+    "missingWords": 0,
+    "substitutedWords": 2,
+    "repeatedWords": 0,
+    "hallucinatedWords": 1,
+    "criticalMismatch": false
+  },
+  "attempt": {
+    "number": 1,
+    "parentAttemptId": null,
+    "reason": "initial synthesis",
+    "selected": null
+  },
+  "issues": [],
+  "status": "READY",
+  "provenance": {
+    "createdAt": "2026-10-12T04:29:29.422Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "7dc2c8557eba523e"
+}

@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "1.0.0",
+  "dialogueRoutingDecisionId": "dlr-83f1c5a96e50",
+  "version": 1,
+  "projectId": "phase7-gps-explainer",
+  "contentClass": "FACTUAL",
+  "speakerMode": "SINGLE_NARRATOR",
+  "narratorVoiceId": "am_michael",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "multiVoiceRequired": false,
+  "decision": "NOT_APPLICABLE",
+  "routingChecks": [
+    {
+      "checkId": "narrator-route",
+      "fixture": "Voice Bible narrator resolution",
+      "expected": "voiceId=am_michael",
+      "status": "VERIFIED"
+    },
+    {
+      "checkId": "unknown-speaker-fail-closed",
+      "fixture": "synthetic unknown speakerId",
+      "expected": "DIALOGUE_SPEAKER_NOT_FOUND",
+      "status": "VERIFIED"
+    },
+    {
+      "checkId": "missing-voice-fail-closed",
+      "fixture": "synthetic character without voiceId",
+      "expected": "DIALOGUE_VOICE_NOT_ASSIGNED",
+      "status": "VERIFIED"
+    },
+    {
+      "checkId": "language-mismatch-fail-closed",
+      "fixture": "synthetic character with ja voice on en script",
+      "expected": "DIALOGUE_VOICE_LANGUAGE_MISMATCH",
+      "status": "VERIFIED"
+    }
+  ],
+  "provenance": {
+    "createdAt": "2026-10-12T06:32:50.628Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "cb8e6204f97814af"
+}

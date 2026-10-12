@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0.0",
+  "ttsSegmentAudioId": "tsa-aaa397516504",
+  "version": 1,
+  "projectId": "phase7-gps-explainer",
+  "scriptRef": {
+    "scriptArtifactId": "fss-phase7-gps-explainer",
+    "scriptVersion": 2
+  },
+  "segmentId": "N05",
+  "segmentOrdinal": 4,
+  "sourceTextHash": "0d5a998a205e7057",
+  "compiledInputHash": "0d5a998a205e7057",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "narrationDirectionRef": "nd-7bd74d759a3c",
+  "pronunciationPassRef": "prp-f6b2f490d97d",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "runtimeIdentity": {
+    "runtimeMode": "LOCAL_SYNTHESIS",
+    "modelRepo": "hexgrad/Kokoro-82M",
+    "modelHash": "UNKNOWN_NOT_AVAILABLE",
+    "languageCode": "a"
+  },
+  "voiceId": "am_michael",
+  "effectiveSpeed": 1,
+  "pacePolicyVersion": "pace-speed-1.0.0",
+  "audioRef": "assets/voice/narration-segments/tsa-aaa397516504.wav",
+  "audioContentHash": "57b86a8e251f02ea91bbacb527a2781da67081c36054653adddb44d6c5c92b85",
+  "durationMs": 14150,
+  "sampleRate": 24000,
+  "channels": 1,
+  "technicalQa": {
+    "decodePass": true,
+    "nonSilent": true,
+    "finiteSamples": true,
+    "peak": 13500,
+    "rms": 1376.44,
+    "clippingSamples": 0,
+    "transcript": "On a flat map, a second tower gives a second circle and the two cross in two places. A third circle leaves just one spot where all three meet, positioning from three distances, triliteration.",
+    "wer": 0.0294,
+    "missingWords": 0,
+    "substitutedWords": 1,
+    "repeatedWords": 0,
+    "hallucinatedWords": 0,
+    "criticalMismatch": false
+  },
+  "attempt": {
+    "number": 1,
+    "parentAttemptId": null,
+    "reason": "initial synthesis",
+    "selected": null
+  },
+  "issues": [],
+  "status": "READY",
+  "provenance": {
+    "createdAt": "2026-10-12T04:20:00.947Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "0715134747240891"
+}

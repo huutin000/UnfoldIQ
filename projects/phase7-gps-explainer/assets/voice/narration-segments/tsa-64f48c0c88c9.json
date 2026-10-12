@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0.0",
+  "ttsSegmentAudioId": "tsa-64f48c0c88c9",
+  "version": 1,
+  "projectId": "phase7-gps-explainer",
+  "scriptRef": {
+    "scriptArtifactId": "fss-phase7-gps-explainer",
+    "scriptVersion": 2
+  },
+  "segmentId": "N29",
+  "segmentOrdinal": 29,
+  "sourceTextHash": "634095ab387993c8",
+  "compiledInputHash": "634095ab387993c8",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "narrationDirectionRef": "nd-7bd74d759a3c",
+  "pronunciationPassRef": "prp-f6b2f490d97d",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "runtimeIdentity": {
+    "runtimeMode": "LOCAL_SYNTHESIS",
+    "modelRepo": "hexgrad/Kokoro-82M",
+    "modelHash": "UNKNOWN_NOT_AVAILABLE",
+    "languageCode": "a"
+  },
+  "voiceId": "am_michael",
+  "effectiveSpeed": 1,
+  "pacePolicyVersion": "pace-speed-1.0.0",
+  "audioRef": "assets/voice/narration-segments/tsa-64f48c0c88c9.wav",
+  "audioContentHash": "ff10ab64e80463355c2ec8dfe4b49e6bdb2ffccf632f786affaa72d6784237b5",
+  "durationMs": 31575,
+  "sampleRate": 24000,
+  "channels": 1,
+  "technicalQa": {
+    "decodePass": true,
+    "nonSilent": true,
+    "finiteSamples": true,
+    "peak": 16918,
+    "rms": 1269.74,
+    "clippingSamples": 0,
+    "transcript": "Accuracy comes in layers. The U.S. government commits to a daily global average signal-in-space ranging error of at most two meters, with 95% probability across healthy satellites. On one day in 2021, that average was at most about 64 centimeters. But that does not describe your phone's accuracy. Your position also depends on satellite geometry, the atmosphere and nearby buildings, so phones typically land within about five meters under open sky.",
+    "wer": 0.0649,
+    "missingWords": 3,
+    "substitutedWords": 2,
+    "repeatedWords": 0,
+    "hallucinatedWords": 0,
+    "criticalMismatch": false
+  },
+  "attempt": {
+    "number": 1,
+    "parentAttemptId": null,
+    "reason": "initial synthesis",
+    "selected": null
+  },
+  "issues": [],
+  "status": "READY",
+  "provenance": {
+    "createdAt": "2026-10-12T04:29:56.998Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "171805baea2161db"
+}

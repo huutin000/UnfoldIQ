@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0.0",
+  "ttsSegmentAudioId": "tsa-caa0cc65e22a",
+  "version": 1,
+  "projectId": "phase7-gps-explainer",
+  "scriptRef": {
+    "scriptArtifactId": "fss-phase7-gps-explainer",
+    "scriptVersion": 2
+  },
+  "segmentId": "N11",
+  "segmentOrdinal": 10,
+  "sourceTextHash": "441c396dca6d35ac",
+  "compiledInputHash": "441c396dca6d35ac",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "narrationDirectionRef": "nd-7bd74d759a3c",
+  "pronunciationPassRef": "prp-f6b2f490d97d",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "runtimeIdentity": {
+    "runtimeMode": "LOCAL_SYNTHESIS",
+    "modelRepo": "hexgrad/Kokoro-82M",
+    "modelHash": "UNKNOWN_NOT_AVAILABLE",
+    "languageCode": "a"
+  },
+  "voiceId": "am_michael",
+  "effectiveSpeed": 1,
+  "pacePolicyVersion": "pace-speed-1.0.0",
+  "audioRef": "assets/voice/narration-segments/tsa-caa0cc65e22a.wav",
+  "audioContentHash": "e2001e2d7f0561ad226c1b0a63c941e1645c145c0d458d152c0fd2a922847af0",
+  "durationMs": 12675,
+  "sampleRate": 24000,
+  "channels": 1,
+  "technicalQa": {
+    "decodePass": true,
+    "nonSilent": true,
+    "finiteSamples": true,
+    "peak": 16743,
+    "rms": 1387.79,
+    "clippingSamples": 0,
+    "transcript": "Radio waves travel at the speed of light almost 300,000 kilometers a second. Distance is then speed times travel time. Measure the time and you know the distance.",
+    "wer": 0.1,
+    "missingWords": 1,
+    "substitutedWords": 2,
+    "repeatedWords": 0,
+    "hallucinatedWords": 0,
+    "criticalMismatch": false
+  },
+  "attempt": {
+    "number": 1,
+    "parentAttemptId": null,
+    "reason": "initial synthesis",
+    "selected": null
+  },
+  "issues": [],
+  "status": "READY",
+  "provenance": {
+    "createdAt": "2026-10-12T04:22:14.022Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "eaa6162a39e3ab31"
+}

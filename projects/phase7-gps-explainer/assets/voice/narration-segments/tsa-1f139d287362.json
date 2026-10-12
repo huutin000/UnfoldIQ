@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0.0",
+  "ttsSegmentAudioId": "tsa-1f139d287362",
+  "version": 1,
+  "projectId": "phase7-gps-explainer",
+  "scriptRef": {
+    "scriptArtifactId": "fss-phase7-gps-explainer",
+    "scriptVersion": 2
+  },
+  "segmentId": "N12",
+  "segmentOrdinal": 11,
+  "sourceTextHash": "e27a55c15898fd4d",
+  "compiledInputHash": "e27a55c15898fd4d",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "narrationDirectionRef": "nd-7bd74d759a3c",
+  "pronunciationPassRef": "prp-f6b2f490d97d",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "runtimeIdentity": {
+    "runtimeMode": "LOCAL_SYNTHESIS",
+    "modelRepo": "hexgrad/Kokoro-82M",
+    "modelHash": "UNKNOWN_NOT_AVAILABLE",
+    "languageCode": "a"
+  },
+  "voiceId": "am_michael",
+  "effectiveSpeed": 1,
+  "pacePolicyVersion": "pace-speed-1.0.0",
+  "audioRef": "assets/voice/narration-segments/tsa-1f139d287362.wav",
+  "audioContentHash": "edf9e2dc7a8ec8b84fa896255f32cf7a0960d3b7131497b8d33f9e9203a9939b",
+  "durationMs": 15475,
+  "sampleRate": 24000,
+  "channels": 1,
+  "technicalQa": {
+    "decodePass": true,
+    "nonSilent": true,
+    "finiteSamples": true,
+    "peak": 16460,
+    "rms": 1423.71,
+    "clippingSamples": 0,
+    "transcript": "From straight overhead the signal takes about seven hundredths of a second lower in the sky up to about nine hundredths Short but a clock that is off by just one microsecond moves the answer by 300 meters",
+    "wer": 0.0513,
+    "missingWords": 1,
+    "substitutedWords": 1,
+    "repeatedWords": 0,
+    "hallucinatedWords": 0,
+    "criticalMismatch": false
+  },
+  "attempt": {
+    "number": 1,
+    "parentAttemptId": null,
+    "reason": "initial synthesis",
+    "selected": null
+  },
+  "issues": [],
+  "status": "READY",
+  "provenance": {
+    "createdAt": "2026-10-12T04:22:35.921Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "c0e37bd85cb27246"
+}

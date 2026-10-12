@@ -1,0 +1,875 @@
+{
+  "schemaVersion": "1.0.0",
+  "performanceQaId": "pfq-6c019053968c",
+  "version": 1,
+  "projectId": "phase7-gps-explainer",
+  "scriptRef": {
+    "scriptArtifactId": "fss-phase7-gps-explainer",
+    "scriptVersion": 2
+  },
+  "speechRateQaRef": "srq-457814c7b2bc",
+  "segments": [
+    {
+      "segmentId": "N01",
+      "signals": {
+        "rateWpm": 148.88,
+        "energyStd": 973.2,
+        "pauseCount": 4,
+        "pauseVariation": 0.194,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N02",
+      "signals": {
+        "rateWpm": 149.07,
+        "energyStd": 896.2,
+        "pauseCount": 5,
+        "pauseVariation": 0.1901,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N03",
+      "signals": {
+        "rateWpm": 134.87,
+        "energyStd": 903.9,
+        "pauseCount": 7,
+        "pauseVariation": 0.1746,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N04",
+      "signals": {
+        "rateWpm": 146.82,
+        "energyStd": 949.9,
+        "pauseCount": 5,
+        "pauseVariation": 0.2132,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N05",
+      "signals": {
+        "rateWpm": 144.17,
+        "energyStd": 962.7,
+        "pauseCount": 7,
+        "pauseVariation": 0.2028,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N06",
+      "signals": {
+        "rateWpm": 150,
+        "energyStd": 951.3,
+        "pauseCount": 7,
+        "pauseVariation": 0.1923,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N07",
+      "signals": {
+        "rateWpm": 136.8,
+        "energyStd": 909.8,
+        "pauseCount": 8,
+        "pauseVariation": 0.1663,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N08",
+      "signals": {
+        "rateWpm": 135.45,
+        "energyStd": 867.7,
+        "pauseCount": 5,
+        "pauseVariation": 0.1802,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N09",
+      "signals": {
+        "rateWpm": 157.89,
+        "energyStd": 936.8,
+        "pauseCount": 5,
+        "pauseVariation": 0.1805,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N10",
+      "signals": {
+        "rateWpm": 156.18,
+        "energyStd": 932.6,
+        "pauseCount": 5,
+        "pauseVariation": 0.1948,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N11",
+      "signals": {
+        "rateWpm": 142.01,
+        "energyStd": 979.3,
+        "pauseCount": 6,
+        "pauseVariation": 0.1984,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N12",
+      "signals": {
+        "rateWpm": 151.21,
+        "energyStd": 1007.2,
+        "pauseCount": 7,
+        "pauseVariation": 0.1884,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N13",
+      "signals": {
+        "rateWpm": 146.72,
+        "energyStd": 958.1,
+        "pauseCount": 4,
+        "pauseVariation": 0.1738,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N14",
+      "signals": {
+        "rateWpm": 162.58,
+        "energyStd": 899.1,
+        "pauseCount": 7,
+        "pauseVariation": 0.1819,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N15",
+      "signals": {
+        "rateWpm": 151.07,
+        "energyStd": 940.4,
+        "pauseCount": 9,
+        "pauseVariation": 0.1805,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N16",
+      "signals": {
+        "rateWpm": 131.15,
+        "energyStd": 966.6,
+        "pauseCount": 7,
+        "pauseVariation": 0.1628,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N17",
+      "signals": {
+        "rateWpm": 131.75,
+        "energyStd": 875.4,
+        "pauseCount": 6,
+        "pauseVariation": 0.1703,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N18",
+      "signals": {
+        "rateWpm": 141.74,
+        "energyStd": 936.7,
+        "pauseCount": 6,
+        "pauseVariation": 0.157,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N19",
+      "signals": {
+        "rateWpm": 145.73,
+        "energyStd": 939.7,
+        "pauseCount": 4,
+        "pauseVariation": 0.1681,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N19b",
+      "signals": {
+        "rateWpm": 143.92,
+        "energyStd": 846.9,
+        "pauseCount": 9,
+        "pauseVariation": 0.1527,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N20",
+      "signals": {
+        "rateWpm": 141.77,
+        "energyStd": 931.1,
+        "pauseCount": 6,
+        "pauseVariation": 0.2,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N21",
+      "signals": {
+        "rateWpm": 138.9,
+        "energyStd": 922.8,
+        "pauseCount": 7,
+        "pauseVariation": 0.1817,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N22",
+      "signals": {
+        "rateWpm": 137.75,
+        "energyStd": 896.3,
+        "pauseCount": 5,
+        "pauseVariation": 0.2124,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N23",
+      "signals": {
+        "rateWpm": 161.54,
+        "energyStd": 910.1,
+        "pauseCount": 5,
+        "pauseVariation": 0.1769,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N24",
+      "signals": {
+        "rateWpm": 152.04,
+        "energyStd": 910.6,
+        "pauseCount": 8,
+        "pauseVariation": 0.1738,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N25",
+      "signals": {
+        "rateWpm": 152.78,
+        "energyStd": 921.3,
+        "pauseCount": 8,
+        "pauseVariation": 0.1759,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N26",
+      "signals": {
+        "rateWpm": 140.35,
+        "energyStd": 879.8,
+        "pauseCount": 8,
+        "pauseVariation": 0.1701,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N27",
+      "signals": {
+        "rateWpm": 141.89,
+        "energyStd": 956.1,
+        "pauseCount": 6,
+        "pauseVariation": 0.1784,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N28",
+      "signals": {
+        "rateWpm": 143.92,
+        "energyStd": 955.5,
+        "pauseCount": 6,
+        "pauseVariation": 0.1637,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N29",
+      "signals": {
+        "rateWpm": 146.32,
+        "energyStd": 856.2,
+        "pauseCount": 12,
+        "pauseVariation": 0.1639,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N30",
+      "signals": {
+        "rateWpm": 146.71,
+        "energyStd": 906.5,
+        "pauseCount": 6,
+        "pauseVariation": 0.1724,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N31",
+      "signals": {
+        "rateWpm": 100.93,
+        "energyStd": 1009.2,
+        "pauseCount": 6,
+        "pauseVariation": 0.2336,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N32",
+      "signals": {
+        "rateWpm": 126.12,
+        "energyStd": 896.1,
+        "pauseCount": 7,
+        "pauseVariation": 0.1827,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N33",
+      "signals": {
+        "rateWpm": 164.27,
+        "energyStd": 940.5,
+        "pauseCount": 5,
+        "pauseVariation": 0.1613,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N34",
+      "signals": {
+        "rateWpm": 134.23,
+        "energyStd": 957.2,
+        "pauseCount": 5,
+        "pauseVariation": 0.1875,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N35",
+      "signals": {
+        "rateWpm": 143.86,
+        "energyStd": 964.1,
+        "pauseCount": 7,
+        "pauseVariation": 0.1731,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    },
+    {
+      "segmentId": "N36",
+      "signals": {
+        "rateWpm": 156,
+        "energyStd": 1022.3,
+        "pauseCount": 3,
+        "pauseVariation": 0.28,
+        "asrWer": null,
+        "repeatedCadence": null
+      },
+      "checks": {
+        "monotony": "PASS",
+        "mechanicalCadence": "PASS",
+        "pauseNaturalness": "PASS",
+        "intonation": "PASS",
+        "emphasis": "PASS",
+        "overacting": "PASS",
+        "underacting": "PASS",
+        "joins": "PASS"
+      },
+      "issues": [],
+      "status": "PASS"
+    }
+  ],
+  "fatigue": {
+    "shortFormPerformance": "MEASURED",
+    "longFormFatigue": "BOUNDED_PROXY_NOT_FULLY_MEASURED",
+    "note": "pilot script is short; sustained-narration fatigue proof belongs to Phase 7 long-form E2E"
+  },
+  "decision": "PASS",
+  "provenance": {
+    "createdAt": "2026-10-12T06:33:52.097Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "333e1db4d7db18f9"
+}

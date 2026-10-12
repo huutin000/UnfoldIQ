@@ -1,0 +1,368 @@
+{
+  "schemaVersion": "1.0.0",
+  "finalNarrationTrackId": "fnt-e2ceed888682",
+  "version": 1,
+  "projectId": "phase7-gps-explainer",
+  "scriptRef": {
+    "scriptArtifactId": "fss-phase7-gps-explainer",
+    "scriptVersion": 2
+  },
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "speechRateQaRef": "srq-457814c7b2bc",
+  "performanceQaRef": "pfq-6c019053968c",
+  "joinPolicy": {
+    "version": "narration-join-1.0.0",
+    "interSegmentSilenceMs": 250
+  },
+  "segments": [
+    {
+      "segmentId": "N01",
+      "segmentOrdinal": 0,
+      "ttsSegmentAudioId": "tsa-785651a86ab6",
+      "audioRef": "assets/voice/narration-segments/tsa-785651a86ab6.wav",
+      "audioContentHash": "0583804cb427d6510efc4e9bb09754d4792f178f196a8327e1e9ebf3da783b6e",
+      "durationMs": 10075,
+      "joinStartMs": 0
+    },
+    {
+      "segmentId": "N02",
+      "segmentOrdinal": 1,
+      "ttsSegmentAudioId": "tsa-1db1fa33d062",
+      "audioRef": "assets/voice/narration-segments/tsa-1db1fa33d062.wav",
+      "audioContentHash": "a814f891ca086bfb4b8394831617c849d7db5315d08e667fa7ac3a5f1440211c",
+      "durationMs": 12075,
+      "joinStartMs": 10325
+    },
+    {
+      "segmentId": "N03",
+      "segmentOrdinal": 2,
+      "ttsSegmentAudioId": "tsa-a78698a135eb",
+      "audioRef": "assets/voice/narration-segments/tsa-a78698a135eb.wav",
+      "audioContentHash": "d2cad3ab86682cca96324ddd0807e814fa74b5d105116b219360bd4cbf5a5f44",
+      "durationMs": 17350,
+      "joinStartMs": 22650
+    },
+    {
+      "segmentId": "N04",
+      "segmentOrdinal": 3,
+      "ttsSegmentAudioId": "tsa-5ad66bf73ea4",
+      "audioRef": "assets/voice/narration-segments/tsa-5ad66bf73ea4.wav",
+      "audioContentHash": "0d72ebb86e19a5cbdc6c31536215090937606af7543b84ed71044235408c4a18",
+      "durationMs": 10625,
+      "joinStartMs": 40250
+    },
+    {
+      "segmentId": "N05",
+      "segmentOrdinal": 4,
+      "ttsSegmentAudioId": "tsa-aaa397516504",
+      "audioRef": "assets/voice/narration-segments/tsa-aaa397516504.wav",
+      "audioContentHash": "57b86a8e251f02ea91bbacb527a2781da67081c36054653adddb44d6c5c92b85",
+      "durationMs": 14150,
+      "joinStartMs": 51125
+    },
+    {
+      "segmentId": "N06",
+      "segmentOrdinal": 5,
+      "ttsSegmentAudioId": "tsa-9bc324156a16",
+      "audioRef": "assets/voice/narration-segments/tsa-9bc324156a16.wav",
+      "audioContentHash": "576e948e38a6dcdcc20afefff763da748878329d5a1df67143f0f1716d07f169",
+      "durationMs": 15600,
+      "joinStartMs": 65525
+    },
+    {
+      "segmentId": "N07",
+      "segmentOrdinal": 6,
+      "ttsSegmentAudioId": "tsa-adf3069dd28b",
+      "audioRef": "assets/voice/narration-segments/tsa-adf3069dd28b.wav",
+      "audioContentHash": "9a9a9aa0f3bb73f72bc5e00fc2692d58dc95a3a1d50578f1a1adbfdca705e940",
+      "durationMs": 20175,
+      "joinStartMs": 81375
+    },
+    {
+      "segmentId": "N08",
+      "segmentOrdinal": 7,
+      "ttsSegmentAudioId": "tsa-8ffdc64ea257",
+      "audioRef": "assets/voice/narration-segments/tsa-8ffdc64ea257.wav",
+      "audioContentHash": "6ced95ee57d1d53905aa59b5d7c87c0d908a4d0416f4d0bf57a4ab0cd7f12cfe",
+      "durationMs": 14175,
+      "joinStartMs": 101800
+    },
+    {
+      "segmentId": "N09",
+      "segmentOrdinal": 8,
+      "ttsSegmentAudioId": "tsa-7545bdf280f6",
+      "audioRef": "assets/voice/narration-segments/tsa-7545bdf280f6.wav",
+      "audioContentHash": "8ffcca043ef4fc98a1a2d9ec18784bbfdf71c33222e1f2f82af0c9cd3fec5f92",
+      "durationMs": 13300,
+      "joinStartMs": 116225
+    },
+    {
+      "segmentId": "N10",
+      "segmentOrdinal": 9,
+      "ttsSegmentAudioId": "tsa-4851c3dfc501",
+      "audioRef": "assets/voice/narration-segments/tsa-4851c3dfc501.wav",
+      "audioContentHash": "7ae1edd199b65e1675af4738a4b7346da206949eb4d9b9e881765c3c42a1e69b",
+      "durationMs": 11525,
+      "joinStartMs": 129775
+    },
+    {
+      "segmentId": "N11",
+      "segmentOrdinal": 10,
+      "ttsSegmentAudioId": "tsa-caa0cc65e22a",
+      "audioRef": "assets/voice/narration-segments/tsa-caa0cc65e22a.wav",
+      "audioContentHash": "e2001e2d7f0561ad226c1b0a63c941e1645c145c0d458d152c0fd2a922847af0",
+      "durationMs": 12675,
+      "joinStartMs": 141550
+    },
+    {
+      "segmentId": "N12",
+      "segmentOrdinal": 11,
+      "ttsSegmentAudioId": "tsa-1f139d287362",
+      "audioRef": "assets/voice/narration-segments/tsa-1f139d287362.wav",
+      "audioContentHash": "edf9e2dc7a8ec8b84fa896255f32cf7a0960d3b7131497b8d33f9e9203a9939b",
+      "durationMs": 15475,
+      "joinStartMs": 154475
+    },
+    {
+      "segmentId": "N13",
+      "segmentOrdinal": 12,
+      "ttsSegmentAudioId": "tsa-9839c2989133",
+      "audioRef": "assets/voice/narration-segments/tsa-9839c2989133.wav",
+      "audioContentHash": "fbaee7f8a401c4fe9d2c70bd0cd17939d60faf02a007448a2f156073f2d518d7",
+      "durationMs": 11450,
+      "joinStartMs": 170200
+    },
+    {
+      "segmentId": "N14",
+      "segmentOrdinal": 13,
+      "ttsSegmentAudioId": "tsa-33a5d6498c87",
+      "audioRef": "assets/voice/narration-segments/tsa-33a5d6498c87.wav",
+      "audioContentHash": "26534866414c815280ee3cc60c8c7244f43f5e8f97a4cb2012754dc57693d104",
+      "durationMs": 15500,
+      "joinStartMs": 181900
+    },
+    {
+      "segmentId": "N15",
+      "segmentOrdinal": 14,
+      "ttsSegmentAudioId": "tsa-fcdb9231274c",
+      "audioRef": "assets/voice/narration-segments/tsa-fcdb9231274c.wav",
+      "audioContentHash": "e2a8a97ecea7d605b44a6a958468900d473cd9cb8edf4d93d0e332796c75c8c2",
+      "durationMs": 17475,
+      "joinStartMs": 197650
+    },
+    {
+      "segmentId": "N16",
+      "segmentOrdinal": 15,
+      "ttsSegmentAudioId": "tsa-6e1a431599c2",
+      "audioRef": "assets/voice/narration-segments/tsa-6e1a431599c2.wav",
+      "audioContentHash": "a0590b7b065eaea4030b81f8c9ebc9eb78e2d31feadf031e4e324d216f3a7006",
+      "durationMs": 18300,
+      "joinStartMs": 215375
+    },
+    {
+      "segmentId": "N17",
+      "segmentOrdinal": 16,
+      "ttsSegmentAudioId": "tsa-ec4a5b3729af",
+      "audioRef": "assets/voice/narration-segments/tsa-ec4a5b3729af.wav",
+      "audioContentHash": "05a1712316b85be077dc4f43b03efb480f5a5ba06250656dc9d0304582071762",
+      "durationMs": 16850,
+      "joinStartMs": 233925
+    },
+    {
+      "segmentId": "N18",
+      "segmentOrdinal": 17,
+      "ttsSegmentAudioId": "tsa-33f94c277574",
+      "audioRef": "assets/voice/narration-segments/tsa-33f94c277574.wav",
+      "audioContentHash": "663578b41ab36036bfc3545c44b150e445d090a57cb8e4d806d524001fa5e71e",
+      "durationMs": 18625,
+      "joinStartMs": 251025
+    },
+    {
+      "segmentId": "N19",
+      "segmentOrdinal": 18,
+      "ttsSegmentAudioId": "tsa-71fe08a5ce35",
+      "audioRef": "assets/voice/narration-segments/tsa-71fe08a5ce35.wav",
+      "audioContentHash": "518c3a7387e43279c7e972ae871d2372147284f969c215dd6cf6168d767208c2",
+      "durationMs": 13175,
+      "joinStartMs": 269900
+    },
+    {
+      "segmentId": "N19b",
+      "segmentOrdinal": 19,
+      "ttsSegmentAudioId": "tsa-123a55cc9360",
+      "audioRef": "assets/voice/narration-segments/tsa-123a55cc9360.wav",
+      "audioContentHash": "d3482955f84b35a2cb832aed5588f77aed3c5690a23db26fb910297a25afc9c3",
+      "durationMs": 29600,
+      "joinStartMs": 283325
+    },
+    {
+      "segmentId": "N20",
+      "segmentOrdinal": 20,
+      "ttsSegmentAudioId": "tsa-c7db9b06b0d5",
+      "audioRef": "assets/voice/narration-segments/tsa-c7db9b06b0d5.wav",
+      "audioContentHash": "c1ad69deb9417514cc11335e0b679ddae954f59a5c1241587de1142f4b68673d",
+      "durationMs": 11850,
+      "joinStartMs": 313175
+    },
+    {
+      "segmentId": "N21",
+      "segmentOrdinal": 21,
+      "ttsSegmentAudioId": "tsa-1ff36e05a7f9",
+      "audioRef": "assets/voice/narration-segments/tsa-1ff36e05a7f9.wav",
+      "audioContentHash": "a089bca741c5eff542e104378aa0251b323667eb795b583adb256b907771ba8d",
+      "durationMs": 18575,
+      "joinStartMs": 325275
+    },
+    {
+      "segmentId": "N22",
+      "segmentOrdinal": 22,
+      "ttsSegmentAudioId": "tsa-d02e95ee4a26",
+      "audioRef": "assets/voice/narration-segments/tsa-d02e95ee4a26.wav",
+      "audioContentHash": "b2c4559eadd45e2ed0f455a00b16af0102c885cdb58a7842c61ee219b7844e59",
+      "durationMs": 11325,
+      "joinStartMs": 344100
+    },
+    {
+      "segmentId": "N23",
+      "segmentOrdinal": 23,
+      "ttsSegmentAudioId": "tsa-78d74668fb65",
+      "audioRef": "assets/voice/narration-segments/tsa-78d74668fb65.wav",
+      "audioContentHash": "fc5f5222c572114fddcef0c773d6350441628723cf4802f839014fb9ca10ed64",
+      "durationMs": 13000,
+      "joinStartMs": 355675
+    },
+    {
+      "segmentId": "N24",
+      "segmentOrdinal": 24,
+      "ttsSegmentAudioId": "tsa-271c5d0e6e7a",
+      "audioRef": "assets/voice/narration-segments/tsa-271c5d0e6e7a.wav",
+      "audioContentHash": "0172122c397b03978b281087d0cb3652d519d18725e3f7b5f2ee799b19d60eb2",
+      "durationMs": 22100,
+      "joinStartMs": 368925
+    },
+    {
+      "segmentId": "N25",
+      "segmentOrdinal": 25,
+      "ttsSegmentAudioId": "tsa-c0989aba0700",
+      "audioRef": "assets/voice/narration-segments/tsa-c0989aba0700.wav",
+      "audioContentHash": "1c7c5fd3aa61140bf528b904c7c1c725157127f0e84a881a0bd5eb0047ea516c",
+      "durationMs": 21600,
+      "joinStartMs": 391275
+    },
+    {
+      "segmentId": "N26",
+      "segmentOrdinal": 26,
+      "ttsSegmentAudioId": "tsa-112d64d06de9",
+      "audioRef": "assets/voice/narration-segments/tsa-112d64d06de9.wav",
+      "audioContentHash": "3a79f0f8044d3117fa193e12c537bf06fb7a64d721d99f92247412d6608c51c3",
+      "durationMs": 21375,
+      "joinStartMs": 413125
+    },
+    {
+      "segmentId": "N27",
+      "segmentOrdinal": 27,
+      "ttsSegmentAudioId": "tsa-4301344547cd",
+      "audioRef": "assets/voice/narration-segments/tsa-4301344547cd.wav",
+      "audioContentHash": "96229322edfce9c2b4933c175f2eed46a24622201d82ada604dab9dbbf1728d9",
+      "durationMs": 14800,
+      "joinStartMs": 434750
+    },
+    {
+      "segmentId": "N28",
+      "segmentOrdinal": 28,
+      "ttsSegmentAudioId": "tsa-7dd1cfd36f8c",
+      "audioRef": "assets/voice/narration-segments/tsa-7dd1cfd36f8c.wav",
+      "audioContentHash": "1eaa8629e112a9da1fcb6758ae5e7d57bec651b28d549bcb96d817c8549207fe",
+      "durationMs": 15425,
+      "joinStartMs": 449800
+    },
+    {
+      "segmentId": "N29",
+      "segmentOrdinal": 29,
+      "ttsSegmentAudioId": "tsa-64f48c0c88c9",
+      "audioRef": "assets/voice/narration-segments/tsa-64f48c0c88c9.wav",
+      "audioContentHash": "ff10ab64e80463355c2ec8dfe4b49e6bdb2ffccf632f786affaa72d6784237b5",
+      "durationMs": 31575,
+      "joinStartMs": 465475
+    },
+    {
+      "segmentId": "N30",
+      "segmentOrdinal": 30,
+      "ttsSegmentAudioId": "tsa-e32cb5c209cc",
+      "audioRef": "assets/voice/narration-segments/tsa-e32cb5c209cc.wav",
+      "audioContentHash": "b8804d6d81f884fa05a8ed0c567a16ccb943ea948c82cf0e9d003abd3af7a114",
+      "durationMs": 15950,
+      "joinStartMs": 497300
+    },
+    {
+      "segmentId": "N31",
+      "segmentOrdinal": 31,
+      "ttsSegmentAudioId": "tsa-a6849825636c",
+      "audioRef": "assets/voice/narration-segments/tsa-a6849825636c.wav",
+      "audioContentHash": "0e7b47924092a2c8c4e2ad23aa151e64cc002ee91064ab8efd7452c2f56aa156",
+      "durationMs": 10700,
+      "joinStartMs": 513500
+    },
+    {
+      "segmentId": "N32",
+      "segmentOrdinal": 32,
+      "ttsSegmentAudioId": "tsa-89891312a9c4",
+      "audioRef": "assets/voice/narration-segments/tsa-89891312a9c4.wav",
+      "audioContentHash": "d9fe53d3986b7b7c8e4eebe5190750cffe7baae8006366c290aec7dbe04cd352",
+      "durationMs": 16175,
+      "joinStartMs": 524450
+    },
+    {
+      "segmentId": "N33",
+      "segmentOrdinal": 33,
+      "ttsSegmentAudioId": "tsa-1ca563ce55d4",
+      "audioRef": "assets/voice/narration-segments/tsa-1ca563ce55d4.wav",
+      "audioContentHash": "a041f005873ededa994fe76bb84435b116fe995b9177512da6a13d53aaa94923",
+      "durationMs": 14975,
+      "joinStartMs": 540875
+    },
+    {
+      "segmentId": "N34",
+      "segmentOrdinal": 34,
+      "ttsSegmentAudioId": "tsa-d3a9fe50f03f",
+      "audioRef": "assets/voice/narration-segments/tsa-d3a9fe50f03f.wav",
+      "audioContentHash": "0df300282591cf12d0283ef48d6956e674b6b894320865a4496e08f4da950807",
+      "durationMs": 11175,
+      "joinStartMs": 556100
+    },
+    {
+      "segmentId": "N35",
+      "segmentOrdinal": 35,
+      "ttsSegmentAudioId": "tsa-c0c8c2c76428",
+      "audioRef": "assets/voice/narration-segments/tsa-c0c8c2c76428.wav",
+      "audioContentHash": "7181b7dc10445838841de81d7b219ca752688dc7bb5ca7c7f2bc82f002219ff5",
+      "durationMs": 17100,
+      "joinStartMs": 567525
+    },
+    {
+      "segmentId": "N36",
+      "segmentOrdinal": 36,
+      "ttsSegmentAudioId": "tsa-b1314040c3f2",
+      "audioRef": "assets/voice/narration-segments/tsa-b1314040c3f2.wav",
+      "audioContentHash": "0c64e5ab11336b507d513ff29efc7a7fa678d41127aa6c032bf64d9620dfbf81",
+      "durationMs": 5000,
+      "joinStartMs": 584875
+    }
+  ],
+  "audioRef": "assets/voice/narration-track/fnt-e2ceed888682.wav",
+  "audioContentHash": "842232ee8bb49d996ca7c04bb28f2a95a55cd96f0a79ec7ca2a2640b8e4d6e31",
+  "durationMs": 590125,
+  "sampleRate": 24000,
+  "channels": 1,
+  "joinQa": {
+    "joinCount": 36,
+    "maxDiscontinuity": 0,
+    "status": "PASS"
+  },
+  "status": "ASSEMBLED",
+  "provenance": {
+    "createdAt": "2026-10-12T06:34:00.551Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "cfdd454496d0cd1c"
+}

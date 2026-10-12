@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0.0",
+  "ttsSegmentAudioId": "tsa-7545bdf280f6",
+  "version": 1,
+  "projectId": "phase7-gps-explainer",
+  "scriptRef": {
+    "scriptArtifactId": "fss-phase7-gps-explainer",
+    "scriptVersion": 2
+  },
+  "segmentId": "N09",
+  "segmentOrdinal": 8,
+  "sourceTextHash": "5a3e49a899d5dc54",
+  "compiledInputHash": "5a3e49a899d5dc54",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "narrationDirectionRef": "nd-7bd74d759a3c",
+  "pronunciationPassRef": "prp-f6b2f490d97d",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "runtimeIdentity": {
+    "runtimeMode": "LOCAL_SYNTHESIS",
+    "modelRepo": "hexgrad/Kokoro-82M",
+    "modelHash": "UNKNOWN_NOT_AVAILABLE",
+    "languageCode": "a"
+  },
+  "voiceId": "am_michael",
+  "effectiveSpeed": 1,
+  "pacePolicyVersion": "pace-speed-1.0.0",
+  "audioRef": "assets/voice/narration-segments/tsa-7545bdf280f6.wav",
+  "audioContentHash": "8ffcca043ef4fc98a1a2d9ec18784bbfdf71c33222e1f2f82af0c9cd3fec5f92",
+  "durationMs": 13300,
+  "sampleRate": 24000,
+  "channels": 1,
+  "technicalQa": {
+    "decodePass": true,
+    "nonSilent": true,
+    "finiteSamples": true,
+    "peak": 17599,
+    "rms": 1352.79,
+    "clippingSamples": 0,
+    "transcript": "There are at least 24 of them in six orbital planes tilted 55 degrees to the equator. That arrangement lets you see at least four satellites from virtually any point on the planet.",
+    "wer": 0.1143,
+    "missingWords": 2,
+    "substitutedWords": 2,
+    "repeatedWords": 0,
+    "hallucinatedWords": 0,
+    "criticalMismatch": false
+  },
+  "attempt": {
+    "number": 1,
+    "parentAttemptId": null,
+    "reason": "initial synthesis",
+    "selected": null
+  },
+  "issues": [],
+  "status": "READY",
+  "provenance": {
+    "createdAt": "2026-10-12T04:21:27.364Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "2527c5d6e79eb3fd"
+}

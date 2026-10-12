@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0.0",
+  "ttsSegmentAudioId": "tsa-4301344547cd",
+  "version": 1,
+  "projectId": "phase7-gps-explainer",
+  "scriptRef": {
+    "scriptArtifactId": "fss-phase7-gps-explainer",
+    "scriptVersion": 2
+  },
+  "segmentId": "N27",
+  "segmentOrdinal": 27,
+  "sourceTextHash": "685b9267e38cdce6",
+  "compiledInputHash": "685b9267e38cdce6",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "narrationDirectionRef": "nd-7bd74d759a3c",
+  "pronunciationPassRef": "prp-f6b2f490d97d",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "runtimeIdentity": {
+    "runtimeMode": "LOCAL_SYNTHESIS",
+    "modelRepo": "hexgrad/Kokoro-82M",
+    "modelHash": "UNKNOWN_NOT_AVAILABLE",
+    "languageCode": "a"
+  },
+  "voiceId": "am_michael",
+  "effectiveSpeed": 1,
+  "pacePolicyVersion": "pace-speed-1.0.0",
+  "audioRef": "assets/voice/narration-segments/tsa-4301344547cd.wav",
+  "audioContentHash": "96229322edfce9c2b4933c175f2eed46a24622201d82ada604dab9dbbf1728d9",
+  "durationMs": 14800,
+  "sampleRate": 24000,
+  "channels": 1,
+  "technicalQa": {
+    "decodePass": true,
+    "nonSilent": true,
+    "finiteSamples": true,
+    "peak": 18382,
+    "rms": 1378.91,
+    "clippingSamples": 0,
+    "transcript": "In cities, signals also bounce off buildings. Engineers call it multi-path, and it makes a signal look as if it traveled farther. Where buildings, bridges, or trees block the signal, the blue dot gets worse.",
+    "wer": 0.0571,
+    "missingWords": 0,
+    "substitutedWords": 1,
+    "repeatedWords": 0,
+    "hallucinatedWords": 1,
+    "criticalMismatch": false
+  },
+  "attempt": {
+    "number": 1,
+    "parentAttemptId": null,
+    "reason": "initial synthesis",
+    "selected": null
+  },
+  "issues": [],
+  "status": "READY",
+  "provenance": {
+    "createdAt": "2026-10-12T04:29:07.871Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "36d96c1fc3403293"
+}

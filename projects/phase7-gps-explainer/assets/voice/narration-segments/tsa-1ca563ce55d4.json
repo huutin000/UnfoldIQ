@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0.0",
+  "ttsSegmentAudioId": "tsa-1ca563ce55d4",
+  "version": 1,
+  "projectId": "phase7-gps-explainer",
+  "scriptRef": {
+    "scriptArtifactId": "fss-phase7-gps-explainer",
+    "scriptVersion": 2
+  },
+  "segmentId": "N33",
+  "segmentOrdinal": 33,
+  "sourceTextHash": "6ba03ee08712cf1a",
+  "compiledInputHash": "6ba03ee08712cf1a",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "narrationDirectionRef": "nd-7bd74d759a3c",
+  "pronunciationPassRef": "prp-f6b2f490d97d",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "runtimeIdentity": {
+    "runtimeMode": "LOCAL_SYNTHESIS",
+    "modelRepo": "hexgrad/Kokoro-82M",
+    "modelHash": "UNKNOWN_NOT_AVAILABLE",
+    "languageCode": "a"
+  },
+  "voiceId": "am_michael",
+  "effectiveSpeed": 1,
+  "pacePolicyVersion": "pace-speed-1.0.0",
+  "audioRef": "assets/voice/narration-segments/tsa-1ca563ce55d4.wav",
+  "audioContentHash": "a041f005873ededa994fe76bb84435b116fe995b9177512da6a13d53aaa94923",
+  "durationMs": 14975,
+  "sampleRate": 24000,
+  "channels": 1,
+  "technicalQa": {
+    "decodePass": true,
+    "nonSilent": true,
+    "finiteSamples": true,
+    "peak": 16229,
+    "rms": 1359.06,
+    "clippingSamples": 0,
+    "transcript": "When the blue dot lands on the right street, here is what just happened. Signals that left the satellites a fraction of a second ago were timed to within billions of a second, then corrected for the atmosphere and for relativity.",
+    "wer": 0.0244,
+    "missingWords": 0,
+    "substitutedWords": 1,
+    "repeatedWords": 0,
+    "hallucinatedWords": 0,
+    "criticalMismatch": false
+  },
+  "attempt": {
+    "number": 1,
+    "parentAttemptId": null,
+    "reason": "initial synthesis",
+    "selected": null
+  },
+  "issues": [],
+  "status": "READY",
+  "provenance": {
+    "createdAt": "2026-10-12T04:31:20.314Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "a8799c547b4559d2"
+}

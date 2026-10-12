@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0.0",
+  "ttsSegmentAudioId": "tsa-123a55cc9360",
+  "version": 1,
+  "projectId": "phase7-gps-explainer",
+  "scriptRef": {
+    "scriptArtifactId": "fss-phase7-gps-explainer",
+    "scriptVersion": 2
+  },
+  "segmentId": "N19b",
+  "segmentOrdinal": 19,
+  "sourceTextHash": "9a67c54531b2983e",
+  "compiledInputHash": "9a67c54531b2983e",
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "narrationDirectionRef": "nd-7bd74d759a3c",
+  "pronunciationPassRef": "prp-f6b2f490d97d",
+  "provider": "local-kokoro",
+  "providerModel": "kokoro-v1",
+  "runtimeIdentity": {
+    "runtimeMode": "LOCAL_SYNTHESIS",
+    "modelRepo": "hexgrad/Kokoro-82M",
+    "modelHash": "UNKNOWN_NOT_AVAILABLE",
+    "languageCode": "a"
+  },
+  "voiceId": "am_michael",
+  "effectiveSpeed": 1,
+  "pacePolicyVersion": "pace-speed-1.0.0",
+  "audioRef": "assets/voice/narration-segments/tsa-123a55cc9360.wav",
+  "audioContentHash": "d3482955f84b35a2cb832aed5588f77aed3c5690a23db26fb910297a25afc9c3",
+  "durationMs": 29600,
+  "sampleRate": 24000,
+  "channels": 1,
+  "technicalQa": {
+    "decodePass": true,
+    "nonSilent": true,
+    "finiteSamples": true,
+    "peak": 20106,
+    "rms": 1276.33,
+    "clippingSamples": 0,
+    "transcript": "Here is the twist. In a simplified model with identical circular satellite orbits, ignoring relativity would make every measured distance appear too short by the same amount, up to about 11 kilometers between daily clock updates. That shared error could be absorbed into the receiver's own clock bias, so the position estimate would survive in this idealized case. GPS time would not. It could drift by 38 microseconds a day.",
+    "wer": 0.0423,
+    "missingWords": 1,
+    "substitutedWords": 2,
+    "repeatedWords": 0,
+    "hallucinatedWords": 0,
+    "criticalMismatch": false
+  },
+  "attempt": {
+    "number": 1,
+    "parentAttemptId": null,
+    "reason": "initial synthesis",
+    "selected": null
+  },
+  "issues": [],
+  "status": "READY",
+  "provenance": {
+    "createdAt": "2026-10-12T04:25:40.989Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "4f4af2f3c35028de"
+}
