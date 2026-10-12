@@ -1,0 +1,4115 @@
+{
+  "version": "1.0.0",
+  "projectId": "phase7-gps-explainer",
+  "alignmentVersion": "1.0.0",
+  "narrationTimingHash": "e5e58ee03408ed3e52b3f20955c32782a126772dc60705f4fbdec0084d33c8fc",
+  "profileRef": "en-longform-youtube@1.0.0",
+  "mode": "DIALOGUE_ONLY",
+  "events": [
+    {
+      "captionId": "cap-0001",
+      "startMs": 420,
+      "endMs": 3698,
+      "text": "Your phone can find you on Earth to within a few meters.",
+      "lines": [
+        "Your phone can find you on Earth to within",
+        "a few meters."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00001",
+        "w-00002",
+        "w-00003",
+        "w-00004",
+        "w-00005",
+        "w-00006",
+        "w-00007",
+        "w-00008",
+        "w-00009",
+        "w-00010",
+        "w-00011",
+        "w-00012"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0002",
+      "startMs": 3698,
+      "endMs": 6636,
+      "text": "Yet not one GPS satellite is tracking it.",
+      "lines": [
+        "Yet not one GPS satellite is tracking it."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00013",
+        "w-00014",
+        "w-00015",
+        "w-00016",
+        "w-00017",
+        "w-00018",
+        "w-00019",
+        "w-00020"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0003",
+      "startMs": 6636,
+      "endMs": 9020,
+      "text": "They only broadcast, like lighthouses.",
+      "lines": [
+        "They only broadcast, like lighthouses."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00021",
+        "w-00022",
+        "w-00023",
+        "w-00024",
+        "w-00025"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0004",
+      "startMs": 10705,
+      "endMs": 14823,
+      "text": "So how does a phone find itself from signals that only travel one way?",
+      "lines": [
+        "So how does a phone find itself from",
+        "signals that only travel one way?"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00026",
+        "w-00027",
+        "w-00028",
+        "w-00029",
+        "w-00030",
+        "w-00031",
+        "w-00032",
+        "w-00033",
+        "w-00034",
+        "w-00035",
+        "w-00036",
+        "w-00037",
+        "w-00038",
+        "w-00039"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0005",
+      "startMs": 14823,
+      "endMs": 20301,
+      "text": "By measuring time, so precisely that one billionth of a second is thirty",
+      "lines": [
+        "By measuring time, so precisely that one",
+        "billionth of a second is thirty"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00040",
+        "w-00041",
+        "w-00042",
+        "w-00043",
+        "w-00044",
+        "w-00045",
+        "w-00046",
+        "w-00047",
+        "w-00048",
+        "w-00049",
+        "w-00050",
+        "w-00051",
+        "w-00052"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0006",
+      "startMs": 20301,
+      "endMs": 21625,
+      "text": "centimeters of error.",
+      "lines": [
+        "centimeters of error."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00053",
+        "w-00054",
+        "w-00055"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0007",
+      "startMs": 23090,
+      "endMs": 25301,
+      "text": "And the clocks involved are strange:",
+      "lines": [
+        "And the clocks involved are strange:"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00056",
+        "w-00057",
+        "w-00058",
+        "w-00059",
+        "w-00060",
+        "w-00061"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0008",
+      "startMs": 25301,
+      "endMs": 31109,
+      "text": "without correction, a GPS satellite clock would gain about thirty-eight microseconds",
+      "lines": [
+        "without correction, a GPS satellite clock",
+        "would gain about thirty-eight microseconds"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00062",
+        "w-00063",
+        "w-00064",
+        "w-00065",
+        "w-00066",
+        "w-00067",
+        "w-00068",
+        "w-00069",
+        "w-00070",
+        "w-00071",
+        "w-00072"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0009",
+      "startMs": 31109,
+      "endMs": 33720,
+      "text": "a day compared with one on the ground.",
+      "lines": [
+        "a day compared with one on the ground."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00073",
+        "w-00074",
+        "w-00075",
+        "w-00076",
+        "w-00077",
+        "w-00078",
+        "w-00079",
+        "w-00080"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0010",
+      "startMs": 33720,
+      "endMs": 39050,
+      "text": "That is far beyond the timing accuracy GPS needs, and Einstein explains why.",
+      "lines": [
+        "That is far beyond the timing accuracy GPS",
+        "needs, and Einstein explains why."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00081",
+        "w-00082",
+        "w-00083",
+        "w-00084",
+        "w-00085",
+        "w-00086",
+        "w-00087",
+        "w-00088",
+        "w-00089",
+        "w-00090",
+        "w-00091",
+        "w-00092",
+        "w-00093"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0011",
+      "startMs": 40630,
+      "endMs": 41773,
+      "text": "First, the geometry.",
+      "lines": [
+        "First, the geometry."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00094",
+        "w-00095",
+        "w-00096"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0012",
+      "startMs": 41773,
+      "endMs": 44917,
+      "text": "Suppose you are exactly five kilometers from a tower.",
+      "lines": [
+        "Suppose you are exactly five kilometers",
+        "from a tower."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00097",
+        "w-00098",
+        "w-00099",
+        "w-00100",
+        "w-00101",
+        "w-00102",
+        "w-00103",
+        "w-00104",
+        "w-00105"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0013",
+      "startMs": 44917,
+      "endMs": 48278,
+      "text": "You could be anywhere on a circle around it.",
+      "lines": [
+        "You could be anywhere on a circle around",
+        "it."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00106",
+        "w-00107",
+        "w-00108",
+        "w-00109",
+        "w-00110",
+        "w-00111",
+        "w-00112",
+        "w-00113",
+        "w-00114"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0014",
+      "startMs": 48278,
+      "endMs": 49850,
+      "text": "One distance is not enough.",
+      "lines": [
+        "One distance is not enough."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00115",
+        "w-00116",
+        "w-00117",
+        "w-00118",
+        "w-00119"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0015",
+      "startMs": 51545,
+      "endMs": 55974,
+      "text": "On a flat map, a second tower gives a second circle, and the two cross in",
+      "lines": [
+        "On a flat map, a second tower gives a",
+        "second circle, and the two cross in"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00120",
+        "w-00121",
+        "w-00122",
+        "w-00123",
+        "w-00124",
+        "w-00125",
+        "w-00126",
+        "w-00127",
+        "w-00128",
+        "w-00129",
+        "w-00130",
+        "w-00131",
+        "w-00132",
+        "w-00133",
+        "w-00134",
+        "w-00135"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0016",
+      "startMs": 55974,
+      "endMs": 60209,
+      "text": "two places. A third circle leaves just one spot where all three meet.",
+      "lines": [
+        "two places. A third circle leaves just one",
+        "spot where all three meet."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00136",
+        "w-00137",
+        "w-00138",
+        "w-00139",
+        "w-00140",
+        "w-00141",
+        "w-00142",
+        "w-00143",
+        "w-00144",
+        "w-00145",
+        "w-00146",
+        "w-00147",
+        "w-00148"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0018",
+      "startMs": 60209,
+      "endMs": 62123,
+      "text": "Positioning from three",
+      "lines": [
+        "Positioning from three"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00149",
+        "w-00150",
+        "w-00151"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0019",
+      "startMs": 62123,
+      "endMs": 64345,
+      "text": "distances: trilateration.",
+      "lines": [
+        "distances: trilateration."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00152",
+        "w-00153"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0020",
+      "startMs": 65945,
+      "endMs": 69794,
+      "text": "The real world has three dimensions, so each distance is a sphere.",
+      "lines": [
+        "The real world has three dimensions, so",
+        "each distance is a sphere."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00154",
+        "w-00155",
+        "w-00156",
+        "w-00157",
+        "w-00158",
+        "w-00159",
+        "w-00160",
+        "w-00161",
+        "w-00162",
+        "w-00163",
+        "w-00164",
+        "w-00165"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0021",
+      "startMs": 69794,
+      "endMs": 74341,
+      "text": "Three spheres can still meet at two points, so a receiver needs more",
+      "lines": [
+        "Three spheres can still meet at two",
+        "points, so a receiver needs more"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00166",
+        "w-00167",
+        "w-00168",
+        "w-00169",
+        "w-00170",
+        "w-00171",
+        "w-00172",
+        "w-00173",
+        "w-00174",
+        "w-00175",
+        "w-00176",
+        "w-00177",
+        "w-00178"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0022",
+      "startMs": 74341,
+      "endMs": 75718,
+      "text": "measurements than that.",
+      "lines": [
+        "measurements than that."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00179",
+        "w-00180",
+        "w-00181"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0023",
+      "startMs": 75718,
+      "endMs": 79805,
+      "text": "One extra measurement turns out to matter for a surprising reason.",
+      "lines": [
+        "One extra measurement turns out to matter",
+        "for a surprising reason."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00182",
+        "w-00183",
+        "w-00184",
+        "w-00185",
+        "w-00186",
+        "w-00187",
+        "w-00188",
+        "w-00189",
+        "w-00190",
+        "w-00191",
+        "w-00192"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0024",
+      "startMs": 79889,
+      "endMs": 84866,
+      "text": "All of this assumes the towers know where they are.",
+      "lines": [
+        "All of this assumes the towers know where",
+        "they are."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00193",
+        "w-00194",
+        "w-00195",
+        "w-00196",
+        "w-00197",
+        "w-00198",
+        "w-00199",
+        "w-00200",
+        "w-00201",
+        "w-00202"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0025",
+      "startMs": 84866,
+      "endMs": 90358,
+      "text": "For GPS, monitor stations track every satellite and work out its exact orbit and",
+      "lines": [
+        "For GPS, monitor stations track every",
+        "satellite and work out its exact orbit and"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00203",
+        "w-00204",
+        "w-00205",
+        "w-00206",
+        "w-00207",
+        "w-00208",
+        "w-00209",
+        "w-00210",
+        "w-00211",
+        "w-00212",
+        "w-00213",
+        "w-00214",
+        "w-00215",
+        "w-00216"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0026",
+      "startMs": 90358,
+      "endMs": 91657,
+      "text": "clock errors.",
+      "lines": [
+        "clock errors."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00217",
+        "w-00218"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0027",
+      "startMs": 91657,
+      "endMs": 96891,
+      "text": "Ground antennas then upload fresh data, about every two hours under normal",
+      "lines": [
+        "Ground antennas then upload fresh data,",
+        "about every two hours under normal"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00219",
+        "w-00220",
+        "w-00221",
+        "w-00222",
+        "w-00223",
+        "w-00224",
+        "w-00225",
+        "w-00226",
+        "w-00227",
+        "w-00228",
+        "w-00229",
+        "w-00230"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0028",
+      "startMs": 96891,
+      "endMs": 100595,
+      "text": "conditions, and the satellite rebroadcasts it to users.",
+      "lines": [
+        "conditions, and the satellite rebroadcasts",
+        "it to users."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00231",
+        "w-00232",
+        "w-00233",
+        "w-00234",
+        "w-00235",
+        "w-00236",
+        "w-00237",
+        "w-00238"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0029",
+      "startMs": 102220,
+      "endMs": 107102,
+      "text": "The satellites orbit about twenty thousand two hundred kilometers up, roughly three",
+      "lines": [
+        "The satellites orbit about twenty thousand",
+        "two hundred kilometers up, roughly three"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00239",
+        "w-00240",
+        "w-00241",
+        "w-00242",
+        "w-00243",
+        "w-00244",
+        "w-00245",
+        "w-00246",
+        "w-00247",
+        "w-00248",
+        "w-00249",
+        "w-00250"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0030",
+      "startMs": 107102,
+      "endMs": 112460,
+      "text": "Earth radii above your head, moving about fourteen thousand kilometers an hour.",
+      "lines": [
+        "Earth radii above your head, moving about",
+        "fourteen thousand kilometers an hour."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00251",
+        "w-00252",
+        "w-00253",
+        "w-00254",
+        "w-00255",
+        "w-00256",
+        "w-00257",
+        "w-00258",
+        "w-00259",
+        "w-00260",
+        "w-00261",
+        "w-00262"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0031",
+      "startMs": 112460,
+      "endMs": 114660,
+      "text": "Each one circles the planet twice a day.",
+      "lines": [
+        "Each one circles the planet twice a day."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00263",
+        "w-00264",
+        "w-00265",
+        "w-00266",
+        "w-00267",
+        "w-00268",
+        "w-00269",
+        "w-00270"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0032",
+      "startMs": 116645,
+      "endMs": 120978,
+      "text": "There are at least twenty-four of them, in six orbital planes tilted fifty-five",
+      "lines": [
+        "There are at least twenty-four of them, in",
+        "six orbital planes tilted fifty-five"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00271",
+        "w-00272",
+        "w-00273",
+        "w-00274",
+        "w-00275",
+        "w-00276",
+        "w-00277",
+        "w-00278",
+        "w-00279",
+        "w-00280",
+        "w-00281",
+        "w-00282",
+        "w-00283"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0033",
+      "startMs": 120978,
+      "endMs": 122264,
+      "text": "degrees to the equator.",
+      "lines": [
+        "degrees to the equator."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00284",
+        "w-00285",
+        "w-00286",
+        "w-00287"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0034",
+      "startMs": 122264,
+      "endMs": 127860,
+      "text": "That arrangement lets you see at least four satellites from virtually any point",
+      "lines": [
+        "That arrangement lets you see at least",
+        "four satellites from virtually any point"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00288",
+        "w-00289",
+        "w-00290",
+        "w-00291",
+        "w-00292",
+        "w-00293",
+        "w-00294",
+        "w-00295",
+        "w-00296",
+        "w-00297",
+        "w-00298",
+        "w-00299",
+        "w-00300"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0035",
+      "startMs": 127860,
+      "endMs": 132458,
+      "text": "on the planet. Each satellite broadcasts a message:",
+      "lines": [
+        "on the planet. Each satellite broadcasts a",
+        "message:"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00301",
+        "w-00302",
+        "w-00303",
+        "w-00304",
+        "w-00305",
+        "w-00306",
+        "w-00307",
+        "w-00308"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0037",
+      "startMs": 132458,
+      "endMs": 137170,
+      "text": "where it is, what time its clock says, how healthy it is, and even a model of",
+      "lines": [
+        "where it is, what time its clock says, how",
+        "healthy it is, and even a model of"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00309",
+        "w-00310",
+        "w-00311",
+        "w-00312",
+        "w-00313",
+        "w-00314",
+        "w-00315",
+        "w-00316",
+        "w-00317",
+        "w-00318",
+        "w-00319",
+        "w-00320",
+        "w-00321",
+        "w-00322",
+        "w-00323",
+        "w-00324",
+        "w-00325"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0038",
+      "startMs": 137170,
+      "endMs": 138127,
+      "text": "the ionosphere.",
+      "lines": [
+        "the ionosphere."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00326",
+        "w-00327"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0039",
+      "startMs": 138127,
+      "endMs": 140195,
+      "text": "Your phone only has to listen.",
+      "lines": [
+        "Your phone only has to listen."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00328",
+        "w-00329",
+        "w-00330",
+        "w-00331",
+        "w-00332",
+        "w-00333"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0040",
+      "startMs": 141970,
+      "endMs": 146805,
+      "text": "Radio waves travel at the speed of light, almost three hundred thousand kilometers",
+      "lines": [
+        "Radio waves travel at the speed of light,",
+        "almost three hundred thousand kilometers"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00334",
+        "w-00335",
+        "w-00336",
+        "w-00337",
+        "w-00338",
+        "w-00339",
+        "w-00340",
+        "w-00341",
+        "w-00342",
+        "w-00343",
+        "w-00344",
+        "w-00345",
+        "w-00346"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0041",
+      "startMs": 146805,
+      "endMs": 149938,
+      "text": "a second. Distance is then speed times travel time.",
+      "lines": [
+        "a second. Distance is then speed times",
+        "travel time."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00347",
+        "w-00348",
+        "w-00349",
+        "w-00350",
+        "w-00351",
+        "w-00352",
+        "w-00353",
+        "w-00354",
+        "w-00355"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0043",
+      "startMs": 149938,
+      "endMs": 153530,
+      "text": "Measure the time, and you know the distance.",
+      "lines": [
+        "Measure the time, and you know the",
+        "distance."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00356",
+        "w-00357",
+        "w-00358",
+        "w-00359",
+        "w-00360",
+        "w-00361",
+        "w-00362",
+        "w-00363"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0044",
+      "startMs": 154855,
+      "endMs": 159591,
+      "text": "From straight overhead, the signal takes about seven hundredths of a second.",
+      "lines": [
+        "From straight overhead, the signal takes",
+        "about seven hundredths of a second."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00364",
+        "w-00365",
+        "w-00366",
+        "w-00367",
+        "w-00368",
+        "w-00369",
+        "w-00370",
+        "w-00371",
+        "w-00372",
+        "w-00373",
+        "w-00374",
+        "w-00375"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0045",
+      "startMs": 159591,
+      "endMs": 162940,
+      "text": "Lower in the sky, up to about nine hundredths.",
+      "lines": [
+        "Lower in the sky, up to about nine",
+        "hundredths."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00376",
+        "w-00377",
+        "w-00378",
+        "w-00379",
+        "w-00380",
+        "w-00381",
+        "w-00382",
+        "w-00383",
+        "w-00384"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0046",
+      "startMs": 162940,
+      "endMs": 168007,
+      "text": "Short, but a clock that is off by just one microsecond moves the answer by three",
+      "lines": [
+        "Short, but a clock that is off by just one",
+        "microsecond moves the answer by three"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00385",
+        "w-00386",
+        "w-00387",
+        "w-00388",
+        "w-00389",
+        "w-00390",
+        "w-00391",
+        "w-00392",
+        "w-00393",
+        "w-00394",
+        "w-00395",
+        "w-00396",
+        "w-00397",
+        "w-00398",
+        "w-00399",
+        "w-00400"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0047",
+      "startMs": 168007,
+      "endMs": 168935,
+      "text": "hundred meters.",
+      "lines": [
+        "hundred meters."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00401",
+        "w-00402"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0048",
+      "startMs": 170600,
+      "endMs": 174977,
+      "text": "The satellites carry atomic clocks that the ground system keeps checking.",
+      "lines": [
+        "The satellites carry atomic clocks that",
+        "the ground system keeps checking."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00403",
+        "w-00404",
+        "w-00405",
+        "w-00406",
+        "w-00407",
+        "w-00408",
+        "w-00409",
+        "w-00410",
+        "w-00411",
+        "w-00412",
+        "w-00413"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0049",
+      "startMs": 174977,
+      "endMs": 180115,
+      "text": "Your receiver uses an inexpensive clock that drifts, so it has to cope with its",
+      "lines": [
+        "Your receiver uses an inexpensive clock",
+        "that drifts, so it has to cope with its"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00414",
+        "w-00415",
+        "w-00416",
+        "w-00417",
+        "w-00418",
+        "w-00419",
+        "w-00420",
+        "w-00421",
+        "w-00422",
+        "w-00423",
+        "w-00424",
+        "w-00425",
+        "w-00426",
+        "w-00427",
+        "w-00428"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0050",
+      "startMs": 180115,
+      "endMs": 183344,
+      "text": "own error. Here is the trick.",
+      "lines": [
+        "own error. Here is the trick."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00429",
+        "w-00430",
+        "w-00431",
+        "w-00432",
+        "w-00433",
+        "w-00434"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0052",
+      "startMs": 183344,
+      "endMs": 187534,
+      "text": "Suppose every distance comes out too long by the same amount.",
+      "lines": [
+        "Suppose every distance comes out too long",
+        "by the same amount."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00435",
+        "w-00436",
+        "w-00437",
+        "w-00438",
+        "w-00439",
+        "w-00440",
+        "w-00441",
+        "w-00442",
+        "w-00443",
+        "w-00444",
+        "w-00445"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0053",
+      "startMs": 187534,
+      "endMs": 191479,
+      "text": "On a flat map, the three circles no longer meet at one point.",
+      "lines": [
+        "On a flat map, the three circles no longer",
+        "meet at one point."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00446",
+        "w-00447",
+        "w-00448",
+        "w-00449",
+        "w-00450",
+        "w-00451",
+        "w-00452",
+        "w-00453",
+        "w-00454",
+        "w-00455",
+        "w-00456",
+        "w-00457",
+        "w-00458"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0054",
+      "startMs": 191479,
+      "endMs": 196620,
+      "text": "Shrink them all equally until they do, and that amount is the clock error.",
+      "lines": [
+        "Shrink them all equally until they do, and",
+        "that amount is the clock error."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00459",
+        "w-00460",
+        "w-00461",
+        "w-00462",
+        "w-00463",
+        "w-00464",
+        "w-00465",
+        "w-00466",
+        "w-00467",
+        "w-00468",
+        "w-00469",
+        "w-00470",
+        "w-00471",
+        "w-00472"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0055",
+      "startMs": 198070,
+      "endMs": 200877,
+      "text": "In three dimensions, that makes four unknowns:",
+      "lines": [
+        "In three dimensions, that makes four",
+        "unknowns:"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00473",
+        "w-00474",
+        "w-00475",
+        "w-00476",
+        "w-00477",
+        "w-00478",
+        "w-00479"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0056",
+      "startMs": 200877,
+      "endMs": 204825,
+      "text": "east-west, north-south, height, and the clock error.",
+      "lines": [
+        "east-west, north-south, height, and the",
+        "clock error."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00480",
+        "w-00481",
+        "w-00482",
+        "w-00483",
+        "w-00484",
+        "w-00485",
+        "w-00486"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0057",
+      "startMs": 204825,
+      "endMs": 209458,
+      "text": "The receiver therefore uses at least four satellites and solves for all of them",
+      "lines": [
+        "The receiver therefore uses at least four",
+        "satellites and solves for all of them"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00487",
+        "w-00488",
+        "w-00489",
+        "w-00490",
+        "w-00491",
+        "w-00492",
+        "w-00493",
+        "w-00494",
+        "w-00495",
+        "w-00496",
+        "w-00497",
+        "w-00498",
+        "w-00499",
+        "w-00500"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0058",
+      "startMs": 209458,
+      "endMs": 214150,
+      "text": "at once. A distance with this clock error baked in is called a pseudorange.",
+      "lines": [
+        "at once. A distance with this clock error",
+        "baked in is called a pseudorange."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00501",
+        "w-00502",
+        "w-00503",
+        "w-00504",
+        "w-00505",
+        "w-00506",
+        "w-00507",
+        "w-00508",
+        "w-00509",
+        "w-00510",
+        "w-00511",
+        "w-00512",
+        "w-00513",
+        "w-00514"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0060",
+      "startMs": 215795,
+      "endMs": 220645,
+      "text": "As a bonus, the receiver now knows the time, straight from the atomic clocks on",
+      "lines": [
+        "As a bonus, the receiver now knows the",
+        "time, straight from the atomic clocks on"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00515",
+        "w-00516",
+        "w-00517",
+        "w-00518",
+        "w-00519",
+        "w-00520",
+        "w-00521",
+        "w-00522",
+        "w-00523",
+        "w-00524",
+        "w-00525",
+        "w-00526",
+        "w-00527",
+        "w-00528",
+        "w-00529"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0061",
+      "startMs": 220645,
+      "endMs": 221896,
+      "text": "the satellites.",
+      "lines": [
+        "the satellites."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00530",
+        "w-00531"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0062",
+      "startMs": 221896,
+      "endMs": 226986,
+      "text": "That timing synchronizes communications systems and power grids, and lets",
+      "lines": [
+        "That timing synchronizes communications",
+        "systems and power grids, and lets"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00532",
+        "w-00533",
+        "w-00534",
+        "w-00535",
+        "w-00536",
+        "w-00537",
+        "w-00538",
+        "w-00539",
+        "w-00540",
+        "w-00541"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0063",
+      "startMs": 226986,
+      "endMs": 230284,
+      "text": "financial transactions carry traceable time tags.",
+      "lines": [
+        "financial transactions carry traceable",
+        "time tags."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00542",
+        "w-00543",
+        "w-00544",
+        "w-00545",
+        "w-00546",
+        "w-00547"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0064",
+      "startMs": 230284,
+      "endMs": 232575,
+      "text": "Hollywood even uses it in movie slates.",
+      "lines": [
+        "Hollywood even uses it in movie slates."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00548",
+        "w-00549",
+        "w-00550",
+        "w-00551",
+        "w-00552",
+        "w-00553",
+        "w-00554"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0065",
+      "startMs": 234325,
+      "endMs": 238457,
+      "text": "Now those atomic clocks have a problem, and it comes from Einstein.",
+      "lines": [
+        "Now those atomic clocks have a problem,",
+        "and it comes from Einstein."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00555",
+        "w-00556",
+        "w-00557",
+        "w-00558",
+        "w-00559",
+        "w-00560",
+        "w-00561",
+        "w-00562",
+        "w-00563",
+        "w-00564",
+        "w-00565",
+        "w-00566"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0066",
+      "startMs": 238457,
+      "endMs": 242084,
+      "text": "Special relativity says moving clocks tick slower.",
+      "lines": [
+        "Special relativity says moving clocks tick",
+        "slower."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00567",
+        "w-00568",
+        "w-00569",
+        "w-00570",
+        "w-00571",
+        "w-00572",
+        "w-00573"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0067",
+      "startMs": 242084,
+      "endMs": 247788,
+      "text": "At fourteen thousand kilometers an hour, satellite clocks fall behind ground clocks",
+      "lines": [
+        "At fourteen thousand kilometers an hour,",
+        "satellite clocks fall behind ground clocks"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00574",
+        "w-00575",
+        "w-00576",
+        "w-00577",
+        "w-00578",
+        "w-00579",
+        "w-00580",
+        "w-00581",
+        "w-00582",
+        "w-00583",
+        "w-00584",
+        "w-00585"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0068",
+      "startMs": 247788,
+      "endMs": 249785,
+      "text": "by about seven microseconds a day.",
+      "lines": [
+        "by about seven microseconds a day."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00586",
+        "w-00587",
+        "w-00588",
+        "w-00589",
+        "w-00590",
+        "w-00591"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0069",
+      "startMs": 251445,
+      "endMs": 255476,
+      "text": "General relativity says clocks tick faster where gravity is weaker.",
+      "lines": [
+        "General relativity says clocks tick faster",
+        "where gravity is weaker."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00592",
+        "w-00593",
+        "w-00594",
+        "w-00595",
+        "w-00596",
+        "w-00597",
+        "w-00598",
+        "w-00599",
+        "w-00600",
+        "w-00601"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0070",
+      "startMs": 255476,
+      "endMs": 259299,
+      "text": "Up there, that adds about forty-five microseconds a day.",
+      "lines": [
+        "Up there, that adds about forty-five",
+        "microseconds a day."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00602",
+        "w-00603",
+        "w-00604",
+        "w-00605",
+        "w-00606",
+        "w-00607",
+        "w-00608",
+        "w-00609",
+        "w-00610"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0071",
+      "startMs": 259299,
+      "endMs": 264885,
+      "text": "Combined with the effect of motion, an uncorrected satellite clock would run",
+      "lines": [
+        "Combined with the effect of motion, an",
+        "uncorrected satellite clock would run"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00611",
+        "w-00612",
+        "w-00613",
+        "w-00614",
+        "w-00615",
+        "w-00616",
+        "w-00617",
+        "w-00618",
+        "w-00619",
+        "w-00620",
+        "w-00621",
+        "w-00622"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0072",
+      "startMs": 264885,
+      "endMs": 268845,
+      "text": "about thirty-eight microseconds a day faster than one on the ground.",
+      "lines": [
+        "about thirty-eight microseconds a day",
+        "faster than one on the ground."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00623",
+        "w-00624",
+        "w-00625",
+        "w-00626",
+        "w-00627",
+        "w-00628",
+        "w-00629",
+        "w-00630",
+        "w-00631",
+        "w-00632",
+        "w-00633"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0073",
+      "startMs": 270300,
+      "endMs": 273431,
+      "text": "About thirty-eight microseconds a day sounds tiny.",
+      "lines": [
+        "About thirty-eight microseconds a day",
+        "sounds tiny."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00634",
+        "w-00635",
+        "w-00636",
+        "w-00637",
+        "w-00638",
+        "w-00639",
+        "w-00640"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0074",
+      "startMs": 273431,
+      "endMs": 278763,
+      "text": "But a ranging error of three meters takes only ten nanoseconds of clock error.",
+      "lines": [
+        "But a ranging error of three meters takes",
+        "only ten nanoseconds of clock error."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00641",
+        "w-00642",
+        "w-00643",
+        "w-00644",
+        "w-00645",
+        "w-00646",
+        "w-00647",
+        "w-00648",
+        "w-00649",
+        "w-00650",
+        "w-00651",
+        "w-00652",
+        "w-00653",
+        "w-00654"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0075",
+      "startMs": 278763,
+      "endMs": 281820,
+      "text": "The offset is thousands of times too big to ignore.",
+      "lines": [
+        "The offset is thousands of times too big",
+        "to ignore."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00655",
+        "w-00656",
+        "w-00657",
+        "w-00658",
+        "w-00659",
+        "w-00660",
+        "w-00661",
+        "w-00662",
+        "w-00663",
+        "w-00664"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0076",
+      "startMs": 283745,
+      "endMs": 284720,
+      "text": "Here is the twist.",
+      "lines": [
+        "Here is the twist."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00665",
+        "w-00666",
+        "w-00667",
+        "w-00668"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0077",
+      "startMs": 284720,
+      "endMs": 289640,
+      "text": "In a simplified model with identical circular satellite orbits, ignoring",
+      "lines": [
+        "In a simplified model with identical",
+        "circular satellite orbits, ignoring"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00669",
+        "w-00670",
+        "w-00671",
+        "w-00672",
+        "w-00673",
+        "w-00674",
+        "w-00675",
+        "w-00676",
+        "w-00677",
+        "w-00678"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0078",
+      "startMs": 289640,
+      "endMs": 294409,
+      "text": "relativity would make every measured distance appear too short by the same",
+      "lines": [
+        "relativity would make every measured",
+        "distance appear too short by the same"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00679",
+        "w-00680",
+        "w-00681",
+        "w-00682",
+        "w-00683",
+        "w-00684",
+        "w-00685",
+        "w-00686",
+        "w-00687",
+        "w-00688",
+        "w-00689",
+        "w-00690"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0079",
+      "startMs": 294409,
+      "endMs": 298660,
+      "text": "amount, up to about eleven kilometers between daily clock updates.",
+      "lines": [
+        "amount, up to about eleven kilometers",
+        "between daily clock updates."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00691",
+        "w-00692",
+        "w-00693",
+        "w-00694",
+        "w-00695",
+        "w-00696",
+        "w-00697",
+        "w-00698",
+        "w-00699",
+        "w-00700"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0080",
+      "startMs": 298660,
+      "endMs": 303629,
+      "text": "That shared error could be absorbed into the receiver's own clock bias, so the",
+      "lines": [
+        "That shared error could be absorbed into",
+        "the receiver's own clock bias, so the"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00701",
+        "w-00702",
+        "w-00703",
+        "w-00704",
+        "w-00705",
+        "w-00706",
+        "w-00707",
+        "w-00708",
+        "w-00709",
+        "w-00710",
+        "w-00711",
+        "w-00712",
+        "w-00713",
+        "w-00714"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0081",
+      "startMs": 303629,
+      "endMs": 307264,
+      "text": "position estimate would survive in this idealized case.",
+      "lines": [
+        "position estimate would survive in this",
+        "idealized case."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00715",
+        "w-00716",
+        "w-00717",
+        "w-00718",
+        "w-00719",
+        "w-00720",
+        "w-00721",
+        "w-00722"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0082",
+      "startMs": 307264,
+      "endMs": 308309,
+      "text": "GPS time would not:",
+      "lines": [
+        "GPS time would not:"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00723",
+        "w-00724",
+        "w-00725",
+        "w-00726"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0083",
+      "startMs": 308309,
+      "endMs": 311765,
+      "text": "it could drift by thirty-eight microseconds a day.",
+      "lines": [
+        "it could drift by thirty-eight",
+        "microseconds a day."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00727",
+        "w-00728",
+        "w-00729",
+        "w-00730",
+        "w-00731",
+        "w-00732",
+        "w-00733",
+        "w-00734"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0084",
+      "startMs": 313575,
+      "endMs": 318589,
+      "text": "Before launch, each satellite clock is tuned to run slightly slow, by about four",
+      "lines": [
+        "Before launch, each satellite clock is",
+        "tuned to run slightly slow, by about four"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00735",
+        "w-00736",
+        "w-00737",
+        "w-00738",
+        "w-00739",
+        "w-00740",
+        "w-00741",
+        "w-00742",
+        "w-00743",
+        "w-00744",
+        "w-00745",
+        "w-00746",
+        "w-00747",
+        "w-00748"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0085",
+      "startMs": 318589,
+      "endMs": 320641,
+      "text": "and a half parts in ten billion.",
+      "lines": [
+        "and a half parts in ten billion."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00749",
+        "w-00750",
+        "w-00751",
+        "w-00752",
+        "w-00753",
+        "w-00754",
+        "w-00755"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0086",
+      "startMs": 320641,
+      "endMs": 324035,
+      "text": "Once in orbit, relativity cancels that offset.",
+      "lines": [
+        "Once in orbit, relativity cancels that",
+        "offset."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00756",
+        "w-00757",
+        "w-00758",
+        "w-00759",
+        "w-00760",
+        "w-00761",
+        "w-00762"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0087",
+      "startMs": 325695,
+      "endMs": 330233,
+      "text": "Orbits are not perfect circles, so a smaller relativistic error is left over,",
+      "lines": [
+        "Orbits are not perfect circles, so a",
+        "smaller relativistic error is left over,"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00763",
+        "w-00764",
+        "w-00765",
+        "w-00766",
+        "w-00767",
+        "w-00768",
+        "w-00769",
+        "w-00770",
+        "w-00771",
+        "w-00772",
+        "w-00773",
+        "w-00774",
+        "w-00775"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0088",
+      "startMs": 330233,
+      "endMs": 333607,
+      "text": "and it differs from satellite to satellite.",
+      "lines": [
+        "and it differs from satellite to",
+        "satellite."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00776",
+        "w-00777",
+        "w-00778",
+        "w-00779",
+        "w-00780",
+        "w-00781",
+        "w-00782"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0089",
+      "startMs": 333607,
+      "endMs": 338905,
+      "text": "For a slightly oval orbit it can reach about forty-five nanoseconds, roughly",
+      "lines": [
+        "For a slightly oval orbit it can reach",
+        "about forty-five nanoseconds, roughly"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00783",
+        "w-00784",
+        "w-00785",
+        "w-00786",
+        "w-00787",
+        "w-00788",
+        "w-00789",
+        "w-00790",
+        "w-00791",
+        "w-00792",
+        "w-00793",
+        "w-00794"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0090",
+      "startMs": 338905,
+      "endMs": 342855,
+      "text": "fifteen meters of range error, and receivers correct for it.",
+      "lines": [
+        "fifteen meters of range error, and",
+        "receivers correct for it."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00795",
+        "w-00796",
+        "w-00797",
+        "w-00798",
+        "w-00799",
+        "w-00800",
+        "w-00801",
+        "w-00802",
+        "w-00803",
+        "w-00804"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0091",
+      "startMs": 344500,
+      "endMs": 346802,
+      "text": "How does a receiver time a signal at all?",
+      "lines": [
+        "How does a receiver time a signal at all?"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00805",
+        "w-00806",
+        "w-00807",
+        "w-00808",
+        "w-00809",
+        "w-00810",
+        "w-00811",
+        "w-00812",
+        "w-00813"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0092",
+      "startMs": 346802,
+      "endMs": 348888,
+      "text": "Every satellite sends its own code:",
+      "lines": [
+        "Every satellite sends its own code:"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00814",
+        "w-00815",
+        "w-00816",
+        "w-00817",
+        "w-00818",
+        "w-00819"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0093",
+      "startMs": 348888,
+      "endMs": 354420,
+      "text": "a pattern of one thousand twenty-three pulses, repeating every millisecond.",
+      "lines": [
+        "a pattern of one thousand twenty-three",
+        "pulses, repeating every millisecond."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00820",
+        "w-00821",
+        "w-00822",
+        "w-00823",
+        "w-00824",
+        "w-00825",
+        "w-00826",
+        "w-00827",
+        "w-00828",
+        "w-00829"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0094",
+      "startMs": 356095,
+      "endMs": 360134,
+      "text": "The receiver makes the same pattern and slides it until the two match.",
+      "lines": [
+        "The receiver makes the same pattern and",
+        "slides it until the two match."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00830",
+        "w-00831",
+        "w-00832",
+        "w-00833",
+        "w-00834",
+        "w-00835",
+        "w-00836",
+        "w-00837",
+        "w-00838",
+        "w-00839",
+        "w-00840",
+        "w-00841",
+        "w-00842"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0095",
+      "startMs": 360134,
+      "endMs": 364642,
+      "text": "That shift is how late the signal arrived, by the receiver's own clock.",
+      "lines": [
+        "That shift is how late the signal arrived,",
+        "by the receiver's own clock."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00843",
+        "w-00844",
+        "w-00845",
+        "w-00846",
+        "w-00847",
+        "w-00848",
+        "w-00849",
+        "w-00850",
+        "w-00851",
+        "w-00852",
+        "w-00853",
+        "w-00854",
+        "w-00855"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0096",
+      "startMs": 364642,
+      "endMs": 367615,
+      "text": "That is why the result is called a pseudorange.",
+      "lines": [
+        "That is why the result is called a",
+        "pseudorange."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00856",
+        "w-00857",
+        "w-00858",
+        "w-00859",
+        "w-00860",
+        "w-00861",
+        "w-00862",
+        "w-00863",
+        "w-00864"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0097",
+      "startMs": 369305,
+      "endMs": 374328,
+      "text": "The pattern repeats every millisecond, about three hundred kilometers of signal,",
+      "lines": [
+        "The pattern repeats every millisecond,",
+        "about three hundred kilometers of signal,"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00865",
+        "w-00866",
+        "w-00867",
+        "w-00868",
+        "w-00869",
+        "w-00870",
+        "w-00871",
+        "w-00872",
+        "w-00873",
+        "w-00874",
+        "w-00875"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0098",
+      "startMs": 374328,
+      "endMs": 378296,
+      "text": "so the code alone fixes the delay only within one millisecond.",
+      "lines": [
+        "so the code alone fixes the delay only",
+        "within one millisecond."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00876",
+        "w-00877",
+        "w-00878",
+        "w-00879",
+        "w-00880",
+        "w-00881",
+        "w-00882",
+        "w-00883",
+        "w-00884",
+        "w-00885",
+        "w-00886"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0099",
+      "startMs": 378296,
+      "endMs": 380745,
+      "text": "The message supplies the rest:",
+      "lines": [
+        "The message supplies the rest:"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00887",
+        "w-00888",
+        "w-00889",
+        "w-00890",
+        "w-00891"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0100",
+      "startMs": 380745,
+      "endMs": 385761,
+      "text": "at fifty bits a second, each six-second block carries a time-of-week word near its",
+      "lines": [
+        "at fifty bits a second, each six-second",
+        "block carries a time-of-week word near its"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00892",
+        "w-00893",
+        "w-00894",
+        "w-00895",
+        "w-00896",
+        "w-00897",
+        "w-00898",
+        "w-00899",
+        "w-00900",
+        "w-00901",
+        "w-00902",
+        "w-00903",
+        "w-00904",
+        "w-00905"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0101",
+      "startMs": 385761,
+      "endMs": 389985,
+      "text": "start, so the receiver can work out which millisecond it is hearing.",
+      "lines": [
+        "start, so the receiver can work out which",
+        "millisecond it is hearing."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00906",
+        "w-00907",
+        "w-00908",
+        "w-00909",
+        "w-00910",
+        "w-00911",
+        "w-00912",
+        "w-00913",
+        "w-00914",
+        "w-00915",
+        "w-00916",
+        "w-00917"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0102",
+      "startMs": 391675,
+      "endMs": 396159,
+      "text": "Between the satellite and your phone, the signal crosses the ionosphere and the",
+      "lines": [
+        "Between the satellite and your phone, the",
+        "signal crosses the ionosphere and the"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00918",
+        "w-00919",
+        "w-00920",
+        "w-00921",
+        "w-00922",
+        "w-00923",
+        "w-00924",
+        "w-00925",
+        "w-00926",
+        "w-00927",
+        "w-00928",
+        "w-00929",
+        "w-00930"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0103",
+      "startMs": 396159,
+      "endMs": 398625,
+      "text": "troposphere, and both add delay.",
+      "lines": [
+        "troposphere, and both add delay."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00931",
+        "w-00932",
+        "w-00933",
+        "w-00934",
+        "w-00935"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0104",
+      "startMs": 398625,
+      "endMs": 403809,
+      "text": "Dry air alone adds about two point three meters straight overhead, and about ten",
+      "lines": [
+        "Dry air alone adds about two point three",
+        "meters straight overhead, and about ten"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00936",
+        "w-00937",
+        "w-00938",
+        "w-00939",
+        "w-00940",
+        "w-00941",
+        "w-00942",
+        "w-00943",
+        "w-00944",
+        "w-00945",
+        "w-00946",
+        "w-00947",
+        "w-00948",
+        "w-00949"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0105",
+      "startMs": 403809,
+      "endMs": 406419,
+      "text": "meters for satellites low on the horizon.",
+      "lines": [
+        "meters for satellites low on the horizon."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00950",
+        "w-00951",
+        "w-00952",
+        "w-00953",
+        "w-00954",
+        "w-00955",
+        "w-00956"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0106",
+      "startMs": 406419,
+      "endMs": 411379,
+      "text": "Water vapor adds only tens of centimeters, but it changes quickly and is hard",
+      "lines": [
+        "Water vapor adds only tens of centimeters,",
+        "but it changes quickly and is hard"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00957",
+        "w-00958",
+        "w-00959",
+        "w-00960",
+        "w-00961",
+        "w-00962",
+        "w-00963",
+        "w-00964",
+        "w-00965",
+        "w-00966",
+        "w-00967",
+        "w-00968",
+        "w-00969",
+        "w-00970"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0107",
+      "startMs": 411379,
+      "endMs": 417716,
+      "text": "to model. The ionosphere changes with the time of day and with solar activity.",
+      "lines": [
+        "to model. The ionosphere changes with the",
+        "time of day and with solar activity."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00971",
+        "w-00972",
+        "w-00973",
+        "w-00974",
+        "w-00975",
+        "w-00976",
+        "w-00977",
+        "w-00978",
+        "w-00979",
+        "w-00980",
+        "w-00981",
+        "w-00982",
+        "w-00983",
+        "w-00984"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0109",
+      "startMs": 417716,
+      "endMs": 422077,
+      "text": "It delays lower frequencies more, in proportion to one over the",
+      "lines": [
+        "It delays lower frequencies more, in",
+        "proportion to one over the"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00985",
+        "w-00986",
+        "w-00987",
+        "w-00988",
+        "w-00989",
+        "w-00990",
+        "w-00991",
+        "w-00992",
+        "w-00993",
+        "w-00994",
+        "w-00995"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0110",
+      "startMs": 422077,
+      "endMs": 423580,
+      "text": "frequency squared.",
+      "lines": [
+        "frequency squared."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00996",
+        "w-00997"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0111",
+      "startMs": 423580,
+      "endMs": 429024,
+      "text": "A receiver listening on two frequencies can compare the delays and correct for it.",
+      "lines": [
+        "A receiver listening on two frequencies",
+        "can compare the delays and correct for it."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-00998",
+        "w-00999",
+        "w-01000",
+        "w-01001",
+        "w-01002",
+        "w-01003",
+        "w-01004",
+        "w-01005",
+        "w-01006",
+        "w-01007",
+        "w-01008",
+        "w-01009",
+        "w-01010",
+        "w-01011"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0112",
+      "startMs": 429024,
+      "endMs": 433465,
+      "text": "With the newer civil signal L2C, civilian receivers can do that.",
+      "lines": [
+        "With the newer civil signal L2C, civilian",
+        "receivers can do that."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01012",
+        "w-01013",
+        "w-01014",
+        "w-01015",
+        "w-01016",
+        "w-01017",
+        "w-01018",
+        "w-01019",
+        "w-01020",
+        "w-01021",
+        "w-01022"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0113",
+      "startMs": 435170,
+      "endMs": 437913,
+      "text": "In cities, signals also bounce off buildings.",
+      "lines": [
+        "In cities, signals also bounce off",
+        "buildings."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01023",
+        "w-01024",
+        "w-01025",
+        "w-01026",
+        "w-01027",
+        "w-01028",
+        "w-01029"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0114",
+      "startMs": 437913,
+      "endMs": 443547,
+      "text": "Engineers call it multipath, and it makes a signal look as if it traveled farther.",
+      "lines": [
+        "Engineers call it multipath, and it makes",
+        "a signal look as if it traveled farther."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01030",
+        "w-01031",
+        "w-01032",
+        "w-01033",
+        "w-01034",
+        "w-01035",
+        "w-01036",
+        "w-01037",
+        "w-01038",
+        "w-01039",
+        "w-01040",
+        "w-01041",
+        "w-01042",
+        "w-01043",
+        "w-01044"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0115",
+      "startMs": 443547,
+      "endMs": 448650,
+      "text": "Where buildings, bridges or trees block the signal, the blue dot gets worse.",
+      "lines": [
+        "Where buildings, bridges or trees block",
+        "the signal, the blue dot gets worse."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01045",
+        "w-01046",
+        "w-01047",
+        "w-01048",
+        "w-01049",
+        "w-01050",
+        "w-01051",
+        "w-01052",
+        "w-01053",
+        "w-01054",
+        "w-01055",
+        "w-01056",
+        "w-01057"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0116",
+      "startMs": 450200,
+      "endMs": 453526,
+      "text": "Put it all together, and a pseudorange is simply a sum:",
+      "lines": [
+        "Put it all together, and a pseudorange is",
+        "simply a sum:"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01058",
+        "w-01059",
+        "w-01060",
+        "w-01061",
+        "w-01062",
+        "w-01063",
+        "w-01064",
+        "w-01065",
+        "w-01066",
+        "w-01067",
+        "w-01068"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0117",
+      "startMs": 453526,
+      "endMs": 458859,
+      "text": "the true distance, plus the clock errors, plus the ionosphere and troposphere",
+      "lines": [
+        "the true distance, plus the clock errors,",
+        "plus the ionosphere and troposphere"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01069",
+        "w-01070",
+        "w-01071",
+        "w-01072",
+        "w-01073",
+        "w-01074",
+        "w-01075",
+        "w-01076",
+        "w-01077",
+        "w-01078",
+        "w-01079",
+        "w-01080"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0118",
+      "startMs": 458859,
+      "endMs": 461132,
+      "text": "delays, plus multipath and noise.",
+      "lines": [
+        "delays, plus multipath and noise."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01081",
+        "w-01082",
+        "w-01083",
+        "w-01084",
+        "w-01085"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0119",
+      "startMs": 461132,
+      "endMs": 464040,
+      "text": "The receiver's whole job is to untangle that sum.",
+      "lines": [
+        "The receiver's whole job is to untangle",
+        "that sum."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01086",
+        "w-01087",
+        "w-01088",
+        "w-01089",
+        "w-01090",
+        "w-01091",
+        "w-01092",
+        "w-01093",
+        "w-01094"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0120",
+      "startMs": 465895,
+      "endMs": 467669,
+      "text": "Accuracy comes in layers. The U.S.",
+      "lines": [
+        "Accuracy comes in layers. The U.S."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01095",
+        "w-01096",
+        "w-01097",
+        "w-01098",
+        "w-01099",
+        "w-01100"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0122",
+      "startMs": 467669,
+      "endMs": 472103,
+      "text": "government commits to a daily global average signal-in-space ranging error of",
+      "lines": [
+        "government commits to a daily global",
+        "average signal-in-space ranging error of"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01101",
+        "w-01102",
+        "w-01103",
+        "w-01104",
+        "w-01105",
+        "w-01106",
+        "w-01107",
+        "w-01108",
+        "w-01109",
+        "w-01110",
+        "w-01111"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0123",
+      "startMs": 472103,
+      "endMs": 476638,
+      "text": "at most two meters, with ninety-five percent probability, across",
+      "lines": [
+        "at most two meters, with ninety-five",
+        "percent probability, across"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01112",
+        "w-01113",
+        "w-01114",
+        "w-01115",
+        "w-01116",
+        "w-01117",
+        "w-01118",
+        "w-01119",
+        "w-01120"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0124",
+      "startMs": 476638,
+      "endMs": 478138,
+      "text": "healthy satellites.",
+      "lines": [
+        "healthy satellites."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01121",
+        "w-01122"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0125",
+      "startMs": 478138,
+      "endMs": 482723,
+      "text": "On one day in 2021, that average was at most about sixty-four centimeters.",
+      "lines": [
+        "On one day in 2021, that average was at",
+        "most about sixty-four centimeters."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01123",
+        "w-01124",
+        "w-01125",
+        "w-01126",
+        "w-01127",
+        "w-01128",
+        "w-01129",
+        "w-01130",
+        "w-01131",
+        "w-01132",
+        "w-01133",
+        "w-01134",
+        "w-01135"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0126",
+      "startMs": 482723,
+      "endMs": 486431,
+      "text": "But that does not describe your phone's accuracy.",
+      "lines": [
+        "But that does not describe your phone's",
+        "accuracy."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01136",
+        "w-01137",
+        "w-01138",
+        "w-01139",
+        "w-01140",
+        "w-01141",
+        "w-01142",
+        "w-01143"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0127",
+      "startMs": 486431,
+      "endMs": 491377,
+      "text": "Your position also depends on satellite geometry, the atmosphere and nearby",
+      "lines": [
+        "Your position also depends on satellite",
+        "geometry, the atmosphere and nearby"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01144",
+        "w-01145",
+        "w-01146",
+        "w-01147",
+        "w-01148",
+        "w-01149",
+        "w-01150",
+        "w-01151",
+        "w-01152",
+        "w-01153",
+        "w-01154"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0128",
+      "startMs": 491377,
+      "endMs": 496015,
+      "text": "buildings, so phones typically land within about five meters under open sky.",
+      "lines": [
+        "buildings, so phones typically land within",
+        "about five meters under open sky."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01155",
+        "w-01156",
+        "w-01157",
+        "w-01158",
+        "w-01159",
+        "w-01160",
+        "w-01161",
+        "w-01162",
+        "w-01163",
+        "w-01164",
+        "w-01165",
+        "w-01166"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0129",
+      "startMs": 497700,
+      "endMs": 499465,
+      "text": "It used to be worse by design.",
+      "lines": [
+        "It used to be worse by design."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01167",
+        "w-01168",
+        "w-01169",
+        "w-01170",
+        "w-01171",
+        "w-01172",
+        "w-01173"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0130",
+      "startMs": 499465,
+      "endMs": 504593,
+      "text": "Until May 2000, the United States deliberately degraded the public GPS",
+      "lines": [
+        "Until May 2000, the United States",
+        "deliberately degraded the public GPS"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01174",
+        "w-01175",
+        "w-01176",
+        "w-01177",
+        "w-01178",
+        "w-01179",
+        "w-01180",
+        "w-01181",
+        "w-01182",
+        "w-01183",
+        "w-01184"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0131",
+      "startMs": 504593,
+      "endMs": 507049,
+      "text": "signal for national security reasons.",
+      "lines": [
+        "signal for national security reasons."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01185",
+        "w-01186",
+        "w-01187",
+        "w-01188",
+        "w-01189"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0132",
+      "startMs": 507049,
+      "endMs": 512300,
+      "text": "Then it turned that feature off, and says it has no intent to use it again.",
+      "lines": [
+        "Then it turned that feature off, and says",
+        "it has no intent to use it again."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01190",
+        "w-01191",
+        "w-01192",
+        "w-01193",
+        "w-01194",
+        "w-01195",
+        "w-01196",
+        "w-01197",
+        "w-01198",
+        "w-01199",
+        "w-01200",
+        "w-01201",
+        "w-01202",
+        "w-01203",
+        "w-01204",
+        "w-01205"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0133",
+      "startMs": 513900,
+      "endMs": 515433,
+      "text": "Engineers push further.",
+      "lines": [
+        "Engineers push further."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01206",
+        "w-01207",
+        "w-01208"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0134",
+      "startMs": 515433,
+      "endMs": 518922,
+      "text": "Augmentation systems add corrections;",
+      "lines": [
+        "Augmentation systems add corrections;"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01209",
+        "w-01210",
+        "w-01211",
+        "w-01212"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0135",
+      "startMs": 518922,
+      "endMs": 523320,
+      "text": "WAAS, run by the FAA, helps aircraft navigate across North America.",
+      "lines": [
+        "WAAS, run by the FAA, helps aircraft",
+        "navigate across North America."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01213",
+        "w-01214",
+        "w-01215",
+        "w-01216",
+        "w-01217",
+        "w-01218",
+        "w-01219",
+        "w-01220",
+        "w-01221",
+        "w-01222",
+        "w-01223"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0136",
+      "startMs": 524870,
+      "endMs": 530605,
+      "text": "Newer civil signals, called L2C, L5 and L1C, are being added next to the original",
+      "lines": [
+        "Newer civil signals, called L2C, L5 and",
+        "L1C, are being added next to the original"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01224",
+        "w-01225",
+        "w-01226",
+        "w-01227",
+        "w-01228",
+        "w-01229",
+        "w-01230",
+        "w-01231",
+        "w-01232",
+        "w-01233",
+        "w-01234",
+        "w-01235",
+        "w-01236",
+        "w-01237",
+        "w-01238"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0137",
+      "startMs": 530605,
+      "endMs": 533984,
+      "text": "one, but receivers must be upgraded to use them.",
+      "lines": [
+        "one, but receivers must be upgraded to use",
+        "them."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01239",
+        "w-01240",
+        "w-01241",
+        "w-01242",
+        "w-01243",
+        "w-01244",
+        "w-01245",
+        "w-01246",
+        "w-01247"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0138",
+      "startMs": 533984,
+      "endMs": 539770,
+      "text": "Other nations fly their own constellations, like Galileo in Europe.",
+      "lines": [
+        "Other nations fly their own",
+        "constellations, like Galileo in Europe."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01248",
+        "w-01249",
+        "w-01250",
+        "w-01251",
+        "w-01252",
+        "w-01253",
+        "w-01254",
+        "w-01255",
+        "w-01256",
+        "w-01257"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0139",
+      "startMs": 541295,
+      "endMs": 545523,
+      "text": "When the blue dot lands on the right street, here is what just happened.",
+      "lines": [
+        "When the blue dot lands on the right",
+        "street, here is what just happened."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01258",
+        "w-01259",
+        "w-01260",
+        "w-01261",
+        "w-01262",
+        "w-01263",
+        "w-01264",
+        "w-01265",
+        "w-01266",
+        "w-01267",
+        "w-01268",
+        "w-01269",
+        "w-01270",
+        "w-01271"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0140",
+      "startMs": 545523,
+      "endMs": 549553,
+      "text": "Signals that left the satellites a fraction of a second ago were timed to",
+      "lines": [
+        "Signals that left the satellites a",
+        "fraction of a second ago were timed to"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01272",
+        "w-01273",
+        "w-01274",
+        "w-01275",
+        "w-01276",
+        "w-01277",
+        "w-01278",
+        "w-01279",
+        "w-01280",
+        "w-01281",
+        "w-01282",
+        "w-01283",
+        "w-01284",
+        "w-01285"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0141",
+      "startMs": 549553,
+      "endMs": 554002,
+      "text": "within billionths of a second, then corrected for the atmosphere and",
+      "lines": [
+        "within billionths of a second, then",
+        "corrected for the atmosphere and"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01286",
+        "w-01287",
+        "w-01288",
+        "w-01289",
+        "w-01290",
+        "w-01291",
+        "w-01292",
+        "w-01293",
+        "w-01294",
+        "w-01295",
+        "w-01296"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0142",
+      "startMs": 554002,
+      "endMs": 554875,
+      "text": "for relativity.",
+      "lines": [
+        "for relativity."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01297",
+        "w-01298"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0143",
+      "startMs": 556500,
+      "endMs": 558399,
+      "text": "And it is not only for phones.",
+      "lines": [
+        "And it is not only for phones."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01299",
+        "w-01300",
+        "w-01301",
+        "w-01302",
+        "w-01303",
+        "w-01304",
+        "w-01305"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0144",
+      "startMs": 558399,
+      "endMs": 564049,
+      "text": "Spacecraft use GPS as a compass, and sometimes even as a clock, replacing",
+      "lines": [
+        "Spacecraft use GPS as a compass, and",
+        "sometimes even as a clock, replacing"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01306",
+        "w-01307",
+        "w-01308",
+        "w-01309",
+        "w-01310",
+        "w-01311",
+        "w-01312",
+        "w-01313",
+        "w-01314",
+        "w-01315",
+        "w-01316",
+        "w-01317",
+        "w-01318"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0145",
+      "startMs": 564049,
+      "endMs": 566360,
+      "text": "expensive atomic clocks on board.",
+      "lines": [
+        "expensive atomic clocks on board."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01319",
+        "w-01320",
+        "w-01321",
+        "w-01322",
+        "w-01323"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0146",
+      "startMs": 567945,
+      "endMs": 570326,
+      "text": "Relativity is not only for satellites.",
+      "lines": [
+        "Relativity is not only for satellites."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01324",
+        "w-01325",
+        "w-01326",
+        "w-01327",
+        "w-01328",
+        "w-01329"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0147",
+      "startMs": 570326,
+      "endMs": 575813,
+      "text": "NIST physicists once ran two clocks just a foot apart in height, and they ticked at",
+      "lines": [
+        "NIST physicists once ran two clocks just a",
+        "foot apart in height, and they ticked at"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01330",
+        "w-01331",
+        "w-01332",
+        "w-01333",
+        "w-01334",
+        "w-01335",
+        "w-01336",
+        "w-01337",
+        "w-01338",
+        "w-01339",
+        "w-01340",
+        "w-01341",
+        "w-01342",
+        "w-01343",
+        "w-01344",
+        "w-01345"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0148",
+      "startMs": 575813,
+      "endMs": 577175,
+      "text": "different rates.",
+      "lines": [
+        "different rates."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01346",
+        "w-01347"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0149",
+      "startMs": 577175,
+      "endMs": 582723,
+      "text": "Gravity changes how time passes, and every time that blue dot appears, GPS has",
+      "lines": [
+        "Gravity changes how time passes, and every",
+        "time that blue dot appears, GPS has"
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01348",
+        "w-01349",
+        "w-01350",
+        "w-01351",
+        "w-01352",
+        "w-01353",
+        "w-01354",
+        "w-01355",
+        "w-01356",
+        "w-01357",
+        "w-01358",
+        "w-01359",
+        "w-01360",
+        "w-01361"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0150",
+      "startMs": 582723,
+      "endMs": 583765,
+      "text": "accounted for it.",
+      "lines": [
+        "accounted for it."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01362",
+        "w-01363",
+        "w-01364"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0151",
+      "startMs": 585275,
+      "endMs": 587239,
+      "text": "Every claim in this video is sourced.",
+      "lines": [
+        "Every claim in this video is sourced."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01365",
+        "w-01366",
+        "w-01367",
+        "w-01368",
+        "w-01369",
+        "w-01370",
+        "w-01371"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    },
+    {
+      "captionId": "cap-0152",
+      "startMs": 587239,
+      "endMs": 588875,
+      "text": "The list is in the description.",
+      "lines": [
+        "The list is in the description."
+      ],
+      "speakerId": "narrator",
+      "wordIds": [
+        "w-01372",
+        "w-01373",
+        "w-01374",
+        "w-01375",
+        "w-01376",
+        "w-01377"
+      ],
+      "presentation": {
+        "mode": "BLOCK",
+        "anchor": "BOTTOM_CENTER",
+        "safeZoneRef": "en-longform-youtube@1.0.0"
+      },
+      "locked": false
+    }
+  ],
+  "qa": {
+    "status": "PASS",
+    "findings": [],
+    "metrics": {
+      "eventCount": 145,
+      "maxCps": 19.17,
+      "avgCps": 15.21,
+      "maxLineLength": 42,
+      "findingCount": 0
+    }
+  },
+  "qaStatus": "PASS",
+  "inputHashes": {
+    "transcript": "88c098ecf8ec9f7be491a39a5f42f72faf55b9fb7e8def4cfd3f2702030bf1c6",
+    "alignment": "e5e58ee03408ed3e52b3f20955c32782a126772dc60705f4fbdec0084d33c8fc"
+  },
+  "createdAt": "2026-10-12T06:46:53.131Z"
+}
