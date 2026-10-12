@@ -51,3 +51,9 @@ remotion/.render-binaries/
 flow-companion/extension/.output/
 *.pem
 *.crx
+
+# Third-party stock music audio (Mixkit license forbids standalone redistribution); keep only JSON metadata/evidence in Git
+/assets/approved-local/music/*.mp3
+/assets/music/audio/*.wav
+# Generated GPS explainer audio (82 MB WAV: narration segments, track, final mix); JSON metadata with SHA-256 stays in Git, back up the WAVs outside Git
+/projects/phase7-gps-explainer/assets/**/*.wav
