@@ -227,7 +227,16 @@ async function main() {
     assert(ra.compiledText.includes("koh-koh-roh") && !ra.compiledText.includes("[Kokoro]"), "READ_AS substitution unchanged");
   });
 
-  console.log(`\n=== DONE: ${passed} passed, ${failed} failed ===`);
+  await runTest("GPS profile v2 reads WAAS as the word /wɑs/ (owner-graded NATURAL)", () => {
+    const latest = pron.latestPronunciationProfile(REPO, "phase7-gps-explainer");
+    assert(latest.ok && latest.profile.version >= 2, "GPS profile has a revision beyond v1");
+    const waas = latest.profile.entries.find((e) => e.normalizedTerm === "waas");
+    assertEq(waas.reading.notation + ":" + waas.reading.value, "IPA:wɑs", "WAAS reading is IPA wɑs");
+    const c = kokoroPhonemize.compileInput({ text: "run by the FAA, WAAS helps", entries: [waas] });
+    assert(c.compiledText.includes("[WAAS](/wɑs/)"), "WAAS compiles to official Kokoro phoneme markup");
+  });
+
+  console.log(`\n=== DONE:${passed} passed, ${failed} failed ===`);
   process.exit(failed > 0 ? 1 : 0);
 }
 

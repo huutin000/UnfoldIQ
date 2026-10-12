@@ -1,0 +1,181 @@
+{
+  "schemaVersion": "1.0.0",
+  "pronunciationProfileId": "pron-53d1f23a8102",
+  "version": 2,
+  "projectId": "phase7-gps-explainer",
+  "language": "en-us",
+  "entries": [
+    {
+      "entryId": "pe-fac471181be0",
+      "normalizedTerm": "l2c",
+      "displayTerm": "L2C",
+      "language": "en-us",
+      "locale": null,
+      "category": "ACRONYM",
+      "reading": {
+        "notation": "READ_AS",
+        "value": "L two C"
+      },
+      "acronymMode": "CUSTOM",
+      "scope": {
+        "level": "PROJECT",
+        "projectId": "phase7-gps-explainer",
+        "scriptArtifactId": null,
+        "segmentId": null
+      },
+      "source": "PROJECT_OVERRIDE",
+      "quality": "AUTO",
+      "notes": "proposed reading; owner verifies by listening",
+      "provenance": {
+        "createdAt": "2026-10-11T07:12:17.076Z",
+        "origin": null,
+        "evidenceRefs": []
+      }
+    },
+    {
+      "entryId": "pe-fc093ae4b476",
+      "normalizedTerm": "l5",
+      "displayTerm": "L5",
+      "language": "en-us",
+      "locale": null,
+      "category": "ACRONYM",
+      "reading": {
+        "notation": "READ_AS",
+        "value": "L five"
+      },
+      "acronymMode": "CUSTOM",
+      "scope": {
+        "level": "PROJECT",
+        "projectId": "phase7-gps-explainer",
+        "scriptArtifactId": null,
+        "segmentId": null
+      },
+      "source": "PROJECT_OVERRIDE",
+      "quality": "AUTO",
+      "notes": "proposed reading; owner verifies by listening",
+      "provenance": {
+        "createdAt": "2026-10-11T07:12:17.076Z",
+        "origin": null,
+        "evidenceRefs": []
+      }
+    },
+    {
+      "entryId": "pe-1a3a613c9f15",
+      "normalizedTerm": "l1c",
+      "displayTerm": "L1C",
+      "language": "en-us",
+      "locale": null,
+      "category": "ACRONYM",
+      "reading": {
+        "notation": "READ_AS",
+        "value": "L one C"
+      },
+      "acronymMode": "CUSTOM",
+      "scope": {
+        "level": "PROJECT",
+        "projectId": "phase7-gps-explainer",
+        "scriptArtifactId": null,
+        "segmentId": null
+      },
+      "source": "PROJECT_OVERRIDE",
+      "quality": "AUTO",
+      "notes": "proposed reading; owner verifies by listening",
+      "provenance": {
+        "createdAt": "2026-10-11T07:12:17.076Z",
+        "origin": null,
+        "evidenceRefs": []
+      }
+    },
+    {
+      "entryId": "pe-4cdd238ddd9d",
+      "normalizedTerm": "waas",
+      "displayTerm": "WAAS",
+      "language": "en-us",
+      "locale": null,
+      "category": "ACRONYM",
+      "reading": {
+        "notation": "IPA",
+        "value": "wɑs"
+      },
+      "acronymMode": "CUSTOM",
+      "scope": {
+        "level": "PROJECT",
+        "projectId": "phase7-gps-explainer",
+        "scriptArtifactId": null,
+        "segmentId": null
+      },
+      "source": "OPERATOR_OVERRIDE",
+      "quality": "VERIFIED",
+      "notes": "owner graded WAHS /wɑs/ NATURAL by ear (speed 1.0 sample)",
+      "provenance": {
+        "createdAt": "2026-10-12T03:45:33.088Z",
+        "origin": null,
+        "evidenceRefs": []
+      }
+    },
+    {
+      "entryId": "pe-86ef62a4047e",
+      "normalizedTerm": "faa",
+      "displayTerm": "FAA",
+      "language": "en-us",
+      "locale": null,
+      "category": "ACRONYM",
+      "reading": {
+        "notation": "READ_AS",
+        "value": "F A A"
+      },
+      "acronymMode": "LETTER_BY_LETTER",
+      "scope": {
+        "level": "PROJECT",
+        "projectId": "phase7-gps-explainer",
+        "scriptArtifactId": null,
+        "segmentId": null
+      },
+      "source": "PROJECT_OVERRIDE",
+      "quality": "AUTO",
+      "notes": "proposed reading",
+      "provenance": {
+        "createdAt": "2026-10-11T07:12:17.076Z",
+        "origin": null,
+        "evidenceRefs": []
+      }
+    },
+    {
+      "entryId": "pe-c096249987a6",
+      "normalizedTerm": "nist",
+      "displayTerm": "NIST",
+      "language": "en-us",
+      "locale": null,
+      "category": "ACRONYM",
+      "reading": {
+        "notation": "READ_AS",
+        "value": "nist"
+      },
+      "acronymMode": "CUSTOM",
+      "scope": {
+        "level": "PROJECT",
+        "projectId": "phase7-gps-explainer",
+        "scriptArtifactId": null,
+        "segmentId": null
+      },
+      "source": "PROJECT_OVERRIDE",
+      "quality": "AUTO",
+      "notes": "spoken as a word by NIST staff; owner verifies by listening",
+      "provenance": {
+        "createdAt": "2026-10-11T07:12:17.076Z",
+        "origin": null,
+        "evidenceRefs": []
+      }
+    }
+  ],
+  "provenance": {
+    "source": "phase-7-script",
+    "createdAt": "2026-10-12T03:45:33.098Z",
+    "evidenceRefs": [
+      "Report/evidence/phase-7/script/gps-script-v3.md",
+      "Report/evidence/phase-7/script/qa/pronunciation-sample-addendum-v4-wahs.json"
+    ],
+    "revisedFrom": "pron-2243101e4d39"
+  },
+  "fingerprint": "d210b61bc638da09"
+}

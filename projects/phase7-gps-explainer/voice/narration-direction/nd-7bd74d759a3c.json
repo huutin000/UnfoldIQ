@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "1.0.0",
+  "narrationDirectionId": "nd-7bd74d759a3c",
+  "version": 3,
+  "projectId": "phase7-gps-explainer",
+  "scriptRef": {
+    "scriptArtifactId": "fss-phase7-gps-explainer",
+    "scriptVersion": 2
+  },
+  "voiceBibleRef": "vb-19f4fd6a4596",
+  "language": "en-us",
+  "segments": [
+    {
+      "segmentId": "N01",
+      "segmentOrdinal": 0,
+      "sourceTextHash": "dccdf56a6e439269",
+      "speakerId": null,
+      "emphasis": [],
+      "pauseIntent": [],
+      "energy": null,
+      "emotion": null,
+      "paceIntent": "MODERATE",
+      "directionReason": "neutral baseline pace (speed 1.0); no stylistic direction added"
+    }
+  ],
+  "stats": {
+    "totalSegments": 37,
+    "directedSegments": 1,
+    "directionCoveragePercent": 2.7,
+    "emphasisCount": 0,
+    "explicitPauseCount": 0,
+    "overDirectionReview": false
+  },
+  "provenance": {
+    "source": "phase-7-owner-sample-review",
+    "createdAt": "2026-10-12T04:16:44.227Z",
+    "evidenceRefs": []
+  },
+  "fingerprint": "6217161fdb93343c"
+}
