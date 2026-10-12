@@ -1,0 +1,234 @@
+{
+ "note": "voice stem vs music stem power in each narrated segment (same for both candidates: ducking is identical)",
+ "summary": {
+  "min": 17.3,
+  "p10": 18.2,
+  "median": 18.6,
+  "max": 24.4,
+  "below10dB": []
+ },
+ "perSegment": [
+  {
+   "segmentId": "N01",
+   "voiceDb": -16.3,
+   "musicDb": -34.7,
+   "separationDb": 18.4
+  },
+  {
+   "segmentId": "N02",
+   "voiceDb": -16.3,
+   "musicDb": -35,
+   "separationDb": 18.7
+  },
+  {
+   "segmentId": "N03",
+   "voiceDb": -16.3,
+   "musicDb": -34.7,
+   "separationDb": 18.4
+  },
+  {
+   "segmentId": "N04",
+   "voiceDb": -16.4,
+   "musicDb": -34.4,
+   "separationDb": 18
+  },
+  {
+   "segmentId": "N05",
+   "voiceDb": -16.5,
+   "musicDb": -34.7,
+   "separationDb": 18.2
+  },
+  {
+   "segmentId": "N06",
+   "voiceDb": -16.2,
+   "musicDb": -34.9,
+   "separationDb": 18.7
+  },
+  {
+   "segmentId": "N07",
+   "voiceDb": -16.3,
+   "musicDb": -34.6,
+   "separationDb": 18.3
+  },
+  {
+   "segmentId": "N08",
+   "voiceDb": -16.3,
+   "musicDb": -34.5,
+   "separationDb": 18.2
+  },
+  {
+   "segmentId": "N09",
+   "voiceDb": -16.3,
+   "musicDb": -34.9,
+   "separationDb": 18.6
+  },
+  {
+   "segmentId": "N10",
+   "voiceDb": -16.3,
+   "musicDb": -35.6,
+   "separationDb": 19.3
+  },
+  {
+   "segmentId": "N11",
+   "voiceDb": -16.4,
+   "musicDb": -34.7,
+   "separationDb": 18.3
+  },
+  {
+   "segmentId": "N12",
+   "voiceDb": -16.3,
+   "musicDb": -34.7,
+   "separationDb": 18.4
+  },
+  {
+   "segmentId": "N13",
+   "voiceDb": -16.2,
+   "musicDb": -34.4,
+   "separationDb": 18.2
+  },
+  {
+   "segmentId": "N14",
+   "voiceDb": -16.3,
+   "musicDb": -34.6,
+   "separationDb": 18.3
+  },
+  {
+   "segmentId": "N15",
+   "voiceDb": -16.3,
+   "musicDb": -34.8,
+   "separationDb": 18.5
+  },
+  {
+   "segmentId": "N16",
+   "voiceDb": -16.2,
+   "musicDb": -36.4,
+   "separationDb": 20.2
+  },
+  {
+   "segmentId": "N17",
+   "voiceDb": -16.2,
+   "musicDb": -40.6,
+   "separationDb": 24.4
+  },
+  {
+   "segmentId": "N18",
+   "voiceDb": -16.3,
+   "musicDb": -37.8,
+   "separationDb": 21.5
+  },
+  {
+   "segmentId": "N19",
+   "voiceDb": -16.2,
+   "musicDb": -37.7,
+   "separationDb": 21.5
+  },
+  {
+   "segmentId": "N19b",
+   "voiceDb": -16.2,
+   "musicDb": -38.8,
+   "separationDb": 22.6
+  },
+  {
+   "segmentId": "N20",
+   "voiceDb": -16.3,
+   "musicDb": -38.9,
+   "separationDb": 22.6
+  },
+  {
+   "segmentId": "N21",
+   "voiceDb": -16.4,
+   "musicDb": -37.7,
+   "separationDb": 21.3
+  },
+  {
+   "segmentId": "N22",
+   "voiceDb": -16.5,
+   "musicDb": -37.1,
+   "separationDb": 20.6
+  },
+  {
+   "segmentId": "N23",
+   "voiceDb": -16.4,
+   "musicDb": -37.3,
+   "separationDb": 20.9
+  },
+  {
+   "segmentId": "N24",
+   "voiceDb": -16.3,
+   "musicDb": -33.6,
+   "separationDb": 17.3
+  },
+  {
+   "segmentId": "N25",
+   "voiceDb": -16.3,
+   "musicDb": -36.8,
+   "separationDb": 20.5
+  },
+  {
+   "segmentId": "N26",
+   "voiceDb": -16.3,
+   "musicDb": -36.4,
+   "separationDb": 20.1
+  },
+  {
+   "segmentId": "N27",
+   "voiceDb": -16.3,
+   "musicDb": -36.3,
+   "separationDb": 20
+  },
+  {
+   "segmentId": "N28",
+   "voiceDb": -16.2,
+   "musicDb": -36.9,
+   "separationDb": 20.7
+  },
+  {
+   "segmentId": "N29",
+   "voiceDb": -16.3,
+   "musicDb": -34.9,
+   "separationDb": 18.6
+  },
+  {
+   "segmentId": "N30",
+   "voiceDb": -16.3,
+   "musicDb": -34.7,
+   "separationDb": 18.4
+  },
+  {
+   "segmentId": "N31",
+   "voiceDb": -16.4,
+   "musicDb": -34.5,
+   "separationDb": 18.1
+  },
+  {
+   "segmentId": "N32",
+   "voiceDb": -16.4,
+   "musicDb": -34.6,
+   "separationDb": 18.2
+  },
+  {
+   "segmentId": "N33",
+   "voiceDb": -16.3,
+   "musicDb": -34.5,
+   "separationDb": 18.2
+  },
+  {
+   "segmentId": "N34",
+   "voiceDb": -16.3,
+   "musicDb": -34.8,
+   "separationDb": 18.5
+  },
+  {
+   "segmentId": "N35",
+   "voiceDb": -16.1,
+   "musicDb": -34.6,
+   "separationDb": 18.5
+  },
+  {
+   "segmentId": "N36",
+   "voiceDb": -16.6,
+   "musicDb": -39.9,
+   "separationDb": 23.3
+  }
+ ]
+}

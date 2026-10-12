@@ -1,0 +1,233 @@
+{
+  "kind": "MUSIC_LICENSE_EVIDENCE",
+  "projectId": "phase7-gps-explainer",
+  "recordedAt": "2026-10-12T08:12:56.437Z",
+  "license": {
+    "name": "Mixkit Stock Music Free License",
+    "url": "https://mixkit.co/license/modal/musicFree/",
+    "termsStatus": "VERIFIED_FROM_OFFICIAL_SOURCE",
+    "termsNote": "Reviewer-confirmed on 2026-10-12: YouTube commercial use allowed, attribution not required. The agent itself could not fetch the terms text; keep the page URLs above for release re-checks.",
+    "ownerReportedTerms": {
+      "commercialYouTube": "ALLOWED",
+      "monetizedYouTube": "ALLOWED",
+      "attribution": "NOT_REQUIRED (official Mixkit FAQ)",
+      "contentId": "copyright claims may still occur; Mixkit asks claims to be sent to team@mixkit.co",
+      "prohibited": [
+        "registering the music in Content ID or a rights-management system as own property",
+        "distributing or remixing the music as a standalone music product"
+      ]
+    }
+  },
+  "provenance": {
+    "status": "VERIFIED_FROM_OFFICIAL_DOWNLOAD",
+    "scope": "tracks MIXKIT-184 (Vastness) and MIXKIT-570 (Sonor #2) only; the two non-selected tracks were not re-downloaded and stay PENDING_VERIFICATION",
+    "rule": "Evidence = SHA-256 equality with a fresh download from the official Mixkit asset URL. Windows file times are NOT used as download evidence.",
+    "verifiedOn": "2026-10-12"
+  },
+  "tracks": [
+    {
+      "trackId": "MIXKIT-184",
+      "title": "Vastness",
+      "author": "Andrew Ev",
+      "file": "assets/approved-local/music/mixkit-vastness-184.mp3",
+      "bytes": 7356125,
+      "sha256": "3ffae7ccd5ea6f612f75efdf9a8318ccce79a5e4f355b26e233631330a57660f",
+      "durationMs": 229820,
+      "format": "mp3 44.1kHz stereo",
+      "sourcePageUrl": "https://mixkit.co/free-stock-music/instrument/synth/",
+      "sourcePageUrlNote": "official category listing (no per-track permalink found)",
+      "selectedForProject": true,
+      "provenanceStatus": "VERIFIED_FROM_OFFICIAL_DOWNLOAD",
+      "rightsStatus": "VERIFIED",
+      "listing": {
+        "url": "https://mixkit.co/free-stock-music/instrument/synth/",
+        "status": "VERIFIED_FROM_OFFICIAL_SOURCE",
+        "verifiedOn": "2026-10-12",
+        "officialListingMetadata": {
+          "name": "Vastness",
+          "byArtist": "Andrew Ev",
+          "genre": "Ambient",
+          "duration": "PT3M50S",
+          "license": "https://mixkit.co/license/#musicFree",
+          "copyrightNotice": "Mixkit Stock Music Free License"
+        }
+      },
+      "localFileTimeNotEvidence": "2026-10-12T07:44:22.246Z",
+      "officialDownload": {
+        "method": "agent re-download from the official Mixkit asset URL (read-only fetch into a scratch directory outside the repo)",
+        "assetUrl": "https://assets.mixkit.co/music/184/184.mp3",
+        "downloadedAtUtc": "2026-10-12T07:59:54Z",
+        "httpStatus": 200,
+        "contentType": "audio/mpeg",
+        "contentLengthBytes": 7356125,
+        "lastModifiedHeader": "Thu, 04 Jul 2024 09:59:54 GMT",
+        "etag": "f2bab8be87f62ca8545152df981c0f8b",
+        "downloadedSha256": "3ffae7ccd5ea6f612f75efdf9a8318ccce79a5e4f355b26e233631330a57660f",
+        "repoSha256": "3ffae7ccd5ea6f612f75efdf9a8318ccce79a5e4f355b26e233631330a57660f",
+        "byteIdentical": true,
+        "durationCheck": "listing PT3M50S vs file 229.8 s"
+      },
+      "rightsScope": "background music in the project's YouTube video (commercial / monetized use)"
+    },
+    {
+      "trackId": "MIXKIT-570",
+      "title": "Sonor #2",
+      "author": "Eugenio Mininni",
+      "file": "assets/approved-local/music/mixkit-sonor-2-570.mp3",
+      "bytes": 8383724,
+      "sha256": "e98aaa4574f3e83ac9aefe2aa32ae8bedd1da4e9f5517858f2ccc3cb4c5f3221",
+      "durationMs": 261923,
+      "format": "mp3 44.1kHz stereo",
+      "sourcePageUrl": "https://mixkit.co/free-stock-music/tag/technology/",
+      "sourcePageUrlNote": "official category listing (no per-track permalink found)",
+      "selectedForProject": true,
+      "provenanceStatus": "VERIFIED_FROM_OFFICIAL_DOWNLOAD",
+      "rightsStatus": "VERIFIED",
+      "listing": {
+        "url": "https://mixkit.co/free-stock-music/tag/technology/",
+        "status": "VERIFIED_FROM_OFFICIAL_SOURCE",
+        "verifiedOn": "2026-10-12",
+        "officialListingMetadata": {
+          "name": "Sonor #2",
+          "byArtist": "Eugenio Mininni",
+          "genre": "Ambient",
+          "duration": "PT4M22S",
+          "license": "https://mixkit.co/license/#musicFree",
+          "copyrightNotice": "Mixkit Stock Music Free License"
+        }
+      },
+      "localFileTimeNotEvidence": "2026-10-12T07:43:30.424Z",
+      "officialDownload": {
+        "method": "agent re-download from the official Mixkit asset URL (read-only fetch into a scratch directory outside the repo)",
+        "assetUrl": "https://assets.mixkit.co/music/570/570.mp3",
+        "downloadedAtUtc": "2026-10-12T07:59:55Z",
+        "httpStatus": 200,
+        "contentType": "audio/mpeg",
+        "contentLengthBytes": 8383724,
+        "lastModifiedHeader": "Thu, 04 Jul 2024 10:01:42 GMT",
+        "etag": "151b1f2ae31b892490dd6294b5eff564",
+        "downloadedSha256": "e98aaa4574f3e83ac9aefe2aa32ae8bedd1da4e9f5517858f2ccc3cb4c5f3221",
+        "repoSha256": "e98aaa4574f3e83ac9aefe2aa32ae8bedd1da4e9f5517858f2ccc3cb4c5f3221",
+        "byteIdentical": true,
+        "durationCheck": "listing PT4M22S vs file 261.9 s"
+      },
+      "rightsScope": "background music in the project's YouTube video (commercial / monetized use)"
+    },
+    {
+      "trackId": "MIXKIT-588",
+      "title": "(title not recorded)",
+      "author": "(not recorded)",
+      "file": "assets/approved-local/music/mixkit-feedback-dreams-588.mp3",
+      "bytes": 4780080,
+      "sha256": "13dff735e4cc2cc0a36c29f3492d92799f8f14f1d9ddae28a8bcf2544cc1470c",
+      "durationMs": 149308,
+      "format": "mp3 44.1kHz stereo",
+      "sourcePageUrl": null,
+      "sourcePageUrlNote": "not recorded; owner to supply the exact Mixkit track page URL",
+      "selectedForProject": false,
+      "provenanceStatus": "PENDING_VERIFICATION",
+      "rightsStatus": "UNVERIFIED",
+      "localFileTimeNotEvidence": "2026-10-12T07:43:57.581Z"
+    },
+    {
+      "trackId": "MIXKIT-616",
+      "title": "(title not recorded)",
+      "author": "(not recorded)",
+      "file": "assets/approved-local/music/mixkit-what-it-takes-616.mp3",
+      "bytes": 9528932,
+      "sha256": "23dd3630ef495b6ac6c71110f752f63f8b80bf8ec16e80eba265af671d0288f6",
+      "durationMs": 297692,
+      "format": "mp3 44.1kHz stereo",
+      "sourcePageUrl": null,
+      "sourcePageUrlNote": "not recorded; owner to supply the exact Mixkit track page URL",
+      "selectedForProject": false,
+      "provenanceStatus": "PENDING_VERIFICATION",
+      "rightsStatus": "UNVERIFIED",
+      "localFileTimeNotEvidence": "2026-10-12T07:42:34.748Z"
+    }
+  ],
+  "notSelected": "mixkit-feedback-dreams-588 and mixkit-what-it-takes-616 are in the folder but excluded by the owner decision (high dynamic range, LRA 12.7 / 15.7 LU)",
+  "officialSources": {
+    "verifiedOn": "2026-10-12",
+    "verifiedBy": "owner/reviewer (Phase 7 music review message, 2026-10-12)",
+    "agentIndependentFetch": "NOT_ACHIEVED (the agent could not render the license terms from mixkit.co/license/); statuses below rest on the reviewer check of the official pages",
+    "pages": [
+      {
+        "url": "https://mixkit.co/license/modal/musicFree/",
+        "role": "Mixkit Stock Music Free License"
+      },
+      {
+        "url": "https://mixkit.co/free-stock-music/",
+        "role": "Music FAQ (attribution not required)"
+      },
+      {
+        "url": "https://mixkit.co/free-stock-music/instrument/synth/",
+        "role": "Vastness listing"
+      },
+      {
+        "url": "https://mixkit.co/free-stock-music/tag/technology/",
+        "role": "Sonor #2 listing"
+      }
+    ],
+    "permalinkNote": "No per-track permalink page was found; the official category listing URL plus track name and author is recorded (owner decision 2026-10-12)."
+  },
+  "statuses": {
+    "licenseTerms": "VERIFIED_FROM_OFFICIAL_SOURCE",
+    "trackListing": "VERIFIED_FROM_OFFICIAL_SOURCE",
+    "assetProvenance": "VERIFIED_FROM_OFFICIAL_DOWNLOAD (selected tracks 184 and 570)",
+    "rightsStatus": "VERIFIED (tracks 184 and 570, scope below)",
+    "contentIdStatus": "NOT_TESTED",
+    "ownerMusicApproval": "APPROVED (2026-10-12)",
+    "finalMixApproval": "APPROVED (2026-10-12, candidate A)"
+  },
+  "statusNote": "Four separate states, never merged: rightsStatus (license + provenance for the intended use), contentIdStatus, ownerMusicApproval, finalMixApproval. The two non-selected tracks keep rightsStatus UNVERIFIED.",
+  "audioChecksPending": [
+    "human listening review: no vocals, no masking of the Kokoro narration, natural transitions, Cue 03 repeat, outro vs N36 (signal analysis and ASR are supporting evidence only, never an automatic PASS)"
+  ],
+  "rightsDecision": {
+    "status": "VERIFIED",
+    "scope": {
+      "usage": "background music in the project's YouTube video (commercial / monetized use)",
+      "license": "Mixkit Stock Music Free License",
+      "attribution": "not required",
+      "excludes": [
+        "registering the music in Content ID or any rights-management system as own property",
+        "distributing or remixing the music as a standalone music product"
+      ],
+      "decidedBy": "owner (Phase 7 music review, 2026-10-12)"
+    },
+    "date": "2026-10-12",
+    "notAnImplication": "contentIdStatus NOT_TESTED is tracked separately and is NOT a license defect; ownerMusicApproval APPROVED 2026-10-12; finalMixApproval stays PENDING (final mix needs human listening)."
+  },
+  "schemaCompatibility": {
+    "checkedAgainst": [
+      "schemas/approved-local.schema.json (rightsStatus enum VERIFIED|UNVERIFIED|UNKNOWN|NOT_APPLICABLE)",
+      "schemas/music-asset.schema.json (rights.status APPROVED|REVIEW_REQUIRED|REJECTED + separate per-project usageDecision)"
+    ],
+    "finding": "No repo schema or lib mentions Content ID, owner music approval or final-mix approval, and neither schema merges them into the rights field: approved-local uses a single rightsStatus, music-asset already separates rights from the per-project usageDecision. The separate states live only in this evidence file, so no schema change is needed and compatibility is untouched.",
+    "proposalIfLaterNeeded": "if the library ingestion step later wants these states in a schema, add optional fields (contentIdStatus, ownerApproval) to music-asset.usageDecision rather than overloading rights.status.",
+    "mapping": "evidence rightsStatus VERIFIED <-> approved-local rightsStatus VERIFIED <-> music-asset rights.status APPROVED (+ usageDecision APPROVED_FOR_PROJECT only after ingestion, which has not been done).",
+    "libraryIngestion": "NOT_DONE (MP3 to WAV conversion and library ingestion are outside this step; assets/approved-local.json unchanged)"
+  },
+  "storagePolicy": {
+    "decidedBy": "owner, 2026-10-12",
+    "gitIgnore": "/assets/approved-local/music/*.mp3 (root .gitignore)",
+    "inGit": [
+      "music-license-evidence.json",
+      "music-cue-plan.json",
+      "MUSIC_ASSET_VERIFICATION_REPORT.md",
+      "SHA-256 and official download URLs (this file)"
+    ],
+    "notInGit": "all four Mixkit MP3 files (Mixkit forbids standalone redistribution); restore from the official asset URLs and verify SHA-256"
+  },
+  "libraryIngestion": {
+    "status": "DONE (2026-10-12, owner permitted mix)",
+    "assets": {
+      "MIXKIT-184": "mus-1e79e277b220",
+      "MIXKIT-570": "mus-4b4e55ee279f"
+    },
+    "derivative": "MP3 -> PCM16 mono 24 kHz WAV via ffmpeg for the mix engine; stored in assets/music/audio (git-ignored)",
+    "libraryIndex": "assets/music/library-index.json",
+    "usageDecision": "APPROVED_FOR_PROJECT (youtube, COMMERCIAL)"
+  }
+}

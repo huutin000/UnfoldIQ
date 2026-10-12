@@ -1,0 +1,588 @@
+{
+  "kind": "MUSIC_CUE_PLAN",
+  "projectId": "phase7-gps-explainer",
+  "status": "REVISION_C5_FINAL_MIX_APPROVED",
+  "updatedAt": "2026-10-12T09:28:29.400Z",
+  "decision": "Revision C5 chosen by owner on 2026-10-12 (baseline kept in revisionHistory)",
+  "conditions": [
+    "asset provenance verified before rightsStatus VERIFIED",
+    "audio checks (no vocals, no masking, no abrupt transitions, natural end of cue 03) after listening is permitted",
+    "timestamps re-derived from the final measured narration track"
+  ],
+  "assets": {
+    "vastness": {
+      "trackId": "MIXKIT-184",
+      "file": "assets/approved-local/music/mixkit-vastness-184.mp3",
+      "sha256": "3ffae7ccd5ea6f612f75efdf9a8318ccce79a5e4f355b26e233631330a57660f",
+      "durationMs": 229820
+    },
+    "sonor2": {
+      "trackId": "MIXKIT-570",
+      "file": "assets/approved-local/music/mixkit-sonor-2-570.mp3",
+      "sha256": "e98aaa4574f3e83ac9aefe2aa32ae8bedd1da4e9f5517858f2ccc3cb4c5f3221",
+      "durationMs": 261923
+    },
+    "evidenceRef": "Report/evidence/phase-7/audio/music-license-evidence.json",
+    "rightsStatus": "VERIFIED (tracks 184 and 570; scope: background music in the project's YouTube video)"
+  },
+  "plan": {
+    "version": "1.1.0",
+    "projectId": "phase7-gps-explainer",
+    "status": "PLANNED",
+    "cues": [
+      {
+        "cueId": "music-01-vastness-open",
+        "segmentIds": [
+          "N01",
+          "N02",
+          "N03",
+          "N04",
+          "N05",
+          "N06",
+          "N07",
+          "N08",
+          "N09",
+          "N10",
+          "N11",
+          "N12",
+          "N13",
+          "N14",
+          "N15",
+          "N16"
+        ],
+        "role": "BED",
+        "purpose": "PACING",
+        "sourceStartMs": 0,
+        "sourceEndMs": 229820,
+        "timelineStartMs": 0,
+        "timelineEndMs": 229820,
+        "loopAllowed": false,
+        "loopPlan": {
+          "strategy": "SINGLE_PASS",
+          "crossfadeMs": 0
+        },
+        "vocalPolicy": "INSTRUMENTAL_ONLY",
+        "mood": [
+          "calm",
+          "vast"
+        ],
+        "locked": false,
+        "reason": "Vastness (229.8 s) from the hook to the end of its own natural fade (fade ~225-229 s). Revision C5 (owner, 2026-10-12): not trimmed, no added fade-out, so the hand-over to cue 02 is a 15.6 s gradual morph (214.25-229.82 s) under continuous narration (N15/N16) instead of a forced 2 s cut of a full-level passage."
+      },
+      {
+        "cueId": "music-02-sonor-technical",
+        "segmentIds": [
+          "N16",
+          "N17",
+          "N18",
+          "N19",
+          "N19b",
+          "N20",
+          "N21",
+          "N22",
+          "N23",
+          "N24",
+          "N25",
+          "N26",
+          "N27"
+        ],
+        "role": "BED",
+        "purpose": "PACING",
+        "sourceStartMs": 0,
+        "sourceEndMs": 252000,
+        "timelineStartMs": 214250,
+        "timelineEndMs": 466250,
+        "loopAllowed": false,
+        "loopPlan": {
+          "strategy": "SINGLE_PASS",
+          "crossfadeMs": 2000
+        },
+        "vocalPolicy": "INSTRUMENTAL_ONLY",
+        "mood": [
+          "steady",
+          "technical"
+        ],
+        "locked": false,
+        "reason": "Sonor #2 (262 s) under receiver time, Einstein/relativity, signal timing, atmosphere and multipath (N16-N28). Revision C5: enters at 214.25 s on its own quiet swell (source 0-14 s) with NO added fade-in, so it rises underneath Vastness's natural fade. Ends at the N28/N29 gap (465.2-465.5 s) as before (2 s crossfade into cue 03, kept by owner decision); last 9.9 s of the file unused."
+      },
+      {
+        "cueId": "music-03-vastness-close",
+        "segmentIds": [
+          "N28",
+          "N29",
+          "N30",
+          "N31",
+          "N32",
+          "N33",
+          "N34",
+          "N35",
+          "N36"
+        ],
+        "role": "BED",
+        "purpose": "PACING",
+        "sourceStartMs": 103945,
+        "sourceEndMs": 229820,
+        "timelineStartMs": 464250,
+        "timelineEndMs": 590125,
+        "loopAllowed": false,
+        "loopPlan": {
+          "strategy": "SINGLE_PASS",
+          "crossfadeMs": 2000
+        },
+        "vocalPolicy": "INSTRUMENTAL_ONLY",
+        "mood": [
+          "calm",
+          "resolving"
+        ],
+        "locked": false,
+        "reason": "Final 125.9 s of Vastness (so the file's natural ending lands at the end of the narration) under accuracy layers, WAAS/new signals, applications and the outro (N29-N36). Longer than the owner's ~102 s draft because the boundary moved to N28/N29."
+      }
+    ],
+    "ambience": [],
+    "sfx": [],
+    "intentionalSilence": []
+  },
+  "cueAssets": {
+    "music-01-vastness-open": "MIXKIT-184",
+    "music-02-sonor-technical": "MIXKIT-570",
+    "music-03-vastness-close": "MIXKIT-184"
+  },
+  "timing": {
+    "basis": "measured narration track fnt-e2ceed888682 (current values, informational)",
+    "currentNarrationEndMs": 589875,
+    "currentTrackDurationMs": 590125,
+    "notProductionDuration": "590.1 s is NOT a fixed production duration; every timeline value is derived from segment anchors and must be recomputed when the narration/TTS timing changes",
+    "recomputeRule": "cue 01 starts at 0 and runs to Vastness's natural end (no trim); cue 02 starts 1 s before the centre of the N15/N16 gap with no added fade-in; boundary 02/03 = centre of the N28/N29 gap, crossfade window = boundary +/- crossfadeMs/2; cue 03 ends at the narration track end and its sourceStartMs = vastnessDurationMs - (cue03 end - cue03 start) so the file natural ending lands on the narration end",
+    "anchors": {
+      "cue01Start": {
+        "type": "TRACK_START"
+      },
+      "cue01End": {
+        "type": "SOURCE_END",
+        "note": "Vastness natural end (229.82 s source); not tied to a segment gap"
+      },
+      "cue02Start": {
+        "type": "GAP_CENTER_MINUS_MS",
+        "between": [
+          "N15",
+          "N16"
+        ],
+        "offsetMs": -1000
+      },
+      "boundary_02_03": {
+        "type": "GAP_CENTER",
+        "between": [
+          "N28",
+          "N29"
+        ]
+      },
+      "cue03End": {
+        "type": "TRACK_END"
+      }
+    }
+  },
+  "crossfades": [
+    {
+      "between": [
+        "music-01-vastness-open",
+        "music-02-sonor-technical"
+      ],
+      "windowMs": [
+        214250,
+        229820
+      ],
+      "durationMs": 15570,
+      "type": "NATURAL_FADE_MORPH",
+      "narrationOverlap": true,
+      "narrationSpeechInWindowMs": 15320,
+      "narrationSpeechShare": 0.98,
+      "overlappingSegments": [
+        {
+          "id": "N15",
+          "ms": 875
+        },
+        {
+          "id": "N16",
+          "ms": 14445
+        }
+      ],
+      "anchor": "Sonor entry = centre of the N15/N16 gap minus 1 s (as in the baseline); window end = Vastness natural end",
+      "note": "Gradual morph entirely under continuous narration; it is NOT inside a gap and does not claim to be. Bed-envelope simulation (C5): thin seconds (< -6 dB re nominal) 13 -> 1, minimum -12.3 -> -6.4 dB, no dropout."
+    },
+    {
+      "between": [
+        "music-02-sonor-technical",
+        "music-03-vastness-close"
+      ],
+      "windowMs": [
+        464250,
+        466250
+      ],
+      "durationMs": 2000,
+      "gapBetweenSegments": [
+        "N28",
+        "N29"
+      ],
+      "gapMs": [
+        465225,
+        465475
+      ],
+      "gapCenterMs": 465350,
+      "narrationOverlap": true,
+      "narrationSpeechInWindowMs": 1750,
+      "narrationSpeechShare": 0.88,
+      "overlappingSegments": [
+        {
+          "id": "N28",
+          "ms": 975
+        },
+        {
+          "id": "N29",
+          "ms": 775
+        }
+      ],
+      "note": "The 2 s crossfade is centred on the gap but spans about 1750 ms of speech; the gap itself is only 250 ms. The transition happens UNDER narration (ducked), not in silence."
+    }
+  ],
+  "repeatRisk": {
+    "asset": "Vastness (cue 01 and cue 03)",
+    "cue01SourceMs": [
+      0,
+      229820
+    ],
+    "cue03SourceMs": [
+      103945,
+      229820
+    ],
+    "overlappingSourceMs": [
+      103945,
+      229820
+    ],
+    "overlappingDurationMs": 125875,
+    "shareOfCue03": 1,
+    "replayDelayMs": 360305,
+    "severity": "HIGH_OVERLAP",
+    "note": "After revision C5 cue 03 replays 100% of cue 01's material (cue 01 now uses the whole file), about 360 s later (was 89%). Owner decision: keep Vastness for cue 03. Mitigating: Vastness is very uniform (LRA 2.1 LU, 1.6 dB range); the audible risk still has to be judged by ear.",
+    "options": [
+      "keep (preserves the natural ending; recommended unless listening shows a recognisable motif)",
+      "start cue 03 from the beginning of Vastness (deliberate bookend motif, but no natural ending: needs a fade-out)",
+      "use another approved track for cue 03 (needs a new owner decision; the two excluded tracks are high-dynamic)"
+    ],
+    "status": "ACCEPTED_BY_OWNER_DECISION_PENDING_LISTENING_CONFIRMATION"
+  },
+  "sceneLinks": {
+    "basis": "APPROXIMATE_BY_PLANNED_TIME: scene-plan.json v1.3.0 scene times (planned total 575 s) are drafts and drift from the measured narration; relink when the scene plan is rebased on the final audio",
+    "cues": {
+      "music-01-vastness-open": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S07",
+        "S08",
+        "S09",
+        "S10",
+        "S11",
+        "S12",
+        "S13",
+        "S14",
+        "S15",
+        "S16",
+        "S17",
+        "S18",
+        "S19",
+        "S20",
+        "S21"
+      ],
+      "music-02-sonor-technical": [
+        "S19",
+        "S20",
+        "S21",
+        "S22",
+        "S23",
+        "S24",
+        "S25",
+        "S26",
+        "S27",
+        "S28",
+        "S29",
+        "S30",
+        "S31",
+        "S32",
+        "S33",
+        "S34",
+        "S35",
+        "S36",
+        "S37",
+        "S38",
+        "S39",
+        "S40",
+        "S41"
+      ],
+      "music-03-vastness-close": [
+        "S41",
+        "S42",
+        "S43",
+        "S44",
+        "S45",
+        "S46",
+        "S47",
+        "S48",
+        "S49",
+        "S50"
+      ]
+    },
+    "crossfadeScenes": {
+      "01-02": [
+        "S19",
+        "S20",
+        "S21"
+      ],
+      "02-03": [
+        "S41"
+      ]
+    }
+  },
+  "notDone": [
+    "MP3 to WAV conversion and library ingestion",
+    "final mix",
+    "render",
+    "Script Approval Gate untouched",
+    "no push"
+  ],
+  "approvals": {
+    "rightsStatus": "VERIFIED",
+    "contentIdStatus": "NOT_TESTED",
+    "ownerMusicApproval": "APPROVED (owner, 2026-10-12: \"duyệt nhạc, cho phép mix\"; revision C5, rights VERIFIED)",
+    "finalMixApproval": "APPROVED (owner, 2026-10-12, candidate A final-audio-0ad36041aa41)"
+  },
+  "revisionHistory": [
+    {
+      "planVersion": "1.0.0",
+      "label": "baseline (conditionally approved 2026-10-12)",
+      "plan": {
+        "version": "1.1.0",
+        "projectId": "phase7-gps-explainer",
+        "status": "PLANNED",
+        "cues": [
+          {
+            "cueId": "music-01-vastness-open",
+            "segmentIds": [
+              "N01",
+              "N02",
+              "N03",
+              "N04",
+              "N05",
+              "N06",
+              "N07",
+              "N08",
+              "N09",
+              "N10",
+              "N11",
+              "N12",
+              "N13",
+              "N14",
+              "N15",
+              "N16"
+            ],
+            "role": "BED",
+            "purpose": "PACING",
+            "sourceStartMs": 0,
+            "sourceEndMs": 229820,
+            "timelineStartMs": 0,
+            "timelineEndMs": 229820,
+            "loopAllowed": false,
+            "loopPlan": {
+              "strategy": "SINGLE_PASS",
+              "crossfadeMs": 0
+            },
+            "vocalPolicy": "INSTRUMENTAL_ONLY",
+            "mood": [
+              "calm",
+              "vast"
+            ],
+            "locked": false,
+            "reason": "Vastness (229.8 s) from the hook to the end of its own natural fade (fade ~225-229 s). Revision C5 (owner, 2026-10-12): not trimmed, no added fade-out, so the hand-over to cue 02 is a 15.6 s gradual morph (214.25-229.82 s) under continuous narration (N15/N16) instead of a forced 2 s cut of a full-level passage."
+          },
+          {
+            "cueId": "music-02-sonor-technical",
+            "segmentIds": [
+              "N16",
+              "N17",
+              "N18",
+              "N19",
+              "N19b",
+              "N20",
+              "N21",
+              "N22",
+              "N23",
+              "N24",
+              "N25",
+              "N26",
+              "N27"
+            ],
+            "role": "BED",
+            "purpose": "PACING",
+            "sourceStartMs": 0,
+            "sourceEndMs": 252000,
+            "timelineStartMs": 214250,
+            "timelineEndMs": 466250,
+            "loopAllowed": false,
+            "loopPlan": {
+              "strategy": "SINGLE_PASS",
+              "crossfadeMs": 2000
+            },
+            "vocalPolicy": "INSTRUMENTAL_ONLY",
+            "mood": [
+              "steady",
+              "technical"
+            ],
+            "locked": false,
+            "reason": "Sonor #2 (262 s) under receiver time, Einstein/relativity, signal timing, atmosphere and multipath (N16-N28). Revision C5: enters at 214.25 s on its own quiet swell (source 0-14 s) with NO added fade-in, so it rises underneath Vastness's natural fade. Ends at the N28/N29 gap (465.2-465.5 s) as before (2 s crossfade into cue 03, kept by owner decision); last 9.9 s of the file unused."
+          },
+          {
+            "cueId": "music-03-vastness-close",
+            "segmentIds": [
+              "N28",
+              "N29",
+              "N30",
+              "N31",
+              "N32",
+              "N33",
+              "N34",
+              "N35",
+              "N36"
+            ],
+            "role": "BED",
+            "purpose": "PACING",
+            "sourceStartMs": 103945,
+            "sourceEndMs": 229820,
+            "timelineStartMs": 464250,
+            "timelineEndMs": 590125,
+            "loopAllowed": false,
+            "loopPlan": {
+              "strategy": "SINGLE_PASS",
+              "crossfadeMs": 2000
+            },
+            "vocalPolicy": "INSTRUMENTAL_ONLY",
+            "mood": [
+              "calm",
+              "resolving"
+            ],
+            "locked": false,
+            "reason": "Final 125.9 s of Vastness (so the file's natural ending lands at the end of the narration) under accuracy layers, WAAS/new signals, applications and the outro (N29-N36). Longer than the owner's ~102 s draft because the boundary moved to N28/N29."
+          }
+        ],
+        "ambience": [],
+        "sfx": [],
+        "intentionalSilence": []
+      },
+      "crossfades": [
+        {
+          "between": [
+            "music-01-vastness-open",
+            "music-02-sonor-technical"
+          ],
+          "windowMs": [
+            214250,
+            216250
+          ],
+          "durationMs": 2000,
+          "gapBetweenSegments": [
+            "N15",
+            "N16"
+          ],
+          "gapMs": [
+            215125,
+            215375
+          ],
+          "gapCenterMs": 215250,
+          "narrationOverlap": true,
+          "narrationSpeechInWindowMs": 1750,
+          "narrationSpeechShare": 0.88,
+          "overlappingSegments": [
+            {
+              "id": "N15",
+              "ms": 875
+            },
+            {
+              "id": "N16",
+              "ms": 875
+            }
+          ],
+          "note": "The 2 s crossfade is centred on the gap but spans about 1750 ms of speech; the gap itself is only 250 ms. The transition happens UNDER narration (ducked), not in silence."
+        },
+        {
+          "between": [
+            "music-02-sonor-technical",
+            "music-03-vastness-close"
+          ],
+          "windowMs": [
+            464250,
+            466250
+          ],
+          "durationMs": 2000,
+          "gapBetweenSegments": [
+            "N28",
+            "N29"
+          ],
+          "gapMs": [
+            465225,
+            465475
+          ],
+          "gapCenterMs": 465350,
+          "narrationOverlap": true,
+          "narrationSpeechInWindowMs": 1750,
+          "narrationSpeechShare": 0.88,
+          "overlappingSegments": [
+            {
+              "id": "N28",
+              "ms": 975
+            },
+            {
+              "id": "N29",
+              "ms": 775
+            }
+          ],
+          "note": "The 2 s crossfade is centred on the gap but spans about 1750 ms of speech; the gap itself is only 250 ms. The transition happens UNDER narration (ducked), not in silence."
+        }
+      ],
+      "repeatRisk": {
+        "asset": "Vastness (cue 01 and cue 03)",
+        "cue01SourceMs": [
+          0,
+          229820
+        ],
+        "cue03SourceMs": [
+          103945,
+          229820
+        ],
+        "overlappingSourceMs": [
+          103945,
+          229820
+        ],
+        "overlappingDurationMs": 125875,
+        "shareOfCue03": 1,
+        "replayDelayMs": 360305,
+        "severity": "HIGH_OVERLAP",
+        "note": "After revision C5 cue 03 replays 100% of cue 01's material (cue 01 now uses the whole file), about 360 s later (was 89%). Owner decision: keep Vastness for cue 03. Mitigating: Vastness is very uniform (LRA 2.1 LU, 1.6 dB range); the audible risk still has to be judged by ear.",
+        "options": [
+          "keep (preserves the natural ending; recommended unless listening shows a recognisable motif)",
+          "start cue 03 from the beginning of Vastness (deliberate bookend motif, but no natural ending: needs a fade-out)",
+          "use another approved track for cue 03 (needs a new owner decision; the two excluded tracks are high-dynamic)"
+        ],
+        "status": "ACCEPTED_BY_OWNER_DECISION_PENDING_LISTENING_CONFIRMATION"
+      }
+    }
+  ],
+  "ownerDecisions": [
+    {
+      "date": "2026-10-12",
+      "decision": "Apply C5 at ~215 s; keep the ~465 s boundary unchanged; keep Vastness for cue 03",
+      "options": "MUSIC_CUE_BOUNDARY_OPTIONS.md",
+      "evidence": "music-boundary-options-evidence.json"
+    }
+  ]
+}

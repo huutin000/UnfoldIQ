@@ -1,0 +1,243 @@
+{
+ "nominalDbfs": {
+  "V": -11.0,
+  "S": -16.2
+ },
+ "method": "numeric bed envelope: power sum of each cue's 2 s RMS (dB re the track's own median) with linear fade gains; approximation only (no EQ, no ducking, no gain staging, no audio rendered)",
+ "options": {
+  "C0 current plan": {
+   "215 s region [195-245]": {
+    "minReNominalDb": -12.3,
+    "secondsBelowMinus6dB": 13,
+    "secondsBelowMinus12dB": 1,
+    "secondsBelowMinus20dB": 0,
+    "maxReNominalDb": 1.8
+   },
+   "465 s region [450-480]": {
+    "minReNominalDb": -15.2,
+    "secondsBelowMinus6dB": 3,
+    "secondsBelowMinus12dB": 2,
+    "secondsBelowMinus20dB": 0,
+    "maxReNominalDb": 3.5
+   },
+   "cue03DurationSec": 125.9,
+   "cue03ReplaysCue01Sec": 112.3,
+   "cue03ReplayShare": 0.89,
+   "sonorUsedSourceSec": [
+    0,
+    252.0
+   ],
+   "boundaryWindows": {
+    "cue01->02": {
+     "windowSec": [
+      214.25,
+      216.25
+     ],
+     "speechShare": 0.88
+    },
+    "cue02->03": {
+     "windowSec": [
+      464.25,
+      466.25
+     ],
+     "speechShare": 0.88
+    }
+   }
+  },
+  "C5 only 215: Vastness plays its natural end, Sonor enters at 214.25 with its own swell (no extra fade)": {
+   "215 s region [195-245]": {
+    "minReNominalDb": -6.4,
+    "secondsBelowMinus6dB": 1,
+    "secondsBelowMinus12dB": 0,
+    "secondsBelowMinus20dB": 0,
+    "maxReNominalDb": 1.8
+   },
+   "465 s region [450-480]": {
+    "minReNominalDb": -15.2,
+    "secondsBelowMinus6dB": 3,
+    "secondsBelowMinus12dB": 2,
+    "secondsBelowMinus20dB": 0,
+    "maxReNominalDb": 3.5
+   },
+   "cue03DurationSec": 125.9,
+   "cue03ReplaysCue01Sec": 125.9,
+   "cue03ReplayShare": 1.0,
+   "sonorUsedSourceSec": [
+    0,
+    252.0
+   ],
+   "boundaryWindows": {
+    "cue01->02": {
+     "windowSec": [
+      214.25,
+      229.82
+     ],
+     "speechShare": 0.98
+    },
+    "cue02->03": {
+     "windowSec": [
+      464.25,
+      466.25
+     ],
+     "speechShare": 0.88
+    }
+   }
+  },
+  "C4 only 465: cue 03 enters 4 s earlier over Sonor's natural fade (5 s fade-in)": {
+   "215 s region [195-245]": {
+    "minReNominalDb": -12.3,
+    "secondsBelowMinus6dB": 13,
+    "secondsBelowMinus12dB": 1,
+    "secondsBelowMinus20dB": 0,
+    "maxReNominalDb": 1.8
+   },
+   "465 s region [450-480]": {
+    "minReNominalDb": -6.6,
+    "secondsBelowMinus6dB": 1,
+    "secondsBelowMinus12dB": 0,
+    "secondsBelowMinus20dB": 0,
+    "maxReNominalDb": 3.5
+   },
+   "cue03DurationSec": 128.9,
+   "cue03ReplaysCue01Sec": 115.3,
+   "cue03ReplayShare": 0.89,
+   "sonorUsedSourceSec": [
+    0,
+    252.0
+   ],
+   "boundaryWindows": {
+    "cue01->02": {
+     "windowSec": [
+      214.25,
+      216.25
+     ],
+     "speechShare": 0.88
+    },
+    "cue02->03": {
+     "windowSec": [
+      461.25,
+      466.25
+     ],
+     "speechShare": 0.95
+    }
+   }
+  },
+  "C3 = C5 + C4 (no hard cuts: both boundaries overlap the natural fades)": {
+   "215 s region [195-245]": {
+    "minReNominalDb": -6.4,
+    "secondsBelowMinus6dB": 1,
+    "secondsBelowMinus12dB": 0,
+    "secondsBelowMinus20dB": 0,
+    "maxReNominalDb": 1.8
+   },
+   "465 s region [450-480]": {
+    "minReNominalDb": -6.6,
+    "secondsBelowMinus6dB": 1,
+    "secondsBelowMinus12dB": 0,
+    "secondsBelowMinus20dB": 0,
+    "maxReNominalDb": 3.5
+   },
+   "cue03DurationSec": 128.9,
+   "cue03ReplaysCue01Sec": 128.9,
+   "cue03ReplayShare": 1.0,
+   "sonorUsedSourceSec": [
+    0,
+    252.0
+   ],
+   "boundaryWindows": {
+    "cue01->02": {
+     "windowSec": [
+      214.25,
+      229.82
+     ],
+     "speechShare": 0.98
+    },
+    "cue02->03": {
+     "windowSec": [
+      461.25,
+      466.25
+     ],
+     "speechShare": 0.95
+    }
+   }
+  },
+  "C2 handover at Vastness natural end: Sonor from src 11 s at 229.8 s, gap-aligned at 465": {
+   "215 s region [195-245]": {
+    "minReNominalDb": -25.9,
+    "secondsBelowMinus6dB": 7,
+    "secondsBelowMinus12dB": 5,
+    "secondsBelowMinus20dB": 2,
+    "maxReNominalDb": 1.8
+   },
+   "465 s region [450-480]": {
+    "minReNominalDb": -3.8,
+    "secondsBelowMinus6dB": 0,
+    "secondsBelowMinus12dB": 0,
+    "secondsBelowMinus20dB": 0,
+    "maxReNominalDb": 3.5
+   },
+   "cue03DurationSec": 125.8,
+   "cue03ReplaysCue01Sec": 125.8,
+   "cue03ReplayShare": 1.0,
+   "sonorUsedSourceSec": [
+    11.0,
+    247.6
+   ],
+   "boundaryWindows": {
+    "cue01->02": {
+     "windowSec": [
+      229.8,
+      231.8
+     ],
+     "speechShare": 1.0
+    },
+    "cue02->03": {
+     "windowSec": [
+      464.35,
+      466.35
+     ],
+     "speechShare": 0.88
+    }
+   }
+  },
+  "C1 skip Sonor intro, both boundaries at gap centres (233.8 and 465.35)": {
+   "215 s region [195-245]": {
+    "minReNominalDb": -80.0,
+    "secondsBelowMinus6dB": 9,
+    "secondsBelowMinus12dB": 8,
+    "secondsBelowMinus20dB": 5,
+    "maxReNominalDb": 1.8
+   },
+   "465 s region [450-480]": {
+    "minReNominalDb": -3.8,
+    "secondsBelowMinus6dB": 0,
+    "secondsBelowMinus12dB": 0,
+    "secondsBelowMinus20dB": 0,
+    "maxReNominalDb": 3.5
+   },
+   "cue03DurationSec": 125.8,
+   "cue03ReplaysCue01Sec": 125.8,
+   "cue03ReplayShare": 1.0,
+   "sonorUsedSourceSec": [
+    14.0,
+    247.6
+   ],
+   "boundaryWindows": {
+    "cue01->02": {
+     "windowSec": [
+      229.82,
+      234.8
+     ],
+     "speechShare": 0.95
+    },
+    "cue02->03": {
+     "windowSec": [
+      464.35,
+      466.35
+     ],
+     "speechShare": 0.88
+    }
+   }
+  }
+ }
+}
