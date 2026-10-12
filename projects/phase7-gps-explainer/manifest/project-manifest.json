@@ -2,13 +2,13 @@
   "schemaVersion": "1.6.0",
   "manifestId": "pm-81b1cf9df1e2",
   "projectId": "phase7-gps-explainer",
-  "projectVersion": 11,
-  "revision": 11,
+  "projectVersion": 27,
+  "revision": 27,
   "pipelineVersion": null,
   "contentMode": "technical-explainer",
   "contentClass": "FACTUAL",
   "createdAt": "2026-10-11T07:12:16.829Z",
-  "updatedAt": "2026-10-11T09:59:06.923Z",
+  "updatedAt": "2026-10-12T09:28:29.525Z",
   "artifacts": {
     "creativeBriefVersion": {
       "version": null,
@@ -89,16 +89,16 @@
       "detail": null
     },
     "finalAudioVersion": {
-      "version": null,
-      "status": "NOT_CREATED_YET",
-      "ref": null,
-      "detail": null
+      "version": "final-audio-0ad36041aa41",
+      "status": "VERIFIED",
+      "ref": "assets/audio/final-audio/final-audio-0ad36041aa41.json",
+      "detail": "mix QA PASS; finalMixApproval APPROVED by owner 2026-10-12 (candidate A, youtube-standard)"
     },
     "alignmentVersion": {
-      "version": null,
-      "status": "NOT_CREATED_YET",
-      "ref": null,
-      "detail": null
+      "version": "alignment@e5e58ee03408",
+      "status": "VERIFIED",
+      "ref": "audio/alignment.json",
+      "detail": "1377 words, provider local-energy-known-text coverage 1"
     },
     "timelineVersion": {
       "version": null,
@@ -113,52 +113,52 @@
       "detail": null
     },
     "narrationDirectionVersion": {
-      "version": "nd-813ce6990d3c",
-      "status": "UNRESOLVED",
-      "ref": "voice/narration-direction/nd-813ce6990d3c.json",
-      "detail": "v2 coverage=0% INVALID_SEGMENTS"
+      "version": "nd-7bd74d759a3c",
+      "status": "VERIFIED",
+      "ref": "voice/narration-direction/nd-7bd74d759a3c.json",
+      "detail": "v3 coverage=2.7%"
     },
     "pronunciationProfileVersion": {
-      "version": "pron-2243101e4d39",
+      "version": "pron-53d1f23a8102",
       "status": "VERIFIED",
-      "ref": "voice/pronunciation-profile/pron-2243101e4d39.json",
-      "detail": "v1 6 entries"
+      "ref": "voice/pronunciation-profile/pron-53d1f23a8102.json",
+      "detail": "v2 6 entries"
     },
     "pronunciationRuntimePassVersion": {
-      "version": "prp-c9eab301c6c0",
+      "version": "prp-f6b2f490d97d",
       "status": "VERIFIED",
-      "ref": "voice/pronunciation-pass/prp-c9eab301c6c0.json",
+      "ref": "voice/pronunciation-pass/prp-f6b2f490d97d.json",
       "detail": "v1 local-kokoro/kokoro-v1 statuses=CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,CLEAN,OVERRIDE_APPLIED,CLEAN,CLEAN,CLEAN,CLEAN,OVERRIDE_APPLIED,OVERRIDE_APPLIED,CLEAN,CLEAN,OVERRIDE_APPLIED,CLEAN"
     },
     "ttsReadyPlanVersion": {
-      "version": "ttp-77f300b60896",
+      "version": "ttp-bb7733972a7e",
       "status": "VERIFIED",
-      "ref": "voice/tts-ready-plan/ttp-77f300b60896.json",
+      "ref": "voice/tts-ready-plan/ttp-bb7733972a7e.json",
       "detail": "overall=READY_FOR_TTS segments=37"
     },
     "narrationAudioVersion": {
-      "version": null,
-      "status": "NOT_CREATED_YET",
-      "ref": null,
-      "detail": null
+      "version": "fnt-e2ceed888682",
+      "status": "VERIFIED",
+      "ref": "assets/voice/narration-track/fnt-e2ceed888682.json",
+      "detail": "v1 590125ms 37 segments"
     },
     "speechRateQaVersion": {
-      "version": null,
-      "status": "NOT_CREATED_YET",
-      "ref": null,
-      "detail": null
+      "version": "srq-457814c7b2bc",
+      "status": "VERIFIED",
+      "ref": "audio/narration/qa/srq-457814c7b2bc.json",
+      "detail": "PASS (37 entries)"
     },
     "performanceQaVersion": {
-      "version": null,
-      "status": "NOT_CREATED_YET",
-      "ref": null,
-      "detail": null
+      "version": "pfq-6c019053968c",
+      "status": "VERIFIED",
+      "ref": "audio/narration/qa/pfq-6c019053968c.json",
+      "detail": "PASS (37 entries)"
     },
     "dialogueRoutingVersion": {
-      "version": null,
-      "status": "NOT_CREATED_YET",
-      "ref": null,
-      "detail": null
+      "version": "dlr-83f1c5a96e50",
+      "status": "UNRESOLVED",
+      "ref": "audio/narration/qa/dlr-83f1c5a96e50.json",
+      "detail": "NOT_APPLICABLE (4 entries)"
     }
   },
   "providers": {
@@ -176,5 +176,5 @@
     "previousManifestId": null,
     "previousProjectVersion": null
   },
-  "fingerprint": "dfeb2046561c8416"
+  "fingerprint": "93514ac051dba13a"
 }
