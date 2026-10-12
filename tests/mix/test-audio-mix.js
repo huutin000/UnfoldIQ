@@ -99,6 +99,56 @@ await runTest("M1 buildMixPlan: schema-valid, measured staging, ducking rules pr
   assert(s.mixPlan.inputHashes.narrationTiming, "narration timing hash recorded");
 });
 
+await runTest("M1b per-cue fadeInMs/fadeOutMs override the 300/800 ms defaults", async () => {
+  const s = setupProduction();
+  const defaults = s.mixPlan.tracks.music.map((c) => [c.fadeInMs, c.fadeOutMs]);
+  assert(defaults.every(([i, o]) => i === 300 && o === 800), "defaults 300/800 without overrides");
+  const cues = s.plan.cues.map((c, i) => (i === 0 ? { ...c, fadeInMs: 0, fadeOutMs: 2000 } : c));
+  const mp = mix.buildMixPlan({ projectId: "p", repoRoot: s.repo, musicPlan: { ...s.plan, cues }, profile: s.profile, narrationSegments: s.narrationSegments });
+  assert(mp.ok, "plan built: " + (mp.message || ""));
+  const first = mp.mixPlan.tracks.music.find((c) => c.clipId === cues[0].cueId);
+  assertEq(first.fadeInMs + "/" + first.fadeOutMs, "0/2000", "overridden fades carried into the mix clip");
+  assert(mix.validateMixPlan(mp.mixPlan).ok, "plan still schema valid");
+});
+
+await runTest("M1c very quiet narration: voice gain stays within the schema ceiling (+12 dB)", async () => {
+  const s = setupProduction();
+  // 0.02 and 0.0005 amplitude: far below the -16 LUFS target, with a >3 dB level difference so the per-segment correction is active.
+  const quiet = [["s1", 0.02], ["s2", 0.0005]].map(([id, amplitude], i) => {
+    const p = path.join(s.repo, "narration", `quiet-${id}.wav`);
+    fs.writeFileSync(p, H.makeSpeechWav({ durationMs: 8000, amplitude }));
+    return { segmentId: id, path: p, startMs: i * 8000, endMs: (i + 1) * 8000 };
+  });
+  const mp = mix.buildMixPlan({ projectId: "p", repoRoot: s.repo, musicPlan: s.plan, profile: s.profile, narrationSegments: quiet });
+  assert(mp.ok, "plan built and schema valid: " + (mp.message || ""));
+  assert(mp.mixPlan.tracks.voice.every((c) => c.gainDb <= 12), "every voice gainDb <= 12: " + mp.mixPlan.tracks.voice.map((c) => c.gainDb));
+});
+
+await runTest("M1d limiter turns peaks down smoothly (no flat-top clipping) and never exceeds the ceiling", async () => {
+  const n = FS * 2;
+  const sig = new Float64Array(n);
+  for (let i = 0; i < n; i += 1) sig[i] = 0.3 * Math.sin((2 * Math.PI * 200 * i) / FS);
+  for (let i = FS; i < FS + 2400; i += 1) sig[i] = 1.8 * Math.sin((2 * Math.PI * 200 * i) / FS); // loud burst, 6 dB over full scale
+  const orig = Float64Array.from(sig);
+  const ceilingDb = -1.3;
+  const c = Math.pow(10, ceilingDb / 20);
+  mix.engine.softLimit(sig, ceilingDb, FS);
+  let max = 0, atCeiling = 0;
+  for (let i = 0; i < n; i += 1) { const a = Math.abs(sig[i]); if (a > max) max = a; if (a > c * 0.999) atCeiling += 1; }
+  assert(max <= c * (1 + 1e-9), `peak within ceiling (${max.toFixed(4)} <= ${c.toFixed(4)})`);
+  assert(atCeiling < 100, `smooth gain reduction, not a hard clip (${atCeiling} samples at the ceiling)`);
+  assertEq(sig[100], orig[100], "audio far from the burst is untouched");
+});
+
+await runTest("M1e repeated LIMIT lowers the ceiling by the measured deficit (converges instead of repeating -1.3 dB)", async () => {
+  const finding = { code: "TRUE_PEAK_POLICY_FAIL", correctiveAction: "LIMIT", status: "FAIL", deficitDb: 2.1 };
+  const base = { tracks: { voice: [], music: [], ambience: [], sfx: [] } };
+  const first = mix.applyRepairs(base, [finding]);
+  assertEq(first.plan.limiter.ceilingDb, -1.3, "first LIMIT enables the limiter at -1.3 dB");
+  const second = mix.applyRepairs(first.plan, [finding]);
+  assertEq(second.plan.limiter.ceilingDb, -3.4, "second LIMIT lowers the ceiling by the deficit (2.1 dB)");
+});
+
 await runTest("M2 clean production mixes PASS (≤1 local REMASTER allowed)", async () => {
   const s = setupProduction();
   const r = mix.mixWithRepair({ mixPlan: s.mixPlan, profile: s.profile, intentionalSilence: s.plan.intentionalSilence });
