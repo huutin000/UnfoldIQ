@@ -9,12 +9,13 @@
 const fs = require("fs");
 const path = require("path");
 const { transition } = require("./state-machine");
-const { resolveProjectPath } = require("./path-policy");
+const { resolveProjectPath, assertSafeId } = require("./path-policy");
 const traceContract = require("../extension/src/contracts/trace-contract.js");
 
 const TRACE_CAP = 200;
 
 function jobsDir(projectRoot, projectId) {
+  assertSafeId("projectId", projectId);
   return path.join(path.resolve(projectRoot), "projects", projectId, "flow-jobs");
 }
 
@@ -23,6 +24,7 @@ function ensureJobsDir(projectRoot, projectId) {
 }
 
 function jobPath(projectRoot, projectId, jobId) {
+  assertSafeId("jobId", jobId);
   return path.join(jobsDir(projectRoot, projectId), `${jobId}.json`);
 }
 

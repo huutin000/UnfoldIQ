@@ -36,10 +36,65 @@ function tokenMatches(provided, expected) {
   return crypto.timingSafeEqual(a, b);
 }
 
+const LOOPBACK_HOSTNAMES = new Set(["127.0.0.1", "localhost", "[::1]"]);
+
+// URL.origin is "null" for chrome-extension:, so build the origin by hand.
+function normalizeOrigin(u) {
+  if (u.protocol === "chrome-extension:") return `chrome-extension://${u.host}`;
+  return u.origin;
+}
+
+// Allowlist entries are normalised once per array (cached), through the same
+// URL parse as the request origin; unparseable entries are dropped.
+const normalizedAllowlists = new WeakMap();
+function normalizeAllowlist(allowed) {
+  let set = normalizedAllowlists.get(allowed);
+  if (!set) {
+    set = new Set();
+    for (const entry of allowed) {
+      try {
+        const n = normalizeOrigin(new URL(String(entry).trim()));
+        if (n !== "null") set.add(n); // opaque origin (moz-extension:, file:, ...): never matchable
+      } catch {
+        // dropped
+      }
+    }
+    normalizedAllowlists.set(allowed, set);
+  }
+  return set;
+}
+
 function validateOrigin(origin, allowed) {
-  if (!origin) return false;
-  const list = allowed && allowed.length > 0 ? allowed : ["http://127.0.0.1", "http://localhost", "chrome-extension://"];
-  return list.some((prefix) => String(origin).startsWith(prefix));
+  if (!origin || typeof origin !== "string" || origin === "null") return false;
+  let u;
+  try {
+    u = new URL(origin);
+  } catch {
+    return false;
+  }
+  if (allowed && allowed.length > 0) {
+    // Explicit allowlist: exact match on the normalized origin, never a prefix.
+    // If every entry is unparseable the set is empty, so everything is rejected
+    // (fail-closed; it does NOT fall back to the default loopback policy).
+    const n = normalizeOrigin(u);
+    return n !== "null" && normalizeAllowlist(allowed).has(n);
+  }
+  if (u.protocol === "http:") return LOOPBACK_HOSTNAMES.has(u.hostname);
+  if (u.protocol === "chrome-extension:") return u.host !== "";
+  return false;
+}
+
+// DNS-rebinding guard: the Host header must name a loopback host (any port).
+function validateHost(hostHeader) {
+  if (!hostHeader || typeof hostHeader !== "string") return false;
+  let u;
+  try {
+    u = new URL(`http://${hostHeader}`);
+  } catch {
+    return false;
+  }
+  if (u.username || u.password || u.pathname !== "/" || u.search || u.hash) return false;
+  return LOOPBACK_HOSTNAMES.has(u.hostname);
 }
 
 function findSecrets(value, trail = "$") {
@@ -73,4 +128,4 @@ function stripSecrets(value) {
   return value;
 }
 
-module.exports = { isLoopbackAddress, assertLoopbackBind, validateOrigin, tokenMatches, findSecrets, stripSecrets };
+module.exports = { isLoopbackAddress, assertLoopbackBind, validateOrigin, validateHost, tokenMatches, findSecrets, stripSecrets };

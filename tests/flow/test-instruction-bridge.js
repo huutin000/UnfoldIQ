@@ -130,7 +130,7 @@ async function main() {
     });
 
     await runTest("IR6 evidence on unknown sync → 404", async () => {
-      const r = await req("POST", `/instruction/evidence?projectId=${PROJECT}`, { syncId: "sy-nope" });
+      const r = await req("POST", `/instruction/evidence?projectId=${PROJECT}`, { syncId: "sy-000000000000" });
       assert(r.status === 404 && r.body.error === "SYNC_NOT_FOUND", "unknown sync reported");
     });
 
