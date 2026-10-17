@@ -97,7 +97,7 @@ await runTest("Case A — first-time user over HTTP: /pairing/status → approve
 });
 
 await runTest("Case B — trusted reconnect over HTTP: challenge → verify → session; jobs route works with x-bridge-session", async () => {
-  const st = await request("/pairing/status");
+  const st = await request("/pairing/status", { headers: { "x-bridge-token": DEV_TOKEN } });
   const c = await request("/pairing/challenge", { method: "POST", body: { deviceId: st.json.deviceId, origin: ORIGIN } });
   assertEq(c.status, 200, "challenge 200");
   const sig = manager.signProof({ deviceId: st.json.deviceId, nonce: c.json.nonce, origin: ORIGIN });
@@ -109,7 +109,7 @@ await runTest("Case B — trusted reconnect over HTTP: challenge → verify → 
 });
 
 await runTest("Case F/G — wrong origin + replay rejected over HTTP", async () => {
-  const st = await request("/pairing/status");
+  const st = await request("/pairing/status", { headers: { "x-bridge-token": DEV_TOKEN } });
   const c1 = await request("/pairing/challenge", { method: "POST", body: { deviceId: st.json.deviceId, origin: ORIGIN } });
   const sig = manager.signProof({ deviceId: st.json.deviceId, nonce: c1.json.nonce, origin: ORIGIN });
   const v1 = await request("/pairing/verify", { method: "POST", body: { deviceId: st.json.deviceId, nonce: c1.json.nonce, signature: sig.signature, origin: ORIGIN } });

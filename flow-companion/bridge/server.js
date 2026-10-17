@@ -135,11 +135,27 @@ function createBridgeServer({ projectRoot, token, host = "127.0.0.1", allowedOri
       if (parts[0] === "pairing") {
         if (!pairing) return send(res, 404, { error: "PAIRING_DISABLED" });
         if (req.method === "GET" && parts.length === 2 && parts[1] === "status") {
+          // Unauthenticated callers get only non-identifying fields; the device
+          // identity (deviceId/origin/trustedSince/rotatedAt) needs dev token or session.
           const st = pairing.status();
+          if (!authorized(req).ok) {
+            // Allow-list: new status() fields stay private until listed here.
+            const pub = { paired: st.paired };
+            if ("corrupted" in st) pub.corrupted = st.corrupted;
+            if ("actionable" in st) pub.actionable = st.actionable;
+            pub.authModes = st.authModes;
+            pub.contractVersion = st.contractVersion;
+            pub.exactOriginRequired = true;
+            return send(res, 200, pub);
+          }
           return send(res, 200, { ...st, exactOriginRequired: true });
         }
         const body = req.method === "POST" ? await readBody(req) : {};
         if (req.method === "POST" && parts.length === 2 && parts[1] === "approve") {
+          // An already-paired device can only be re-approved by an authenticated
+          // caller. status() and approve() are synchronous and run with no await
+          // in between, so no other request can pair/unpair inside this window.
+          if (pairing.status().paired && !authorized(req).ok) return send(res, 409, { error: "ALREADY_PAIRED" });
           const r = pairing.approve({ origin: body.origin, sessionOnly: body.sessionOnly === true });
           return r.ok ? send(res, 200, r) : send(res, r.code === "ORIGIN_REJECTED" ? 403 : 409, { error: r.code });
         }
@@ -286,6 +302,8 @@ function createBridgeServer({ projectRoot, token, host = "127.0.0.1", allowedOri
           const body = stripSecrets(raw);
           const check = instructionSync.validateApplyPayload({ ...body, projectId });
           if (!check.ok) return send(res, 400, { error: check.blockers[0], blockers: check.blockers });
+          // Body ids become artifact path segments: validate before the store.
+          if (body.instructionVersion !== undefined && body.instructionVersion !== null) assertSafeId("instructionVersion", body.instructionVersion);
           const setRes = body.instructionVersion
             ? agentInstructions.loadInstructionSet(projectRoot, projectId, body.instructionVersion)
             : agentInstructions.loadLatestInstructionSet(projectRoot, projectId);
@@ -345,6 +363,9 @@ function createBridgeServer({ projectRoot, token, host = "127.0.0.1", allowedOri
           if (secretHits.length > 0) return send(res, 400, { error: "CREDENTIAL_PAYLOAD_REJECTED", fields: secretHits });
           const body = stripSecrets(raw);
           requireFields(body, ["syncId"]);
+          if (typeof body.syncId !== "string" || !/^sy-[0-9a-f]{12}$/.test(body.syncId)) {
+            return send(res, 400, { error: "INVALID_ID: syncId" });
+          }
           const evCheck = instructionSync.validateSyncEvidence({ ...(body.applyResult || {}), ...(body.readback || {}) });
           if (!evCheck.ok) return send(res, 400, { error: "FORBIDDEN_SYNC_EVIDENCE", blockers: evCheck.blockers });
           const syncRes = agentInstructions.loadSync(projectRoot, projectId, body.syncId);

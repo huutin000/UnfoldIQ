@@ -44,6 +44,26 @@ function normalizeOrigin(u) {
   return u.origin;
 }
 
+// Allowlist entries are normalised once per array (cached), through the same
+// URL parse as the request origin; unparseable entries are dropped.
+const normalizedAllowlists = new WeakMap();
+function normalizeAllowlist(allowed) {
+  let set = normalizedAllowlists.get(allowed);
+  if (!set) {
+    set = new Set();
+    for (const entry of allowed) {
+      try {
+        const n = normalizeOrigin(new URL(String(entry).trim()));
+        if (n !== "null") set.add(n); // opaque origin (moz-extension:, file:, ...): never matchable
+      } catch {
+        // dropped
+      }
+    }
+    normalizedAllowlists.set(allowed, set);
+  }
+  return set;
+}
+
 function validateOrigin(origin, allowed) {
   if (!origin || typeof origin !== "string" || origin === "null") return false;
   let u;
@@ -54,7 +74,10 @@ function validateOrigin(origin, allowed) {
   }
   if (allowed && allowed.length > 0) {
     // Explicit allowlist: exact match on the normalized origin, never a prefix.
-    return allowed.includes(normalizeOrigin(u));
+    // If every entry is unparseable the set is empty, so everything is rejected
+    // (fail-closed; it does NOT fall back to the default loopback policy).
+    const n = normalizeOrigin(u);
+    return n !== "null" && normalizeAllowlist(allowed).has(n);
   }
   if (u.protocol === "http:") return LOOPBACK_HOSTNAMES.has(u.hostname);
   if (u.protocol === "chrome-extension:") return u.host !== "";
