@@ -17,10 +17,10 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
-const { assertLoopbackBind, validateOrigin, tokenMatches, findSecrets, stripSecrets } = require("./security");
+const { assertLoopbackBind, validateOrigin, validateHost, tokenMatches, findSecrets, stripSecrets } = require("./security");
 const instructionSync = require("./instruction-sync");
 const agentInstructions = require("../../lib/agent-instructions/index.js");
-const { resolveProjectPath, sanitizeFilename } = require("./path-policy");
+const { resolveProjectPath, sanitizeFilename, assertSafeId } = require("./path-policy");
 const store = require("./job-store");
 const jobContract = require("../extension/src/contracts/job-contract.js");
 const { checkGeneratedImage, checkCorrelation } = require("./media-quality");
@@ -121,6 +121,9 @@ function createBridgeServer({ projectRoot, token, host = "127.0.0.1", allowedOri
 
   const server = http.createServer(async (req, res) => {
     try {
+      if (!validateHost(req.headers.host)) {
+        return send(res, 403, { error: "HOST_REJECTED" });
+      }
       const origin = req.headers.origin || "";
       if (origin && !validateOrigin(origin, allowedOrigins)) {
         return send(res, 403, { error: "ORIGIN_REJECTED" });
@@ -180,6 +183,9 @@ function createBridgeServer({ projectRoot, token, host = "127.0.0.1", allowedOri
         if (secretHits.length > 0) return send(res, 400, { error: "CREDENTIAL_PAYLOAD_REJECTED", fields: secretHits });
         const body = stripSecrets(raw);
         requireFields(body, ["projectId", "job"]);
+        assertSafeId("projectId", body.projectId);
+        assertSafeId("projectId", body.job && body.job.projectId);
+        assertSafeId("jobId", body.job && body.job.jobId);
         // Harden: validate the persisted job against the canonical contract
         // before any state exists (late failures at import time are too late).
         jobContract.checkJobShape({ status: "PENDING", attempt: 1, ...body.job });
@@ -192,6 +198,8 @@ function createBridgeServer({ projectRoot, token, host = "127.0.0.1", allowedOri
         const jobId = parts[1];
         const projectId = url.searchParams.get("projectId");
         if (!projectId) return send(res, 400, { error: "SCHEMA_INVALID: projectId query required" });
+        assertSafeId("jobId", jobId);
+        assertSafeId("projectId", projectId);
         if (req.method === "GET" && parts.length === 2) {
           const job = store.getJob(projectRoot, projectId, jobId);
           if (!job) return send(res, 404, { error: "JOB_NOT_FOUND" });

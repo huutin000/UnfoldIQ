@@ -36,10 +36,42 @@ function tokenMatches(provided, expected) {
   return crypto.timingSafeEqual(a, b);
 }
 
+const LOOPBACK_HOSTNAMES = new Set(["127.0.0.1", "localhost", "[::1]"]);
+
+// URL.origin is "null" for chrome-extension:, so build the origin by hand.
+function normalizeOrigin(u) {
+  if (u.protocol === "chrome-extension:") return `chrome-extension://${u.host}`;
+  return u.origin;
+}
+
 function validateOrigin(origin, allowed) {
-  if (!origin) return false;
-  const list = allowed && allowed.length > 0 ? allowed : ["http://127.0.0.1", "http://localhost", "chrome-extension://"];
-  return list.some((prefix) => String(origin).startsWith(prefix));
+  if (!origin || typeof origin !== "string" || origin === "null") return false;
+  let u;
+  try {
+    u = new URL(origin);
+  } catch {
+    return false;
+  }
+  if (allowed && allowed.length > 0) {
+    // Explicit allowlist: exact match on the normalized origin, never a prefix.
+    return allowed.includes(normalizeOrigin(u));
+  }
+  if (u.protocol === "http:") return LOOPBACK_HOSTNAMES.has(u.hostname);
+  if (u.protocol === "chrome-extension:") return u.host !== "";
+  return false;
+}
+
+// DNS-rebinding guard: the Host header must name a loopback host (any port).
+function validateHost(hostHeader) {
+  if (!hostHeader || typeof hostHeader !== "string") return false;
+  let u;
+  try {
+    u = new URL(`http://${hostHeader}`);
+  } catch {
+    return false;
+  }
+  if (u.username || u.password || u.pathname !== "/" || u.search || u.hash) return false;
+  return LOOPBACK_HOSTNAMES.has(u.hostname);
 }
 
 function findSecrets(value, trail = "$") {
@@ -73,4 +105,4 @@ function stripSecrets(value) {
   return value;
 }
 
-module.exports = { isLoopbackAddress, assertLoopbackBind, validateOrigin, tokenMatches, findSecrets, stripSecrets };
+module.exports = { isLoopbackAddress, assertLoopbackBind, validateOrigin, validateHost, tokenMatches, findSecrets, stripSecrets };

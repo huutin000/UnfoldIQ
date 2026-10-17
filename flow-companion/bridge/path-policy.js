@@ -8,7 +8,18 @@
 
 const path = require("path");
 
+const SAFE_ID_PATTERN = /^[A-Za-z0-9_][A-Za-z0-9_-]{0,127}$/;
+
+// projectId / jobId become path segments: allow only a conservative charset.
+function assertSafeId(kind, id) {
+  if (typeof id !== "string" || !SAFE_ID_PATTERN.test(id)) {
+    throw new Error(`INVALID_ID: ${kind}`);
+  }
+  return id;
+}
+
 function resolveProjectPath(projectRoot, projectId, relativePath) {
+  assertSafeId("projectId", projectId);
   if (typeof relativePath !== "string" || relativePath.length === 0) {
     throw new Error("EMPTY_PATH");
   }
@@ -31,4 +42,4 @@ function sanitizeFilename(name) {
   return clean;
 }
 
-module.exports = { resolveProjectPath, sanitizeFilename };
+module.exports = { resolveProjectPath, sanitizeFilename, assertSafeId };
